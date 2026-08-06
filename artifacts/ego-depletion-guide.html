@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willpower Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F4EFE6;
+  --paper-dark: #EAE3D6;
+  --ink: #1C1917;
+  --ink-light: #44403C;
+  --ink-faint: #78716C;
+  --ink-ghost: #A8A29E;
+  --rust: #C2410C;
+  --rust-light: #EA580C;
+  --rust-bg: rgba(194, 65, 12, 0.06);
+  --rust-border: rgba(194, 65, 12, 0.15);
+  --sage: #5F6D52;
+  --sage-bg: rgba(95, 109, 82, 0.08);
+  --sage-border: rgba(95, 109, 82, 0.2);
+  --red-bg: rgba(185, 28, 28, 0.06);
+  --red-border: rgba(185, 28, 28, 0.15);
+  --red: #B91C1C;
+  --rule: rgba(28, 25, 23, 0.1);
+  --rule-dark: rgba(28, 25, 23, 0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── WIZARD NAV ─── */
+.wizard-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  z-index: 1000;
+  padding: 16px 24px 12px;
+}
+
+.wizard-inner { max-width: 740px; margin: 0 auto; }
+
+.wizard-title-row {
+  display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;
+}
+
+.wizard-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: 0.5px;
+}
+
+.wizard-page-label {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint);
+}
+
+.steps-row { display: flex; align-items: center; }
+
+.step-line {
+  flex: 1; height: 1px; background: var(--rule); position: relative;
+}
+
+.step-line .fill {
+  position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+  background: var(--rust); transition: width 0.4s ease;
+}
+
+.step-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--rule-dark); background: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500; color: var(--ink-faint);
+  cursor: pointer; transition: all 0.35s ease; flex-shrink: 0; position: relative; z-index: 2;
+}
+
+.step-dot:hover { border-color: var(--rust); color: var(--rust); }
+
+.step-dot.active {
+  background: var(--rust); border-color: var(--rust); color: #fff;
+  transform: scale(1.15); box-shadow: 0 2px 12px rgba(194, 65, 12, 0.25);
+}
+
+.step-dot.completed { background: var(--sage); border-color: var(--sage); color: #fff; }
+
+/* ─── PAGE ─── */
+.page-container { max-width: 740px; margin: 0 auto; padding: 110px 24px 140px; min-height: 100vh; }
+.page { display: none; animation: pageIn 0.45s ease-out; }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+
+/* ─── TYPOGRAPHY ─── */
+.page-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px; font-weight: 700; color: rgba(194, 65, 12, 0.06);
+  line-height: 1; margin-bottom: -30px; user-select: none;
+}
+
+h1.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 44px); font-weight: 600; color: var(--ink);
+  line-height: 1.2; margin-bottom: 8px;
+}
+h1.page-title em { color: var(--rust); font-style: italic; }
+
+.page-subtitle { font-size: 12px; color: var(--ink-faint); margin-bottom: 36px; max-width: 520px; }
+
+h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+
+h3.section-label {
+  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--rust);
+  margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+}
+
+p { margin-bottom: 16px; color: var(--ink-light); }
+.highlight { color: var(--rust); font-weight: 500; }
+
+/* ─── TLDR ─── */
+.tldr { background: var(--rust-bg); border-left: 3px solid var(--rust); padding: 16px 20px; margin-bottom: 32px; }
+.tldr-label { font-size: 10px; letter-spacing: 2px; color: var(--rust); margin-bottom: 4px; font-weight: 600; }
+.tldr p { margin-bottom: 0; color: var(--ink); font-size: 13px; }
+
+/* ─── RESEARCH ─── */
+.research-box { background: var(--sage-bg); border: 1px solid var(--sage-border); padding: 18px 20px; margin: 24px 0; position: relative; }
+.research-box::before { content:'RESEARCH'; position:absolute; top:8px; right:12px; font-size:9px; letter-spacing:2px; color:var(--sage); opacity:0.6; }
+.research-box p { font-size:12px; color:var(--ink-faint); font-style:italic; margin-bottom:0; }
+.research-box .src { display:inline-block; margin-top:6px; font-size:10px; color:var(--sage); font-style:normal; }
+
+/* ─── STATS ─── */
+.stat-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin:24px 0; }
+.stat { border:1px solid var(--rule); padding:16px; text-align:center; }
+.stat-val { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:700; color:var(--rust); line-height:1; margin-bottom:2px; }
+.stat-label { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-faint); }
+
+/* ─── CARDS ─── */
+.card { border:1px solid var(--rule); padding:22px 24px; margin-bottom:14px; transition:all 0.3s ease; position:relative; }
+.card:hover { border-color:var(--rule-dark); transform:translateX(3px); }
+.card .card-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--rust); margin-bottom:6px; }
+.card .card-title { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:var(--ink); margin-bottom:8px; }
+.card .card-body { font-size:12px; color:var(--ink-faint); margin-bottom:0; }
+.card .card-body strong { color:var(--ink-light); font-weight:500; }
+.card .card-time { position:absolute; top:22px; right:24px; font-size:11px; color:var(--ink-ghost); }
+.card.threat { background:var(--red-bg); border-color:var(--red-border); }
+.card.threat .card-tag { color:var(--red); }
+.card .countermeasure { margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); display:flex; gap:8px; align-items:flex-start; }
+.card .countermeasure::before { content:'→'; color:var(--sage); font-weight:600; }
+.card .countermeasure span { font-size:12px; color:var(--sage); }
+
+/* ─── TIMELINE ─── */
+.timeline { position:relative; padding-left:36px; margin:20px 0; }
+.timeline::before { content:''; position:absolute; left:8px; top:8px; bottom:8px; width:1px; background:linear-gradient(180deg, var(--rust), var(--rule)); }
+.tl-item { position:relative; margin-bottom:24px; }
+.tl-item::before { content:''; position:absolute; left:-31px; top:6px; width:9px; height:9px; border-radius:50%; border:2px solid var(--rust); background:var(--paper); }
+.tl-time { font-size:11px; color:var(--rust); letter-spacing:1px; margin-bottom:2px; font-weight:500; }
+.tl-title { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.tl-desc { font-size:12px; color:var(--ink-faint); }
+
+/* ─── VS ROW ─── */
+.vs-row { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; margin:20px 0; align-items:stretch; }
+.vs-card { padding:18px 20px; border:1px solid var(--rule); }
+.vs-card.bad { background:var(--red-bg); border-color:var(--red-border); }
+.vs-card.good { background:var(--sage-bg); border-color:var(--sage-border); }
+.vs-card .vs-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+.vs-card.bad .vs-label { color:var(--red); }
+.vs-card.good .vs-label { color:var(--sage); }
+.vs-card p { font-size:12px; color:var(--ink-faint); margin-bottom:0; }
+.vs-divider { display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-ghost); font-weight:600; }
+
+/* ─── FOOD ─── */
+.food-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin:16px 0; }
+.food-card { border:1px solid var(--rule); padding:18px; }
+.food-cat { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--rust); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--rule); }
+.food-item { display:flex; justify-content:space-between; padding:4px 0; font-size:12px; }
+.food-name { color:var(--ink-light); }
+.food-note { color:var(--ink-ghost); font-size:11px; }
+
+/* ─── BUDGET ─── */
+.budget-control { border:1px solid var(--rule); border-left:3px solid var(--rust); padding:24px; margin-bottom:16px; background:rgba(255,255,255,0.3); }
+.budget-header { margin-bottom:18px; }
+.budget-title-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px; }
+.budget-label { font-size:10px; letter-spacing:2px; color:var(--ink-faint); }
+.budget-total { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:700; color:var(--rust); line-height:1; transition:all 0.3s ease; }
+.budget-tier { font-size:11px; color:var(--ink-faint); }
+
+.budget-slider { -webkit-appearance:none; appearance:none; width:100%; height:4px; background:var(--rule-dark); border-radius:2px; outline:none; cursor:pointer; }
+.budget-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; background:var(--rust); cursor:pointer; box-shadow:0 2px 8px rgba(194,65,12,0.3); }
+.budget-slider::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:var(--rust); border:none; cursor:pointer; }
+
+.slider-labels { display:flex; justify-content:space-between; margin-top:8px; }
+.slider-label { font-size:10px; letter-spacing:2px; color:var(--ink-ghost); transition:all 0.3s ease; }
+.slider-label[data-active="true"] { color:var(--rust); font-weight:600; }
+.budget-meta { font-size:11px; color:var(--ink-faint); margin-top:6px; }
+
+.shop-grid-i { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:14px; }
+.shop-cat { border:1px solid var(--rule); padding:18px; background:rgba(255,255,255,0.3); }
+.shop-cat-hd { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--rust); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--rule); }
+.si { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:all 0.2s ease; gap:6px; }
+.si:last-child { border-bottom:none; }
+.si:hover { padding-left:4px; }
+.si-left { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
+.si-check { width:14px; height:14px; border:1.5px solid var(--ink-ghost); border-radius:2px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:transparent; transition:all 0.2s ease; }
+.si.sel .si-check { border-color:var(--sage); background:var(--sage); color:#fff; }
+.si-name { font-size:12px; color:var(--ink-light); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:all 0.2s; }
+.si.sel .si-name { color:var(--ink-ghost); text-decoration:line-through; }
+.si-brand { font-size:10px; color:var(--ink-ghost); white-space:nowrap; }
+.si-price { font-size:12px; color:var(--rust); font-variant-numeric:tabular-nums; white-space:nowrap; min-width:48px; text-align:right; transition:all 0.3s; }
+
+.totals-bar { border:1px solid var(--rule); padding:16px 20px; margin-bottom:20px; background:rgba(255,255,255,0.3); }
+.totals-row { display:flex; justify-content:space-between; padding:4px 0; }
+.totals-row.sv { border-top:1px solid var(--rule); margin-top:4px; padding-top:8px; }
+.t-lbl { font-size:12px; color:var(--ink-faint); }
+.t-val { font-size:13px; color:var(--ink); font-variant-numeric:tabular-nums; }
+
+/* ─── CHECKLIST ─── */
+.checklist { list-style:none; }
+.checklist li { display:flex; align-items:flex-start; gap:12px; padding:14px 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:all 0.2s ease; font-size:13px; color:var(--ink-light); }
+.checklist li:hover { padding-left:6px; }
+.checklist li .ck-box { width:18px; height:18px; border:1.5px solid var(--ink-ghost); border-radius:3px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; color:transparent; transition:all 0.2s; margin-top:2px; }
+.checklist li.done .ck-box { border-color:var(--sage); background:var(--sage); color:#fff; }
+.checklist li.done { color:var(--ink-ghost); text-decoration:line-through; text-decoration-color:var(--rule-dark); }
+.check-progress { margin-top:20px; }
+.check-bar-bg { height:6px; background:var(--rule); border-radius:3px; overflow:hidden; }
+.check-bar-fill { height:100%; background:var(--sage); border-radius:3px; transition:width 0.4s ease; width:0%; }
+.check-label { font-size:11px; color:var(--ink-faint); margin-top:6px; text-align:right; }
+
+/* ─── OVERVIEW ─── */
+.overview-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin:20px 0; }
+.ov-card { border:1px solid var(--rule); padding:18px 20px; cursor:pointer; transition:all 0.3s ease; }
+.ov-card:hover { border-color:var(--rust); transform:translateY(-2px); box-shadow:0 4px 16px rgba(28,25,23,0.06); }
+.ov-num { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:var(--rust); line-height:1; margin-bottom:4px; opacity:0.4; }
+.ov-title { font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.ov-desc { font-size:11px; color:var(--ink-faint); margin-bottom:0; }
+
+/* ─── BOTTOM NAV ─── */
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--rule); padding:16px 24px; z-index:1000; }
+.bottom-inner { max-width:740px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+.btn { font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:1px; padding:10px 24px; border:1px solid var(--rule-dark); background:transparent; color:var(--ink-light); cursor:pointer; transition:all 0.3s ease; }
+.btn:hover { border-color:var(--ink); color:var(--ink); }
+.btn.primary { background:var(--rust); border-color:var(--rust); color:#fff; }
+.btn.primary:hover { background:var(--rust-light); border-color:var(--rust-light); }
+.btn:disabled { opacity:0.3; cursor:default; }
+.page-indicator { font-size:11px; color:var(--ink-faint); letter-spacing:0.5px; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width:600px) {
+  .page-number { font-size:80px; margin-bottom:-20px; }
+  .vs-row { grid-template-columns:1fr; }
+  .vs-divider { padding:4px 0; }
+  .step-dot { width:24px; height:24px; font-size:10px; }
+  .stat-grid { grid-template-columns:1fr 1fr; }
+  .overview-grid { grid-template-columns:1fr; }
+  .food-grid, .shop-grid-i { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- WIZARD NAV -->
+<div class="wizard-nav">
+  <div class="wizard-inner">
+    <div class="wizard-title-row">
+      <span class="wizard-brand">Willpower Protocol</span>
+      <span class="wizard-page-label" id="nav-label">Overview</span>
+    </div>
+    <div class="steps-row" id="steps-row"></div>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="page-container">
+
+<!-- PAGE 0: OVERVIEW -->
+<div class="page active" data-page="0">
+  <div class="page-number">00</div>
+  <h1 class="page-title">How to Stay Sharp<br>After <em>Work</em></h1>
+  <p class="page-subtitle">A science-backed system for countering ego depletion during your evening investing sessions. 7 steps. 3–4 productive hours.</p>
+
+  <div class="tldr">
+    <div class="tldr-label">THE CORE IDEA</div>
+    <p>Every decision at work drains the same mental resource. By evening, your brain conserves what's left — steering you to scroll, game, and snack. This protocol overrides that so you get your investing hours back.</p>
+  </div>
+
+  <h3 class="section-label">Quick Navigation</h3>
+  <div class="overview-grid" id="overview-grid"></div>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-val">300+</div><div class="stat-label">Studies on topic</div></div>
+    <div class="stat"><div class="stat-val">3–4h</div><div class="stat-label">Your time window</div></div>
+    <div class="stat"><div class="stat-val">15 min</div><div class="stat-label">Recovery ritual</div></div>
+    <div class="stat"><div class="stat-val">~50.–</div><div class="stat-label">CHF / week fuel</div></div>
+  </div>
+</div>
+
+<!-- PAGE 1: SCIENCE -->
+<div class="page" data-page="1">
+  <div class="page-number">01</div>
+  <h1 class="page-title">Understanding <em>Ego Depletion</em></h1>
+  <p class="page-subtitle">The science behind why you can't focus after 8 hours of work.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>Self-control is a limited resource. Every decision and impulse you suppress at work drains it. By evening your brain switches to conservation mode — not laziness, neurology.</p></div>
+  <p>You've spent 8+ hours making decisions, suppressing impulses, focusing under pressure. Every act of self-control draws from the same <span class="highlight">limited mental resource</span>. By the time you're home, your tank is partially drained.</p>
+  <p>Your brain is actively conserving what's left, steering you toward the <span class="highlight">path of least resistance</span> — scrolling, gaming, snacking.</p>
+  <div class="research-box"><p>The model has been refined from pure "resource exhaustion" to a conservation model: the body naturally reduces further self-control effort after expenditure to preserve remaining reserves.</p><span class="src">Baumeister, André, Southwick & Tice (2024) — Current Opinion in Psychology</span></div>
+  <h3 class="section-label">Key Mechanisms</h3>
+  <div class="card"><div class="card-tag">Mechanism 01</div><div class="card-title">The Conservation Model</div><div class="card-body">Your body doesn't run out — it <strong>conserves</strong>. After spending energy, your system reduces further output to preserve reserves. Evening tasks feel disproportionately hard because of this.</div></div>
+  <div class="card"><div class="card-tag">Mechanism 02</div><div class="card-title">Glucose & Motivation</div><div class="card-body">Blood glucose plays a role, but it's more about <strong>motivational signaling</strong> than raw fuel. Stable blood sugar = more perceived resources available.</div></div>
+  <div class="card"><div class="card-tag">Mechanism 03</div><div class="card-title">The Muscle Analogy</div><div class="card-body">Willpower fatigues like a muscle — but also <strong>strengthens over time</strong> with training. Short-term depletion is real. Long-term capacity can be built.</div></div>
+</div>
+
+<!-- PAGE 2: THREATS -->
+<div class="page" data-page="2">
+  <div class="page-number">02</div>
+  <h1 class="page-title">Your <em>Threat</em> Model</h1>
+  <p class="page-subtitle">Each derailer exploits ego depletion differently. Know the enemy.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>Phone = zero-friction dopamine. Fatigue = conservation trick. Games = fake productivity. Each has a specific countermeasure.</p></div>
+  <div class="card threat"><div class="card-tag">Threat 01 — High Risk</div><div class="card-title">Phone & Social Media</div><div class="card-body">Infinite scroll is zero-friction dopamine. A depleted brain will always choose it over opening a spreadsheet. The algorithm is optimized to keep you there.</div><div class="countermeasure"><span>Phone in another room. Screen Time / Focus Mode blocks social apps 18:00–22:00.</span></div></div>
+  <div class="card threat"><div class="card-tag">Threat 02 — High Risk</div><div class="card-title">Post-Work Fatigue</div><div class="card-body">"Too tired to start" is usually your brain conserving willpower, not real exhaustion. The barrier is <strong>initiation</strong>, not execution.</div><div class="countermeasure"><span>Use the Transition Ritual (Step 03). The 2-minute rule: just open your tools. Momentum handles the rest.</span></div></div>
+  <div class="card threat"><div class="card-tag">Threat 03 — Medium Risk</div><div class="card-title">Video Games</div><div class="card-body">Games offer structured challenge + clear rewards — exactly what your depleted brain craves. They <strong>mimic productivity</strong> without delivering real progress.</div><div class="countermeasure"><span>Gaming = reward after your block, not a substitute. Calendar alarm: "Gaming Unlocked" at 21:00+.</span></div></div>
+</div>
+
+<!-- PAGE 3: RECOVERY -->
+<div class="page" data-page="3">
+  <div class="page-number">03</div>
+  <h1 class="page-title">The <em>Recovery</em> Protocol</h1>
+  <p class="page-subtitle">4 evidence-based steps to restore self-control. ~25 min total.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>Transition (shower + eat) → Mood boost (comedy / music) → Values anchor (review your "why") → Mindset override (reframe fatigue). Then open your tools.</p></div>
+  <div class="card"><span class="card-time">~15 min</span><div class="card-tag">Step 01</div><div class="card-title">The Transition Cut</div><div class="card-body">Don't go from work to desk. Create a <strong>hard boundary</strong>. Duschen, umziehen, essen (see Fuel section). Phone stays away. New context = new energy budget.</div></div>
+  <div class="card"><span class="card-time">~5 min</span><div class="card-tag">Step 02</div><div class="card-title">Positive Mood Injection</div><div class="card-body">Research shows positive mood <strong>restores depleted self-control</strong>. Watch one comedy clip, listen to a song, text a friend. Not wasted time — validated recovery.</div></div>
+  <div class="card"><span class="card-time">~3 min</span><div class="card-tag">Step 03</div><div class="card-title">Values Anchor</div><div class="card-body">People who <strong>reflected on a core value</strong> after depletion performed significantly better. Review your investing goals, your financial independence timeline. Write one sentence.</div></div>
+  <div class="card"><span class="card-time">~2 min</span><div class="card-tag">Step 04</div><div class="card-title">Mindset Override</div><div class="card-body">Believing willpower is unlimited <strong>reduces depletion effects</strong>. Reframe: "I'm not tired — conservation mode." Set one micro-goal: <strong>one ticker, one chart, one thesis.</strong></div></div>
+  <div class="research-box"><p>Positive mood restored depleted self-control. Core values affirmation improved subsequent task performance. Unlimited-willpower beliefs reduced depletion effects in experiments.</p><span class="src">Tice et al. (2007) / Schmeichel & Vohs (2009) / Dweck (2012)</span></div>
+</div>
+
+<!-- PAGE 4: EVENING BLOCK -->
+<div class="page" data-page="4">
+  <div class="page-number">04</div>
+  <h1 class="page-title">Evening <em>Block</em></h1>
+  <p class="page-subtitle">Structure removes decisions. Decisions consume willpower. Follow the track.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>20 min transition → 10 min recovery → 60 min deep work → 10 min break → 60 min lighter work → 20 min review → reward.</p></div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-time">18:00 — 18:20</div><div class="tl-title">Transition Ritual</div><div class="tl-desc">Duschen, umziehen, essen. Phone in the other room on silent.</div></div>
+    <div class="tl-item"><div class="tl-time">18:20 — 18:30</div><div class="tl-title">Recovery Protocol</div><div class="tl-desc">Mood boost → Values anchor → micro-goal setzen. Tools öffnen.</div></div>
+    <div class="tl-item"><div class="tl-time">18:30 — 19:30</div><div class="tl-title">Deep Work Block 1</div><div class="tl-desc">Hardest task first — Company Analysis, Geschäftsberichte, Thesis. Timer on.</div></div>
+    <div class="tl-item"><div class="tl-time">19:30 — 19:40</div><div class="tl-title">Active Break</div><div class="tl-desc">Aufstehen. 10 Liegestütze, stretch, Wasser holen. Don't touch your phone.</div></div>
+    <div class="tl-item"><div class="tl-time">19:40 — 20:40</div><div class="tl-title">Deep Work Block 2</div><div class="tl-desc">Lighter tasks — News scannen, Portfolio review, Watchlists, Trading-Journal.</div></div>
+    <div class="tl-item"><div class="tl-time">20:40 — 21:00</div><div class="tl-title">Review & Plan Tomorrow</div><div class="tl-desc">1–2 Sachen aufschreiben für morgen. Tools schliessen. Fertig.</div></div>
+    <div class="tl-item"><div class="tl-time">21:00+</div><div class="tl-title">Reward Unlocked</div><div class="tl-desc">Gaming, Phone, whatever. Guilt-free. Earned it.</div></div>
+  </div>
+</div>
+
+<!-- PAGE 5: FUEL -->
+<div class="page" data-page="5">
+  <div class="page-number">05</div>
+  <h1 class="page-title">Fuel <em>Protocol</em></h1>
+  <p class="page-subtitle">What to buy & eat — with interactive budget slider.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>Brot + Guetzli = spike → crash → couch. Swap for protein + complex carbs + healthy fat. Eat within 20 min of getting home. CHF 37–86/week.</p></div>
+
+  <h3 class="section-label">The Problem</h3>
+  <div class="vs-row">
+    <div class="vs-card bad"><div class="vs-label">Was du machst</div><p>Brot, Guetzli, Chips. Fast carbs spike blood sugar, crash 30–45 min later — right when you need focus.</p></div>
+    <div class="vs-divider">→</div>
+    <div class="vs-card good"><div class="vs-label">Was du machen sollst</div><p>Protein + complex carbs + fat. 2–3h steady fuel. Same effort, different items from the fridge.</p></div>
+  </div>
+
+  <h3 class="section-label">Quick Meals — Under 10 min</h3>
+  <div class="food-grid">
+    <div class="food-card"><div class="food-cat">Zero Cooking</div>
+      <div class="food-item"><span class="food-name">Griech. Jogurt + Granola + Banane</span><span class="food-note">protein + slow carbs</span></div>
+      <div class="food-item"><span class="food-name">Vollkornbrot + Lachs + Avocado</span><span class="food-note">omega-3 + fiber</span></div>
+      <div class="food-item"><span class="food-name">Nussmix + dunkle Schoggi + Apfel</span><span class="food-note">quick brain snack</span></div>
+      <div class="food-item"><span class="food-name">Hüttenkäse + Baumnüsse + Honig</span><span class="food-note">slow-release</span></div>
+    </div>
+    <div class="food-card"><div class="food-cat">5–10 Minuten</div>
+      <div class="food-item"><span class="food-name">Rührei + Vollkorntoast + Tomate</span><span class="food-note">high protein</span></div>
+      <div class="food-item"><span class="food-name">Thunfisch + Reis (übrig) + Soja</span><span class="food-note">meal prep friendly</span></div>
+      <div class="food-item"><span class="food-name">Omelette + Käse + Spinat</span><span class="food-note">classic brain fuel</span></div>
+      <div class="food-item"><span class="food-name">Hummus + Rüebli + Fladenbrot</span><span class="food-note">steady energy</span></div>
+    </div>
+  </div>
+
+  <h3 class="section-label">Weekly Shopping — Budget Slider</h3>
+  <div id="budget-app">
+    <div class="budget-control">
+      <div class="budget-header"><div class="budget-title-row"><span class="budget-label">WEEKLY BUDGET</span><span class="budget-total" id="budget-total">CHF 52.60</span></div><div class="budget-tier" id="budget-tier-label">MID</div></div>
+      <input type="range" min="0" max="2" step="1" value="1" id="budget-slider" class="budget-slider">
+      <div class="slider-labels"><span class="slider-label" data-active="false" id="sl-low">LOW</span><span class="slider-label" data-active="true" id="sl-mid">MID</span><span class="slider-label" data-active="false" id="sl-high">HIGH</span></div>
+      <div class="budget-meta" id="budget-desc">M-Classic / Coop Standard</div>
+    </div>
+    <div id="shop-grid" class="shop-grid-i"></div>
+    <div class="totals-bar">
+      <div class="totals-row"><span class="t-lbl">Items selected</span><span class="t-val" id="items-count">0 / 18</span></div>
+      <div class="totals-row"><span class="t-lbl">Selected total</span><span class="t-val highlight" id="selected-total">CHF 0.00</span></div>
+      <div class="totals-row"><span class="t-lbl">Full list</span><span class="t-val" id="full-total">CHF 52.60</span></div>
+      <div class="totals-row sv" id="savings-row" style="display:none;"><span class="t-lbl">vs. High</span><span class="t-val" id="savings-value" style="color:var(--sage);">saved CHF 0.00</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 6: LONG-TERM -->
+<div class="page" data-page="6">
+  <div class="page-number">06</div>
+  <h1 class="page-title">Long-Term <em>Capacity</em></h1>
+  <p class="page-subtitle">Building a bigger willpower reserve over weeks and months.</p>
+  <div class="tldr"><div class="tldr-label">TL;DR</div><p>Exercise 3×/week builds self-control capacity in 4 weeks. Sleep 7–8h. Automate mundane decisions. Start small, compound wins.</p></div>
+  <div class="card"><div class="card-tag">Habit 01</div><div class="card-title">Physical Exercise</div><div class="card-body">2025 study: <strong>4-week HIIT</strong> (3×18 min/week) significantly improved self-control. Skiing on weekends helps — add short weekday sessions. Even 20 min recharges your system.</div></div>
+  <div class="card"><div class="card-tag">Habit 02</div><div class="card-title">Sleep Architecture</div><div class="card-body">Chronic sleep deficit is the <strong>#1 amplifier</strong> of ego depletion. Target 7–8h. Late-night gaming that cuts into sleep destroys tomorrow's willpower.</div></div>
+  <div class="card"><div class="card-tag">Habit 03</div><div class="card-title">Decision Reduction</div><div class="card-body">Every decision drains the same resource. <strong>Automate the mundane:</strong> Meal prep am Sonntag, same Gym time, plan tomorrow tonight. Save willpower for investing.</div></div>
+  <div class="card"><div class="card-tag">Habit 04</div><div class="card-title">Small Wins Compounding</div><div class="card-body">Start with <strong>30 min</strong> if 2 hours feels impossible. Successfully exercising self-control builds capacity. Stack small wins — progressive overload im Training.</div></div>
+</div>
+
+<!-- PAGE 7: CHECKLIST -->
+<div class="page" data-page="7">
+  <div class="page-number">07</div>
+  <h1 class="page-title">Daily <em>Preflight</em></h1>
+  <p class="page-subtitle">Run through before each session. Tap to check off.</p>
+  <div class="tldr"><div class="tldr-label">ROUTINE</div><p>8 items. 2 minutes to scan. All 8 checked = your session will go well. Missing items? Fix them first.</p></div>
+  <ul class="checklist" id="checklist">
+    <li><div class="ck-box">✓</div><span>Phone is in another room or on Do Not Disturb</span></li>
+    <li><div class="ck-box">✓</div><span>I've eaten something with stable energy (not pure sugar)</span></li>
+    <li><div class="ck-box">✓</div><span>Mood boost done (Musik, Comedy, Social)</span></li>
+    <li><div class="ck-box">✓</div><span>Investing goals / "why" reviewed</span></li>
+    <li><div class="ck-box">✓</div><span>Specific micro-goal set for tonight</span></li>
+    <li><div class="ck-box">✓</div><span>Tools open and ready (Browser, Apps, Notizen)</span></li>
+    <li><div class="ck-box">✓</div><span>Gaming / Social Media scheduled as reward after block</span></li>
+    <li><div class="ck-box">✓</div><span>Timer set for first deep work block</span></li>
+  </ul>
+  <div class="check-progress"><div class="check-bar-bg"><div class="check-bar-fill" id="check-fill"></div></div><div class="check-label" id="check-label">0 / 8 ready</div></div>
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav"><div class="bottom-inner">
+  <button class="btn" id="btn-prev" disabled>← Back</button>
+  <span class="page-indicator" id="page-ind">1 / 8</span>
+  <button class="btn primary" id="btn-next">Next →</button>
+</div></div>
+
+<script>
+(function(){
+  const PAGES = [
+    {label:"Overview",short:"Übersicht"},
+    {label:"The Science",short:"Science"},
+    {label:"Your Threats",short:"Threats"},
+    {label:"Recovery Protocol",short:"Recovery"},
+    {label:"Evening Block",short:"Schedule"},
+    {label:"Fuel & Shopping",short:"Fuel"},
+    {label:"Long-Term",short:"Kapazität"},
+    {label:"Daily Preflight",short:"Checklist"}
+  ];
+  const DESCS = ["","Why you can't focus after work","Phone, fatigue, games — mapped","4 steps to reset before your session","Your 3–4h evening structure","What to eat + interactive budget list","Building willpower long-term","8-point preflight checklist"];
+  let cur = 0;
+
+  // Build nav
+  const sr = document.getElementById('steps-row');
+  PAGES.forEach((p,i) => {
+    if(i>0){ const l=document.createElement('div'); l.className='step-line'; l.innerHTML='<div class="fill"></div>'; sr.appendChild(l); }
+    const d=document.createElement('div'); d.className='step-dot'+(i===0?' active':'');
+    d.textContent=i===0?'○':i; d.title=p.label;
+    d.addEventListener('click',()=>goTo(i)); sr.appendChild(d);
+  });
+
+  // Overview grid
+  const og = document.getElementById('overview-grid');
+  PAGES.forEach((p,i) => {
+    if(i===0) return;
+    const c=document.createElement('div'); c.className='ov-card';
+    c.innerHTML=`<div class="ov-num">0${i}</div><div class="ov-title">${p.label}</div><p class="ov-desc">${DESCS[i]}</p>`;
+    c.addEventListener('click',()=>goTo(i)); og.appendChild(c);
+  });
+
+  function goTo(i){
+    if(i<0||i>=PAGES.length) return;
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelector(`.page[data-page="${i}"]`).classList.add('active');
+    cur=i; updateNav(); window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function updateNav(){
+    const dots=document.querySelectorAll('.step-dot'), lines=document.querySelectorAll('.step-line .fill');
+    dots.forEach((d,i)=>{ d.className='step-dot';
+      if(i===cur){d.classList.add('active');d.textContent='●';}
+      else if(i<cur){d.classList.add('completed');d.textContent='✓';}
+      else{d.textContent=i===0?'○':i;}
+    });
+    lines.forEach((l,i)=>{l.style.width=i<cur?'100%':'0%';});
+    document.getElementById('nav-label').textContent=PAGES[cur].label;
+    document.getElementById('page-ind').textContent=`${cur+1} / ${PAGES.length}`;
+    const prev=document.getElementById('btn-prev'), next=document.getElementById('btn-next');
+    prev.disabled=cur===0;
+    next.textContent=cur===PAGES.length-1?'✓ Done':'Next →';
+  }
+
+  document.getElementById('btn-prev').addEventListener('click',()=>goTo(cur-1));
+  document.getElementById('btn-next').addEventListener('click',()=>{if(cur<PAGES.length-1)goTo(cur+1);});
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')goTo(cur+1);if(e.key==='ArrowLeft')goTo(cur-1);});
+
+  // Checklist
+  document.querySelectorAll('.checklist li').forEach(li=>{
+    li.addEventListener('click',()=>{
+      li.classList.toggle('done');
+      const done=document.querySelectorAll('.checklist li.done').length, total=document.querySelectorAll('.checklist li').length;
+      document.getElementById('check-fill').style.width=((done/total)*100)+'%';
+      document.getElementById('check-label').textContent=`${done} / ${total} ready`;
+    });
+  });
+
+  // Budget
+  const SD=[
+    {cat:"Protein",name:"Eier (10er)",low:{b:"M-Budget",p:3.20},mid:{b:"M-Classic",p:4.60},high:{b:"Bio Freiland",p:7.90}},
+    {cat:"Protein",name:"Griech. Jogurt",low:{b:"Prix Garantie",p:1.50},mid:{b:"Emmi",p:2.40},high:{b:"Bio Naturaplan",p:3.50}},
+    {cat:"Protein",name:"Thunfisch (3×)",low:{b:"M-Budget",p:3.45},mid:{b:"M-Classic",p:5.10},high:{b:"Fish Tales MSC",p:8.70}},
+    {cat:"Protein",name:"Pouletbrust 500g",low:{b:"Optigal Aktion",p:6.50},mid:{b:"Optigal",p:9.80},high:{b:"Bio Weide",p:15.90}},
+    {cat:"Protein",name:"Hüttenkäse",low:{b:"M-Budget",p:1.20},mid:{b:"M-Classic",p:1.90},high:{b:"Fine Food",p:2.80}},
+    {cat:"Protein",name:"Hummus",low:{b:"Prix Garantie",p:1.60},mid:{b:"Obela",p:2.90},high:{b:"Bio Deli",p:4.20}},
+    {cat:"Slow Carbs",name:"Vollkornbrot",low:{b:"M-Budget",p:1.30},mid:{b:"Migros",p:2.60},high:{b:"Bio Dinkel",p:4.50}},
+    {cat:"Slow Carbs",name:"Haferflocken",low:{b:"M-Budget",p:0.85},mid:{b:"M-Classic",p:1.40},high:{b:"Alnatura Bio",p:2.30}},
+    {cat:"Slow Carbs",name:"Basmatireis 1kg",low:{b:"M-Budget",p:2.20},mid:{b:"Ben's",p:3.50},high:{b:"Bio Fairtrade",p:5.80}},
+    {cat:"Slow Carbs",name:"Bananen ~1kg",low:{b:"Lose",p:1.60},mid:{b:"Fairtrade",p:2.30},high:{b:"Bio Fairtrade",p:3.20}},
+    {cat:"Slow Carbs",name:"Äpfel 1kg",low:{b:"Aktion",p:2.40},mid:{b:"CH Tafeläpfel",p:3.60},high:{b:"Bio Schweiz",p:5.20}},
+    {cat:"Slow Carbs",name:"Wraps",low:{b:"M-Budget",p:1.50},mid:{b:"Old El Paso",p:3.20},high:{b:"Bio Vollkorn",p:4.40}},
+    {cat:"Fats & Snacks",name:"Nussmix 200g",low:{b:"M-Budget",p:2.80},mid:{b:"M-Classic",p:4.90},high:{b:"Bio Sélection",p:7.50}},
+    {cat:"Fats & Snacks",name:"Avocado (2×)",low:{b:"Lose",p:1.90},mid:{b:"Ready to eat",p:3.20},high:{b:"Bio Peru",p:4.50}},
+    {cat:"Fats & Snacks",name:"Dunkle Schoggi",low:{b:"M-Budget 72%",p:0.95},mid:{b:"Frey 72%",p:2.30},high:{b:"Lindt Excell.",p:3.90}},
+    {cat:"Fats & Snacks",name:"Rüebli 1kg",low:{b:"Lose",p:1.40},mid:{b:"CH Rüebli",p:2.10},high:{b:"Bio Demeter",p:3.60}},
+    {cat:"Fats & Snacks",name:"Trockenfrüchte",low:{b:"M-Budget",p:1.80},mid:{b:"M-Classic",p:3.40},high:{b:"Bio Fairtrade",p:5.20}},
+    {cat:"Fats & Snacks",name:"Grüntee 20er",low:{b:"M-Budget",p:0.95},mid:{b:"Lipton",p:2.50},high:{b:"Yogi Tea Bio",p:4.90}}
+  ];
+  const TM={0:{l:"LOW — M-Budget / Prix Garantie",d:"Günstigste Eigenmarken, gleiche Nährstoffe",k:"low"},1:{l:"MID — Standard Migros / Coop",d:"M-Classic / Coop Standard — gute Qualität",k:"mid"},2:{l:"HIGH — Bio / Sélection / Premium",d:"Bio, Naturaplan, Sélection, Fairtrade",k:"high"}};
+  const ss=new Set(), sl=document.getElementById('budget-slider');
+  function gk(){return TM[parseInt(sl.value)].k;}
+  function ct(k){return SD.reduce((s,d)=>s+d[k].p,0);}
+  function cs(k){let s=0;SD.forEach((d,i)=>{if(ss.has(i))s+=d[k].p;});return s;}
+
+  function rs(){
+    const k=gk(),t=parseInt(sl.value),tot=ct(k),ht=ct("high");
+    document.getElementById('budget-total').textContent='CHF '+tot.toFixed(2);
+    document.getElementById('budget-tier-label').textContent=TM[t].l;
+    document.getElementById('budget-desc').textContent=TM[t].d;
+    document.getElementById('full-total').textContent='CHF '+tot.toFixed(2);
+    ['sl-low','sl-mid','sl-high'].forEach((id,i)=>{document.getElementById(id).setAttribute('data-active',i===t?'true':'false');});
+    const svr=document.getElementById('savings-row');
+    if(t<2){svr.style.display='flex';document.getElementById('savings-value').textContent='saved CHF '+(ht-tot).toFixed(2);}else{svr.style.display='none';}
+    const g=document.getElementById('shop-grid');g.innerHTML='';
+    const cats=[...new Set(SD.map(d=>d.cat))];
+    cats.forEach(cat=>{
+      const items=SD.map((d,i)=>({...d,idx:i})).filter(d=>d.cat===cat);
+      const div=document.createElement('div');div.className='shop-cat';
+      div.innerHTML=`<div class="shop-cat-hd">${cat}</div>`;
+      items.forEach(item=>{
+        const d=item[k];const el=document.createElement('div');
+        el.className='si'+(ss.has(item.idx)?' sel':'');
+        el.innerHTML=`<div class="si-left"><div class="si-check">✓</div><span class="si-name">${item.name}</span></div><span class="si-brand">${d.b}</span><span class="si-price">${d.p.toFixed(2)}</span>`;
+        el.addEventListener('click',()=>{ss.has(item.idx)?ss.delete(item.idx):ss.add(item.idx);us();});
+        div.appendChild(el);
+      });g.appendChild(div);
+    });us();
+  }
+  function us(){
+    const k=gk();
+    document.getElementById('selected-total').textContent='CHF '+cs(k).toFixed(2);
+    document.getElementById('items-count').textContent=ss.size+' / '+SD.length;
+    document.querySelectorAll('.si').forEach((el,i)=>{el.classList.toggle('sel',ss.has(i));});
+  }
+  sl.addEventListener('input',rs);rs();updateNav();
+})();
+</script>
+</body>
+</html>

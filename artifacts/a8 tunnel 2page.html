@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)file:///C:/Users/yanik/Downloads/Telegram%20Desktop/a8%20tunnel%202page.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="./a8 tunnel 2page_files/css2" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #ccc;
+    padding: 20px;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    margin: 0 auto 20px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  /* ── PAGE 1 ── */
+  .p1-accent {
+    background: #1a5fa8;
+    height: 8px;
+  }
+
+  .p1-header {
+    padding: 28px 36px 20px;
+    border-bottom: 2px solid #1a2a3a;
+    position: relative;
+  }
+
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    color: #1a5fa8;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .p1-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 58px;
+    line-height: 0.92;
+    color: #1a2a3a;
+  }
+
+  .p1-title span { color: #1a5fa8; }
+
+  .p1-sub {
+    font-size: 13px;
+    color: #556;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  .badge {
+    position: absolute;
+    top: 28px;
+    right: 36px;
+    background: #1a2a3a;
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .p1-body {
+    padding: 20px 36px 24px;
+  }
+
+  /* Lead box */
+  .lead-box {
+    background: #1a2a3a;
+    color: white;
+    padding: 18px 20px;
+    border-left: 5px solid #1a5fa8;
+    margin-bottom: 20px;
+  }
+
+  .lead-box .box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #5aaeff;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .lead-box p {
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  .lead-box strong { color: #fff; font-weight: 700; }
+
+  /* Two col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .info-card {
+    border: 1.5px solid #1a2a3a;
+    padding: 14px 16px;
+  }
+
+  .card-head {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    color: #1a2a3a;
+    border-bottom: 2px solid #1a5fa8;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  .info-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .info-card ul li {
+    font-size: 12px;
+    line-height: 1.45;
+    padding-left: 14px;
+    position: relative;
+    color: #1a2a3a;
+  }
+
+  .info-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #1a5fa8;
+    font-weight: 700;
+  }
+
+  /* Timeline table */
+  .tl-box {
+    border: 1.5px solid #1a2a3a;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+
+  .tl-row {
+    display: flex;
+    gap: 14px;
+    padding: 7px 0;
+    border-bottom: 1px solid #e8ecf0;
+    align-items: flex-start;
+  }
+
+  .tl-row:last-child { border-bottom: none; }
+
+  .tl-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #1a5fa8;
+    min-width: 130px;
+    padding-top: 1px;
+  }
+
+  .tl-desc {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #1a2a3a;
+  }
+
+  .tl-desc strong { font-weight: 700; }
+
+  /* Footer p1 */
+  .page-footer {
+    border-top: 1.5px solid #1a2a3a;
+    padding: 10px 36px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .page-footer span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    color: #99a;
+    letter-spacing: 0.08em;
+  }
+
+  .bot-bar {
+    background: #1a2a3a;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* ── PAGE 2 ── */
+  .p2-accent {
+    background: #1a5fa8;
+    height: 8px;
+  }
+
+  .p2-header {
+    padding: 24px 36px 16px;
+    border-bottom: 2px solid #1a2a3a;
+  }
+
+  .p2-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: #1a2a3a;
+    line-height: 1;
+  }
+
+  .p2-title span { color: #1a5fa8; }
+
+  .p2-sub {
+    font-size: 12px;
+    color: #556;
+    margin-top: 6px;
+  }
+
+  .p2-body {
+    padding: 20px 36px 80px;
+  }
+
+  /* Big relevance cards */
+  .rel-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .rel-card {
+    border: 1.5px solid #1a2a3a;
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .rel-num {
+    background: #1a2a3a;
+    color: #d0dff0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    padding: 14px 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    min-width: 72px;
+    justify-content: center;
+  }
+
+  .rel-content {
+    padding: 14px 16px;
+    flex: 1;
+  }
+
+  .rel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: #1a2a3a;
+    margin-bottom: 5px;
+  }
+
+  .rel-text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #334;
+  }
+
+  .rel-text strong { color: #1a2a3a; font-weight: 700; }
+
+  /* Quote / highlight */
+  .highlight-box {
+    background: #f0f6ff;
+    border: 1.5px solid #1a5fa8;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+
+  .hl-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: #1a5fa8;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hl-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1a2a3a;
+    font-style: italic;
+  }
+
+  .hl-text strong { font-style: normal; font-weight: 700; }
+
+  /* Discussion */
+  .disc-box {
+    border: 1.5px solid #1a2a3a;
+    padding: 14px 16px;
+  }
+
+  .disc-qs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .dq {
+    background: #f5f7fa;
+    border: 1px solid #ccd;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #1a2a3a;
+  }
+
+  .dq-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: #d0dde8;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; }
+    .bot-bar { position: fixed; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1 ═══════════ -->
+<div class="page">
+  <div class="p1-accent"></div>
+
+  <div class="p1-header">
+    <div class="badge">JUNI – JULI 2026</div>
+    <div class="kicker">Regionale Nachrichten · ABU Präsentation · Seite 1 von 2</div>
+    <div class="p1-title">TUNNEL<br><span>SPERRUNG</span><br>A8 THUN–INTERLAKEN</div>
+    <div class="p1-sub">Leissigentunnel und Ausfahrt Leissigen-West | Bundesamt für Strassen ASTRA</div>
+  </div>
+
+  <div class="p1-body">
+
+    <div class="lead-box">
+      <div class="box-label">Was ist passiert?</div>
+      <p>Seit <strong>Mitte Januar 2026</strong> wird der <strong>Leissigentunnel</strong> auf der A8 zwischen Spiez und Interlaken-West jede Nacht gesperrt. Grund: Erneuerung der <strong>elektronischen Sicherheitsanlagen</strong> und Betonarbeiten an der Tunnelrampe. Ab <strong>Anfang Juni</strong> kommen zusätzliche Tages- und Nachtsperrungen der <strong>Ausfahrt Leissigen-West</strong> dazu — vom <strong>26.–30. Juni sogar eine durchgehende Totalsperre</strong>. Umleitung läuft über Därligen-West. Der Transitverkehr auf der A8 ist nicht betroffen.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="card-head">Warum wird gebaut?</div>
+        <ul>
+          <li>Elektronische Sicherheitsanlagen im Tunnel veraltet</li>
+          <li>Korrosionsschäden an Rampe Leissigen-West</li>
+          <li>Neue Lärmschutzwand beim Leimerntunnel (Spiez)</li>
+          <li>Vorarbeiten für Gesamtsanierung ab ~2032</li>
+          <li>Nachts gebaut = weniger Behinderung tagsüber</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="card-head">Folgen für die Region</div>
+        <ul>
+          <li>Pendler Thun–Interlaken: Umwege über Kantonsstrassen</li>
+          <li>Mehr Verkehr auf Ausweichrouten durch Dörfer</li>
+          <li>Tourismusgebiet Interlaken direkt betroffen</li>
+          <li>Alternative: BLS-Bahn Thun–Interlaken</li>
+          <li>Witterungsabhängig — Verschiebungen möglich</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-box">
+      <div class="card-head">Zeitplan der Sperrungen</div>
+      <div class="tl-row">
+        <div class="tl-date">Jan – Ende Mai 2026</div>
+        <div class="tl-desc">Nachtssperrungen Leissigentunnel — Erneuerung Elektronik &amp; Sicherheit</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2./3. Juni (20–04:30)</div>
+        <div class="tl-desc">Nachtsperrung A8 Spiez ↔ Faulensee — Lärmschutzwand Leimerntunnel</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">3. Juni – 25. Juni</div>
+        <div class="tl-desc">Nachtsperrung Ausfahrt Leissigen-West Richtung Interlaken (Mo–Fr, 20–05 Uhr)</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">26. – 30. Juni</div>
+        <div class="tl-desc"><strong>Totalsperre rund um die Uhr</strong> — Ausfahrt Leissigen-West Richtung Interlaken</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">1. – 8. Juli</div>
+        <div class="tl-desc">Weitere Nachtsperrungen — danach Ende der Arbeiten</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Ab ~2032</div>
+        <div class="tl-desc">Grosse Gesamtsanierung A8 Spiez – Interlaken-West beginnt</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>QUELLE: ASTRA · POLIZEINEWS.CH · NAU.CH · 2026</span>
+    <span>BZI INTERLAKEN · ABU · REGIONALE NACHRICHTEN</span>
+  </div>
+</div>
+
+
+<!-- ═══════════ PAGE 2 ═══════════ -->
+<div class="page">
+  <div class="p2-accent"></div>
+
+  <div class="p2-header">
+    <div class="kicker">Regionale Nachrichten · ABU Präsentation · Seite 2 von 2</div>
+    <div class="p2-title">WARUM IST DAS <span>RELEVANT?</span></div>
+    <div class="p2-sub">Bedeutung für die Region Thun–Interlaken und die Schweizer Infrastrukturpolitik</div>
+  </div>
+
+  <div class="p2-body">
+
+    <div class="rel-grid">
+
+      <div class="rel-card">
+        <div class="rel-num">01</div>
+        <div class="rel-content">
+          <div class="rel-title">Die A8 ist die einzige Autobahnverbindung ins Berner Oberland</div>
+          <div class="rel-text">Es gibt keine direkte Alternative. Wer von Thun nach Interlaken will, muss entweder über die A8 oder lange Umwege über Bergstrassen in Kauf nehmen. Jede Sperrung trifft <strong>täglich tausende Pendler, Schüler und Touristen</strong> direkt. Das macht dieses Thema für die ganze Region relevant — nicht nur für Autofahrer.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">02</div>
+        <div class="rel-content">
+          <div class="rel-title">Sommersaison &amp; Tourismus: Interlaken als globaler Hotspot</div>
+          <div class="rel-text">Die Totalsperre Ende Juni fällt genau in den <strong>Beginn der Hochsaison</strong>. Interlaken empfängt jährlich Millionen von Touristen aus Japan, Indien, den USA und China. Viele reisen per Bus oder Mietwagen an. Stau und Umwege auf den Ausweichrouten belasten <strong>lokale Dörfer und die Wirtschaft</strong> der Region direkt.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">03</div>
+        <div class="rel-content">
+          <div class="rel-title">Alte Infrastruktur — ein nationales Problem</div>
+          <div class="rel-text">Viele Schweizer Tunnel und Autobahnen wurden in den <strong>1970er und 80er Jahren</strong> gebaut. Sie müssen jetzt gleichzeitig saniert werden — das kostet Milliarden und dauert Jahrzehnte. Die Frage, wer das bezahlt und wie Baustellen organisiert werden, ist <strong>politisch und wirtschaftlich hochaktuell</strong>.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">04</div>
+        <div class="rel-content">
+          <div class="rel-title">Tunnelsicherheit ist eine öffentliche Pflicht</div>
+          <div class="rel-text">Veraltete elektronische Sicherheitsanlagen in einem Tunnel bedeuten <strong>erhöhtes Risiko bei Unfällen oder Bränden</strong>. Der Staat hat die Pflicht, diese zu erneuern — auch wenn das Kosten und Behinderungen verursacht. Das zeigt den Zielkonflikt zwischen <strong>Sicherheit, Komfort und Wirtschaft</strong>.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-label">Fazit</div>
+      <div class="hl-text">Die Tunnelsperrungen auf der A8 sind kein Randthema — sie zeigen, wie <strong>abhängig eine ganze Region von einer einzigen Strasse</strong> ist. Gleichzeitig machen sie deutlich, dass Infrastruktur nicht selbstverständlich ist: Sie muss regelmässig gewartet, erneuert und finanziert werden. Das kostet — und es braucht politischen Willen, das anzugehen.</div>
+    </div>
+
+    <div class="disc-box">
+      <div class="card-head">Diskussionsfragen</div>
+      <div class="disc-qs">
+        <div class="dq">
+          <div class="dq-num">01</div>
+          Ist es sinnvoll, Bauarbeiten nachts durchzuführen — auch wenn das Anwohner durch Lärm belastet?
+        </div>
+        <div class="dq">
+          <div class="dq-num">02</div>
+          Sollte der Staat früher in Infrastruktur investieren, bevor Schäden entstehen?
+        </div>
+        <div class="dq">
+          <div class="dq-num">03</div>
+          Wäre eine bessere Bahn die Lösung, um die Abhängigkeit von der A8 zu reduzieren?
+        </div>
+        <div class="dq">
+          <div class="dq-num">04</div>
+          Wer soll für teure Sanierungen zahlen — Steuerzahler, Autofahrer oder der Bund?
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>QUELLE: ASTRA · POLIZEINEWS.CH · NAU.CH · 2026</span>
+    <span>BZI INTERLAKEN · ABU · REGIONALE NACHRICHTEN</span>
+  </div>
+</div>
+
+
+
+</body></html>

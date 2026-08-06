@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schweiz: Governance & Demografische Trends</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 50%, #f9fafb 100%);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            border-left: 4px solid;
+        }
+        
+        .metric-card.green { border-color: #10b981; }
+        .metric-card.orange { border-color: #f97316; }
+        .metric-card.red { border-color: #dc2626; }
+        .metric-card.blue { border-color: #3b82f6; }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-subtext {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .metric-card.green .metric-subtext { color: #10b981; }
+        .metric-card.orange .metric-subtext { color: #f97316; }
+        .metric-card.red .metric-subtext { color: #dc2626; }
+        .metric-card.blue .metric-subtext { color: #3b82f6; }
+        
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+            text-transform: capitalize;
+        }
+        
+        .tab:hover {
+            color: #111827;
+        }
+        
+        .tab.active {
+            color: #dc2626;
+            border-bottom-color: #dc2626;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-note {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 1rem;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #fce7f3 100%);
+            border: 1px solid #d8b4fe;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #7c3aed;
+        }
+        
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-section li {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .info-section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #7c3aed;
+            font-weight: bold;
+        }
+        
+        .highlight-box {
+            background: white;
+            border: 1px solid #d8b4fe;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .highlight-box strong {
+            color: #111827;
+        }
+        
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .issue-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        .issue-card h4 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .issue-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .issue-card li {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .bullet {
+            color: #dc2626;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .bullet.orange {
+            color: #f97316;
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fed7aa 100%);
+            border: 1px solid #dc2626;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .conclusion-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .conclusion-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .conclusion-item p {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+        
+        canvas {
+            max-height: 400px;
+        }
+
+        .side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+
+        .bordered-section {
+            border-left: 4px solid;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bordered-section.red { border-color: #dc2626; }
+        .bordered-section.purple { border-color: #9333ea; }
+        .bordered-section.blue { border-color: #3b82f6; }
+        .bordered-section.green { border-color: #10b981; }
+        .bordered-section.orange { border-color: #f97316; }
+
+        @media (max-width: 768px) {
+            .chart-grid, .side-by-side {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Schweiz: Governance & Demografische Trends</h1>
+            <p class="subtitle">Analyse von Korruption, Wahlbeteiligung und Bevölkerungsdynamik</p>
+        </header>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card green">
+                <div class="metric-label">Korruptions-Rang</div>
+                <div class="metric-value">5.</div>
+                <div class="metric-subtext">von 180 Ländern</div>
+            </div>
+            <div class="metric-card orange">
+                <div class="metric-label">Wahlbeteiligung</div>
+                <div class="metric-value">~45%</div>
+                <div class="metric-subtext">Durchschnittliche Beteiligung</div>
+            </div>
+            <div class="metric-card red">
+                <div class="metric-label">Geburtenrate</div>
+                <div class="metric-value">1.33</div>
+                <div class="metric-subtext">Kinder pro Frau (2023)</div>
+            </div>
+            <div class="metric-card blue">
+                <div class="metric-label">Partizipation</div>
+                <div class="metric-value">90%</div>
+                <div class="metric-subtext">Abstimmung in 4 Jahren</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview')">Übersicht</button>
+            <button class="tab" onclick="switchTab('democracy')">Demokratie</button>
+            <button class="tab" onclick="switchTab('population')">Bevölkerung</button>
+            <button class="tab" onclick="switchTab('governance')">Governance</button>
+        </div>
+
+        <!-- Tab Content: Overview -->
+        <div id="overview" class="tab-content active">
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3 class="chart-title">Wahlbeteiligung Trend (1970-2024)</h3>
+                    <canvas id="voterTurnoutChart"></canvas>
+                    <p class="chart-note">Tiefpunkt: 42.2% im Jahr 1995. Aktuell stabil bei ~45%.</p>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Geburtenraten-Rückgang (1850-2023)</h3>
+                    <canvas id="birthRateOverviewChart"></canvas>
+                    <p class="chart-note">Höhepunkt: 2.68 im Jahr 1964 (Baby Boom). Absturz auf 1.55 bis 1980. Allzeit-Tief von 1.33 in 2023.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Democracy -->
+        <div id="democracy" class="tab-content">
+            <div class="chart-card">
+                <h3 class="chart-title">Demokratische Beteiligung Analyse</h3>
+                <div class="side-by-side">
+                    <div>
+                        <canvas id="voterTurnoutDetailChart"></canvas>
+                    </div>
+                    <div class="info-panel">
+                        <div class="bordered-section orange">
+                            <h4>Wichtigste Erkenntnisse</h4>
+                            <ul>
+                                <li>Kontinuierlicher Rückgang von den 1970er Jahren bis zum Tiefpunkt von 42.2% im Jahr 1995</li>
+                                <li>Durchschnittliche Wahlbeteiligung liegt selten über 50%</li>
+                                <li>Nur 32% Wahlbeteiligung bei den jüngsten Berner Kantonswahlen</li>
+                                <li>ABER: 90% nehmen mindestens einmal alle 4 Jahre teil</li>
+                            </ul>
+                        </div>
+                        <div class="bordered-section blue">
+                            <h4>Ursachen</h4>
+                            <ul>
+                                <li>"Wahlmüdigkeit" durch 3-4 Abstimmungen pro Jahr</li>
+                                <li>Selektive Partizipationsstrategie</li>
+                                <li>Hohe Regierungszufriedenheit (65% bewerten mit 7+/10)</li>
+                                <li>Nicht primär korruptionsbedingt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Population -->
+        <div id="population" class="tab-content">
+            <div class="chart-card">
+                <h3 class="chart-title">Bevölkerungs- & Demografiekrise</h3>
+                <div class="side-by-side">
+                    <div>
+                        <canvas id="birthRateDetailChart"></canvas>
+                    </div>
+                    <div class="info-panel">
+                        <div class="bordered-section red">
+                            <h4>Kritische Metriken</h4>
+                            <ul>
+                                <li>1850: ~4.0 Kinder pro Frau (vorindustriell)</li>
+                                <li>1940: Auf 1.8 gefallen (Vorkriegstief)</li>
+                                <li>1964: Baby-Boom-Höhepunkt bei 2.68</li>
+                                <li>1980: Absturz auf 1.55 (Post-Pillen-Ära)</li>
+                                <li>2023: 1.33 Kinder pro Frau (Allzeit-Tief)</li>
+                                <li>Unter Ersatzrate (2.1) seit den frühen 1970er Jahren</li>
+                                <li>Alterspyramide invertiert</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1970s Crash Info Box -->
+            <div class="info-box">
+                <h3>Der Geburtenraten-Crash der 1970er: Ein perfekter Sturm</h3>
+                <div class="info-grid">
+                    <div class="info-section">
+                        <h4>Hauptursachen (1965-1980)</h4>
+                        <ul>
+                            <li><strong>1. Einführung der Antibabypille (1960er):</strong> Geburtenrate fiel von 1965-1975 stark, direkt korrelierend mit der Verfügbarkeit der Pille. Gesamtfruchtbarkeit fiel nach 1971 unter 2.0.</li>
+                            <li><strong>2. Bildung & Erwerbstätigkeit von Frauen:</strong> Tertiärbildung bei Frauen stieg von 6% (Kohorte 1930) auf 13% (1950) auf 21% (1970). Höhere Bildung stark mit Kinderlosigkeit korreliert.</li>
+                            <li><strong>3. Wunsch nach kleineren Familien:</strong> Wachsende Präferenz zur Verkleinerung der Familiengröße bei steigenden Opportunitätskosten.</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h4>Sekundäre Faktoren</h4>
+                        <ul>
+                            <li><strong>Urbanisierung:</strong> Wandel vom ländlichen zum städtischen Leben reduzierte wirtschaftlichen Anreiz für grosse Familien</li>
+                            <li><strong>Wirtschaftsabschwächung:</strong> Ende des Nachkriegsbooms erschwerte Jobsuche, reduzierte relatives Einkommen</li>
+                            <li><strong>Steigende Kinderlosigkeit:</strong> Fiel nie unter 14% selbst während des Baby Booms; stieg auf 20% bei 1970er Kohorten</li>
+                            <li><strong>Karriere-Familie-Konflikt:</strong> Hochgebildete Frauen sahen sich zunehmenden Einschränkungen bei der Vereinbarkeit von Karriere und Mutterschaft gegenüber</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Der Baby Boom (1940er-1960er):</strong> Die Schweiz erlebte einen schwächeren Baby Boom als andere Länder. Die Fruchtbarkeit erreichte 1964 einen Höhepunkt von 2.68, angetrieben durch steigende Heiratsraten und sinkende Kinderlosigkeit statt grösserer Familien. Der Boom endete abrupt mit der Einführung der Pille und den Frauenbefreiungsbewegungen.</p>
+                </div>
+            </div>
+
+            <!-- Why Never Recovered -->
+            <div class="chart-card">
+                <h3 class="chart-title">Warum sich die Fruchtbarkeit nie erholte</h3>
+                <div class="info-grid">
+                    <div class="bordered-section blue">
+                        <h4>Wirtschaftliche Barrieren</h4>
+                        <ul>
+                            <li>Hohe Wohnkosten</li>
+                            <li>Teure Kinderbetreuung</li>
+                            <li>Einkommensstagnation</li>
+                            <li>Beschäftigungsunsicherheit</li>
+                        </ul>
+                    </div>
+                    <div class="bordered-section green">
+                        <h4>Soziale Veränderungen</h4>
+                        <ul>
+                            <li>Verzögerte Erstgeburten (jetzt 30+)</li>
+                            <li>Schwierigkeiten bei Partnerfindung</li>
+                            <li>Steigende Unfruchtbarkeit mit dem Alter</li>
+                            <li>Kultureller Wandel weg von grossen Familien</li>
+                        </ul>
+                    </div>
+                    <div class="bordered-section orange">
+                        <h4>Strukturelle Probleme</h4>
+                        <ul>
+                            <li>Begrenzte Arbeitsflexibilität</li>
+                            <li>KMU-dominierte Wirtschaft</li>
+                            <li>Schwache familienpolitische Unterstützung</li>
+                            <li>Karriere-Mutterschaft-Unvereinbarkeit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Governance -->
+        <div id="governance" class="tab-content">
+            <div class="chart-card">
+                <h3 class="chart-title">Korruption & Governance-Bewertung</h3>
+                <div class="side-by-side">
+                    <div>
+                        <canvas id="corruptionRadarChart"></canvas>
+                        <p class="chart-note" style="text-align: center;">Höhere Werte zeigen bessere Leistung</p>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 1rem;">Transparenz-Score: 81/100 (Rang 5/180)</h4>
+                        <canvas id="issuesBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issues Grid -->
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <h4>Identifizierte Probleme</h4>
+                    <ul>
+                        <li><span class="bullet">•</span><span>Politische Interessenkonflikte vom Europarat markiert</span></li>
+                        <li><span class="bullet">•</span><span>Politische Parteien mit 3.3/5 auf Korruptionsskala bewertet (am verdächtigsten)</span></li>
+                        <li><span class="bullet">•</span><span>Begrenzte Untersuchungen von Banken, die illegale Gelder akzeptieren</span></li>
+                        <li><span class="bullet">•</span><span>Zufluchtsort für "Diktatorenvermögen" und politisch exponierte Personen</span></li>
+                        <li><span class="bullet">•</span><span>CHF 1.7M Bestechungsfall in öffentlicher IT-Beschaffung (SECO)</span></li>
+                    </ul>
+                </div>
+
+                <div class="issue-card">
+                    <h4>Strukturelle Schwächen</h4>
+                    <ul>
+                        <li><span class="bullet orange">•</span><span>Mangelnde Transparenz im Büro der Bundesanwaltschaft</span></li>
+                        <li><span class="bullet orange">•</span><span>Potenzielle mangelnde Objektivität bei Bundesrichtern</span></li>
+                        <li><span class="bullet orange">•</span><span>Unzureichende Strafverfolgungsressourcen für Finanzverbrechen</span></li>
+                        <li><span class="bullet orange">•</span><span>Mangelnder politischer Wille zur Untersuchung des Bankensektors</span></li>
+                        <li><span class="bullet orange">•</span><span>Schwache Vermögensrückgewinnungsmechanismen</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion Box -->
+        <div class="conclusion-box">
+            <h3>Zusammenhänge & Analyse</h3>
+            <div class="conclusion-grid">
+                <div class="conclusion-item">
+                    <h4 style="color: #dc2626;">Begrenzte direkte kausale Verbindungen</h4>
+                    <p>Während alle drei Trends existieren, sind die Beweise für direkte Kausalität schwach. Jeder hat eigene primäre Treiber.</p>
+                </div>
+                <div class="conclusion-item">
+                    <h4 style="color: #f97316;">Wähler-Apathie ≠ Korruptionsbedingt</h4>
+                    <p>Niedrige Wahlbeteiligung resultiert aus Wahlmüdigkeit und selektiver Teilnahme, nicht Misstrauen. Hohe Zufriedenheit deutet auf Vertrauen ins System hin.</p>
+                </div>
+                <div class="conclusion-item">
+                    <h4 style="color: #9333ea;">Demografiekrise unabhängig</h4>
+                    <p>Bevölkerungsrückgang spiegelt Trends entwickelter Nationen wider, getrieben von Ökonomie und sozialem Wandel, nicht Governance-Versagen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const voterTurnoutData = {
+            labels: [1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024],
+            datasets: [{
+                label: 'Wahlbeteiligung %',
+                data: [56, 52, 48, 46, 45, 42.2, 43, 45, 46, 48, 46, 45],
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                borderWidth: 3,
+                tension: 0.3
+            }]
+        };
+
+        const birthRateData = {
+            labels: [1850, 1900, 1940, 1946, 1950, 1960, 1964, 1970, 1975, 1980, 1990, 2000, 2010, 2015, 2020, 2022, 2023],
+            datasets: [{
+                label: 'Kinder pro Frau',
+                data: [4.0, 3.8, 1.8, 2.62, 2.4, 2.5, 2.68, 2.1, 1.6, 1.55, 1.58, 1.50, 1.52, 1.54, 1.46, 1.39, 1.33],
+                borderColor: '#dc2626',
+                backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                borderWidth: 3,
+                tension: 0.3
+            }]
+        };
+
+        const corruptionData = {
+            labels: ['Gesamtrang', 'Politische Parteien', 'Öffentliches Vertrauen', 'Transparenz', 'Richterliche Unabhängigkeit'],
+            datasets: [{
+                label: 'Score',
+                data: [81, 34, 65, 72, 68],
+                backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                borderColor: '#10b981',
+                borderWidth: 2
+            }]
+        };
+
+        const issuesData = {
+            labels: ['Interessenkonflikte', 'Banking-Opazität', 'Politische Finanzierung', 'Öffentliche Beschaffung', 'Vermögensrückgewinnung'],
+            datasets: [{
+                label: 'Risiko-Level',
+                data: [65, 75, 70, 55, 80],
+                backgroundColor: '#ef4444',
+                borderColor: '#dc2626',
+                borderWidth: 1
+            }]
+        };
+
+        // Chart configurations
+        const lineChartConfig = {
+            type: 'line',
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // Create charts
+        const voterTurnoutChart = new Chart(
+            document.getElementById('voterTurnoutChart'),
+            {
+                ...lineChartConfig,
+                data: voterTurnoutData,
+                options: {
+                    ...lineChartConfig.options,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            }
+        );
+
+        const birthRateOverviewChart = new Chart(
+            document.getElementById('birthRateOverviewChart'),
+            {
+                ...lineChartConfig,
+                data: birthRateData,
+                options: {
+                    ...lineChartConfig.options,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 4.5
+                        }
+                    }
+                }
+            }
+        );
+
+        const voterTurnoutDetailChart = new Chart(
+            document.getElementById('voterTurnoutDetailChart'),
+            {
+                ...lineChartConfig,
+                data: voterTurnoutData,
+                options: {
+                    ...lineChartConfig.options,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            }
+        );
+
+        const birthRateDetailChart = new Chart(
+            document.getElementById('birthRateDetailChart'),
+            {
+                ...lineChartConfig,
+                data: birthRateData,
+                options: {
+                    ...lineChartConfig.options,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 4.5
+                        }
+                    }
+                }
+            }
+        );
+
+        const corruptionRadarChart = new Chart(
+            document.getElementById('corruptionRadarChart'),
+            {
+                type: 'radar',
+                data: corruptionData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        );
+
+        const issuesBarChart = new Chart(
+            document.getElementById('issuesBarChart'),
+            {
+                type: 'bar',
+                data: issuesData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        );
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

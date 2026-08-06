@@ -1,0 +1,3201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Demographic Time Bomb — Switzerland's Aging Crisis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0c0c10;
+    --bg2: #13131a;
+    --bg3: #1a1a24;
+    --surface: #1e1e2e;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e4d9;
+    --text-dim: #9a9490;
+    --red: #c8373a;
+    --red-glow: rgba(200,55,58,0.15);
+    --gold: #c9a84c;
+    --gold-dim: rgba(201,168,76,0.15);
+    --green: #3a9c6e;
+    --green-dim: rgba(58,156,110,0.12);
+    --blue: #3a7fc8;
+    --ff-display: 'Playfair Display', Georgia, serif;
+    --ff-body: 'Lora', Georgia, serif;
+    --ff-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-body);
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    background: rgba(12,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0 0.9rem;
+    height: 56px;
+    line-height: 56px;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text);
+    border-bottom-color: var(--red);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 2rem 4rem;
+  }
+
+  .hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,55,58,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,55,58,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    opacity: 0.018;
+    background:
+      linear-gradient(var(--red), var(--red)) 50% 0 / 140px 700px no-repeat,
+      linear-gradient(var(--red), var(--red)) 0 50% / 700px 140px no-repeat;
+  }
+
+  .hero-inner {
+    position: relative;
+    text-align: center;
+    max-width: 900px;
+    animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.2s both;
+  }
+
+  .hero-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    animation: fadeUp 1s 0.35s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero-sub {
+    font-family: var(--ff-display);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 3.5rem;
+    animation: fadeUp 1s 0.5s both;
+  }
+
+  /* Ratio counter */
+  .ratio-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    animation: fadeUp 1s 0.7s both;
+  }
+
+  .ratio-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ratio-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .ratio-card.now::before { background: var(--gold); }
+  .ratio-card.future::before { background: var(--red); }
+  .ratio-card.past::before { background: var(--green); }
+
+  .ratio-year {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .ratio-number {
+    font-family: var(--ff-display);
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .ratio-card.past .ratio-number { color: var(--green); }
+  .ratio-card.now .ratio-number { color: var(--gold); }
+  .ratio-card.future .ratio-number { color: var(--red); }
+
+  .ratio-label {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+
+  .ratio-arrow {
+    font-size: 1.5rem;
+    color: var(--border);
+    align-self: center;
+  }
+
+  .hero-scroll {
+    margin-top: 4rem;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    animation: fadeUp 1s 1s both, pulse 2s 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  section {
+    padding: 6rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  section:first-of-type { border-top: none; }
+
+  .section-label {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    background: var(--red);
+    opacity: 0.4;
+  }
+
+  h2 {
+    font-family: var(--ff-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: var(--ff-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: rgba(232,228,217,0.85);
+    margin-bottom: 1.2rem;
+    max-width: 72ch;
+  }
+
+  strong { color: var(--text); font-weight: 500; }
+
+  /* ── STAT BLOCKS ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 2.5rem 0;
+  }
+
+  .stat-block {
+    background: var(--bg2);
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .stat-num {
+    font-family: var(--ff-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-num.danger { color: var(--red); }
+  .stat-num.good { color: var(--green); }
+
+  .stat-desc {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* ── PHASES ── */
+  .phases {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .phases::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--green), var(--gold), var(--red), var(--red));
+    opacity: 0.4;
+  }
+
+  .phase {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .phase.visible { opacity: 1; transform: none; }
+
+  .phase-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: var(--bg);
+    z-index: 1;
+  }
+
+  .phase:nth-child(1) .phase-num { color: var(--green); border-color: var(--green); }
+  .phase:nth-child(2) .phase-num { color: #7ec87e; border-color: #7ec87e; }
+  .phase:nth-child(3) .phase-num { color: var(--gold); border-color: var(--gold); }
+  .phase:nth-child(4) .phase-num { color: #e07a3a; border-color: #e07a3a; }
+  .phase:nth-child(5) .phase-num { color: var(--red); border-color: var(--red); }
+
+  .phase-body { padding-top: 0.6rem; }
+
+  .phase-title {
+    font-family: var(--ff-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .phase-timing {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .phase p { font-size: 0.9rem; margin-bottom: 0; max-width: 65ch; }
+
+  .phase-indicators {
+    margin-top: 0.6rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg3);
+    border-left: 2px solid;
+    border-radius: 0 2px 2px 0;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .phase:nth-child(1) .phase-indicators { border-color: var(--green); }
+  .phase:nth-child(2) .phase-indicators { border-color: #7ec87e; }
+  .phase:nth-child(3) .phase-indicators { border-color: var(--gold); }
+  .phase:nth-child(4) .phase-indicators { border-color: #e07a3a; }
+  .phase:nth-child(5) .phase-indicators { border-color: var(--red); }
+
+  /* ── COUNTRY CARDS ── */
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .country-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.3s;
+  }
+
+  .country-card.visible { opacity: 1; transform: none; }
+  .country-card:hover { border-color: rgba(255,255,255,0.2); }
+
+  .country-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .country-flag {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .country-verdict {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    margin-top: 0.2rem;
+  }
+
+  .verdict-bad { background: var(--red-glow); color: var(--red); }
+  .verdict-good { background: var(--green-dim); color: var(--green); }
+  .verdict-mid { background: var(--gold-dim); color: var(--gold); }
+
+  .country-name {
+    font-family: var(--ff-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 0.3rem;
+  }
+
+  .country-body {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .country-body p {
+    font-size: 0.875rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .country-lesson {
+    padding: 0.75rem;
+    background: var(--bg3);
+    border-radius: 3px;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .country-lesson strong {
+    color: var(--text);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SWISS PILLARS ── */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 700px) { .pillars { grid-template-columns: 1fr; } }
+
+  .pillar {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .pillar-header {
+    padding: 1rem 1.25rem;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pillar-1 .pillar-header { color: var(--red); }
+  .pillar-2 .pillar-header { color: var(--gold); }
+  .pillar-3 .pillar-header { color: var(--green); }
+
+  .pillar-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .pillar-top-pct {
+    font-family: var(--ff-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .pillar-body { padding: 1.25rem; }
+
+  .pillar-name {
+    font-family: var(--ff-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .pillar-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .pillar-body p { font-size: 0.85rem; max-width: none; }
+
+  .pillar-amount {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg3);
+    border-radius: 3px;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+  }
+
+  /* ── CHART ── */
+  .chart-container {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .chart-title {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── REFORM SCORECARD ── */
+  .reform-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 2.5rem 0;
+  }
+
+  .reform-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .reform-item.visible { opacity: 1; transform: none; }
+
+  .reform-name {
+    font-family: var(--ff-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .reform-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+  }
+
+  .reform-bar-wrap {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+  }
+
+  .reform-bar {
+    width: 100px;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .reform-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s cubic-bezier(0.16,1,0.3,1);
+    width: 0;
+  }
+
+  .reform-bar-fill.high { background: var(--green); }
+  .reform-bar-fill.mid { background: var(--gold); }
+  .reform-bar-fill.low { background: var(--red); }
+
+  .reform-political {
+    font-family: var(--ff-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .political-extreme { background: var(--red-glow); color: var(--red); }
+  .political-high { background: rgba(224,122,58,0.15); color: #e07a3a; }
+  .political-medium { background: var(--gold-dim); color: var(--gold); }
+  .political-low { background: var(--green-dim); color: var(--green); }
+
+  /* ── SCENARIOS ── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .scenario {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+    transition: transform 0.3s;
+  }
+
+  .scenario:hover { transform: translateY(-3px); }
+
+  .scenario-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .scenario-type {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .scenario-best .scenario-type { color: var(--green); }
+  .scenario-mid .scenario-type { color: var(--gold); }
+  .scenario-worst .scenario-type { color: var(--red); }
+
+  .scenario-title {
+    font-family: var(--ff-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .scenario-body { padding: 1.25rem 1.5rem; }
+  .scenario-body p { font-size: 0.875rem; }
+
+  .scenario-prob {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 3px;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+
+  .scenario-best .scenario-prob { background: var(--green-dim); color: var(--green); }
+  .scenario-mid .scenario-prob { background: var(--gold-dim); color: var(--gold); }
+  .scenario-worst .scenario-prob { background: var(--red-glow); color: var(--red); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .timeline-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 110px;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      var(--green) 0%,
+      var(--gold) 40%,
+      var(--red) 70%,
+      rgba(200,55,58,0.3) 100%);
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 2rem;
+    padding: 1rem 0;
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .tl-item.visible { opacity: 1; transform: none; }
+
+  .tl-year {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: right;
+    padding-top: 0.1rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: 107px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 0.4rem;
+    z-index: 1;
+  }
+
+  .tl-content {
+    padding-left: 0.5rem;
+    border-left: none;
+  }
+
+  .tl-event {
+    font-family: var(--ff-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .tl-detail {
+    font-size: 0.83rem;
+    color: var(--text-dim);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .tl-item.critical .tl-year { color: var(--red); }
+  .tl-item.critical .tl-dot { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .tl-item.past .tl-dot { background: var(--green); }
+  .tl-item.past .tl-year { color: var(--green); }
+  .tl-item.warn .tl-dot { background: var(--gold); }
+  .tl-item.warn .tl-year { color: var(--gold); }
+  .tl-item.you .tl-dot { background: var(--blue); box-shadow: 0 0 12px var(--blue); }
+  .tl-item.you .tl-year { color: var(--blue); }
+
+  /* ── PERSONAL SECTION ── */
+  .personal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .personal-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    border-top: 2px solid var(--gold);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .personal-card.visible { opacity: 1; transform: none; }
+
+  .personal-num {
+    font-family: var(--ff-mono);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .personal-title {
+    font-family: var(--ff-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .personal-card p { font-size: 0.85rem; margin: 0; }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--red);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--red-glow);
+    border-radius: 0 4px 4px 0;
+  }
+
+  blockquote p {
+    font-family: var(--ff-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+  }
+
+  blockquote cite {
+    display: block;
+    font-family: var(--ff-mono);
+    font-style: normal;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    line-height: 2;
+  }
+
+  /* Population pyramid */
+  .pyramid-wrap {
+    margin: 2.5rem 0;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+  }
+
+  .pyramid-title {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .pyramid-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 3px 0;
+  }
+
+  .pyramid-age {
+    font-family: var(--ff-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .pyramid-bar-left, .pyramid-bar-right {
+    height: 16px;
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .pyramid-bar-left {
+    background: linear-gradient(to left, var(--blue), rgba(58,127,200,0.5));
+    margin-left: auto;
+  }
+
+  .pyramid-bar-right {
+    background: linear-gradient(to right, var(--red), rgba(200,55,58,0.5));
+  }
+
+  .pyramid-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .pyramid-label {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pyramid-label.male { color: var(--blue); }
+  .pyramid-label.female { color: var(--red); }
+
+  .pyramid-center { flex: 0 0 40px; }
+  .pyramid-left-side { flex: 1; display: flex; justify-content: flex-end; }
+  .pyramid-right-side { flex: 1; }
+
+  /* two-col layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } .nav-links { display: none; } }
+
+  .callout {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .callout-big {
+    font-family: var(--ff-display);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .callout p { font-size: 0.85rem; margin: 0.4rem 0 0; max-width: none; }
+
+  /* Switzerland flag stripe */
+  .swiss-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1.5rem;
+  }
+
+  .swiss-cross-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--red);
+    border-radius: 3px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .swiss-cross-icon::before,
+  .swiss-cross-icon::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 1px;
+  }
+
+  .swiss-cross-icon::before {
+    width: 20px; height: 6px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .swiss-cross-icon::after {
+    width: 6px; height: 20px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .warn-box {
+    background: var(--red-glow);
+    border: 1px solid rgba(200,55,58,0.3);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .warn-box p { color: var(--text); margin: 0; max-width: none; }
+
+  /* Animate on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Switzerland position badge */
+  .ch-position {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 40px;
+    padding: 0.4rem 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .ch-position-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .ch-position span {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── REFORMS DEEP DIVE ── */
+  .mechanic-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .mechanic-card.visible { opacity: 1; transform: none; }
+
+  .mechanic-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+
+  .mechanic-title {
+    font-family: var(--ff-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .mechanic-eff {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .eff-vhigh { background: var(--green-dim); color: var(--green); }
+  .eff-high  { background: rgba(58,156,110,0.08); color: var(--green); }
+  .eff-mid   { background: var(--gold-dim); color: var(--gold); }
+  .eff-low   { background: var(--red-glow); color: var(--red); }
+
+  .mechanic-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media (max-width: 768px) { .mechanic-body { grid-template-columns: 1fr; } }
+
+  .mechanic-col {
+    padding: 1.5rem 1.75rem;
+    border-right: 1px solid var(--border);
+  }
+  .mechanic-col:last-child { border-right: none; }
+
+  .mechanic-col-label {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mechanic-col p { font-size: 0.875rem; max-width: none; }
+
+  .flow-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--bg3);
+    border-radius: 3px;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    position: relative;
+  }
+
+  .flow-arrow {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 1.1rem;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .flow-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .impact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .impact-table th {
+    text-align: left;
+    padding: 0.4rem 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.55rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .impact-table td {
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .impact-table tr:last-child td { border-bottom: none; }
+
+  .tag-pos { color: var(--green); }
+  .tag-neg { color: var(--red); }
+  .tag-neu { color: var(--gold); }
+
+  .req-list {
+    list-style: none;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .req-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+
+  .req-list li::before {
+    content: '→';
+    color: var(--text-dim);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .key-number-band {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0.75rem 0;
+  }
+
+  .key-num-cell {
+    flex: 1;
+    background: var(--bg);
+    padding: 0.75rem;
+    text-align: center;
+  }
+
+  .key-num-value {
+    font-family: var(--ff-display);
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .key-num-label {
+    font-family: var(--ff-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ch-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--bg);
+    border-radius: 3px;
+    margin-top: 0.75rem;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    color: var(--text-dim);
+  }
+
+  .ch-status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── FATHER SECTION ── */
+  .father-cohort-banner {
+    background: linear-gradient(135deg, var(--bg2) 0%, rgba(201,168,76,0.06) 100%);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    padding: 1.75rem 2rem;
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (max-width: 700px) { .father-cohort-banner { grid-template-columns: 1fr; } }
+
+  .cohort-year-badge {
+    font-family: var(--ff-display);
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.8;
+  }
+
+  .cohort-text h3 { color: var(--gold); margin-bottom: 0.3rem; }
+  .cohort-text p { font-size: 0.875rem; max-width: none; margin: 0; }
+
+  .cohort-locked-in {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 160px;
+  }
+
+  .lock-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .lock-check { color: var(--green); font-size: 0.8rem; }
+  .lock-x { color: var(--red); font-size: 0.8rem; }
+  .lock-warn { color: var(--gold); font-size: 0.8rem; }
+
+  /* Father horizontal timeline */
+  .father-htl {
+    margin: 2.5rem 0;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+
+  .father-htl-inner {
+    display: flex;
+    gap: 0;
+    min-width: 700px;
+    position: relative;
+  }
+
+  .father-htl-inner::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--green) 0%, var(--gold) 35%, var(--red) 65%, rgba(200,55,58,0.3) 100%);
+  }
+
+  .father-phase {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.5rem;
+    position: relative;
+  }
+
+  .father-phase-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--bg);
+    z-index: 1;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .father-phase.ph-a .father-phase-dot { border-color: var(--green); background: rgba(58,156,110,0.3); }
+  .father-phase.ph-b .father-phase-dot { border-color: var(--gold); background: rgba(201,168,76,0.3); }
+  .father-phase.ph-c .father-phase-dot { border-color: #e07a3a; background: rgba(224,122,58,0.3); }
+  .father-phase.ph-d .father-phase-dot { border-color: var(--red); background: rgba(200,55,58,0.3); }
+
+  .father-phase-year {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .father-phase.ph-a .father-phase-year { color: var(--green); }
+  .father-phase.ph-b .father-phase-year { color: var(--gold); }
+  .father-phase.ph-c .father-phase-year { color: #e07a3a; }
+  .father-phase.ph-d .father-phase-year { color: var(--red); }
+
+  .father-phase-label {
+    font-family: var(--ff-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+
+  .father-phase-desc {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* Father three scenarios */
+  .father-scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  @media (max-width: 700px) { .father-scenarios { grid-template-columns: 1fr; } }
+
+  .father-scen {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .father-scen.visible { opacity: 1; transform: none; }
+
+  .father-scen-head {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .father-scen-type {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .fs-good .father-scen-type { color: var(--green); }
+  .fs-base .father-scen-type { color: var(--gold); }
+  .fs-risk .father-scen-type { color: var(--red); }
+
+  .father-scen-title {
+    font-family: var(--ff-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .father-scen-body {
+    padding: 1.25rem;
+  }
+
+  .father-scen-body p { font-size: 0.85rem; }
+
+  .income-projection {
+    margin: 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .income-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .income-row:last-child { border-bottom: none; }
+  .income-val { font-weight: 700; }
+  .income-val.pos { color: var(--green); }
+  .income-val.warn { color: var(--gold); }
+  .income-val.neg { color: var(--red); }
+
+  /* Risk cards */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .risk-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    border-left: 3px solid;
+    padding: 1.25rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .risk-card.visible { opacity: 1; transform: none; }
+  .risk-card.r-high { border-left-color: var(--red); }
+  .risk-card.r-mid { border-left-color: var(--gold); }
+  .risk-card.r-low { border-left-color: var(--green); }
+
+  .risk-level {
+    font-family: var(--ff-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .r-high .risk-level { color: var(--red); }
+  .r-mid .risk-level { color: var(--gold); }
+  .r-low .risk-level { color: var(--green); }
+
+  .risk-title {
+    font-family: var(--ff-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .risk-card p { font-size: 0.83rem; margin: 0; }
+
+  /* Action items */
+  .action-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+
+  .action-item {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .action-item.visible { opacity: 1; transform: none; }
+
+  .action-icon {
+    font-family: var(--ff-mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    line-height: 1;
+  }
+
+  .action-title {
+    font-family: var(--ff-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .action-item p { font-size: 0.82rem; margin: 0; }
+
+  .urgency-badge {
+    font-family: var(--ff-mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .urg-now { background: var(--red-glow); color: var(--red); }
+  .urg-soon { background: var(--gold-dim); color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">CH Demographic Analysis — 2025</div>
+  <ul class="nav-links">
+    <li><a href="#universal">Universal Pattern</a></li>
+    <li><a href="#global">Global Cases</a></li>
+    <li><a href="#switzerland">Switzerland</a></li>
+    <li><a href="#reforms">Reforms</a></li>
+    <li><a href="#reforms-deep">How They Work</a></li>
+    <li><a href="#scenarios">Scenarios</a></li>
+    <li><a href="#father">Father's Outlook</a></li>
+    <li><a href="#personal">For You</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-cross"></div>
+  <div class="hero-inner">
+    <div class="hero-label">Switzerland · Pension Crisis · Generational Analysis</div>
+    <h1 class="hero-title">The Demographic<br><em>Time Bomb</em></h1>
+    <p class="hero-sub">Switzerland's aging crisis, the collapse of the support ratio,<br>and the generation that inherits the consequences</p>
+
+    <div class="ratio-display">
+      <div class="ratio-card past">
+        <div class="ratio-year">1948</div>
+        <div class="ratio-number" id="r1948">6.5</div>
+        <div class="ratio-label">Workers per retiree</div>
+      </div>
+      <div class="ratio-arrow">→</div>
+      <div class="ratio-card now">
+        <div class="ratio-year">Today</div>
+        <div class="ratio-number" id="r2025">3.4</div>
+        <div class="ratio-label">Workers per retiree</div>
+      </div>
+      <div class="ratio-arrow">→</div>
+      <div class="ratio-card future">
+        <div class="ratio-year">~2045</div>
+        <div class="ratio-number" id="r2045">2.0</div>
+        <div class="ratio-label">Workers per retiree</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">↓ Scroll to explore</div>
+  </div>
+</section>
+
+<!-- PART I: UNIVERSAL PATTERN -->
+<section id="universal">
+  <div class="container">
+    <div class="section-label">Part I</div>
+    <h2>What Always Happens When Demographics Invert</h2>
+    <p>Every modern pension system built on Pay-As-You-Go logic contains the same structural fragility. When the ratio of workers to retirees falls, the math stops working. The pattern across all affected countries follows five identifiable phases — and Switzerland is currently inside Phase 2.</p>
+
+    <div class="stat-row reveal">
+      <div class="stat-block">
+        <div class="stat-num">7.2→2.1</div>
+        <div class="stat-desc">OECD support ratio<br>1950 → projected 2050</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">2.1</div>
+        <div class="stat-desc">Fertility rate needed to sustain<br>population without immigration</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num danger">50%</div>
+        <div class="stat-desc">Additional GDP cost if retirees<br>live 3 years longer than projected</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">27.8%→50%</div>
+        <div class="stat-desc">EU old-age dependency ratio<br>2010 → projected 2060</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.5rem;">The Five Phases of a Demographic Crisis</h3>
+    <p>Historical patterns across Japan, Germany, Italy, and others reveal a consistent progression. The phase you are in determines which solutions are still available.</p>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">1</div>
+        <div class="phase-body">
+          <div class="phase-timing">20–40 years before crisis</div>
+          <div class="phase-title">Silent Buildup</div>
+          <p>Fertility falls below replacement. Economists flag the trend. Politicians defer action — the problem is distant and pension funds look healthy. This phase is deceptively calm.</p>
+          <div class="phase-indicators">Early indicators: fertility rate below 1.8 · median age rising · pension surplus beginning to shrink · revised-upward life expectancy projections ignored</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">2</div>
+        <div class="phase-body">
+          <div class="phase-timing">10–20 years before crisis</div>
+          <div class="phase-title">Window of Action <span style="color:var(--gold); font-size:0.75rem; font-family:var(--ff-mono);">← Switzerland is here</span></div>
+          <p>Demographic math becomes undeniable. Deficits are clearly projected. A real window exists to enact reform — the workforce is still large enough to absorb transition costs. Countries that act now achieve good outcomes. Countries that don't enter Phase 3.</p>
+          <div class="phase-indicators">Indicators: dependency ratio rising measurably · first reform proposals entering parliament · labour shortages in key sectors · pension reserve drawdown beginning</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">3</div>
+        <div class="phase-body">
+          <div class="phase-timing">Onset of crisis</div>
+          <div class="phase-title">Fiscal Stress</div>
+          <p>Expenditures begin exceeding contributions. Reserves drain. Governments face a forced choice between all unpopular options: higher contributions, lower benefits, later retirement, higher VAT, or more immigrants. None is painless. Political gridlock is common.</p>
+          <div class="phase-indicators">Indicators: AHV running structural deficits · credit agencies flagging pension liabilities · working-age population declining in absolute terms · healthcare costs surging</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">4</div>
+        <div class="phase-body">
+          <div class="phase-timing">The critical threshold</div>
+          <div class="phase-title">The Gerontocracy Problem</div>
+          <p>The retired population grows large enough to dominate democratic elections. Reforms that reduce their benefits become impossible to pass. Italy's reform window was calculated to have closed around 2006. Switzerland is not there yet — but approaching it rapidly.</p>
+          <div class="phase-indicators">Indicators: elderly bloc &gt;30% of active voters · consecutive referendum defeats on structural reform · working-age emigration rising · youth resentment becoming political force</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">5</div>
+        <div class="phase-body">
+          <div class="phase-timing">Resolution — forced or managed</div>
+          <div class="phase-title">Structural Resolution</div>
+          <p>The system resolves — one way or another. The good outcome is managed reform enacted before Phase 4 locks in permanently. The bad outcome is forced adjustment via emergency benefit cuts during fiscal crisis, or decades of sustained economic stagnation.</p>
+          <div class="phase-indicators">Good: NDC reform, automatic stabilizers, extended careers · Bad: emergency cuts, gerontocratic gridlock, sustained GDP stagnation, youth emigration spiral</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART II: GLOBAL CASES -->
+<section id="global">
+  <div class="container">
+    <div class="section-label">Part II</div>
+    <h2>What Actually Happened — Global Case Studies</h2>
+    <p>Four countries, four very different outcomes. Each one is a direct data point for what Switzerland's choices will produce.</p>
+
+    <div class="country-grid">
+      <!-- Japan -->
+      <div class="country-card">
+        <div class="country-header">
+          <div>
+            <div class="country-flag">🇯🇵</div>
+            <div class="country-name">Japan</div>
+          </div>
+          <div class="country-verdict verdict-bad">Warning label</div>
+        </div>
+        <div class="country-body">
+          <p>The world's most advanced aging case. <strong>29% of the population is over 65</strong> today. Projected to reach 38% by 2065. Pension expenditure headed toward 30% of GDP by 2040. Japan's cultural resistance to immigration left it without a demographic buffer. The "lost decades" of stagnation post-1991 crushed wage growth and contribution bases simultaneously.</p>
+          <div class="country-lesson"><strong>Key lesson:</strong> Acting late + incrementally, without systemic redesign, produces sustained stagnation across generations. Not a single crisis — a slow, compounding deterioration. The suffering is real but diffuse and invisible year-to-year.</div>
+        </div>
+      </div>
+
+      <!-- Sweden -->
+      <div class="country-card">
+        <div class="country-header">
+          <div>
+            <div class="country-flag">🇸🇪</div>
+            <div class="country-name">Sweden</div>
+          </div>
+          <div class="country-verdict verdict-good">Gold standard</div>
+        </div>
+        <div class="country-body">
+          <p>Recognized the sustainability problem in the late 1980s and <strong>enacted a complete systemic overhaul in 1999</strong> — one move, not incremental patches. Contribution rates would have needed to rise to 28–40% without reform. The NDC (Notional Defined Contribution) model ties benefit levels to actual demographics with automatic stabilizers. No political vote needed when reality changes.</p>
+          <p>Result: Sweden's pension costs as % of GDP are projected to <strong>fall from 7.6% to 7.0%</strong> by 2050 — the only major European country with a downward trajectory.</p>
+          <div class="country-lesson"><strong>Key lesson:</strong> Comprehensive reform enacted early, with automatic stabilizers built in, is the only proven formula. The politics were brutal — but they had the window, and they used it.</div>
+        </div>
+      </div>
+
+      <!-- Germany -->
+      <div class="country-card">
+        <div class="country-header">
+          <div>
+            <div class="country-flag">🇩🇪</div>
+            <div class="country-name">Germany</div>
+          </div>
+          <div class="country-verdict verdict-mid">Muddling through</div>
+        </div>
+        <div class="country-body">
+          <p>Multiple reforms since 1992 — gradual retirement age rises, benefit formula adjustments, contribution increases. Never achieved Sweden's systemic redesign. Coalition politics produced patchwork adjustments rather than a coherent long-term architecture. The defined-benefit PAYG structure remains in place, still vulnerable to shocks.</p>
+          <div class="country-lesson"><strong>Key lesson:</strong> Incremental reform buys time but does not solve the problem. Each political cycle that fails to enact deep reform makes the eventual reckoning more painful and the transition costs higher.</div>
+        </div>
+      </div>
+
+      <!-- Italy -->
+      <div class="country-card">
+        <div class="country-header">
+          <div>
+            <div class="country-flag">🇮🇹</div>
+            <div class="country-name">Italy</div>
+          </div>
+          <div class="country-verdict verdict-bad">Cautionary tale</div>
+        </div>
+        <div class="country-body">
+          <p>Fertility at 1.2, historically some workers retired in their <strong>early 50s</strong> with near-full benefits. Pension expenditure among the highest in OECD. Repeated reform attempts blocked or reversed by popular vote. The gerontocracy threshold passed by 2006. Resolution is now happening through economic deterioration rather than managed policy — precisely the bad outcome.</p>
+          <div class="country-lesson"><strong>Key lesson:</strong> When reform is delayed until the pensioner vote bloc becomes structurally dominant, democratic reform becomes impossible. The resolution arrives anyway — just inflicted rather than chosen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container reveal">
+      <div class="chart-title">Pension Expenditure as % of GDP — Projected to 2050</div>
+      <canvas id="countryChart" height="200"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- PART III: SWITZERLAND -->
+<section id="switzerland">
+  <div class="container">
+    <div class="section-label">Part III</div>
+    <div class="swiss-banner">
+      <div class="swiss-cross-icon"></div>
+      <h2 style="margin-bottom:0;">Switzerland's Specific Situation</h2>
+    </div>
+
+    <div class="ch-position">
+      <div class="ch-position-dot"></div>
+      <span>Currently in Phase 2 — the window of action. Closing.</span>
+    </div>
+
+    <p>Switzerland is not in crisis today. But the structural conditions for crisis are fully in place. The AHV was designed for a 6.5-to-1 worker-to-retiree ratio. It is operating at 3.4-to-1 and heading toward 2-to-1. Every year of delay compresses the remaining adjustment capacity.</p>
+
+    <!-- Three pillars -->
+    <h3 style="margin-top:2rem;">The Three-Pillar System</h3>
+    <p>Switzerland's pension architecture is uniquely layered. Understanding all three pillars is essential to understanding where the pressure lies and which levers exist.</p>
+
+    <div class="pillars">
+      <div class="pillar pillar-1">
+        <div class="pillar-header">
+          Pillar 1 — AHV/IV
+          <div class="pillar-top">
+            <div class="pillar-top-pct" style="color:var(--red);">Most exposed</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-name">State Pension</div>
+          <div class="pillar-sub">Pay-As-You-Go · Politically mandated</div>
+          <p>73% funded by wage contributions, 20% federal subsidy, 6% VAT, 1% other. Max pension CHF 2,450/month. Average actual: ~CHF 1,800/month. Purely redistributive — current workers pay current retirees. Most exposed pillar to demographic deterioration.</p>
+          <div class="pillar-amount">Expenditure exceeds income from ~2025 onwards without reform</div>
+        </div>
+      </div>
+
+      <div class="pillar pillar-2">
+        <div class="pillar-header">
+          Pillar 2 — BVG
+          <div class="pillar-top">
+            <div class="pillar-top-pct" style="color:var(--gold);">Under reform pressure</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-name">Occupational Pension</div>
+          <div class="pillar-sub">Capital-funded · Employer + Employee</div>
+          <p>Mandatory for employees earning above CHF 22,050. Capital invested in markets. Mandated conversion rate 6.8% — but pension funds have already cut theirs to ~5.3% on average for non-mandatory portions. BVG 21 reform was rejected by voters in September 2024.</p>
+          <div class="pillar-amount">Avg pension: CHF 2,353/month (men CHF 2,353 · women ~1,650)</div>
+        </div>
+      </div>
+
+      <div class="pillar pillar-3">
+        <div class="pillar-header">
+          Pillar 3 — Private
+          <div class="pillar-top">
+            <div class="pillar-top-pct" style="color:var(--green);">Your control</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <div class="pillar-name">Voluntary Savings (3a/3b)</div>
+          <div class="pillar-sub">Tax-advantaged · Fully individual</div>
+          <p>Annual contribution limit ~CHF 7,200 for employed people (3a). Tax-deductible on contribution, taxed at reduced rate on withdrawal. Invested individually. The only variable entirely within your control — and the one most likely to determine whether your retirement is comfortable or constrained.</p>
+          <div class="pillar-amount">Pillars 1+2 combined: designed to replace ~60% of income (increasingly unrealistic)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key numbers -->
+    <h3 style="margin-top:2rem;">The Fiscal Numbers</h3>
+
+    <div class="stat-row reveal">
+      <div class="stat-block">
+        <div class="stat-num danger">CHF 2.5B</div>
+        <div class="stat-desc">Projected AHV contribution<br>deficit in 2030</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num danger">CHF 5.7B</div>
+        <div class="stat-desc">Projected AHV contribution<br>deficit in 2040</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">9M</div>
+        <div class="stat-desc">Total Swiss population<br>221 babies born per day</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">1.5</div>
+        <div class="stat-desc">Swiss fertility rate<br>(2.1 needed for replacement)</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container reveal">
+      <div class="chart-title">AHV Projected Annual Deficit (CHF Billion) — Without Reform</div>
+      <canvas id="deficitChart" height="200"></canvas>
+    </div>
+
+    <!-- Population pyramid -->
+    <div class="pyramid-wrap reveal">
+      <div class="pyramid-title">Swiss Population Structure 2025 — Youth Cohorts Visibly Shrinking</div>
+      <div class="pyramid-labels">
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <div style="width:40px;"></div>
+          <span class="pyramid-label male">Male</span>
+        </div>
+        <span class="pyramid-label female">Female</span>
+      </div>
+      <div id="pyramid"></div>
+      <div style="margin-top:1rem; font-family:var(--ff-mono); font-size:0.6rem; color:var(--text-dim);">
+        Note: Bar widths represent relative age group population share. The narrowing at younger ages is the structural driver of the crisis.
+      </div>
+    </div>
+
+    <!-- 2024 political events -->
+    <h3 style="margin-top:2rem;">The 2024 Political Contradiction</h3>
+
+    <div class="warn-box reveal">
+      <p>In March 2024, Swiss voters simultaneously approved the 13th AHV pension (higher entitlements) by 58.24% <strong>and</strong> rejected raising the retirement age to 66 by <strong>74.72%</strong>. This combination — more benefits demanded, reform mechanisms rejected — is the textbook gerontocracy dynamic. It consumed fiscal space at the worst possible demographic moment.</p>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="callout">
+          <div class="callout-label">13th pension approved March 2024</div>
+          <div class="callout-big">+8.33%</div>
+          <p>Annual AHV benefit increase. First payment December 2026. Adds ~CHF 2.45B to annual costs at full effect. Financing still being debated in parliament as of 2026.</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout">
+          <div class="callout-label">Retirement age rise rejected March 2024</div>
+          <div class="callout-big">74.7%</div>
+          <p>Against raising retirement age to 66. The AHV 2030 reform being drafted now explicitly excludes raising retirement age — politically impossible after this margin.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Immigration -->
+    <h3 style="margin-top:2rem;">The Immigration Buffer</h3>
+    <p>Switzerland's position relative to Japan and Italy is substantially better for one critical reason: immigration. The foreign-born population is <strong>30% of total residents</strong> — second highest in the OECD. Net migration has been persistently positive for two decades. These immigrants contribute to AHV and BVG in real time, directly supporting the pension base today.</p>
+
+    <blockquote>
+      <p>"Immigration is key for Switzerland's economy in terms of labour and skills. Over the past two decades, net migration has been persistently positive."</p>
+      <cite>OECD Economic Survey — Switzerland 2024</cite>
+    </blockquote>
+
+    <p>Switzerland received 136,000 new long-term immigrants in 2024. However, the buffer has limits: immigration is politically contested (SVP pressure), non-EU quotas are capped at 8,500 permits annually, and immigrants age too — they become net recipients eventually. The buffer is real but not a permanent structural solution.</p>
+  </div>
+</section>
+
+<!-- PART IV: REFORM TOOLKIT -->
+<section id="reforms">
+  <div class="container">
+    <div class="section-label">Part IV</div>
+    <h2>The Reform Toolkit — What Works, What Doesn't</h2>
+    <p>There are exactly seven levers available to any government facing this problem. Each has a measurable effectiveness level and a political cost. Switzerland has partially deployed several, structurally deployed none of the most powerful ones.</p>
+
+    <div class="reform-grid">
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">Raising Retirement Age</div>
+          <div class="reform-desc">Every additional year worked adds contributions, removes one year of payout. Sweden, Netherlands, Finland all implementing. Switzerland voted 74.7% against in 2024.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--green);">VERY HIGH effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill high" data-width="90"></div></div>
+        </div>
+        <div class="reform-political political-extreme">Politically extreme</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">NDC Automatic Stabilizers</div>
+          <div class="reform-desc">Sweden model: benefits automatically adjust to demographic reality without requiring a new vote. Removes the political gridlock problem permanently. Not yet on the Swiss policy table.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--green);">HIGHEST effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill high" data-width="100"></div></div>
+        </div>
+        <div class="reform-political political-high">High difficulty</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">Immigration (Skilled Workers)</div>
+          <div class="reform-desc">Fastest and most flexible lever. Working-age immigrants contribute immediately. Switzerland uses this extensively — 30% of population is foreign-born. Politically contested via SVP pressure.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--green);">HIGH effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill high" data-width="80"></div></div>
+        </div>
+        <div class="reform-political political-medium">Medium difficulty</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">VAT Increases</div>
+          <div class="reform-desc">Spreads financing burden across all economy including retirees. AHV 21 added 0.4pp. 13th pension debate centers on +0.7pp more. Regressive — hits lower incomes harder. Buys time, doesn't solve structure.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--gold);">MODERATE effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill mid" data-width="50"></div></div>
+        </div>
+        <div class="reform-political political-medium">Medium difficulty</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">Extending Working Lives (Incentive-Based)</div>
+          <div class="reform-desc">Voluntary incentives to work past 65. AHV 2030 reform focuses on this. The OECD specifically notes BVG age-tiered contributions make older workers more expensive, creating a counterproductive employer disincentive.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--gold);">MODERATE effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill mid" data-width="45"></div></div>
+        </div>
+        <div class="reform-political political-low">Low difficulty</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">Contribution Rate Increases</div>
+          <div class="reform-desc">Raising wage percentage paid into AHV. Directly burdens younger workers bearing the demographic cost already. Increases labour costs, potentially reducing employment and competitiveness.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--gold);">MODERATE short-term</div>
+          <div class="reform-bar"><div class="reform-bar-fill mid" data-width="40"></div></div>
+        </div>
+        <div class="reform-political political-medium">Medium difficulty</div>
+      </div>
+
+      <div class="reform-item">
+        <div>
+          <div class="reform-name">Fertility Incentives</div>
+          <div class="reform-desc">France has tried for decades. Results mixed at best. High opportunity cost of children in Swiss urban life is structural and cultural. Takes 20–25 years to affect the labour force even if successful. Not a short-term tool.</div>
+        </div>
+        <div class="reform-bar-wrap">
+          <div style="font-family:var(--ff-mono);font-size:0.55rem;color:var(--red);">LOW effectiveness</div>
+          <div class="reform-bar"><div class="reform-bar-fill low" data-width="20"></div></div>
+        </div>
+        <div class="reform-political political-low">Low difficulty</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART IV-B: HOW REFORMS ACTUALLY WORK -->
+<section id="reforms-deep">
+  <div class="container">
+    <div class="section-label">Part IV — Deep Dive</div>
+    <h2>How Each Reform Actually Works</h2>
+    <p>The summary scorecard tells you what each lever does. This section explains <em>how the money flows, what changes mechanically, who wins and who loses, and exactly what needs to happen politically</em> before any of it can be implemented in Switzerland.</p>
+
+    <!-- 1. Raising Retirement Age -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">1 — Raising the Retirement Age</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">The most direct lever. Works on both sides of the equation simultaneously.</div>
+        </div>
+        <div class="mechanic-eff eff-vhigh">Highest effectiveness</div>
+        <div class="reform-political political-extreme" style="white-space:nowrap;">Extreme difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the money flows</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--green)"></div>Each additional year worked = +1 year of contributions from worker + employer</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--green)"></div>Same year = AHV pays zero pensions to that cohort (not yet retired)</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Combined swing per cohort of ~80,000 workers: ~CHF 2–2.5B per year of delay</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>This compounds: a 67-year retirement age vs 65 = 2 years × CHF 2.5B = CHF 5B/year at full effect</div>
+          </div>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">~CHF 2.5B</div>
+              <div class="key-num-label">Annual AHV swing per year of retirement age increase</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">74.7%</div>
+              <div class="key-num-label">Swiss voters rejected rise to 66 in March 2024</div>
+            </div>
+          </div>
+          <p>The Netherlands has linked retirement age automatically to life expectancy — each year of life expectancy gain shifts retirement by 0.67 years, with 5 years advance notice. No new referendum required. Sweden implements the same from 2026. Finland from 2030. This "automatic link" model removes the political pain of repeated votes by building the adjustment into the law once.</p>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--red)"></div>
+            <span>Switzerland: Not currently on the table. AHV 2030 reform explicitly excludes retirement age changes after March 2024 vote. Life expectancy link being discussed for future reform cycle post-2030.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>Current workers (50–64)</td><td><span class="tag-neg">−</span> Must work 1–2 additional years before drawing pension. Loss of planned leisure time.</td></tr>
+            <tr><td>Young workers (you)</td><td><span class="tag-pos">+</span> Your future pension system is more solvent. Lower contribution increases needed. Contribution burden reduced.</td></tr>
+            <tr><td>Current retirees</td><td><span class="tag-neu">0</span> Unaffected — already receiving pension. AHV entitlement already locked.</td></tr>
+            <tr><td>Employers</td><td><span class="tag-neu">±</span> Workers available longer, but BVG costs rise steeply with age (see Reform #6). Mixed.</td></tr>
+            <tr><td>Low-income/manual workers</td><td><span class="tag-neg">−−</span> Greatest burden. Physical jobs cannot always be extended. Actuarially unfair — shorter life expectancy means fewer retirement years regardless.</td></tr>
+            <tr><td>AHV system</td><td><span class="tag-pos">++</span> Single highest-impact lever available. Addresses both expenditure (later payments) and revenue (more contributions) simultaneously.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Parliamentary bill amending AHV law (Referenzalter in AHVG)</li>
+            <li>Mandatory referendum vote (Bundesgesetz subject to optional referendum; change to constitution = obligatory referendum)</li>
+            <li>Minimum 50% voter majority — women's retirement age to 65 passed by only 50.55% in 2022</li>
+            <li>Transitional compensation measures for near-retirement cohorts (politically necessary)</li>
+            <li>Best path: automatic life expectancy link, requiring only one vote to enact permanently</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. NDC Automatic Stabilizers -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">2 — NDC Automatic Stabilizers (Sweden Model)</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">The architectural solution. Rebuilds the system so it self-corrects without requiring a political vote each time reality changes.</div>
+        </div>
+        <div class="mechanic-eff eff-vhigh">Structural fix</div>
+        <div class="reform-political political-high" style="white-space:nowrap;">Very high difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the mechanism works</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--blue)"></div>Each worker's contributions are credited to a <em>notional individual account</em> (not a real fund — a bookkeeping entry)</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--blue)"></div>Account balance grows each year with average wage growth (the economy-wide index)</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>At retirement: accumulated notional capital ÷ "annuity divisor" = annual pension. The divisor is recalculated each year using actual life expectancy of that cohort.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div><strong>Automatic brake:</strong> if total contributions fall below total projected payouts (i.e., demographics worsen), a "balance ratio" triggers proportional scaling of all accounts — reducing what everyone eventually receives, automatically, without a new vote.</div>
+          </div>
+          <p style="margin-top:0.75rem;">Under this model, the system never runs dry because the formula itself adjusts. People who live longer receive smaller annual pensions (the same total capital spread over more years). People who retire later receive larger pensions. The political gridlock problem is structurally removed.</p>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">−0.6%</div>
+              <div class="key-num-label">Sweden's pension costs as % GDP by 2050 (falling)</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">15–20 yr</div>
+              <div class="key-num-label">Transition period needed while old DB promises run in parallel</div>
+            </div>
+          </div>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--red)"></div>
+            <span>Switzerland: Not on any current reform agenda. AHV is constitutionally enshrined (Art. 111–113 of the Federal Constitution) as a defined benefit structure. Requires constitutional amendment — the highest political bar.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>Future workers (your generation)</td><td><span class="tag-pos">++</span> Guarantees a system that self-funds without crisis. Contribution rates stabilized. No surprise emergency increases.</td></tr>
+            <tr><td>Near-retirement cohort (50–65 now)</td><td><span class="tag-neg">−</span> Their defined-benefit expectations must be managed during transition. Pension amounts become uncertain rather than fixed — politically very difficult to accept.</td></tr>
+            <tr><td>Current retirees</td><td><span class="tag-neg">−</span> If automatic brake triggers during their retirement, they receive lower real pensions. This is the biggest political barrier — retirees vote.</td></tr>
+            <tr><td>Government</td><td><span class="tag-pos">++</span> Removes perpetual pension reform from political calendar. Eliminates structural deficit risk permanently. Major fiscal stabilization.</td></tr>
+            <tr><td>Financial markets</td><td><span class="tag-pos">+</span> Switzerland's sovereign creditworthiness improves as long-term pension liabilities are structurally managed.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Constitutional amendment to Art. 111–113 — requires double majority (voters + cantons)</li>
+            <li>Complete architectural rebuild of AHV administration and accounting systems</li>
+            <li>Cross-party political consensus — at minimum SP + FDP alignment (historically rare)</li>
+            <li>15–20 year transition plan running new NDC system alongside old DB promises</li>
+            <li>Public communication campaign reframing pension "certainty" as system sustainability</li>
+            <li>Timeline: earliest realistic full implementation: 2045–2050 even if started now</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. VAT Increases -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">3 — VAT Increases (Mehrwertsteuer)</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">The most politically viable short-term tool. Spreads the burden across the whole economy, including retirees who spend.</div>
+        </div>
+        <div class="mechanic-eff eff-mid">Buys time</div>
+        <div class="reform-political political-medium" style="white-space:nowrap;">Medium difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the money flows</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Parliament legislates a dedicated VAT rate increase, revenue earmarked for AHV compensation fund (Ausgleichsfonds)</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Every purchase of goods/services in Switzerland generates AHV revenue — including by retirees spending their pensions</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Revenue flows directly to AHV fund on a continuous basis — no lag time unlike contribution changes</div>
+          </div>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">CHF 400M</div>
+              <div class="key-num-label">Revenue per 0.1 percentage point of standard VAT</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">8.1%</div>
+              <div class="key-num-label">Current standard Swiss VAT rate (raised from 7.7% in AHV 21)</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">+0.7pp</div>
+              <div class="key-num-label">Proposed increase to fund 13th pension ≈ CHF 2.8B/year</div>
+            </div>
+          </div>
+          <p>The key insight: retirees spend roughly 60–70% of their income on VAT-applicable consumption. This means a VAT increase partially flows back from the pension recipients themselves — a self-correcting partial feedback loop. It's more distributionally fair than pure wage contribution increases that only burden workers.</p>
+          <p>However: VAT is <strong>regressive</strong> — lower-income households spend a higher share of income on consumption vs. savings. This hits people who can least afford it proportionally harder, which is a persistent critique from the left.</p>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--gold)"></div>
+            <span>Switzerland: Already used in AHV 21 (+0.4pp). 13th pension financing debate centers on another +0.7pp. Swiss voters have historically accepted small VAT increases for AHV — but voter fatigue is building.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>All consumers</td><td><span class="tag-neg">−</span> Every purchase costs slightly more. Diffuse burden across 9M people.</td></tr>
+            <tr><td>Low-income households</td><td><span class="tag-neg">−−</span> Disproportionate burden as % of income. Housing, food basics have reduced VAT rate but overall hit is regressive.</td></tr>
+            <tr><td>Retirees</td><td><span class="tag-neg">−</span> They contribute back via spending — partially self-funding but still a net cost.</td></tr>
+            <tr><td>Tourism/export sector</td><td><span class="tag-neu">0</span> Exports VAT-exempt. Hotels have separate reduced rate. Minimal competitive impact.</td></tr>
+            <tr><td>AHV system</td><td><span class="tag-pos">+</span> Immediate, reliable, broad-based revenue. Not subject to labour market fluctuations.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Parliamentary legislation — VAT increases above constitutional ceiling require constitutional amendment (mandatory referendum)</li>
+            <li>Constitutional ceiling currently at 8.1% standard rate — further increases require voter approval</li>
+            <li>Obligatory referendum: needs 50% popular majority + cantonal majority (double majority)</li>
+            <li>Swiss voters have approved AHV VAT increases in 1995, 1999, and 2022 — track record is positive</li>
+            <li>Reduced rates (food, medicine, books) also need adjustment — separate political negotiation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Contribution Rate Increases -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">4 — AHV Contribution Rate Increases</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">Raising the percentage of wages paid into AHV — the most direct revenue lever but with significant side effects on younger workers.</div>
+        </div>
+        <div class="mechanic-eff eff-mid">Short-term revenue</div>
+        <div class="reform-political political-medium" style="white-space:nowrap;">Medium difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the money flows</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Currently: employer pays 5.3% of gross salary + employee pays 5.3% = 10.6% total AHV contribution</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Raising by 0.5pp each side → 10.6% → 11.6% total. On median salary CHF 75,000: +CHF 750/year per worker</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>System-wide: ~5.1M workers × CHF 750 = CHF ~3.8B additional annual revenue at 0.5pp increase</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>Side effect: labour costs rise → employers may hire fewer people or automate → reduces the very contribution base being tapped</div>
+          </div>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">10.6%</div>
+              <div class="key-num-label">Current combined AHV contribution rate</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">CHF 3.8B</div>
+              <div class="key-num-label">Additional revenue from +0.5pp each side (est.)</div>
+            </div>
+          </div>
+          <p>The hidden problem: contribution rate increases are paid almost entirely by working-age people. They disproportionately burden the generation already carrying the demographic adjustment. Sweden's reform explicitly avoided this — its NDC model kept contribution rates fixed and adjusted benefits instead. Switzerland's approach has been to do the opposite.</p>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--gold)"></div>
+            <span>Switzerland: Under active debate as part of 13th pension financing. Parliament is currently considering a mixed solution of contribution increases + VAT. Both chambers leaning toward combination. No referendum needed for rate changes within legal range.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>Young workers (20–35)</td><td><span class="tag-neg">−−</span> Bear highest proportional cost — highest contribution years ahead with no corresponding benefit increase for their own future pension.</td></tr>
+            <tr><td>Mid-career workers (35–55)</td><td><span class="tag-neg">−</span> Significant but shorter remaining payment horizon than young workers.</td></tr>
+            <tr><td>Employers</td><td><span class="tag-neg">−</span> Labour costs rise. Switzerland already has very low employer social charges vs Germany/France — this partially erodes that competitive advantage.</td></tr>
+            <tr><td>Current retirees</td><td><span class="tag-pos">+</span> Contributions flow to them immediately. Zero cost to them personally.</td></tr>
+            <tr><td>Self-employed / freelancers</td><td><span class="tag-neg">−−</span> Pay both sides (employee + employer share) — any increase hits them double.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Parliamentary amendment to AHVG (AHV law) — no obligatory referendum for rate changes within constitutional bounds</li>
+            <li>Optional referendum possible if opponents collect 50,000 signatures within 100 days</li>
+            <li>Social partners (unions + employers) must be consulted — can trigger major opposition</li>
+            <li>Employers' federation historically opposes labour cost increases</li>
+            <li>Simpler and faster than VAT change; can be implemented in 12–18 months once decided</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. BVG Conversion Rate + Extending Working Lives -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">5 — BVG Conversion Rate Reform + Extending Working Lives</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">Two structurally linked problems: an actuarially broken conversion rate that transfers wealth from young to old, and a BVG cost structure that paradoxically punishes employers for keeping older workers.</div>
+        </div>
+        <div class="mechanic-eff eff-mid">Medium-term impact</div>
+        <div class="reform-political political-high" style="white-space:nowrap;">High difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">The conversion rate problem</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Conversion rate (Umwandlungssatz) = % of BVG capital paid as annual pension. Mandated: 6.8%</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>Life expectancy at 65 today: ~21 years. Actuarially fair rate at 2% return = ~4.76%. At 6.8%: retiree draws CHF 142,800 from CHF 100,000 over 21 years — a 42% overpayment vs actuarial reality.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>The gap (~CHF 1B+/year system-wide) is cross-subsidized by active worker contributions — an involuntary transfer from you to current retirees</div>
+          </div>
+          <div class="mechanic-col-label" style="margin-top:1rem;">The employer age-cost problem</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>BVG employer contribution rates are age-tiered: age 25–34 = 7% of salary. Age 55–65 = 18%</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>A 60-year-old costs the employer 2.6× more in pension contributions than a 25-year-old — a direct financial disincentive to employ or retain older workers</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Reform fix: flatten the age tiers, reduce the 55–65 rate, extend coverage to near-retirement years — making older workers less expensive to employ</div>
+          </div>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">CHF 1B+</div>
+              <div class="key-num-label">Annual cross-subsidy from workers to retirees via actuarially unfair conversion rate</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">6.8% → 5.3%</div>
+              <div class="key-num-label">Mandated rate vs. what most funds actually apply (non-mandatory portions)</div>
+            </div>
+          </div>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--red)"></div>
+            <span>Switzerland: BVG 21 reform (which addressed both) rejected by voters September 2024 — second defeat. Pension funds acting de facto without the protective compensatory measures the reform would have included.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>Active workers (all)</td><td><span class="tag-pos">+</span> Stop cross-subsidizing actuarially unfair conversion rate. Contributions actually fund their own future pension more directly.</td></tr>
+            <tr><td>New retirees (entering now)</td><td><span class="tag-neg">−</span> Lower mandatory conversion rate = lower annual pension from same accumulated capital. Need longer to "earn back" via longevity.</td></tr>
+            <tr><td>Part-time / low-income workers</td><td><span class="tag-pos">+</span> Lower entry threshold and relative coordination deduction would bring ~1.7M currently uncovered part-time workers (mostly women) into compulsory BVG coverage.</td></tr>
+            <tr><td>Older workers (55–65)</td><td><span class="tag-pos">+</span> Flatter age tiers make them cheaper to employ — more likely to be retained past 60.</td></tr>
+            <tr><td>Women</td><td><span class="tag-pos">++</span> Gender pension gap is 30–35% — worst of any Swiss pillar. Reform directly targeted this by including part-time work better. Rejection was a significant setback.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>New BVG 22 or BVG 23 parliamentary draft — third attempt needed</li>
+            <li>Subject to optional referendum — 50,000 signatures can trigger vote within 100 days of passage</li>
+            <li>Trade unions and left parties have blocked twice — need better compensatory measures to bring them on board</li>
+            <li>Key concession needed: guarantees for currently low-income and part-time workers that the conversion rate cut doesn't reduce their pension in absolute terms</li>
+            <li>Individual pension funds are already implementing de facto — formal reform would standardize protection and transparency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Immigration -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">6 — Immigration as a Demographic Buffer</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">The fastest and most flexible lever. Switzerland already relies on it heavily — but it has limits that are both political and structural.</div>
+        </div>
+        <div class="mechanic-eff eff-high">High effectiveness</div>
+        <div class="reform-political political-medium" style="white-space:nowrap;">Contested politically</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the money flows</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--green)"></div>Immigrant aged 28 earning CHF 75,000 gross: pays AHV employee contribution of 5.3% = CHF 3,975/year. Employer matches = CHF 3,975/year. Total: CHF 7,950/year to AHV from day 1.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--green)"></div>Also pays BVG contributions, income tax, VAT — comprehensive economic contribution across all fiscal streams</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>But: they accrue AHV entitlement for their own future retirement — a future liability. Net present value of contribution vs. eventual pension depends heavily on how long they stay.</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>Young immigrants (20–30) arriving now have 35–45 contribution years before drawing — very high net positive value for the AHV fund</div>
+          </div>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">30%</div>
+              <div class="key-num-label">Foreign-born share of Swiss population — 2nd highest in OECD</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">~CHF 24B</div>
+              <div class="key-num-label">Estimated annual AHV contributions from immigrant workers (est. 3M foreign workers)</div>
+            </div>
+          </div>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--gold)"></div>
+            <span>Switzerland: Already one of the world's most immigration-dependent economies. EU/EFTA free movement is the primary channel. Non-EU quotas (8,500 permits) are tightly capped. SVP continuously pushes for reduction. Structural tension between fiscal need and political sentiment.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>AHV system (now)</td><td><span class="tag-pos">++</span> Immediate, large-scale revenue contribution without any reform legislation required.</td></tr>
+            <tr><td>AHV system (future)</td><td><span class="tag-neu">±</span> Future liability grows as immigrants age. Net positive only if contribution years > pension years.</td></tr>
+            <tr><td>Swiss labour market</td><td><span class="tag-pos">+</span> Fills shortages in science, engineering, healthcare, ICT — the OECD's 2024 identified shortage occupations.</td></tr>
+            <tr><td>Low-skilled Swiss workers</td><td><span class="tag-neg">−</span> Wage competition in lower-skill sectors. Housing demand pressure in urban areas where immigrants concentrate.</td></tr>
+            <tr><td>Swiss infrastructure</td><td><span class="tag-neg">−</span> Transport, housing, schools require investment proportional to population growth. Short-term fiscal pressure on cantons.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Maintain and potentially expand EU/EFTA free movement agreement — currently under renegotiation (Swiss-EU bilateral III)</li>
+            <li>Increase non-EU annual quotas above current 8,500 B permits + 4,000 L permits</li>
+            <li>Faster professional qualification recognition (agreements with Canada, UK already signed)</li>
+            <li>Integration programs to maximize labour force participation among already-resident immigrants</li>
+            <li>Political challenge: SVP's Initiative Massnahme and similar campaigns. Any mandatory referendum on immigration policy is high-risk.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Fertility -->
+    <div class="mechanic-card">
+      <div class="mechanic-header">
+        <div>
+          <div class="mechanic-title">7 — Fertility Incentives</div>
+          <div style="font-family:var(--ff-mono);font-size:0.6rem;color:var(--text-dim);margin-top:0.25rem;">The slowest lever in existence. Works on a 25-year lag. Evidence from France — the most sustained experiment globally — shows modest effects at enormous cost.</div>
+        </div>
+        <div class="mechanic-eff eff-low">Low near-term</div>
+        <div class="reform-political political-low" style="white-space:nowrap;">Low difficulty</div>
+      </div>
+      <div class="mechanic-body">
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">How the mechanism works (and why it's slow)</div>
+          <div class="flow-chain">
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>Fertility incentive introduced today → additional births in years 1–5</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--red)"></div>Those children enter the workforce in approximately 20–25 years (2045–2050)</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>The AHV crisis peaks in 2030–2040 — fertility incentives cannot help during the critical window at all</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node"><div class="flow-dot" style="background:var(--gold)"></div>France spent 4.5% of GDP annually on family policy for decades. Result: fertility rose from ~1.65 to ~1.83 — meaningful but far from replacement, and at an annual cost of CHF 15–20B equivalent at Swiss scale</div>
+          </div>
+          <p>The fundamental driver of low fertility — the high opportunity cost of children relative to dual-income urban professional lifestyles — is structural and cultural. Cash transfers reduce but do not eliminate this calculation. Switzerland's fertility at 1.5 reflects one of the world's most expensive childcare systems, high urban housing costs, and career-intensive professional culture.</p>
+          <div class="key-number-band">
+            <div class="key-num-cell">
+              <div class="key-num-value">1.5</div>
+              <div class="key-num-label">Swiss fertility rate (2.1 needed for replacement)</div>
+            </div>
+            <div class="key-num-cell">
+              <div class="key-num-value">25 yrs</div>
+              <div class="key-num-label">Minimum lag before any new births affect the labour force</div>
+            </div>
+          </div>
+          <div class="ch-status-bar">
+            <div class="ch-status-dot" style="background:var(--gold)"></div>
+            <span>Switzerland: Some cantonal childcare subsidies, maternity/paternity leave improvements. No national-scale fertility programme. Unlikely to be prioritised over faster-acting tools given AHV's immediate fiscal pressure.</span>
+          </div>
+        </div>
+        <div class="mechanic-col">
+          <div class="mechanic-col-label">Who it affects and how</div>
+          <table class="impact-table">
+            <tr><th>Stakeholder</th><th>Impact</th></tr>
+            <tr><td>Young families (now)</td><td><span class="tag-pos">+</span> Reduced childcare costs, better parental leave — direct quality of life improvement regardless of demographic effect.</td></tr>
+            <tr><td>Women's career trajectories</td><td><span class="tag-pos">+</span> Better childcare enables higher female labour force participation immediately — a faster demographic benefit than waiting 25 years for new workers.</td></tr>
+            <tr><td>AHV (short term)</td><td><span class="tag-neg">−</span> Childcare subsidies cost money now. Children are pure fiscal cost for 20+ years before contributing.</td></tr>
+            <tr><td>AHV (long term, 2055+)</td><td><span class="tag-pos">+</span> Larger cohort of contributors in retirement of today's Gen Z. Meaningful only if fertility rises substantially.</td></tr>
+            <tr><td>Employers</td><td><span class="tag-pos">+</span> Better female labour participation reduces talent shortages. Employer-funded childcare partially worthwhile as retention tool.</td></tr>
+          </table>
+          <div class="mechanic-col-label" style="margin-top:1rem;">What's needed to implement</div>
+          <ul class="req-list">
+            <li>Expanded federal childcare subsidies — currently minimal and cantonal. Estimated cost: CHF 1–2B/year for meaningful coverage</li>
+            <li>Extension of paid parental leave beyond current 14-week maternity + 2-week paternity</li>
+            <li>Structural housing reform in urban areas to reduce family formation costs</li>
+            <li>Parliamentary legislation — no mandatory referendum for subsidy programmes within existing budget</li>
+            <li>Key insight: Better childcare improves women's labour participation <em>now</em> — a faster benefit than waiting for new workers in 2050. Both effects compound.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART V: SCENARIOS -->
+<section id="scenarios">
+  <div class="container">
+    <div class="section-label">Part V</div>
+    <h2>Best Case, Worst Case, Most Likely</h2>
+    <p>Three genuinely possible trajectories, each with a realistic probability assessment based on current political conditions and historical precedent.</p>
+
+    <div class="scenario-grid">
+      <div class="scenario scenario-best reveal">
+        <div class="scenario-header">
+          <div class="scenario-type">Best Case</div>
+          <div class="scenario-title">The Swedish Path</div>
+        </div>
+        <div class="scenario-body">
+          <p>AHV 2030 reform enacts NDC-style automatic stabilizers. Retirement age gradually rises to 67 or links to life expectancy. BVG reform passes on a third attempt. Immigration remains strong and skilled. AI-driven productivity gains are captured in wages, sustaining contribution bases. Pillar 3 participation rises substantially among younger cohorts.</p>
+          <p>Under this scenario: your generation faces <strong>higher contribution rates in the 2030s and 2040s</strong> but benefits from a stable, properly funded system when you retire in the 2050s–2060s.</p>
+          <div class="scenario-prob">Probability: Low to Moderate — requires cross-party consensus sustained across multiple electoral cycles in a direct democracy system.</div>
+        </div>
+      </div>
+
+      <div class="scenario scenario-mid reveal">
+        <div class="scenario-header">
+          <div class="scenario-type">Most Likely</div>
+          <div class="scenario-title">The German Muddle</div>
+        </div>
+        <div class="scenario-body">
+          <p>Incremental reforms continue. VAT rises modestly. Voluntary working-life extension helps at margins. Immigration provides a buffer. AHV runs deficits from early 2030s financed by reserve drawdown plus further tax adjustments. Pillar 2 conversion rates are quietly reduced by individual funds without formal parliamentary approval.</p>
+          <p>Benefit levels are slowly eroded in real terms through inflation and purchasing power losses rather than explicit cuts. <strong>No single dramatic crisis — a sustained, quiet deterioration</strong>. Your generation gets meaningfully less than today's retirees relative to final salary.</p>
+          <div class="scenario-prob">Probability: High — this is the Japan/Germany outcome. Muddling through without failure but also without genuine resolution.</div>
+        </div>
+      </div>
+
+      <div class="scenario scenario-worst reveal">
+        <div class="scenario-header">
+          <div class="scenario-type">Worst Case</div>
+          <div class="scenario-title">The Forced Resolution</div>
+        </div>
+        <div class="scenario-body">
+          <p>A severe global recession in the 2030s reduces contributions precisely when the baby boomer wave peaks. Political gridlock prevents pre-emptive reform. AHV reserve fund depleted ahead of schedule. Emergency benefit cuts are imposed with little warning. Housing market deterioration as the large elderly population liquidates real estate simultaneously.</p>
+          <p>In Switzerland's direct democracy: the worst case is not government imposing cuts — it is referendums blocking every reform until the system faces genuine solvency, and emergency measures are imposed <strong>outside the normal democratic process</strong>.</p>
+          <div class="scenario-prob">Probability: Low but non-trivial — the 2024 votes (13th pension + age rise rejected + BVG reform rejected) moved the needle meaningfully toward this path.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container reveal" style="margin-top:2rem;">
+      <div class="chart-title">Switzerland Government Debt-to-GDP — Projected Scenarios to 2050</div>
+      <canvas id="debtChart" height="200"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- PART V-B: FATHER'S SCENARIO -->
+<section id="father">
+  <div class="container">
+    <div class="section-label">Part V — Generational Comparison</div>
+    <h2>Retiring into the Storm — Your Father's Cohort (2028)</h2>
+    <p>Your father retires in approximately 2028 — right into the eye of the baby boomer peak demand wave. He is not the victim of the crisis: <em>his cohort is structurally its cause</em>. But the irony is that if the system fails to reform, he also bears real consequences in his later retirement years. His situation is fundamentally different from yours — better in some ways, more exposed in others.</p>
+
+    <!-- Cohort banner -->
+    <div class="father-cohort-banner reveal">
+      <div class="cohort-year-badge">2028</div>
+      <div class="cohort-text">
+        <h3>The Baby Boomer at the Gate</h3>
+        <p>Born ~1960–1963. Contributed to AHV for ~40 years. Enters retirement precisely when the 3.4-to-1 worker ratio begins its steepest compression toward 2-to-1. He is among the last cohort to draw a pension under the old fiscal reality — and the first to feel the consequences if it starts to crack in the 2030s. His retirement horizon is approximately 25 years (2028–2053), spanning all three phases of the coming crisis.</p>
+      </div>
+      <div class="cohort-locked-in">
+        <div style="font-family:var(--ff-mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem;">What's locked in for him</div>
+        <div class="lock-item"><span class="lock-check">✓</span> 13th AHV pension (Dec 2026)</div>
+        <div class="lock-item"><span class="lock-check">✓</span> ~40 years of AHV contributions</div>
+        <div class="lock-item"><span class="lock-check">✓</span> Current BVG conversion rates</div>
+        <div class="lock-item"><span class="lock-check">✓</span> CHF ~47B AHV reserve fund intact</div>
+        <div class="lock-item"><span class="lock-warn">⚠</span> Healthcare cost trajectory</div>
+        <div class="lock-item"><span class="lock-warn">⚠</span> Real purchasing power after 2030</div>
+        <div class="lock-item"><span class="lock-x">✗</span> AHV benefit cuts post-2035 (risk)</div>
+        <div class="lock-item"><span class="lock-x">✗</span> Long-term care cost uncovered</div>
+      </div>
+    </div>
+
+    <!-- Horizontal timeline -->
+    <h3 style="margin-top:2.5rem;">His 25-Year Retirement Timeline</h3>
+    <p>Four distinct phases, each with a different risk profile and different levers he can pull.</p>
+
+    <div class="father-htl reveal">
+      <div class="father-htl-inner">
+        <div class="father-phase ph-a">
+          <div class="father-phase-dot"></div>
+          <div class="father-phase-year">2028–2032</div>
+          <div class="father-phase-label">Entry — Stable Window</div>
+          <div class="father-phase-desc">13th pension active. AHV reserve intact. BVG at locked conversion rate. Early retirement years are fiscally the most secure of his horizon. Low systemic risk.</div>
+        </div>
+        <div class="father-phase ph-b">
+          <div class="father-phase-dot"></div>
+          <div class="father-phase-year">2032–2040</div>
+          <div class="father-phase-label">Risk Escalation</div>
+          <div class="father-phase-desc">AHV deficits real and growing. Baby boomer wave at maximum. Healthcare costs compounding 4–6%/year. Nominal pension stable but purchasing power beginning to erode. Reform or not — this decade defines his income in the next one.</div>
+        </div>
+        <div class="father-phase ph-c">
+          <div class="father-phase-dot"></div>
+          <div class="father-phase-year">2040–2048</div>
+          <div class="father-phase-label">Maximum Exposure</div>
+          <div class="father-phase-desc">If 2030s reform failed: real pension value has eroded significantly. Healthcare is largest budget item. Long-term care costs potentially emerging. If reform succeeded: stabilisation visible, system on new trajectory.</div>
+        </div>
+        <div class="father-phase ph-d">
+          <div class="father-phase-dot"></div>
+          <div class="father-phase-year">2048–2053</div>
+          <div class="father-phase-label">Late Retirement</div>
+          <div class="father-phase-desc">System trajectory largely locked in. Pillar 2 capital exhausted or still drawing. Long-term care most likely relevant. Key variable: did he have supplemental healthcare insurance and sufficient Pillar 3? Wealth transfer to children.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three scenarios -->
+    <h3 style="margin-top:2.5rem;">Three Scenarios for His Retirement</h3>
+    <p>Unlike your generation where the outcome is still being decided, his first 7–8 years are relatively secure. The divergence point is the 2032–2038 period — whether Switzerland manages its AHV crisis or enters emergency territory.</p>
+
+    <div class="father-scenarios">
+      <div class="father-scen fs-good">
+        <div class="father-scen-head">
+          <div class="father-scen-type">Good Outcome</div>
+          <div class="father-scen-title">Comfortable &amp; Cushioned</div>
+        </div>
+        <div class="father-scen-body">
+          <p>Strong BVG accumulation, active Pillar 3, AHV 2030 reform stabilizes the system. Healthcare costs managed via supplemental insurance. Housing owned and paid off.</p>
+          <div class="income-projection">
+            <div class="income-row"><span>AHV (13th pension)</span><span class="income-val pos">CHF ~2,100/mo</span></div>
+            <div class="income-row"><span>BVG pension</span><span class="income-val pos">CHF ~2,400/mo</span></div>
+            <div class="income-row"><span>Pillar 3 drawdown</span><span class="income-val pos">CHF ~800/mo</span></div>
+            <div class="income-row"><span>Total gross</span><span class="income-val pos">~CHF 5,300/mo</span></div>
+            <div class="income-row"><span>Healthcare incl. supplemental</span><span class="income-val warn">−CHF 900/mo</span></div>
+            <div class="income-row"><span>Real net 2040 purchasing power</span><span class="income-val pos">~CHF 3,800/mo ✓</span></div>
+          </div>
+          <p>The 13th pension more than compensates for any real-term erosion in the early years. Reform prevents structural cuts. Comfortable by any metric.</p>
+        </div>
+      </div>
+
+      <div class="father-scen fs-base">
+        <div class="father-scen-head">
+          <div class="father-scen-type">Most Likely Outcome</div>
+          <div class="father-scen-title">Gradual Real Erosion</div>
+        </div>
+        <div class="father-scen-body">
+          <p>Moderate BVG, partial Pillar 3. AHV nominally maintained but not indexed to healthcare inflation. Real purchasing power declines 15–25% over 20 years. No emergency, but measurably less comfortable from the mid-2030s onward.</p>
+          <div class="income-projection">
+            <div class="income-row"><span>AHV (13th pension, real 2040)</span><span class="income-val warn">CHF ~1,950/mo</span></div>
+            <div class="income-row"><span>BVG pension</span><span class="income-val warn">CHF ~2,000/mo</span></div>
+            <div class="income-row"><span>Pillar 3 (limited)</span><span class="income-val warn">CHF ~300/mo</span></div>
+            <div class="income-row"><span>Healthcare (KVG + extras)</span><span class="income-val neg">−CHF 1,100/mo</span></div>
+            <div class="income-row"><span>Real net 2040 purchasing power</span><span class="income-val warn">~CHF 2,800/mo ⚠</span></div>
+          </div>
+          <p>The Krankenkassenprämien are the silent retirement killer here. Rising 5–8%/year, they consume an ever-larger fraction of a nominally fixed income. The 13th pension essentially gets fully absorbed by healthcare cost growth within 8–10 years.</p>
+        </div>
+      </div>
+
+      <div class="father-scen fs-risk">
+        <div class="father-scen-head">
+          <div class="father-scen-type">Risk Scenario</div>
+          <div class="father-scen-title">System Stress + Care Costs</div>
+        </div>
+        <div class="father-scen-body">
+          <p>AHV faces emergency cuts in mid-2030s. Poor Pillar 2 coverage (e.g., career gaps, part-time years). No supplemental insurance. Long-term care need emerges post-2045 — Pflegeheim costs CHF 6,000–12,000/month, EL (Ergänzungsleistungen) partially covers but means-testing depletes savings first.</p>
+          <div class="income-projection">
+            <div class="income-row"><span>AHV after emergency cut (est.)</span><span class="income-val neg">CHF ~1,700/mo</span></div>
+            <div class="income-row"><span>BVG (reduced/gap years)</span><span class="income-val neg">CHF ~1,200/mo</span></div>
+            <div class="income-row"><span>Pillar 3</span><span class="income-val neg">CHF 0</span></div>
+            <div class="income-row"><span>Healthcare incl. LTC (partially)</span><span class="income-val neg">−CHF 2,000+/mo</span></div>
+            <div class="income-row"><span>Real net 2045 purchasing power</span><span class="income-val neg">~CHF 900/mo ✗</span></div>
+          </div>
+          <p>The Ergänzungsleistungen (EL) acts as a floor — Switzerland does not let people starve in retirement. But EL is means-tested: any assets above a threshold (including housing equity) must be drawn down first. Dignity of retirement, not just survival, is at risk.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key risks specific to his cohort -->
+    <h3 style="margin-top:2.5rem;">The Five Risks Specific to His Cohort</h3>
+    <div class="risk-grid">
+      <div class="risk-card r-high">
+        <div class="risk-level">High risk</div>
+        <div class="risk-title">Healthcare Cost Inflation</div>
+        <p>Krankenkassenprämien (KVG) have risen 4–8% annually for years. A CHF 500/month premium today becomes CHF 900–1,100/month by 2040 in nominal terms. AHV is adjusted by the "Mischindex" (50% wages, 50% prices) — not by healthcare inflation. The gap compounds every year. Supplemental insurance (Zusatzversicherung) should be locked in <em>while still employed</em> — insurers can reject pre-existing conditions after retirement.</p>
+      </div>
+      <div class="risk-card r-high">
+        <div class="risk-level">High risk</div>
+        <div class="risk-title">Real Purchasing Power Erosion via Mischindex</div>
+        <p>AHV pensions are adjusted annually using a mixed index: 50% wage growth + 50% CPI. When wages grow faster than consumer prices — which is typical in a healthy Swiss economy — AHV pensions fall behind real living standards. Retirees effectively see a slow, invisible annual cut in relative purchasing power even when nominal amounts increase slightly. Over 20 years this compounds significantly.</p>
+      </div>
+      <div class="risk-card r-high">
+        <div class="risk-level">High risk</div>
+        <div class="risk-title">Long-Term Care (Pflegefinanzierung)</div>
+        <p>Switzerland's long-term care system is partially funded by the state, partially by private contribution. A nursing home (Pflegeheim) costs CHF 6,000–12,000/month. The statutory long-term care insurance (via KVG) covers nursing costs but not accommodation and meals (~CHF 3,000–6,000/month). Ergänzungsleistungen cover gaps but require asset depletion first. This is the single largest unquantified liability in Swiss retirement planning for his cohort.</p>
+      </div>
+      <div class="risk-card r-mid">
+        <div class="risk-level">Medium risk</div>
+        <div class="risk-title">AHV System Stress Post-2033</div>
+        <p>If AHV 2030 reform fails politically or is insufficient, the reserve fund drawdown accelerates post-2033. In the worst case, parliament is forced to reduce benefits. His cohort — fully in retirement, with no remaining ability to adjust savings behavior — bears these cuts without any recourse. The 13th pension ironically becomes the target of reversal first, since it was the most recent addition.</p>
+      </div>
+      <div class="risk-card r-mid">
+        <div class="risk-level">Medium risk</div>
+        <div class="risk-title">BVG Conversion Rate de Facto Decline</div>
+        <p>If he hasn't retired yet, his BVG fund may have already reduced its actual conversion rate below 6.8%. Most funds are at 5.0–5.5% for non-mandatory portions. The difference on CHF 400,000 accumulated capital: at 6.8% = CHF 27,200/year. At 5.3% = CHF 21,200/year. That's CHF 6,000/year less — permanently — with no compensation unless the BVG reform had passed (it didn't). He should request the exact Umwandlungssatz from his fund now.</p>
+      </div>
+      <div class="risk-card r-low">
+        <div class="risk-level">Lower risk (if planned)</div>
+        <div class="risk-title">Housing and Asset Concentration</div>
+        <p>If he owns property: maintenance costs rise with age, and the asset is illiquid. If renting: rent increases in Heimberg/Thun area continue (Referenzzinssatz mechanism allows periodic rent rises). Housing costs will likely consume a rising share of retirement income. Asset diversification matters — being 100% concentrated in Swiss real estate is not a hedge against the economic pressures this report describes.</p>
+      </div>
+    </div>
+
+    <!-- What he can do NOW -->
+    <h3 style="margin-top:2.5rem;">What He Can Still Do — Actions in the Next 3 Years</h3>
+    <p>With 3 years before retirement, there are still meaningful optimization moves. The window is closing but not closed.</p>
+
+    <div class="action-items">
+      <div class="action-item">
+        <div class="action-icon">3a</div>
+        <div>
+          <div class="action-title">Maximize Pillar 3a Immediately <span class="urgency-badge urg-now">Do now</span></div>
+          <p>CHF 7,200/year (2025 limit for employed people) is tax-deductible from cantonal + federal income. At his marginal rate — likely 25–35% — this represents CHF 1,800–2,500 in annual tax savings. Compound 3 years at even modest returns. Also consider opening a second 3a account (staggered withdrawals reduce tax burden at drawdown).</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">BVG</div>
+        <div>
+          <div class="action-title">Voluntary BVG Buy-In (Einkauf) <span class="urgency-badge urg-now">High priority</span></div>
+          <p>If he has contribution gaps (career changes, self-employment, periods abroad), he can make voluntary buy-in contributions to his pension fund (Einkauf in die Pensionskasse). These are 100% tax-deductible in the year of payment, with a 3-year lock-in before capital withdrawal. At his tax bracket this is one of the highest-return "investments" available. He should request a "Vorsorgeausweis" immediately to see the gap amount.</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">AHV</div>
+        <div>
+          <div class="action-title">Consider AHV Deferral (Aufschub) <span class="urgency-badge urg-soon">Worth modeling</span></div>
+          <p>He can defer AHV drawdown by up to 5 years past retirement age. Each year deferred increases the eventual monthly pension by approximately 5.2%. If he works part-time from 65–67, deferring for 2 years adds ~10.4% permanently to his AHV pension for life. This is particularly valuable if he or his partner is in good health — the break-even point is approximately age 77.</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">🏥</div>
+        <div>
+          <div class="action-title">Lock In Healthcare Coverage Now <span class="urgency-badge urg-now">Closes at retirement</span></div>
+          <p>Supplemental insurance (Zusatzversicherung) for private/semi-private hospital ward, dental, and international coverage is dramatically easier to obtain while employed and in good health. After retirement, insurers can demand health declarations and reject pre-existing conditions. The window to secure good supplemental coverage at reasonable premiums is the next 2–3 years.</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">½</div>
+        <div>
+          <div class="action-title">Model Phased / Partial Retirement <span class="urgency-badge urg-soon">Tax optimization</span></div>
+          <p>Switzerland allows partial AHV drawdown combined with continued part-time work. Drawing 50% AHV while working 50% keeps him in the contribution system, adds social engagement, and provides a gentler tax transition than full lump-sum pension receipt. BVG can be taken partially too — staggered withdrawals across multiple tax years significantly reduces the lump-sum withdrawal tax burden (which is canton-dependent but can be 6–12% of capital).</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">📋</div>
+        <div>
+          <div class="action-title">Request Full Pension Fund Audit <span class="urgency-badge urg-now">Today</span></div>
+          <p>He should obtain: (1) Vorsorgeausweis from his BVG fund — shows actual accumulated capital, conversion rate his fund applies, projected pension, and buy-in gap. (2) AHV Kontoauszug from the cantonal AHV office — shows all contribution years and projected pension amount. (3) Confirmation of Pillar 3a balances. These three documents give the complete picture from which all decisions flow.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box reveal" style="margin-top:1rem;">
+      <p><strong>The key insight for his generation:</strong> He enters retirement in a better fiscal position than it may appear — the 13th pension is real, his accumulated BVG capital is substantial, and the reserve fund is not yet depleted. His vulnerability is not the first decade but the second and third: the 2038–2053 window where healthcare compounding, potential system stress, and possible long-term care costs converge simultaneously. The optimization moves available to him now — Pillar 3a maximization, BVG buy-in, healthcare insurance timing — directly determine his resilience in exactly that window.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART VI: PERSONAL -->
+<section id="personal">
+  <div class="container">
+    <div class="section-label">Part VI — Your Generation</div>
+    <h2>What This Means If You're in Your 20s Right Now</h2>
+
+    <p>You are currently in your apprenticeship years. By the time you reach peak earning age — roughly 40 to 55 — Switzerland's demographic crisis will have fully matured. The AHV reserve will have been drawn on, the baby boomer wave will be fully retired, and the decisions being made in parliament between now and 2030 will have locked in the system you inherit.</p>
+
+    <blockquote>
+      <p>"Financial redistribution from young to old is already a thorn in the side of young generations and considered an unfair burden. Fairness to future generations demands reform quickly and sustainably."</p>
+      <cite>Swiss Life / LINK Institute — Intergenerational Solidarity Study</cite>
+    </blockquote>
+
+    <div class="warn-box reveal">
+      <p>The Deloitte 2025 survey found that <strong>almost half of Gen Z in Switzerland worries about retirement</strong>. Over a third of Gen Z and millennials struggle to cover monthly expenses — and more than half live paycheck to paycheck. Nearly half of Gen Z globally believes the state pension won't exist in its current form when they retire. <strong>These perceptions are not irrational. They are based on a correct reading of the math.</strong></p>
+    </div>
+
+    <h3 style="margin-top:2rem;">What This Means Practically</h3>
+
+    <div class="personal-grid">
+      <div class="personal-card">
+        <div class="personal-num">3a</div>
+        <div class="personal-title">Pillar 3 is Your Most Controllable Variable</div>
+        <p>AHV and BVG levels are set by politics and demographics. Your Pillar 3 contributions are entirely within your control, tax-advantaged, and compound over 40+ years. Starting mid-20s versus 35 produces a materially different retirement position. The compound effect at your age is enormous.</p>
+      </div>
+
+      <div class="personal-card">
+        <div class="personal-num">40%</div>
+        <div class="personal-title">Stress-Test Your AHV Replacement Assumption</div>
+        <p>Don't assume AHV replaces 60% of your income as it does for current retirees. Plan for 40–50% as a conservative stress-test. The structural erosion is real and ongoing. Build your Pillar 3 to cover the gap.</p>
+      </div>
+
+      <div class="personal-card">
+        <div class="personal-num">5.3%</div>
+        <div class="personal-title">Know Your BVG Fund's Real Conversion Rate</div>
+        <p>The mandated rate is 6.8%, but most pension funds have already quietly lowered their actual rate to around 5.3% for non-mandatory portions. This directly reduces your eventual pension. Understanding your specific fund's policy matters more than the legal minimum.</p>
+      </div>
+
+      <div class="personal-card">
+        <div class="personal-num">VT</div>
+        <div class="personal-title">Invest Pillar 3 Aggressively in Global Equity</div>
+        <p>A 40-year investment horizon is extraordinarily long. Broad global equity (VT/VWRL equivalent) over that timeframe has historically crushed conservative pension fund returns. Don't let Pillar 3 sit in a savings account. The time cost of conservatism at your age is enormous.</p>
+      </div>
+
+      <div class="personal-card">
+        <div class="personal-num">2040s</div>
+        <div class="personal-title">The Political Balance Will Shift — Eventually</div>
+        <p>As the baby boomer cohort ages out of the electorate (mortality) and the Gen Z cohort grows as a share of voters, pension politics will rebalance. The gerontocratic dominance peaks in the 2030s–2040s. After that, reform becomes progressively more achievable democratically. Your generation will have political power — eventually.</p>
+      </div>
+
+      <div class="personal-card">
+        <div class="personal-num">⚡</div>
+        <div class="personal-title">Data Center / AI Infrastructure Career Alignment</div>
+        <p>The only path to supporting more retirees with fewer workers runs through productivity growth. AI infrastructure is exactly what enables that. Your career trajectory is not just personally relevant — it is structurally relevant to the problem this report analyzes.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:2rem; border-top-color:var(--red);">
+      <div class="callout-label">The Hidden BVG Transfer — What Nobody Tells You</div>
+      <p>The occupational pension system contains what researchers call an "unintended solidarity transfer." The statutory conversion rate (6.8%) is not actuarially fair at current life expectancies — new retirees draw more than their contributions justified. The shortfall is cross-subsidized by the active working population. <strong>This is a hidden, automatic transfer from you to current retirees that happens without your knowledge or consent.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-label">Part VII</div>
+    <h2>The Timeline: Key Dates and What's at Stake</h2>
+    <p>From the reforms already locked in, to the projected crisis points, to the moment you retire. This is the sequence your generation will live through.</p>
+
+    <div class="timeline">
+      <div class="timeline-line"></div>
+
+      <div class="tl-item past">
+        <div class="tl-year">2022</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">AHV 21 Reform Passes</div>
+            <p class="tl-detail">Women's retirement age raised to 65 (equal to men). VAT raised by 0.4pp. Last successfully enacted AHV structural reform. Bought approximately 8–10 years of fiscal space.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item past">
+        <div class="tl-year">Sep 2024</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">BVG 21 Reform Rejected by Voters</div>
+            <p class="tl-detail">Second consecutive failure to reform the second pillar. Pension funds continue adjusting conversion rates downward de facto, without the protective measures the reform would have introduced for part-time and low-income workers.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-year">Dec 2026</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">13th AHV Pension — First Payment</div>
+            <p class="tl-detail">Approved in March 2024. Adds ~8.33% to annual AHV costs permanently. Financing source (VAT vs contributions vs mixed) still being debated in parliament as of mid-2026. Introduces ~CHF 2.45B in additional annual expenditure at full effect.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-year">2026–2028</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">AHV 2030 Reform Enters Parliament</div>
+            <p class="tl-detail">Federal Council must present draft by Spring 2026. Will not include retirement age increase. Focuses on: voluntary working-life extension incentives, removing max AHV age of 70, raising contribution thresholds, more equitable contribution structure. Possible VAT increase of 0.7pp.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item critical">
+        <div class="tl-year">~2030</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">Baby Boomer Retirement Wave — Peak Intensity</div>
+            <p class="tl-detail">The 1946–1964 birth cohort fully in retirement. AHV structural deficit projected at CHF 500M–2.5B annually depending on how 13th pension is financed. Reserve fund begins meaningful drawdown. This is the fiscal crux point.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item critical">
+        <div class="tl-year">2030–2040</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">Maximum Gerontocratic Pressure</div>
+            <p class="tl-detail">The retired population is at its largest as a share of the electorate. Reform windows are hardest to exploit. AHV deficit projected at CHF 4–5.7B annually by 2040. Government debt-to-GDP could rise from current levels toward 45–51% depending on scenario.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-year">2040+</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">Demographic Rebalancing Begins</div>
+            <p class="tl-detail">The baby boomer cohort begins aging out of the electorate. The Gen Z and millennial cohort grows as a share of the vote. Reform becomes progressively more achievable. The political landscape for pension adjustment begins to shift — but by how much depends entirely on what happened in the 2030s.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item you">
+        <div class="tl-year">2055–2065</div>
+        <div style="position:relative;">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-event">You Reach Retirement Age</div>
+            <p class="tl-detail">The system you will draw from is being designed by decisions made right now — between 2025 and 2030. The quality of that system depends entirely on whether Switzerland used its remaining Phase 2 window or spent it on political short-termism. Every CHF in your Pillar 3 today is insurance against the worst-case path.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p style="max-width:none; text-align:center; margin-bottom:0.5rem;">
+      Sources: Federal Social Insurance Office (FSIO) · Swiss Federal Council Reports 2024–2026 · OECD Economic Survey Switzerland 2024 · KOF ETH Zurich · Intereconomics 2022 · IMF Shrinkanomics Analysis · Oxford Institute of Population Ageing · Deloitte Global Gen Z Survey Switzerland 2025 · Swiss Life Intergenerational Study · SWI Swissinfo.ch · UBS BVG Analysis · PwC Switzerland
+    </p>
+    <p style="max-width:none; text-align:center; margin-top:0.5rem; opacity:0.5;">
+      Analysis compiled May 2026 · The Demographic Time Bomb: Switzerland's Aging Crisis
+    </p>
+  </div>
+</footer>
+
+<script>
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        e.target.classList.add('visible');
+        // Animate reform bars
+        if (e.target.classList.contains('reform-item')) {
+          const fill = e.target.querySelector('.reform-bar-fill');
+          if (fill) fill.style.width = fill.dataset.width + '%';
+        }
+      }, i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.phase, .country-card, .reform-item, .tl-item, .personal-card, .reveal, .mechanic-card, .father-scen, .risk-card, .action-item').forEach(el => observer.observe(el));
+
+// ── REFORM BAR OBSERVER ──
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.reform-bar-fill').forEach(fill => {
+        setTimeout(() => { fill.style.width = fill.dataset.width + '%'; }, 200);
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+// ── NAV ACTIVE STATE ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const id = e.target.id;
+      const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => navObserver.observe(s));
+
+// ── POPULATION PYRAMID ──
+const ageGroups = [
+  { age: '80+', m: 38, f: 58 },
+  { age: '75–79', m: 52, f: 62 },
+  { age: '70–74', m: 68, f: 74 },
+  { age: '65–69', m: 80, f: 85 },
+  { age: '60–64', m: 90, f: 91 },
+  { age: '55–59', m: 95, f: 94 },
+  { age: '50–54', m: 100, f: 99 },
+  { age: '45–49', m: 96, f: 95 },
+  { age: '40–44', m: 94, f: 92 },
+  { age: '35–39', m: 90, f: 88 },
+  { age: '30–34', m: 88, f: 85 },
+  { age: '25–29', m: 82, f: 78 },
+  { age: '20–24', m: 72, f: 68 },
+  { age: '15–19', m: 64, f: 60 },
+  { age: '10–14', m: 60, f: 57 },
+  { age: '5–9',   m: 57, f: 54 },
+  { age: '0–4',   m: 55, f: 52 },
+];
+
+const pyramidEl = document.getElementById('pyramid');
+const maxVal = 100;
+
+ageGroups.forEach(g => {
+  const row = document.createElement('div');
+  row.className = 'pyramid-row';
+  row.innerHTML = `
+    <div class="pyramid-left-side">
+      <div class="pyramid-bar-left" style="width:0" data-w="${(g.m / maxVal) * 180}px"></div>
+    </div>
+    <div class="pyramid-center pyramid-age">${g.age}</div>
+    <div class="pyramid-right-side">
+      <div class="pyramid-bar-right" style="width:0" data-w="${(g.f / maxVal) * 180}px"></div>
+    </div>
+  `;
+  pyramidEl.appendChild(row);
+});
+
+const pyramidObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.pyramid-bar-left, .pyramid-bar-right').forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.width = bar.dataset.w;
+        bar.style.transition = 'width 0.8s cubic-bezier(0.16,1,0.3,1)';
+      }, i * 25);
+    });
+  }
+}, { threshold: 0.2 });
+
+pyramidObserver.observe(pyramidEl);
+
+// ── CHARTS ──
+Chart.defaults.color = '#9a9490';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 10;
+
+// Country comparison chart
+const ctxCountry = document.getElementById('countryChart').getContext('2d');
+new Chart(ctxCountry, {
+  type: 'bar',
+  data: {
+    labels: ['Japan 2040', 'Italy 2040', 'Germany 2040', 'Switzerland 2040\n(no reform)', 'Switzerland 2040\n(reformed)', 'Sweden 2050'],
+    datasets: [{
+      label: 'Pension Expenditure % of GDP',
+      data: [30, 18.5, 14.2, 14.8, 12.1, 7.0],
+      backgroundColor: [
+        'rgba(200,55,58,0.7)', 'rgba(200,55,58,0.5)', 'rgba(201,168,76,0.5)',
+        'rgba(200,55,58,0.45)', 'rgba(58,156,110,0.55)', 'rgba(58,156,110,0.8)'
+      ],
+      borderColor: [
+        'var(--red)', 'rgba(200,55,58,0.8)', 'var(--gold)',
+        'rgba(200,55,58,0.7)', 'rgba(58,156,110,0.8)', 'var(--green)'
+      ],
+      borderWidth: 1,
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => `${ctx.parsed.y}% of GDP` }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.05)' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// AHV deficit chart
+const ctxDef = document.getElementById('deficitChart').getContext('2d');
+new Chart(ctxDef, {
+  type: 'line',
+  data: {
+    labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2032', '2034', '2036', '2038', '2040'],
+    datasets: [
+      {
+        label: 'Without reform + 13th pension (CHF B)',
+        data: [0.2, 0.4, 0.8, 1.1, 1.5, 2.0, 2.5, 3.0, 3.5, 4.2, 4.9, 5.7],
+        borderColor: 'var(--red)',
+        backgroundColor: 'rgba(200,55,58,0.08)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+      },
+      {
+        label: 'With sustainable reform (CHF B)',
+        data: [0.2, 0.3, 0.4, 0.3, 0.2, 0.2, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        borderColor: 'var(--green)',
+        backgroundColor: 'rgba(58,156,110,0.06)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        borderDash: [6, 3],
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index' },
+    plugins: {
+      legend: {
+        display: true,
+        labels: { boxWidth: 12, padding: 20, color: '#9a9490' }
+      },
+      tooltip: {
+        callbacks: { label: ctx => `${ctx.dataset.label}: CHF ${ctx.parsed.y}B` }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { callback: v => 'CHF ' + v + 'B' },
+        grid: { color: 'rgba(255,255,255,0.05)' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// Debt-to-GDP chart
+const ctxDebt = document.getElementById('debtChart').getContext('2d');
+new Chart(ctxDebt, {
+  type: 'line',
+  data: {
+    labels: ['2019', '2022', '2025', '2028', '2030', '2033', '2036', '2040', '2045', '2050'],
+    datasets: [
+      {
+        label: 'Best case (managed reform)',
+        data: [26, 27, 27, 27, 28, 29, 30, 31, 33, 35],
+        borderColor: 'var(--green)',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        tension: 0.4,
+        borderDash: [6,3],
+      },
+      {
+        label: 'Base case (incremental reform)',
+        data: [26, 27, 27.5, 28, 29, 31, 34, 38, 42, 45],
+        borderColor: 'var(--gold)',
+        backgroundColor: 'rgba(201,168,76,0.06)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+      },
+      {
+        label: 'Worst case (no reform)',
+        data: [26, 28, 29, 31, 33, 37, 41, 45, 48, 51],
+        borderColor: 'var(--red)',
+        backgroundColor: 'rgba(200,55,58,0.06)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index' },
+    plugins: {
+      legend: {
+        display: true,
+        labels: { boxWidth: 12, padding: 20, color: '#9a9490' }
+      },
+      tooltip: {
+        callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}% of GDP` }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        ticks: { callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.05)' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>

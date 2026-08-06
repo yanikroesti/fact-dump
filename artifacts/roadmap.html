@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — Elektroinstallateur → Data Center Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f1eb;
+    --cream: #ede8df;
+    --rule: #c8bfb0;
+    --accent: #b8372e;
+    --accent-light: #e8d5d3;
+    --muted: #8a8279;
+    --highlight: #d4a843;
+    --phase-active: #2a2a2a;
+    --check-done: #4a7c59;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* — HEADER — */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+  .masthead-kicker {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .masthead h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .masthead h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .masthead-sub {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    letter-spacing: 0.3px;
+  }
+
+  /* — PROGRESS BAR — */
+  .progress-strip {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .progress-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 2px;
+  }
+  .progress-pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--paper);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* — CONTAINER — */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* — PHASE — */
+  .phase {
+    margin-top: 3rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+  }
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .phase-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .phase-meta {
+    flex: 1;
+  }
+  .phase-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .phase-years {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .phase-toggle {
+    font-size: 1.2rem;
+    color: var(--muted);
+    transition: transform 0.3s ease;
+    align-self: center;
+  }
+  .phase.open .phase-toggle { transform: rotate(180deg); }
+
+  .phase-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  .phase.open .phase-body {
+    max-height: 3000px;
+  }
+
+  .phase-intro {
+    margin-top: 1rem;
+    font-weight: 300;
+    color: #444;
+    font-size: 14px;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  /* — STEPS — */
+  .steps {
+    margin-top: 1.25rem;
+    list-style: none;
+  }
+  .step {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px dotted var(--rule);
+    align-items: flex-start;
+  }
+  .step:last-child { border-bottom: none; }
+
+  .step-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 1.5px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 2px;
+    position: relative;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+  .step-check:checked {
+    background: var(--check-done);
+    border-color: var(--check-done);
+  }
+  .step-check:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -1px;
+    left: 2px;
+    font-size: 13px;
+    color: white;
+    font-weight: 600;
+  }
+
+  .step-content { flex: 1; }
+  .step-label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .step.done .step-label {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .step-detail {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+  .step-detail a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-light);
+  }
+  .step-detail a:hover {
+    border-color: var(--accent);
+  }
+
+  .step-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 3px;
+    display: inline-block;
+  }
+  .tag-free { background: #dce8dc; color: #3a5a3a; }
+  .tag-paid { background: #e8ddd0; color: #6b5840; }
+  .tag-cert { background: var(--accent-light); color: var(--accent); }
+  .tag-school { background: #d0d8e8; color: #3a4a6b; }
+
+  /* — SIDEBAR CALLOUT — */
+  .callout {
+    margin-top: 1.5rem;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .callout-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  /* — TARGET ROLES — */
+  .roles-grid {
+    margin-top: 1.5rem;
+  }
+  .role-card {
+    border: 1px solid var(--rule);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  .role-card:hover {
+    background: var(--cream);
+  }
+  .role-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .role-req {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-align: right;
+  }
+
+  /* — EMPLOYERS — */
+  .employers {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .employer-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--ink);
+    letter-spacing: 0.5px;
+  }
+
+  /* — FOOTER — */
+  .footer {
+    margin-top: 3rem;
+    border-top: 3px double var(--ink);
+    padding-top: 1.25rem;
+    text-align: center;
+  }
+  .footer p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* — ANIMATIONS — */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .phase {
+    animation: fadeIn 0.4s ease both;
+  }
+  .phase:nth-child(2) { animation-delay: 0.1s; }
+  .phase:nth-child(3) { animation-delay: 0.15s; }
+  .phase:nth-child(4) { animation-delay: 0.2s; }
+  .phase:nth-child(5) { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-kicker">Karriere-Roadmap · Persönlich</div>
+  <h1>Elektroinstallateur → <em>Data Center Engineer</em></h1>
+  <div class="masthead-sub">Hands-on Build & Commission · EFZ 2029+ · Schweiz</div>
+</header>
+
+<div class="progress-strip">
+  <span class="progress-label">Fortschritt</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════ PHASE 1 ═══════════════ -->
+  <section class="phase open" data-phase="1">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-num">1</span>
+      <div class="phase-meta">
+        <div class="phase-title">Fundament legen</div>
+        <div class="phase-years">Jetzt — Während der Lehre · bis 2029</div>
+      </div>
+      <span class="phase-toggle">▾</span>
+    </div>
+    <div class="phase-body">
+      <p class="phase-intro">Dein EFZ gibt dir bereits die Kernkompetenzen: Leistungsverteilung, NIN 2020, Sicherheitssysteme, Installationsschemas. Die meisten, die in Data Centers einsteigen, haben das <em>nicht</em>. Jetzt baust du das IT-Wissen drumherum.</p>
+
+      <ul class="steps">
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="1-1">
+          <div class="step-content">
+            <div class="step-label">Cisco NetAcad — Networking Basics (ITN) abschliessen</div>
+            <div class="step-detail">TCP/IP, VLANs, Subnetting, Structured Cabling. Gratis-Kurs, ca. 70h. <a href="https://www.netacad.com" target="_blank">netacad.com</a></div>
+            <span class="step-tag tag-free">Gratis</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="1-2">
+          <div class="step-content">
+            <div class="step-label">Data-Center-Grundwissen aufbauen</div>
+            <div class="step-detail">Uptime Tier Levels (I–IV), USV-Systeme, Kühlung (CRAC/CRAH), Redundanzkonzepte (N+1, 2N). YouTube-Kanäle: Practical Networking, Art of Server</div>
+            <span class="step-tag tag-free">Gratis</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="1-3">
+          <div class="step-content">
+            <div class="step-label">Englisch auf B2-Niveau bringen</div>
+            <div class="step-detail">Pflicht für HF-Zulassung und alle internationalen Zertifikate. Cambridge FCE oder IELTS empfohlen.</div>
+            <span class="step-tag tag-paid">Investition</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="1-4">
+          <div class="step-content">
+            <div class="step-label">Linux-Basics lernen</div>
+            <div class="step-detail">CLI-Navigation, File-System, Berechtigungen, SSH. Data-Center-Infrastruktur läuft auf Linux. <a href="https://linuxjourney.com" target="_blank">linuxjourney.com</a></div>
+            <span class="step-tag tag-free">Gratis</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="1-5">
+          <div class="step-content">
+            <div class="step-label">EFZ Elektroinstallateur bestehen</div>
+            <div class="step-detail">LAP / QV erfolgreich abschliessen. Dein Fundament für alles Weitere.</div>
+            <span class="step-tag tag-school">EFZ</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-title">Warum das zählt</div>
+        Stromverteilung, Sicherungssysteme, Schutzkonzepte — das ist der Teil, den IT-Leute mühsam nachlernen müssen. Du bringst ihn schon mit. Die Netzwerk- und Linux-Basics schliessen die Lücke zur IT-Welt.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PHASE 2 ═══════════════ -->
+  <section class="phase" data-phase="2">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-num">2</span>
+      <div class="phase-meta">
+        <div class="phase-title">Weiterbildung nach EFZ</div>
+        <div class="phase-years">2029 — 2032 · Berufsbegleitend</div>
+      </div>
+      <span class="phase-toggle">▾</span>
+    </div>
+    <div class="phase-body">
+      <p class="phase-intro">Zwei Routen stehen dir offen. Für Hands-on Data-Center-Arbeit ist die HF der stärkste Hebel — du qualifizierst dich für Führungs- und Fachpositionen, nicht nur Ausführung.</p>
+
+      <ul class="steps">
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="2-1">
+          <div class="step-content">
+            <div class="step-label">Dipl. Elektrotechniker HF — Programm starten</div>
+            <div class="step-detail">~3 Jahre berufsbegleitend. Schulen: STFW Winterthur, TEKO, ABB Technikerschule, BFI Bern. Gehalt danach ca. CHF 7'000 brutto/Mt.</div>
+            <span class="step-tag tag-school">HF · 3 Jahre</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="2-2">
+          <div class="step-content">
+            <div class="step-label">Oder: BP Elektroprojektleiter/in Installation & Sicherheit</div>
+            <div class="step-detail">Schnellerer Einstieg in Projektleiter-Rollen. Kann mit HF kombiniert werden. Kürzer, aber tiefere Decke ohne HF.</div>
+            <span class="step-tag tag-cert">BP · Alternative</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="2-3">
+          <div class="step-content">
+            <div class="step-label">Erste Berufserfahrung in Stark-/Schwachstrom-Projekten</div>
+            <div class="step-detail">Industrieinstallationen, USV-Anlagen, Notstromgruppen, Gebäudeautomation. Gezielt Erfahrung in kritischer Infrastruktur suchen.</div>
+            <span class="step-tag tag-paid">Praxis</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="2-4">
+          <div class="step-content">
+            <div class="step-label">HF-Abschluss — Dipl. Elektrotechniker HF</div>
+            <div class="step-detail">Diplom in der Tasche. Jetzt bist du qualifiziert für Fachpositionen in kritischer Infrastruktur.</div>
+            <span class="step-tag tag-school">Abschluss</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-title">Empfehlung</div>
+        HF ist der empfohlene Weg für Hands-on + Verantwortung. Die BP allein reicht für Projektleitung, aber die HF öffnet Türen zu Critical Infrastructure und MEP-Positionen.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PHASE 3 ═══════════════ -->
+  <section class="phase" data-phase="3">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-num">3</span>
+      <div class="phase-meta">
+        <div class="phase-title">Data-Center-Spezialisierung</div>
+        <div class="phase-years">2032 — 2035 · Zertifikate + Erfahrung</div>
+      </div>
+      <span class="phase-toggle">▾</span>
+    </div>
+    <div class="phase-body">
+      <p class="phase-intro">Mit HF + 2 Jahren Berufserfahrung stackst du jetzt die branchenspezifischen Zertifikate. Dein Elektro-Background gibt dir einen klaren Vorteil gegenüber IT-Kandidaten.</p>
+
+      <ul class="steps">
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="3-1">
+          <div class="step-content">
+            <div class="step-label">CDCP — Certified Data Centre Professional (EPI)</div>
+            <div class="step-detail">Einstiegszertifikat: Tier Levels, Verkabelung, Kühlung, Sicherheit, Brandschutz, Stromversorgung. 2-Tage-Kurs + Prüfung.</div>
+            <span class="step-tag tag-cert">Entry Level</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="3-2">
+          <div class="step-content">
+            <div class="step-label">2+ Jahre Erfahrung in DC-Operations oder kritischer Infrastruktur</div>
+            <div class="step-detail">Bewirb dich bei Equinix, Green.ch, Interxion (Schweiz) oder MEP-Ingenieurbüros. Hands-on mit USV, Generatoren, HVAC, Rack-Installationen.</div>
+            <span class="step-tag tag-paid">Praxis</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="3-3">
+          <div class="step-content">
+            <div class="step-label">CDCDP — Certified Data Centre Design Professional</div>
+            <div class="step-detail">Physische Infrastruktur, Stromverteilung, Klimatisierung, Datenverkabelung, Gebäudesysteme. Vom Entwurf bis zur Inbetriebnahme.</div>
+            <span class="step-tag tag-cert">Mid Level</span>
+          </div>
+        </li>
+        <li class="step">
+          <input type="checkbox" class="step-check" data-key="3-4">
+          <div class="step-content">
+            <div class="step-label">BICSI DCDC — Data Center Design Consultant</div>
+            <div class="step-detail">Integration von Dokumentation, Plänen, Spezifikationen, Bau- und Betriebsmanagement. Braucht nachweisbare DC-Erfahrung.</div>
+            <span class="step-tag tag-cert">Advanced</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-title">Dein Vorteil</div>
+        Der MEP-Bereich in Data Centers (USV, Notstromgeneratoren, HVAC, Brandschutz) — genau da schlägt dein Elektro-Hintergrund die IT-Kandidaten. Die meisten Bewerber können Server, aber keine Stromverteilung.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PHASE 4 ═══════════════ -->
+  <section class="phase" data-phase="4">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-num">4</span>
+      <div class="phase-meta">
+        <div class="phase-title">Ziel-Positionen</div>
+        <div class="phase-years">Ab 2035 · Karriere</div>
+      </div>
+      <span class="phase-toggle">▾</span>
+    </div>
+    <div class="phase-body">
+      <p class="phase-intro">Die konkreten Stellen, auf die du hinarbeitest. Alle setzen auf deinen Mix aus Elektro-Fundament, HF-Diplom und DC-Zertifikaten.</p>
+
+      <div class="roles-grid">
+        <div class="role-card">
+          <div class="role-name">Data Center Facilities Engineer</div>
+          <div class="role-req">EFZ + HF + CDCP</div>
+        </div>
+        <div class="role-card">
+          <div class="role-name">Critical Infrastructure Engineer</div>
+          <div class="role-req">HF + 3–5J + BICSI</div>
+        </div>
+        <div class="role-card">
+          <div class="role-name">Data Center Commissioning Engineer</div>
+          <div class="role-req">HF + CDCDP + Praxis</div>
+        </div>
+        <div class="role-card">
+          <div class="role-name">MEP Engineer (Data Center)</div>
+          <div class="role-req">HF + DC-Zertifikate</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Arbeitgeber Schweiz</p>
+        <div class="employers">
+          <span class="employer-tag">AWS (Zürich)</span>
+          <span class="employer-tag">Microsoft</span>
+          <span class="employer-tag">Equinix</span>
+          <span class="employer-tag">Green.ch</span>
+          <span class="employer-tag">Interxion</span>
+          <span class="employer-tag">MEP-Ingenieurbüros</span>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:1.5rem;">
+        <div class="callout-title">AWS-Referenz</div>
+        AWS listet explizit: Überwachung von Strom-, Kühlungs- und Brandschutzalarmen; Koordination von Lieferantenarbeiten; Rack-Installationen; Support der Infrastrukturteams — alles direkt anwendbar mit deinem Hintergrund.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Roadmap · Stand April 2026 · Fortschritt wird lokal gespeichert</p>
+</footer>
+
+<script>
+  // — Persist checkboxes —
+  const STORAGE_KEY = 'dc-roadmap-checks';
+
+  function loadState() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+  }
+
+  const state = loadState();
+  const checks = document.querySelectorAll('.step-check');
+
+  checks.forEach(cb => {
+    const key = cb.dataset.key;
+    if (state[key]) {
+      cb.checked = true;
+      cb.closest('.step').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      state[key] = cb.checked;
+      cb.closest('.step').classList.toggle('done', cb.checked);
+      saveState(state);
+      updateProgress();
+    });
+  });
+
+  // — Progress —
+  function updateProgress() {
+    const total = checks.length;
+    const done = document.querySelectorAll('.step-check:checked').length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+  updateProgress();
+
+  // — Accordion —
+  function togglePhase(header) {
+    header.closest('.phase').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

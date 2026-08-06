@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Format Picker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:        #0d0f14;
+  --surface:   #141720;
+  --surface2:  #1c2030;
+  --border:    #252a3a;
+  --border2:   #313852;
+
+  --accent:    #5b8fff;
+  --accent-bg: rgba(91,143,255,.12);
+  --accent-glow: rgba(91,143,255,.25);
+
+  --lime:      #a8ff57;
+  --lime-bg:   rgba(168,255,87,.1);
+
+  --pink:      #ff5fa0;
+  --pink-bg:   rgba(255,95,160,.1);
+
+  --amber:     #ffb340;
+  --amber-bg:  rgba(255,179,64,.1);
+
+  --text:      #e8eaf2;
+  --muted:     #6b7394;
+  --dim:       #2e3450;
+
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .025;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── CARD ── */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 880px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.03), 0 32px 80px rgba(0,0,0,.5);
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(91,143,255,.06) 0%, transparent 60%);
+}
+
+.header-left { display: flex; align-items: center; gap: 12px; }
+
+.logo-dot {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent-glow);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .6; transform: scale(.85); }
+}
+
+.header h1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -.3px;
+  color: var(--text);
+}
+
+.header-tag {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ── BODY LAYOUT ── */
+.body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+/* ── LEFT PANEL ── */
+.left {
+  padding: 20px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+.sec-label {
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* ── RATIO GRID ── */
+.ratio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.ratio-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 9px 4px 7px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: background .12s, border-color .12s, color .12s, box-shadow .12s;
+  line-height: 1;
+}
+
+.ratio-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+  background: var(--dim);
+}
+
+.ratio-btn.active {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(91,143,255,.15) inset, 0 0 14px rgba(91,143,255,.1);
+}
+
+.r-vis {
+  background: currentColor;
+  border-radius: 1px;
+  opacity: .55;
+  flex-shrink: 0;
+}
+
+.custom-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.custom-row input {
+  flex: 1;
+  width: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  padding: 7px 8px;
+  text-align: center;
+  outline: none;
+  transition: border-color .12s;
+}
+
+.custom-row input:focus { border-color: var(--accent); }
+.custom-sep { color: var(--muted); font-size: 18px; font-weight: 500; }
+
+/* ── DIMENSION BLOCKS ── */
+.dim-block { display: flex; flex-direction: column; gap: 8px; }
+
+.dim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dim-field { display: flex; align-items: center; gap: 5px; }
+
+.dim-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 5px 8px;
+  width: 82px;
+  text-align: right;
+  outline: none;
+  transition: border-color .12s, box-shadow .12s;
+}
+
+.dim-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.dim-unit { font-size: 11px; color: var(--muted); }
+
+/* ── PILLS ── */
+.pills { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.pill {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .1s;
+  line-height: 1.5;
+}
+
+.pill:hover { border-color: var(--border2); color: var(--text); }
+
+.pill.active {
+  border-color: var(--lime);
+  color: var(--lime);
+  background: var(--lime-bg);
+}
+
+/* ── SLIDER ── */
+.slider-wrap { padding: 2px 0; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: var(--dim);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px var(--accent-glow), 0 0 8px var(--accent-glow);
+  transition: transform .1s, box-shadow .1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 5px var(--accent-glow), 0 0 14px var(--accent-glow);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 15px; height: 15px;
+  background: var(--accent);
+  border-radius: 50%; border: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ── LOCK ── */
+.lock-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 9px 14px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  transition: all .12s;
+}
+
+.lock-btn:hover { border-color: var(--border2); color: var(--text); }
+
+.lock-btn.on {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: var(--pink-bg);
+  box-shadow: 0 0 14px rgba(255,95,160,.08);
+}
+
+.lock-icon { font-size: 13px; }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ── RIGHT PANEL ── */
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 28px;
+  position: relative;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(91,143,255,.04) 0%, transparent 70%);
+}
+
+/* dot grid bg */
+.right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--dim) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ── PREVIEW ── */
+.preview-area {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-box {
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: width .2s cubic-bezier(.4,0,.2,1), height .2s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 0 0 1px rgba(91,143,255,.1), 0 0 40px rgba(91,143,255,.1);
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.pb-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(91,143,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,143,255,.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.pb-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: .7;
+}
+.pb-corner.tl { top: 0; left: 0; border-width: 2px 0 0 2px; border-radius: 2px 0 0 0; }
+.pb-corner.tr { top: 0; right: 0; border-width: 2px 2px 0 0; border-radius: 0 2px 0 0; }
+.pb-corner.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; border-radius: 0 0 0 2px; }
+.pb-corner.br { bottom: 0; right: 0; border-width: 0 2px 2px 0; border-radius: 0 0 2px 0; }
+
+.pb-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 8px;
+}
+
+.pb-dims {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -.3px;
+}
+
+.pb-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.pb-w-label {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--accent);
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.pb-h-label {
+  position: absolute;
+  right: -34px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-size: 10px;
+  color: var(--accent);
+  white-space: nowrap;
+  font-style: italic;
+}
+
+/* ── STATS ── */
+.stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.stat:nth-child(1) { --c: var(--lime);  --cb: var(--lime-bg); }
+.stat:nth-child(2) { --c: var(--accent); --cb: var(--accent-bg); }
+.stat:nth-child(3) { --c: var(--amber); --cb: var(--amber-bg); }
+
+.stat:hover {
+  border-color: var(--c);
+  background: var(--cb);
+  box-shadow: 0 0 16px rgba(0,0,0,.2);
+}
+
+.stat-val {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  transition: color .2s;
+}
+
+.stat:hover .stat-val { color: var(--c); }
+
+.stat-key {
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* ── SWAP BTN ── */
+.swap-btn {
+  position: relative;
+  z-index: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .12s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swap-btn:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: var(--amber-bg);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+  .body { grid-template-columns: 1fr; }
+  .left { max-height: none; border-right: none; border-bottom: 1px solid var(--border); }
+  .right { padding: 24px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-dot"></div>
+      <h1>Format Picker</h1>
+    </div>
+    <span class="header-tag">Dimension Tool</span>
+  </div>
+
+  <div class="body">
+    <!-- LEFT -->
+    <div class="left">
+
+      <!-- RATIO -->
+      <div>
+        <div class="sec-label">Aspect Ratio</div>
+        <div class="ratio-grid" id="rGrid"></div>
+        <div class="custom-row" id="customRow" style="display:none">
+          <input type="number" id="crW" value="16" min="1" max="9999" placeholder="W">
+          <span class="custom-sep">:</span>
+          <input type="number" id="crH" value="9" min="1" max="9999" placeholder="H">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- WIDTH -->
+      <div class="dim-block">
+        <div class="dim-header">
+          <div class="sec-label" style="margin:0">Width</div>
+          <div class="dim-field">
+            <input class="dim-input" type="number" id="wIn" value="1920" min="1" max="7680">
+            <span class="dim-unit">px</span>
+          </div>
+        </div>
+        <div class="pills" id="wPills"></div>
+        <div class="slider-wrap">
+          <input type="range" id="wSlider" min="1" max="7680" value="1920" step="1">
+        </div>
+      </div>
+
+      <!-- LOCK -->
+      <button class="lock-btn on" id="lockBtn">
+        <span class="lock-icon" id="lockIcon">⛓</span>
+        <span id="lockTxt">Ratio locked</span>
+      </button>
+
+      <!-- HEIGHT -->
+      <div class="dim-block">
+        <div class="dim-header">
+          <div class="sec-label" style="margin:0">Height</div>
+          <div class="dim-field">
+            <input class="dim-input" type="number" id="hIn" value="1080" min="1" max="7680">
+            <span class="dim-unit">px</span>
+          </div>
+        </div>
+        <div class="pills" id="hPills"></div>
+        <div class="slider-wrap">
+          <input type="range" id="hSlider" min="1" max="7680" value="1080" step="1">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="preview-area">
+        <div class="preview-box" id="pBox">
+          <div class="pb-grid"></div>
+          <div class="pb-corner tl"></div>
+          <div class="pb-corner tr"></div>
+          <div class="pb-corner bl"></div>
+          <div class="pb-corner br"></div>
+          <div class="pb-content">
+            <div class="pb-dims" id="pDims">1920 × 1080</div>
+            <div class="pb-sub" id="pSub">16:9 · Full HD</div>
+          </div>
+          <span class="pb-w-label" id="pWLbl">1920 px</span>
+          <span class="pb-h-label" id="pHLbl">1080 px</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val" id="sMP">2.07 MP</div><div class="stat-key">Megapixels</div></div>
+        <div class="stat"><div class="stat-val" id="sRatio">16:9</div><div class="stat-key">Ratio</div></div>
+        <div class="stat"><div class="stat-val" id="sClass">Full HD</div><div class="stat-key">Class</div></div>
+      </div>
+
+      <button class="swap-btn" id="swapBtn">⇄ Swap W ↔ H</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const RATIOS = [
+  {l:'1:1',w:1,h:1}, {l:'4:3',w:4,h:3}, {l:'3:4',w:3,h:4}, {l:'3:2',w:3,h:2},
+  {l:'2:3',w:2,h:3}, {l:'16:9',w:16,h:9}, {l:'9:16',w:9,h:16}, {l:'16:10',w:16,h:10},
+  {l:'21:9',w:21,h:9}, {l:'9:21',w:9,h:21}, {l:'5:4',w:5,h:4}, {l:'Free',w:null,h:null}
+];
+
+const WP = [
+  {l:'360',v:360},{l:'720',v:720},{l:'1080',v:1080},{l:'1440',v:1440},
+  {l:'2K',v:2048},{l:'QHD',v:2560},{l:'4K',v:3840},{l:'8K',v:7680}
+];
+
+const HP = [
+  {l:'240',v:240},{l:'480',v:480},{l:'720',v:720},{l:'1080',v:1080},
+  {l:'1440',v:1440},{l:'2160',v:2160},{l:'4320',v:4320}
+];
+
+let S = { w:1920, h:1080, rW:16, rH:9, locked:true, activeR:'16:9' };
+
+function gcd(a,b){ return b===0?a:gcd(b,a%b); }
+function simplify(w,h){ const g=gcd(Math.round(w),Math.round(h)); return `${w/g}:${h/g}`; }
+function resClass(w,h){
+  const mp=w*h/1e6;
+  if(mp>=33) return '8K';
+  if(mp>=8)  return '4K';
+  if(mp>=5)  return 'QHD';
+  if(mp>=3.5)return '2.5K';
+  if(mp>=2)  return 'Full HD';
+  if(mp>=0.6)return 'HD';
+  if(mp>=0.2)return 'SD';
+  return 'Lo-Res';
+}
+
+/* -- BUILD RATIO GRID -- */
+function buildGrid(){
+  const g = document.getElementById('rGrid');
+  RATIOS.forEach(r => {
+    const b = document.createElement('button');
+    b.className = 'ratio-btn' + (r.l===S.activeR?' active':'');
+    b.dataset.l = r.l;
+    const vis = document.createElement('div');
+    vis.className = 'r-vis';
+    const MW=24, MH=20;
+    if(r.w&&r.h){
+      if(r.w>=r.h){ vis.style.width=MW+'px'; vis.style.height=Math.max(7,Math.round(MW*r.h/r.w))+'px'; }
+      else { vis.style.height=MH+'px'; vis.style.width=Math.max(5,Math.round(MH*r.w/r.h))+'px'; }
+    } else { vis.style.width='18px'; vis.style.height='13px'; }
+    b.appendChild(vis);
+    b.appendChild(document.createTextNode(r.l));
+    b.onclick = () => pickRatio(r);
+    g.appendChild(b);
+  });
+}
+
+/* -- BUILD PILLS -- */
+function buildPills(){
+  const ww = document.getElementById('wPills');
+  WP.forEach(p => {
+    const b = document.createElement('button');
+    b.className='pill'; b.textContent=p.l;
+    b.onclick = () => { setW(p.v); render(); };
+    ww.appendChild(b);
+  });
+  const hw = document.getElementById('hPills');
+  HP.forEach(p => {
+    const b = document.createElement('button');
+    b.className='pill'; b.textContent=p.l;
+    b.onclick = () => { setH(p.v); render(); };
+    hw.appendChild(b);
+  });
+}
+
+/* -- RATIO PICK -- */
+function pickRatio(r){
+  S.activeR = r.l;
+  document.querySelectorAll('.ratio-btn').forEach(b => b.classList.toggle('active', b.dataset.l===r.l));
+  const cr = document.getElementById('customRow');
+  if(r.l==='Free'){
+    S.locked=false; cr.style.display='flex'; updLock(); return;
+  }
+  cr.style.display='none';
+  S.rW=r.w; S.rH=r.h; S.locked=true; updLock();
+  S.h = Math.min(7680,Math.max(1,Math.round(S.w*r.h/r.w)));
+  render();
+}
+
+/* -- SET DIM -- */
+function setW(v){
+  S.w = Math.min(7680,Math.max(1,+v||1));
+  if(S.locked&&S.rW&&S.rH) S.h=Math.min(7680,Math.max(1,Math.round(S.w*S.rH/S.rW)));
+}
+function setH(v){
+  S.h = Math.min(7680,Math.max(1,+v||1));
+  if(S.locked&&S.rW&&S.rH) S.w=Math.min(7680,Math.max(1,Math.round(S.h*S.rW/S.rH)));
+}
+
+/* -- LOCK -- */
+function updLock(){
+  const btn = document.getElementById('lockBtn');
+  btn.classList.toggle('on', S.locked);
+  document.getElementById('lockIcon').textContent = S.locked ? '⛓' : '🔓';
+  document.getElementById('lockTxt').textContent = S.locked ? 'Ratio locked' : 'Ratio unlocked';
+}
+
+document.getElementById('lockBtn').onclick = () => {
+  if(S.activeR==='Free') return;
+  S.locked = !S.locked;
+  if(S.locked) S.h=Math.min(7680,Math.max(1,Math.round(S.w*S.rH/S.rW)));
+  updLock(); render();
+};
+
+/* -- SWAP -- */
+document.getElementById('swapBtn').onclick = () => {
+  [S.w,S.h]=[S.h,S.w];
+  if(S.locked){ [S.rW,S.rH]=[S.rH,S.rW]; }
+  render();
+};
+
+/* -- SLIDER / INPUT EVENTS -- */
+const wSlider=document.getElementById('wSlider'), hSlider=document.getElementById('hSlider');
+const wIn=document.getElementById('wIn'), hIn=document.getElementById('hIn');
+wSlider.oninput = () => { setW(wSlider.value); render(); };
+hSlider.oninput = () => { setH(hSlider.value); render(); };
+wIn.onchange = () => { setW(wIn.value); render(); };
+hIn.onchange = () => { setH(hIn.value); render(); };
+
+/* -- CUSTOM RATIO -- */
+const crW=document.getElementById('crW'), crH=document.getElementById('crH');
+function applyCustomRatio(){
+  S.rW=+crW.value||1; S.rH=+crH.value||1; S.locked=true; updLock();
+  S.h=Math.min(7680,Math.max(1,Math.round(S.w*S.rH/S.rW)));
+  render();
+}
+crW.onchange=applyCustomRatio; crH.onchange=applyCustomRatio;
+
+/* -- RENDER -- */
+function render(){
+  const maxW=420, maxH=210;
+  const asp = S.w/S.h;
+  let bw,bh;
+  if(asp>=maxW/maxH){ bw=maxW; bh=maxW/asp; }
+  else              { bh=maxH; bw=maxH*asp;  }
+  bw=Math.max(60,bw); bh=Math.max(40,bh);
+
+  const pBox = document.getElementById('pBox');
+  pBox.style.width  = Math.round(bw)+'px';
+  pBox.style.height = Math.round(bh)+'px';
+
+  const ratio = simplify(S.w,S.h);
+  const cls   = resClass(S.w,S.h);
+
+  document.getElementById('pDims').textContent = `${S.w} × ${S.h}`;
+  document.getElementById('pSub').textContent  = `${ratio} · ${cls}`;
+  document.getElementById('pWLbl').textContent = `${S.w} px`;
+  document.getElementById('pHLbl').textContent = `${S.h} px`;
+
+  const mp = (S.w*S.h/1e6).toFixed(2);
+  document.getElementById('sMP').textContent    = mp+' MP';
+  document.getElementById('sRatio').textContent = ratio;
+  document.getElementById('sClass').textContent = cls;
+
+  wIn.value=S.w; hIn.value=S.h;
+  wSlider.value=S.w; hSlider.value=S.h;
+
+  /* slider fill */
+  [wSlider,hSlider].forEach(sl => {
+    const pct = (sl.value-sl.min)/(sl.max-sl.min)*100;
+    sl.style.background=`linear-gradient(to right,#5b8fff ${pct}%,#2e3450 ${pct}%)`;
+  });
+
+  /* active pills */
+  document.querySelectorAll('#wPills .pill').forEach((p,i)=>p.classList.toggle('active',WP[i].v===S.w));
+  document.querySelectorAll('#hPills .pill').forEach((p,i)=>p.classList.toggle('active',HP[i].v===S.h));
+}
+
+buildGrid();
+buildPills();
+render();
+</script>
+</body>
+</html>

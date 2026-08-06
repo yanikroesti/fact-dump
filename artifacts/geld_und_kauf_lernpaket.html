@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geld und Kauf — Lernpaket | BZI ABU</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --surface-alt: #EDEAE3;
+  --ink: #1A1A18;
+  --ink-soft: #5A5750;
+  --ink-mute: #888378;
+  --accent: #C0392B;
+  --accent-light: #F8E8E6;
+  --accent-dark: #962D23;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --border: #D5D0C8;
+  --border-soft: #E5E1DA;
+  --shadow: 0 2px 12px rgba(26,26,24,0.08);
+  --shadow-sm: 0 1px 4px rgba(26,26,24,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  padding: 40px 0 28px;
+  border-bottom: 3px solid var(--ink);
+  margin-bottom: 28px;
+}
+header h1 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+header .subtitle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+header .meta {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+}
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 32px;
+  position: sticky;
+  top: 8px;
+  z-index: 100;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.tab-btn {
+  flex: 1;
+  min-width: max-content;
+  background: transparent;
+  border: none;
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: 9px;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SHARED ── */
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  margin: 36px 0 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+h2:first-child { margin-top: 0; }
+h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin: 22px 0 10px;
+  color: var(--ink);
+}
+h4 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  color: var(--ink);
+}
+p { margin-bottom: 12px; color: var(--ink); }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+
+.intro {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 24px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.card.compact { padding: 16px 18px; }
+
+.card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.card-title .num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.badge.or { background: var(--info-light); color: var(--info); }
+.badge.law { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box {
+  border-left: 3px solid var(--info);
+  background: var(--info-light);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 12px 0;
+  font-size: 0.94rem;
+}
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--accent); background: var(--accent-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box strong { color: inherit; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+tr:last-child td { border-bottom: none; }
+
+/* ── REVEAL ── */
+.reveal-btn {
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.18s;
+  letter-spacing: 0.02em;
+}
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--ink-soft); }
+
+.solution {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--success-light);
+  border-left: 3px solid var(--success);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.94rem;
+}
+.solution.show { display: block; animation: fadeIn 0.2s; }
+.solution h4 {
+  margin-top: 0;
+  color: var(--success);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── BEGRIFFE GRID ── */
+.begriff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.begriff {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.begriff dt {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.begriff dt .law-ref {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink-mute);
+  margin-left: 6px;
+}
+.begriff dd {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.begriff-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+.cat-chip {
+  background: var(--surface-alt);
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage {
+  position: relative;
+  margin: 18px 0 14px;
+}
+.flash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  min-height: 220px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: all 0.2s;
+}
+.flash-card:hover { box-shadow: 0 4px 18px rgba(26,26,24,0.12); }
+.flash-card .side-label {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+.flash-card .law-ref-flash {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+}
+.flash-front { font-family: var(--font-display); font-size: 1.8rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+
+.flash-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.flash-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--accent); border-color: var(--accent-light); }
+.flash-btn.bad:hover { background: var(--accent-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  padding: 0 8px;
+}
+.flash-stats {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+}
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-alt);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ── LERNPLAN ── */
+.day {
+  display: flex;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  align-items: flex-start;
+}
+.day-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--accent);
+  min-width: 50px;
+}
+.day-content { flex: 1; }
+.day-content h4 {
+  margin: 4px 0 4px;
+  font-size: 1rem;
+}
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  position: relative;
+}
+.day .check:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+.day .check:checked::after {
+  content: '✓';
+  color: white;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.milestone {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: white;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.milestone-icon {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.quiz-q .q-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.quiz-q .q-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.quiz-q .q-topic {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.quiz-q .q-source {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  margin-left: auto;
+}
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA / DIAGRAM ── */
+.schema {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+.schema-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: start;
+}
+.schema-row:last-child { border-bottom: none; }
+.schema-key {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.schema-key small {
+  display: block;
+  font-weight: 500;
+  color: var(--ink-mute);
+  font-size: 0.76rem;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+.compare-col {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.compare-col h4 {
+  margin-top: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border-soft);
+  margin-bottom: 10px;
+}
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--accent); color: var(--accent); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FORMULA / NUMBER BOX ── */
+.fact {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Geld &amp; Kauf</h1>
+  <div class="subtitle">BZI Allgemeinbildung · TK2 · Lernpaket</div>
+  <div class="meta">Vertragsrecht · Lohn &amp; Budget · Banken · Zahlungsverkehr · Kaufvertrag · Finanzierung</div>
+</header>
+
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     THEORIE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<p class="intro">Alles, was du für die Prüfung brauchst — strukturiert nach den 6 Stoffgebieten der Lernziele. Die Gesetzesartikel beziehen sich auf das <strong>OR</strong> (Obligationenrecht).</p>
+
+<!-- 1. Vertragsrecht -->
+<h2>1 · Vertragsrecht (OR)</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.1</span><h3>Aufbau des OR</h3></div>
+  <p>Das OR ist in <strong>5 Abteilungen</strong> gegliedert. Bei Rechtsfragen schaut man, wo das Thema hingehört, und sucht den passenden Artikel.</p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">1. Abteilung<small>OR 1–183</small></div><div class="schema-val">Allgemeine Bestimmungen — gilt für alle Verträge (Vertragsabschluss, Mängel, Erfüllung)</div></div>
+    <div class="schema-row"><div class="schema-key">2. Abteilung<small>OR 184–551</small></div><div class="schema-val">Einzelne Vertragsverhältnisse — Kauf, Tausch, Schenkung, Miete, Arbeitsvertrag, Auftrag …</div></div>
+    <div class="schema-row"><div class="schema-key">3. Abteilung<small>OR 552–926</small></div><div class="schema-val">Handelsgesellschaften und Genossenschaft (AG, GmbH, KG …)</div></div>
+    <div class="schema-row"><div class="schema-key">4. Abteilung<small>OR 927–963b</small></div><div class="schema-val">Handelsregister, Geschäftsfirmen, kaufmännische Buchführung</div></div>
+    <div class="schema-row"><div class="schema-key">5. Abteilung<small>OR 965–1186</small></div><div class="schema-val">Wertpapiere</div></div>
+  </div>
+  <div class="info-box"><strong>Lernziel:</strong> Den groben Aufbau beschreiben können <em>und</em> Gesetzesstellen nachschlagen.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.2</span><h3>Vertragsabschluss</h3></div>
+  <p>Ein Vertrag kommt zustande, sobald der <strong>gegenseitige Wille</strong> der Parteien übereinstimmt <span class="badge or">OR 1</span>. Bei beweglichen Sachen genügt mündliche Zustimmung — Formvorschriften gibt es nur in Spezialfällen.</p>
+  <h4>Formvorschriften</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Form</th><th>Beispiele</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Formfrei</strong> (mündlich genügt)</td><td>Alltagskäufe, Auftrag, Miete (Wohnung)</td></tr>
+      <tr><td><strong>Schriftlich</strong></td><td>Lehrvertrag, Konsumkredit, Bürgschaft (bis CHF 2'000)</td></tr>
+      <tr><td><strong>Öffentliche Beurkundung</strong></td><td>Grundstückkauf, Eheverträge, Erbverträge</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.3</span><h3>Vertragsmängel — wann ein Vertrag <em>ungültig</em> ist</h3></div>
+  <p>Auch wenn beide unterschrieben haben, kann ein Vertrag aus folgenden Gründen ungültig sein:</p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Widerrechtlicher Inhalt<small>OR 20</small></div><div class="schema-val">Vertrag verstösst gegen Gesetz (z.B. Drogendeal, Schweigegeld nach Unfallflucht).</div></div>
+    <div class="schema-row"><div class="schema-key">Sittenwidriger Inhalt<small>OR 20</small></div><div class="schema-val">Verstösst gegen die guten Sitten (z.B. unmoralische Wetten).</div></div>
+    <div class="schema-row"><div class="schema-key">Unmöglicher Inhalt<small>OR 20</small></div><div class="schema-val">Leistung kann objektiv nicht erbracht werden (z.B. ein Stein vom Jupiter verkaufen).</div></div>
+    <div class="schema-row"><div class="schema-key">Übervorteilung<small>OR 21</small></div><div class="schema-val">Offensichtliches Missverhältnis Leistung ↔ Gegenleistung; Ausnützung von Notlage / Unerfahrenheit.</div></div>
+    <div class="schema-row"><div class="schema-key">Wesentlicher Irrtum<small>OR 23 ff.</small></div><div class="schema-val">Sich beim Abschluss in einem wichtigen Punkt geirrt (Frist 1 Jahr ab Entdeckung).</div></div>
+    <div class="schema-row"><div class="schema-key">Absichtliche Täuschung<small>OR 28</small></div><div class="schema-val">Eine Partei verschweigt oder lügt über wichtige Tatsachen (z.B. verkaufter Unfallwagen als „einwandfrei").</div></div>
+    <div class="schema-row"><div class="schema-key">Drohung / Furchterregung<small>OR 29/30</small></div><div class="schema-val">Vertrag unter Druck oder Angst abgeschlossen.</div></div>
+    <div class="schema-row"><div class="schema-key">Handlungsunfähigkeit<small>ZGB 12 ff.</small></div><div class="schema-val">Minderjährige / urteilsunfähige Personen brauchen Zustimmung der gesetzlichen Vertretung — Ausnahme: <span class="fact">eigener Lohn</span> (ZGB 323).</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.4</span><h3>Vertragserfüllung — die 4 Arten von Unmöglichkeit</h3></div>
+  <p>Wenn die Leistung nicht erbracht werden kann, unterscheidet man:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Vor Vertragsabschluss schon unmöglich<br><em>(anfänglich)</em></th><th>Erst nach Vertragsabschluss unmöglich<br><em>(nachträglich)</em></th></tr></thead>
+    <tbody>
+      <tr><th>Niemand kann liefern<br><em>(objektiv)</em></th><td>Vertrag <strong>nichtig</strong> (OR 20)</td><td>Vertrag <strong>aufgelöst</strong>; ggf. Schadenersatz</td></tr>
+      <tr><th>Nur Verkäufer kann nicht<br><em>(subjektiv)</em></th><td>Vertrag <strong>gültig</strong>; Schadenersatz an Käufer</td><td>Vertrag <strong>gültig</strong>; Verkäufer haftet (sofern Verschulden)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="info-box"><strong>Beispiel Wagen-Aufgabe (BZI):</strong> Wagen 2 (vor Abschluss zerstört, B wusste nichts) = anfänglich subjektiv unmöglich. Wagen 4 (Blitz nach Abschluss, kein Verschulden) = nachträglich objektiv unmöglich.</div>
+</div>
+
+<!-- 2. Lohn & Budget -->
+<h2>2 · Lohn &amp; Budget</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.1</span><h3>Bruttolohn → Nettolohn</h3></div>
+  <p>Vom <strong>Bruttolohn</strong> (das, was du auf dem Vertrag verdienst) werden Sozialversicherungsbeiträge abgezogen. Was übrig bleibt = <strong>Nettolohn</strong> = das Geld auf deinem Konto.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Abzug</th><th>Anteil Arbeitnehmer</th><th>Wofür?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AHV/IV/EO</strong></td><td>5.3 % (AG zahlt gleich viel = 10.6 %)</td><td>Alters-, Invaliden-, Erwerbsersatzversicherung</td></tr>
+      <tr><td><strong>ALV</strong></td><td>1.1 % (total 2.2 %)</td><td>Arbeitslosenversicherung</td></tr>
+      <tr><td><strong>NBU</strong> (Nichtbetriebsunfall)</td><td>~ 1.4–2 %</td><td>Unfälle ausserhalb der Arbeit</td></tr>
+      <tr><td><strong>BVG</strong> (Pensionskasse)</td><td>~ 7 % (je nach Alter)</td><td>2. Säule, Rente</td></tr>
+      <tr><td><strong>KTG</strong> (fakultativ)</td><td>variabel</td><td>Krankentaggeld</td></tr>
+    </tbody>
+  </table></div>
+  <div class="info-box"><strong>Faustregel:</strong> Brutto → Netto = ca. 13–17 % Abzug bei einem normalen Lehrlingslohn (ohne Quellensteuer).</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.2</span><h3>Budget — fixe vs. variable Kosten</h3></div>
+  <div class="compare">
+    <div class="compare-col pro">
+      <h4>Fixe Kosten</h4>
+      <ul>
+        <li>Miete</li><li>Krankenkasse</li><li>Telefon / Internet</li><li>Versicherungen</li><li>Abos (GA, Streaming)</li><li>Steuern</li>
+      </ul>
+    </div>
+    <div class="compare-col con">
+      <h4>Variable Kosten</h4>
+      <ul>
+        <li>Lebensmittel</li><li>Kleider</li><li>Ausgang / Freizeit</li><li>Ferien</li><li>Geschenke</li><li>Reparaturen</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box success"><strong>Grundsatz:</strong> Einnahmen ≥ Ausgaben. Budget hilft, Überschuldung zu vermeiden und Sparziele zu erreichen.</div>
+  <p><strong>Bei Minus:</strong> Variable Kosten kürzen (am leichtesten), Abos prüfen, Nebenjob, Kreditkartenabos auflösen.</p>
+</div>
+
+<!-- 3. Banken & SNB -->
+<h2>3 · Geldinstitute &amp; SNB</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">3.1</span><h3>Schweizerische Nationalbank (SNB)</h3></div>
+  <p>Aufgaben der SNB:</p>
+  <ul>
+    <li><strong>Geldpolitik</strong> — Preisstabilität (Inflationsziel &lt; 2 %)</li>
+    <li><strong>Banknoten</strong> ausgeben (CHF 10–1000, aktuell 9. Serie)</li>
+    <li><strong>Devisenreserven</strong> verwalten (Euro, Dollar, Gold)</li>
+    <li><strong>Zahlungsverkehr</strong> stabilisieren (Bank der Banken)</li>
+    <li><strong>Statistik</strong> &amp; Finanzstabilität überwachen</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">3.2</span><h3>Geschäftsbanken — was machen sie?</h3></div>
+  <ul>
+    <li><strong>Konten führen</strong> (Lohn-, Privat-, Sparkonto)</li>
+    <li><strong>Zahlungsverkehr</strong> abwickeln (Aufträge, Karten, E-Banking)</li>
+    <li><strong>Kredite vergeben</strong> (Privatkredit, Hypothek, Konsumkredit)</li>
+    <li><strong>Anlegen / Vermögen verwalten</strong> (Fonds, ETF, Aktien)</li>
+    <li><strong>Sparen ermöglichen</strong> (Sparkonto mit Zins, Vorsorge 3a)</li>
+  </ul>
+  <h4>Wichtige Kontotypen</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Konto</th><th>Zweck</th><th>Zins</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lohnkonto / Privatkonto</strong></td><td>Tägliche Zahlungen, Lohneingang</td><td>~ 0 %</td></tr>
+      <tr><td><strong>Sparkonto</strong></td><td>Geld parken, Notgroschen</td><td>~ 0.1–0.5 % (Jugend etwas mehr)</td></tr>
+      <tr><td><strong>Säule 3a</strong></td><td>Private Vorsorge mit Steuervorteil</td><td>0.1–1 % + Steuerersparnis</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- 4. Zahlungsverkehr -->
+<h2>4 · Zahlungsverkehr</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.1</span><h3>Debitkarte vs. Kreditkarte</h3></div>
+  <div class="compare">
+    <div class="compare-col pro">
+      <h4>Debitkarte</h4>
+      <ul>
+        <li>Belastung <strong>sofort</strong> ab Konto</li>
+        <li>Nur Geld ausgeben, das auch da ist</li>
+        <li>Beispiele: Maestro, V-Pay, Postcard, Debit Mastercard</li>
+        <li>Bargeldbezug am Bancomat</li>
+      </ul>
+    </div>
+    <div class="compare-col con">
+      <h4>Kreditkarte</h4>
+      <ul>
+        <li>Belastung <strong>am Monatsende</strong> per Sammelrechnung</li>
+        <li>Karte gewährt einen Kredit (lat. <em>credere</em> = vertrauen)</li>
+        <li>Beispiele: VISA, Mastercard, AmEx, Diners</li>
+        <li>Im Internet weltweit nutzbar; Versicherungen oft inkl.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box warn"><strong>Risiko Kreditkarte:</strong> Wer monatlich nicht voll abbezahlt, zahlt 10–13 % Zins. Kreditkartenschulden sind eine häufige Ursache für Verschuldung bei jungen Leuten.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.2</span><h3>Bargeldlose Zahlungsarten</h3></div>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Zahlungsauftrag</div><div class="schema-val">Einzelne Überweisung, einmalig — manuell ausgelöst (z.B. Rechnung bezahlen via E-Banking).</div></div>
+    <div class="schema-row"><div class="schema-key">Dauerauftrag</div><div class="schema-val">Wenn ein <strong>fixer Betrag</strong> regelmässig an denselben Empfänger geht. Beispiel: Miete, Sparbetrag.</div></div>
+    <div class="schema-row"><div class="schema-key">LSV (Lastschriftverfahren)</div><div class="schema-val">Du ermächtigst ein Unternehmen, direkt vom Konto abzubuchen. Praktisch bei <strong>variablen Beträgen</strong> (Strom, Telefon, Krankenkasse).</div></div>
+    <div class="schema-row"><div class="schema-key">E-Banking</div><div class="schema-val">Online Bankkonto verwalten — günstig, 24/7, leichtes Sicherheitsrisiko (Phishing, Passwort).</div></div>
+    <div class="schema-row"><div class="schema-key">TWINT</div><div class="schema-val">Schweizer Mobile-Payment via App — direkt zwischen Privatpersonen oder im Laden mit QR-Code.</div></div>
+    <div class="schema-row"><div class="schema-key">PayPal</div><div class="schema-val">Internationale Online-Zahlungen mit Käuferschutz; Konto verknüpft mit Bank/Karte.</div></div>
+  </div>
+  <h4>Vor- und Nachteile</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Methode</th><th>Vorteile</th><th>Nachteile</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Banküberweisung</strong></td><td>Sicher, dokumentiert, im Voraus möglich</td><td>Portogebühren, Bearbeitungszeit</td></tr>
+      <tr><td><strong>E-Banking</strong></td><td>Bequem, 24/7, günstig</td><td>Cybersicherheit (Phishing, 2FA nötig)</td></tr>
+      <tr><td><strong>Postschalter</strong></td><td>Persönliche Beratung, sofortige Prüfung</td><td>Umständlich, zeitraubend, gebührenpflichtig</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- 5. Kaufvertrag -->
+<h2>5 · Kaufvertrag</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.1</span><h3>Grundlagen Kaufvertrag</h3></div>
+  <p>Geregelt in <span class="badge or">OR 184 ff.</span></p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Parteien</div><div class="schema-val"><strong>Käufer</strong> und <strong>Verkäufer</strong></div></div>
+    <div class="schema-row"><div class="schema-key">Pflichten Verkäufer<small>OR 184 I</small></div><div class="schema-val">Übergabe der Sache + Übertragung des Eigentums</div></div>
+    <div class="schema-row"><div class="schema-key">Pflichten Käufer<small>OR 184 I</small></div><div class="schema-val">Bezahlung des Kaufpreises</div></div>
+    <div class="schema-row"><div class="schema-key">Vertragsabschluss<small>OR 1</small></div><div class="schema-val">Gegenseitige Willensübereinstimmung (z.B. Annahme einer Bestellung)</div></div>
+    <div class="schema-row"><div class="schema-key">Eigentumsübertragung<small>OR 184 I</small></div><div class="schema-val">Bei beweglichen Sachen: mit der Übergabe</div></div>
+    <div class="schema-row"><div class="schema-key">Transportkosten<small>OR 189 I</small></div><div class="schema-val">Standardmässig <strong>Käufer</strong> (sofern nichts anderes vereinbart)</div></div>
+    <div class="schema-row"><div class="schema-key">Garantie / Gewährleistung<small>OR 210</small></div><div class="schema-val"><strong>2 Jahre</strong> ab Übergabe (Fahrnis); Mängel sofort melden</div></div>
+    <div class="schema-row"><div class="schema-key">Quittung aufbewahren</div><div class="schema-val">Mindestens <strong>5 Jahre</strong> (Verjährung Privatkäufe), bei Garantie 2 J. Beweis nötig</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.2</span><h3>Kaufarten</h3></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Art</th><th>Erklärung</th><th>Besonderheit</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Handkauf / Barkauf</strong></td><td>Ware und Geld werden gleichzeitig ausgetauscht (Zug um Zug, OR 184 II)</td><td>Sicher, kein Schuldverhältnis</td></tr>
+      <tr><td><strong>Kreditkauf</strong></td><td>Bezahlung erst nach vereinbarter Frist</td><td>Käufer hat Schuld; Risiko Überschuldung</td></tr>
+      <tr><td><strong>Versandkauf</strong></td><td>Online / Katalog; Lieferung gegen Rechnung</td><td>Käufer prüft bei Erhalt</td></tr>
+      <tr><td><strong>Haustürkauf</strong></td><td>Verkauf an der Wohnungstür / unangemeldet</td><td><strong>7 Tage Widerrufsrecht</strong> (eingeschriebener Brief)</td></tr>
+      <tr><td><strong>Internetkauf</strong></td><td>Online-Shopping</td><td>Sichere Shops (https, Impressum, Bewertungen) wählen</td></tr>
+      <tr><td><strong>Mietkauf / Abzahlungskauf</strong></td><td>Raten, Eigentum erst nach letzter Rate</td><td>Endpreis oft viel höher; Überschuldungsgefahr</td></tr>
+    </tbody>
+  </table></div>
+  <div class="info-box"><strong>Unbestellte Ware:</strong> Wer dir Ware ohne Bestellung schickt, kann nichts verlangen. Du musst sie weder zurücksenden noch bezahlen.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.3</span><h3>Vertragsverletzungen — die 3 Hauptfälle</h3></div>
+  <p class="intro" style="margin-bottom:14px;">Was tun, wenn etwas schiefgeht? Drei Szenarien, drei Vorgehensweisen.</p>
+
+  <h4>① Lieferverzug — Verkäufer liefert nicht (rechtzeitig) <span class="badge or">OR 102, 107</span></h4>
+  <ol>
+    <li><strong>Mahnung</strong> mit angemessener <strong>Nachfrist</strong> setzen</li>
+    <li>Wenn Frist verstreicht, hat Käufer 3 Wahlmöglichkeiten:
+      <ul>
+        <li>Vom Vertrag <strong>zurücktreten</strong></li>
+        <li><strong>Schadenersatz fordern</strong> + auf Lieferung bestehen</li>
+        <li><strong>Schadenersatz fordern</strong> + auf Lieferung verzichten</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h4>② Mangelhafte Lieferung <span class="badge or">OR 201, 205, 206, 210</span></h4>
+  <p>Käufer-Pflichten: Ware <strong>sofort prüfen</strong> + Mangel <strong>sofort melden</strong> (= Mängelrüge). 4 Wahlmöglichkeiten:</p>
+  <ul>
+    <li><strong>Wandelung</strong> — vom Vertrag zurücktreten, Geld zurück</li>
+    <li><strong>Minderung</strong> — Preis reduzieren</li>
+    <li><strong>Ersatzlieferung</strong> — neue, mängelfreie Ware</li>
+    <li><strong>Reparatur</strong> — nicht im Gesetz, aber praxisüblich</li>
+  </ul>
+
+  <h4>③ Zahlungsverzug — Käufer zahlt nicht <span class="badge or">OR 102, 104</span></h4>
+  <ol>
+    <li>1., evtl. 2./3. <strong>Mahnung</strong></li>
+    <li><strong>Verzugszins</strong> 5 % p.a. (OR 104)</li>
+    <li><strong>Betreibung</strong> einleiten (Zahlungsbefehl)</li>
+  </ol>
+
+  <div class="info-box danger"><strong>Wichtig:</strong> Die <em>Mängelrüge</em> ist Pflicht, sonst verliert man Garantieansprüche. Bei Lieferverzug ist die <em>Mahnung mit Nachfrist</em> die Eintrittskarte für die 3 Wahlrechte.</div>
+</div>
+
+<!-- 6. Finanzierung & Leasing -->
+<h2>6 · Finanzierungsarten &amp; Leasing</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.1</span><h3>Eigen- vs. Fremdfinanzierung</h3></div>
+  <div class="compare">
+    <div class="compare-col pro">
+      <h4>Eigenfinanzierung</h4>
+      <ul>
+        <li>Eigenes Geld / Erspartes</li>
+        <li>Keine Zinsen, keine Schulden</li>
+        <li>Volle Eigentumsrechte sofort</li>
+        <li>Aber: Sparen dauert; Liquidität sinkt</li>
+      </ul>
+    </div>
+    <div class="compare-col con">
+      <h4>Fremdfinanzierung</h4>
+      <ul>
+        <li>Bank- oder Konsumkredit, Leasing</li>
+        <li>Sofort kaufen können</li>
+        <li>Aber: Zins, Tilgungspflicht, Risiko Überschuldung</li>
+        <li>Endpreis immer höher als Barkauf</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.2</span><h3>Leasing — wie es funktioniert</h3></div>
+  <p>Leasing ist ein <strong>langfristiger Mietvertrag</strong> mit Kaufoption. Der Leasinggeber (meist Bank/Finanzinstitut) bleibt Eigentümer, der Leasingnehmer nutzt das Objekt gegen monatliche Raten.</p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Leasinggeber</div><div class="schema-val">Bank / Finanzinstitut, das das Objekt kauft und vermietet — bleibt Eigentümer</div></div>
+    <div class="schema-row"><div class="schema-key">Leasingnehmer</div><div class="schema-val">Du. Bezahlst monatliche Raten, nutzt das Objekt, hast aber kein Eigentum</div></div>
+    <div class="schema-row"><div class="schema-key">Leasingrate</div><div class="schema-val">Monatliche Zahlung — abhängig von Kaufpreis, Restwert, Laufzeit, Zins</div></div>
+    <div class="schema-row"><div class="schema-key">Restwert</div><div class="schema-val">Wert des Objekts <em>nach</em> der Laufzeit. Höherer Restwert = tiefere Rate, aber teurer Auskauf</div></div>
+    <div class="schema-row"><div class="schema-key">Vollkasko</div><div class="schema-val"><strong>Obligatorisch</strong> beim Autoleasing — zusätzlicher Fixkostenposten</div></div>
+    <div class="schema-row"><div class="schema-key">Widerrufsrecht (KKG)</div><div class="schema-val"><strong>14 Tage</strong> nach Erhalt der Vertragskopie schriftlich kündbar</div></div>
+    <div class="schema-row"><div class="schema-key">Kilometerlimite</div><div class="schema-val">Mehrkilometer = Nachzahlung pro km bei Rückgabe</div></div>
+  </div>
+  <div class="info-box warn"><strong>Faustregel TCS:</strong> Leasingrate × 2 = effektive monatliche Kosten (inkl. Vollkasko, Service, Reifen, Steuern). Leasing ist 10–15 % teurer als Barkauf.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.3</span><h3>KKG — Konsumkreditgesetz</h3></div>
+  <p>Das KKG schützt Konsumentinnen und Konsumenten vor Überschuldung durch Kredite und Leasing.</p>
+  <h4>Was fällt unter das KKG?</h4>
+  <ul>
+    <li>Privatkredite (Konsumkredite) bis CHF 80'000</li>
+    <li>Leasing für private Zwecke (z.B. Privatauto)</li>
+    <li>Kreditkarten / Überziehungen</li>
+  </ul>
+  <h4>Was fällt <em>nicht</em> darunter?</h4>
+  <ul>
+    <li>Hypotheken, gewerbliche Kredite</li>
+    <li>Kredite unter CHF 500 oder über CHF 80'000</li>
+    <li>Leasing für Geschäftszwecke</li>
+  </ul>
+  <h4>Schutzfunktionen</h4>
+  <ul>
+    <li><strong>Bonitätsprüfung</strong> durch Kreditgeber Pflicht</li>
+    <li><strong>Widerrufsrecht 14 Tage</strong> bei Konsumkredit / Leasing</li>
+    <li><strong>Maximalzins</strong> (aktuell 11 % bei Konsumkredit, 9 % bei Karten — wird vom Bundesrat festgelegt)</li>
+    <li>Eintrag im <strong>IKO</strong> (Informationsstelle für Konsumkredit)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.4</span><h3>Schulden &amp; Betreibung</h3></div>
+  <p>Wer Rechnungen ignoriert, riskiert eine <strong>Betreibung</strong> nach <span class="badge law">SchKG</span> (Bundesgesetz über Schuldbetreibung und Konkurs).</p>
+  <h4>Ablauf</h4>
+  <ol>
+    <li>Gläubiger stellt <strong>Betreibungsbegehren</strong> beim Betreibungsamt</li>
+    <li>Betreibungsamt schickt <strong>Zahlungsbefehl</strong></li>
+    <li>Schuldner kann <strong>Rechtsvorschlag</strong> erheben (innert 10 Tagen) — wenn er die Forderung nicht anerkennt</li>
+    <li>Sonst: <strong>Pfändung</strong> oder <strong>Konkurs</strong></li>
+  </ol>
+  <h4>3 Arten der Betreibung</h4>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Betreibung auf Pfändung</div><div class="schema-val">Standard für Privatpersonen — Lohn / Vermögenswerte werden gepfändet</div></div>
+    <div class="schema-row"><div class="schema-key">Betreibung auf Pfandverwertung</div><div class="schema-val">Wenn ein Pfand existiert (z.B. Hypothek auf Haus)</div></div>
+    <div class="schema-row"><div class="schema-key">Betreibung auf Konkurs</div><div class="schema-val">Für im Handelsregister eingetragene Personen / Firmen</div></div>
+  </div>
+  <h4>Existenzminimum</h4>
+  <p>Bei der Lohnpfändung darf nicht der ganze Lohn gepfändet werden — der Schuldner behält das <strong>betreibungsrechtliche Existenzminimum</strong>:</p>
+  <ul>
+    <li>Grundbetrag (Essen, Kleidung, Hygiene): ~CHF 1'200/Monat (Alleinstehende)</li>
+    <li>Miete (effektiv)</li>
+    <li>Krankenkasse (Grundversicherung)</li>
+    <li>Arbeitsweg, ggf. Unterhaltszahlungen</li>
+  </ul>
+  <h4>Kompetenzstücke (nicht pfändbar)</h4>
+  <p>Persönliche Gegenstände, die zum Leben/Arbeiten unbedingt nötig sind (Bett, Kleider, Werkzeuge des Berufs).</p>
+  <div class="info-box danger"><strong>Folgen einer Betreibung:</strong> 5 Jahre lang Eintrag im Betreibungsregister. Wirkt sich auf Wohnungs-/Jobsuche und neue Verträge negativ aus — auch ungerechtfertigte Betreibungen.</div>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BEGRIFFE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+
+<p class="intro">Alle wichtigen Begriffe aus den Lernzielen alphabetisch. Filter nach Thema oder suchen.</p>
+
+<input type="text" class="begriff-search" id="begriffSearch" placeholder="🔍 Begriff suchen…">
+<div class="cat-filter" id="catFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="recht">Recht</button>
+  <button class="cat-chip" data-cat="lohn">Lohn/Budget</button>
+  <button class="cat-chip" data-cat="bank">Bank/Zahlung</button>
+  <button class="cat-chip" data-cat="kauf">Kauf</button>
+  <button class="cat-chip" data-cat="finanz">Finanzierung</button>
+</div>
+
+<dl class="begriff-grid" id="begriffGrid">
+  <!-- Will be populated by JS -->
+</dl>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     KARTEIKARTEN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="karten">
+
+<p class="intro">Karteikarten für aktives Wiederholen. Klick zum Umdrehen, dann <strong>👍 gewusst</strong> oder <strong>👎 nochmal</strong>. „Nochmal"-Karten kommen zurück, bis du sie kannst.</p>
+
+<div class="cat-filter" id="cardCatFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="recht">Recht</button>
+  <button class="cat-chip" data-cat="lohn">Lohn/Budget</button>
+  <button class="cat-chip" data-cat="bank">Bank/Zahlung</button>
+  <button class="cat-chip" data-cat="kauf">Kauf</button>
+  <button class="cat-chip" data-cat="finanz">Finanzierung</button>
+</div>
+
+<div class="progress"><div class="progress-fill" id="cardProgress"></div></div>
+
+<div class="flash-stage">
+  <div class="flash-card" id="flashCard" onclick="flipCard()">
+    <span class="side-label" id="flashSide">VORDERSEITE</span>
+    <span class="law-ref-flash" id="flashLawRef"></span>
+    <div id="flashContent" class="flash-front">Klick zum Starten</div>
+  </div>
+</div>
+<p class="flash-hint">Tipp: Leertaste = umdrehen · ← → = navigieren</p>
+
+<div class="flash-controls">
+  <button class="flash-btn" onclick="prevCard()">← Zurück</button>
+  <button class="flash-btn bad" id="flashBad" onclick="rateCard(false)" disabled>👎 Nochmal</button>
+  <span class="flash-counter" id="flashCounter">0 / 0</span>
+  <button class="flash-btn good" id="flashGood" onclick="rateCard(true)" disabled>👍 Gewusst</button>
+  <button class="flash-btn" onclick="nextCard()">Weiter →</button>
+</div>
+<div class="flash-controls" style="margin-top:6px;">
+  <button class="flash-btn" onclick="shuffleCards()">🔀 Mischen</button>
+  <button class="flash-btn" onclick="resetCards()">↻ Zurücksetzen</button>
+</div>
+<div class="flash-stats">
+  <span><strong id="statsKnown">0</strong> gewusst</span>
+  <span><strong id="statsUnknown">0</strong> nochmal</span>
+  <span><strong id="statsTotal">0</strong> total</span>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     QUIZ
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="quiz">
+
+<p class="intro">Echte Fragen aus dem BZI-Material + zusätzliche Übungsfragen. Erst selber antworten, dann Lösung anzeigen lassen.</p>
+
+<div class="cat-filter">
+  <button class="cat-chip active" onclick="revealAll(true)">Alle Lösungen anzeigen</button>
+  <button class="cat-chip" onclick="revealAll(false)">Alle verstecken</button>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q1</span><span class="q-topic">Vertragsrecht</span><span class="q-source">BZI Aufbau OR</span></div>
+  <p class="q-text">Wie viele Mitglieder braucht es zur Gründung einer Aktiengesellschaft? In welcher Abteilung des OR steht das?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Eine oder mehrere natürliche oder juristische Personen genügen <span class="badge or">OR 620 / 625</span>. Steht in der <strong>3. Abteilung: Handelsgesellschaften</strong>, 26. Titel: Die Aktiengesellschaft.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q2</span><span class="q-topic">Vertragsrecht</span><span class="q-source">BZI Aufbau OR</span></div>
+  <p class="q-text">Du bestellst online Kleider; auf der Rechnung sind zusätzlich Versandkosten aufgeführt. Musst du diese bezahlen?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Ja — die Transportkosten zahlt grundsätzlich der Käufer <span class="badge or">OR 189 I</span>, ausser etwas anderes wurde vereinbart. (2. Abteilung, 6. Titel: Kauf und Tausch)</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q3</span><span class="q-topic">Vertragsmängel</span><span class="q-source">BZI Wein-Aufgabe</span></div>
+  <p class="q-text">Der Weinbauer erklärt beim Verkauf, der Wein habe 92 Öchsle. Tatsächlich sind es nur 82. Welche Vertragsverletzung ist das?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Mangelhafte Lieferung</strong> — die zugesicherte Eigenschaft fehlt. Käufer kann mit Mängelrüge eine der vier Wahlmöglichkeiten geltend machen (Wandelung, Minderung, Ersatzlieferung, Reparatur) <span class="badge or">OR 197, 205, 206</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q4</span><span class="q-topic">Vertragsmängel</span><span class="q-source">BZI Wein-Aufgabe</span></div>
+  <p class="q-text">Der Weinbauer verkauft auch 6 Flaschen Wein an zwei 15-Jährige. Was ist das rechtlich?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Der Vertrag ist <strong>widerrechtlich</strong> <span class="badge or">OR 20</span> (Verstoss gegen Jugendschutzgesetz für Alkoholverkauf an unter 16-Jährige). Zusätzlich: 15-Jährige sind beschränkt handlungsfähig — Zustimmung der Eltern nötig.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q5</span><span class="q-topic">Vertragsmängel</span><span class="q-source">BZI Wein-Aufgabe</span></div>
+  <p class="q-text">Müllers (Käufer) bezahlen die Weinrechnung nicht oder nicht rechtzeitig. Welche Vertragsverletzung?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Zahlungsverzug.</strong> Verkäufer kann mahnen → Verzugszins 5 % <span class="badge or">OR 102, 104</span> → notfalls Betreibung einleiten.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q6</span><span class="q-topic">Kaufvertrag</span><span class="q-source">BZI Grundwissen</span></div>
+  <p class="q-text">Wann findet bei beweglichen Sachen die Eigentumsübertragung statt?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Bei der <strong>Übergabe</strong> der Sache <span class="badge or">OR 184 I</span>. Vorher gehört sie noch dem Verkäufer.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q7</span><span class="q-topic">Kaufvertrag</span><span class="q-source">BZI Grundwissen</span></div>
+  <p class="q-text">Wie heissen die drei Gewährleistungsansprüche, die einem gemäss OR beim Gattungskauf zustehen, falls die Ware einen Mangel aufweist?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li><strong>Wandelung</strong> — vom Vertrag zurücktreten <span class="badge or">OR 205</span></li><li><strong>Minderung</strong> — Preisreduktion <span class="badge or">OR 205</span></li><li><strong>Ersatzlieferung</strong> — neue mängelfreie Ware <span class="badge or">OR 206</span></li></ol><p>Eine vierte praktische Möglichkeit (nicht im Gesetz): <strong>Reparatur</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q8</span><span class="q-topic">Kaufvertrag</span><span class="q-source">BZI Grundwissen</span></div>
+  <p class="q-text">Wie reagiert man, wenn der Verkäufer nicht rechtzeitig liefert?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Eine <strong>Liefermahnung</strong> mit angemessener Nachfrist setzen. Verstreicht die Frist, hat man drei Wahlrechte: Vertragsrücktritt / Schadenersatz mit Lieferung / Schadenersatz ohne Lieferung <span class="badge or">OR 102, 107</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q9</span><span class="q-topic">Kaufvertrag</span><span class="q-source">BZI Grundwissen</span></div>
+  <p class="q-text">Wie lange dauert die Garantiezeit bei Fahrniskäufen, wenn nichts Spezielles vereinbart wurde?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>2 Jahre</strong> <span class="badge or">OR 210</span>. Mängel müssen aber <em>sofort</em> nach Entdeckung gemeldet werden (Mängelrüge), sonst verliert man den Anspruch.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q10</span><span class="q-topic">Kaufvertrag</span><span class="q-source">BZI Grundwissen</span></div>
+  <p class="q-text">Welche spezielle Möglichkeit hat der Käufer bei einem Haustürkauf?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Innerhalb von <strong>7 Tagen</strong> kann der Vertrag <strong>schriftlich widerrufen</strong> werden. Empfehlung: eingeschriebener Brief — Poststempel des 7. Tages reicht.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q11</span><span class="q-topic">Vertragsverletzungen</span><span class="q-source">BZI Aufgaben</span></div>
+  <p class="q-text">Du bestellst eine Hi-Fi-Anlage für eine Party. Trotz Mahnung wird sie nicht termingerecht geliefert. Die Gäste sind mit der schlechten Ersatzanlage unzufrieden. Was kannst du tun?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Schadenersatz fordern und auf Lieferung verzichten.</strong> Die Lieferung jetzt nützt nichts mehr, da die Party vorbei ist <span class="badge or">OR 107</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q12</span><span class="q-topic">Vertragsverletzungen</span><span class="q-source">BZI Aufgaben</span></div>
+  <p class="q-text">Du erhältst 12 bestellte DVDs, davon 8 wegen schlechter Verpackung kaputt. Welche drei gesetzlichen Möglichkeiten hast du laut OR?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ul><li><strong>Ersatzlieferung</strong> <span class="badge or">OR 206</span></li><li><strong>Minderung</strong> (Preisreduktion) <span class="badge or">OR 205</span></li><li><strong>Wandelung</strong> (Vertragsrücktritt) <span class="badge or">OR 205</span></li></ul><p>Vorher: <strong>Mängelrüge</strong> einreichen <span class="badge or">OR 201</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q13</span><span class="q-topic">Lohn</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Lukas verdient brutto CHF 4'500. Welche Sozialabzüge werden vom Lohn abgezogen, und ungefähr wie viel?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ul><li>AHV/IV/EO: 5.3 % = ~239.- </li><li>ALV: 1.1 % = ~50.-</li><li>NBU: ~1.5 % = ~67.-</li><li>BVG: ~7 % = ~315.- (je nach Alter)</li></ul><p>Total Abzüge ca. CHF 670 → Nettolohn ca. <strong>CHF 3'830</strong>. Plus eventuell KTG und Quellensteuer.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q14</span><span class="q-topic">Zahlungsverkehr</span><span class="q-source">BZI Zahlungsverkehr</span></div>
+  <p class="q-text">Erkläre den Unterschied zwischen Debit- und Kreditkarte.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Bei der <strong>Debitkarte</strong> wird der Betrag <em>laufend</em> dem Konto belastet — du kannst nur Geld ausgeben, das auch da ist. Bei der <strong>Kreditkarte</strong> gewährt der Anbieter einen Kredit (lat. <em>credere</em> = vertrauen) und fordert das Geld erst Ende Monat per Sammelrechnung ein.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q15</span><span class="q-topic">Zahlungsverkehr</span><span class="q-source">BZI Zahlungsverkehr</span></div>
+  <p class="q-text">Erkläre LSV. Wann eignet es sich besonders?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Lastschriftverfahren:</strong> Du ermächtigst ein Unternehmen, seine Rechnungen direkt mit der Bank abzubuchen. Geeignet bei <strong>wiederkehrenden Rechnungen mit unterschiedlichen Beträgen</strong> — z.B. Strom, Telefon, Krankenkasse.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q16</span><span class="q-topic">Leasing</span><span class="q-source">BZI Iconomix</span></div>
+  <p class="q-text">Richtig oder falsch: „Wenn ich in finanzielle Engpässe gerate, kann ich den Leasingvertrag jederzeit ohne Zusatzkosten kündigen."</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Falsch.</strong> Nur innert <strong>14 Tagen</strong> nach Erhalt der Vertragskopie kann man schriftlich widerrufen. Danach ist die Kündigung zwar möglich, aber meist sehr teuer (Nachzahlungen, da rückwirkend höhere Raten berechnet werden).</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q17</span><span class="q-topic">Leasing</span><span class="q-source">BZI Iconomix</span></div>
+  <p class="q-text">Daniel hat ein Leasingangebot: Kaufpreis 20'000.-, Laufzeit 3 J., Restwert 7'000.-, Zins 5 % → Rate 417.35.- Bei Bank B: gleiche Bedingungen, aber Restwert 5'000.-, Rate 468.75.- Welches Angebot ist günstiger und wieso?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Bank A</strong> ist günstiger (51.40.- weniger pro Monat). Grund: A rechnet mit höherem Restwert (7'000 statt 5'000) → weniger Wertverlust während der Laufzeit muss über die Raten finanziert werden.</p><p><strong>Aber Vorsicht:</strong> Bei A muss Daniel am Schluss 7'000.- aufbringen, wenn er das Auto behalten will (statt 5'000 bei B). Tieferer Restwert = höhere Raten, dafür kleinere Schlusszahlung.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q18</span><span class="q-topic">Betreibung</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Du erhältst einen Zahlungsbefehl, den du für ungerechtfertigt hältst. Was tust du?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Innert 10 Tagen Rechtsvorschlag erheben</strong> beim Betreibungsamt (mündlich am Schalter oder schriftlich). Der Gläubiger muss dann seine Forderung gerichtlich beweisen, sonst wird die Betreibung gestoppt.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q19</span><span class="q-topic">Betreibung</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Was sind „Kompetenzstücke" bei einer Pfändung?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Persönliche Gegenstände, die für den Lebensunterhalt und die Berufsausübung <strong>unbedingt nötig</strong> sind und deshalb <strong>nicht gepfändet</strong> werden dürfen — z.B. Bett, Kleidung, Werkzeug des Berufs, einfacher Hausrat.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q20</span><span class="q-topic">Finanzierung</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Du willst dir ein Auto für CHF 20'000 kaufen. Du hast die Wahl zwischen Barkauf, Konsumkredit (8 % Zins, 36 Mt., Rate ~CHF 624) und Leasing (Rate ~CHF 417 + Vollkasko). Welche Lösung ist langfristig am günstigsten?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Barkauf</strong> — keine Zinsen, sofort dein Eigentum, Kontrolle über Versicherungen. Leasing wirkt monatlich günstig, aber: Vollkasko obligatorisch, am Schluss kein Eigentum, Total ~10–15 % teurer als Barkauf. Konsumkredit ist meistens am teuersten wegen hohem Zins.</p><p><strong>Faustregel:</strong> Wenn du sparen kannst, spar zuerst. Fremdfinanzierung nur, wenn das Bedürfnis dringend ist und das Budget die Raten <em>plus</em> Versicherung &amp; Service trägt.</p></div>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LERNPLAN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+
+<p class="intro">14-Tage-Plan für die Prüfung. Tag 1 startet heute (oder wann immer du anfängst). Hak ab, was du erledigt hast — der Fortschritt bleibt im Browser gespeichert.</p>
+
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="1"><div class="day-num">1</div><div class="day-content"><h4>Setup &amp; Überblick</h4><ul class="day-tasks"><li>Lernziele durchlesen — was muss ich am Schluss können?</li><li>Theorie-Tab überfliegen, alles 1× durchscrollen</li><li>15 Min: erste Karteikarten-Runde (zum Reinkommen)</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="2"><div class="day-num">2</div><div class="day-content"><h4>Vertragsrecht — Aufbau OR &amp; Vertragsabschluss</h4><ul class="day-tasks"><li>Theorie 1.1 + 1.2 lesen</li><li>OR-Aufbau: 5 Abteilungen auswendig</li><li>Formvorschriften (formfrei / schriftlich / öff. Beurkundung) — Beispiele merken</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="3"><div class="day-num">3</div><div class="day-content"><h4>Vertragsmängel — wann ungültig?</h4><ul class="day-tasks"><li>Theorie 1.3 + 1.4 (Unmöglichkeit)</li><li>OR 20, 21, 23, 28, 29 ans Smartphone als Notiz</li><li>Quiz Q3 + Q4 lösen</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="4"><div class="day-num">4</div><div class="day-content"><h4>Lohn &amp; Budget</h4><ul class="day-tasks"><li>Theorie 2.1 + 2.2</li><li>Sozialabzüge AHV/ALV/NBU/BVG mit Prozenten merken</li><li>Eigenes Budget skizzieren (5 Min)</li><li>Quiz Q13</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Meilenstein Tag 4:</strong><p>Du kennst OR-Aufbau, Vertragsabschluss, Mängel und das Lohnsystem. ~30 % geschafft.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="5"><div class="day-num">5</div><div class="day-content"><h4>Banken &amp; SNB</h4><ul class="day-tasks"><li>Theorie 3.1 + 3.2</li><li>SNB-Aufgaben (5 Punkte) auswendig</li><li>Kontotypen vergleichen</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="6"><div class="day-num">6</div><div class="day-content"><h4>Zahlungsverkehr</h4><ul class="day-tasks"><li>Theorie 4.1 + 4.2</li><li>Debit vs. Kredit klar trennen</li><li>Dauerauftrag vs. LSV: Wann was?</li><li>Quiz Q14 + Q15</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="7"><div class="day-num">7</div><div class="day-content"><h4>Erste Wiederholung</h4><ul class="day-tasks"><li>Karteikarten: alle Karten der Woche durch</li><li>Begriffe-Tab: Recht + Lohn/Bank Kategorien</li><li>Pausen-Tag — kein neuer Stoff</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="8"><div class="day-num">8</div><div class="day-content"><h4>Kaufvertrag — Grundlagen</h4><ul class="day-tasks"><li>Theorie 5.1 + 5.2</li><li>Kaufarten-Tabelle auswendig (Bar/Kredit/Versand/Haustür/Internet/Mietkauf)</li><li>Quiz Q6, Q7, Q9, Q10</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="9"><div class="day-num">9</div><div class="day-content"><h4>Vertragsverletzungen — die 3 Hauptfälle</h4><ul class="day-tasks"><li>Theorie 5.3 — diese Sektion ist <em>klausurkritisch</em></li><li>Schema malen: Lieferverzug / mangelhafte Lieferung / Zahlungsverzug</li><li>Quiz Q8, Q11, Q12</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="10"><div class="day-num">10</div><div class="day-content"><h4>Finanzierung &amp; Leasing</h4><ul class="day-tasks"><li>Theorie 6.1 + 6.2 + 6.3</li><li>Eigen- vs. Fremdfinanzierung Vor-/Nachteile</li><li>KKG: 14 Tage Widerruf, Maximalzins</li><li>Quiz Q16, Q17, Q20</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Meilenstein Tag 10:</strong><p>Stoff komplett durchgearbeitet. Jetzt kommt nur noch Wiederholung &amp; Festigung.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="11"><div class="day-num">11</div><div class="day-content"><h4>Schulden &amp; Betreibung</h4><ul class="day-tasks"><li>Theorie 6.4</li><li>Ablauf Betreibung in 4 Schritten merken</li><li>3 Arten der Betreibung</li><li>Quiz Q18 + Q19</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="12"><div class="day-num">12</div><div class="day-content"><h4>Karteikarten-Marathon</h4><ul class="day-tasks"><li>Alle Karteikarten 1× komplett durch</li><li>„Nochmal"-Karten markiert lassen — auf die fokussieren</li><li>Begriffe-Tab: Stichproben — kannst du jeden erklären?</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="13"><div class="day-num">13</div><div class="day-content"><h4>Quiz komplett &amp; Schwachstellen</h4><ul class="day-tasks"><li>Alle Quiz-Fragen <em>ohne</em> Lösung anzeigen lösen</li><li>Wo gehakt? → Theorie nochmal lesen</li><li>OR-Artikel-Cheatsheet erstellen (1 A4-Seite)</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="14"><div class="day-num">14</div><div class="day-content"><h4>Tag vor der Prüfung — leichter Tag</h4><ul class="day-tasks"><li>Karteikarten 1× durch (nur die schwierigen)</li><li>Quiz Q11/Q12 (Vertragsverletzungen) nochmal</li><li>Früh ins Bett, gut essen, kein neuer Stoff!</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Prüfungstag</strong><p>Locker bleiben. Bei Rechtsfällen: Wer macht was falsch? Welche Vorschrift greift? Welcher OR-Artikel? Du hast dich vorbereitet.</p></div></div>
+
+</section>
+
+</div>
+
+<script>
+// ═══ TAB SWITCHING ═══
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+// ═══ QUIZ REVEAL ═══
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  // Recht
+  { term: 'OR', cat: 'recht', def: 'Obligationenrecht — Schweizerisches Gesetz, das Verträge und Obligationen regelt. 5 Abteilungen.' },
+  { term: 'Willensübereinstimmung', cat: 'recht', ref: 'OR 1', def: 'Beide Parteien wollen dasselbe — Voraussetzung für jeden Vertrag.' },
+  { term: 'Übervorteilung', cat: 'recht', ref: 'OR 21', def: 'Offensichtliches Missverhältnis von Leistung und Gegenleistung; Ausnützung von Notlage oder Unerfahrenheit.' },
+  { term: 'Wesentlicher Irrtum', cat: 'recht', ref: 'OR 23', def: 'Sich beim Vertragsabschluss in einem wichtigen Punkt geirrt — Frist 1 Jahr ab Entdeckung zur Anfechtung.' },
+  { term: 'Absichtliche Täuschung', cat: 'recht', ref: 'OR 28', def: 'Eine Partei verschweigt oder lügt über wichtige Tatsachen. Vertrag anfechtbar.' },
+  { term: 'Handlungsfähigkeit', cat: 'recht', ref: 'ZGB 12', def: 'Fähigkeit, mit eigenen Handlungen Rechte und Pflichten zu begründen. Voraussetzung: Mündigkeit + Urteilsfähigkeit.' },
+  { term: 'Formvorschriften', cat: 'recht', def: 'Bestimmte Verträge brauchen Schriftform (Lehrvertrag, Konsumkredit) oder öffentliche Beurkundung (Grundstück, Ehevertrag).' },
+  // Lohn / Budget
+  { term: 'Bruttolohn', cat: 'lohn', def: 'Vereinbarter Lohn vor Sozialabzügen — das, was im Arbeitsvertrag steht.' },
+  { term: 'Nettolohn', cat: 'lohn', def: 'Lohn nach Abzug aller Sozialversicherungsbeiträge — was tatsächlich auf dem Konto landet.' },
+  { term: 'AHV/IV/EO', cat: 'lohn', def: 'Alters-, Invaliden- und Erwerbsersatzversicherung. Arbeitnehmer zahlt 5.3 % vom Bruttolohn (gleicher Anteil vom AG).' },
+  { term: 'ALV', cat: 'lohn', def: 'Arbeitslosenversicherung — 1.1 % Arbeitnehmeranteil. Sichert Lohnersatz bei Stellenverlust.' },
+  { term: 'BVG', cat: 'lohn', def: 'Berufliche Vorsorge / Pensionskasse / 2. Säule. Ca. 7 % je nach Alter; obligatorisch ab CHF 22\'050 Jahreslohn.' },
+  { term: 'NBU', cat: 'lohn', def: 'Nichtbetriebsunfallversicherung — deckt Unfälle ausserhalb der Arbeit. ~1.4–2 %.' },
+  { term: 'Fixkosten', cat: 'lohn', def: 'Wiederkehrende, immer gleich hohe Ausgaben (Miete, Krankenkasse, Versicherungen, Abos).' },
+  { term: 'Variable Kosten', cat: 'lohn', def: 'Schwankende Ausgaben — Lebensmittel, Kleider, Freizeit, Ferien.' },
+  // Bank / Zahlung
+  { term: 'SNB', cat: 'bank', def: 'Schweizerische Nationalbank — Zentralbank der Schweiz. Verantwortlich für Geldpolitik, Banknoten, Devisenreserven, Finanzstabilität.' },
+  { term: 'Debitkarte', cat: 'bank', def: 'Karte, mit der Belastungen sofort dem Konto entnommen werden (Maestro, V-Pay, Postcard).' },
+  { term: 'Kreditkarte', cat: 'bank', def: 'Karte mit Kredit bis zur Monatsabrechnung (VISA, Mastercard, AmEx). Zinsen nur bei Teilzahlung.' },
+  { term: 'Lastschriftverfahren (LSV)', cat: 'bank', def: 'Ermächtigung, dass ein Unternehmen Beträge direkt vom Konto abbucht. Geeignet bei variablen Beträgen (Strom, Telefon).' },
+  { term: 'Dauerauftrag', cat: 'bank', def: 'Bank überweist regelmässig einen <strong>fixen Betrag</strong> an denselben Empfänger (Miete, Sparen).' },
+  { term: 'E-Banking', cat: 'bank', def: 'Online-Bankgeschäfte über Webportal/App — Zahlungen, Saldo, Aufträge — 24/7 verfügbar.' },
+  { term: 'TWINT', cat: 'bank', def: 'Schweizer Mobile-Payment App — direkte Zahlungen via Telefonnummer oder QR-Code.' },
+  // Kauf
+  { term: 'Kaufvertrag', cat: 'kauf', ref: 'OR 184', def: 'Verkäufer übergibt Sache + Eigentum, Käufer bezahlt Kaufpreis. Zwei Pflichten je Seite.' },
+  { term: 'Eigentumsübertragung', cat: 'kauf', ref: 'OR 184 I', def: 'Bei beweglichen Sachen mit der Übergabe. Vorher gehört die Sache dem Verkäufer.' },
+  { term: 'Barkauf / Handkauf', cat: 'kauf', def: 'Ware und Geld werden gleichzeitig (Zug um Zug) ausgetauscht. Sicherste Form.' },
+  { term: 'Kreditkauf', cat: 'kauf', def: 'Bezahlung erst nach vereinbarter Frist. Käufer hat Schuld; Risiko Überschuldung.' },
+  { term: 'Mietkauf', cat: 'kauf', def: 'Ratenkauf — Eigentum erst nach letzter Rate. Endpreis oft viel höher als Barkauf.' },
+  { term: 'Haustürkauf', cat: 'kauf', def: 'Verkauf in der Wohnung des Käufers. Käufer hat <strong>7 Tage Widerrufsrecht</strong>.' },
+  { term: 'Liefermahnung', cat: 'kauf', ref: 'OR 102', def: 'Schriftliche Aufforderung an säumigen Verkäufer mit angemessener Nachfrist. Voraussetzung für die 3 Wahlrechte.' },
+  { term: 'Mängelrüge', cat: 'kauf', ref: 'OR 201', def: 'Sofortige schriftliche Beanstandung mangelhafter Ware durch den Käufer. Pflicht — sonst Verlust der Garantieansprüche.' },
+  { term: 'Wandelung', cat: 'kauf', ref: 'OR 205', def: 'Vom Vertrag zurücktreten und Geld zurückverlangen. Eines der 3 gesetzlichen Wahlrechte bei mangelhafter Lieferung.' },
+  { term: 'Minderung', cat: 'kauf', ref: 'OR 205', def: 'Preis reduzieren statt zurückzutreten. Ware behalten.' },
+  { term: 'Ersatzlieferung', cat: 'kauf', ref: 'OR 206', def: 'Verlangen, dass mangelhafte Ware durch mängelfreie ersetzt wird (nur bei Gattungskauf).' },
+  { term: 'Gewährleistung / Garantie', cat: 'kauf', ref: 'OR 197 ff., 210', def: '2 Jahre Haftung des Verkäufers für Mängel ab Übergabe (Fahrniskauf). Mängel sofort melden.' },
+  { term: 'Verzugszins', cat: 'kauf', ref: 'OR 104', def: '5 % p.a. bei Zahlungsverzug, sofern keine andere Vereinbarung.' },
+  // Finanzierung
+  { term: 'Eigenfinanzierung', cat: 'finanz', def: 'Bezahlung mit eigenem Geld / Erspartem — keine Zinsen, kein Schuldverhältnis.' },
+  { term: 'Fremdfinanzierung', cat: 'finanz', def: 'Bezahlung mit geliehenem Geld (Kredit, Leasing) — Zinsen, Tilgungspflicht, Risiko Überschuldung.' },
+  { term: 'Konsumkredit', cat: 'finanz', def: 'Privatkredit für Konsumgüter; max. CHF 80\'000; Bonitätsprüfung Pflicht; Zins gesetzlich gedeckelt.' },
+  { term: 'Leasing', cat: 'finanz', def: 'Langfristiger Mietvertrag — Leasinggeber bleibt Eigentümer, Leasingnehmer zahlt Raten und nutzt das Objekt.' },
+  { term: 'Leasinggeber', cat: 'finanz', def: 'Bank oder Finanzinstitut — kauft das Objekt und vermietet es. Bleibt während der ganzen Laufzeit Eigentümer.' },
+  { term: 'Leasingnehmer', cat: 'finanz', def: 'Du. Nutzt das Objekt, zahlt monatliche Raten, hat aber kein Eigentum.' },
+  { term: 'Restwert', cat: 'finanz', def: 'Wert des Objekts nach Ende der Leasingzeit. Höher = tiefere Rate, aber teurer Auskauf.' },
+  { term: 'Vollkasko', cat: 'finanz', def: 'Beim Autoleasing <strong>obligatorisch</strong>. Deckt auch selbstverschuldete Schäden — zusätzliche Fixkosten.' },
+  { term: 'KKG', cat: 'finanz', def: 'Konsumkreditgesetz — schützt vor Überschuldung. Widerrufsrecht 14 Tage, Bonitätsprüfung, Maximalzins.' },
+  { term: 'IKO', cat: 'finanz', def: 'Informationsstelle für Konsumkredit — Datenbank, in der laufende Kredite zentral erfasst werden.' },
+  { term: 'SchKG', cat: 'finanz', def: 'Bundesgesetz über Schuldbetreibung und Konkurs — regelt das Vorgehen bei nicht bezahlten Schulden.' },
+  { term: 'Betreibung', cat: 'finanz', def: 'Staatlich gesteuertes Verfahren, mit dem ein Gläubiger Geld eintreiben kann. 3 Arten: Pfändung, Pfandverwertung, Konkurs.' },
+  { term: 'Zahlungsbefehl', cat: 'finanz', def: 'Offizielle Aufforderung zur Zahlung vom Betreibungsamt. Beginn des Betreibungsverfahrens.' },
+  { term: 'Rechtsvorschlag', cat: 'finanz', def: 'Einspruch des Schuldners gegen den Zahlungsbefehl — innert 10 Tagen. Stoppt die Betreibung, bis der Gläubiger sie gerichtlich durchsetzt.' },
+  { term: 'Pfändung', cat: 'finanz', def: 'Beschlagnahmung von Vermögen / Lohnpfändung beim Schuldner. Standard-Betreibung für Privatpersonen.' },
+  { term: 'Existenzminimum', cat: 'finanz', def: 'Betrag, den der Schuldner trotz Lohnpfändung behält — Grundbedarf, Miete, Krankenkasse, Arbeitsweg.' },
+  { term: 'Kompetenzstücke', cat: 'finanz', def: 'Persönliche, lebensnotwendige Gegenstände (Bett, Kleider, Werkzeuge des Berufs), die nicht gepfändet werden dürfen.' },
+];
+
+function renderBegriffe(filter, searchTerm) {
+  const grid = document.getElementById('begriffGrid');
+  const search = (searchTerm || '').toLowerCase();
+  const filtered = BEGRIFFE.filter(b => {
+    const matchCat = filter === 'all' || b.cat === filter;
+    const matchSearch = !search || b.term.toLowerCase().includes(search) || b.def.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+  grid.innerHTML = filtered.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>
+  `).join('') || `<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px;">Keine Begriffe gefunden.</div>`;
+}
+
+let currentBegriffeFilter = 'all';
+let currentBegriffeSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentBegriffeFilter = chip.dataset.cat;
+    renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+  });
+});
+document.getElementById('begriffSearch').addEventListener('input', (e) => {
+  currentBegriffeSearch = e.target.value;
+  renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+});
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+// Build cards from BEGRIFFE plus extra fact-cards
+const EXTRA_CARDS = [
+  { term: 'Garantiezeit Fahrniskauf', cat: 'kauf', def: '<strong>2 Jahre</strong> ab Übergabe.', ref: 'OR 210' },
+  { term: 'Verzugszins (gesetzlich)', cat: 'kauf', def: '<strong>5 % p.a.</strong>', ref: 'OR 104' },
+  { term: 'Widerruf Haustürkauf', cat: 'kauf', def: '<strong>7 Tage</strong> schriftlich.', ref: '' },
+  { term: 'Widerruf Leasingvertrag (KKG)', cat: 'finanz', def: '<strong>14 Tage</strong> nach Erhalt der Vertragskopie.', ref: '' },
+  { term: 'Frist Rechtsvorschlag', cat: 'finanz', def: '<strong>10 Tage</strong> nach Erhalt des Zahlungsbefehls.', ref: '' },
+  { term: '3 Wahlrechte bei mangelhafter Lieferung', cat: 'kauf', def: 'Wandelung · Minderung · Ersatzlieferung. (4. praktisch: Reparatur)', ref: 'OR 205, 206' },
+  { term: '3 Wahlrechte bei Lieferverzug', cat: 'kauf', def: 'Vertragsrücktritt · Schadenersatz + Lieferung · Schadenersatz ohne Lieferung.', ref: 'OR 107' },
+  { term: '3 Arten der Betreibung', cat: 'finanz', def: 'Pfändung (Privat) · Pfandverwertung (mit Pfand) · Konkurs (HR-Eintrag).', ref: 'SchKG' },
+  { term: 'Sozialabzüge AHV/IV/EO Anteil AN', cat: 'lohn', def: '<strong>5.3 %</strong> (AG zahlt gleich viel = total 10.6 %).', ref: '' },
+  { term: 'Sozialabzüge ALV Anteil AN', cat: 'lohn', def: '<strong>1.1 %</strong> (total 2.2 %).', ref: '' },
+  { term: 'Verschiedene Zahlungsmittel mit variablen Beträgen', cat: 'bank', def: 'LSV (Lastschriftverfahren) — z.B. für Strom, Telefon, Krankenkasse.', ref: '' },
+  { term: 'Verschiedene Zahlungsmittel mit fixen Beträgen', cat: 'bank', def: 'Dauerauftrag — z.B. Miete, Sparbetrag.', ref: '' },
+];
+const ALL_CARDS = [...BEGRIFFE, ...EXTRA_CARDS];
+let cardSet = [];
+let cardIdx = 0;
+let cardFlipped = false;
+let knownIds = new Set();
+let unknownIds = new Set();
+let cardCatFilter = 'all';
+
+function buildCardSet() {
+  cardSet = ALL_CARDS.filter(c => cardCatFilter === 'all' || c.cat === cardCatFilter);
+  cardSet = cardSet.map((c, i) => ({...c, _id: ALL_CARDS.indexOf(c)}));
+  cardIdx = 0;
+  cardFlipped = false;
+  knownIds = new Set();
+  unknownIds = new Set();
+  renderCard();
+  updateCardStats();
+}
+
+function renderCard() {
+  if (cardSet.length === 0) {
+    document.getElementById('flashContent').innerHTML = 'Keine Karten in dieser Kategorie';
+    document.getElementById('flashContent').className = 'flash-front';
+    document.getElementById('flashCounter').textContent = '0 / 0';
+    document.getElementById('flashSide').textContent = '';
+    document.getElementById('flashLawRef').textContent = '';
+    return;
+  }
+  const c = cardSet[cardIdx];
+  const content = document.getElementById('flashContent');
+  const side = document.getElementById('flashSide');
+  const ref = document.getElementById('flashLawRef');
+  if (cardFlipped) {
+    content.innerHTML = c.def;
+    content.className = 'flash-back';
+    side.textContent = 'RÜCKSEITE';
+    ref.textContent = c.ref || '';
+  } else {
+    content.innerHTML = c.term;
+    content.className = 'flash-front';
+    side.textContent = 'VORDERSEITE';
+    ref.textContent = '';
+  }
+  document.getElementById('flashCounter').textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  document.getElementById('flashGood').disabled = !cardFlipped;
+  document.getElementById('flashBad').disabled = !cardFlipped;
+  // Progress
+  const totalRated = knownIds.size + unknownIds.size;
+  document.getElementById('cardProgress').style.width = `${(totalRated / cardSet.length) * 100}%`;
+}
+
+function flipCard() { if (cardSet.length === 0) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (cardSet.length === 0) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (cardSet.length === 0) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) {
+  if (cardSet.length === 0) return;
+  const id = cardSet[cardIdx]._id;
+  if (known) { knownIds.add(id); unknownIds.delete(id); }
+  else { unknownIds.add(id); knownIds.delete(id); }
+  updateCardStats();
+  nextCard();
+}
+function shuffleCards() {
+  cardSet.sort(() => Math.random() - 0.5);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+function resetCards() {
+  knownIds.clear(); unknownIds.clear();
+  cardIdx = 0; cardFlipped = false;
+  renderCard(); updateCardStats();
+}
+function updateCardStats() {
+  document.getElementById('statsKnown').textContent = knownIds.size;
+  document.getElementById('statsUnknown').textContent = unknownIds.size;
+  document.getElementById('statsTotal').textContent = cardSet.length;
+}
+document.querySelectorAll('#cardCatFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#cardCatFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    cardCatFilter = chip.dataset.cat;
+    buildCardSet();
+  });
+});
+document.addEventListener('keydown', (e) => {
+  // Only when on cards tab
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); flipCard(); }
+  else if (e.code === 'ArrowRight') nextCard();
+  else if (e.code === 'ArrowLeft') prevCard();
+  else if (e.code === 'KeyJ' && cardFlipped) rateCard(true);
+  else if (e.code === 'KeyF' && cardFlipped) rateCard(false);
+});
+buildCardSet();
+
+// ═══ LERNPLAN PROGRESS (in-memory only) ═══
+function updatePlanProgress() {
+  const all = document.querySelectorAll('.day .check');
+  const done = document.querySelectorAll('.day .check:checked').length;
+  document.getElementById('planProgress').style.width = `${(done / all.length) * 100}%`;
+}
+document.querySelectorAll('.day .check').forEach(cb => cb.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+
+</body>
+</html>

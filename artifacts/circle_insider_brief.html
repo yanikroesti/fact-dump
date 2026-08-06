@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIRCLE INSIDER BRIEF // 2026.05.25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0b0a;
+  --bg-alt: #111311;
+  --bg-hi: #161816;
+  --border: #1f241f;
+  --border-hi: #2a312a;
+  --text: #d4dcd4;
+  --text-dim: #6b7568;
+  --text-faint: #3d433d;
+  --green: #4ade80;
+  --green-dim: #2d6b43;
+  --amber: #e5a13a;
+  --red: #ef4444;
+  --red-dim: #6b2020;
+  --blue: #6ab7ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(74, 222, 128, 0.015) 0px,
+    rgba(74, 222, 128, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ───── HEADER ───── */
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.header .brand {
+  color: var(--green);
+  font-weight: 700;
+}
+.header .brand::before {
+  content: '▶ ';
+  color: var(--green-dim);
+}
+.header .status {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 6px;
+  animation: pulse 1.6s ease-in-out infinite;
+  vertical-align: middle;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+  50% { opacity: 0.4; box-shadow: 0 0 0 5px rgba(74, 222, 128, 0); }
+}
+
+/* ───── TITLE ───── */
+.title-block {
+  padding: 34px 0 20px;
+  border-bottom: 1px dashed var(--border);
+}
+.title-block .eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.title-block h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.title-block h1 .accent { color: var(--green); }
+.title-block h1 .strike { color: var(--text-faint); text-decoration: line-through; text-decoration-color: var(--red); }
+.title-block .sub {
+  color: var(--text-dim);
+  margin-top: 14px;
+  font-size: 13px;
+  max-width: 62ch;
+}
+
+/* ───── TABS ───── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-top: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  background: transparent;
+  color: var(--text-dim);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 14px 20px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text); }
+.tab.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.tab .num {
+  color: var(--text-faint);
+  margin-right: 8px;
+}
+.tab.active .num { color: var(--green-dim); }
+
+/* ───── PANES ───── */
+.pane { display: none; padding: 32px 0 60px; animation: fadeIn 0.3s ease; }
+.pane.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───── SECTION HEADERS ───── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: var(--green-dim);
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+p { margin-bottom: 14px; color: var(--text); }
+p.muted { color: var(--text-dim); }
+
+/* ───── STAT GRID ───── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+.stat {
+  background: var(--bg-alt);
+  padding: 20px 18px;
+}
+.stat .label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.stat .value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat .value.pos { color: var(--green); }
+.stat .value.neg { color: var(--red); }
+.stat .value.warn { color: var(--amber); }
+.stat .value.info { color: var(--blue); }
+.stat .delta {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ───── CALLOUT ───── */
+.callout {
+  border: 1px solid var(--green-dim);
+  border-left: 3px solid var(--green);
+  background: rgba(74, 222, 128, 0.03);
+  padding: 18px 20px;
+  margin: 24px 0;
+}
+.callout .tag {
+  display: inline-block;
+  background: var(--green);
+  color: var(--bg);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.warn { border-color: var(--red-dim); border-left-color: var(--red); background: rgba(239, 68, 68, 0.03); }
+.callout.warn .tag { background: var(--red); color: var(--bg); }
+.callout.amber { border-color: #4a3510; border-left-color: var(--amber); background: rgba(229, 161, 58, 0.03); }
+.callout.amber .tag { background: var(--amber); color: var(--bg); }
+.callout.info { border-color: #1f3a5a; border-left-color: var(--blue); background: rgba(106, 183, 255, 0.03); }
+.callout.info .tag { background: var(--blue); color: var(--bg); }
+
+/* ───── MYTH-vs-FACT ───── */
+.myth-fact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+.mf-col { background: var(--bg-alt); padding: 20px 22px; }
+.mf-col .head {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.mf-col.myth .head { color: var(--red); }
+.mf-col.fact .head { color: var(--green); }
+.mf-col p { font-size: 13px; line-height: 1.55; margin-bottom: 10px; }
+.mf-col p:last-child { margin-bottom: 0; }
+.mf-col code {
+  background: var(--bg);
+  padding: 1px 6px;
+  border: 1px solid var(--border-hi);
+  color: var(--green);
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .myth-fact { grid-template-columns: 1fr; }
+}
+
+/* ───── INSIDER TABLE ───── */
+.insider-table {
+  border: 1px solid var(--border);
+  margin: 18px 0 24px;
+  overflow-x: auto;
+}
+.it-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 0.8fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+  min-width: 700px;
+}
+.it-row:last-child { border-bottom: none; }
+.it-row.head {
+  background: var(--bg-alt);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.it-row.total {
+  background: var(--bg-hi);
+  font-weight: 700;
+  color: var(--text);
+}
+.it-row > div { padding: 12px 14px; font-size: 12.5px; border-right: 1px solid var(--border); }
+.it-row > div:last-child { border-right: none; }
+.it-row .person { font-weight: 700; color: var(--text); }
+.it-row .person small { display: block; color: var(--text-dim); font-weight: 400; font-size: 10.5px; margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
+.it-row .sells { color: var(--red); }
+.it-row .buys { color: var(--green); }
+.it-row .amount { font-weight: 700; }
+.it-row .pct { color: var(--text-dim); }
+
+/* ───── BAR ───── */
+.bar-wrap {
+  margin: 20px 0 24px;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 90px;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12.5px;
+}
+.bar-row .name { color: var(--text); }
+.bar-row .name small { display: block; color: var(--text-faint); font-size: 10px; margin-top: 2px; }
+.bar-row .bar-bg {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  height: 22px;
+  position: relative;
+}
+.bar-row .bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red-dim) 0%, var(--red) 100%);
+}
+.bar-row .amt {
+  color: var(--red);
+  font-weight: 700;
+  text-align: right;
+  font-size: 13px;
+}
+
+/* ───── TIMELINE ───── */
+.timeline {
+  margin: 24px 0;
+  border-left: 1px solid var(--border-hi);
+}
+.tl-item {
+  position: relative;
+  padding: 0 0 22px 24px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  background: var(--bg);
+  border: 2px solid var(--green);
+  border-radius: 50%;
+}
+.tl-item.ghost::before { border-color: var(--text-faint); }
+.tl-item .ts {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.tl-item.ghost .ts { color: var(--text-faint); }
+.tl-item .desc { font-size: 13px; color: var(--text); }
+
+/* ───── STEPS / TAKES ───── */
+.steps {
+  counter-reset: stepcount;
+  margin: 20px 0;
+}
+.step {
+  counter-increment: stepcount;
+  position: relative;
+  padding: 16px 18px 16px 56px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.step::before {
+  content: counter(stepcount, decimal-leading-zero);
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 13px;
+}
+.step h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.step p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ───── INTERPRET BLOCKS ───── */
+.interp-block {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  margin-bottom: 20px;
+  background: var(--bg-alt);
+}
+.interp-block.bear { border-left-color: var(--red); }
+.interp-block.bull { border-left-color: var(--green); }
+.interp-block.neutral { border-left-color: var(--blue); }
+.interp-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.interp-head h3 {
+  font-size: 16px;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+.interp-head .code {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+}
+.interp-block.bear .interp-head .code { color: var(--red); }
+.interp-block.bull .interp-head .code { color: var(--green); }
+.interp-block.neutral .interp-head .code { color: var(--blue); }
+.interp-body { padding: 14px 18px 18px; }
+.interp-body ul { list-style: none; padding: 0; margin: 0; }
+.interp-body li {
+  padding: 10px 0 10px 26px;
+  border-bottom: 1px dashed var(--border);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text);
+  position: relative;
+}
+.interp-body li:last-child { border-bottom: none; }
+.interp-body li::before {
+  content: '▸';
+  position: absolute;
+  left: 4px;
+  top: 10px;
+}
+.interp-block.bear .interp-body li::before { color: var(--red); }
+.interp-block.bull .interp-body li::before { color: var(--green); }
+.interp-block.neutral .interp-body li::before { color: var(--blue); }
+.interp-body li strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text);
+  font-size: 12.5px;
+}
+.interp-body li span {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+/* ───── DISCLAIMER ───── */
+.disclaimer {
+  margin-top: 40px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border-hi);
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.disclaimer strong { color: var(--amber); }
+
+/* ───── FOOTER ───── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 0 26px;
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cursor::after {
+  content: '_';
+  animation: blink 1s steps(2) infinite;
+  color: var(--green);
+  font-weight: 700;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.sources {
+  margin-top: 28px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.sources h4 {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.sources ul { list-style: none; padding: 0; }
+.sources li { padding: 3px 0; color: var(--text-dim); }
+.sources li::before { content: '// '; color: var(--text-faint); }
+
+@media (max-width: 640px) {
+  body { font-size: 13px; }
+  .wrap { padding: 0 14px; }
+  .tab { padding: 12px 14px; font-size: 11px; }
+  .stat { padding: 16px 14px; }
+  .stat .value { font-size: 22px; }
+  .bar-row { grid-template-columns: 130px 1fr 80px; }
+  .bar-row .amt { font-size: 12px; }
+  .header { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="brand">CIRCLE.INSIDER.BRIEF</div>
+    <div class="status">
+      <span><span class="live-dot"></span>LIVE</span>
+      <span id="clock">2026.05.25</span>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <div class="eyebrow">// SIGNAL CHECK · MYTH VS. FACT</div>
+    <h1>The <span class="accent">Circle</span> CEO didn't<br>just dump stock<span class="cursor"></span></h1>
+    <p class="sub">The May Form 4 making the rounds wasn't a sale — it was a trust restructuring. But Circle insiders <em>have</em> sold roughly $159M+ in CRCL over six months, and that's a separate, real story. This brief separates the two.</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="1"><span class="num">01</span>SIGNAL</button>
+    <button class="tab" data-tab="2"><span class="num">02</span>INTEL</button>
+    <button class="tab" data-tab="3"><span class="num">03</span>INTERPRET</button>
+  </div>
+
+  <!-- ═══════════ TAB 1: SIGNAL ═══════════ -->
+  <div class="pane active" id="pane-1">
+
+    <div class="section-label">KEY NUMBERS · LAST 6 MONTHS</div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">INSIDER TXNS</div>
+        <div class="value neg">49</div>
+        <div class="delta">all sales, zero buys</div>
+      </div>
+      <div class="stat">
+        <div class="label">INSIDER BUYS</div>
+        <div class="value pos">0</div>
+        <div class="delta">across all executives</div>
+      </div>
+      <div class="stat">
+        <div class="label">EST. TOTAL SOLD</div>
+        <div class="value neg">~$159M+</div>
+        <div class="delta">top 6 insiders, market sales</div>
+      </div>
+      <div class="stat">
+        <div class="label">ALLAIRE SALES</div>
+        <div class="value neg">~$46.9M</div>
+        <div class="delta">373,438 shares / 11 sales</div>
+      </div>
+      <div class="stat">
+        <div class="label">ALLAIRE STILL HOLDS</div>
+        <div class="value info">~16.2M</div>
+        <div class="delta">Class A + B, ~$1.8B at $111</div>
+      </div>
+      <div class="stat">
+        <div class="label">CEO POSITION SOLD</div>
+        <div class="value warn">~2.3%</div>
+        <div class="delta">of total holdings</div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="tag">CORRECTION</span>
+      <p>If you saw the May 13–18 Form 4 filings described as "Circle CEO dumps shares" — that's not what they were. They were estate-planning transfers, not market trades. The myth-vs-fact breakdown below clears it up.</p>
+    </div>
+
+    <div class="section-label">MYTH VS. FACT · MAY 2026 FILINGS</div>
+
+    <div class="myth-fact">
+      <div class="mf-col myth">
+        <div class="head">▼ THE MISREAD</div>
+        <p>"Circle CEO Jeremy Allaire sold a massive block of CRCL shares in mid-May 2026 — bearish signal, insiders heading for the exit."</p>
+        <p>Often paired with screenshots of Form 4 filings dated May 13, 15, and 18 showing large share movements involving Allaire's name.</p>
+      </div>
+      <div class="mf-col fact">
+        <div class="head">▲ WHAT ACTUALLY HAPPENED</div>
+        <p>The mid-May Form 4s reported transactions coded <code>J</code> — SEC code for "other acquisition or disposition," <strong>not</strong> an open-market sale (which would be code <code>S</code>).</p>
+        <p>Footnotes specify the J-coded entries were an exempt transfer of Class B shares from the <em>Allaire 2025 Qualified Annuity Trust</em> back to Allaire personally. Estate-planning move, not a market trade.</p>
+        <p>Post-restructuring, Allaire directly holds 15,912,737 Class B + 294,201 Class A shares. He didn't sell into the market in those filings.</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="tag">SO WHAT</span>
+      <p>The specific filing the meme is built on is benign. But the broader insider-selling pattern at Circle is <strong>real</strong>, well-documented, and arguably more important than the misread that triggered the question. Tab <strong>02 INTEL</strong> shows the actual numbers.</p>
+    </div>
+
+    <div class="section-label">QUICK CONTEXT · CIRCLE</div>
+    <p class="muted">Circle Internet Group (NYSE: CRCL) — issuer of USDC, the second-largest stablecoin. IPO'd June 5, 2025 at $31. Peaked near $300 in late 2025. Currently trades around $110. Insider lockup expired in the second half of 2025, and a wave of 10b5-1 selling plans were filed thereafter, which is what we're now seeing executed.</p>
+
+  </div>
+
+  <!-- ═══════════ TAB 2: INTEL ═══════════ -->
+  <div class="pane" id="pane-2">
+
+    <div class="section-label">INSIDER TRANSACTIONS · 6-MONTH WINDOW</div>
+    <h2>Who's actually selling at Circle</h2>
+    <p class="muted">Per QuiverQuant aggregation of SEC Form 4 filings over the past six months. Open-market transactions only — does not include trust restructurings (code J), RSU vesting, or tax-withholding dispositions.</p>
+
+    <div class="insider-table">
+      <div class="it-row head">
+        <div>NAME · ROLE</div>
+        <div>SHARES SOLD</div>
+        <div>SALES</div>
+        <div>EST. VALUE</div>
+        <div>BUYS</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Jeremy Allaire<small>Chairman &amp; CEO</small></div>
+        <div class="sells">373,438</div>
+        <div class="sells">11</div>
+        <div class="amount sells">~$46.9M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Rajeev V. Date<small>Director</small></div>
+        <div class="sells">530,446</div>
+        <div class="sells">15</div>
+        <div class="amount sells">~$44.6M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Patrick S. Neville<small>Co-Founder</small></div>
+        <div class="sells">328,943</div>
+        <div class="sells">4</div>
+        <div class="amount sells">~$39.1M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Nikhil Chandhok<small>Chief Product &amp; Tech Officer</small></div>
+        <div class="sells">170,000</div>
+        <div class="sells">7</div>
+        <div class="amount sells">~$15.9M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Jeremy Fox-Geen<small>Chief Financial Officer</small></div>
+        <div class="sells">73,830</div>
+        <div class="sells">3</div>
+        <div class="amount sells">~$8.3M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row">
+        <div class="person">Heath Tarbert<small>President</small></div>
+        <div class="sells">36,273</div>
+        <div class="sells">3</div>
+        <div class="amount sells">~$4.4M</div>
+        <div class="buys">0</div>
+      </div>
+      <div class="it-row total">
+        <div>TOTAL · TOP 6 INSIDERS</div>
+        <div>1,512,930</div>
+        <div>43</div>
+        <div>~$159.2M</div>
+        <div>0</div>
+      </div>
+    </div>
+
+    <div class="section-label">DOLLAR-VALUE COMPARISON</div>
+    <div class="bar-wrap">
+      <div class="bar-row">
+        <div class="name">Allaire<small>CEO</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 100%"></div></div>
+        <div class="amt">$46.9M</div>
+      </div>
+      <div class="bar-row">
+        <div class="name">Date<small>Director</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 95.1%"></div></div>
+        <div class="amt">$44.6M</div>
+      </div>
+      <div class="bar-row">
+        <div class="name">Neville<small>Co-Founder</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 83.4%"></div></div>
+        <div class="amt">$39.1M</div>
+      </div>
+      <div class="bar-row">
+        <div class="name">Chandhok<small>CPO/CTO</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 33.9%"></div></div>
+        <div class="amt">$15.9M</div>
+      </div>
+      <div class="bar-row">
+        <div class="name">Fox-Geen<small>CFO</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 17.7%"></div></div>
+        <div class="amt">$8.3M</div>
+      </div>
+      <div class="bar-row">
+        <div class="name">Tarbert<small>President</small></div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 9.4%"></div></div>
+        <div class="amt">$4.4M</div>
+      </div>
+    </div>
+
+    <div class="section-label">MECHANICS · HOW THESE SALES WORK</div>
+    <div class="steps">
+      <div class="step">
+        <h4>Rule 10b5-1 trading plans</h4>
+        <p>Most of the sales above are executed under 10b5-1 plans — pre-arranged schedules filed when the insider had no material non-public information. Trades fire automatically on the schedule regardless of price or news. Recent Chandhok and Fox-Geen sales are explicitly disclosed as 10b5-1.</p>
+      </div>
+      <div class="step">
+        <h4>Post-IPO lockup expiration</h4>
+        <p>CRCL IPO'd June 5, 2025. Standard 180-day lockup expired around early December 2025. The current wave of selling starts roughly from that point — typical post-IPO insider behavior, not crisis-driven.</p>
+      </div>
+      <div class="step">
+        <h4>Stock price context</h4>
+        <p>CRCL peaked near $300 in late 2025. Most insider sales executed between ~$90 and ~$120. Insiders are <em>not</em> exiting at the top — they're selling into a stock that's already pulled back ~60% from highs.</p>
+      </div>
+      <div class="step">
+        <h4>CEO position remains massive</h4>
+        <p>After ~$47M in sales, Allaire still holds ~16.2M shares directly (Class A + B). At $111/share that's ~$1.8B in CRCL stock — roughly 97.7% of his original direct stake intact. The $47M is a slice, not an exit.</p>
+      </div>
+      <div class="step">
+        <h4>The May "restructuring" filings</h4>
+        <p>Separate from the 10b5-1 sales. Allaire's May 13–18 Form 4s moved shares from the 2025 Qualified Annuity Trust (a GRAT — Grantor Retained Annuity Trust used for estate-tax planning) back to him personally. Code J. Not in the $46.9M figure above.</p>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <span class="tag">CAVEAT</span>
+      <p>The $159M+ figure is an estimate derived from QuiverQuant aggregation of Form 4 filings over six months. Actual proceeds can differ from "average price × shares" because individual sales execute at different prices throughout the day. Treat these as order-of-magnitude figures, not exact accounting.</p>
+    </div>
+
+    <div class="sources">
+      <h4>SOURCES</h4>
+      <ul>
+        <li>SEC EDGAR · Form 4 filings, CRCL (Feb–May 2026)</li>
+        <li>QuiverQuant · DiscussionTracker / Insider Trades aggregation</li>
+        <li>StockTitan · CRCL insider trading activity summaries</li>
+        <li>Ticker Report · Chandhok 5/21 sale @ $111.00 (Rule 10b5-1)</li>
+        <li>GuruFocus · Allaire transaction history (5 sells, 0 buys, 5yr)</li>
+        <li>DailyPolitical · Dec 22, 2025 cluster sale coverage</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ TAB 3: INTERPRET ═══════════ -->
+  <div class="pane" id="pane-3">
+
+    <div class="section-label">HOW TO READ THIS · THREE FRAMES</div>
+    <h2>The same data, three lenses</h2>
+    <p class="muted">Insider selling rarely has one correct interpretation. Below are the three honest frames a careful reader can hold simultaneously. Pick the weighting that fits your view — but don't pretend the other frames don't exist.</p>
+
+    <!-- BEAR -->
+    <div class="interp-block bear">
+      <div class="interp-head">
+        <h3>BEARISH READ</h3>
+        <span class="code">// CASE_FOR_CONCERN</span>
+      </div>
+      <div class="interp-body">
+        <ul>
+          <li>
+            <strong>49 sales, 0 buys over 6 months is asymmetric.</strong>
+            <span>Even allowing for 10b5-1 and lockup mechanics, a complete absence of insider buying at $90–$120 — when the stock was near $300 just months earlier — suggests no insider sees current levels as a clear bargain.</span>
+          </li>
+          <li>
+            <strong>Sales clustered across the leadership team, not isolated.</strong>
+            <span>CEO, co-founder, multiple directors, CFO, CPO, President all selling within the same window. Coordinated 10b5-1 plans suggest a shared view that diversification away from the stock makes sense now.</span>
+          </li>
+          <li>
+            <strong>Revenue model leverage to T-bill yields.</strong>
+            <span>Circle earns most of its income from interest on T-bills backing USDC. Falling rate environment compresses margins. Insiders may be hedging that exposure personally faster than the market is pricing it.</span>
+          </li>
+          <li>
+            <strong>Competitive pressure on USDC dominance.</strong>
+            <span>Tether (USDT) still dominates emerging-market flows. New entrants (PYUSD, bank-issued stablecoins post-GENIUS Act) erode the moat. CRCL multiple assumes continued share growth — risky assumption.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NEUTRAL -->
+    <div class="interp-block neutral">
+      <div class="interp-head">
+        <h3>NEUTRAL READ</h3>
+        <span class="code">// MOST_LIKELY_EXPLANATION</span>
+      </div>
+      <div class="interp-body">
+        <ul>
+          <li>
+            <strong>This is what every post-IPO lockup looks like.</strong>
+            <span>180-day lockup expires → 10b5-1 plans get filed → automatic selling on schedule. Meta, Snap, Coinbase, Airbnb all saw similar patterns in their first 6–12 months post-lockup. Not a signal about Circle specifically.</span>
+          </li>
+          <li>
+            <strong>10b5-1 plans were filed when MNPI status was clean.</strong>
+            <span>Plans get adopted at quarterly windows. Sales execute mechanically regardless of subsequent good or bad news. The trades aren't "insiders fleeing" — they're "insiders following the schedule they set months ago."</span>
+          </li>
+          <li>
+            <strong>Allaire still holds ~$1.8B in CRCL.</strong>
+            <span>Selling 2.3% of a position to diversify is the textbook responsible move for a founder whose net worth is 95%+ in one stock. The headline number is loud; the position size is largely unchanged.</span>
+          </li>
+          <li>
+            <strong>Estate planning via GRAT is normal.</strong>
+            <span>The May trust restructuring is plain vanilla wealth planning for any founder with billions in concentrated stock. Reading bearish signal into it is misinterpretation.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BULL -->
+    <div class="interp-block bull">
+      <div class="interp-head">
+        <h3>BULLISH (OR AT LEAST UNFAZED) READ</h3>
+        <span class="code">// CASE_FOR_DISMISSAL</span>
+      </div>
+      <div class="interp-body">
+        <ul>
+          <li>
+            <strong>Insiders sold into weakness, not strength.</strong>
+            <span>Sales executed at ~$90–$120, well below the ~$300 peak. If insiders had perfect information about coming bad news, they'd have sold at the top. They didn't.</span>
+          </li>
+          <li>
+            <strong>Allaire's restructuring keeps shares in family/trust orbit.</strong>
+            <span>The Form 4 J transactions move stock between Allaire and his trusts — the household still controls the same economic stake. That's not a bet against the company; it's the opposite of a bet against the company.</span>
+          </li>
+          <li>
+            <strong>Fundamentals continue strengthening.</strong>
+            <span>USDC ~80% of dollar-stablecoin transaction volume per Allaire's Q1 commentary. Arc L1 launching. CPN payment network expanding. GENIUS Act passed. CLARITY Act in progress. The legislative tailwind is real.</span>
+          </li>
+          <li>
+            <strong>Allaire is leaning in, not stepping back.</strong>
+            <span>Speaking at Bernstein on May 28. Named TIME100. Public CEO engagement, not the behavior of someone winding down. Personal cash-out + public ramp-up is the post-IPO founder norm.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">SYNTHESIS</span>
+      <p>The strongest objective read: <strong>this is mostly mechanical post-IPO selling under 10b5-1 plans</strong>, with a real but secondary signal that no insider currently views CRCL as cheap enough to buy. The May trust restructuring is irrelevant to that conclusion either way. If you're long CRCL, the insider data is mildly negative but not alarming. If you're short or considering shorting, this isn't your edge — find a better thesis.</p>
+    </div>
+
+    <div class="section-label">SIGNALS WORTH ACTUALLY WATCHING</div>
+    <div class="steps">
+      <div class="step">
+        <h4>Termination or modification of 10b5-1 plans</h4>
+        <p>Filed via Form 4 footnotes. If multiple insiders abruptly pause or end their selling schedules, that's a real signal — they think the price will materially change soon.</p>
+      </div>
+      <div class="step">
+        <h4>First insider purchase</h4>
+        <p>A single insider open-market buy after months of pure selling is louder than any sale. Insiders rarely buy for non-fundamental reasons. Watch for "P" (purchase) transactions on Form 4.</p>
+      </div>
+      <div class="step">
+        <h4>USDC market share trajectory</h4>
+        <p>Defiance Stablecoin Market Cap dashboard, or Circle's own attestations. USDC vs. USDT share is the single biggest driver of long-term Circle equity value.</p>
+      </div>
+      <div class="step">
+        <h4>Fed rate path</h4>
+        <p>Circle's revenue is ~80% interest income on T-bill reserves. Each 25bp cut materially compresses operating leverage. Watch FOMC dot plot and 3M T-bill yields.</p>
+      </div>
+      <div class="step">
+        <h4>CLARITY Act progress</h4>
+        <p>Currently in Senate Banking Committee markup. Passage = clearer regulatory tailwind for distribution partner reward programs (USDC growth). Failure = significant overhang.</p>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>NOT FINANCIAL ADVICE.</strong> This brief synthesizes SEC Form 4 filings and aggregator data as of 2026.05.25. Insider transaction data is reported with delays and reclassifications. Always verify against primary SEC filings before acting on any position. The author has no position in CRCL.
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div>BRIEF // V1.0 // 2026.05.25</div>
+    <div>OBJECTIVE READ · NO POSITION DISCLOSURE</div>
+  </div>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('.pane');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panes.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + t.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+
+  function updateClock() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('clock').textContent =
+      `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} · ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>

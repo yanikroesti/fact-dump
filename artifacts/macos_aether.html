@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>macOS Æther — Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============== RESET / BASE ============== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --txt: #f5f5f7;
+    --txt-dim: rgba(245,245,247,0.62);
+    --txt-faint: rgba(245,245,247,0.38);
+    --glass-bg: rgba(20,20,24,0.42);
+    --glass-bg-strong: rgba(28,28,32,0.62);
+    --glass-border: rgba(255,255,255,0.10);
+    --glass-border-bright: rgba(255,255,255,0.18);
+    --accent: #ff6b35;
+    --accent-2: #00d4ff;
+    --accent-3: #c084fc;
+    --shadow-lg: 0 24px 48px -12px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.08) inset;
+    --shadow-md: 0 10px 25px -8px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(255,255,255,0.07) inset;
+    --radius: 18px;
+    --radius-sm: 10px;
+    --radius-lg: 28px;
+    --font-display: 'Instrument Serif', 'Times New Roman', serif;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    color: var(--txt);
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    cursor: default;
+  }
+  body {
+    background: #050507;
+    position: relative;
+  }
+
+  /* ============== ANIMATED LIQUID AETHER WALLPAPER ============== */
+  .wallpaper {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .aether-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+  .b1 { width: 60vw; height: 60vw; background: #ff6b35; top: -20%; left: -10%; animation: float1 28s ease-in-out infinite; }
+  .b2 { width: 55vw; height: 55vw; background: #c084fc; top: 30%; right: -15%; animation: float2 32s ease-in-out infinite; }
+  .b3 { width: 50vw; height: 50vw; background: #00d4ff; bottom: -20%; left: 20%; animation: float3 36s ease-in-out infinite; }
+  .b4 { width: 40vw; height: 40vw; background: #ec4899; top: 40%; left: 30%; animation: float4 24s ease-in-out infinite; opacity: 0.35; }
+
+  @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(8vw, 12vh) scale(1.15); } }
+  @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-10vw, 8vh) scale(0.9); } }
+  @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw, -10vh) scale(1.1); } }
+  @keyframes float4 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw, -8vh) scale(1.2); } }
+
+  /* Grain overlay */
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Vignette */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%);
+  }
+
+  /* ============== MENU BAR ============== */
+  .menubar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    z-index: 1000;
+    background: rgba(15,15,18,0.55);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .menubar-left, .menubar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .menubar-right { margin-left: auto; gap: 12px; }
+  .apple-logo {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.92;
+  }
+  .menubar-item {
+    padding: 2px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+  }
+  .menubar-item.bold { font-weight: 600; }
+  .menubar-item:hover { background: rgba(255,255,255,0.12); }
+  .menubar-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px;
+    transition: background 0.15s;
+  }
+  .menubar-icon:hover { background: rgba(255,255,255,0.1); }
+  .ai-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 12px var(--accent-2);
+    margin-right: 6px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  .clock { font-variant-numeric: tabular-nums; font-size: 13px; padding: 2px 6px; cursor: pointer; border-radius: 5px; }
+  .clock:hover { background: rgba(255,255,255,0.12); }
+
+  /* ============== DESKTOP ============== */
+  .desktop {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    overflow: hidden;
+  }
+
+  /* ============== WORKSPACE INDICATOR (top-right floating) ============== */
+  .workspace-indicator {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 0.5px solid var(--glass-border);
+    padding: 8px 12px;
+    border-radius: 100px;
+    box-shadow: var(--shadow-md);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--txt-dim);
+  }
+  .workspace-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    transition: all 0.3s;
+  }
+  .workspace-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    width: 18px;
+    border-radius: 4px;
+  }
+
+  /* ============== WIDGETS / SMART STACK ============== */
+  .widgets {
+    position: absolute;
+    top: 60px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 280px;
+  }
+  .widget {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
+  }
+  .widget:hover { transform: translateY(-2px); border-color: var(--glass-border-bright); }
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+  }
+
+  /* Weather widget */
+  .w-weather .temp {
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+  }
+  .w-weather .temp sup { font-size: 24px; opacity: 0.6; }
+  .w-weather .condition {
+    margin-top: 6px;
+    color: var(--txt-dim);
+    font-size: 13px;
+  }
+  .w-weather .city {
+    margin-top: 2px;
+    font-style: italic;
+    font-family: var(--font-display);
+    font-size: 20px;
+  }
+
+  /* Calendar widget */
+  .w-cal .date-big {
+    font-family: var(--font-display);
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .w-cal .date-month {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .w-cal .events { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .w-cal .event { display: flex; gap: 10px; font-size: 12px; align-items: flex-start; }
+  .w-cal .event .dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .w-cal .event .time { color: var(--txt-faint); font-variant-numeric: tabular-nums; font-size: 11px; min-width: 36px; }
+  .w-cal .event .title { color: var(--txt); }
+
+  /* AI Pulse widget */
+  .w-ai {
+    background: linear-gradient(135deg, rgba(255,107,53,0.18), rgba(192,132,252,0.12));
+    border: 0.5px solid rgba(255,107,53,0.25);
+  }
+  .w-ai .ai-status { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .w-ai .ai-orb {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 40%, var(--accent-3) 100%);
+    box-shadow: 0 0 24px rgba(255,107,53,0.6);
+    animation: orbPulse 3s ease-in-out infinite;
+  }
+  @keyframes orbPulse { 0%,100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.08); filter: brightness(1.2); } }
+  .w-ai .ai-name { font-family: var(--font-display); font-size: 22px; font-style: italic; }
+  .w-ai .ai-sub { font-size: 11px; color: var(--txt-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+  .w-ai .ai-msg {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--txt-dim);
+    margin-top: 8px;
+  }
+  .w-ai .ai-msg em { color: var(--txt); font-style: italic; font-family: var(--font-display); font-size: 14px; }
+  .w-ai .ai-actions { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .w-ai .chip {
+    padding: 4px 10px;
+    border: 0.5px solid var(--glass-border-bright);
+    border-radius: 100px;
+    font-size: 11px;
+    background: rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .w-ai .chip:hover { background: rgba(255,255,255,0.12); border-color: var(--accent); }
+
+  /* Now playing widget (bottom-right) */
+  .now-playing {
+    position: absolute;
+    bottom: 110px;
+    right: 24px;
+    width: 280px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .np-art {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460, #533483);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .np-art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 50%);
+  }
+  .np-info { flex: 1; min-width: 0; }
+  .np-title {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .np-artist { font-size: 11px; color: var(--txt-dim); margin-top: 2px; }
+  .np-bar { height: 2px; background: rgba(255,255,255,0.12); border-radius: 1px; margin-top: 10px; overflow: hidden; }
+  .np-bar-fill { height: 100%; background: var(--accent); width: 42%; }
+  .np-controls { display: flex; gap: 8px; align-items: center; }
+  .np-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .np-btn:hover { background: rgba(255,255,255,0.12); }
+  .np-btn.play { background: rgba(255,255,255,0.15); }
+
+  /* ============== WINDOWS ============== */
+  .window {
+    position: absolute;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.08) inset;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+  }
+  .window.focused {
+    box-shadow: 0 40px 80px -15px rgba(0,0,0,0.8), 0 0 0 0.5px rgba(255,255,255,0.12) inset, 0 0 0 1px rgba(255,107,53,0.15);
+  }
+  .window-titlebar {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    cursor: grab;
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .window-titlebar:active { cursor: grabbing; }
+  .traffic-lights { display: flex; gap: 8px; }
+  .tl {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: filter 0.15s;
+    position: relative;
+  }
+  .tl-close { background: #ff5f57; }
+  .tl-min { background: #febc2e; }
+  .tl-max { background: #28c840; }
+  .tl:hover { filter: brightness(1.15); }
+  .window-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--txt-dim);
+    flex: 1;
+    text-align: center;
+    pointer-events: none;
+  }
+  .window-content { flex: 1; overflow: auto; padding: 20px; }
+
+  /* Mail window content */
+  .mail-window { width: 580px; height: 420px; top: 90px; right: 340px; }
+  .mail-list { display: flex; flex-direction: column; gap: 2px; }
+  .mail-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: background 0.15s;
+  }
+  .mail-item:hover { background: rgba(255,255,255,0.04); }
+  .mail-item.unread { background: rgba(255,107,53,0.06); }
+  .mail-item .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+  }
+  .av-1 { background: linear-gradient(135deg, #ff6b35, #c084fc); }
+  .av-2 { background: linear-gradient(135deg, #00d4ff, #0080ff); }
+  .av-3 { background: linear-gradient(135deg, #10b981, #059669); }
+  .av-4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .mail-item .info { flex: 1; min-width: 0; }
+  .mail-item .from { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; }
+  .mail-item .from .time { font-size: 11px; color: var(--txt-faint); font-weight: 400; }
+  .mail-item .subj { font-size: 12px; margin-top: 2px; }
+  .mail-item .preview { font-size: 12px; color: var(--txt-dim); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ai-summary {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--accent);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-summary::before { content: '✦'; font-size: 10px; }
+
+  /* Notes window content */
+  .notes-window { width: 360px; height: 380px; top: 200px; right: 50px; }
+  .notes-window .window-content {
+    padding: 28px;
+    font-family: var(--font-display);
+  }
+  .notes-window h2 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .notes-window p {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--txt-dim);
+    margin-bottom: 10px;
+  }
+  .notes-window .signature {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--txt-faint);
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  /* ============== DOCK ============== */
+  .dock-container {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 500;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .dock {
+    background: rgba(20,20,24,0.55);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 0.5px solid var(--glass-border-bright);
+    border-radius: 22px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.06) inset;
+  }
+  .dock-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 4px;
+    align-self: center;
+  }
+  .dock-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), margin 0.25s;
+    position: relative;
+    flex-shrink: 0;
+    font-size: 28px;
+  }
+  .dock-icon:hover {
+    transform: translateY(-12px) scale(1.35);
+  }
+  .dock-icon::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: rgba(20,20,24,0.92);
+    backdrop-filter: blur(20px);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    border: 0.5px solid var(--glass-border);
+  }
+  .dock-icon:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .dock-icon.running::before {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.55);
+  }
+  /* Gradient backgrounds for dock icons */
+  .di-finder  { background: linear-gradient(135deg, #2563eb, #7dd3fc); }
+  .di-safari  { background: radial-gradient(circle at 30% 30%, #60a5fa, #1e3a8a); }
+  .di-mail    { background: linear-gradient(180deg, #38bdf8, #0ea5e9); }
+  .di-msg     { background: linear-gradient(180deg, #4ade80, #15803d); }
+  .di-music   { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+  .di-photos  { background: conic-gradient(from 0deg, #ff6b35, #c084fc, #00d4ff, #4ade80, #ff6b35); }
+  .di-notes   { background: linear-gradient(180deg, #fef08a, #facc15); }
+  .di-code    { background: linear-gradient(135deg, #1e293b, #475569); }
+  .di-ai      { background: radial-gradient(circle at 30% 30%, #fff, #ff6b35 30%, #c084fc 70%, #1e1b4b); box-shadow: 0 0 20px rgba(255,107,53,0.4); }
+  .di-spaces  { background: linear-gradient(135deg, #c084fc, #6366f1); }
+  .di-trash   { background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.15); }
+
+  /* SVG icons inside dock */
+  .dock-icon svg { width: 28px; height: 28px; fill: white; }
+
+  /* ============== COMMAND ATLAS (Spotlight successor) ============== */
+  .atlas-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 18vh;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .atlas-backdrop.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .atlas {
+    width: 640px;
+    max-width: 90vw;
+    background: rgba(28,28,32,0.7);
+    backdrop-filter: blur(50px) saturate(200%);
+    -webkit-backdrop-filter: blur(50px) saturate(200%);
+    border: 0.5px solid var(--glass-border-bright);
+    border-radius: 22px;
+    box-shadow: 0 40px 80px -10px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.1) inset;
+    overflow: hidden;
+    animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .atlas-input {
+    display: flex;
+    align-items: center;
+    padding: 18px 22px;
+    gap: 14px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .atlas-orb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 40%, var(--accent-3));
+    box-shadow: 0 0 16px rgba(255,107,53,0.6);
+    animation: orbPulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .atlas-input input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--txt);
+    font-size: 22px;
+    font-family: var(--font-display);
+    font-style: italic;
+    width: 100%;
+    letter-spacing: -0.01em;
+  }
+  .atlas-input input::placeholder { color: var(--txt-faint); font-style: italic; }
+  .atlas-kbd {
+    padding: 3px 7px;
+    background: rgba(255,255,255,0.08);
+    border: 0.5px solid var(--glass-border);
+    border-radius: 5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--txt-dim);
+  }
+
+  .atlas-section {
+    padding: 8px;
+  }
+  .atlas-section-title {
+    padding: 6px 14px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--txt-faint);
+  }
+  .atlas-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .atlas-result:hover, .atlas-result.selected { background: rgba(255,107,53,0.15); }
+  .atlas-result .icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .atlas-result .label { flex: 1; font-size: 13px; }
+  .atlas-result .label .sub { font-size: 11px; color: var(--txt-dim); margin-top: 1px; }
+  .atlas-result .meta { font-size: 11px; color: var(--txt-faint); font-family: var(--font-mono); }
+
+  .atlas-suggest {
+    padding: 14px 22px;
+    background: linear-gradient(90deg, rgba(255,107,53,0.08), rgba(192,132,252,0.05));
+    border-top: 0.5px solid rgba(255,107,53,0.15);
+    font-size: 12px;
+    color: var(--txt-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .atlas-suggest .label-pill {
+    background: rgba(255,107,53,0.2);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ============== HINT BUTTON ============== */
+  .hint {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20,20,24,0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 0.5px solid var(--glass-border-bright);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--txt-dim);
+    z-index: 200;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+  }
+  .hint:hover { color: var(--txt); border-color: var(--accent); }
+  .hint kbd {
+    background: rgba(255,255,255,0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    margin: 0 2px;
+  }
+
+  /* ============== NOTIFICATION ============== */
+  .notification {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 320px;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 0.5px solid var(--glass-border-bright);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-lg);
+    display: none;
+    z-index: 600;
+    animation: notifSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes notifSlide { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .notification.show { display: block; }
+  .notif-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .notif-app-icon {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 40%, var(--accent-3));
+  }
+  .notif-app-name { font-size: 11px; color: var(--txt-dim); flex: 1; letter-spacing: 0.04em; text-transform: uppercase; }
+  .notif-time { font-size: 11px; color: var(--txt-faint); }
+  .notif-title { font-size: 13px; font-weight: 600; }
+  .notif-body { font-size: 12px; color: var(--txt-dim); margin-top: 3px; line-height: 1.45; }
+
+  /* ============== EDITORIAL TYPOGRAPHY FLOURISH ============== */
+  .desktop-watermark {
+    position: absolute;
+    bottom: 100px;
+    left: 24px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+  }
+  .desktop-watermark strong {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-ui);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    color: rgba(255,255,255,0.28);
+  }
+
+  /* ============== MOBILE / SMALL SCREEN ============== */
+  @media (max-width: 900px) {
+    .widgets { width: 220px; left: 12px; top: 50px; }
+    .mail-window { width: 90vw; right: 5vw; }
+    .notes-window { display: none; }
+    .now-playing { right: 12px; bottom: 110px; width: 220px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Wallpaper -->
+<div class="wallpaper">
+  <div class="aether-blob b1"></div>
+  <div class="aether-blob b2"></div>
+  <div class="aether-blob b3"></div>
+  <div class="aether-blob b4"></div>
+</div>
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<!-- Menu Bar -->
+<div class="menubar">
+  <div class="menubar-left">
+    <div class="apple-logo">
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
+        <path d="M11.6 8.5c0-1.9 1.5-2.7 1.6-2.8-0.9-1.3-2.3-1.5-2.7-1.5-1.2-0.1-2.3 0.7-2.8 0.7-0.6 0-1.5-0.7-2.5-0.6-1.3 0-2.5 0.7-3.1 1.9-1.3 2.3-0.3 5.7 1 7.5 0.6 0.9 1.4 1.9 2.4 1.9 1 0 1.3-0.6 2.5-0.6 1.1 0 1.5 0.6 2.5 0.6 1 0 1.7-0.9 2.3-1.8 0.7-1.1 1-2.1 1-2.2-0.1 0-2.1-0.8-2.2-3.1zM9.6 3c0.5-0.6 0.9-1.5 0.8-2.4-0.8 0-1.7 0.5-2.2 1.2-0.5 0.6-0.9 1.5-0.8 2.3 0.9 0.1 1.7-0.4 2.2-1.1z"/>
+      </svg>
+    </div>
+    <div class="menubar-item bold">Finder</div>
+    <div class="menubar-item">File</div>
+    <div class="menubar-item">Edit</div>
+    <div class="menubar-item">View</div>
+    <div class="menubar-item">Go</div>
+    <div class="menubar-item">Window</div>
+    <div class="menubar-item">Help</div>
+  </div>
+  <div class="menubar-right">
+    <div class="menubar-item" style="display:flex; align-items:center;">
+      <div class="ai-pulse"></div>Æther
+    </div>
+    <div class="menubar-icon" title="Battery">
+      <svg width="22" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="1" y="3" width="20" height="8" rx="2"/>
+        <rect x="3" y="5" width="14" height="4" fill="currentColor" stroke="none" rx="0.5"/>
+        <rect x="22" y="6" width="1.5" height="2" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="menubar-icon" title="Wi-Fi">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="white" opacity="0.9">
+        <path d="M8 11.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-3.5-2.7c.9-.9 2.1-1.4 3.5-1.4s2.6.5 3.5 1.4l1-1c-1.2-1.2-2.8-1.9-4.5-1.9s-3.3.7-4.5 1.9l1 1zm-2.7-2.7C3.8 4.5 5.8 3.7 8 3.7s4.2.8 6.2 2.4l1-1c-2-1.7-4.4-2.6-7.2-2.6S2.8 3.4.8 5.1l1 1z"/>
+      </svg>
+    </div>
+    <div class="menubar-icon" title="Control Center">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="1.5">
+        <rect x="2" y="2" width="6" height="6" rx="1.5"/>
+        <rect x="10" y="2" width="6" height="6" rx="1.5"/>
+        <rect x="2" y="10" width="6" height="6" rx="1.5"/>
+        <rect x="10" y="10" width="6" height="6" rx="1.5"/>
+      </svg>
+    </div>
+    <div class="clock" id="clock">Tue 12 May  10:42</div>
+  </div>
+</div>
+
+<!-- Desktop -->
+<div class="desktop">
+
+  <!-- Hint -->
+  <div class="hint" onclick="openAtlas()">
+    Press <kbd>⌘</kbd><kbd>K</kbd> or click to invoke <em>Atlas</em>
+  </div>
+
+  <!-- Workspace Indicator -->
+  <div class="workspace-indicator">
+    <span>Workspace</span>
+    <div class="workspace-dot"></div>
+    <div class="workspace-dot active"></div>
+    <div class="workspace-dot"></div>
+    <div class="workspace-dot"></div>
+    <span style="margin-left: 8px; color: var(--txt);">Focus</span>
+  </div>
+
+  <!-- Widgets -->
+  <div class="widgets">
+
+    <div class="widget w-weather">
+      <div class="widget-header">
+        <span>Thun · Now</span>
+        <span>↑ 14° ↓ 6°</span>
+      </div>
+      <div class="temp">11<sup>°C</sup></div>
+      <div class="condition">Partly cloudy · feels like 9°</div>
+      <div class="city">Bernese Oberland</div>
+    </div>
+
+    <div class="widget w-cal">
+      <div class="widget-header">
+        <span>Today</span>
+        <span>3 events</span>
+      </div>
+      <div class="date-month">TUESDAY</div>
+      <div class="date-big">12 May</div>
+      <div class="events">
+        <div class="event">
+          <span class="time">09:00</span>
+          <span class="dot" style="background: var(--accent);"></span>
+          <span class="title">BZI · Mathematik Schlussprüfung</span>
+        </div>
+        <div class="event">
+          <span class="time">13:30</span>
+          <span class="dot" style="background: var(--accent-2);"></span>
+          <span class="title">Lehrbetrieb · Baustelle Steffisburg</span>
+        </div>
+        <div class="event">
+          <span class="time">19:00</span>
+          <span class="dot" style="background: var(--accent-3);"></span>
+          <span class="title">Skitour vorbereiten</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget w-ai">
+      <div class="ai-status">
+        <div class="ai-orb"></div>
+        <div>
+          <div class="ai-name">Æther</div>
+          <div class="ai-sub">Ambient · Listening</div>
+        </div>
+      </div>
+      <div class="ai-msg">
+        <em>"You have a math exam in 18 minutes."</em> Want me to pull up your Algebra cheatsheet and silence Slack until 11:00?
+      </div>
+      <div class="ai-actions">
+        <div class="chip" onclick="showNotification('Cheatsheet opened')">Yes, do it</div>
+        <div class="chip" onclick="showNotification('Only silence')">Just silence</div>
+        <div class="chip">Not now</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Watermark -->
+  <div class="desktop-watermark">
+    <strong>macOS 17 — Concept</strong>
+    Æther · A spatial, ambient operating system
+  </div>
+
+  <!-- Mail Window -->
+  <div class="window mail-window focused" data-window="mail">
+    <div class="window-titlebar" data-drag>
+      <div class="traffic-lights">
+        <div class="tl tl-close" onclick="closeWindow(this)"></div>
+        <div class="tl tl-min"></div>
+        <div class="tl tl-max"></div>
+      </div>
+      <div class="window-title">Inbox — 4 unread</div>
+      <div style="width: 54px;"></div>
+    </div>
+    <div class="window-content">
+      <div class="mail-list">
+        <div class="mail-item unread">
+          <div class="avatar av-1">SR</div>
+          <div class="info">
+            <div class="from">Sarah Reichmuth <span class="time">10:31</span></div>
+            <div class="subj">Lehrabschluss-Praxisprüfung — Vorbereitung</div>
+            <div class="preview">Hoi G, anbei die Unterlagen für die IPA. Bitte schau bis Freitag rein, dann besprechen wir...</div>
+            <div class="ai-summary">Summary: Practical exam prep docs attached. Reply needed by Friday.</div>
+          </div>
+        </div>
+        <div class="mail-item unread">
+          <div class="avatar av-2">DC</div>
+          <div class="info">
+            <div class="from">Datacenter Careers <span class="time">09:14</span></div>
+            <div class="subj">Internship opening — DC commissioning, Zurich</div>
+            <div class="preview">Hello G, your profile matched a new opening for a hands-on commissioning role at our Zurich site...</div>
+            <div class="ai-summary">Matches your 2029 career goal. Salary range CHF 65–78k.</div>
+          </div>
+        </div>
+        <div class="mail-item">
+          <div class="avatar av-3">VC</div>
+          <div class="info">
+            <div class="from">Swiss VitalCare GmbH <span class="time">Yesterday</span></div>
+            <div class="subj">Website 4-language launch — final review</div>
+            <div class="preview">Hi, die Übersetzungen für FR und ZH sind fertig. Wann können wir den Soft-Launch machen?</div>
+          </div>
+        </div>
+        <div class="mail-item unread">
+          <div class="avatar av-4">PM</div>
+          <div class="info">
+            <div class="from">Polymarket <span class="time">Yesterday</span></div>
+            <div class="subj">Your 5-min BTC market closed: +$42.18</div>
+            <div class="preview">Position resolved YES. Net P&amp;L this week: +$214.62</div>
+          </div>
+        </div>
+        <div class="mail-item">
+          <div class="avatar av-1">JL</div>
+          <div class="info">
+            <div class="from">Jonas Lauwiner <span class="time">Sun</span></div>
+            <div class="subj">Reels für Wahlkampf — Feedback</div>
+            <div class="preview">Hoi, die letzten zwei Reels sind super geworden. Können wir nächste Woche...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes Window -->
+  <div class="window notes-window" data-window="notes">
+    <div class="window-titlebar" data-drag>
+      <div class="traffic-lights">
+        <div class="tl tl-close" onclick="closeWindow(this)"></div>
+        <div class="tl tl-min"></div>
+        <div class="tl tl-max"></div>
+      </div>
+      <div class="window-title">Æther — Manifesto</div>
+      <div style="width: 54px;"></div>
+    </div>
+    <div class="window-content">
+      <h2>A new <em>spatial</em> operating system.</h2>
+      <p>The desktop is no longer a metaphor. It is a <em>place</em>.</p>
+      <p>Windows breathe. Workspaces are rooms. The assistant is not a chatbot in a sidebar — it is the air between your apps.</p>
+      <p>Computing should feel less like driving, more like walking.</p>
+      <div class="signature">— Æther, 2026</div>
+    </div>
+  </div>
+
+  <!-- Now Playing -->
+  <div class="now-playing">
+    <div class="np-art"></div>
+    <div class="np-info">
+      <div class="np-title">Strobe</div>
+      <div class="np-artist">deadmau5</div>
+      <div class="np-bar"><div class="np-bar-fill"></div></div>
+    </div>
+    <div class="np-controls">
+      <div class="np-btn play">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="white"><path d="M3 2v8l7-4z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <div class="notif-header">
+      <div class="notif-app-icon"></div>
+      <div class="notif-app-name">Æther</div>
+      <div class="notif-time">now</div>
+    </div>
+    <div class="notif-title" id="notif-title">Done.</div>
+    <div class="notif-body" id="notif-body">Cheatsheet opened in your second workspace. Slack silenced until 11:00.</div>
+  </div>
+
+  <!-- Dock -->
+  <div class="dock-container">
+    <div class="dock">
+      <div class="dock-icon di-finder running" data-name="Finder">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-3 5a2 2 0 110 4 2 2 0 010-4zm6 0a2 2 0 110 4 2 2 0 010-4zm-7 8c1.5 2 3.5 3 4 3s2.5-1 4-3"/></svg>
+      </div>
+      <div class="dock-icon di-safari" data-name="Safari">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm3 7l-2 5-5 2 2-5 5-2z"/></svg>
+      </div>
+      <div class="dock-icon di-mail running" data-name="Mail">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2zm0 2v.5l8 5 8-5V8H4z"/></svg>
+      </div>
+      <div class="dock-icon di-msg" data-name="Messages">
+        <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.2 6.1L4 22l4.5-2.2c1.1.4 2.3.7 3.5.7 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>
+      </div>
+      <div class="dock-icon di-notes running" data-name="Notes">
+        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm8 1v5h5"/></svg>
+      </div>
+      <div class="dock-icon di-music" data-name="Music">
+        <svg viewBox="0 0 24 24"><path d="M9 17V5l11-2v12M9 17a3 3 0 11-6 0 3 3 0 016 0zm11-2a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div class="dock-icon di-photos" data-name="Photos">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg>
+      </div>
+      <div class="dock-icon di-code" data-name="Xcode">
+        <svg viewBox="0 0 24 24"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg>
+      </div>
+      <div class="dock-divider"></div>
+      <div class="dock-icon di-ai" data-name="Æther" onclick="openAtlas()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="white"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="white" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="dock-icon di-spaces" data-name="Spatial Workspaces">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
+      </div>
+      <div class="dock-divider"></div>
+      <div class="dock-icon di-trash" data-name="Trash">
+        <svg viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Command Atlas (Spotlight successor) -->
+<div class="atlas-backdrop" id="atlas">
+  <div class="atlas">
+    <div class="atlas-input">
+      <div class="atlas-orb"></div>
+      <input type="text" placeholder="Ask anything, find anything, do anything…" id="atlas-input" />
+      <span class="atlas-kbd">esc</span>
+    </div>
+
+    <div class="atlas-section">
+      <div class="atlas-section-title">✦ Æther suggests</div>
+      <div class="atlas-result selected">
+        <div class="icon" style="background: linear-gradient(135deg, #ff6b35, #c084fc);">📐</div>
+        <div class="label">
+          Open Algebra cheatsheet
+          <div class="sub">Last opened 2 days ago · For your 11:00 exam</div>
+        </div>
+        <div class="meta">↵</div>
+      </div>
+      <div class="atlas-result">
+        <div class="icon" style="background: linear-gradient(135deg, #00d4ff, #0080ff);">📅</div>
+        <div class="label">
+          Start Focus until 11:00
+          <div class="sub">Silence Slack, Messages, Mail</div>
+        </div>
+        <div class="meta">⌘F</div>
+      </div>
+    </div>
+
+    <div class="atlas-section">
+      <div class="atlas-section-title">Applications</div>
+      <div class="atlas-result">
+        <div class="icon" style="background: linear-gradient(180deg, #fef08a, #facc15);">📝</div>
+        <div class="label">Notes</div>
+        <div class="meta">App</div>
+      </div>
+      <div class="atlas-result">
+        <div class="icon" style="background: linear-gradient(135deg, #1e293b, #475569);">⟨/⟩</div>
+        <div class="label">Xcode</div>
+        <div class="meta">App</div>
+      </div>
+    </div>
+
+    <div class="atlas-section">
+      <div class="atlas-section-title">Files & Documents</div>
+      <div class="atlas-result">
+        <div class="icon" style="background: rgba(255,255,255,0.1);">📄</div>
+        <div class="label">
+          Rechnung — Abbrucharbeiten.docx
+          <div class="sub">Documents · Modified yesterday</div>
+        </div>
+        <div class="meta">⌘1</div>
+      </div>
+      <div class="atlas-result">
+        <div class="icon" style="background: rgba(255,255,255,0.1);">📊</div>
+        <div class="label">
+          BTC-correlation-trendscore.pine
+          <div class="sub">Projects · Modified 3 hours ago</div>
+        </div>
+        <div class="meta">⌘2</div>
+      </div>
+    </div>
+
+    <div class="atlas-suggest">
+      <span class="label-pill">Try asking</span>
+      <em style="font-family: var(--font-display); font-size: 14px;">
+        "Summarize all unread mail and draft replies for me"
+      </em>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========== CLOCK ==========
+  function tick() {
+    const d = new Date();
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}  ${hh}:${mm}`;
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  // ========== COMMAND ATLAS ==========
+  const atlas = document.getElementById('atlas');
+  const atlasInput = document.getElementById('atlas-input');
+
+  function openAtlas() {
+    atlas.classList.add('active');
+    setTimeout(() => atlasInput.focus(), 50);
+  }
+  function closeAtlas() {
+    atlas.classList.remove('active');
+    atlasInput.value = '';
+  }
+  atlas.addEventListener('click', (e) => {
+    if (e.target === atlas) closeAtlas();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      atlas.classList.contains('active') ? closeAtlas() : openAtlas();
+    }
+    if (e.key === 'Escape') closeAtlas();
+  });
+
+  // ========== WINDOW DRAGGING ==========
+  let dragData = null;
+  document.querySelectorAll('.window').forEach(win => {
+    const bar = win.querySelector('[data-drag]');
+    bar.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('tl')) return;
+      focusWindow(win);
+      const rect = win.getBoundingClientRect();
+      dragData = {
+        win,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+      };
+      win.style.transition = 'none';
+    });
+    win.addEventListener('mousedown', () => focusWindow(win));
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (!dragData) return;
+    const x = e.clientX - dragData.offsetX;
+    const y = Math.max(30, e.clientY - dragData.offsetY);
+    dragData.win.style.left = x + 'px';
+    dragData.win.style.top = (y - 30) + 'px';
+    dragData.win.style.right = 'auto';
+  });
+  document.addEventListener('mouseup', () => {
+    if (dragData) {
+      dragData.win.style.transition = '';
+      dragData = null;
+    }
+  });
+
+  function focusWindow(win) {
+    document.querySelectorAll('.window').forEach(w => {
+      w.classList.remove('focused');
+      w.style.zIndex = 100;
+    });
+    win.classList.add('focused');
+    win.style.zIndex = 150;
+  }
+
+  function closeWindow(el) {
+    const win = el.closest('.window');
+    win.style.transition = 'transform 0.3s, opacity 0.3s';
+    win.style.transform = 'scale(0.85)';
+    win.style.opacity = '0';
+    setTimeout(() => win.style.display = 'none', 300);
+  }
+
+  // ========== NOTIFICATION ==========
+  function showNotification(msg) {
+    const notif = document.getElementById('notification');
+    document.getElementById('notif-title').textContent = 'Done.';
+    document.getElementById('notif-body').textContent = msg + '. Slack silenced until 11:00.';
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 4000);
+  }
+
+  // ========== DOCK MAGNIFICATION ==========
+  const dock = document.querySelector('.dock');
+  const icons = Array.from(dock.querySelectorAll('.dock-icon'));
+  dock.addEventListener('mousemove', (e) => {
+    const rect = dock.getBoundingClientRect();
+    const mx = e.clientX;
+    icons.forEach(icon => {
+      const iconRect = icon.getBoundingClientRect();
+      const iconCenter = iconRect.left + iconRect.width / 2;
+      const dist = Math.abs(mx - iconCenter);
+      const maxDist = 90;
+      const scale = dist < maxDist ? 1 + (1 - dist / maxDist) * 0.5 : 1;
+      const lift = dist < maxDist ? (1 - dist / maxDist) * 14 : 0;
+      icon.style.transform = `translateY(-${lift}px) scale(${scale})`;
+    });
+  });
+  dock.addEventListener('mouseleave', () => {
+    icons.forEach(icon => icon.style.transform = '');
+  });
+
+  // ========== ATLAS RESULT NAV ==========
+  let selectedIdx = 0;
+  const updateSelection = () => {
+    const results = atlas.querySelectorAll('.atlas-result');
+    results.forEach((r, i) => r.classList.toggle('selected', i === selectedIdx));
+  };
+  document.addEventListener('keydown', (e) => {
+    if (!atlas.classList.contains('active')) return;
+    const results = atlas.querySelectorAll('.atlas-result');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIdx = (selectedIdx + 1) % results.length;
+      updateSelection();
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIdx = (selectedIdx - 1 + results.length) % results.length;
+      updateSelection();
+    }
+    if (e.key === 'Enter') {
+      closeAtlas();
+      showNotification('Algebra cheatsheet opened');
+    }
+  });
+
+  // Atlas result hover sets selection
+  atlas.querySelectorAll('.atlas-result').forEach((r, i) => {
+    r.addEventListener('mouseenter', () => { selectedIdx = i; updateSelection(); });
+    r.addEventListener('click', () => {
+      closeAtlas();
+      showNotification('Action triggered');
+    });
+  });
+
+  // Parallax on cursor for the wallpaper blobs
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    document.querySelectorAll('.aether-blob').forEach((blob, i) => {
+      const mult = (i + 1) * 0.5;
+      blob.style.marginLeft = `${x * mult}px`;
+      blob.style.marginTop = `${y * mult}px`;
+    });
+  });
+</script>
+
+</body>
+</html>

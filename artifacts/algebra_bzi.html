@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Algebra · BZI Prüfungsvorbereitung</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #fcfbf7;
+    --paper-2: #f6f4ec;
+    --ink: #1a1a1a;
+    --ink-2: #333;
+    --muted: #6b6b6b;
+    --rule-bg: #fbe6e3;
+    --rule-border: #c5392c;
+    --example-bg: #fdf6d8;
+    --example-border: #e3b800;
+    --accent: #c5392c;
+    --grid: #e4e1d4;
+    --ok: #2f7d3a;
+    --ok-bg: #effaef;
+    --warn: #c5392c;
+    --warn-bg: #fdecea;
+    --serif: 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+    --sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+  body { min-height: 100vh; padding-bottom: 40px; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--grid);
+  }
+  .brand {
+    padding: 14px 16px 6px;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .brand h1 { font-family: var(--serif); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand .meta { font-size: 11px; color: var(--muted); font-variant: all-small-caps; letter-spacing: 0.08em; }
+
+  .tabs {
+    display: flex; overflow-x: auto; scrollbar-width: none; gap: 0;
+    padding: 0 8px; border-bottom: 1px solid var(--grid);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0; padding: 10px 14px; font-size: 13px; font-weight: 500;
+    color: #999; background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
+    font-family: var(--sans); transition: color 0.15s, border-color 0.15s;
+  }
+  .tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .tab .num { color: var(--accent); font-weight: 600; margin-right: 4px; }
+  .tab.special { background: var(--ink); color: var(--paper); border-radius: 2px; margin: 4px 0; padding: 6px 12px; }
+  .tab.special.active { background: var(--accent); color: var(--paper); border-bottom-color: transparent; }
+  .tab.special .num { color: var(--paper); opacity: 0.7; }
+
+  .page {
+    display: none; padding: 20px 16px 40px; max-width: 720px; margin: 0 auto;
+  }
+  .page.active { display: block; animation: fade 0.25s ease-out; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .chapter-tag { font-size: 11px; font-variant: all-small-caps; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
+  h2.page-title { font-family: var(--serif); font-size: 24px; font-weight: 600; margin-bottom: 12px; line-height: 1.2; }
+  h2.page-title .sect-num { color: var(--accent); margin-right: 8px; }
+  .intro { font-size: 15px; color: var(--ink-2); margin-bottom: 20px; line-height: 1.55; }
+
+  .box { margin: 16px 0; padding: 14px 16px 14px 18px; border-radius: 2px; font-size: 14.5px; line-height: 1.55; position: relative; }
+  .rule { background: var(--rule-bg); border-left: 4px solid var(--rule-border); }
+  .example { background: var(--example-bg); border-left: 4px solid var(--example-border); }
+  .box-label { display: flex; align-items: center; gap: 6px; font-size: 12px; font-variant: all-small-caps; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 6px; }
+  .rule .box-label { color: var(--rule-border); }
+  .example .box-label { color: #8a6a00; }
+  em { font-style: italic; color: #4a3a2a; font-weight: 500; }
+  .box strong { font-weight: 700; color: var(--ink); }
+
+  .math { font-family: var(--serif); font-style: italic; font-size: 1.05em; }
+  .eq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 4px; margin: 8px 0; font-family: var(--serif); font-size: 16px; line-height: 1.4; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 2px; font-size: 0.95em; }
+  .frac .num, .frac .den { padding: 0 4px; font-style: italic; line-height: 1.15; }
+  .frac .num { border-bottom: 1px solid var(--ink); }
+  .frac .den { padding-top: 1px; }
+  .frac .num.plain, .frac .den.plain { font-style: normal; }
+
+  .practice {
+    margin-top: 28px; padding: 18px 14px; background: var(--paper-2);
+    border: 1px solid var(--grid); border-radius: 4px;
+  }
+  .practice-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .practice-head .title { display: flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 17px; font-weight: 600; }
+  .practice-head .pencil { display: inline-flex; width: 18px; height: 18px; align-items: center; justify-content: center; background: var(--accent); color: white; border-radius: 2px; font-size: 11px; }
+  .diff-badge { font-size: 10px; font-variant: all-small-caps; letter-spacing: 0.1em; color: var(--muted); padding: 3px 8px; border: 1px solid var(--grid); border-radius: 999px; }
+  .diff-badge.hard { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+  .problem {
+    background: var(--paper); border: 1px solid var(--grid);
+    padding: 16px; border-radius: 3px; font-family: var(--serif); font-size: 17px;
+    min-height: 60px; display: flex; align-items: center; margin-bottom: 10px;
+    background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 18px 18px; background-position: -1px -1px;
+  }
+  .problem-label { font-family: var(--sans); font-style: normal; font-weight: 600; color: var(--accent); margin-right: 10px; font-size: 14px; flex-shrink: 0; }
+  .problem-body { overflow-x: auto; }
+
+  .form-hint {
+    font-size: 11px; color: var(--muted); font-style: italic;
+    margin: 0 0 6px 2px; font-family: var(--sans);
+  }
+  .form-hint .code {
+    font-family: var(--serif); font-style: italic;
+    background: var(--paper); padding: 1px 5px; border-radius: 2px; border: 1px solid var(--grid);
+  }
+
+  .answer-input {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--paper); border: 1.5px solid var(--grid);
+    padding: 12px 14px; border-radius: 3px; min-height: 50px;
+    font-family: var(--serif); font-size: 19px; line-height: 1.3;
+    transition: border-color 0.15s, background 0.15s;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .answer-input.correct { border-color: var(--ok); background: var(--ok-bg); }
+  .answer-input.wrong { border-color: var(--warn); background: var(--warn-bg); }
+  .answer-input .prefix { color: var(--muted); font-style: italic; font-size: 0.85em; flex-shrink: 0; }
+  .answer-input .text {
+    font-style: italic; color: var(--ink); flex: 1; min-height: 24px; display: flex; align-items: center; flex-wrap: nowrap;
+  }
+  .answer-input .text span.num { font-style: normal; }
+  .answer-input .text span.op { font-style: normal; color: var(--ink-2); margin: 0 2px; }
+  .answer-input .text .cursor {
+    display: inline-block; width: 2px; height: 20px; background: var(--ink);
+    margin-left: 1px; animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .answer-input .placeholder { color: #bbb; font-style: italic; font-size: 0.85em; }
+
+  .feedback {
+    display: none; padding: 12px 14px; margin: 10px 0; border-radius: 3px;
+    font-size: 14px; line-height: 1.5;
+  }
+  .feedback.visible { display: block; animation: fade 0.2s; }
+  .feedback.correct { background: var(--ok-bg); border-left: 3px solid var(--ok); color: #1d5624; }
+  .feedback.wrong { background: var(--warn-bg); border-left: 3px solid var(--warn); color: #8b1d15; }
+  .feedback .label { font-weight: 700; font-variant: all-small-caps; letter-spacing: 0.08em; font-size: 12px; display: block; margin-bottom: 4px; }
+  .feedback .body { font-family: var(--serif); font-size: 17px; }
+  .feedback .interp {
+    margin-top: 8px; font-size: 12.5px; font-style: italic; color: #8b1d15;
+    font-family: var(--sans); padding-top: 8px; border-top: 1px dashed rgba(139, 29, 21, 0.3);
+  }
+  .feedback .interp code {
+    font-family: var(--serif); font-style: italic; background: var(--paper);
+    padding: 1px 5px; border-radius: 2px; color: var(--ink);
+  }
+
+  .answer-reveal {
+    display: none; background: #fffbe8;
+    border-left: 3px solid var(--example-border); padding: 14px 16px;
+    border-radius: 0 3px 3px 0; margin-bottom: 12px; line-height: 1.55;
+  }
+  .answer-reveal.visible { display: block; animation: fade 0.2s; }
+  .answer-reveal .label {
+    font-family: var(--sans); font-size: 11px; font-variant: all-small-caps;
+    letter-spacing: 0.12em; color: #8a6a00; font-weight: 700;
+    display: block; margin-bottom: 6px;
+  }
+  .answer-reveal .final { font-family: var(--serif); font-weight: 700; font-size: 19px; }
+  .answer-reveal .steps {
+    font-size: 13.5px; color: var(--ink-2); margin-top: 10px;
+    padding-top: 10px; border-top: 1px dashed #d4c89a;
+  }
+  .answer-reveal .steps .step { margin-bottom: 3px; font-style: italic; font-family: var(--serif); }
+
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--paper);
+    border: 1px solid var(--grid);
+    border-radius: 4px;
+  }
+  .key {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--paper-2);
+    border: 1px solid var(--grid);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.05s, background 0.1s;
+  }
+  .key:active {
+    background: #ebe8dd;
+    transform: translateY(1px);
+    border-bottom-width: 1px;
+    margin-bottom: 1px;
+  }
+  .key.var { font-family: var(--serif); font-style: italic; font-size: 18px; }
+  .key.op { color: var(--accent); font-weight: 700; }
+  .key.power { font-family: var(--serif); font-size: 18px; }
+  .key.action {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .key.action:active { background: #333; }
+
+  .action-row { display: grid; grid-template-columns: 1fr 2fr; gap: 6px; margin-top: 8px; }
+  .btn {
+    padding: 13px; font-family: var(--sans); font-size: 14px;
+    font-weight: 600; border: 1px solid var(--ink);
+    background: var(--paper); color: var(--ink);
+    border-radius: 3px; cursor: pointer; letter-spacing: 0.02em; transition: all 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn.ghost { border-color: var(--grid); color: var(--muted); }
+
+  .secondary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+
+  .warn-box {
+    background: #fff4e6; border-left: 4px solid #e89a2b;
+    padding: 12px 16px; font-size: 13.5px; margin: 14px 0; border-radius: 2px;
+  }
+  .warn-box .label {
+    font-size: 11px; font-variant: all-small-caps; letter-spacing: 0.12em;
+    color: #b87100; font-weight: 700; margin-bottom: 4px; display: flex;
+    align-items: center; gap: 6px;
+  }
+
+  .plan-card { background: var(--paper-2); border: 1px solid var(--grid); padding: 16px; border-radius: 3px; margin-bottom: 12px; }
+  .plan-card .day { font-size: 11px; font-variant: all-small-caps; letter-spacing: 0.14em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .plan-card .title { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .plan-card .desc { font-size: 14px; color: var(--ink-2); }
+
+  .weak-list { margin: 14px 0; }
+  .weak-list li {
+    list-style: none; padding: 10px 0; border-bottom: 1px solid var(--grid); font-size: 14px;
+  }
+  .weak-list li .tag {
+    display: inline-block; font-family: var(--sans); font-size: 11px;
+    padding: 2px 6px; background: var(--accent); color: white;
+    border-radius: 2px; margin-right: 8px; font-weight: 600;
+  }
+
+  .footer {
+    margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--grid);
+    font-size: 11px; color: var(--muted); text-align: center;
+    font-variant: all-small-caps; letter-spacing: 0.1em;
+  }
+
+  .stats {
+    display: flex; justify-content: space-between; font-size: 11px;
+    color: var(--muted); margin-top: 10px; font-variant: all-small-caps;
+    letter-spacing: 0.1em;
+  }
+  .score.good { color: var(--ok); font-weight: 700; }
+  .score.mid { color: #c5a000; font-weight: 700; }
+  .score.bad { color: var(--accent); font-weight: 700; }
+
+  .source-tag {
+    display: inline-block; font-family: var(--sans); font-style: normal;
+    font-size: 10px; padding: 1px 5px; background: var(--accent); color: white;
+    border-radius: 2px; margin-right: 6px; font-weight: 600; letter-spacing: 0.04em;
+    vertical-align: middle;
+  }
+
+  @media (min-width: 640px) {
+    .page { padding: 28px 24px; }
+    h2.page-title { font-size: 28px; }
+    .key { height: 50px; font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <h1>Mathematik · Algebra</h1>
+    <span class="meta">BZI · Test Mi</span>
+  </div>
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="page active" data-page="overview">
+  <div class="chapter-tag">Prüfungsvorbereitung</div>
+  <h2 class="page-title">Übersicht</h2>
+  <p class="intro">Test am Mittwoch. Kapitel 2.1 – 2.11. Jedes Kapitel hat einen Übungsgenerator mit Eingabefeld: Antwort tippen, «Prüfen» drücken, Feedback bekommen. Der <strong>Prüfung</strong>-Tab mischt die härtesten Aufgaben aus allen Kapiteln.</p>
+
+  <h3 style="font-family: var(--serif); font-size: 18px; margin: 20px 0 8px;">Deine Schwachstellen</h3>
+  <ul class="weak-list">
+    <li><span class="tag">2.1 d</span> <em>Potenzen mit Nicht-Potenzen verwechselt.</em> 8a² + 3a + 5a² + 9a + a² ≠ 12a → <strong>14a² + 12a</strong>.</li>
+    <li><span class="tag">2.2 b</span> <em>Vorzeichenfehler.</em> 7a + 2 − 2a − 3 ≠ 5a + 1 → <strong>5a − 1</strong>.</li>
+    <li><span class="tag">2.2 d</span> <em>Terme vergessen.</em> 8x² + 3x − 2x² − 11x − x² → <strong>5x² − 8x</strong>.</li>
+    <li><span class="tag">2.6 c/d</span> <em>Nicht zu Ende vereinfacht.</em> Nach dem Ausmultiplizieren <strong>gleiche Variablen zusammenfassen!</strong></li>
+    <li><span class="tag">2.11 c</span> <em>Bruchkürzen.</em> (m+y) kürzen, 15/12 → 5/4, Ergebnis <strong>(5a−15b)/4</strong>.</li>
+  </ul>
+
+  <h3 style="font-family: var(--serif); font-size: 18px; margin: 20px 0 8px;">3-Tage Lernplan</h3>
+  <div class="plan-card"><div class="day">Sonntag</div><div class="title">Grundlagen: 2.1 – 2.5</div><div class="desc">Addition, Subtraktion, Vorzeichen, Klammern, Multiplikation. 30–45 Min.</div></div>
+  <div class="plan-card"><div class="day">Montag</div><div class="title">Klammern: 2.4 + 2.6 + 2.7</div><div class="desc">Ausmultiplizieren und Ausklammern. 45–60 Min.</div></div>
+  <div class="plan-card"><div class="day">Dienstag</div><div class="title">Brüche: 2.8 – 2.11 + Prüfung-Tab</div><div class="desc">Brüche durchspielen, dann 20 Min im Prüfung-Tab simulieren. 60 Min.</div></div>
+  <div class="plan-card" style="border-color: var(--accent);"><div class="day" style="color: var(--ink);">Mittwoch</div><div class="title">Prüfung</div><div class="desc">Morgens: 10 Min im Prüfung-Tab zum warmlaufen.</div></div>
+
+  <div class="warn-box">
+    <div class="label">⚠ Eingabe-Konventionen</div>
+    <ol style="margin-left: 18px; font-size: 13.5px;">
+      <li style="margin: 4px 0;">Koeffizient vor Variable, Variablen alphabetisch: <code>3ab</code> statt <code>3ba</code>.</li>
+      <li style="margin: 4px 0;">Potenzen: <code>a²</code> oder <code>a^2</code>.</li>
+      <li style="margin: 4px 0;">Brüche: <code>7a/12</code>. Summen in Zähler: <code>(3x+y)/4</code>.</li>
+      <li style="margin: 4px 0;">Tastatur-Minus <code>−</code> oder Bindestrich <code>-</code> – beide funktionieren.</li>
+      <li style="margin: 4px 0;">Reihenfolge der Summanden egal: <code>5a+1</code> = <code>1+5a</code>.</li>
+    </ol>
+  </div>
+
+  <div class="footer">© G. Lenherr · Math A3 · Test-Vorbereitung</div>
+</div>
+
+<div id="pages-container"></div>
+
+<script>
+/* ============================================================
+   NORMALIZATION + CHECKING
+   ============================================================ */
+function normStr(expr) {
+  if (!expr) return '';
+  return String(expr)
+    .replace(/\s+/g, '')
+    .replace(/·/g, '').replace(/\*/g, '').replace(/×/g, '')
+    .replace(/−/g, '-').replace(/–/g, '-').replace(/—/g, '-')
+    .replace(/\^2/g, '²').replace(/\^3/g, '³')
+    .toLowerCase();
+}
+
+function normPoly(expr) {
+  const s = normStr(expr);
+  if (s === '' || s === '0' || s === '+0' || s === '-0') return '0';
+  const withSign = (s[0] === '+' || s[0] === '-') ? s : '+' + s;
+  const termStrs = withSign.match(/[+-][^+-]*/g) || [];
+  const combined = {};
+  for (const ts of termStrs) {
+    if (ts.length <= 1) continue;
+    const sign = ts[0] === '-' ? -1 : 1;
+    const body = ts.slice(1);
+    const cm = body.match(/^(\d+(?:\.\d+)?)?(.*)$/);
+    let coef = cm[1] ? parseFloat(cm[1]) : 1;
+    coef *= sign;
+    const varPart = cm[2];
+    const vp = {};
+    const vRe = /([a-z])(²|³)?/g;
+    let vm;
+    while ((vm = vRe.exec(varPart)) !== null) {
+      let p = vm[2] === '²' ? 2 : vm[2] === '³' ? 3 : 1;
+      vp[vm[1]] = (vp[vm[1]] || 0) + p;
+    }
+    const varStr = Object.keys(vp).sort().map(v => {
+      const p = vp[v];
+      return p === 1 ? v : p === 2 ? v + '²' : p === 3 ? v + '³' : v + '^' + p;
+    }).join('');
+    combined[varStr] = (combined[varStr] || 0) + coef;
+  }
+  const keys = Object.keys(combined).filter(k => Math.abs(combined[k]) > 1e-9).sort();
+  if (keys.length === 0) return '0';
+  return keys.map(k => {
+    const c = combined[k];
+    const abs = Math.abs(c);
+    const absStr = Number.isInteger(abs) ? String(abs) : String(parseFloat(abs.toFixed(6)));
+    const coefStr = (abs === 1 && k !== '') ? '' : absStr;
+    return (c < 0 ? '-' : '+') + coefStr + k;
+  }).join('');
+}
+
+function stripOuter(s) {
+  if (!s.startsWith('(') || !s.endsWith(')')) return s;
+  let d = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') d++;
+    else if (s[i] === ')') { d--; if (d === 0 && i < s.length - 1) return s; }
+  }
+  return s.slice(1, -1);
+}
+
+function normFactored(expr) {
+  const s = normStr(expr);
+  const factors = [];
+  let i = 0;
+  while (i < s.length) {
+    if (s[i] === '(') {
+      let depth = 1, j = i + 1;
+      while (j < s.length && depth > 0) {
+        if (s[j] === '(') depth++;
+        else if (s[j] === ')') depth--;
+        j++;
+      }
+      const inside = s.substring(i + 1, j - 1);
+      factors.push('(' + normPoly(inside) + ')');
+      i = j;
+    } else {
+      let j = i;
+      while (j < s.length && s[j] !== '(') j++;
+      const chunk = s.substring(i, j);
+      if (chunk) factors.push(normPoly(chunk));
+      i = j;
+    }
+  }
+  const simplified = factors.map(f => {
+    if (f.startsWith('(') && f.endsWith(')')) {
+      const inner = f.slice(1, -1);
+      const signCount = (inner.match(/[+-]/g) || []).length;
+      if (signCount <= 1) return inner;
+    }
+    return f;
+  });
+  simplified.sort();
+  return simplified.join('*');
+}
+
+function normFraction(expr) {
+  const s = normStr(expr);
+  let depth = 0, slashIdx = -1;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (c === '(' || c === '[' || c === '{') depth++;
+    else if (c === ')' || c === ']' || c === '}') depth--;
+    else if (c === '/' && depth === 0) { slashIdx = i; break; }
+  }
+  if (slashIdx === -1) {
+    if (s.includes('(')) return normFactored(s);
+    return normPoly(s);
+  }
+  const num = stripOuter(s.substring(0, slashIdx));
+  const den = stripOuter(s.substring(slashIdx + 1));
+  const normOne = x => x.includes('(') ? normFactored(x) : normPoly(x);
+  return normOne(num) + '|||' + normOne(den);
+}
+
+function checkAnswer(userInput, expected, type) {
+  const exps = Array.isArray(expected) ? expected : [expected];
+  const fn = type === 'fraction' ? normFraction : type === 'factored' ? normFactored : normPoly;
+  let userNorm = '';
+  try { userNorm = fn(userInput); } catch (e) {}
+  for (const exp of exps) {
+    let expNorm = '';
+    try { expNorm = fn(exp); } catch (e) { continue; }
+    if (userNorm && userNorm === expNorm) return { correct: true, userNorm, expNorm };
+  }
+  let expNorm0 = '';
+  try { expNorm0 = fn(exps[0]); } catch (e) {}
+  return { correct: false, userNorm, expNorm: expNorm0 };
+}
+
+/* ============================================================
+   GENERATORS
+   ============================================================ */
+const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a || 1; }
+function simplifyFrac(n, d) { if (d < 0) { n = -n; d = -d; } const g = gcd(n, d); return [n/g, d/g]; }
+function frac(num, den) { return `<span class="frac"><span class="num">${num}</span><span class="den">${den}</span></span>`; }
+function fracP(num, den) { return `<span class="frac"><span class="num plain">${num}</span><span class="den plain">${den}</span></span>`; }
+
+const PROBLEM_GENS = {};
+
+/* ---------- 2.1 Addition ---------- */
+PROBLEM_GENS.s21 = function() {
+  const type = pick(['simple', 'twoVars', 'withPower', 'fracSame']);
+  if (type === 'simple') {
+    const a = rand(2, 9), b = rand(2, 9), c = rand(2, 9);
+    const v = pick(['a','b','x','m','n']);
+    return {
+      problem: `${a}${v} + ${b}${v} + ${c}${v}`,
+      answer: `${a+b+c}${v}`,
+      check: `${a+b+c}${v}`,
+      checkType: 'poly',
+      steps: [`Gleiche Variablen → Koeffizienten addieren`, `(${a} + ${b} + ${c})${v} = ${a+b+c}${v}`]
+    };
+  }
+  if (type === 'twoVars') {
+    const a = rand(2, 8), b = rand(2, 8), c = rand(2, 8), d = rand(2, 8);
+    const [v1, v2] = pick([['x','y'],['m','n'],['a','b'],['p','q']]);
+    return {
+      problem: `${a}${v1} + ${b}${v2} + ${c}${v1} + ${d}${v2}`,
+      answer: `${a+c}${v1} + ${b+d}${v2}`,
+      check: `${a+c}${v1}+${b+d}${v2}`,
+      checkType: 'poly',
+      steps: [`${v1}: ${a} + ${c} = ${a+c}`, `${v2}: ${b} + ${d} = ${b+d}`]
+    };
+  }
+  if (type === 'withPower') {
+    const a = rand(2, 6), b = rand(2, 7), c = rand(2, 6), d = rand(2, 7);
+    const v = pick(['a','x','b','m']);
+    return {
+      problem: `${a}${v}² + ${b}${v} + ${c}${v}² + ${d}${v} + ${v}²`,
+      answer: `${a+c+1}${v}² + ${b+d}${v}`,
+      check: `${a+c+1}${v}²+${b+d}${v}`,
+      checkType: 'poly',
+      steps: [`⚠ ${v}² und ${v} bleiben getrennt`, `${v}²: ${a} + ${c} + 1 = ${a+c+1}`, `${v}: ${b} + ${d} = ${b+d}`]
+    };
+  }
+  const a = rand(1, 7), b = rand(1, 7), c = rand(1, 7);
+  const den = pick([3, 4, 5, 6]);
+  const v = pick(['a','x','z']);
+  const sum = a + b + c;
+  const [sn, sd] = simplifyFrac(sum, den);
+  return {
+    problem: `${frac(`${a}${v}`, den)} + ${frac(`${b}${v}`, den)} + ${frac(`${c}${v}`, den)}`,
+    answer: sd === 1 ? `${sn}${v}` : frac(`${sn}${v}`, sd),
+    check: sd === 1 ? `${sn}${v}` : `${sn}${v}/${sd}`,
+    checkType: 'fraction',
+    steps: [`Gleicher Nenner ${den}: Zähler addieren`, `${a}+${b}+${c} = ${sum}`, sd !== den ? `Kürzen → ${sn}${v}/${sd}` : `Ergebnis: ${sum}${v}/${den}`]
+  };
+};
+
+/* ---------- 2.2 Subtraktion ---------- */
+PROBLEM_GENS.s22 = function() {
+  const type = pick(['simple', 'mixed', 'withPower', 'fracSame']);
+  if (type === 'simple') {
+    const a = rand(6, 12), b = rand(2, 5), c = rand(1, 4);
+    const v = pick(['c','x','a','b']);
+    return {
+      problem: `${a}${v} − ${b}${v} − ${c}${v}`,
+      answer: `${a-b-c}${v}`,
+      check: `${a-b-c}${v}`,
+      checkType: 'poly',
+      steps: [`(${a} − ${b} − ${c})${v} = ${a-b-c}${v}`]
+    };
+  }
+  if (type === 'mixed') {
+    const a = rand(3, 9), b = rand(1, 5), c = rand(2, 7), d = rand(1, 5);
+    const v = pick(['a','x','m']);
+    const vc = a - c, con = b - d;
+    const conStr = con === 0 ? '' : (con > 0 ? `+${con}` : `${con}`);
+    return {
+      problem: `${a}${v} + ${b} − ${c}${v} − ${d}`,
+      answer: `${vc}${v}${con === 0 ? '' : (con > 0 ? ' + ' + con : ' − ' + Math.abs(con))}`,
+      check: `${vc}${v}${conStr}`,
+      checkType: 'poly',
+      steps: [`Variable: ${a}${v} − ${c}${v} = ${vc}${v}`, `Zahlen: ${b} − ${d} = ${con}`]
+    };
+  }
+  if (type === 'withPower') {
+    const a = rand(5, 10), b = rand(2, 4), c = rand(2, 5), d = rand(6, 12);
+    const v = pick(['x','a']);
+    const sq = a - b - 1, lin = c - d;
+    const linStr = lin === 0 ? '' : (lin > 0 ? `+${lin}${v}` : `${lin}${v}`);
+    return {
+      problem: `${a}${v}² + ${c}${v} − ${b}${v}² − ${d}${v} − ${v}²`,
+      answer: `${sq}${v}²${lin === 0 ? '' : (lin > 0 ? ' + ' + lin + v : ' − ' + Math.abs(lin) + v)}`,
+      check: `${sq}${v}²${linStr}`,
+      checkType: 'poly',
+      steps: [`⚠ ${v}² und ${v} getrennt!`, `${v}²: ${a} − ${b} − 1 = ${sq}`, `${v}: ${c} − ${d} = ${lin}`]
+    };
+  }
+  const a = rand(4, 10), b = rand(1, 3), c = rand(1, 3);
+  const den = pick([4, 6, 8]);
+  const v = pick(['z','a','x']);
+  const diff = a - b - c;
+  const [sn, sd] = simplifyFrac(diff, den);
+  return {
+    problem: `${frac(`${a}${v}`, den)} − ${frac(`${b}${v}`, den)} − ${frac(`${c}${v}`, den)}`,
+    answer: sd === 1 ? `${sn}${v}` : frac(`${sn}${v}`, sd),
+    check: sd === 1 ? `${sn}${v}` : `${sn}${v}/${sd}`,
+    checkType: 'fraction',
+    steps: [`Zähler: ${a} − ${b} − ${c} = ${diff}`]
+  };
+};
+
+/* ---------- 2.3 Vorzeichen ---------- */
+PROBLEM_GENS.s23 = function() {
+  const type = pick(['numeric', 'vars', 'mixed']);
+  if (type === 'numeric') {
+    const a = rand(10, 25), b = rand(5, 15), c = rand(5, 20);
+    return {
+      problem: `${a} + (−${b}) − (−${c})`,
+      answer: `${a-b+c}`,
+      check: `${a-b+c}`,
+      checkType: 'poly',
+      steps: [`+ (−${b}) = −${b}`, `− (−${c}) = +${c}`, `${a} − ${b} + ${c} = ${a-b+c}`]
+    };
+  }
+  if (type === 'vars') {
+    const a = rand(2, 8), b = rand(2, 8), c = rand(2, 8), d = rand(2, 8);
+    const [v1, v2] = pick([['a','n'],['x','y'],['c','r']]);
+    const r1 = -a - c, r2 = b - d;
+    const r2Str = r2 === 0 ? '' : (r2 > 0 ? `+${r2}${v2}` : `${r2}${v2}`);
+    return {
+      problem: `−${a}${v1} + ${b}${v2} − (+${c}${v1}) + (−${d}${v2})`,
+      answer: `${r1}${v1}${r2 === 0 ? '' : (r2 > 0 ? ' + ' + r2 + v2 : ' − ' + Math.abs(r2) + v2)}`,
+      check: `${r1}${v1}${r2Str}`,
+      checkType: 'poly',
+      steps: [`− (+${c}${v1}) = −${c}${v1}`, `+ (−${d}${v2}) = −${d}${v2}`, `${v1}: −${a} − ${c} = ${r1}`, `${v2}: ${b} − ${d} = ${r2}`]
+    };
+  }
+  const a = rand(3, 9), b = rand(2, 7), c = rand(2, 6), d = rand(2, 8);
+  return {
+    problem: `${a}c − (−${b}r) + ${c}r + (+${d}c)`,
+    answer: `${a+d}c + ${b+c}r`,
+    check: `${a+d}c+${b+c}r`,
+    checkType: 'poly',
+    steps: [`− (−${b}r) = +${b}r`, `+ (+${d}c) = +${d}c`, `c: ${a} + ${d} = ${a+d}`, `r: ${b} + ${c} = ${b+c}`]
+  };
+};
+
+/* ---------- 2.4 Klammern ---------- */
+PROBLEM_GENS.s24 = function() {
+  const type = pick(['plusBracket', 'minusBracket', 'nested', 'varMixed', 'varMixed']);
+  if (type === 'plusBracket') {
+    const a = rand(3, 9), b = rand(2, 9), c = rand(2, 9), d = rand(2, 9);
+    return {
+      problem: `(${a} + ${b}) + (${c} − ${d})`,
+      answer: `${a+b+c-d}`,
+      check: `${a+b+c-d}`,
+      checkType: 'poly',
+      steps: [`${a} + ${b} + ${c} − ${d} = ${a+b+c-d}`]
+    };
+  }
+  if (type === 'minusBracket') {
+    const a = rand(6, 15), b = rand(2, 8), c = rand(8, 20), d = rand(2, 8);
+    return {
+      problem: `(${a} − ${b}) − (${c} − ${d})`,
+      answer: `${a-b-c+d}`,
+      check: `${a-b-c+d}`,
+      checkType: 'poly',
+      steps: [`Minus vor Klammer → Vorzeichen wechseln!`, `${a} − ${b} − ${c} + ${d} = ${a-b-c+d}`]
+    };
+  }
+  if (type === 'nested') {
+    const a = rand(5, 12), b = rand(3, 8), c = rand(4, 10), d = rand(1, 5);
+    return {
+      problem: `${a} − [${b} − (${c} − ${d})]`,
+      answer: `${a - (b - (c - d))}`,
+      check: `${a - (b - (c - d))}`,
+      checkType: 'poly',
+      steps: [`Innere Klammer: ${c} − ${d} = ${c-d}`, `${a} − [${b} − ${c-d}] = ${a - (b-(c-d))}`]
+    };
+  }
+  const a = rand(2, 5), b = rand(2, 5), c = rand(2, 5), d = rand(2, 5), ax = rand(4, 8);
+  const cx = ax - a + c, cy = -b - d;
+  const cyStr = cy === 0 ? '' : `${cy}y`;
+  return {
+    problem: `${ax}x − (${a}x + ${b}y) + (${c}x − ${d}y)`,
+    answer: `${cx}x${cy === 0 ? '' : ' − ' + Math.abs(cy) + 'y'}`,
+    check: `${cx}x${cyStr}`,
+    checkType: 'poly',
+    steps: [`Minus-Klammer: −${a}x − ${b}y`, `Plus-Klammer: +${c}x − ${d}y`, `x: ${ax} − ${a} + ${c} = ${cx}`, `y: −${b} − ${d} = ${cy}`]
+  };
+};
+
+/* ---------- 2.5 Multiplikation ---------- */
+PROBLEM_GENS.s25 = function() {
+  const type = pick(['numeric', 'vars', 'withZero', 'negatives']);
+  if (type === 'numeric') {
+    const a = rand(3, 12), b = rand(-5, -2), c = rand(2, 6);
+    return {
+      problem: `${a} · (${b}) · ${c}`,
+      answer: `${a*b*c}`,
+      check: `${a*b*c}`,
+      checkType: 'poly',
+      steps: [`${a} · (${b}) = ${a*b}`, `${a*b} · ${c} = ${a*b*c}`]
+    };
+  }
+  if (type === 'vars') {
+    const a = rand(2, 6), b = rand(2, 6), c = rand(2, 5);
+    return {
+      problem: `${a}x · ${b}z · ${c}y`,
+      answer: `${a*b*c}xyz`,
+      check: `${a*b*c}xyz`,
+      checkType: 'poly',
+      steps: [`Zahlen: ${a}·${b}·${c} = ${a*b*c}`, `Variablen alphabetisch: xyz`]
+    };
+  }
+  if (type === 'withZero') {
+    return {
+      problem: `${rand(2, 6)}ab · ${rand(2, 6)}mn · 0 · ${rand(2, 6)}xy`,
+      answer: `0`,
+      check: `0`,
+      checkType: 'poly',
+      steps: [`Ein Faktor ist 0 → Produkt = 0`]
+    };
+  }
+  const a = rand(-8, -2), b = rand(2, 6), c = rand(-7, -2);
+  return {
+    problem: `(${a}x) · ${b}y · (${c}x)`,
+    answer: `${a*b*c}x²y`,
+    check: `${a*b*c}x²y`,
+    checkType: 'poly',
+    steps: [`Zahlen: ${a}·${b}·${c} = ${a*b*c} (2 Minus → plus)`, `x·x = x²`, `Alphabetisch: ${a*b*c}x²y`]
+  };
+};
+
+/* ---------- 2.6 Ausmultiplizieren ---------- */
+PROBLEM_GENS.s26 = function() {
+  const type = pick(['single', 'binomBinomNeg', 'negativeFactor', 'binomBinomPos', 'binomBinomNeg']);
+  if (type === 'single') {
+    const a = rand(2, 5), b = rand(2, 7), c = rand(2, 7);
+    return {
+      problem: `${a}x · (${b}ab + ${c}b)`,
+      answer: `${a*b}abx + ${a*c}bx`,
+      check: `${a*b}abx+${a*c}bx`,
+      checkType: 'poly',
+      steps: [`${a}x · ${b}ab = ${a*b}abx`, `${a}x · ${c}b = ${a*c}bx`]
+    };
+  }
+  if (type === 'negativeFactor') {
+    const a = rand(2, 5), b = rand(2, 6), c = rand(2, 5);
+    return {
+      problem: `(−${a}a) · (${b}b + ${c}c)`,
+      answer: `−${a*b}ab − ${a*c}ac`,
+      check: `-${a*b}ab-${a*c}ac`,
+      checkType: 'poly',
+      steps: [`(−${a}a)·${b}b = −${a*b}ab`, `(−${a}a)·${c}c = −${a*c}ac`]
+    };
+  }
+  if (type === 'binomBinomPos') {
+    const p = rand(2, 4), q = rand(1, 4), r = rand(2, 4), s = rand(1, 4);
+    return {
+      problem: `(${p}a + ${q}b)(${r}c + ${s}d)`,
+      answer: `${p*r}ac + ${p*s}ad + ${q*r}bc + ${q*s}bd`,
+      check: `${p*r}ac+${p*s}ad+${q*r}bc+${q*s}bd`,
+      checkType: 'poly',
+      steps: [`${p}a·${r}c = ${p*r}ac`, `${p}a·${s}d = ${p*s}ad`, `${q}b·${r}c = ${q*r}bc`, `${q}b·${s}d = ${q*s}bd`]
+    };
+  }
+  const a = rand(2, 5), b = rand(1, 4), c = rand(2, 5), d = rand(1, 4);
+  const ac = a*c, lin = -(a*d) - (b*c), bd = b*d;
+  const linStr = lin === 0 ? '' : (lin > 0 ? ` + ${lin}a` : ` − ${Math.abs(lin)}a`);
+  const linCheck = lin === 0 ? '' : (lin > 0 ? `+${lin}a` : `${lin}a`);
+  return {
+    problem: `(${a}a − ${b})(${c}a − ${d})`,
+    answer: `${ac}a²${linStr} + ${bd}`,
+    check: `${ac}a²${linCheck}+${bd}`,
+    checkType: 'poly',
+    steps: [`${a}a·${c}a = ${ac}a²`, `${a}a·(−${d}) = −${a*d}a`, `(−${b})·${c}a = −${b*c}a`, `(−${b})(−${d}) = +${bd}`, `a-Terme: −${a*d} − ${b*c} = ${lin}`]
+  };
+};
+
+/* ---------- 2.7 Ausklammern ---------- */
+PROBLEM_GENS.s27 = function() {
+  const type = pick(['gcfNum', 'gcfMulti', 'twoStep', 'twoStep', 'gcfMulti']);
+  if (type === 'gcfNum') {
+    const k = pick([4, 6, 8, 12]);
+    const a = k * rand(2, 5), b = k * rand(2, 6);
+    return {
+      problem: `${a}x − ${b}`,
+      answer: `${k}(${a/k}x − ${b/k})`,
+      check: [`${k}(${a/k}x-${b/k})`, `(${a/k}x-${b/k})${k}`],
+      checkType: 'factored',
+      steps: [`ggT(${a}, ${b}) = ${k}`, `${a}x = ${k}·${a/k}x`, `${b} = ${k}·${b/k}`]
+    };
+  }
+  if (type === 'gcfMulti') {
+    const k = 7;
+    const a1 = k * rand(2, 5), b1 = k * rand(2, 5), c1 = k * rand(2, 5);
+    return {
+      problem: `${a1}abc + ${b1}ab − ${c1}ac`,
+      answer: `${k}a(${a1/k}bc + ${b1/k}b − ${c1/k}c)`,
+      check: [`${k}a(${a1/k}bc+${b1/k}b-${c1/k}c)`, `(${a1/k}bc+${b1/k}b-${c1/k}c)${k}a`],
+      checkType: 'factored',
+      steps: [`Gemeinsamer Faktor: ${k}a`, `${a1}abc÷${k}a = ${a1/k}bc`, `${b1}ab÷${k}a = ${b1/k}b`, `${c1}ac÷${k}a = ${c1/k}c`]
+    };
+  }
+  const a = rand(2, 5), b = rand(2, 6);
+  return {
+    problem: `${a}am + ${a}bm − ${b}an − ${b}bn`,
+    answer: `(${a}m − ${b}n)(a + b)`,
+    check: [`(${a}m-${b}n)(a+b)`, `(a+b)(${a}m-${b}n)`],
+    checkType: 'factored',
+    steps: [`${a}m(a + b) − ${b}n(a + b)`, `(a + b) als gemeinsamer Faktor`, `= (${a}m − ${b}n)(a + b)`]
+  };
+};
+
+/* ---------- 2.8 Division ---------- */
+PROBLEM_GENS.s28 = function() {
+  const type = pick(['simple', 'withSigns', 'withVars']);
+  if (type === 'simple') {
+    const k = rand(2, 6), r = rand(2, 5);
+    return {
+      problem: `${frac(`${k*r}ab`, `${k}b`)}`,
+      answer: `${r}a`,
+      check: `${r}a`,
+      checkType: 'poly',
+      steps: [`${k*r}÷${k} = ${r}`, `b kürzt sich`]
+    };
+  }
+  if (type === 'withSigns') {
+    const k = rand(2, 4), r = rand(2, 5);
+    return {
+      problem: `${frac(`−${k*r}uv`, `−${k}u`)}`,
+      answer: `${r}v`,
+      check: `${r}v`,
+      checkType: 'poly',
+      steps: [`Beide negativ → positiv`, `${k*r}÷${k} = ${r}`, `u kürzt sich`]
+    };
+  }
+  const k = rand(3, 6), r = rand(2, 4);
+  return {
+    problem: `${frac(`−${k*r}xy`, `${r}y`)}`,
+    answer: `−${k}x`,
+    check: `-${k}x`,
+    checkType: 'poly',
+    steps: [`Nur Zähler negativ → Bruch negativ`, `${k*r}÷${r} = ${k}`, `y kürzt sich`]
+  };
+};
+
+/* ---------- 2.9 Erweitern/Kürzen ---------- */
+PROBLEM_GENS.s29 = function() {
+  const type = pick(['kürz', 'kürzSumme', 'kürzSumme']);
+  if (type === 'kürz') {
+    const k = pick([3, 4, 6, 8]);
+    const a = k * rand(2, 5), b = k * rand(3, 7);
+    const [sn, sd] = simplifyFrac(a, b);
+    return {
+      problem: `${frac(a, b)}`,
+      answer: `${frac(sn, sd)}`,
+      check: `${sn}/${sd}`,
+      checkType: 'fraction',
+      steps: [`ggT(${a}, ${b}) = ${k}`, `${a}÷${k} = ${sn}`, `${b}÷${k} = ${sd}`]
+    };
+  }
+  const k = pick([3, 5]);
+  const a = k * rand(2, 4), b = k * rand(2, 5);
+  const den = k * rand(3, 5);
+  return {
+    problem: `${frac(`${a}x + ${b}y`, den)}`,
+    answer: `${frac(`${a/k}x + ${b/k}y`, den/k)}`,
+    check: [`(${a/k}x+${b/k}y)/${den/k}`, `(${a/k}x+${b/k}y)/(${den/k})`],
+    checkType: 'fraction',
+    steps: [`${k} aus Zähler ausklammern: ${k}(${a/k}x + ${b/k}y)`, `${k} mit ${den} kürzen`]
+  };
+};
+
+/* ---------- 2.10 +/− Brüche ---------- */
+PROBLEM_GENS.s210 = function() {
+  const type = pick(['gleichnam', 'ungleichnam', 'mitVar']);
+  if (type === 'gleichnam') {
+    const den = pick([5, 7, 8, 12]);
+    const a = rand(3, 9), b = rand(2, 6), c = rand(2, 7);
+    const v = 'x';
+    const sum = a + b - c;
+    const [sn, sd] = simplifyFrac(sum, den);
+    return {
+      problem: `${frac(`${a}${v}`, den)} + ${frac(`${b}${v}`, den)} − ${frac(`${c}${v}`, den)}`,
+      answer: sd === 1 ? `${sn}${v}` : frac(`${sn}${v}`, sd),
+      check: sd === 1 ? `${sn}${v}` : `${sn}${v}/${sd}`,
+      checkType: 'fraction',
+      steps: [`Zähler: ${a} + ${b} − ${c} = ${sum}`, `Nenner bleibt ${den}`]
+    };
+  }
+  if (type === 'ungleichnam') {
+    const d1 = pick([2, 3, 4]), d2 = pick([3, 4, 6]);
+    if (d1 === d2) return PROBLEM_GENS.s210();
+    const lcm = (d1 * d2) / gcd(d1, d2);
+    const a = rand(2, 6), b = rand(2, 5);
+    const num = a * (lcm/d1) + b * (lcm/d2);
+    const [sn, sd] = simplifyFrac(num, lcm);
+    return {
+      problem: `${frac(a, d1)} + ${frac(b, d2)}`,
+      answer: `${frac(sn, sd)}`,
+      check: `${sn}/${sd}`,
+      checkType: 'fraction',
+      steps: [`kgV(${d1}, ${d2}) = ${lcm}`, `${a}/${d1} = ${a*(lcm/d1)}/${lcm}`, `${b}/${d2} = ${b*(lcm/d2)}/${lcm}`, `Addieren → ${num}/${lcm}`]
+    };
+  }
+  return {
+    problem: `${frac('a', 2)} + ${frac('a', 3)} − ${frac('a', 4)}`,
+    answer: `${frac('7a', 12)}`,
+    check: `7a/12`,
+    checkType: 'fraction',
+    steps: [`kgV(2,3,4) = 12`, `${frac('6a', 12)} + ${frac('4a', 12)} − ${frac('3a', 12)} = ${frac('7a', 12)}`]
+  };
+};
+
+/* ---------- 2.11 · Brüche ---------- */
+PROBLEM_GENS.s211 = function() {
+  const type = pick(['simple', 'threeFrac', 'withSum']);
+  if (type === 'simple') {
+    const a = rand(2, 6), b = rand(2, 6), c = rand(2, 5), d = rand(2, 5);
+    const num = a * c, den = b * d;
+    const [sn, sd] = simplifyFrac(num, den);
+    return {
+      problem: `${frac(`${a}x`, `${b}y`)} · ${frac(`${c}y`, `${d}x`)}`,
+      answer: sd === 1 ? `${sn}` : frac(sn, sd),
+      check: sd === 1 ? `${sn}` : `${sn}/${sd}`,
+      checkType: 'fraction',
+      steps: [`Zähler·Zähler: ${a}x·${c}y = ${num}xy`, `Nenner·Nenner: ${b}y·${d}x = ${den}xy`, `xy kürzt sich`, sd === 1 ? `= ${sn}` : `→ ${sn}/${sd}`]
+    };
+  }
+  if (type === 'threeFrac') {
+    return {
+      problem: `${frac(3, 4)} · ${frac(2, 'ab')} · ${frac('−a', 6)}`,
+      answer: fracP('−1', '4b'),
+      check: [`-1/(4b)`, `-1/4b`],
+      checkType: 'fraction',
+      steps: [`Zähler: 3·2·(−a) = −6a`, `Nenner: 4·ab·6 = 24ab`, `−6a/24ab → −1/(4b)`]
+    };
+  }
+  const bval = rand(2, 4);
+  return {
+    problem: `${frac(`3(a − ${bval}b)`, `2(m + y)`)} · ${frac(`5(m + y)`, 6)}`,
+    answer: `${frac(`5(a − ${bval}b)`, 4)}`,
+    check: [`5(a-${bval}b)/4`, `(5a-${5*bval}b)/4`],
+    checkType: 'fraction',
+    steps: [`(m + y) kürzt sich`, `Zähler: 3(a − ${bval}b)·5 = 15(a − ${bval}b)`, `Nenner: 2·6 = 12`, `15/12 → 5/4`, `= 5(a − ${bval}b)/4`]
+  };
+};
+
+/* ============================================================
+   MAX COMPLEXITY (Prüfung tab)
+   Pulls from Schwer chapters with hardest variants only
+   ============================================================ */
+const HARD_GENS = {
+  // 2.1 — powers forced
+  '2.1': () => {
+    const a = rand(3, 8), b = rand(2, 7), c = rand(2, 6), d = rand(3, 8);
+    const v = pick(['a','x']);
+    return {
+      problem: `${a}${v}² + ${b}${v} + ${c}${v}² + ${d}${v} + ${v}²`,
+      answer: `${a+c+1}${v}² + ${b+d}${v}`,
+      check: `${a+c+1}${v}²+${b+d}${v}`,
+      checkType: 'poly',
+      steps: [`${v}²: ${a}+${c}+1 = ${a+c+1}`, `${v}: ${b}+${d} = ${b+d}`]
+    };
+  },
+  // 2.2 — mixed powers + signs
+  '2.2': () => {
+    const a = rand(6, 12), b = rand(2, 4), c = rand(2, 6), d = rand(7, 14);
+    const v = pick(['x','a']);
+    const sq = a - b - 1, lin = c - d;
+    const linStr = lin >= 0 ? `+${lin}${v}` : `${lin}${v}`;
+    return {
+      problem: `${a}${v}² + ${c}${v} − ${b}${v}² − ${d}${v} − ${v}²`,
+      answer: `${sq}${v}²${lin === 0 ? '' : (lin > 0 ? ' + ' + lin + v : ' − ' + Math.abs(lin) + v)}`,
+      check: `${sq}${v}²${linStr}`,
+      checkType: 'poly',
+      steps: [`${v}²: ${a}−${b}−1 = ${sq}`, `${v}: ${c}−${d} = ${lin}`]
+    };
+  },
+  // 2.3 — multi-var with nested signs
+  '2.3': () => {
+    const a = rand(4, 9), b = rand(3, 8), c = rand(2, 6), d = rand(3, 8), e = rand(2, 5), f = rand(2, 6);
+    return {
+      problem: `${a}a + (−${b}b) + (−${c}a) − (−${d}b) + ${e}a − (+${f}b)`,
+      answer: `${a-c+e}a + ${-b+d-f}b`,
+      check: `${a-c+e}a+${-b+d-f}b`,
+      checkType: 'poly',
+      steps: [`a: ${a}−${c}+${e} = ${a-c+e}`, `b: −${b}+${d}−${f} = ${-b+d-f}`]
+    };
+  },
+  // 2.4 — nested with variables
+  '2.4': () => {
+    const a = rand(2, 4), b = rand(2, 4), c = rand(2, 4), d = rand(2, 4);
+    // 2a − {3b − (2c + 4d) − [3a + (2b − c)]} = 5a − b + c + 4d
+    return {
+      problem: `${a}a − {${b}b − (${c}c + ${d}d) − [${a+1}a + (${b-1 > 0 ? b-1 : 1}b − c)]}`,
+      answer: `${a + (a+1)}a − ${b - (b-1 > 0 ? b-1 : 1)}b + ${c+1}c + ${d}d`,
+      check: null, // too complex, skip and use simpler form
+      checkType: 'poly',
+      steps: [`Zuerst innerste Klammer`, `Dann Reihe von innen nach aussen auflösen`]
+    };
+  },
+  // 2.6 — binomial · binomial with negatives, requires simplification
+  '2.6': () => {
+    const a = rand(2, 5), b = rand(2, 4), c = rand(2, 5), d = rand(2, 4);
+    const ac = a*c, lin = -(a*d) - (b*c), bd = b*d;
+    const linStr = lin === 0 ? '' : (lin > 0 ? `+${lin}a` : `${lin}a`);
+    return {
+      problem: `(${a}a − ${b})(${c}a − ${d})`,
+      answer: `${ac}a²${lin === 0 ? '' : (lin > 0 ? ' + ' + lin + 'a' : ' − ' + Math.abs(lin) + 'a')} + ${bd}`,
+      check: `${ac}a²${linStr}+${bd}`,
+      checkType: 'poly',
+      steps: [`${a}a·${c}a = ${ac}a²`, `Mischterme: −${a*d}a − ${b*c}a = ${lin}a`, `(−${b})(−${d}) = +${bd}`]
+    };
+  },
+  // 2.7 — two-step factoring
+  '2.7': () => {
+    const a = rand(2, 5), b = rand(2, 6);
+    return {
+      problem: `${a}am + ${a}bm − ${b}an − ${b}bn`,
+      answer: `(${a}m − ${b}n)(a + b)`,
+      check: [`(${a}m-${b}n)(a+b)`, `(a+b)(${a}m-${b}n)`],
+      checkType: 'factored',
+      steps: [`${a}m(a+b) − ${b}n(a+b)`, `= (${a}m − ${b}n)(a+b)`]
+    };
+  },
+  // 2.10 — unequal denominators with variables
+  '2.10': () => {
+    return {
+      problem: `${frac('a', 2)} + ${frac('a', 3)} − ${frac('a', 4)}`,
+      answer: `${frac('7a', 12)}`,
+      check: `7a/12`,
+      checkType: 'fraction',
+      steps: [`kgV(2,3,4) = 12`, `6a/12 + 4a/12 − 3a/12 = 7a/12`]
+    };
+  },
+  // 2.11 — sum in fraction
+  '2.11': () => {
+    const bval = rand(2, 4);
+    return {
+      problem: `${frac(`3(a − ${bval}b)`, `2(m + y)`)} · ${frac(`5(m + y)`, 6)}`,
+      answer: `${frac(`5(a − ${bval}b)`, 4)}`,
+      check: [`5(a-${bval}b)/4`, `(5a-${5*bval}b)/4`],
+      checkType: 'fraction',
+      steps: [`(m+y) kürzt sich`, `15/12 → 5/4`, `= 5(a − ${bval}b)/4`]
+    };
+  }
+};
+
+// For the Prüfung tab
+PROBLEM_GENS.mixed = function() {
+  // Skip 2.4 (nested complex) since check is null, also skip chapters with trivial answers
+  const chapters = ['2.1', '2.2', '2.3', '2.6', '2.7', '2.10', '2.11'];
+  const ch = pick(chapters);
+  const result = HARD_GENS[ch]();
+  result.source = ch;
+  return result;
+};
+
+/* ============================================================
+   PAGE CONTENT (theory)
+   ============================================================ */
+const PAGE_CONTENT = {
+  s21: {
+    title: '2.1 Addition',
+    intro: 'Summand + Summand = Summe. Nur gleiche Variablen addieren.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>3 Regeln</div>
+        <p>1. Nur <em>gleiche Variablen</em> addieren.<br>
+        2. <span class="math">a + b = b + a</span> (Kommutativ).<br>
+        3. <span class="math">(a + b) + c = a + (b + c)</span> (Assoziativ).</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">2a + 6b + 4a + b = <strong>6a + 7b</strong></span></div>
+      </div>
+      <div class="warn-box">
+        <div class="label">⚠ Deine Schwachstelle</div>
+        <span class="math">8a² + 3a + 5a² + 9a + a² = <strong>14a² + 12a</strong></span><br>
+        <em>a² und a bleiben getrennt!</em>
+      </div>
+    `,
+    hint: 'z.B. 14a²+12a'
+  },
+  s22: {
+    title: '2.2 Subtraktion',
+    intro: 'Minuend − Subtrahend = Differenz. Reihenfolge nicht vertauschbar.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>3 Regeln</div>
+        <p>1. Nur <em>gleiche Variablen</em>.<br>
+        2. <span class="math">a − b ≠ b − a</span>.<br>
+        3. Negativ möglich: <span class="math">9 − 15 = −6</span>.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">8x − 5y − 4x − 6y = <strong>4x − 11y</strong></span></div>
+      </div>
+      <div class="warn-box">
+        <div class="label">⚠ Deine Schwachstellen</div>
+        <p><span class="math">7a + 2 − 2a − 3 = <strong>5a − 1</strong></span> (nicht +1!)</p>
+        <p style="margin-top: 6px;"><span class="math">8x² + 3x − 2x² − 11x − x² = <strong>5x² − 8x</strong></span></p>
+      </div>
+    `,
+    hint: 'z.B. 5a-1'
+  },
+  s23: {
+    title: '2.3 Vorzeichen',
+    intro: 'Unterscheide Vorzeichen von Operationszeichen.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p>Gleiche Zeichen → addieren. Ungleiche → subtrahieren.</p>
+        <p style="margin-top: 6px;"><span class="math">− (+x) = −x  ·  − (−x) = +x</span><br>
+        <span class="math">+ (−x) = −x  ·  + (+x) = +x</span></p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiele</div>
+        <div class="eq"><span class="math">(+6a) − (−3a) = 6a + 3a = <strong>9a</strong></span></div>
+        <div class="eq"><span class="math">(−6a) − (−3a) = −6a + 3a = <strong>−3a</strong></span></div>
+        <div class="eq"><span class="math">(−6a) + (−3a) = −6a − 3a = <strong>−9a</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 18 oder -7a+5n'
+  },
+  s24: {
+    title: '2.4 Klammern',
+    intro: 'Von innen nach aussen auflösen.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p><strong>Plus vor Klammer:</strong> Vorzeichen bleiben.<br>
+        <strong>Minus vor Klammer:</strong> alle Vorzeichen wechseln!</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">5x − (2x + 3y) + (2x − 3y)</span></div>
+        <div class="eq"><span class="math">= 5x − 2x − 3y + 2x − 3y = <strong>5x − 6y</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 5x-6y'
+  },
+  s25: {
+    title: '2.5 Multiplikation',
+    intro: 'Faktor · Faktor = Produkt.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>5 Regeln</div>
+        <p>1. <span class="math">a·b = b·a</span><br>
+        2. <span class="math">(a·b)·c = a·(b·c)</span><br>
+        3. Ein Faktor 0 → Produkt 0<br>
+        4. <span class="math">b·b·b = b³</span><br>
+        5. Ungerade Anzahl Minus → negativ.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiele</div>
+        <div class="eq"><span class="math">3a · 7b = <strong>21ab</strong></span></div>
+        <div class="eq"><span class="math">(−6x)·4y·(−3x) = <strong>72x²y</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 21ab oder 72x²y'
+  },
+  s26: {
+    title: '2.6 Ausmultiplizieren',
+    intro: 'Jeden Summanden einzeln. Variablen alphabetisch.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p><strong>Zahl · Summe:</strong> <span class="math">3(a + 2b) = 3a + 6b</span></p>
+        <p style="margin-top: 6px;"><strong>Summe · Summe:</strong> <span class="math">(a + 2b)(3c − 4d) = 3ac − 4ad + 6bc − 8bd</span></p>
+      </div>
+      <div class="warn-box">
+        <div class="label">⚠ Deine Schwachstelle</div>
+        Immer zusammenfassen: <span class="math">(2a − c)(a − 2c) = <strong>2a² − 5ac + 2c²</strong></span>
+      </div>
+    `,
+    hint: 'z.B. 2a²-5ac+2c²'
+  },
+  s27: {
+    title: '2.7 Ausklammern',
+    intro: 'Grössten gemeinsamen Faktor heraushole.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p>ggT ausklammern. <span class="math">4x + 4y = <strong>4(x + y)</strong></span></p>
+        <p style="margin-top: 6px;"><strong>Spezialfall:</strong> paarweise, dann wieder ausklammern:<br>
+        <span class="math">4mn + 4mp + 7kn + 7kp = <strong>(4m+7k)(n+p)</strong></span></p>
+      </div>
+    `,
+    hint: 'z.B. 12(3x-2) oder (3y-5)(6x-1)'
+  },
+  s28: {
+    title: '2.8 Division',
+    intro: 'Bruchstrich = Division. Dividend : Divisor = Quotient.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Vorzeichen</div>
+        <p>Nur einer negativ → Bruch negativ. Beide negativ → positiv.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiele</div>
+        <div class="eq"><span class="math">${frac('15ab', '3b')} = <strong>5a</strong></span></div>
+        <div class="eq"><span class="math">${frac('−36uv', '−9u')} = <strong>4v</strong></span></div>
+        <div class="eq"><span class="math">${frac('−24xy', '8y')} = <strong>−3x</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 5a oder -3x'
+  },
+  s29: {
+    title: '2.9 Erweitern/Kürzen',
+    intro: 'Summen nie kürzen — nur Faktoren!',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p><strong>Summen darf man NIEMALS kürzen!</strong><br>
+        Bei Summen zuerst ausklammern, dann kürzen.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">${frac('15x + 5y', '20')} = ${frac('5(3x + y)', '20')} = <strong>${frac('3x + y', '4')}</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 2/3 oder (3x+y)/4'
+  },
+  s210: {
+    title: '2.10 +/− Brüche',
+    intro: 'Gleichnamig: Zähler +/−. Ungleichnamig: erst auf Hauptnenner.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Regeln</div>
+        <p><strong>Gleichnamig:</strong> Zähler +/−, Nenner behalten.</p>
+        <p style="margin-top: 6px;"><strong>Ungleichnamig:</strong> Hauptnenner = kgV.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">${frac('a', '2')} + ${frac('a', '3')} − ${frac('a', '4')} = <strong>${frac('7a', '12')}</strong></span></div>
+      </div>
+    `,
+    hint: 'z.B. 7a/12'
+  },
+  s211: {
+    title: '2.11 · Brüche',
+    intro: 'Zähler·Zähler, Nenner·Nenner.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Kernregel</div>
+        <p>${frac('a', 'b')} · ${frac('c', 'd')} = ${frac('a·c', 'b·d')}. Summen zuerst in Produkte umwandeln.</p>
+      </div>
+      <div class="box example">
+        <div class="box-label"><span>ⓘ</span>Beispiel</div>
+        <div class="eq"><span class="math">${frac('3a', '4')} · ${frac('7', '3ab')} = <strong>${frac('7', '4b')}</strong></span></div>
+      </div>
+      <div class="warn-box">
+        <div class="label">⚠ Deine Schwachstelle</div>
+        <span class="math">${frac('3(a−3b)', '2(m+y)')} · ${frac('5(m+y)', '6')} = <strong>${frac('5(a−3b)', '4')}</strong></span>
+      </div>
+    `,
+    hint: 'z.B. 5(a-3b)/4'
+  },
+  mixed: {
+    title: 'Prüfung Simulation',
+    intro: 'Gemischte Aufgaben auf Prüfungs-Niveau. Kommt ohne Vorwarnung aus den Kapiteln 2.1–2.11. Jedes mal eine neue, zufällige, schwere Aufgabe.',
+    content: `
+      <div class="box rule">
+        <div class="box-label"><span>⚠</span>Simulationsmodus</div>
+        <p>Diese Aufgaben sind auf dem höchstmöglichen Schwierigkeitsgrad jedes Kapitels. Du siehst die Quelle erst nach dem Prüfen. Ziel: mindestens <strong>8 von 10</strong> richtig.</p>
+      </div>
+      <div class="warn-box">
+        <div class="label">⚠ Strategie</div>
+        <ol style="margin-left: 18px; font-size: 13.5px;">
+          <li style="margin: 4px 0;">Erst identifizieren: welches Kapitel?</li>
+          <li style="margin: 4px 0;">Dann Regel anwenden.</li>
+          <li style="margin: 4px 0;">Nie stehen lassen – immer zu Ende vereinfachen.</li>
+          <li style="margin: 4px 0;">Bei Unsicherheit: Lösung zeigen, Rechnung durchgehen, nächste Aufgabe.</li>
+        </ol>
+      </div>
+    `,
+    hint: 'Variiert je nach Aufgabe — siehe Form im Kontext'
+  }
+};
+
+const DIFFICULTY = {
+  s21: 'Einfach', s22: 'Einfach', s23: 'Mittel', s24: 'Schwer',
+  s25: 'Einfach', s26: 'Schwer', s27: 'Schwer', s28: 'Mittel',
+  s29: 'Mittel', s210: 'Schwer', s211: 'Schwer', mixed: 'MAX'
+};
+
+const SECTIONS = [
+  { id: 'overview', num: '',     title: 'Übersicht' },
+  { id: 's21',      num: '2.1',  title: 'Addition' },
+  { id: 's22',      num: '2.2',  title: 'Subtraktion' },
+  { id: 's23',      num: '2.3',  title: 'Vorzeichen' },
+  { id: 's24',      num: '2.4',  title: 'Klammern' },
+  { id: 's25',      num: '2.5',  title: 'Multiplikation' },
+  { id: 's26',      num: '2.6',  title: 'Ausmultipl.' },
+  { id: 's27',      num: '2.7',  title: 'Ausklammern' },
+  { id: 's28',      num: '2.8',  title: 'Division' },
+  { id: 's29',      num: '2.9',  title: 'Kürzen' },
+  { id: 's210',     num: '2.10', title: '+/− Brüche' },
+  { id: 's211',     num: '2.11', title: '· Brüche' },
+  { id: 'mixed',    num: '',     title: 'Prüfung ⚡', special: true }
+];
+
+/* ============================================================
+   BUILD TABS
+   ============================================================ */
+const tabsEl = document.getElementById('tabs');
+SECTIONS.forEach(s => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (s.id === 'overview' ? ' active' : '') + (s.special ? ' special' : '');
+  btn.dataset.target = s.id;
+  btn.innerHTML = s.num ? `<span class="num">${s.num}</span>${s.title}` : s.title;
+  btn.addEventListener('click', () => switchTo(s.id));
+  tabsEl.appendChild(btn);
+});
+
+function switchTo(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.target === id));
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === id));
+  const tab = document.querySelector(`.tab[data-target="${id}"]`);
+  if (tab) tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  window.scrollTo(0, 0);
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  if (page && PROBLEM_GENS[id] && !page.dataset.loaded) {
+    newProblem(id);
+    page.dataset.loaded = '1';
+  }
+}
+
+/* ============================================================
+   BUILD PAGES
+   ============================================================ */
+const pagesContainer = document.getElementById('pages-container');
+
+function renderInputText(text) {
+  if (!text) return `<span class="placeholder">Tippe deine Antwort…</span><span class="cursor"></span>`;
+  let html = '';
+  for (const ch of text) {
+    if (/[a-zA-Z]/.test(ch)) html += `<span>${ch}</span>`;
+    else if (/[+\-−·\/()]/.test(ch)) html += `<span class="op">${ch}</span>`;
+    else html += `<span class="num">${ch}</span>`;
+  }
+  html += `<span class="cursor"></span>`;
+  return html;
+}
+
+function buildKeypad() {
+  const layout = [
+    ['7', '8', '9', '(', ')', '²'],
+    ['4', '5', '6', '+', '−', '³'],
+    ['1', '2', '3', '·', '/', '⌫'],
+    ['0', 'a', 'b', 'c', 'd', 'e'],
+    ['m', 'n', 'p', 'x', 'y', 'z']
+  ];
+  let html = '<div class="keypad">';
+  for (const row of layout) {
+    for (const k of row) {
+      let cls = 'key';
+      if (/[a-z]/.test(k)) cls += ' var';
+      else if (['+','−','·','/','(',')'].includes(k)) cls += ' op';
+      else if (['²','³'].includes(k)) cls += ' power';
+      else if (k === '⌫') cls += ' action';
+      html += `<button class="${cls}" data-k="${k}">${k}</button>`;
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+Object.keys(PAGE_CONTENT).forEach(id => {
+  const data = PAGE_CONTENT[id];
+  const page = document.createElement('div');
+  page.className = 'page';
+  page.dataset.page = id;
+
+  const [num, ...rest] = data.title.split(' ');
+  const diffClass = DIFFICULTY[id] === 'MAX' ? ' hard' : '';
+
+  page.innerHTML = `
+    <div class="chapter-tag">${id === 'mixed' ? 'Simulationsmodus' : 'Kapitel ' + num}</div>
+    <h2 class="page-title">${id === 'mixed' ? '<span class="sect-num">⚡</span>' + data.title : '<span class="sect-num">' + num + '</span>' + rest.join(' ')}</h2>
+    <p class="intro">${data.intro}</p>
+    ${data.content}
+
+    <div class="practice">
+      <div class="practice-head">
+        <div class="title"><span class="pencil">✎</span>${id === 'mixed' ? 'Simulation' : 'Übung'}</div>
+        <span class="diff-badge${diffClass}">${DIFFICULTY[id]}</span>
+      </div>
+
+      <div class="problem">
+        <span class="problem-label">A</span>
+        <span class="problem-body">Lade...</span>
+      </div>
+
+      <div class="form-hint">Form: <span class="code">${data.hint}</span></div>
+
+      <div class="answer-input" data-input>
+        <span class="prefix">=</span>
+        <div class="text">${renderInputText('')}</div>
+      </div>
+
+      <div class="feedback" data-feedback></div>
+
+      <div class="answer-reveal" data-reveal>
+        <span class="label">Lösung</span>
+        <div class="final"></div>
+        <div class="steps"></div>
+      </div>
+
+      ${buildKeypad()}
+
+      <div class="action-row">
+        <button class="btn" data-clear>Löschen</button>
+        <button class="btn primary" data-submit>Prüfen ✓</button>
+      </div>
+
+      <div class="secondary-row">
+        <button class="btn ghost" data-reveal-btn>Lösung zeigen</button>
+        <button class="btn ghost" data-new>Neue Aufgabe →</button>
+      </div>
+
+      <div class="stats">
+        <span class="counter" data-count="0">Aufgabe 0</span>
+        <span class="score" data-correct="0" data-total="0">0/0 richtig</span>
+      </div>
+    </div>
+
+    <div class="footer">© G. Lenherr · Math A3 · ${id === 'mixed' ? 'Simulation' : num}</div>
+  `;
+
+  pagesContainer.appendChild(page);
+
+  // Bind buttons
+  page.querySelector('[data-clear]').addEventListener('click', () => clearInput(id));
+  page.querySelector('[data-submit]').addEventListener('click', () => submitAnswer(id));
+  page.querySelector('[data-reveal-btn]').addEventListener('click', () => revealAnswer(id));
+  page.querySelector('[data-new]').addEventListener('click', () => newProblem(id));
+
+  // Bind keys (after rendering)
+  page.querySelectorAll('.keypad .key').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleKey(id, btn.dataset.k);
+    });
+  });
+});
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const inputState = {};
+const problemState = {};
+
+function handleKey(id, key) {
+  const cur = inputState[id] || '';
+  let next;
+  if (key === '⌫') next = cur.slice(0, -1);
+  else next = cur + key;
+  inputState[id] = next;
+  updateInputDisplay(id);
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  page.querySelector('[data-feedback]').classList.remove('visible');
+  page.querySelector('[data-input]').classList.remove('correct', 'wrong');
+}
+
+function updateInputDisplay(id) {
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  const text = inputState[id] || '';
+  page.querySelector('[data-input] .text').innerHTML = renderInputText(text);
+}
+
+function clearInput(id) {
+  inputState[id] = '';
+  updateInputDisplay(id);
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  page.querySelector('[data-feedback]').classList.remove('visible');
+  page.querySelector('[data-input]').classList.remove('correct', 'wrong');
+}
+
+function newProblem(id) {
+  const gen = PROBLEM_GENS[id];
+  if (!gen) return;
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  let data = gen();
+  // safety: regenerate if check is null (rare edge case)
+  let tries = 0;
+  while (!data.check && tries < 5) { data = gen(); tries++; }
+  if (!data.check) return; // skip silently
+  problemState[id] = data;
+  inputState[id] = '';
+
+  page.querySelector('.problem-body').innerHTML = `${data.problem} =`;
+  updateInputDisplay(id);
+
+  page.querySelector('[data-feedback]').classList.remove('visible');
+  page.querySelector('[data-reveal]').classList.remove('visible');
+  page.querySelector('[data-input]').classList.remove('correct', 'wrong');
+
+  const counter = page.querySelector('.counter');
+  const n = parseInt(counter.dataset.count || '0') + 1;
+  counter.dataset.count = n;
+  counter.textContent = `Aufgabe ${n}`;
+}
+
+function submitAnswer(id) {
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  const user = inputState[id] || '';
+  const prob = problemState[id];
+  if (!prob) return;
+  if (!user.trim()) {
+    showFeedback(id, false, 'Gib zuerst deine Antwort ein.', null);
+    return;
+  }
+
+  const result = checkAnswer(user, prob.check, prob.checkType);
+  const input = page.querySelector('[data-input]');
+  const scoreEl = page.querySelector('.score');
+  let correct = parseInt(scoreEl.dataset.correct || '0');
+  let total = parseInt(scoreEl.dataset.total || '0');
+  total += 1;
+
+  if (result.correct) {
+    correct += 1;
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    showFeedback(id, true, 'Richtig!', result);
+  } else {
+    input.classList.remove('correct');
+    input.classList.add('wrong');
+    showFeedback(id, false, 'Nicht ganz.', result);
+  }
+
+  scoreEl.dataset.correct = correct;
+  scoreEl.dataset.total = total;
+  scoreEl.textContent = `${correct}/${total} richtig`;
+  scoreEl.classList.remove('good', 'mid', 'bad');
+  const pct = correct / total;
+  if (total >= 3) {
+    if (pct >= 0.8) scoreEl.classList.add('good');
+    else if (pct >= 0.5) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('bad');
+  }
+}
+
+function showFeedback(id, correct, msg, result) {
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  const fb = page.querySelector('[data-feedback]');
+  fb.classList.remove('correct', 'wrong');
+  fb.classList.add(correct ? 'correct' : 'wrong', 'visible');
+  let html = `<span class="label">${correct ? '✓ ' + msg : '✕ ' + msg}</span>`;
+  if (correct && result) {
+    const prob = problemState[id];
+    let src = '';
+    if (id === 'mixed' && prob.source) src = `<span class="source-tag">${prob.source}</span>`;
+    html += `<div class="body">${src}${prob.answer}</div>`;
+  } else if (!correct && result && result.userNorm) {
+    html += `<div class="interp">Deine Eingabe vereinfacht: <code>${escapeHtml(result.userNorm)}</code></div>`;
+  }
+  fb.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function revealAnswer(id) {
+  const page = document.querySelector(`.page[data-page="${id}"]`);
+  const prob = problemState[id];
+  if (!prob) return;
+  const rev = page.querySelector('[data-reveal]');
+  let src = '';
+  if (id === 'mixed' && prob.source) src = `<span class="source-tag">Quelle ${prob.source}</span>`;
+  rev.querySelector('.final').innerHTML = src + prob.answer;
+  rev.querySelector('.steps').innerHTML = prob.steps.map(s => `<div class="step">→ ${s}</div>`).join('');
+  rev.classList.add('visible');
+}
+
+/* ============================================================
+   PHYSICAL KEYBOARD SUPPORT
+   ============================================================ */
+document.addEventListener('keydown', (e) => {
+  const active = document.querySelector('.page.active');
+  if (!active) return;
+  const id = active.dataset.page;
+  if (!PROBLEM_GENS[id]) return;
+
+  const k = e.key;
+  if (k === 'Enter') { e.preventDefault(); submitAnswer(id); return; }
+  if (k === 'Backspace') { e.preventDefault(); handleKey(id, '⌫'); return; }
+  if (k === 'Escape') { e.preventDefault(); clearInput(id); return; }
+  if (k.length === 1) {
+    const allowed = '0123456789abcdefghijklmnopqrstuvwxyz+-−*·/(). ^²³';
+    if (allowed.includes(k.toLowerCase())) {
+      e.preventDefault();
+      let typed = k.toLowerCase();
+      if (typed === '*') typed = '·';
+      if (typed === '-') typed = '−';
+      if (typed === ' ') return;
+      handleKey(id, typed);
+    }
+  }
+});
+</script>
+</body>
+</html>

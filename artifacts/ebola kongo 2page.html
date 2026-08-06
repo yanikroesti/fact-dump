@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)file:///C:/Users/yanik/Downloads/Telegram%20Desktop/ebola%20kongo%202page.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="./ebola kongo 2page_files/css2" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #bbb;
+    padding: 20px;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    margin: 0 auto 20px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .top-bar { background: #8b1a1a; height: 8px; }
+
+  /* HEADER */
+  .header {
+    padding: 26px 36px 18px;
+    border-bottom: 2px solid #1a0a0a;
+    position: relative;
+  }
+
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    color: #8b1a1a;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .main-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 0.92;
+    color: #1a0a0a;
+  }
+
+  .main-title span { color: #8b1a1a; }
+
+  .sub {
+    font-size: 12.5px;
+    color: #556;
+    margin-top: 9px;
+    font-weight: 500;
+  }
+
+  .badge {
+    position: absolute;
+    top: 26px;
+    right: 36px;
+    background: #1a0a0a;
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* BODY */
+  .body { padding: 18px 36px 70px; }
+
+  /* Lead */
+  .lead {
+    background: #1a0a0a;
+    color: white;
+    padding: 16px 20px;
+    border-left: 5px solid #8b1a1a;
+    margin-bottom: 16px;
+  }
+
+  .box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #e05555;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .lead p { font-size: 13px; line-height: 1.6; }
+  .lead strong { color: #fff; font-weight: 700; }
+
+  /* Stat row */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat {
+    border: 1.5px solid #1a0a0a;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: #8b1a1a;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10.5px;
+    color: #334;
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .card {
+    border: 1.5px solid #1a0a0a;
+    padding: 13px 15px;
+  }
+
+  .card-head {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.05em;
+    color: #1a0a0a;
+    border-bottom: 2px solid #8b1a1a;
+    padding-bottom: 4px;
+    margin-bottom: 9px;
+  }
+
+  .card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+
+  .card ul li {
+    font-size: 12px;
+    line-height: 1.4;
+    padding-left: 14px;
+    position: relative;
+    color: #1a0a0a;
+  }
+
+  .card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #8b1a1a;
+    font-weight: 700;
+  }
+
+  /* Virus info box */
+  .virus-box {
+    background: #fff5f5;
+    border: 1.5px solid #8b1a1a;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .virus-box .box-label { color: #8b1a1a; margin-bottom: 7px; }
+
+  .virus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .vg-item { font-size: 12px; line-height: 1.45; color: #1a0a0a; }
+  .vg-item strong { display: block; font-size: 10px; letter-spacing: 0.1em; color: #8b1a1a; text-transform: uppercase; margin-bottom: 2px; }
+
+  /* Footer */
+  .page-footer {
+    border-top: 1.5px solid #1a0a0a;
+    padding: 9px 36px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+  }
+
+  .page-footer span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    color: #99a;
+    letter-spacing: 0.08em;
+  }
+
+  .bot-bar {
+    background: #1a0a0a;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* PAGE 2 */
+  .p2-header {
+    padding: 22px 36px 14px;
+    border-bottom: 2px solid #1a0a0a;
+  }
+
+  .p2-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: #1a0a0a;
+    line-height: 1;
+  }
+
+  .p2-title span { color: #8b1a1a; }
+  .p2-sub { font-size: 12px; color: #556; margin-top: 5px; }
+
+  .p2-body { padding: 18px 36px 80px; }
+
+  /* Relevance cards */
+  .rel-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+
+  .rel-card {
+    display: flex;
+    border: 1.5px solid #1a0a0a;
+    overflow: hidden;
+  }
+
+  .rel-num {
+    background: #1a0a0a;
+    color: #c0a0a0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 66px;
+    line-height: 1;
+  }
+
+  .rel-content { padding: 12px 15px; flex: 1; }
+
+  .rel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: #1a0a0a;
+    margin-bottom: 4px;
+  }
+
+  .rel-text { font-size: 12px; line-height: 1.5; color: #334; }
+  .rel-text strong { color: #1a0a0a; font-weight: 700; }
+
+  /* Fazit */
+  .fazit {
+    background: #fff5f5;
+    border: 1.5px solid #8b1a1a;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+
+  .fazit .box-label { color: #8b1a1a; }
+  .fazit p { font-size: 12.5px; line-height: 1.6; color: #1a0a0a; font-style: italic; margin-top: 6px; }
+  .fazit p strong { font-style: normal; font-weight: 700; }
+
+  /* Discussion */
+  .disc { border: 1.5px solid #1a0a0a; padding: 13px 15px; }
+
+  .disc-qs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 9px;
+  }
+
+  .dq {
+    background: #fdf5f5;
+    border: 1px solid #cbb;
+    padding: 10px 11px;
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: #1a0a0a;
+  }
+
+  .dq-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: #dcc;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ PAGE 1 ═══════ -->
+<div class="page">
+  <div class="top-bar"></div>
+
+  <div class="header">
+    <div class="badge">MAI 2026 · KONGO</div>
+    <div class="kicker">Internationale Nachrichten · ABU Präsentation · Seite 1 von 2</div>
+    <div class="main-title">EBOLA-<br><span>AUSBRUCH</span><br>KONGO-KINSHASA</div>
+    <div class="sub">Über 900 Verdachtsfälle · WHO-Notlage · Seltener Bundibugyo-Virustyp ohne Impfschutz</div>
+  </div>
+
+  <div class="body">
+
+    <div class="lead">
+      <div class="box-label">Was ist passiert?</div>
+      <p>Im östlichen <strong>Kongo-Kinshasa</strong> grassiert seit Wochen ein <strong>Ebola-Ausbruch</strong> mit dem seltenen Bundibugyo-Virustyp. Die WHO zählt <strong>über 900 Verdachtsfälle</strong> und hat eine <strong>internationale Gesundheitsnotlage</strong> ausgerufen. Der Ausbruch blieb wochenlang unentdeckt, weil das lokale Labor den seltenen Virusstamm zunächst nicht identifizieren konnte. Die betroffene Region ist von <strong>bewaffneten Konflikten</strong> geprägt — das erschwert Hilfe und Eindämmung massiv.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">900+</div>
+        <div class="stat-label">Verdachtsfälle gesamt (WHO)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">204</div>
+        <div class="stat-label">Todesfälle seit Beginn des Ausbruchs</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">91</div>
+        <div class="stat-label">Im Labor bestätigte Infektionen</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Bestätigte Fälle im Nachbarland Uganda</div>
+      </div>
+    </div>
+
+    <div class="virus-box">
+      <div class="box-label">Der Bundibugyo-Virus — was ist das?</div>
+      <div class="virus-grid">
+        <div class="vg-item"><strong>Übertragung</strong>Nicht über die Luft — nur durch engen Kontakt mit Körperflüssigkeiten Infizierter oder Verstorbener.</div>
+        <div class="vg-item"><strong>Impfung / Therapie</strong>Keine. Für diesen seltenen Virustyp existiert weder ein Impfstoff noch eine zugelassene Behandlung.</div>
+        <div class="vg-item"><strong>Ansteckungsrisiko</strong>WHO: sehr hoch in Kongo-Kinshasa, hoch in der Region, weltweit gering.</div>
+        <div class="vg-item"><strong>Erstmals in der Region</strong>Die Bevölkerung in Mongbwalu hat noch nie einen Ebola-Ausbruch erlebt — Unwissenheit und Misstrauen erschweren die Hilfe.</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">Lage vor Ort</div>
+        <ul>
+          <li>Spital in Mongbwalu: «katastrophale Lage» (Ärzte ohne Grenzen)</li>
+          <li>Kaum Schutzausrüstung für Spitalpersonal</li>
+          <li>Behandlungszelte wurden in Brand gesetzt</li>
+          <li>Angehörige verlangen Leichen für traditionelle Bestattungen</li>
+          <li>Falschinformationen über das Virus kursieren</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head">Internationale Reaktion</div>
+        <ul>
+          <li>WHO ruft internationale Gesundheitsnotlage aus</li>
+          <li>Gesundheitsminister der Region treffen sich in Kampala</li>
+          <li>Uganda: Präsident empfiehlt kein Händeschütteln, Pilgerfeste verschoben</li>
+          <li>Deutschland behandelt US-Bürger mit Ebola in Berliner Charité</li>
+          <li>Koordiniertes Vorgehen der Nachbarländer gefordert</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>QUELLE: SRF NEWS · WHO · ÄRZTE OHNE GRENZEN · 25.05.2026</span>
+    <span>BZI INTERLAKEN · ABU · INTERNATIONALE NACHRICHTEN</span>
+  </div>
+  <div class="bot-bar"></div>
+</div>
+
+
+<!-- ═══════ PAGE 2 ═══════ -->
+<div class="page">
+  <div class="top-bar"></div>
+
+  <div class="p2-header">
+    <div class="kicker">Internationale Nachrichten · ABU Präsentation · Seite 2 von 2</div>
+    <div class="p2-title">WARUM IST DAS <span>RELEVANT?</span></div>
+    <div class="p2-sub">Bedeutung für die Weltgemeinschaft, die Schweiz und zukünftige Pandemien</div>
+  </div>
+
+  <div class="p2-body">
+
+    <div class="rel-list">
+
+      <div class="rel-card">
+        <div class="rel-num">01</div>
+        <div class="rel-content">
+          <div class="rel-title">Kein Impfstoff — die Welt ist schutzlos</div>
+          <div class="rel-text">Anders als bei anderen Ebola-Typen gibt es für den Bundibugyo-Virus <strong>weder Impfung noch Therapie</strong>. Das bedeutet: Die einzige Waffe ist Isolierung. In einem Kriegsgebiet mit kaum funktionierenden Spitälern ist das fast unmöglich. Das zeigt, wie <strong>gefährlich Infektionskrankheiten ohne Impfschutz</strong> sind — ein Lehre aus Covid-19, die hier erneut sichtbar wird.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">02</div>
+        <div class="rel-content">
+          <div class="rel-title">Der Ausbruch wurde wochenlang nicht erkannt</div>
+          <div class="rel-text">Das lokale Labor konnte den seltenen Virusstamm zunächst nicht identifizieren. Die Proben mussten erst nach Kinshasa — <strong>tausende Kilometer entfernt</strong>. In dieser Zeit breitete sich das Virus weiter aus. Das zeigt ein globales Problem: <strong>Arme Länder haben keine ausreichende Laborinfrastruktur</strong> — was für die ganze Welt ein Risiko ist.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">03</div>
+        <div class="rel-content">
+          <div class="rel-title">Krieg, Armut und Seuchen — ein gefährlicher Mix</div>
+          <div class="rel-text">Die betroffene Region im Ostkongo ist seit Jahren von <strong>bewaffneten Konflikten und Flüchtlingsbewegungen</strong> geprägt. Hilfsorganisationen können kaum arbeiten, Behandlungszelte werden in Brand gesteckt, Menschen fliehen — und tragen das Virus dabei weiter. Es zeigt: <strong>Krieg und Krankheit verstärken sich gegenseitig</strong>.</div>
+        </div>
+      </div>
+
+      <div class="rel-card">
+        <div class="rel-num">04</div>
+        <div class="rel-content">
+          <div class="rel-title">Auch die Schweiz ist betroffen — und trägt Verantwortung</div>
+          <div class="rel-text">Die Schweiz ist Sitz der WHO in Genf und einer der grössten humanitären Geldgeber weltweit. Organisationen wie <strong>Ärzte ohne Grenzen</strong>, die vor Ort helfen, werden teilweise aus der Schweiz koordiniert. Ausserdem: Ein Ebola-Patient wurde bereits in <strong>Berlin</strong> behandelt — zeigt, dass Krankheiten keine Grenzen kennen.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fazit">
+      <div class="box-label">Fazit</div>
+      <p>Der Ebola-Ausbruch im Kongo ist kein isoliertes Problem eines fernen Landes. Er zeigt, was passiert, wenn <strong>Armut, Krieg und fehlender Gesundheitsschutz</strong> zusammentreffen. Und er erinnert daran: Eine Seuche, die irgendwo nicht bekämpft wird, <strong>kann überall ankommen</strong>. Internationale Solidarität ist keine Grosszügigkeit — sie ist Eigeninteresse.</p>
+    </div>
+
+    <div class="disc">
+      <div class="card-head">Diskussionsfragen</div>
+      <div class="disc-qs">
+        <div class="dq">
+          <div class="dq-num">01</div>
+          Ist es gerecht, dass reiche Länder Impfstoffe schnell entwickeln — aber nur für Krankheiten, die sie selbst bedrohen?
+        </div>
+        <div class="dq">
+          <div class="dq-num">02</div>
+          Darf man traditionelle Bestattungsrituale verbieten, wenn sie Leben gefährden?
+        </div>
+        <div class="dq">
+          <div class="dq-num">03</div>
+          Wie viel Verantwortung trägt die internationale Gemeinschaft für Ausbrüche in armen Krisengebieten?
+        </div>
+        <div class="dq">
+          <div class="dq-num">04</div>
+          Was hätten wir aus Covid-19 gelernt — und setzen wir das hier um?
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>QUELLE: SRF NEWS · WHO · ÄRZTE OHNE GRENZEN · 25.05.2026</span>
+    <span>BZI INTERLAKEN · ABU · INTERNATIONALE NACHRICHTEN</span>
+  </div>
+  <div class="bot-bar"></div>
+</div>
+
+
+
+</body></html>

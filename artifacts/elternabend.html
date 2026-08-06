@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elternabend – Markt & Konsum</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0f14;
+    --surface: #161a23;
+    --card: #1c2130;
+    --accent: #e8a838;
+    --accent-dim: #c4882a;
+    --text: #e8e6e1;
+    --text-muted: #8b8d94;
+    --success: #5cb87a;
+    --danger: #d9534f;
+    --blue: #4a90d9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* SLIDE SYSTEM */
+  .slide-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .slide.active .fade-in {
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* NAVIGATION */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background: rgba(12, 15, 20, 0.85);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(232, 168, 56, 0.15);
+    z-index: 100;
+  }
+
+  .nav-btn {
+    background: none;
+    border: 1px solid rgba(232, 168, 56, 0.3);
+    color: var(--accent);
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(232, 168, 56, 0.12);
+    border-color: var(--accent);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
+  .slide-indicator {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.3;
+    transition: all 0.3s;
+  }
+
+  .dot.active {
+    background: var(--accent);
+    opacity: 1;
+    transform: scale(1.3);
+  }
+
+  /* TYPOGRAPHY */
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--accent);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 1.8vw, 22px);
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 700px;
+    text-align: center;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(232, 168, 56, 0.12);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* SLIDE 1: TITLE */
+  .slide-title {
+    text-align: center;
+    position: relative;
+  }
+
+  .slide-title::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(232, 168, 56, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .school-badge {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  .title-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 24px auto;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: all 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(232, 168, 56, 0.25);
+    transform: translateY(-3px);
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* MASLOW PYRAMID */
+  .pyramid-wrap {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    width: 100%;
+    max-width: 950px;
+  }
+
+  .pyramid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .pyramid-level {
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .pyramid-level:nth-child(1) { width: 40%; background: rgba(232, 168, 56, 0.25); color: var(--accent); }
+  .pyramid-level:nth-child(2) { width: 52%; background: rgba(232, 168, 56, 0.18); color: var(--accent-dim); }
+  .pyramid-level:nth-child(3) { width: 64%; background: rgba(74, 144, 217, 0.2); color: var(--blue); }
+  .pyramid-level:nth-child(4) { width: 76%; background: rgba(92, 184, 122, 0.18); color: var(--success); }
+  .pyramid-level:nth-child(5) { width: 88%; background: rgba(92, 184, 122, 0.25); color: var(--success); }
+
+  .pyramid-level:hover { transform: scale(1.04); filter: brightness(1.2); }
+
+  .pyramid-info {
+    flex: 1;
+  }
+
+  .pyramid-info p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* KREISLAUF */
+  .kreislauf-visual {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 800px;
+  }
+
+  .kreislauf-node {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 140px;
+    transition: all 0.3s;
+  }
+
+  .kreislauf-node:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+  }
+
+  .kreislauf-node .emoji { font-size: 28px; margin-bottom: 8px; }
+  .kreislauf-node .label { font-size: 14px; font-weight: 500; }
+
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    width: 100%;
+    padding: 4px 0;
+  }
+
+  .arrow-row span { font-size: 18px; color: var(--accent); }
+
+  /* QUIZ SLIDE */
+  .quiz-wrap {
+    text-align: center;
+    max-width: 750px;
+    width: 100%;
+  }
+
+  .quiz-question {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3vw, 36px);
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 36px;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .quiz-opt {
+    background: var(--card);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 22px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .quiz-opt:hover {
+    border-color: var(--accent);
+    background: rgba(232, 168, 56, 0.06);
+  }
+
+  .quiz-opt.correct {
+    border-color: var(--success) !important;
+    background: rgba(92, 184, 122, 0.12) !important;
+  }
+
+  .quiz-opt.wrong {
+    border-color: var(--danger) !important;
+    background: rgba(217, 83, 79, 0.08) !important;
+    opacity: 0.6;
+  }
+
+  .opt-letter {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .quiz-feedback {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 10px;
+    display: none;
+  }
+
+  .quiz-feedback.show { display: block; }
+
+  /* STEUERN */
+  .steuer-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 850px;
+    width: 100%;
+  }
+
+  .steuer-col h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .steuer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .steuer-item .icon { font-size: 18px; }
+
+  /* ZUSAMMENFASSUNG */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .summary-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 26px 22px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .summary-card .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    color: var(--accent);
+  }
+
+  .summary-card .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* DELAY CLASSES */
+  .d1 { animation-delay: 0.1s !important; }
+  .d2 { animation-delay: 0.25s !important; }
+  .d3 { animation-delay: 0.4s !important; }
+  .d4 { animation-delay: 0.55s !important; }
+  .d5 { animation-delay: 0.7s !important; }
+  .d6 { animation-delay: 0.85s !important; }
+
+  .fade-in { opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .slide { padding: 40px 28px; }
+    .pyramid-wrap { flex-direction: column; gap: 24px; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .steuer-cols { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="slides">
+
+  <!-- SLIDE 1: TITEL -->
+  <div class="slide active" data-slide="0">
+    <div class="slide-title">
+      <div class="school-badge fade-in d1">BZI Interlaken · ABU Berufsfachschule</div>
+      <h1 class="fade-in d2">Markt & Konsum</h1>
+      <div class="title-divider fade-in d3"></div>
+      <p class="subtitle fade-in d4">Themenkreis G07 – Was Ihre Lernenden über Wirtschaft, Preisbildung und Steuern lernen</p>
+      <p class="subtitle fade-in d5" style="margin-top: 24px; font-size: 14px; color: var(--accent);">Elternabend 2026</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: ÜBERBLICK -->
+  <div class="slide" data-slide="1">
+    <div class="tag fade-in d1">Überblick</div>
+    <h2 class="fade-in d2" style="text-align:center;">Drei grosse Themenblöcke</h2>
+    <div class="cards-grid">
+      <div class="card fade-in d3">
+        <div class="card-icon">🛒</div>
+        <h3>Grundfragen</h3>
+        <p>Bedürfnisse nach Maslow, Güterarten und das Zusammenspiel von Angebot & Nachfrage auf dem freien Markt.</p>
+      </div>
+      <div class="card fade-in d4">
+        <div class="card-icon">🏭</div>
+        <h3>Wirtschaftliche Produktion</h3>
+        <p>Wirtschaftskreislauf, Produktionsfaktoren, Sektoren, BIP-Vergleiche und das Spannungsfeld Wohlstand vs. Wohlfahrt.</p>
+      </div>
+      <div class="card fade-in d5">
+        <div class="card-icon">🏛️</div>
+        <h3>Staat als Wirtschaftsteilnehmer</h3>
+        <p>Steuern verstehen, Einnahmen und Ausgaben der öffentlichen Hand – und die eigene Steuererklärung ausfüllen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: MASLOW -->
+  <div class="slide" data-slide="2">
+    <div class="tag fade-in d1">Bedürfnisse</div>
+    <h2 class="fade-in d2" style="text-align:center; margin-bottom: 30px;">Die Bedürfnispyramide nach Maslow</h2>
+    <div class="pyramid-wrap fade-in d3">
+      <div class="pyramid">
+        <div class="pyramid-level">Selbstverwirklichung</div>
+        <div class="pyramid-level">Wertschätzung</div>
+        <div class="pyramid-level">Soziale Bedürfnisse</div>
+        <div class="pyramid-level">Sicherheitsbedürfnisse</div>
+        <div class="pyramid-level">Grundbedürfnisse (Essen, Trinken, Schlaf)</div>
+      </div>
+      <div class="pyramid-info fade-in d4">
+        <h3>Was lernen die Jugendlichen?</h3>
+        <p style="margin-bottom: 14px;">Die Lernenden ordnen ihre <strong style="color:var(--text)">eigenen Bedürfnisse</strong> in die Pyramide ein und erkennen den Unterschied zwischen <strong style="color:var(--text)">Grund- und Wahlbedürfnissen</strong>.</p>
+        <p>Sie verstehen: Nicht alles, was wir «brauchen», ist ein echtes Grundbedürfnis – und Werbung spielt dabei eine grosse Rolle.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: WIRTSCHAFTSKREISLAUF -->
+  <div class="slide" data-slide="3">
+    <div class="tag fade-in d1">Produktion</div>
+    <h2 class="fade-in d2" style="text-align:center; margin-bottom: 30px;">Der Wirtschaftskreislauf</h2>
+    <div class="kreislauf-visual fade-in d3">
+      <div class="kreislauf-node"><div class="emoji">👨‍👩‍👧‍👦</div><div class="label">Haushalte</div></div>
+      <div class="kreislauf-node"><div class="emoji">🏢</div><div class="label">Unternehmen</div></div>
+      <div class="kreislauf-node"><div class="emoji">🏛️</div><div class="label">Staat</div></div>
+      <div class="kreislauf-node"><div class="emoji">🏦</div><div class="label">Banken</div></div>
+      <div class="kreislauf-node"><div class="emoji">🌍</div><div class="label">Ausland</div></div>
+    </div>
+    <div class="fade-in d4" style="margin-top: 28px; text-align:center;">
+      <div class="arrow-row">
+        <span>→</span> Geldstrom (Löhne, Steuern, Zinsen) <span>→</span>
+      </div>
+      <div class="arrow-row">
+        <span>←</span> Güterstrom (Waren, Dienstleistungen) <span>←</span>
+      </div>
+    </div>
+    <p class="subtitle fade-in d5" style="margin-top: 20px; font-size: 14px;">Die Lernenden ordnen alle fünf Teilnehmer zu und verstehen die Produktionsfaktoren (Arbeit, Boden, Kapital, Wissen).</p>
+  </div>
+
+  <!-- SLIDE 5: BIP & SEKTOREN -->
+  <div class="slide" data-slide="4">
+    <div class="tag fade-in d1">Volkswirtschaft</div>
+    <h2 class="fade-in d2" style="text-align:center;">BIP, Sektoren & Wohlfahrt</h2>
+    <div class="cards-grid fade-in d3" style="max-width: 850px;">
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Wirtschaftssektoren</h3>
+        <p>Die Lernenden ordnen ihren Lehrberuf dem 1., 2. oder 3. Sektor zu – und verstehen den Strukturwandel der Schweizer Wirtschaft.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Bruttoinlandprodukt</h3>
+        <p>Was misst das BIP – und was nicht? Die Lernenden vergleichen zwei Länder und hinterfragen, ob Wachstum automatisch Wohlfahrt bedeutet.</p>
+      </div>
+    </div>
+    <div class="fade-in d4" style="margin-top: 30px; max-width: 700px; text-align: center;">
+      <p style="font-size: 15px; color: var(--text-muted); line-height: 1.6;"><strong style="color: var(--accent);">Kernfrage:</strong> Wohlstand (materieller Reichtum) ist nicht dasselbe wie Wohlfahrt (Lebensqualität, Gesundheit, Umwelt). Die Lernenden erkennen dieses Spannungsfeld.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: STEUERN -->
+  <div class="slide" data-slide="5">
+    <div class="tag fade-in d1">Steuern</div>
+    <h2 class="fade-in d2" style="text-align:center; margin-bottom: 30px;">Der Staat als Wirtschaftsteilnehmer</h2>
+    <div class="steuer-cols fade-in d3">
+      <div>
+        <h3 style="color: var(--success);">💰 Einnahmen</h3>
+        <div class="steuer-item"><span class="icon">→</span> Direkte Steuern (Einkommen, Vermögen)</div>
+        <div class="steuer-item"><span class="icon">→</span> Indirekte Steuern (MwSt, Tabak, Alkohol)</div>
+        <div class="steuer-item"><span class="icon">→</span> Gebühren & Abgaben</div>
+      </div>
+      <div>
+        <h3 style="color: var(--danger);">📋 Ausgaben</h3>
+        <div class="steuer-item"><span class="icon">→</span> Soziale Sicherheit (AHV, IV)</div>
+        <div class="steuer-item"><span class="icon">→</span> Bildung & Forschung</div>
+        <div class="steuer-item"><span class="icon">→</span> Verkehr, Landesverteidigung, Umwelt</div>
+      </div>
+    </div>
+    <p class="subtitle fade-in d4" style="margin-top: 28px; font-size: 14px;">Praxisbezug: Die Lernenden füllen eine eigene Steuererklärung aus – ein wichtiger Schritt in die Selbstständigkeit.</p>
+  </div>
+
+  <!-- SLIDE 7: PUBLIKUMSFRAGE (QUIZ) -->
+  <div class="slide" data-slide="6">
+    <div class="quiz-wrap">
+      <div class="tag fade-in d1">🎯 Frage ans Publikum</div>
+      <div class="quiz-question fade-in d2">
+        Was passiert mit dem Preis eines Produkts, wenn die Nachfrage steigt, das Angebot aber gleich bleibt?
+      </div>
+      <div class="quiz-options fade-in d3" id="quizOptions">
+        <button class="quiz-opt" data-answer="wrong" onclick="handleQuiz(this)">
+          <span class="opt-letter">A</span>
+          <span>Der Preis sinkt</span>
+        </button>
+        <button class="quiz-opt" data-answer="correct" onclick="handleQuiz(this)">
+          <span class="opt-letter">B</span>
+          <span>Der Preis steigt</span>
+        </button>
+        <button class="quiz-opt" data-answer="wrong" onclick="handleQuiz(this)">
+          <span class="opt-letter">C</span>
+          <span>Der Preis bleibt gleich</span>
+        </button>
+        <button class="quiz-opt" data-answer="wrong" onclick="handleQuiz(this)">
+          <span class="opt-letter">D</span>
+          <span>Der Staat legt den Preis fest</span>
+        </button>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback">
+        <strong style="color: var(--success);">Richtig – Antwort B!</strong><br><br>
+        Wenn mehr Menschen ein Produkt wollen (höhere Nachfrage), aber die verfügbare Menge gleich bleibt, entsteht Knappheit – und der Preis steigt. Das ist das Grundprinzip der freien Marktwirtschaft, das Ihre Kinder im Unterricht lernen. <br><br>
+        <em style="font-size: 13px;">Alltagsbeispiel: Warum sind Erdbeeren im Winter teurer als im Sommer?</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: ZUSAMMENFASSUNG -->
+  <div class="slide" data-slide="7">
+    <div class="tag fade-in d1">Zusammenfassung</div>
+    <h2 class="fade-in d2" style="text-align:center; margin-bottom: 30px;">Was Ihr Kind mitnimmt</h2>
+    <div class="summary-grid fade-in d3">
+      <div class="summary-card">
+        <div class="num">🧠</div>
+        <div class="desc">Bedürfnisse erkennen und bewusste Konsumentscheide treffen</div>
+      </div>
+      <div class="summary-card">
+        <div class="num">🔄</div>
+        <div class="desc">Verstehen, wie unsere Wirtschaft funktioniert und zusammenhängt</div>
+      </div>
+      <div class="summary-card">
+        <div class="num">📝</div>
+        <div class="desc">Eigenständig eine Steuererklärung ausfüllen können</div>
+      </div>
+    </div>
+    <div class="fade-in d4" style="margin-top: 40px; text-align: center;">
+      <p class="subtitle" style="font-size: 16px; color: var(--accent);">Vielen Dank für Ihr Interesse!</p>
+      <p class="subtitle" style="font-size: 14px; margin-top: 8px;">Haben Sie Fragen? Wir nehmen uns gerne Zeit.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Zurück</button>
+  <div class="slide-indicator" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Weiter →</button>
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const dotsEl = document.getElementById('dots');
+
+  // Create dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goToSlide(i);
+    d.style.cursor = 'pointer';
+    dotsEl.appendChild(d);
+  }
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+
+    // Re-trigger animations
+    slides[current].querySelectorAll('.fade-in').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+    });
+
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < total) goToSlide(next);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+  });
+
+  // Quiz logic
+  let quizAnswered = false;
+  function handleQuiz(btn) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+    const all = document.querySelectorAll('.quiz-opt');
+    all.forEach(b => {
+      if (b.dataset.answer === 'correct') b.classList.add('correct');
+      else b.classList.add('wrong');
+      b.style.cursor = 'default';
+    });
+    document.getElementById('quizFeedback').classList.add('show');
+  }
+</script>
+
+</body>
+</html>

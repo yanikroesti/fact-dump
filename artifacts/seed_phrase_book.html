@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Seed Phrase — A Complete Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:        #0C0E12;
+  --surface:   #131620;
+  --surface2:  #1A1E2C;
+  --surface3:  #222739;
+  --gold:      #C8A84B;
+  --gold-dim:  #8C7235;
+  --gold-glow: rgba(200,168,75,0.15);
+  --cream:     #EDE8DC;
+  --cream-dim: #A89E8A;
+  --steel:     #4A8FA8;
+  --steel-dim: #2C5A6E;
+  --red:       #B85450;
+  --red-bg:    rgba(184,84,80,0.12);
+  --sidebar-w: 280px;
+  --topbar-h:  62px;
+  --radius:    6px;
+  --font-disp: 'Playfair Display', Georgia, serif;
+  --font-body: 'Crimson Pro', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --gutter:    clamp(24px, 4vw, 64px);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+/* ─────────────────────────────────────────
+   TOP BAR — TTS CONTROLS
+───────────────────────────────────────── */
+#topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  background: rgba(12,14,18,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(200,168,75,0.18);
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 calc(var(--sidebar-w) + 16px);
+  gap: 10px;
+  z-index: 100;
+  overflow: hidden;
+}
+#topbar .book-title {
+  font-family: var(--font-disp);
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  font-style: italic;
+  margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tts-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,168,75,0.3);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.tts-btn:hover { background: var(--gold-glow); border-color: var(--gold); }
+.tts-btn.active { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.tts-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+#tts-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cream-dim);
+  min-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#speed-wrap {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+#speed-wrap label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cream-dim);
+}
+#speed-select {
+  background: var(--surface2);
+  border: 1px solid rgba(200,168,75,0.25);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 3px 6px;
+  cursor: pointer;
+  appearance: none;
+}
+
+/* Voice picker */
+#voice-wrap {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+#voice-wrap label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cream-dim);
+  white-space: nowrap;
+}
+#voice-select {
+  background: var(--surface2);
+  border: 1px solid rgba(200,168,75,0.25);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  appearance: none;
+  max-width: 180px;
+}
+
+/* Pitch slider */
+#pitch-wrap {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+#pitch-wrap label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cream-dim);
+}
+#pitch-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 64px; height: 2px;
+  background: var(--surface3);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+#pitch-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+}
+#pitch-slider::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+}
+#pitch-val {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold-dim);
+  min-width: 22px;
+}
+
+.tts-progress-wrap {
+  flex: 1;
+  max-width: 200px;
+  height: 2px;
+  background: var(--surface3);
+  border-radius: 1px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+#tts-progress-bar {
+  height: 100%;
+  background: var(--gold);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+/* ─────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────── */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid rgba(200,168,75,0.12);
+  overflow-y: auto;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+}
+#sidebar-header {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid rgba(200,168,75,0.12);
+  flex-shrink: 0;
+}
+#sidebar-header .s-title {
+  font-family: var(--font-disp);
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+#sidebar-header .s-sub {
+  font-size: 11px;
+  color: var(--cream-dim);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#chapter-nav { flex: 1; padding: 10px 0 30px; }
+
+.nav-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.nav-item:hover { background: var(--gold-glow); border-left-color: var(--gold-dim); }
+.nav-item.active { background: rgba(200,168,75,0.08); border-left-color: var(--gold); }
+
+.nav-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold-dim);
+  flex-shrink: 0;
+  padding-top: 3px;
+  width: 20px;
+}
+.nav-item.active .nav-num { color: var(--gold); }
+
+.nav-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+.nav-item:hover .nav-text,
+.nav-item.active .nav-text { color: var(--cream); }
+
+/* TTS reading indicator */
+.nav-item.reading .nav-num::after {
+  content: '▶';
+  display: inline-block;
+  color: var(--gold);
+  font-size: 8px;
+  margin-left: 2px;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─────────────────────────────────────────
+   MAIN CONTENT
+───────────────────────────────────────── */
+#main {
+  margin-left: var(--sidebar-w);
+  padding-top: var(--topbar-h);
+  min-height: 100vh;
+}
+
+/* ── HERO / TITLE PAGE ── */
+#hero {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px var(--gutter) 60px;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,168,75,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(74,143,168,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+/* grain overlay */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.2s forwards;
+}
+.hero-title {
+  font-family: var(--font-disp);
+  font-size: clamp(52px, 8vw, 110px);
+  line-height: 0.95;
+  color: var(--cream);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.4s forwards;
+}
+.hero-title span { color: var(--gold); }
+
+.hero-subtitle {
+  font-family: var(--font-disp);
+  font-size: clamp(16px, 2vw, 22px);
+  color: var(--cream-dim);
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 28px;
+  max-width: 560px;
+  line-height: 1.5;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.6s forwards;
+}
+.hero-divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin: 36px 0;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.7s forwards;
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cream-dim);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.8s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CHAPTER SECTIONS ── */
+.chapter {
+  padding: 70px var(--gutter) 80px;
+  border-top: 1px solid rgba(200,168,75,0.1);
+  max-width: 860px;
+}
+.chapter:first-of-type { border-top: none; }
+
+.ch-number {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 14px;
+}
+.ch-title {
+  font-family: var(--font-disp);
+  font-size: clamp(30px, 4vw, 50px);
+  line-height: 1.1;
+  color: var(--cream);
+  font-weight: 700;
+  margin-bottom: 40px;
+  letter-spacing: -0.01em;
+}
+.ch-title em { color: var(--gold); font-style: italic; }
+
+h2 {
+  font-family: var(--font-disp);
+  font-size: clamp(20px, 2.5vw, 26px);
+  color: var(--gold);
+  font-weight: 600;
+  margin: 48px 0 16px;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--cream);
+  font-weight: 600;
+  margin: 32px 0 10px;
+  letter-spacing: 0.02em;
+}
+
+p {
+  color: var(--cream);
+  font-size: 19px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+p strong { font-weight: 600; color: var(--cream); }
+p code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: var(--surface3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--gold);
+}
+
+/* ── LISTS ── */
+ul, ol {
+  margin: 8px 0 24px 0;
+  padding-left: 0;
+  list-style: none;
+}
+ul li, ol li {
+  position: relative;
+  padding: 5px 0 5px 28px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--cream);
+  font-weight: 300;
+}
+ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold-dim);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  top: 8px;
+}
+ol { counter-reset: list-counter; }
+ol li { counter-increment: list-counter; }
+ol li::before {
+  content: counter(list-counter) '.';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  top: 8px;
+  font-weight: 500;
+}
+
+/* ── CALLOUT BOXES ── */
+.callout {
+  border: 1px solid rgba(74,143,168,0.35);
+  background: rgba(74,143,168,0.06);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 28px 0;
+}
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 8px;
+}
+.callout p {
+  font-style: italic;
+  color: var(--cream-dim);
+  font-size: 17px;
+  margin: 0;
+}
+
+.warning {
+  border: 1px solid rgba(184,84,80,0.4);
+  background: var(--red-bg);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 28px 0;
+}
+.warning-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+.warning p { color: var(--cream-dim); font-size: 17px; margin: 0; }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; margin: 24px 0 32px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+thead tr { border-bottom: 1px solid var(--gold-dim); }
+thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+}
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+tbody td {
+  padding: 10px 14px;
+  color: var(--cream-dim);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── GLOSSARY ── */
+.glossary-term {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.glossary-term:last-child { border-bottom: none; }
+.g-word {
+  font-family: var(--font-disp);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.g-def {
+  font-size: 16px;
+  color: var(--cream-dim);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── DROPCAP ── */
+.chapter > p:first-of-type::first-letter {
+  font-family: var(--font-disp);
+  font-size: 4.2em;
+  font-weight: 900;
+  float: left;
+  line-height: 0.82;
+  margin: 0.06em 0.1em 0 0;
+  color: var(--gold);
+}
+
+/* ── TTS HIGHLIGHT ── */
+.tts-word { transition: background 0.1s; border-radius: 2px; }
+.tts-word.highlight {
+  background: rgba(200,168,75,0.25);
+  color: var(--cream);
+}
+
+/* ── CHAPTER READING INDICATOR ── */
+.chapter.reading-chapter {
+  border-left: 2px solid var(--gold);
+  padding-left: calc(var(--gutter) - 2px);
+}
+
+/* ── BACK TO TOP ── */
+#back-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid rgba(200,168,75,0.3);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 50;
+  text-decoration: none;
+}
+#back-top.visible { opacity: 1; }
+#back-top:hover { background: var(--gold-glow); border-color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 0px; }
+  #sidebar { transform: translateX(-280px); width: 280px; transition: transform 0.3s; }
+  #sidebar.open { transform: translateX(0); --sidebar-w: 280px; }
+  #topbar { padding-left: 60px; }
+  #menu-toggle { display: flex !important; }
+  #main { margin-left: 0; }
+}
+#menu-toggle {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  width: 38px; height: 38px;
+  background: var(--surface2);
+  border: 1px solid rgba(200,168,75,0.3);
+  border-radius: var(--radius);
+  align-items: center; justify-content: center;
+  cursor: pointer; z-index: 200;
+  color: var(--gold); font-size: 18px;
+  flex-direction: column; gap: 4px; padding: 8px;
+}
+#menu-toggle span {
+  display: block; width: 18px; height: 1.5px;
+  background: var(--gold); border-radius: 1px; transition: all 0.2s;
+}
+</style>
+</head>
+<body>
+
+<!-- MENU TOGGLE (mobile) -->
+<button id="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="book-title">The Seed Phrase</div>
+
+  <!-- Play / Pause -->
+  <button class="tts-btn" id="btn-play" onclick="ttsPlayPause()" title="Play / Pause">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <!-- Stop -->
+  <button class="tts-btn" id="btn-stop" onclick="ttsStop()" title="Stop">
+    <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></svg>
+  </button>
+
+  <!-- Skip back / forward -->
+  <button class="tts-btn" onclick="ttsChapter(-1)" title="Previous chapter">
+    <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+  </button>
+  <button class="tts-btn" onclick="ttsChapter(1)" title="Next chapter">
+    <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+  </button>
+
+  <!-- Progress -->
+  <div class="tts-progress-wrap">
+    <div id="tts-progress-bar"></div>
+  </div>
+
+  <!-- Status label -->
+  <div id="tts-label">Loading voices…</div>
+
+  <!-- Voice picker -->
+  <div id="voice-wrap">
+    <label for="voice-select">Voice</label>
+    <select id="voice-select" onchange="ttsSetVoice(this.value)" title="Choose a voice">
+      <option value="">Loading…</option>
+    </select>
+  </div>
+
+  <!-- Speed -->
+  <div id="speed-wrap">
+    <label for="speed-select">Speed</label>
+    <select id="speed-select" onchange="ttsSetSpeed(this.value)">
+      <option value="0.75">0.75×</option>
+      <option value="0.9">0.9×</option>
+      <option value="1" selected>1×</option>
+      <option value="1.2">1.2×</option>
+      <option value="1.4">1.4×</option>
+      <option value="1.6">1.6×</option>
+      <option value="2">2×</option>
+    </select>
+  </div>
+
+  <!-- Pitch -->
+  <div id="pitch-wrap">
+    <label for="pitch-slider">Pitch</label>
+    <input type="range" id="pitch-slider" min="0.6" max="1.4" step="0.05" value="1"
+           oninput="ttsSetPitch(this.value)">
+    <span id="pitch-val">1.0</span>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="s-title">The Seed Phrase</div>
+    <div class="s-sub">A Complete Guide</div>
+  </div>
+  <div id="chapter-nav">
+    <a class="nav-item" href="#hero" onclick="scrollTo('hero')">
+      <span class="nav-num">—</span>
+      <span class="nav-text">Title & Foreword</span>
+    </a>
+    <a class="nav-item" href="#ch1" onclick="navClick('ch1')">
+      <span class="nav-num">01</span>
+      <span class="nav-text">The Problem: Owning Something on the Internet</span>
+    </a>
+    <a class="nav-item" href="#ch2" onclick="navClick('ch2')">
+      <span class="nav-num">02</span>
+      <span class="nav-text">Before the Seed Phrase: A Short History</span>
+    </a>
+    <a class="nav-item" href="#ch3" onclick="navClick('ch3')">
+      <span class="nav-num">03</span>
+      <span class="nav-text">The Birth of BIP39</span>
+    </a>
+    <a class="nav-item" href="#ch4" onclick="navClick('ch4')">
+      <span class="nav-num">04</span>
+      <span class="nav-text">Randomness and Entropy</span>
+    </a>
+    <a class="nav-item" href="#ch5" onclick="navClick('ch5')">
+      <span class="nav-num">05</span>
+      <span class="nav-text">The 2048 Words</span>
+    </a>
+    <a class="nav-item" href="#ch6" onclick="navClick('ch6')">
+      <span class="nav-num">06</span>
+      <span class="nav-text">From Words to Ones and Zeros</span>
+    </a>
+    <a class="nav-item" href="#ch7" onclick="navClick('ch7')">
+      <span class="nav-num">07</span>
+      <span class="nav-text">Stretching the Seed: PBKDF2</span>
+    </a>
+    <a class="nav-item" href="#ch8" onclick="navClick('ch8')">
+      <span class="nav-num">08</span>
+      <span class="nav-text">The Infinite Wallet: BIP32</span>
+    </a>
+    <a class="nav-item" href="#ch9" onclick="navClick('ch9')">
+      <span class="nav-num">09</span>
+      <span class="nav-text">Paths Through the Tree: BIP44</span>
+    </a>
+    <a class="nav-item" href="#ch10" onclick="navClick('ch10')">
+      <span class="nav-num">10</span>
+      <span class="nav-text">The 25th Word: Passphrases</span>
+    </a>
+    <a class="nav-item" href="#ch11" onclick="navClick('ch11')">
+      <span class="nav-num">11</span>
+      <span class="nav-text">Hardware Wallets Explained</span>
+    </a>
+    <a class="nav-item" href="#ch12" onclick="navClick('ch12')">
+      <span class="nav-num">12</span>
+      <span class="nav-text">Attack Vectors</span>
+    </a>
+    <a class="nav-item" href="#ch13" onclick="navClick('ch13')">
+      <span class="nav-num">13</span>
+      <span class="nav-text">Shamir's Secret Sharing & SLIP39</span>
+    </a>
+    <a class="nav-item" href="#ch14" onclick="navClick('ch14')">
+      <span class="nav-num">14</span>
+      <span class="nav-text">Other Schemes: Electrum & WIF</span>
+    </a>
+    <a class="nav-item" href="#ch15" onclick="navClick('ch15')">
+      <span class="nav-num">15</span>
+      <span class="nav-text">Best Practices: Storing Safely</span>
+    </a>
+    <a class="nav-item" href="#ch16" onclick="navClick('ch16')">
+      <span class="nav-num">16</span>
+      <span class="nav-text">The Future of Seed Phrases</span>
+    </a>
+    <a class="nav-item" href="#glossary" onclick="navClick('glossary')">
+      <span class="nav-num">GL</span>
+      <span class="nav-text">Glossary</span>
+    </a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-kicker">A Complete Technical Guide</div>
+  <div class="hero-title">The<br><span>Seed</span><br>Phrase</div>
+  <div class="hero-subtitle">Everything you never knew about the twelve words protecting your crypto — from first principles to advanced security.</div>
+  <div class="hero-divider"></div>
+  <div class="hero-meta">16 Chapters · Glossary · BIP39 · BIP32 · BIP44 · SLIP39 · Hardware Wallets</div>
+</section>
+
+<!-- FOREWORD -->
+<section class="chapter" id="foreword">
+  <div class="ch-number">Foreword</div>
+  <div class="ch-title">Before We Begin</div>
+  <p>Somewhere in the world right now, someone is buying their first cryptocurrency. Maybe they downloaded an app on their phone, maybe they purchased a hardware wallet, or maybe a friend handed them a piece of paper and said simply: <em>"Write these words down. Never lose them. Never show anyone."</em></p>
+  <p>Twelve words. Twenty-four words. Sometimes it feels almost absurd — that these ordinary English words, things like <em>abandon</em>, <em>ability</em>, <em>cable</em>, <em>planet</em> — are standing between a person and their life savings. Between them and financial sovereignty. Between them and an amount of money that, in a worst case, cannot be recovered by anyone on earth.</p>
+  <p>Most people treat their seed phrase with a combination of reverence and vague anxiety. They know it matters. They know they should back it up. But very few people understand what it actually is — not just as a concept, but as a technology. Where did it come from? How does it work? Why 12 words and not a password? Why can a piece of hardware you have never seen before, fresh from a factory, read your words and instantly know your Bitcoin balance?</p>
+  <p>This book answers those questions. It is written for someone who knows what a wallet address is, has probably used a hardware wallet, and understands broadly that cryptocurrency transactions are irreversible — but who has not gone deep into the engineering underneath. You do not need to be a programmer or a mathematician. Everything here can be understood with patience and a willingness to think carefully about how systems work.</p>
+  <p>By the end, you will understand exactly what your seed phrase is, how it was invented, what happens when you type it into a device, and how to protect it properly. You will also understand the remarkable cryptographic architecture that makes it possible — the machinery that turns twelve ordinary words into essentially unlimited wealth-bearing addresses.</p>
+  <p>Let us begin at the beginning.</p>
+</section>
+
+<!-- ── CH 1 ── -->
+<section class="chapter" id="ch1">
+  <div class="ch-number">Chapter 01</div>
+  <div class="ch-title">The Problem: <em>Owning Something</em> on the Internet</div>
+
+  <h2>What Does It Mean to Own a Coin?</h2>
+  <p>When you own a dollar bill, you own a physical object. You can hold it, hide it under your mattress, hand it to another person. Ownership is simple and direct. The bill is yours because it is physically in your possession.</p>
+  <p>When you own money in a bank account, you do not own a physical object. You own a legal claim on a debt. The bank owes you that money. You trust that the law, the government, and the bank's own self-interest will honour that claim when you want to spend it. The ownership exists because of relationships between institutions.</p>
+  <p>Cryptocurrency is something fundamentally different from both of these. When you own Bitcoin, you do not hold a physical object, and there is no institution that owes you anything. Instead, you own the right to move a specific amount of value recorded on a shared, public ledger — the blockchain — and that right is proven not by a piece of paper or a bank's database, but by a mathematical secret. That secret is a <strong>private key</strong>.</p>
+
+  <h2>Public Keys and Private Keys</h2>
+  <p>The core of cryptocurrency ownership is a pair of numbers with a remarkable mathematical relationship. One number — the private key — must be kept completely secret. The other — the public key, which derives from the private key — can be shared with anyone in the world.</p>
+  <p>The mathematics underlying this system, called <strong>elliptic curve cryptography</strong>, ensures two things that seem almost magical but are provably true:</p>
+  <ul>
+    <li>Anyone who has your public key can verify that a message was signed by the holder of the corresponding private key — without ever seeing the private key.</li>
+    <li>It is computationally impossible, with any technology that exists or is foreseeable, to work backwards from a public key to its private key.</li>
+  </ul>
+  <p>What this means in practice: when you want to send cryptocurrency, your wallet software creates a transaction and signs it using your private key. That signature can be checked by every computer on the network using your public key. If the signature is valid, the network accepts the transaction. If you do not have the private key, you cannot create a valid signature, and you cannot spend the coins. No exceptions. No recovery. No bank to call.</p>
+  <p>Your wallet address — the string of letters and numbers you give to someone who wants to send you crypto — is derived from your public key. It is essentially a compressed, hashed version of it. Think of it like this: your public key is your name, and your address is a nickname derived from that name.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key Insight</div>
+    <p>In cryptocurrency, you do not own coins. You own a private key that proves the right to move coins. Lose the private key, and the coins are permanently inaccessible to everyone, including you.</p>
+  </div>
+
+  <h2>The Private Key: An Enormous Number</h2>
+  <p>A Bitcoin private key is a randomly selected number between 1 and approximately 1.16 × 10⁷⁷. To put that in perspective: the estimated number of atoms in the observable universe is approximately 10⁸². A Bitcoin private key space is about 100,000 times smaller — which still means there are more possible private keys than anyone could meaningfully count.</p>
+  <p>This is what makes the system secure. If you generated a key randomly, the chance that anyone could guess it is so vanishingly small that it is, for all practical purposes, zero. The raw private key looks like this — a 256-bit number in hexadecimal:</p>
+  <p><code>E9873D79C6D87DC0FB6A5778633389F4453213303DA61F20BD67FC233AA33262</code></p>
+
+  <h2>The Problem with Raw Private Keys</h2>
+  <p>How do you store this? A 64-character hexadecimal string is not easy for humans to work with. It is trivial to copy one character incorrectly, to lose part of it, or to mistake a zero for the letter O. If you make any error, your funds are gone.</p>
+  <p>Furthermore, in modern cryptocurrency usage, you do not have just one private key. A well-designed wallet generates a new address for every transaction — partly for privacy, partly for security. This means potentially hundreds or thousands of private keys. Backing up each one individually would be an overwhelming task.</p>
+  <p>This was the central problem that the creators of BIP39 set out to solve.</p>
+</section>
+
+<!-- ── CH 2 ── -->
+<section class="chapter" id="ch2">
+  <div class="ch-number">Chapter 02</div>
+  <div class="ch-title">Before the Seed Phrase: <em>A Short History</em></div>
+
+  <h2>The Early Days: Raw Keys and Paper Wallets</h2>
+  <p>When Bitcoin launched in January 2009, there was no concept of a seed phrase. Wallets were software programs that generated private keys, stored them in a file on your computer, and that was essentially it. The file was called <code>wallet.dat</code> in the original Bitcoin client. Back it up to a USB drive, keep it safe, and you kept your Bitcoin. Lose the file, and you lost everything.</p>
+  <p>This was fine for a small community of technically sophisticated people. But it had obvious problems. Hard drives fail. Computers get stolen. Files get corrupted. And every time a new address was generated, the backup became out of date — the new key was not in the old backup.</p>
+  <p>Paper wallets emerged as an early improvement. Generate a private key and its corresponding address offline, print both on paper as QR codes, and store the paper safely. Paper wallets were an improvement in some ways — paper is durable, does not require electricity, and cannot be remotely hacked. But each paper wallet was only for a single address. Multiple addresses meant multiple paper wallets.</p>
+
+  <h2>Brain Wallets: A Cautionary Tale</h2>
+  <p>Around 2011 and 2012, a concept called the "brain wallet" gained popularity. The idea was seductive: instead of trusting any piece of hardware, just memorise a passphrase. The passphrase would be run through a hashing algorithm to produce a private key. You could walk through airport security, cross borders, survive any physical disaster, and always have access to your funds — as long as your memory held.</p>
+  <p>The approach seemed brilliant. It turned out to be catastrophic for many people.</p>
+  <p>The problem was entropy. Human beings are terrible at choosing truly random passphrases. People chose quotes from books, song lyrics, Bible verses, common phrases. Attackers built systems that computed the private keys corresponding to millions of common phrases and continually swept the blockchain for any balance associated with those addresses. The moment any coins arrived at a brain wallet address, automated systems moved them within minutes — sometimes seconds.</p>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Warning</div>
+    <p>Brain wallets are not safe. No human-chosen or human-remembered passphrase has sufficient unpredictability to serve as a private key. This is a settled question in cryptography. Do not use brain wallets.</p>
+  </div>
+
+  <h2>WIF: Making Keys Slightly More Human</h2>
+  <p>An early improvement was the <strong>Wallet Import Format (WIF)</strong>. WIF takes a raw private key, adds some identifying information, runs it through a checksum function, and encodes it in <strong>Base58Check</strong> — a format that uses letters and numbers but excludes characters that look similar to each other, like 0 (zero) and O (capital O), or l (lowercase L) and 1 (one). A WIF key looks like:</p>
+  <p><code>5HueCGU8rMjxECyDialwujzdhiNnRcRVFKpfWTGaaxuF2LMNDnL</code></p>
+  <p>The embedded checksum lets software detect if any character has been accidentally changed. WIF was useful but did not solve the fundamental problems: each address still had its own key, backups still became stale, and the keys were still not particularly human-friendly.</p>
+
+  <h2>Deterministic Wallets: The Key Insight</h2>
+  <p>The breakthrough idea that made the modern seed phrase possible came with deterministic wallets. Instead of generating each private key randomly and independently, what if you generated one master secret, and then derived all your keys from that single secret in a predictable, repeatable way?</p>
+  <p>If you could do this, you would only ever need to back up one thing: the master secret. Every address, every key, every coin — all of it could be reconstructed perfectly from that single piece of information. Early implementations appeared around 2012. The Electrum wallet, launched in November 2011, was one of the first — meaning a single backup could restore an entire wallet. But different implementations used different methods. What the ecosystem needed was a standard. That standard became BIP39.</p>
+</section>
+
+<!-- ── CH 3 ── -->
+<section class="chapter" id="ch3">
+  <div class="ch-number">Chapter 03</div>
+  <div class="ch-title">The Birth of <em>BIP39</em></div>
+
+  <h2>What Is a BIP?</h2>
+  <p>BIP stands for <strong>Bitcoin Improvement Proposal</strong>. It is a design document that proposes a change, addition, or new standard for the Bitcoin ecosystem. The process was inspired by Python's PEP system and serves as the formal mechanism through which the Bitcoin community discusses and adopts new technical standards.</p>
+  <p>BIP39, titled <em>"Mnemonic code for generating deterministic keys"</em>, is one of the most significant BIPs ever published. It is the document that defines exactly how seed phrases work.</p>
+
+  <h2>The Authors</h2>
+  <p>BIP39 was authored primarily by <strong>Marek "slush" Palatinus</strong> and <strong>Pavol Rusnak</strong> — co-founders of SatoshiLabs, the Czech company that went on to create the Trezor hardware wallet, the first commercial hardware wallet ever sold. A third contributor, Aaron Voisine, was the founder of the Breadwallet project. Yves Smeets also contributed.</p>
+  <p>The timing is significant. SatoshiLabs was working on the Trezor at the same time as developing BIP39. They needed a way for users to back up and restore their hardware wallet that was practical for non-technical people. The seed phrase was not just an academic proposal — it was a real engineering requirement for a real product. This practical constraint shaped the design.</p>
+
+  <h2>The Proposal</h2>
+  <p>BIP39 was first proposed in September 2013 and went through extensive discussion before being finalised. The core idea was straightforward: instead of asking users to back up a raw key or a hex string, generate a set of ordinary words that encode the key. Words are easier to write down, easier to read back, and easier to verify — you can spot a misspelling or a wrong word much more easily than a wrong hex character.</p>
+  <p>The proposal specified:</p>
+  <ul>
+    <li>A wordlist of exactly 2048 carefully chosen English words</li>
+    <li>A method for encoding a random number as a sequence of those words</li>
+    <li>A method for converting those words back into a binary seed</li>
+    <li>A method for using that seed to generate a full wallet</li>
+  </ul>
+
+  <h2>Adoption Beyond Bitcoin</h2>
+  <p>BIP39 was designed for Bitcoin, but its elegance led to rapid adoption across the entire cryptocurrency ecosystem. Ethereum wallets adopted it. Hardware wallet manufacturers — Trezor, Ledger, Coldcard, and all the rest — adopted it. Software wallets across dozens of blockchains adopted it.</p>
+  <p>This created something remarkable: a <strong>universal backup system</strong>. A seed phrase generated by a Trezor can, in principle, restore your Ethereum wallet in MetaMask. Your Ledger seed can be imported into a Coldcard. The same 24 words can unlock Bitcoin, Ethereum, Litecoin, and hundreds of other cryptocurrencies.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why This Matters</div>
+    <p>Because BIP39 is a universal standard, your seed phrase is not locked to any particular wallet brand or app. The 12 or 24 words are a master key to your cryptographic identity, readable by any compliant software in the world. This is both its greatest strength and, if the words fall into the wrong hands, its greatest risk.</p>
+  </div>
+
+  <h2>12 Words vs 24 Words</h2>
+  <p>BIP39 supports seed phrases of 12, 15, 18, 21, or 24 words. The difference is the amount of randomness encoded. More words means more entropy:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Word Count</th><th>Entropy (bits)</th><th>Security Level</th><th>Common Usage</th></tr></thead>
+      <tbody>
+        <tr><td>12 words</td><td>128 bits</td><td>Very High</td><td>Most software wallets (MetaMask, Trust Wallet)</td></tr>
+        <tr><td>15 words</td><td>160 bits</td><td>Extremely High</td><td>Rare</td></tr>
+        <tr><td>18 words</td><td>192 bits</td><td>Extremely High</td><td>Some older devices</td></tr>
+        <tr><td>21 words</td><td>224 bits</td><td>Near-unbreakable</td><td>Rare</td></tr>
+        <tr><td>24 words</td><td>256 bits</td><td>Near-unbreakable</td><td>Most hardware wallets (Ledger, Trezor)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>In practice, 128 bits of entropy is already considered astronomically secure. To brute-force a 128-bit key using every atom in the universe as a computing element, it would still take longer than the estimated age of the universe. Many times over.</p>
+</section>
+
+<!-- ── CH 4 ── -->
+<section class="chapter" id="ch4">
+  <div class="ch-number">Chapter 04</div>
+  <div class="ch-title">Randomness and Entropy: <em>The Foundation of Everything</em></div>
+
+  <h2>What Is Entropy?</h2>
+  <p>In the context of cryptography and information theory, <strong>entropy</strong> is a measure of unpredictability. The word comes from physics, where it describes disorder in a system, but in information theory it was given a precise mathematical definition by Claude Shannon in 1948.</p>
+  <p>Think of it this way: entropy measures how many bits you would need to perfectly describe the outcome of a random process. A fair coin flip has 1 bit of entropy. A fair six-sided die has approximately 2.58 bits. A completely random choice from a list of 2048 items has exactly 11 bits of entropy.</p>
+  <p>The reason entropy matters in cryptography is this: the security of your private key depends entirely on how unpredictable it is. High entropy means high unpredictability, which means high security.</p>
+
+  <h2>True Randomness vs Pseudo-Randomness</h2>
+  <p>Here is something that surprises many people: computers cannot generate truly random numbers on their own. A computer is a deterministic machine. Given the same starting conditions, it produces the same output. True randomness requires some source of genuine unpredictability from the physical world.</p>
+  <p>For most everyday purposes, pseudo-random number generators — mathematical algorithms that produce sequences of numbers passing statistical tests for randomness — are perfectly adequate. But for cryptography, you need something better: a <strong>CSPRNG</strong> — Cryptographically Secure Pseudo-Random Number Generator. This has specific additional properties:</p>
+  <ul>
+    <li><strong>Forward secrecy:</strong> knowing past outputs does not help predict future ones</li>
+    <li><strong>Backward secrecy:</strong> knowing future outputs does not reveal past ones</li>
+    <li><strong>State compromise resistance:</strong> even if an attacker learns the internal state at one moment, they cannot derive past or future outputs</li>
+  </ul>
+  <p>Modern operating systems collect entropy from physical sources: the precise timing of keyboard presses and mouse movements, hard drive read times, network packet arrival times, temperature sensors, microphone background noise. On hardware wallets, dedicated hardware generates true randomness using physical quantum processes — measuring thermal noise of a resistor or observing random particle events.</p>
+
+  <h2>How Entropy Becomes a Seed Phrase</h2>
+  <p>When you initialise a new wallet, the device generates a large random number using its CSPRNG. Specifically: 128 bits for a 12-word phrase, or 256 bits for 24 words. This random number is the foundation. Everything — every address, every key, every coin you will ever control — derives from this one number. This is why the quality of the random number generator in your wallet matters enormously.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why Hardware Wallets Are Safer</div>
+    <p>A hardware wallet generates its seed in a physically isolated environment with a purpose-built hardware random number generator. A software wallet on your phone or computer generates its seed in an environment that might be compromised by other software, connected to the internet, or using a lower-quality entropy source. This is one of the core security arguments for hardware wallets.</p>
+  </div>
+
+  <h2>The Entropy of Human Choices</h2>
+  <p>Understanding entropy also illuminates why human choices make poor cryptographic secrets. When a cryptographer says a password has low entropy, they do not mean it is short — they mean it is predictable.</p>
+  <p>Researchers have studied large datasets of real passwords that leaked in various breaches. Even passwords that users considered strong showed statistical patterns. People put capital letters at the beginning. Numbers at the end. They use '1' or '!' more than any other. They use words from dictionaries, even with substitutions ('3' for 'E', '@' for 'A'). A password that feels random might have only a few dozen bits of true entropy — completely inadequate for securing millions of dollars.</p>
+  <p>This is why seed phrases are never chosen by the user. The randomness comes from the machine, not from human memory or imagination.</p>
+</section>
+
+<!-- ── CH 5 ── -->
+<section class="chapter" id="ch5">
+  <div class="ch-number">Chapter 05</div>
+  <div class="ch-title">The 2048 Words: <em>Building the Wordlist</em></div>
+
+  <h2>Why Words?</h2>
+  <p>The decision to use words rather than numbers or random characters was fundamentally a human factors decision. The BIP39 authors reasoned that a backup needs to be written down by hand, read back accurately after potentially years, verifiable at a glance, and recognisable enough that errors are obvious. Words solve most of these problems in ways that hex strings simply cannot.</p>
+
+  <h2>Designing the Wordlist: The Criteria</h2>
+  <h3>1. Unambiguous Spelling</h3>
+  <p>Each word must be uniquely identifiable from its first four letters. Why four? Because when a word is written or typed, the first four letters are usually enough to confirm which word it is, even if the rest is unclear. This also enables autocomplete in software: a user can type four letters and the software can identify the word with certainty. No two words on the list share the same first four letters.</p>
+
+  <h3>2. No Similar Words</h3>
+  <p>The wordlist must not contain pairs of words that sound similar or look similar enough to be confused. "There" and "their", for instance, cannot both appear. Neither can words that might be misheard in dictation, or that look alike when handwritten (like "horse" and "house").</p>
+
+  <h3>3. Reasonable Length</h3>
+  <p>Words should ideally be between 3 and 8 characters long. Very short words are too ambiguous in handwriting. Very long words are tedious to copy and more likely to be misspelled.</p>
+
+  <h3>4. Common English Words</h3>
+  <p>Words should be from the common English vocabulary — familiar to native speakers and learnable by non-native speakers. Obscure words, technical jargon, proper nouns, and archaic vocabulary are excluded.</p>
+
+  <h2>Why Exactly 2048 Words?</h2>
+  <p>The number 2048 is not arbitrary. It is 2 to the power of 11. This means each word in the list perfectly encodes exactly <strong>11 bits</strong> of information. If you have a list of 2048 items and pick one, the choice can be described in exactly 11 binary digits. By mapping each word to a unique number from 0 to 2047, and representing that number as an 11-bit binary string, you can encode any sequence of bits as a sequence of words. Each word equals 11 bits.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Words</th><th>Total Bits</th><th>Entropy Bits</th><th>Checksum Bits</th></tr></thead>
+      <tbody>
+        <tr><td>12</td><td>132</td><td>128</td><td>4</td></tr>
+        <tr><td>15</td><td>165</td><td>160</td><td>5</td></tr>
+        <tr><td>18</td><td>198</td><td>192</td><td>6</td></tr>
+        <tr><td>21</td><td>231</td><td>224</td><td>7</td></tr>
+        <tr><td>24</td><td>264</td><td>256</td><td>8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The Checksum: A Built-In Error Detector</h2>
+  <p>The total bits carried (132 for 12 words) is slightly more than the entropy bits (128). The extra bits serve a critical function: they are a checksum. A checksum is a small piece of data computed from the main data that allows you to detect errors.</p>
+  <p>In BIP39, the checksum is calculated by taking the raw entropy, running it through SHA-256, and taking the first N bits of the result. These checksum bits are appended to the entropy and encoded as part of the words — specifically, they influence the <strong>last word</strong> in your phrase. If you write down a word incorrectly and try to restore your wallet, the software recalculates the checksum and detects the mismatch, alerting you to the error before you are locked out.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Last Word Is Special</div>
+    <p>In a BIP39 seed phrase, the final word always contains the checksum bits, which means it is not entirely random. There are only 128 valid last words for a 12-word phrase — not all 2048. This is why some wallet generators show fewer options for the final word when helping you fill in a phrase word by word.</p>
+  </div>
+
+  <h2>Wordlists in Other Languages</h2>
+  <p>The original BIP39 wordlist is in English. However, the standard has been extended to include wordlists in Chinese (Simplified), Chinese (Traditional), Czech, French, Italian, Japanese, Korean, Portuguese, and Spanish. Each of these wordlists follows the same design criteria with exactly 2048 words. For maximum compatibility, the English wordlist remains the default and the most widely supported.</p>
+</section>
+
+<!-- ── CH 6 ── -->
+<section class="chapter" id="ch6">
+  <div class="ch-number">Chapter 06</div>
+  <div class="ch-title">From Words to Ones and Zeros: <em>The Encoding Process</em></div>
+
+  <h2>Step by Step Through BIP39</h2>
+  <p>Now we can trace the complete journey from a raw random number to a set of human-readable words. This is the encoding process that happens inside your wallet when it first generates a seed phrase.</p>
+
+  <h2>Step 1: Generate Entropy</h2>
+  <p>The wallet's random number generator produces a sequence of random bits — 128 bits for a 12-word phrase, 256 bits for a 24-word phrase. This is the raw randomness that forms the foundation of everything.</p>
+
+  <h2>Step 2: Calculate the Checksum</h2>
+  <p>The full entropy is fed into <strong>SHA-256</strong> — a cryptographic hash function that takes any input and produces a fixed 256-bit output. The first N bits of this output become the checksum, where N equals entropy bits divided by 32. For 128-bit entropy: 128 ÷ 32 = 4 checksum bits. SHA-256 is designed so that even a tiny change in input produces a completely different output — this is called the <em>avalanche effect</em>.</p>
+
+  <h2>Step 3: Combine Entropy and Checksum</h2>
+  <p>Append the checksum bits to the end of the entropy bits. For 128-bit entropy with a 4-bit checksum, you now have 132 bits. For 256-bit entropy with an 8-bit checksum, you have 264 bits.</p>
+
+  <h2>Step 4: Split Into 11-Bit Groups</h2>
+  <p>Divide the combined bit string into groups of exactly 11 bits each. For 132 bits, this gives 12 groups. For 264 bits, this gives 24 groups. Each 11-bit group represents a number from 0 to 2047.</p>
+
+  <h2>Step 5: Look Up Each Word</h2>
+  <p>Take each 11-bit number, look it up in the BIP39 wordlist, and write down the corresponding word. Word 0 is "abandon". Word 1 is "ability". Word 2047 is "zoo". The resulting list of 12 or 24 words is your seed phrase.</p>
+
+  <div class="callout">
+    <div class="callout-label">Example Encoding</div>
+    <p>Imagine an 11-bit group is 00000000001 in binary — that's the number 1. Looking up position 1 in the BIP39 wordlist gives "ability". If the next group is 11111111111 (number 2047), the word is "zoo". This is exactly how all 12 or 24 words are chosen.</p>
+  </div>
+
+  <h2>The Decoding Process: Words Back to Bits</h2>
+  <p>When you restore a wallet, the process runs in reverse:</p>
+  <ol>
+    <li>The wallet takes each word and looks up its position number in the BIP39 wordlist</li>
+    <li>It converts each position number to its 11-bit binary representation</li>
+    <li>It concatenates all these 11-bit strings to get the full bit sequence</li>
+    <li>It separates the entropy bits from the checksum bits</li>
+    <li>It recalculates the checksum from the entropy and verifies it matches</li>
+    <li>If verified, the entropy is accepted and used to generate the wallet</li>
+  </ol>
+
+  <h2>What the Words Are Not</h2>
+  <p>The words are not themselves the private key. They are not themselves the seed. They are an encoding of the entropy — the raw randomness — that will be used, through further processing, to generate the actual master seed. The process that transforms entropy into a master seed involves an additional step — key derivation — described in the next chapter.</p>
+</section>
+
+<!-- ── CH 7 ── -->
+<section class="chapter" id="ch7">
+  <div class="ch-number">Chapter 07</div>
+  <div class="ch-title">Stretching the Seed: <em>PBKDF2 and Key Derivation</em></div>
+
+  <h2>From Mnemonic to Master Seed</h2>
+  <p>Once you have your 12 or 24 words, and the wallet has decoded them back into 128 or 256 bits of entropy, the next step might surprise you. The entropy is not used directly as the wallet's master seed. Instead, it goes through a process called key derivation — specifically, an algorithm called <strong>PBKDF2</strong>.</p>
+
+  <h2>What Is PBKDF2?</h2>
+  <p>PBKDF2 stands for <em>Password-Based Key Derivation Function 2</em>. It was designed originally for deriving encryption keys from passwords, and its core feature is that it is <strong>deliberately slow and computationally expensive</strong>.</p>
+  <p>This sounds like a flaw, but it is a crucial security feature. If testing each candidate seed takes only a microsecond on a modern computer, an attacker can test billions per second. If testing each candidate takes a full second — because the algorithm is designed to be slow — the attacker can only test one per second. The difficulty of a brute-force attack increases by a factor of a million.</p>
+
+  <h2>How PBKDF2 Works</h2>
+  <p>PBKDF2 takes several inputs:</p>
+  <ul>
+    <li><strong>The password:</strong> your mnemonic phrase as text</li>
+    <li><strong>A salt:</strong> the string "mnemonic" followed by your optional passphrase</li>
+    <li><strong>An iteration count:</strong> BIP39 specifies exactly 2048 iterations</li>
+    <li><strong>A pseudorandom function:</strong> BIP39 uses HMAC-SHA512</li>
+    <li><strong>The output length:</strong> 512 bits (64 bytes)</li>
+  </ul>
+  <p>The algorithm works by running the input through the pseudorandom function repeatedly — 2048 times — and combining the results. The result of PBKDF2 in BIP39 is a <strong>512-bit master seed</strong>, regardless of whether your entropy was 128 or 256 bits. The derivation expands the entropy to a fixed 512-bit output.</p>
+
+  <h2>HMAC-SHA512: The Underlying Function</h2>
+  <p>PBKDF2 in BIP39 uses <strong>HMAC-SHA512</strong> as its internal pseudorandom function. HMAC stands for Hash-based Message Authentication Code, and SHA-512 produces 512-bit outputs. Its important properties for this application:</p>
+  <ul>
+    <li><strong>Deterministic:</strong> the same inputs always produce the same output, so the same words always restore the same wallet</li>
+    <li><strong>Pseudorandom:</strong> the output looks completely random and reveals nothing about the inputs</li>
+    <li><strong>One-way:</strong> you cannot go backwards from the master seed to the mnemonic words</li>
+    <li><strong>Sensitive to input:</strong> even a single character difference produces a completely different output</li>
+  </ul>
+
+  <h2>The Role of the Salt</h2>
+  <p>In PBKDF2, the salt prevents precomputation attacks — scenarios where an attacker precalculates outputs for millions of possible inputs and stores them in a lookup table. In BIP39, the salt is "mnemonic" concatenated with the passphrase. If there is no passphrase, the salt is just "mnemonic". If you have a passphrase of "correct horse battery", the salt is "mnemonicCorrect horse battery".</p>
+  <p>This is the mechanism that makes the optional 25th word so powerful. Changing the passphrase changes the salt, which changes the output of PBKDF2, which changes the master seed entirely, which changes every derived key and address. The same 12 words with different passphrases produce completely different wallets with no mathematical relationship to each other.</p>
+
+  <div class="callout">
+    <div class="callout-label">One Mnemonic, Many Wallets</div>
+    <p>Your 12 or 24 words alone define one possible wallet. Those same words with a passphrase define a completely different wallet. And different passphrases produce different wallets. None of them are mathematically related to the others. This is the basis of the "hidden wallet" technique described in Chapter 10.</p>
+  </div>
+</section>
+
+<!-- ── CH 8 ── -->
+<section class="chapter" id="ch8">
+  <div class="ch-number">Chapter 08</div>
+  <div class="ch-title">The Infinite Wallet: <em>BIP32</em></div>
+
+  <h2>The Problem of Multiple Addresses</h2>
+  <p>We now have a 512-bit master seed. But we are a long way from a wallet address. And we need not just one address, but many — one for each transaction ideally, and across potentially dozens of different cryptocurrencies. How does a single 512-bit number become an essentially unlimited collection of private keys?</p>
+  <p>The answer is <strong>BIP32: Hierarchical Deterministic Wallets</strong>.</p>
+
+  <h2>The Master Key Pair</h2>
+  <p>The first step in BIP32 is to derive a master key pair from the 512-bit seed. This is done using HMAC-SHA512 with the seed as the message and the string "Bitcoin seed" as the key. The 512-bit output is split into two 256-bit halves:</p>
+  <ul>
+    <li>The left 256 bits become the <strong>master private key</strong></li>
+    <li>The right 256 bits become the <strong>master chain code</strong></li>
+  </ul>
+  <p>The master chain code is additional randomness that gets mixed into the derivation of child keys — a security property that prevents knowledge of the parent public key from enabling prediction of child keys.</p>
+
+  <h2>The Tree Structure</h2>
+  <p>BIP32 organises keys in a tree structure. Starting from the master key, you can derive child keys. From each child key, you can derive grandchild keys. The number of possible children at each level is approximately 4 billion (2³²), and you can go to any depth. The total number of possible keys derivable from a single master seed is effectively unlimited.</p>
+  <p>Each position in the tree is identified by a derivation path — a sequence of numbers describing which branch to follow:</p>
+  <ul>
+    <li><code>m</code> — the master key</li>
+    <li><code>m/0</code> — the first child of the master</li>
+    <li><code>m/0/0</code> — the first grandchild along that path</li>
+    <li><code>m/44'/0'/0'/0/0</code> — a specific address following the BIP44 standard</li>
+  </ul>
+
+  <h2>Normal vs Hardened Derivation</h2>
+  <p><strong>Normal (non-hardened) derivation</strong> uses the parent public key as input, which enables a powerful feature: you can derive child public keys from parent public keys without ever having access to private keys. This is used by exchange integrations and hardware wallets in watch-only mode — your extended public key can generate addresses and monitor balances without being able to spend funds.</p>
+  <p>However, normal derivation has a security vulnerability: if someone learns both a parent public key and any child private key, they can compute the parent private key.</p>
+  <p><strong>Hardened derivation</strong> (marked with an apostrophe in path notation) uses the parent private key as input instead. This prevents the attack — there is no mathematical shortcut, even if an attacker learns a child private key and the parent public key.</p>
+
+  <div class="callout">
+    <div class="callout-label">Extended Keys: xpub and xpriv</div>
+    <p>BIP32 defines "extended keys" — a format that encodes both the key and the chain code in a single portable string. An extended public key (xpub) can generate any child public key in its subtree. An extended private key (xpriv) can generate any private key in its subtree. If you have exported an xpub from your hardware wallet, guard it carefully — while it cannot spend funds, it reveals all your addresses and thus your full transaction history.</p>
+  </div>
+</section>
+
+<!-- ── CH 9 ── -->
+<section class="chapter" id="ch9">
+  <div class="ch-number">Chapter 09</div>
+  <div class="ch-title">Paths Through the Tree: <em>BIP44 and Coin Types</em></div>
+
+  <h2>The Organisation Problem</h2>
+  <p>BIP32 gives us an infinite tree of possible keys. But it says nothing about how to organise the tree — which branch should hold your Bitcoin, which your Ethereum, which for receiving, and which for change transactions. Without a standard for organisation, two wallets that both support BIP32 and BIP39 might put your Bitcoin at completely different positions in the tree. Restoring your seed phrase in a different wallet would show an empty balance, not because your funds were lost, but because the new wallet was looking in the wrong place.</p>
+  <p>BIP44 solves this. It defines a specific path structure ensuring that any compliant wallet generates and finds keys in the same locations.</p>
+
+  <h2>The BIP44 Path Structure</h2>
+  <p>The BIP44 derivation path follows this pattern:</p>
+  <p><code>m / purpose' / coin_type' / account' / change / address_index</code></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Level</th><th>Value</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>purpose</td><td>44'</td><td>Indicates BIP44 is being used. Always 44.</td></tr>
+        <tr><td>coin_type</td><td>0' for BTC, 60' for ETH</td><td>Identifies the cryptocurrency. Defined in SLIP-0044 registry.</td></tr>
+        <tr><td>account</td><td>0', 1', 2'</td><td>Separate accounts within the same wallet and coin.</td></tr>
+        <tr><td>change</td><td>0 or 1</td><td>0 = external (receiving) addresses, 1 = internal (change) addresses.</td></tr>
+        <tr><td>address_index</td><td>0, 1, 2, ...</td><td>Individual address index, sequential from 0.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Coin Types and the SLIP-0044 Registry</h2>
+  <p>The coin_type number is assigned by SLIP-0044 — a separate specification maintained by SatoshiLabs that assigns each cryptocurrency its own unique number:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Coin Type</th><th>Cryptocurrency</th></tr></thead>
+      <tbody>
+        <tr><td>0'</td><td>Bitcoin</td></tr>
+        <tr><td>2'</td><td>Litecoin</td></tr>
+        <tr><td>60'</td><td>Ethereum (and all EVM-compatible chains)</td></tr>
+        <tr><td>145'</td><td>Bitcoin Cash</td></tr>
+        <tr><td>195'</td><td>TRON</td></tr>
+        <tr><td>501'</td><td>Solana</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Because most Ethereum-compatible chains — Polygon, BNB Smart Chain, Avalanche, Arbitrum — use the same address format as Ethereum, wallets typically derive keys using coin type 60 for all of them. The same key and address that holds your ETH also holds your MATIC and BNB, though they operate on separate blockchains.</p>
+
+  <h2>Accounts and the Change Chain</h2>
+  <p>The account level allows you to divide a single wallet into separate accounts — think of them like different bank accounts within the same bank. Account 0 is the default. In Bitcoin specifically, the "change" level separates external receiving addresses (change = 0) from internal change addresses (change = 1) — the ones used automatically when you make a payment and need to return excess funds to yourself. This separation has privacy benefits: by using fresh change addresses, it is harder for observers of the blockchain to link your transactions together.</p>
+
+  <div class="callout">
+    <div class="callout-label">One Seed, Many Coins</div>
+    <p>A single 12 or 24-word seed phrase generates a master seed via PBKDF2. That master seed generates a master key pair via BIP32. From that master key, a tree of child keys is generated. BIP44 specifies which branches to use for which cryptocurrencies. The result is a single backup controlling every address you own across every blockchain your wallet supports.</p>
+  </div>
+</section>
+
+<!-- ── CH 10 ── -->
+<section class="chapter" id="ch10">
+  <div class="ch-number">Chapter 10</div>
+  <div class="ch-title">The 25th Word: <em>Passphrases and Hidden Wallets</em></div>
+
+  <h2>What Is the BIP39 Passphrase?</h2>
+  <p>BIP39 includes an optional but powerful feature called the <strong>passphrase extension</strong> — often referred to informally as the "25th word", even though it is not restricted to a single word and is not drawn from the BIP39 wordlist. The passphrase is an additional piece of text — anything you choose — mixed into the key derivation process.</p>
+  <p>This is distinct from the PIN or password you use to unlock your hardware wallet device. The device PIN protects the device. The BIP39 passphrase protects the seed itself — meaning that even if someone has your 12 or 24 words, they cannot access your funds without also knowing the passphrase.</p>
+
+  <h2>Why Use a Passphrase?</h2>
+  <h3>1. Protection Against Physical Theft of the Seed Backup</h3>
+  <p>Your seed phrase backup — whether written on paper or stamped in metal — is a physical object that could be found or stolen. Without a passphrase, anyone who finds it has complete access to your funds. With a passphrase, the backup alone is useless. This adds a second factor: something you have (the seed phrase) and something you know (the passphrase).</p>
+
+  <h3>2. Plausible Deniability</h3>
+  <p>Because the same seed words produce completely different wallets with different passphrases, you can maintain a "decoy wallet". The decoy uses no passphrase (or a different, known passphrase) and holds a small amount of funds — enough to be plausible. Your real wallet uses a strong passphrase that only you know.</p>
+  <p>If you are ever subjected to a coercive attack — someone forces you to reveal your seed phrase — you can hand over the decoy. They see a wallet with some funds, take them, and leave. Your main holdings, protected by the passphrase they do not know, are untouched. This is sometimes called a <strong>duress scenario</strong>.</p>
+
+  <h3>3. Additional Entropy</h3>
+  <p>For wallets holding very large amounts, a passphrase adds another layer of cryptographic protection even against sophisticated attacks on the seed entropy itself.</p>
+
+  <h2>The Mathematics</h2>
+  <p>PBKDF2 takes the mnemonic phrase and a salt as inputs. The salt is constructed as "mnemonic" concatenated with the passphrase. PBKDF2 with different salts produces completely different 512-bit master seeds — even from the same mnemonic. The difference is not small: even a single character difference produces an entirely different seed due to the avalanche effect. An attacker who has your seed words and knows you use a passphrase must try every possible passphrase — and unlike a 12-word phrase, a passphrase has no checksum to confirm whether a guess is correct.</p>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Warning</div>
+    <p>There is no "forgot my passphrase" option. If you lose or forget your BIP39 passphrase, the wallet it protects is inaccessible forever. No recovery service, no manufacturer, no government can help. Store your passphrase with the same care as your seed words — ideally in separate physical locations, so that neither backup alone reveals both factors.</p>
+  </div>
+
+  <h2>Implementation Across Devices</h2>
+  <p>Not all wallets implement the passphrase feature identically. Trezor calls it "Hidden Wallet". Ledger calls it "Passphrase". Some wallets allow you to attach a passphrase to a specific PIN: entering PIN A opens the decoy wallet, entering PIN B opens the real wallet. This is an elegant implementation that supports the duress scenario without requiring you to behave differently under pressure.</p>
+</section>
+
+<!-- ── CH 11 ── -->
+<section class="chapter" id="ch11">
+  <div class="ch-number">Chapter 11</div>
+  <div class="ch-title">Hardware Wallets: <em>How They Use Your Seed</em></div>
+
+  <h2>The Purpose of a Hardware Wallet</h2>
+  <p>A hardware wallet is a purpose-built device whose primary function is to hold your private keys in a secure environment that is never connected to the internet and never transfers the keys to any external system. The keys are generated on the device, stored on the device, and used on the device — they never leave it.</p>
+  <p>This addresses what security professionals call the "attack surface" of a software wallet. Software wallets run on general-purpose computers that are online, run many other programs, and are exposed to malware, phishing, and remote exploitation. Hardware wallets eliminate nearly all of these attack vectors by isolating keys in a dedicated device with a minimal, audited codebase.</p>
+
+  <h2>The Secure Element</h2>
+  <p>Most commercial hardware wallets include a <strong>Secure Element</strong> — a specialised microchip designed to resist physical and logical attacks. Secure Elements are the same technology used in bank cards, passports, and SIM cards. Key properties:</p>
+  <ul>
+    <li><strong>Physical tamper resistance:</strong> the chip actively destroys its contents if subjected to physical probing, heat, or voltage manipulation</li>
+    <li><strong>Side-channel resistance:</strong> designed to prevent information from leaking through power consumption or electromagnetic emissions</li>
+    <li><strong>Secure key storage:</strong> private keys stored in the Secure Element cannot be read out directly, even by the device's own main processor</li>
+    <li><strong>Hardware RNG:</strong> includes purpose-built true-random number generation for key creation</li>
+  </ul>
+
+  <h2>How Transactions Are Signed</h2>
+  <p>The flow of a transaction signing operation illustrates the security model clearly:</p>
+  <ol>
+    <li>You initiate a transaction in companion software on your computer (Trezor Suite, Ledger Live)</li>
+    <li>The companion software constructs the unsigned transaction and sends it to the hardware wallet</li>
+    <li>The hardware wallet displays the transaction details on its own screen for you to verify</li>
+    <li>You confirm by pressing a button on the hardware wallet itself</li>
+    <li>The hardware wallet derives the appropriate private key internally using BIP32 from the stored seed, signs the transaction, and returns only the signed transaction</li>
+    <li>The companion software broadcasts the signed transaction to the network</li>
+  </ol>
+  <p>The private key never leaves the hardware wallet. Even if your computer is completely compromised by malware, the attacker cannot get your private key.</p>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Warning</div>
+    <p>Always verify the recipient address on the hardware wallet's screen, not on your computer screen. Malware called "clipboard hijackers" specifically targets crypto users by silently replacing copied wallet addresses with the attacker's address. Your computer might show the correct address while the hardware wallet shows a different one — the hardware wallet is always right.</p>
+  </div>
+
+  <h2>Air-Gapped Wallets</h2>
+  <p>Some hardware wallets take isolation even further: they are designed to never connect to any computer at all, communicating only through QR codes or SD cards. The Coldcard hardware wallet is the most prominent example — transactions are loaded via SD card, signed offline, and the signed transaction exported via SD card to be broadcast. The private key never comes within communication range of any internet-connected device.</p>
+</section>
+
+<!-- ── CH 12 ── -->
+<section class="chapter" id="ch12">
+  <div class="ch-number">Chapter 12</div>
+  <div class="ch-title">Attack Vectors: <em>How Seed Phrases Are Stolen or Lost</em></div>
+
+  <h2>The Threat Model</h2>
+  <p>Understanding how seed phrases are attacked is as important as understanding how they work. The security of a system is only as good as its weakest link, and in cryptocurrency, the weakest link is almost always the human handling the seed phrase rather than the mathematics protecting it.</p>
+
+  <h2>Social Engineering and Phishing</h2>
+  <p>The most common way seed phrases are stolen is the simplest: someone convinces the owner to type it into a fake website or app that records and transmits it. Common vectors include:</p>
+  <ul>
+    <li><strong>Fake hardware wallet setup pages:</strong> search results or ads for wallet setup guides that ask you to "enter your recovery phrase to complete setup". Legitimate setup never requires entering an existing seed phrase.</li>
+    <li><strong>Fake wallet apps:</strong> mobile apps that mimic legitimate wallets, capture the seed phrase during "setup", and transmit it to the attacker</li>
+    <li><strong>Fake customer support:</strong> attackers posing as hardware wallet support staff who ask for your seed phrase to "diagnose an issue". Legitimate support never needs this.</li>
+    <li><strong>Compromised websites:</strong> legitimate wallet websites that have been hacked to include forms asking for seed phrases</li>
+  </ul>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Warning</div>
+    <p>You should never, under any circumstances, enter your seed phrase into any website, app, or software that you did not intentionally initiate a restore operation with. No legitimate support team, government agency, or wallet manufacturer will ever ask for your seed phrase. If anyone does, it is an attack.</p>
+  </div>
+
+  <h2>Malware</h2>
+  <ul>
+    <li><strong>Keyloggers:</strong> record every keystroke, capturing seed phrases entered on a keyboard</li>
+    <li><strong>Screen recorders:</strong> capture screenshots, recording seed phrases displayed on screen</li>
+    <li><strong>Clipboard hijackers:</strong> monitor the clipboard and replace copied wallet addresses with attacker addresses</li>
+    <li><strong>Seed phrase harvesters:</strong> scan files and memory for patterns matching BIP39 words</li>
+    <li><strong>Malicious browser extensions:</strong> access data entered into websites</li>
+  </ul>
+
+  <h2>Physical Attacks</h2>
+  <ul>
+    <li>Theft of the paper backup during a break-in</li>
+    <li>Discovery of the backup by family members, visitors, or others with access to your home</li>
+    <li>Confiscation by authorities</li>
+    <li>Discovery in estate proceedings after death</li>
+    <li>Fire, flood, or other damage destroying the only copy</li>
+  </ul>
+
+  <h2>Supply Chain Attacks</h2>
+  <p>A more sophisticated attack targets the hardware wallet itself before it reaches you. A device purchased from an unauthorised reseller might have been tampered with — pre-loaded with a known seed phrase, fitted with a compromised secure element, or installed with modified firmware. Hardware wallet manufacturers address this through tamper-evident packaging and attestation mechanisms. Purchasing directly from the manufacturer remains the safest approach.</p>
+
+  <h2>The Inheritance Problem</h2>
+  <p>This is a risk that is rarely discussed but affects every cryptocurrency holder: what happens to your funds when you die? Traditional financial assets have established inheritance processes. Cryptocurrency does not. If your seed phrase and any associated passphrase die with you, the funds are gone forever. Responsible holders plan for this explicitly.</p>
+</section>
+
+<!-- ── CH 13 ── -->
+<section class="chapter" id="ch13">
+  <div class="ch-number">Chapter 13</div>
+  <div class="ch-title">Shamir's Secret Sharing <em>and SLIP39</em></div>
+
+  <h2>The Backup Dilemma</h2>
+  <p>Your seed phrase must be backed up — losing access means losing your funds. But every backup is a security risk — each copy is another opportunity for theft. If you keep only one copy and it is destroyed, you lose everything. If you keep many copies, the chance that one is stolen increases.</p>
+  <p>Shamir's Secret Sharing offers a mathematically elegant solution: divide the secret into multiple shares such that you need a minimum number of shares to reconstruct the secret, but any individual share reveals nothing about it.</p>
+
+  <h2>Adi Shamir and the Mathematics</h2>
+  <p>Shamir's Secret Sharing was invented by <strong>Adi Shamir</strong> — the "S" in RSA encryption — and published in 1979. The mathematics is based on polynomial interpolation. Given any polynomial of degree N-1, you need exactly N points on that polynomial to uniquely determine it. With fewer than N points, there are infinitely many possible polynomials that pass through those points — you have no information about which polynomial it is.</p>
+  <p>Translating this to secret sharing: encode your secret as the constant term of a random polynomial, evaluate it at different points to generate shares, and distribute the shares. To reconstruct, collect the minimum number of shares (the threshold) and use Lagrange interpolation to recover the polynomial. The constant term is your secret.</p>
+  <p>The security guarantee: with fewer than the threshold number of shares, the secret cannot be determined. This is not just computationally difficult — it is <em>mathematically impossible</em>.</p>
+
+  <h2>SLIP39: Shamir's for Seed Phrases</h2>
+  <p>SLIP39 (SatoshiLabs Improvement Proposal 39) applies Shamir's Secret Sharing to cryptocurrency wallet seeds. Each share is represented as a human-readable list of words using a dedicated wordlist. Shares can be recombined in any software or hardware that implements the standard.</p>
+  <p>A typical SLIP39 setup might be:</p>
+  <ul>
+    <li><strong>3-of-5:</strong> split into 5 shares, any 3 can reconstruct the wallet. Store one at home, one in a safe deposit box, one with a lawyer, one with a trusted family member, one in a second location.</li>
+    <li><strong>2-of-3:</strong> split into 3 shares, any 2 can reconstruct. Give one to yourself, one to a spouse, one to a trusted third party.</li>
+  </ul>
+
+  <h2>SLIP39 Groups</h2>
+  <p>SLIP39 extends basic Shamir's sharing with a "groups" feature — multiple groups, each with its own threshold, where a minimum number of groups must contribute to reconstruct the wallet. For example: Group 1 is your personal share, Group 2 is family shares (any 2 of 3), Group 3 is trusted advisors (any 2 of 3), and you require any 2 groups to reconstruct. No single group of advisors, and no single family member, can access the wallet alone. This enables sophisticated inheritance planning while maintaining security against theft by any individual.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>BIP39</th><th>SLIP39</th></tr></thead>
+      <tbody>
+        <tr><td>Recovery</td><td>Single phrase restores all</td><td>Multiple shares required</td></tr>
+        <tr><td>Security model</td><td>All-or-nothing</td><td>Threshold-based</td></tr>
+        <tr><td>Wallet compatibility</td><td>Very broad (near-universal)</td><td>Limited (mainly Trezor)</td></tr>
+        <tr><td>Passphrase</td><td>Optional 25th word</td><td>Not supported directly</td></tr>
+        <tr><td>Complexity</td><td>Simple</td><td>More complex to set up</td></tr>
+        <tr><td>Error detection</td><td>Checksum on last word</td><td>Stronger checksums per share</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── CH 14 ── -->
+<section class="chapter" id="ch14">
+  <div class="ch-number">Chapter 14</div>
+  <div class="ch-title">Other Schemes: <em>Electrum, WIF, and Alternatives</em></div>
+
+  <h2>The Ecosystem Before and Around BIP39</h2>
+  <p>BIP39 is the dominant standard, but it is not the only scheme for managing cryptocurrency keys. Several others exist, some predating BIP39 and some developed as alternatives for specific purposes.</p>
+
+  <h2>Electrum Seeds</h2>
+  <p>Electrum is one of the oldest Bitcoin wallets still in active use, launched in November 2011. Its developers chose not to adopt BIP39, arguing it had design flaws — and the criticism is worth noting.</p>
+  <p>In BIP39, the mnemonic words encode raw entropy, not the seed itself. Electrum's approach instead encodes the seed directly and embeds version information, making Electrum seeds self-describing. When you restore an Electrum wallet, it knows exactly what type of wallet was used and what derivation scheme to apply — something BIP39 does not inherently encode.</p>
+  <p>The practical trade-off: Electrum phrases work only in Electrum or compatible software. BIP39 phrases work in hundreds of wallets. Electrum has also introduced multiple seed versions over the years for different wallet types (standard, SegWit, 2FA), each with a specific prefix that identifies the version.</p>
+
+  <h2>WIF (Wallet Import Format)</h2>
+  <p>WIF is not a seed phrase system — it represents a single private key, not a master seed. It has no concept of derivation paths or child keys. You import a WIF key to access a single Bitcoin address, nothing more.</p>
+  <p>WIF keys are still encountered when working with old wallets predating HD derivation, with paper wallets, or with some services that provide small amounts of Bitcoin via a WIF key. For anything serious, WIF is obsolete — it requires managing keys individually and makes proper wallet backup impossible.</p>
+
+  <h2>Monero Seeds</h2>
+  <p>Monero, the privacy-focused cryptocurrency, uses a different seed scheme entirely — a 25-word seed where the 25th word is a checksum (not an optional passphrase). Monero's seed format is specific to its own cryptographic system and is not compatible with BIP39. A Monero seed phrase will not restore a Bitcoin wallet and vice versa — an important source of confusion for new users who assume all seed phrases work the same way.</p>
+
+  <h2>Multi-Party Computation Wallets</h2>
+  <p>A more recent alternative is the <strong>MPC (Multi-Party Computation) wallet</strong>, increasingly used by institutions and some consumer apps. In an MPC wallet, the private key is never assembled in one place. Multiple parties each hold a share of the key, and signing a transaction requires collaboration from enough parties without ever reconstructing the full key.</p>
+  <p>MPC wallets typically do not use seed phrases at all. The backup strategy involves securing each share independently. MPC offers strong security properties but often requires trusting the wallet provider to participate in signing — removing some of the self-sovereign properties that make cryptocurrency distinctive. It is a rapidly evolving space.</p>
+</section>
+
+<!-- ── CH 15 ── -->
+<section class="chapter" id="ch15">
+  <div class="ch-number">Chapter 15</div>
+  <div class="ch-title">Best Practices: <em>Storing Your Seed Phrase Safely</em></div>
+
+  <h2>The Core Principles</h2>
+  <p>Everything in the preceding chapters has been building toward this: what should you actually do? The three fundamental principles create tension with each other:</p>
+  <ul>
+    <li><strong>Redundancy:</strong> have enough copies that losing any one does not lose your access</li>
+    <li><strong>Security:</strong> ensure that no unauthorised person can access any copy</li>
+    <li><strong>Availability:</strong> ensure that you (and trusted successors) can access the backup when needed</li>
+  </ul>
+
+  <h2>Writing Down the Seed Phrase</h2>
+  <p>The first step is correctly recording your seed phrase at setup. This is where many mistakes happen:</p>
+  <ul>
+    <li>Write in pencil or permanent ink — never in an ink that fades or bleeds</li>
+    <li>Write clearly and legibly — misread letters lead to failed restores</li>
+    <li>Number each word and check the sequence carefully</li>
+    <li>Double-check against the screen before dismissing it</li>
+    <li>Never take photos — photos sync to cloud services and may be stored on servers outside your control</li>
+    <li>Never type the phrase into any computer or phone</li>
+    <li>Never email or message it to anyone</li>
+  </ul>
+
+  <h2>Paper vs Metal</h2>
+  <p>Paper is the most common medium but has significant vulnerabilities: it burns at around 230°C (common house fires reach far higher), degrades when wet, and deteriorates over decades. For long-term storage of significant holdings, <strong>metal seed backup products</strong> address these vulnerabilities. Stainless steel or titanium products — Cryptosteel, Bilodeau, Cryptotag — withstand temperatures well above typical fire conditions, are waterproof, and last indefinitely. Look for products tested against fire and water by independent parties.</p>
+
+  <h2>Where to Store the Backup</h2>
+  <h3>For Modest Holdings</h3>
+  <ul>
+    <li>One copy in a fireproof safe at home, hidden from casual visitors</li>
+    <li>One copy at a different physical location — a trusted family member's home or a safe deposit box</li>
+  </ul>
+
+  <h3>For Significant Holdings</h3>
+  <ul>
+    <li>Multiple copies in geographically separate locations</li>
+    <li>At least one copy in a professionally secure facility (bank vault or private storage)</li>
+    <li>Consider splitting the backup geographically, with a passphrase adding a second factor</li>
+    <li>Document the backup locations clearly for inheritance purposes</li>
+  </ul>
+  <p>The key insight about geographic separation: a single disaster event — house fire, earthquake, flood — can simultaneously destroy backups stored in the same building or neighbourhood. True redundancy requires backups far enough apart that no single event could affect all of them.</p>
+
+  <h2>Testing Your Backup</h2>
+  <p>Many people create a backup and never verify it works. This is a critical error. After creating any backup, perform a test restore:</p>
+  <ol>
+    <li>Write down your seed phrase</li>
+    <li>Factory-reset the hardware wallet</li>
+    <li>Restore the wallet from the seed phrase</li>
+    <li>Verify that the addresses generated match what you had before</li>
+  </ol>
+  <p>Do this before putting any significant funds in the wallet. The cost of this test is an hour. The cost of discovering an error after a loss is everything.</p>
+
+  <h2>Inheritance and Succession</h2>
+  <p>Plan for your own incapacity or death. At minimum, ensure that someone you trust knows: that you hold cryptocurrency, roughly how much and where, where the seed phrase backup is stored, where the passphrase is stored, and how to access and use a hardware wallet.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Simplest Inheritance Plan</div>
+    <p>Write a letter that explains what cryptocurrency you hold, where the hardware wallet is, where the seed phrase backup is, and the passphrase or where it is stored. Seal this letter and include it with your other estate planning documents, to be opened only in the event of your death or incapacity. Update it whenever any of these details change.</p>
+  </div>
+</section>
+
+<!-- ── CH 16 ── -->
+<section class="chapter" id="ch16">
+  <div class="ch-number">Chapter 16</div>
+  <div class="ch-title">The Future of <em>Seed Phrases</em></div>
+
+  <h2>Is BIP39 Here to Stay?</h2>
+  <p>BIP39 was designed in 2013. In the decade-plus since, the cryptocurrency ecosystem has expanded beyond recognition: thousands of blockchains, layer 2 solutions, decentralised finance, NFTs, and more. Yet the fundamental technology of the seed phrase has changed remarkably little. BIP39, BIP32, and BIP44 remain the dominant standards.</p>
+  <p>This stability is in some ways a feature. But it also means the ecosystem is carrying design decisions made in very different circumstances, and some are increasingly questioned. The most fundamental critique: the seed phrase model places enormous responsibility on ordinary users to manage a cryptographic secret correctly — and most people are not good at this.</p>
+
+  <h2>Account Abstraction</h2>
+  <p>One of the most significant developments in Ethereum and other smart contract platforms is <strong>account abstraction</strong> — a mechanism that allows wallet functionality to be implemented in programmable smart contracts. This enables wallets that do not need a traditional private key, or where losing the key does not mean losing the funds. Possible features include:</p>
+  <ul>
+    <li><strong>Social recovery:</strong> designate trusted contacts who can collectively restore access to your wallet if you lose your key, without ever having access under normal circumstances</li>
+    <li><strong>Multi-signature requirements:</strong> require multiple keys or devices to authorise transactions above a certain value</li>
+    <li><strong>Time locks:</strong> delay large transactions by a set period, giving you time to cancel if unauthorised</li>
+    <li><strong>Spending limits:</strong> enforce daily or per-transaction limits without hardware restrictions</li>
+  </ul>
+  <p>Projects like Safe (formerly Gnosis Safe) and Argent already implement versions of this. Smart contract wallets with social recovery offer a fundamentally different model: instead of a single point of failure (the seed phrase), recovery is distributed among multiple people, none of whom can individually steal the funds.</p>
+
+  <h2>Passkey-Based Wallets</h2>
+  <p>A newer development is the integration of <strong>passkeys</strong> — a web standard for cryptographic authentication that uses the hardware security features of modern smartphones (Apple's Secure Enclave or Android's StrongBox) — with cryptocurrency wallets. Passkey-based wallets allow authentication using biometrics, with the private key stored in the device's hardware security module and the backup handled through platform mechanisms like Apple iCloud Keychain.</p>
+  <p>The trade-off: you are trusting Apple or Google to back up your keys securely. This is a form of custodianship with better usability but less sovereignty than a self-custodied seed phrase.</p>
+
+  <h2>Quantum Computing</h2>
+  <p>Quantum computers, if built at sufficient scale, could theoretically break the elliptic curve cryptography underlying most cryptocurrency key systems. Shor's algorithm could, on a sufficiently powerful quantum computer, compute a private key from a public key. This threat is real but distant — current quantum computers are nowhere near the scale needed. The best estimates suggest meaningful threats to elliptic curve cryptography are decades away.</p>
+  <p>BIP39 seed phrases themselves are not specifically vulnerable to quantum computing — they are a way of encoding entropy from which keys are derived. If the underlying key generation scheme is updated to use quantum-resistant cryptography, seed phrases could continue to serve the same function.</p>
+
+  <h2>Looking Forward</h2>
+  <p>The seed phrase is one of the most important innovations in the history of digital finance. It solved a real, hard problem: how to give ordinary people self-sovereign control of cryptographic secrets in a way that is recoverable, standardised, and human-manageable.</p>
+  <p>It has not solved all problems. The user experience of managing a seed phrase remains daunting for many people. The consequences of mistakes are too severe and too irreversible. But the core insight of BIP39 — encode entropy as words, derive deterministically, back up once — is sound. Whatever comes next will likely build on this foundation rather than abandon it.</p>
+  <p>Understanding that principle is what you now have. Not just the practice of writing down 12 words, but the mathematics, the history, the design choices, and the trade-offs that make the whole system work. That understanding is what turns a ritual into genuine control.</p>
+</section>
+
+<!-- ── GLOSSARY ── -->
+<section class="chapter" id="glossary">
+  <div class="ch-number">Glossary</div>
+  <div class="ch-title">Key Terms <em>Defined</em></div>
+
+  <div class="glossary-term"><div class="g-word">Account Abstraction</div><p class="g-def">A mechanism in Ethereum and similar chains that allows wallets to be implemented as programmable smart contracts, enabling features like social recovery and multi-signature requirements.</p></div>
+  <div class="glossary-term"><div class="g-word">Air-Gapped Wallet</div><p class="g-def">A hardware wallet that never connects to any internet-connected device, communicating only through QR codes or physical media such as SD cards.</p></div>
+  <div class="glossary-term"><div class="g-word">BIP (Bitcoin Improvement Proposal)</div><p class="g-def">A design document proposing changes or additions to the Bitcoin ecosystem. BIP39, BIP32, and BIP44 are the three proposals most relevant to seed phrases.</p></div>
+  <div class="glossary-term"><div class="g-word">BIP32</div><p class="g-def">The proposal defining Hierarchical Deterministic wallets — the standard for deriving an unlimited tree of cryptographic keys from a single master seed.</p></div>
+  <div class="glossary-term"><div class="g-word">BIP39</div><p class="g-def">The proposal defining mnemonic phrases (seed phrases): the standard for encoding wallet entropy as human-readable words.</p></div>
+  <div class="glossary-term"><div class="g-word">BIP44</div><p class="g-def">The proposal defining a standard organisation structure for the BIP32 key tree, specifying which branches to use for different cryptocurrencies and purposes.</p></div>
+  <div class="glossary-term"><div class="g-word">Brain Wallet</div><p class="g-def">A deprecated and dangerous practice of deriving a private key from a human-chosen passphrase. Vulnerable to dictionary attacks because human-chosen secrets have insufficient entropy.</p></div>
+  <div class="glossary-term"><div class="g-word">Chain Code</div><p class="g-def">A 256-bit value derived alongside a private key in BIP32 derivation, used as additional randomness in deriving child keys to prevent prediction from parent public key knowledge alone.</p></div>
+  <div class="glossary-term"><div class="g-word">Checksum</div><p class="g-def">A small piece of data derived from a larger piece of data, used to detect errors. In BIP39, the checksum is the first few bits of the SHA-256 hash of the entropy, appended before encoding as words.</p></div>
+  <div class="glossary-term"><div class="g-word">CSPRNG</div><p class="g-def">Cryptographically Secure Pseudo-Random Number Generator. A pseudo-random number generator with properties suitable for cryptographic use, including unpredictability of future and past outputs.</p></div>
+  <div class="glossary-term"><div class="g-word">Derivation Path</div><p class="g-def">A string specifying the exact sequence of steps to take through the BIP32 key tree to reach a particular key. For example, m/44'/0'/0'/0/0 is the first Bitcoin receiving address in a standard BIP44 wallet.</p></div>
+  <div class="glossary-term"><div class="g-word">Deterministic</div><p class="g-def">A property of a function: given the same inputs, it always produces the same outputs. BIP32 key derivation is deterministic, enabling wallet restoration from a seed.</p></div>
+  <div class="glossary-term"><div class="g-word">Duress Wallet</div><p class="g-def">A wallet holding a small amount of funds that can be revealed under coercion, while the main wallet remains protected by a separate, undisclosed passphrase.</p></div>
+  <div class="glossary-term"><div class="g-word">Elliptic Curve Cryptography (ECC)</div><p class="g-def">The mathematical foundation of cryptocurrency key pairs. It allows creation of public-private key pairs where derivation goes only one way: private to public, but not back.</p></div>
+  <div class="glossary-term"><div class="g-word">Entropy</div><p class="g-def">A measure of unpredictability or randomness. In BIP39, entropy refers to the random bits generated at wallet creation, which encode into the seed phrase words.</p></div>
+  <div class="glossary-term"><div class="g-word">Extended Key (xpub / xpriv)</div><p class="g-def">A BIP32 key encoding that includes both the key and the chain code. An xpub can be shared for watch-only access; an xpriv must be kept secret as it controls all child private keys.</p></div>
+  <div class="glossary-term"><div class="g-word">Hardened Derivation</div><p class="g-def">A BIP32 derivation mode using the parent private key (not public key) as input. Prevents an attacker who learns a child private key from computing the parent private key.</p></div>
+  <div class="glossary-term"><div class="g-word">Hardware Wallet</div><p class="g-def">A dedicated physical device that generates and stores private keys in an isolated, tamper-resistant environment and signs transactions without exposing the private keys to any connected device.</p></div>
+  <div class="glossary-term"><div class="g-word">HD Wallet (Hierarchical Deterministic Wallet)</div><p class="g-def">A wallet that generates all its keys from a single master seed using BIP32, enabling a single backup to restore all keys.</p></div>
+  <div class="glossary-term"><div class="g-word">HMAC-SHA512</div><p class="g-def">Hash-based Message Authentication Code using SHA-512 as the underlying hash function. Used in both PBKDF2 key stretching and BIP32 key derivation.</p></div>
+  <div class="glossary-term"><div class="g-word">Master Seed</div><p class="g-def">The 512-bit output of PBKDF2 applied to the mnemonic phrase. The root from which all wallet keys are derived via BIP32.</p></div>
+  <div class="glossary-term"><div class="g-word">Mnemonic Phrase</div><p class="g-def">The formal name for a seed phrase: a sequence of words encoding the wallet's master entropy, generated according to BIP39.</p></div>
+  <div class="glossary-term"><div class="g-word">MPC (Multi-Party Computation)</div><p class="g-def">A cryptographic technique where multiple parties jointly compute a function without any party learning the others' inputs. Used in some wallets as an alternative to traditional seed-based key management.</p></div>
+  <div class="glossary-term"><div class="g-word">PBKDF2</div><p class="g-def">Password-Based Key Derivation Function 2. A key derivation algorithm that deliberately performs many computational iterations to slow down brute-force attacks. Used in BIP39 to transform mnemonic entropy into the master seed.</p></div>
+  <div class="glossary-term"><div class="g-word">Passphrase (25th word)</div><p class="g-def">An optional additional secret combined with a BIP39 seed phrase to produce a completely different wallet. Provides protection against physical discovery of the seed phrase backup.</p></div>
+  <div class="glossary-term"><div class="g-word">Private Key</div><p class="g-def">A secret 256-bit number that proves the right to spend cryptocurrency associated with the corresponding public key and address. Must never be revealed to anyone.</p></div>
+  <div class="glossary-term"><div class="g-word">Public Key</div><p class="g-def">A value mathematically derived from the private key that can be shared publicly. Used to verify signatures and derive addresses.</p></div>
+  <div class="glossary-term"><div class="g-word">Secure Element</div><p class="g-def">A tamper-resistant microchip that provides secure key storage and cryptographic operations. Used in hardware wallets to protect private keys from physical and logical attacks.</p></div>
+  <div class="glossary-term"><div class="g-word">SHA-256</div><p class="g-def">A cryptographic hash function that produces a 256-bit output. Used in BIP39 for checksum calculation and widely throughout Bitcoin's protocol.</p></div>
+  <div class="glossary-term"><div class="g-word">SLIP39</div><p class="g-def">SatoshiLabs Improvement Proposal 39. A standard applying Shamir's Secret Sharing to cryptocurrency wallet seeds, enabling threshold-based multi-share recovery.</p></div>
+  <div class="glossary-term"><div class="g-word">Shamir's Secret Sharing</div><p class="g-def">A cryptographic method for splitting a secret into N shares such that any K shares can reconstruct the secret, but any fewer than K shares reveal nothing about the secret. Invented by Adi Shamir in 1979.</p></div>
+  <div class="glossary-term"><div class="g-word">UTXO</div><p class="g-def">Unspent Transaction Output. The fundamental unit of Bitcoin accounting — a discrete amount of Bitcoin associated with a specific address. Spending Bitcoin involves consuming UTXOs and creating new ones.</p></div>
+  <div class="glossary-term"><div class="g-word">WIF (Wallet Import Format)</div><p class="g-def">A format for encoding individual Bitcoin private keys in a human-readable Base58Check string. Predates hierarchical deterministic derivation and does not support multi-address wallets.</p></div>
+  <div class="glossary-term"><div class="g-word">xpub</div><p class="g-def">An extended public key in BIP32 format. Can be used to derive all child public keys and addresses in a subtree without exposing any private keys. Useful for watch-only wallets.</p></div>
+</section>
+
+</div><!-- #main -->
+
+<!-- BACK TO TOP -->
+<a href="#hero" id="back-top" title="Back to top">↑</a>
+
+<script>
+// ─── NAVIGATION ACTIVE STATE ────────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const ALL_IDS = ['foreword','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8',
+                 'ch9','ch10','ch11','ch12','ch13','ch14','ch15','ch16','glossary'];
+
+function setActive(id) {
+  navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + id));
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+}, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+sections.forEach(s => observer.observe(s));
+
+function navClick(id) {
+  setActive(id);
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  return false;
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 600);
+});
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ─── TEXT-TO-SPEECH ENGINE v2 ────────────────────────────────────────────────
+// Speaks sentence-by-sentence with natural pauses, supports voice/pitch/speed.
+const synth = window.speechSynthesis;
+
+let ttsPlaying     = false;
+let ttsChapterIdx  = 0;
+let ttsSentenceIdx = 0;
+let ttsSpeed       = 1;
+let ttsPitch       = 1;
+let ttsVoice       = null;           // SpeechSynthesisVoice object
+let ttsChapterSentences = [];        // [ [ "sent1", "sent2", ... ], ... ]  per chapter
+let ttsChapterNames     = [];
+let ttsSentCount        = [];        // total sentences per chapter
+let ttsTotalSents       = 0;
+let ttsChapterSentStart = [];        // cumulative sentence index at chapter start
+let ttsAbortFlag        = false;     // set true to kill current speak loop
+let ttsVoices           = [];
+
+// ── Sentence splitter ──────────────────────────────────────────────────────
+// Splits on .  !  ?  followed by whitespace or end-of-string,
+// but keeps ellipses and abbreviations reasonably intact.
+function splitSentences(text) {
+  // Normalise whitespace first
+  text = text.replace(/\s+/g, ' ').trim();
+
+  // Insert a sentinel after sentence-ending punctuation
+  // Handles: period/!/? followed by space+capital, or end of string
+  // Avoids splitting on e.g. "BIP39" or "2.58"
+  const parts = [];
+  let start = 0;
+  const re = /([.!?;:])(\s+)(?=[A-Z"'(])/g;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const seg = text.slice(start, m.index + m[1].length).trim();
+    if (seg.length > 3) parts.push(seg);
+    start = m.index + m[0].length;
+  }
+  const last = text.slice(start).trim();
+  if (last.length > 3) parts.push(last);
+  return parts.length ? parts : [text];
+}
+
+// ── Build chapter content ──────────────────────────────────────────────────
+function buildTTSContent() {
+  ttsChapterSentences = [];
+  ttsChapterNames     = [];
+  ttsSentCount        = [];
+  ttsChapterSentStart = [];
+  ttsTotalSents       = 0;
+
+  ALL_IDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Get readable text — skip code blocks & table cells (too listy)
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('code, .ch-number, .callout-label, .warning-label, thead')
+         .forEach(n => n.remove());
+    const raw = clone.innerText.replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
+
+    const sentences = splitSentences(raw);
+    ttsChapterSentStart.push(ttsTotalSents);
+    ttsTotalSents += sentences.length;
+    ttsChapterSentences.push(sentences);
+    ttsSentCount.push(sentences.length);
+
+    const titleEl = el.querySelector('.ch-title');
+    ttsChapterNames.push(titleEl ? titleEl.innerText.replace(/\n/g, ' ').trim() : id);
+  });
+}
+
+// ── Voice population ───────────────────────────────────────────────────────
+function populateVoices() {
+  ttsVoices = synth.getVoices();
+  if (!ttsVoices.length) return;
+
+  const sel = document.getElementById('voice-select');
+  sel.innerHTML = '';
+
+  // Sort: prefer English, then premium/enhanced, then others
+  const priority = (v) => {
+    const en = v.lang.startsWith('en');
+    const premium = /enhanced|premium|neural|natural|compact/i.test(v.name) === false
+                    && en ? 1 : 0;
+    // Actually let's prefer "enhanced" and "premium" labels
+    const hi = /enhanced|premium|neural|natural/i.test(v.name) ? 2 : 0;
+    return (en ? 10 : 0) + hi;
+  };
+  const sorted = [...ttsVoices].sort((a, b) => priority(b) - priority(a));
+
+  // Group: English enhanced, English standard, Other
+  const groups = {
+    'English — Premium': [],
+    'English — Standard': [],
+    'Other Languages': []
+  };
+  sorted.forEach(v => {
+    if (v.lang.startsWith('en') && /enhanced|premium|neural|natural/i.test(v.name))
+      groups['English — Premium'].push(v);
+    else if (v.lang.startsWith('en'))
+      groups['English — Standard'].push(v);
+    else
+      groups['Other Languages'].push(v);
+  });
+
+  Object.entries(groups).forEach(([label, voices]) => {
+    if (!voices.length) return;
+    const grp = document.createElement('optgroup');
+    grp.label = label;
+    voices.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = v.name + ' (' + v.lang + ')';
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  });
+
+  // Pick a good default: prefer en-GB or en-US enhanced
+  const preferred = ttsVoices.find(v =>
+    /enhanced|premium|neural/i.test(v.name) && v.lang.startsWith('en')
+  ) || ttsVoices.find(v => v.lang === 'en-GB')
+    || ttsVoices.find(v => v.lang.startsWith('en'))
+    || ttsVoices[0];
+
+  if (preferred) {
+    sel.value = preferred.name;
+    ttsVoice = preferred;
+  }
+
+  updateLabel('Press ▶ to listen');
+}
+
+synth.onvoiceschanged = populateVoices;
+// Chrome populates synchronously sometimes:
+if (synth.getVoices().length) populateVoices();
+
+function ttsSetVoice(name) {
+  ttsVoice = ttsVoices.find(v => v.name === name) || null;
+  if (ttsPlaying) restartFromCurrent();
+}
+
+// ── Progress ───────────────────────────────────────────────────────────────
+function updateProgress() {
+  const done = ttsChapterSentStart[ttsChapterIdx] + ttsSentenceIdx;
+  const pct  = ttsTotalSents ? Math.round((done / ttsTotalSents) * 100) : 0;
+  document.getElementById('tts-progress-bar').style.width = pct + '%';
+}
+
+function updateLabel(text) {
+  document.getElementById('tts-label').textContent = text;
+}
+
+function updatePlayIcon() {
+  document.getElementById('icon-play').style.display  = ttsPlaying ? 'none' : '';
+  document.getElementById('icon-pause').style.display = ttsPlaying ? '' : 'none';
+  document.getElementById('btn-play').classList.toggle('active', ttsPlaying);
+}
+
+// ── Scroll chapter into view ───────────────────────────────────────────────
+function setReadingChapter(idx) {
+  navItems.forEach(n => n.classList.remove('reading'));
+  const id = ALL_IDS[idx];
+  if (!id) return;
+  const navEl = document.querySelector(`.nav-item[href="#${id}"]`);
+  if (navEl) { navEl.classList.add('reading'); navEl.scrollIntoView({ block: 'nearest' }); }
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setActive(id);
+  updateLabel(ttsChapterNames[idx] || '');
+}
+
+// ── Core: speak one sentence, then schedule next ───────────────────────────
+function speakSentence() {
+  if (ttsAbortFlag || !ttsPlaying) return;
+
+  // Advance chapter if exhausted
+  while (ttsChapterIdx < ttsChapterSentences.length &&
+         ttsSentenceIdx >= ttsChapterSentences[ttsChapterIdx].length) {
+    ttsChapterIdx++;
+    ttsSentenceIdx = 0;
+    if (ttsChapterIdx < ttsChapterSentences.length) setReadingChapter(ttsChapterIdx);
+  }
+
+  if (ttsChapterIdx >= ttsChapterSentences.length) {
+    // Finished the whole book
+    ttsPlaying = false;
+    updatePlayIcon();
+    updateLabel('Finished — press ▶ to replay');
+    navItems.forEach(n => n.classList.remove('reading'));
+    return;
+  }
+
+  const sentence = ttsChapterSentences[ttsChapterIdx][ttsSentenceIdx];
+  updateProgress();
+
+  const utt = new SpeechSynthesisUtterance(sentence);
+  utt.rate  = ttsSpeed;
+  utt.pitch = ttsPitch;
+  utt.lang  = ttsVoice ? ttsVoice.lang : 'en-GB';
+  if (ttsVoice) utt.voice = ttsVoice;
+
+  utt.onend = () => {
+    if (ttsAbortFlag || !ttsPlaying) return;
+    ttsSentenceIdx++;
+
+    // Compute pause length based on sentence-ending punctuation
+    const endsWithStop = /[.!?]$/.test(sentence.trim());
+    const endsWithComma = /[,;:]$/.test(sentence.trim());
+    const pause = endsWithStop ? 220 : endsWithComma ? 80 : 50;
+
+    setTimeout(speakSentence, pause);
+  };
+
+  utt.onerror = (e) => {
+    if (e.error === 'interrupted' || e.error === 'canceled') return;
+    // On other errors, skip sentence and continue
+    console.warn('TTS error:', e.error, 'on sentence:', sentence.slice(0, 60));
+    ttsSentenceIdx++;
+    setTimeout(speakSentence, 100);
+  };
+
+  synth.speak(utt);
+}
+
+// ── Start / restart from a specific chapter+sentence ─────────────────────
+function startSpeaking(chIdx, sentIdx) {
+  ttsAbortFlag = true;
+  synth.cancel();
+  ttsChapterIdx  = chIdx;
+  ttsSentenceIdx = sentIdx;
+
+  // Small delay to ensure cancel has taken effect
+  setTimeout(() => {
+    ttsAbortFlag = false;
+    if (!ttsChapterSentences.length) buildTTSContent();
+    setReadingChapter(ttsChapterIdx);
+    speakSentence();
+  }, 80);
+}
+
+function restartFromCurrent() {
+  startSpeaking(ttsChapterIdx, ttsSentenceIdx);
+}
+
+// ── Public controls ────────────────────────────────────────────────────────
+function ttsPlayPause() {
+  if (!ttsChapterSentences.length) buildTTSContent();
+
+  if (ttsPlaying) {
+    // Pause
+    ttsPlaying = false;
+    ttsAbortFlag = true;
+    synth.cancel();
+    updatePlayIcon();
+    updateLabel('Paused — press ▶ to continue');
+    navItems.forEach(n => n.classList.remove('reading'));
+  } else {
+    ttsPlaying = true;
+    updatePlayIcon();
+    startSpeaking(ttsChapterIdx, ttsSentenceIdx);
+  }
+}
+
+function ttsStop() {
+  ttsPlaying     = false;
+  ttsAbortFlag   = true;
+  ttsChapterIdx  = 0;
+  ttsSentenceIdx = 0;
+  synth.cancel();
+  updatePlayIcon();
+  updateLabel('Press ▶ to listen');
+  document.getElementById('tts-progress-bar').style.width = '0%';
+  navItems.forEach(n => n.classList.remove('reading'));
+}
+
+function ttsChapter(dir) {
+  if (!ttsChapterSentences.length) buildTTSContent();
+  const newIdx = Math.max(0, Math.min(ttsChapterSentences.length - 1, ttsChapterIdx + dir));
+  const wasPlaying = ttsPlaying;
+  ttsChapterIdx  = newIdx;
+  ttsSentenceIdx = 0;
+  if (wasPlaying) {
+    startSpeaking(newIdx, 0);
+  } else {
+    const id = ALL_IDS[newIdx];
+    if (id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setActive(id); }
+    updateLabel((ttsChapterNames[newIdx] || '') + ' — press ▶');
+    updateProgress();
+  }
+}
+
+function ttsSetSpeed(val) {
+  ttsSpeed = parseFloat(val);
+  if (ttsPlaying) restartFromCurrent();
+}
+
+function ttsSetPitch(val) {
+  ttsPitch = parseFloat(val);
+  document.getElementById('pitch-val').textContent = parseFloat(val).toFixed(2);
+  if (ttsPlaying) restartFromCurrent();
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(buildTTSContent);
+} else {
+  setTimeout(buildTTSContent, 800);
+}
+
+window.addEventListener('beforeunload', () => { ttsAbortFlag = true; synth.cancel(); });
+</script>
+</body>
+</html>

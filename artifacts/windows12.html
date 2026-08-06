@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows 12</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --accent:#0078d4;--accent2:#60cdff;
+  --glass:rgba(18,20,28,0.88);--glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.10);
+  --text:#f3f3f3;--text2:#ababab;
+  --radius:12px;--shadow:0 8px 40px rgba(0,0,0,0.55);
+  --taskbar-h:52px;
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI Variable','Segoe UI',sans-serif;user-select:none;}
+#desktop{width:100%;height:100%;position:relative;overflow:hidden;background:#060a18;}
+#wallpaper-canvas{position:absolute;inset:0;width:100%;height:100%;}
+/* DESKTOP ICONS */
+#desktop-icons{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:4px;z-index:10;}
+.desk-icon{display:flex;flex-direction:column;align-items:center;gap:5px;width:76px;padding:8px 4px;border-radius:8px;cursor:pointer;color:#fff;font-size:11.5px;text-align:center;line-height:1.3;transition:background .15s;}
+.desk-icon:hover{background:rgba(255,255,255,0.12);}
+.desk-icon .ico{font-size:32px;line-height:1;}
+/* TASKBAR */
+#taskbar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);height:var(--taskbar-h);background:rgba(16,18,26,0.84);backdrop-filter:blur(28px) saturate(1.8);border:1px solid rgba(255,255,255,0.11);border-radius:18px;display:flex;align-items:center;gap:2px;padding:0 10px;z-index:1000;box-shadow:0 4px 32px rgba(0,0,0,0.6);min-width:460px;}
+.tb-sep{width:1px;height:28px;background:rgba(255,255,255,0.1);margin:0 4px;}
+.tb-btn{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;position:relative;transition:background .13s;color:#fff;}
+.tb-btn:hover{background:rgba(255,255,255,0.10);}
+.tb-btn.active::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:14px;height:3px;border-radius:2px;background:var(--accent2);}
+#tb-search{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:0 12px;height:38px;width:200px;cursor:text;font-size:13px;color:var(--text2);transition:background .13s;}
+#tb-search:hover{background:rgba(255,255,255,0.11);}
+#tb-right{margin-left:auto;display:flex;align-items:center;gap:2px;}
+.tb-sys{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text);transition:background .13s;}
+.tb-sys:hover{background:rgba(255,255,255,0.1);}
+#tb-clock{text-align:right;font-size:11.5px;line-height:1.55;color:var(--text);padding:4px 8px;border-radius:8px;cursor:pointer;}
+#tb-clock:hover{background:rgba(255,255,255,0.1);}
+/* tooltip */
+.tb-tooltip{position:absolute;bottom:54px;left:50%;transform:translateX(-50%);background:rgba(16,18,26,0.95);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:4px 10px;font-size:12px;color:#fff;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:2000;}
+.tb-btn:hover .tb-tooltip{opacity:1;}
+/* START MENU */
+#start-menu{position:absolute;bottom:72px;left:50%;transform:translateX(-50%) scale(0.97);width:660px;height:500px;background:rgba(14,16,24,0.92);backdrop-filter:blur(40px) saturate(1.8);border:1px solid rgba(255,255,255,0.10);border-radius:20px;box-shadow:0 20px 70px rgba(0,0,0,0.7);z-index:900;display:none;flex-direction:column;overflow:hidden;opacity:0;transition:opacity .18s,transform .18s;}
+#start-menu.open{display:flex;opacity:1;transform:translateX(-50%) scale(1);}
+#sm-searchbox{margin:18px 20px 10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:10px;}
+#sm-searchbox input{background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:inherit;flex:1;}
+#sm-body{flex:1;overflow-y:auto;padding:0 20px 16px;}
+#sm-body::-webkit-scrollbar{width:4px;}
+#sm-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px;}
+.sm-label{font-size:11.5px;color:var(--text2);margin:14px 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+#sm-pinned{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;}
+.sm-app{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:10px;cursor:pointer;font-size:11.5px;color:var(--text);text-align:center;line-height:1.3;transition:background .13s;}
+.sm-app:hover{background:rgba(255,255,255,0.10);}
+.sm-app .ico{font-size:28px;}
+#sm-rec{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.sm-rec-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12.5px;color:var(--text);transition:background .13s;}
+.sm-rec-item:hover{background:rgba(255,255,255,0.08);}
+.sm-rec-item .ico{font-size:22px;flex-shrink:0;}
+.sm-rec-item .meta{display:flex;flex-direction:column;}
+.sm-rec-item .meta .sub{font-size:11px;color:var(--text2);}
+#sm-footer{padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.07);}
+.sm-user{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);}
+.sm-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#0078d4,#60cdff);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.sm-power{display:flex;gap:4px;}
+.sm-pbtn{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;color:var(--text);transition:background .13s;}
+.sm-pbtn:hover{background:rgba(255,255,255,0.1);}
+/* WINDOWS */
+.win{position:absolute;background:rgba(14,16,24,0.92);backdrop-filter:blur(32px) saturate(1.6);border:1px solid rgba(255,255,255,0.10);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;min-width:280px;min-height:180px;z-index:100;}
+.win.focused{border-color:rgba(255,255,255,0.16);}
+.win.maximized{top:0!important;left:0!important;width:100%!important;height:calc(100% - 68px)!important;border-radius:0;}
+.win-tb{height:38px;display:flex;align-items:center;padding:0 12px;background:rgba(255,255,255,0.03);cursor:move;flex-shrink:0;}
+.win-title{font-size:13px;font-weight:500;color:var(--text);flex:1;display:flex;align-items:center;gap:8px;}
+.win-title .ico{font-size:15px;}
+.win-ctrls{display:flex;}
+.wcb{width:46px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;color:var(--text2);border-radius:6px;transition:background .1s,color .1s;}
+.wcb:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.wcb.cl:hover{background:#c42b1c;color:#fff;}
+.win-body{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.win-resize{position:absolute;bottom:0;right:0;width:14px;height:14px;cursor:se-resize;z-index:5;}
+/* CONTEXT MENU */
+#ctx{position:absolute;z-index:9999;background:rgba(18,20,28,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,0.55);display:none;min-width:180px;}
+.ctx-i{padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;transition:background .1s;}
+.ctx-i:hover{background:rgba(255,255,255,0.09);}
+.ctx-sep{height:1px;background:rgba(255,255,255,0.07);margin:4px 0;}
+/* NOTIFICATIONS */
+#notif-tray{position:absolute;top:14px;right:14px;z-index:5000;display:flex;flex-direction:column;gap:8px;width:320px;}
+.notif{background:rgba(18,20,28,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.10);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 24px rgba(0,0,0,0.45);animation:nin .25s ease;transition:opacity .3s,transform .3s;}
+@keyframes nin{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:none;}}
+.notif-ico{font-size:22px;flex-shrink:0;}
+.notif-body{flex:1;}
+.notif-title{font-size:13px;font-weight:600;color:var(--text);}
+.notif-msg{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4;}
+.notif-x{color:var(--text2);cursor:pointer;font-size:16px;transition:color .1s;}
+.notif-x:hover{color:#fff;}
+/* ACTION CENTER */
+#action-center{position:absolute;bottom:72px;right:12px;width:340px;background:rgba(14,16,24,0.93);backdrop-filter:blur(32px) saturate(1.8);border:1px solid rgba(255,255,255,0.10);border-radius:18px;padding:18px;z-index:900;display:none;box-shadow:0 12px 50px rgba(0,0,0,0.65);}
+#action-center.open{display:block;}
+.ac-head{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:14px;}
+.ac-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.ac-tile{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 10px;cursor:pointer;font-size:12px;color:var(--text);text-align:center;transition:background .13s;}
+.ac-tile:hover{background:rgba(255,255,255,0.13);}
+.ac-tile.on{background:rgba(0,120,212,0.35);color:#60cdff;border-color:rgba(0,120,212,0.4);}
+.ac-tile .ico{font-size:20px;margin-bottom:4px;}
+.ac-sl{margin-bottom:12px;}
+.ac-sl-lbl{font-size:12px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:6px;}
+.ac-sl input{width:100%;accent-color:var(--accent);}
+.ac-sec{font-size:11.5px;color:var(--text2);margin:12px 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+/* COPILOT ORB */
+#cop-orb{position:absolute;bottom:70px;right:18px;width:48px;height:48px;border-radius:50%;background:conic-gradient(from 0deg,#0078d4,#60cdff,#a78bfa,#0078d4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:500;animation:orb-pulse 3s ease-in-out infinite;}
+@keyframes orb-pulse{0%,100%{box-shadow:0 0 20px rgba(0,120,212,0.5);}50%{box-shadow:0 0 36px rgba(96,205,255,0.7);}}
+/* FILE EXPLORER */
+#fe-tb{height:40px;border-bottom:1px solid rgba(255,255,255,0.07);padding:0 10px;display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.fe-tb-btn{padding:4px 10px;border-radius:6px;font-size:12.5px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .1s;}
+.fe-tb-btn:hover{background:rgba(255,255,255,0.09);}
+#fe-path{flex:1;margin-left:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:6px;padding:4px 10px;font-size:12.5px;color:var(--text2);}
+#fe-sidebar{width:200px;flex-shrink:0;border-right:1px solid rgba(255,255,255,0.07);padding:8px;overflow-y:auto;}
+.fe-si{padding:6px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px;transition:background .1s;}
+.fe-si:hover{background:rgba(255,255,255,0.08);}
+.fe-si.active{background:rgba(0,120,212,0.25);color:#60cdff;}
+#fe-main{flex:1;padding:16px;overflow-y:auto;}
+.fe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;}
+.fe-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:8px;cursor:pointer;font-size:11.5px;color:var(--text);text-align:center;line-height:1.3;transition:background .1s;}
+.fe-item:hover{background:rgba(255,255,255,0.08);}
+.fe-item .ico{font-size:30px;}
+#fe-status{height:26px;border-top:1px solid rgba(255,255,255,0.07);padding:0 14px;display:flex;align-items:center;font-size:11.5px;color:var(--text2);flex-shrink:0;}
+/* SETTINGS */
+#set-sidebar{width:220px;flex-shrink:0;padding:8px;overflow-y:auto;border-right:1px solid rgba(255,255,255,0.07);}
+#set-main{flex:1;padding:24px;overflow-y:auto;}
+.set-item{padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;transition:background .1s;}
+.set-item:hover{background:rgba(255,255,255,0.08);}
+.set-item.active{background:rgba(0,120,212,0.25);color:#60cdff;}
+.set-h{font-size:22px;font-weight:700;color:var(--text);margin-bottom:18px;}
+.set-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+.set-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.set-row:last-child{border-bottom:none;}
+.set-row .ricon{font-size:20px;margin-right:12px;}
+.set-row .rlabel{flex:1;font-size:13.5px;color:var(--text);}
+.set-row .rsub{font-size:11.5px;color:var(--text2);margin-top:1px;}
+.toggle{width:40px;height:22px;border-radius:11px;background:rgba(255,255,255,0.15);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:var(--accent);}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;}
+.toggle.on::after{left:21px;}
+.sys-info{background:linear-gradient(135deg,rgba(0,120,212,0.22),rgba(96,205,255,0.12));border:1px solid rgba(0,120,212,0.28);border-radius:10px;padding:18px;display:flex;gap:14px;align-items:center;margin-bottom:14px;}
+.sys-det{font-size:13px;color:var(--text);line-height:1.7;}
+.sys-det strong{font-size:16px;font-weight:700;}
+/* TERMINAL */
+#term-body{flex:1;padding:12px 16px;font-family:'Cascadia Code','Fira Code',monospace;font-size:13px;color:#d4d4d4;overflow-y:auto;background:transparent;}
+#term-body::-webkit-scrollbar{width:4px;}
+#term-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+.tl{line-height:1.6;white-space:pre-wrap;word-break:break-all;}
+.tp{color:#60cdff;}
+.terr{color:#f48771;}
+.tok{color:#4ec9b0;}
+#term-in-row{display:flex;align-items:center;padding:0 16px 12px;font-family:'Cascadia Code','Fira Code',monospace;font-size:13px;}
+#term-prompt{color:#60cdff;white-space:nowrap;margin-right:6px;}
+#term-in{flex:1;background:none;border:none;outline:none;color:#d4d4d4;font-family:inherit;font-size:inherit;caret-color:#60cdff;}
+/* NOTEPAD */
+#np-bar{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0;}
+.np-menu{padding:6px 12px;font-size:13px;color:var(--text);cursor:pointer;transition:background .1s;}
+.np-menu:hover{background:rgba(255,255,255,0.09);}
+#np-area{flex:1;padding:14px 16px;background:transparent;border:none;outline:none;font-family:'Cascadia Code','Courier New',monospace;font-size:13.5px;color:var(--text);resize:none;line-height:1.65;}
+#np-status{height:26px;border-top:1px solid rgba(255,255,255,0.07);padding:0 14px;display:flex;align-items:center;gap:18px;font-size:11.5px;color:var(--text2);flex-shrink:0;}
+/* CALCULATOR */
+#calc-body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;}
+#calc-disp{background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 16px;text-align:right;}
+#calc-expr{font-size:13px;color:var(--text2);min-height:20px;word-break:break-all;}
+#calc-result{font-size:36px;font-weight:300;color:var(--text);line-height:1.2;word-break:break-all;}
+#calc-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.cb{padding:13px 0;border-radius:9px;font-size:16px;cursor:pointer;font-family:inherit;font-weight:500;color:var(--text);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.07);transition:background .1s,transform .07s;text-align:center;}
+.cb:hover{background:rgba(255,255,255,0.13);}
+.cb:active{transform:scale(0.95);}
+.cb.op{background:rgba(0,120,212,0.2);color:#60cdff;border-color:rgba(0,120,212,0.3);}
+.cb.op:hover{background:rgba(0,120,212,0.35);}
+.cb.eq{background:var(--accent);color:#fff;border-color:var(--accent);}
+.cb.eq:hover{background:#106ebe;}
+.cb.fn{background:rgba(255,255,255,0.05);color:var(--text2);}
+.cb.fn:hover{background:rgba(255,255,255,0.1);}
+.cb.wide{grid-column:span 2;}
+/* COPILOT */
+#cop-msgs{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+#cop-msgs::-webkit-scrollbar{width:4px;}
+#cop-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+.cop-msg{display:flex;gap:10px;align-items:flex-start;}
+.cop-msg.user{flex-direction:row-reverse;}
+.cop-bubble{max-width:76%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;color:var(--text);}
+.cop-msg.ai .cop-bubble{background:rgba(255,255,255,0.07);border-radius:4px 14px 14px 14px;}
+.cop-msg.user .cop-bubble{background:var(--accent);border-radius:14px 4px 14px 14px;}
+.cop-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;background:linear-gradient(135deg,#0078d4,#60cdff);margin-top:2px;}
+.cop-av.u{background:linear-gradient(135deg,#6b21a8,#a855f7);}
+#cop-in-row{padding:12px 14px;border-top:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
+#cop-in{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--text);outline:none;resize:none;font-family:inherit;max-height:100px;min-height:40px;line-height:1.4;}
+#cop-in::placeholder{color:var(--text2);}
+#cop-send{width:38px;height:38px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0;transition:background .1s;}
+#cop-send:hover{background:#106ebe;}
+.cop-typing{display:flex;gap:5px;align-items:center;padding:12px 14px;}
+.cop-typing span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);animation:bounce 1.2s infinite;}
+.cop-typing span:nth-child(2){animation-delay:.2s;}
+.cop-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-6px);}}
+/* EDGE */
+#edge-bar{height:44px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;padding:0 12px;flex-shrink:0;}
+.edge-nav{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);cursor:pointer;transition:background .1s;}
+.edge-nav:hover{background:rgba(255,255,255,0.09);}
+#edge-url{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.09);border-radius:7px;padding:6px 12px;font-size:13px;color:var(--text);outline:none;font-family:inherit;}
+#edge-body{flex:1;overflow-y:auto;padding:24px 28px;}
+#edge-body::-webkit-scrollbar{width:4px;}
+#edge-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+#edge-bing{display:flex;flex-direction:column;align-items:center;gap:14px;padding:20px 0 28px;}
+#edge-bing-logo{font-size:38px;font-weight:800;background:linear-gradient(90deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+#edge-bing-search{width:100%;max-width:520px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:30px;padding:11px 20px;font-size:14px;color:var(--text);outline:none;font-family:inherit;}
+.edge-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.edge-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;cursor:pointer;transition:background .1s;}
+.edge-card:hover{background:rgba(255,255,255,0.09);}
+.edge-card .cat{font-size:11px;color:var(--accent2);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
+.edge-card .title{font-size:13.5px;color:var(--text);font-weight:600;line-height:1.4;}
+.edge-card .src{font-size:11.5px;color:var(--text2);margin-top:6px;}
+.edge-sec{font-size:11.5px;color:var(--text2);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin:0 0 10px;}
+/* BOOT */
+#boot{position:fixed;inset:0;background:#000;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transition:opacity .6s;}
+#boot-logo{font-size:64px;}
+#boot-name{font-size:28px;color:#fff;font-weight:300;letter-spacing:2px;}
+#boot-bar{width:200px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
+#boot-fill{height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,#0078d4,#60cdff);animation:bfill 2.3s ease forwards;}
+@keyframes bfill{0%{width:0;}100%{width:100%;}}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+</style>
+</head>
+<body>
+<div id="boot">
+  <div id="boot-logo">⊞</div>
+  <div id="boot-name">Windows 12</div>
+  <div id="boot-bar"><div id="boot-fill"></div></div>
+</div>
+<div id="desktop">
+  <canvas id="wallpaper-canvas"></canvas>
+  <!-- DESKTOP ICONS -->
+  <div id="desktop-icons">
+    <div class="desk-icon" ondblclick="openApp('explorer')"><div class="ico">📁</div>File Explorer</div>
+    <div class="desk-icon" ondblclick="openApp('edge')"><div class="ico">🌐</div>Edge</div>
+    <div class="desk-icon" ondblclick="openApp('notepad')"><div class="ico">📝</div>Notepad</div>
+    <div class="desk-icon" ondblclick="openApp('terminal')"><div class="ico">⬛</div>Terminal</div>
+    <div class="desk-icon" ondblclick="openApp('settings')"><div class="ico">⚙️</div>Settings</div>
+    <div class="desk-icon" ondblclick="openApp('calc')"><div class="ico">🧮</div>Calculator</div>
+  </div>
+  <!-- COPILOT ORB -->
+  <div id="cop-orb" onclick="openApp('copilot')" title="Copilot">✨</div>
+  <!-- CONTEXT MENU -->
+  <div id="ctx">
+    <div class="ctx-i" onclick="closeCtx()">🔄 Refresh</div>
+    <div class="ctx-i" onclick="closeCtx()">🖼️ Change wallpaper</div>
+    <div class="ctx-i" onclick="closeCtx()">📐 Display settings</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-i" onclick="openApp('settings');closeCtx()">⚙️ Personalize</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-i" onclick="closeCtx()">ℹ️ About Windows 12</div>
+  </div>
+  <!-- START MENU -->
+  <div id="start-menu">
+    <div id="sm-searchbox"><span>🔍</span><input type="text" placeholder="Search apps, files, settings…" id="sm-si"></div>
+    <div id="sm-body">
+      <div class="sm-label">Pinned</div>
+      <div id="sm-pinned">
+        <div class="sm-app" onclick="openApp('edge');toggleStart()"><div class="ico">🌐</div>Edge</div>
+        <div class="sm-app" onclick="openApp('explorer');toggleStart()"><div class="ico">📁</div>Explorer</div>
+        <div class="sm-app" onclick="openApp('settings');toggleStart()"><div class="ico">⚙️</div>Settings</div>
+        <div class="sm-app" onclick="openApp('notepad');toggleStart()"><div class="ico">📝</div>Notepad</div>
+        <div class="sm-app" onclick="openApp('terminal');toggleStart()"><div class="ico">⬛</div>Terminal</div>
+        <div class="sm-app" onclick="openApp('calc');toggleStart()"><div class="ico">🧮</div>Calculator</div>
+        <div class="sm-app" onclick="openApp('copilot');toggleStart()"><div class="ico">✨</div>Copilot</div>
+        <div class="sm-app"><div class="ico">📷</div>Photos</div>
+        <div class="sm-app"><div class="ico">🎵</div>Media</div>
+        <div class="sm-app"><div class="ico">📧</div>Mail</div>
+        <div class="sm-app"><div class="ico">📅</div>Calendar</div>
+        <div class="sm-app"><div class="ico">🗒️</div>Sticky Notes</div>
+      </div>
+      <div class="sm-label">Recommended</div>
+      <div id="sm-rec">
+        <div class="sm-rec-item"><div class="ico">📄</div><div class="meta"><span>Q4_Report.docx</span><span class="sub">Word · 2h ago</span></div></div>
+        <div class="sm-rec-item"><div class="ico">📊</div><div class="meta"><span>Budget_2025.xlsx</span><span class="sub">Excel · Yesterday</span></div></div>
+        <div class="sm-rec-item"><div class="ico">🖼️</div><div class="meta"><span>Wallpaper_Draft.png</span><span class="sub">Photos · 3 days ago</span></div></div>
+        <div class="sm-rec-item"><div class="ico">📋</div><div class="meta"><span>Meeting_Notes.txt</span><span class="sub">Notepad · Last week</span></div></div>
+      </div>
+    </div>
+    <div id="sm-footer">
+      <div class="sm-user"><div class="sm-avatar">👤</div><span>Windows User</span></div>
+      <div class="sm-power">
+        <div class="sm-pbtn" title="Lock" onclick="showNotif('🔒','Locked','Session locked.')">🔒</div>
+        <div class="sm-pbtn" title="Sleep" onclick="showNotif('💤','Sleep','PC going to sleep…')">💤</div>
+        <div class="sm-pbtn" title="Power" onclick="showNotif('⏻','Power','Shutting down…')">⏻</div>
+      </div>
+    </div>
+  </div>
+  <!-- ACTION CENTER -->
+  <div id="action-center">
+    <div class="ac-head">Quick Settings</div>
+    <div class="ac-tiles">
+      <div class="ac-tile on" onclick="this.classList.toggle('on')"><div class="ico">📶</div>Wi-Fi</div>
+      <div class="ac-tile on" onclick="this.classList.toggle('on')"><div class="ico">🔵</div>Bluetooth</div>
+      <div class="ac-tile" onclick="this.classList.toggle('on')"><div class="ico">✈️</div>Airplane</div>
+      <div class="ac-tile on" onclick="this.classList.toggle('on')"><div class="ico">🌙</div>Night mode</div>
+      <div class="ac-tile" onclick="this.classList.toggle('on')"><div class="ico">♿</div>Accessibility</div>
+      <div class="ac-tile" onclick="this.classList.toggle('on')"><div class="ico">🔦</div>Focus</div>
+    </div>
+    <div class="ac-sl">
+      <div class="ac-sl-lbl"><span>🔊 Volume</span><span id="vol-v">75%</span></div>
+      <input type="range" min="0" max="100" value="75" oninput="document.getElementById('vol-v').textContent=this.value+'%'">
+    </div>
+    <div class="ac-sl">
+      <div class="ac-sl-lbl"><span>☀️ Brightness</span><span id="bri-v">85%</span></div>
+      <input type="range" min="0" max="100" value="85" oninput="document.getElementById('bri-v').textContent=this.value+'%'">
+    </div>
+    <div class="ac-sec">Notifications</div>
+    <div style="font-size:12.5px;color:var(--text2);text-align:center;padding:6px 0;">No new notifications</div>
+  </div>
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <div class="tb-btn" id="tb-start" onclick="toggleStart()">⊞<div class="tb-tooltip">Start</div></div>
+    <div id="tb-search" onclick="toggleStart();setTimeout(()=>document.getElementById('sm-si').focus(),50)">🔍 Search</div>
+    <div class="tb-sep"></div>
+    <div class="tb-btn" id="tb-fe" onclick="openApp('explorer')">📁<div class="tb-tooltip">File Explorer</div></div>
+    <div class="tb-btn" id="tb-edge" onclick="openApp('edge')">🌐<div class="tb-tooltip">Edge</div></div>
+    <div class="tb-btn" id="tb-term" onclick="openApp('terminal')">⬛<div class="tb-tooltip">Terminal</div></div>
+    <div class="tb-btn" id="tb-np" onclick="openApp('notepad')">📝<div class="tb-tooltip">Notepad</div></div>
+    <div class="tb-btn" id="tb-calc" onclick="openApp('calc')">🧮<div class="tb-tooltip">Calculator</div></div>
+    <div class="tb-btn" id="tb-cop" onclick="openApp('copilot')">✨<div class="tb-tooltip">Copilot</div></div>
+    <div class="tb-btn" id="tb-set" onclick="openApp('settings')">⚙️<div class="tb-tooltip">Settings</div></div>
+    <div id="tb-right">
+      <div class="tb-sys" onclick="toggleAC()">📶 🔊 🔋</div>
+      <div id="tb-clock" onclick="toggleAC()"></div>
+    </div>
+  </div>
+  <div id="notif-tray"></div>
+
+  <!-- FILE EXPLORER -->
+  <div class="win" id="win-explorer" style="width:720px;height:460px;top:80px;left:120px;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-explorer')">
+      <div class="win-title"><span class="ico">📁</span>File Explorer</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('explorer')">─</div>
+        <div class="wcb" onclick="maxWin('win-explorer')">□</div>
+        <div class="wcb cl" onclick="closeWin('explorer')">✕</div>
+      </div>
+    </div>
+    <div id="fe-tb">
+      <div class="fe-tb-btn">✂️ Cut</div>
+      <div class="fe-tb-btn">📋 Copy</div>
+      <div class="fe-tb-btn">📌 Paste</div>
+      <div class="fe-tb-btn">➕ New</div>
+      <div class="fe-tb-btn">🗑️ Delete</div>
+      <div id="fe-path">This PC › Documents</div>
+    </div>
+    <div class="win-body" style="flex-direction:row;overflow:hidden;">
+      <div id="fe-sidebar">
+        <div class="fe-si active">🖥️ This PC</div>
+        <div class="fe-si" onclick="setPath('Desktop')">🖼️ Desktop</div>
+        <div class="fe-si" onclick="setPath('Downloads')">⬇️ Downloads</div>
+        <div class="fe-si" onclick="setPath('Documents')">📄 Documents</div>
+        <div class="fe-si" onclick="setPath('Pictures')">🖼️ Pictures</div>
+        <div class="fe-si" onclick="setPath('Music')">🎵 Music</div>
+        <div class="fe-si" onclick="setPath('Videos')">🎬 Videos</div>
+        <div class="fe-si">💾 Local Disk (C:)</div>
+        <div class="fe-si">💿 Data (D:)</div>
+        <div class="fe-si">🌐 Network</div>
+      </div>
+      <div id="fe-main">
+        <div class="fe-grid">
+          <div class="fe-item"><div class="ico">📄</div>Report_Q4.docx</div>
+          <div class="fe-item"><div class="ico">📊</div>Budget.xlsx</div>
+          <div class="fe-item"><div class="ico">🖼️</div>Wallpaper.png</div>
+          <div class="fe-item"><div class="ico">🎵</div>Playlist.mp3</div>
+          <div class="fe-item"><div class="ico">📁</div>Projects</div>
+          <div class="fe-item"><div class="ico">📁</div>Backup</div>
+          <div class="fe-item"><div class="ico">📝</div>Notes.txt</div>
+          <div class="fe-item"><div class="ico">🗜️</div>Archive.zip</div>
+        </div>
+      </div>
+    </div>
+    <div id="fe-status">8 items &nbsp;|&nbsp; C:\ — 234 GB free of 512 GB</div>
+    <div class="win-resize" onmousedown="startResize(event,'win-explorer')"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="win" id="win-settings" style="width:680px;height:480px;top:60px;left:160px;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-settings')">
+      <div class="win-title"><span class="ico">⚙️</span>Settings</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('settings')">─</div>
+        <div class="wcb" onclick="maxWin('win-settings')">□</div>
+        <div class="wcb cl" onclick="closeWin('settings')">✕</div>
+      </div>
+    </div>
+    <div class="win-body" style="flex-direction:row;overflow:hidden;">
+      <div id="set-sidebar">
+        <div class="set-item active" onclick="showSet(event,'system')">🖥️ System</div>
+        <div class="set-item" onclick="showSet(event,'bluetooth')">🔵 Bluetooth</div>
+        <div class="set-item" onclick="showSet(event,'network')">📶 Network</div>
+        <div class="set-item" onclick="showSet(event,'personal')">🎨 Personalization</div>
+        <div class="set-item" onclick="showSet(event,'apps')">📦 Apps</div>
+        <div class="set-item" onclick="showSet(event,'accounts')">👤 Accounts</div>
+        <div class="set-item" onclick="showSet(event,'privacy')">🔒 Privacy</div>
+        <div class="set-item" onclick="showSet(event,'update')">🔄 Windows Update</div>
+      </div>
+      <div id="set-main">
+        <div id="sp-system">
+          <div class="set-h">System</div>
+          <div class="sys-info"><div style="font-size:44px;">💻</div><div class="sys-det"><strong>Windows 12 Pro</strong><br>Intel Core Ultra 9 275HX<br>32 GB DDR5 · 2 TB NVMe SSD<br>NVIDIA RTX 4080 Super</div></div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">🖥️</span><div><div class="rlabel">Display</div><div class="rsub">2560×1440 @ 165 Hz, HDR</div></div></div>
+            <div class="set-row"><span class="ricon">🔊</span><div><div class="rlabel">Sound</div><div class="rsub">Realtek Audio — Speakers</div></div></div>
+            <div class="set-row"><span class="ricon">🔋</span><div><div class="rlabel">Power & battery</div><div class="rsub">Balanced · 94% remaining</div></div></div>
+            <div class="set-row"><span class="ricon">💾</span><div><div class="rlabel">Storage</div><div class="rsub">234 GB free of 2 TB</div></div></div>
+          </div>
+        </div>
+        <div id="sp-bluetooth" style="display:none">
+          <div class="set-h">Bluetooth & devices</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">🔵</span><div style="flex:1"><div class="rlabel">Bluetooth</div><div class="rsub">On — discoverable</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">🎧</span><div><div class="rlabel">Sony WH-1000XM5</div><div class="rsub">Connected</div></div></div>
+            <div class="set-row"><span class="ricon">🖱️</span><div><div class="rlabel">Logitech MX Master 3</div><div class="rsub">Connected</div></div></div>
+          </div>
+        </div>
+        <div id="sp-network" style="display:none">
+          <div class="set-h">Network & internet</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">📶</span><div><div class="rlabel">Wi-Fi — HomeNetwork_5G</div><div class="rsub">Connected · 546 Mbps</div></div></div>
+            <div class="set-row"><span class="ricon">✈️</span><div style="flex:1"><div class="rlabel">Airplane mode</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">🔥</span><div style="flex:1"><div class="rlabel">Mobile hotspot</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+        <div id="sp-personal" style="display:none">
+          <div class="set-h">Personalization</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">🌑</span><div style="flex:1"><div class="rlabel">Dark mode</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">🎨</span><div><div class="rlabel">Accent color</div><div class="rsub">Windows Blue #0078D4</div></div></div>
+            <div class="set-row"><span class="ricon">🖼️</span><div><div class="rlabel">Background</div><div class="rsub">Dynamic gradient mesh</div></div></div>
+          </div>
+        </div>
+        <div id="sp-apps" style="display:none">
+          <div class="set-h">Apps</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">📦</span><div><div class="rlabel">Microsoft Edge</div><div class="rsub">126.0.2 · 234 MB</div></div></div>
+            <div class="set-row"><span class="ricon">📦</span><div><div class="rlabel">Microsoft 365</div><div class="rsub">16.0.1 · 2.1 GB</div></div></div>
+            <div class="set-row"><span class="ricon">📦</span><div><div class="rlabel">Windows Terminal</div><div class="rsub">1.21.0 · 40 MB</div></div></div>
+            <div class="set-row"><span class="ricon">📦</span><div><div class="rlabel">Copilot</div><div class="rsub">3.0.2 · 120 MB</div></div></div>
+          </div>
+        </div>
+        <div id="sp-accounts" style="display:none">
+          <div class="set-h">Accounts</div>
+          <div class="sys-info"><div class="sm-avatar" style="width:52px;height:52px;font-size:26px;flex-shrink:0;">👤</div><div class="sys-det"><strong>Windows User</strong><br>user@outlook.com<br>Microsoft account · Administrator</div></div>
+        </div>
+        <div id="sp-privacy" style="display:none">
+          <div class="set-h">Privacy & security</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">📍</span><div style="flex:1"><div class="rlabel">Location</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">📷</span><div style="flex:1"><div class="rlabel">Camera</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">🎙️</span><div style="flex:1"><div class="rlabel">Microphone</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="set-row"><span class="ricon">🛡️</span><div><div class="rlabel">Windows Security</div><div class="rsub">Protected · Last scan 1h ago</div></div></div>
+          </div>
+        </div>
+        <div id="sp-update" style="display:none">
+          <div class="set-h">Windows Update</div>
+          <div class="set-card">
+            <div class="set-row"><span class="ricon">✅</span><div><div class="rlabel">You're up to date</div><div class="rsub">Windows 12 Pro — Build 26100.1</div></div></div>
+            <div class="set-row"><span class="ricon">🔄</span><div><div class="rlabel">Check for updates</div><div class="rsub">Last checked: Today, 09:14</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-settings')"></div>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="win" id="win-terminal" style="width:640px;height:420px;top:100px;left:200px;display:none;background:rgba(10,10,14,0.97);">
+    <div class="win-tb" onmousedown="startDrag(event,'win-terminal')" style="background:rgba(25,25,30,0.95);">
+      <div class="win-title" style="color:#eee;"><span class="ico">⬛</span>Windows PowerShell 8</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('terminal')">─</div>
+        <div class="wcb" onclick="maxWin('win-terminal')">□</div>
+        <div class="wcb cl" onclick="closeWin('terminal')">✕</div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div id="term-body">
+        <div class="tl" style="color:#60cdff;font-weight:600;">Windows PowerShell 8.0</div>
+        <div class="tl" style="color:#666;">Copyright (C) Microsoft Corporation. All rights reserved.</div>
+        <div class="tl" style="color:#666;">Type 'help' for a list of commands.</div>
+        <div class="tl"> </div>
+      </div>
+      <div id="term-in-row">
+        <span id="term-prompt">PS C:\Users\User&gt;</span>
+        <input id="term-in" type="text" autocomplete="off" spellcheck="false" onkeydown="termKey(event)">
+      </div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-terminal')"></div>
+  </div>
+
+  <!-- NOTEPAD -->
+  <div class="win" id="win-notepad" style="width:560px;height:420px;top:90px;left:180px;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-notepad')">
+      <div class="win-title"><span class="ico">📝</span>Untitled — Notepad</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('notepad')">─</div>
+        <div class="wcb" onclick="maxWin('win-notepad')">□</div>
+        <div class="wcb cl" onclick="closeWin('notepad')">✕</div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div id="np-bar">
+        <div class="np-menu">File</div>
+        <div class="np-menu">Edit</div>
+        <div class="np-menu">View</div>
+      </div>
+      <textarea id="np-area" placeholder="Start typing…" oninput="npStatus()" onkeyup="npStatus()" onclick="npStatus()"></textarea>
+      <div id="np-status"><span id="np-pos">Ln 1, Col 1</span><span>UTF-8</span><span>Windows (CRLF)</span><span>100%</span></div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-notepad')"></div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="win" id="win-calc" style="width:320px;height:500px;top:70px;left:360px;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-calc')">
+      <div class="win-title"><span class="ico">🧮</span>Calculator</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('calc')">─</div>
+        <div class="wcb" onclick="maxWin('win-calc')">□</div>
+        <div class="wcb cl" onclick="closeWin('calc')">✕</div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div id="calc-body">
+        <div id="calc-disp"><div id="calc-expr"></div><div id="calc-result">0</div></div>
+        <div id="calc-btns">
+          <div class="cb fn" onclick="cFn('C')">C</div>
+          <div class="cb fn" onclick="cFn('+/-')">+/−</div>
+          <div class="cb fn" onclick="cFn('%')">%</div>
+          <div class="cb op" onclick="cOp('/')">÷</div>
+          <div class="cb" onclick="cNum('7')">7</div><div class="cb" onclick="cNum('8')">8</div><div class="cb" onclick="cNum('9')">9</div>
+          <div class="cb op" onclick="cOp('*')">×</div>
+          <div class="cb" onclick="cNum('4')">4</div><div class="cb" onclick="cNum('5')">5</div><div class="cb" onclick="cNum('6')">6</div>
+          <div class="cb op" onclick="cOp('-')">−</div>
+          <div class="cb" onclick="cNum('1')">1</div><div class="cb" onclick="cNum('2')">2</div><div class="cb" onclick="cNum('3')">3</div>
+          <div class="cb op" onclick="cOp('+')">+</div>
+          <div class="cb wide" onclick="cNum('0')">0</div>
+          <div class="cb" onclick="cNum('.')">.</div>
+          <div class="cb eq" onclick="cEq()">=</div>
+        </div>
+      </div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-calc')"></div>
+  </div>
+
+  <!-- COPILOT -->
+  <div class="win" id="win-copilot" style="width:400px;height:560px;top:50px;right:20px;left:auto;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-copilot')">
+      <div class="win-title"><span class="ico">✨</span>Copilot</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('copilot')">─</div>
+        <div class="wcb" onclick="maxWin('win-copilot')">□</div>
+        <div class="wcb cl" onclick="closeWin('copilot')">✕</div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div id="cop-msgs">
+        <div class="cop-msg ai">
+          <div class="cop-av">✨</div>
+          <div class="cop-bubble">Hi! I'm Copilot, your Windows 12 AI assistant. Ask me anything — I can help with writing, coding, web search, and more.</div>
+        </div>
+      </div>
+      <div id="cop-in-row">
+        <textarea id="cop-in" placeholder="Ask me anything…" rows="1" onkeydown="copKey(event)"></textarea>
+        <div id="cop-send" onclick="sendCop()">➤</div>
+      </div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-copilot')"></div>
+  </div>
+
+  <!-- EDGE -->
+  <div class="win" id="win-edge" style="width:760px;height:520px;top:60px;left:100px;display:none;">
+    <div class="win-tb" onmousedown="startDrag(event,'win-edge')">
+      <div class="win-title"><span class="ico">🌐</span>Microsoft Edge — New Tab</div>
+      <div class="win-ctrls">
+        <div class="wcb" onclick="minWin('edge')">─</div>
+        <div class="wcb" onclick="maxWin('win-edge')">□</div>
+        <div class="wcb cl" onclick="closeWin('edge')">✕</div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div id="edge-bar">
+        <div class="edge-nav">←</div>
+        <div class="edge-nav">→</div>
+        <div class="edge-nav" onclick="showNotif('🌐','Edge','Page refreshed.')">↻</div>
+        <input id="edge-url" type="text" value="edge://newtab" onkeydown="if(event.key==='Enter')showNotif('🌐','Edge','Navigating to: '+this.value)">
+        <div class="edge-nav">⋯</div>
+      </div>
+      <div id="edge-body">
+        <div id="edge-bing">
+          <div id="edge-bing-logo">Bing</div>
+          <input id="edge-bing-search" type="text" placeholder="Search the web" onkeydown="if(event.key==='Enter')showNotif('🔍','Bing','Searching: '+this.value)">
+        </div>
+        <div class="edge-sec">Top Stories</div>
+        <div class="edge-grid">
+          <div class="edge-card"><div class="cat">Technology</div><div class="title">Windows 12 launches with AI-first design and deep Copilot integration</div><div class="src">The Verge · 2h ago</div></div>
+          <div class="edge-card"><div class="cat">AI</div><div class="title">Microsoft unveils next-gen Copilot reasoning model built on Azure AI</div><div class="src">Microsoft Blog · 3h ago</div></div>
+          <div class="edge-card"><div class="cat">Finance</div><div class="title">NASDAQ hits record high as tech earnings beat analyst expectations</div><div class="src">Reuters · 5h ago</div></div>
+          <div class="edge-card"><div class="cat">Science</div><div class="title">Researchers achieve room-temperature superconductivity breakthrough</div><div class="src">Nature · 8h ago</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="win-resize" onmousedown="startResize(event,'win-edge')"></div>
+  </div>
+</div>
+
+<script>
+// WALLPAPER
+const cvs=document.getElementById('wallpaper-canvas'),ctx2=cvs.getContext('2d');
+let W,H;
+const blobs=[
+  {x:.15,y:.2,r:.35,c:'#0a3d7a',vx:.0003,vy:.0002},
+  {x:.7,y:.15,r:.3,c:'#0d2040',vx:-.0002,vy:.0003},
+  {x:.5,y:.72,r:.4,c:'#091a40',vx:.0002,vy:-.0002},
+  {x:.85,y:.6,r:.28,c:'#1a0a3d',vx:-.0003,vy:-.0001},
+  {x:.3,y:.85,r:.25,c:'#003366',vx:.0001,vy:.0002},
+];
+function rsz(){W=cvs.width=cvs.offsetWidth;H=cvs.height=cvs.offsetHeight;}
+function drawWall(){
+  ctx2.fillStyle='#060a18';ctx2.fillRect(0,0,W,H);
+  blobs.forEach(b=>{
+    b.x+=b.vx;b.y+=b.vy;
+    if(b.x<0||b.x>1)b.vx*=-1;
+    if(b.y<0||b.y>1)b.vy*=-1;
+    const g=ctx2.createRadialGradient(b.x*W,b.y*H,0,b.x*W,b.y*H,b.r*Math.max(W,H));
+    g.addColorStop(0,b.c+'bb');g.addColorStop(1,'transparent');
+    ctx2.fillStyle=g;ctx2.fillRect(0,0,W,H);
+  });
+  ctx2.strokeStyle='rgba(255,255,255,0.018)';ctx2.lineWidth=1;
+  for(let x=0;x<W;x+=60){ctx2.beginPath();ctx2.moveTo(x,0);ctx2.lineTo(x,H);ctx2.stroke();}
+  for(let y=0;y<H;y+=60){ctx2.beginPath();ctx2.moveTo(0,y);ctx2.lineTo(W,y);ctx2.stroke();}
+  requestAnimationFrame(drawWall);
+}
+rsz();drawWall();
+window.addEventListener('resize',rsz);
+
+// CLOCK
+function tick(){
+  const n=new Date();
+  const t=n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const d=n.toLocaleDateString([],{month:'2-digit',day:'2-digit',year:'numeric'});
+  document.getElementById('tb-clock').innerHTML=t+'<br>'+d;
+}
+tick();setInterval(tick,1000);
+
+// BOOT
+setTimeout(()=>{
+  const b=document.getElementById('boot');b.style.opacity='0';
+  setTimeout(()=>{
+    b.style.display='none';
+    showNotif('⊞','Welcome','Windows 12 is ready.');
+    setTimeout(()=>showNotif('🛡️','Windows Security','Your device is protected.'),1200);
+    setTimeout(()=>showNotif('🔄','Windows Update','Up to date — Build 26100.1'),2400);
+  },600);
+},2500);
+
+// NOTIFICATIONS
+function showNotif(icon,title,msg){
+  const tray=document.getElementById('notif-tray');
+  const el=document.createElement('div');el.className='notif';
+  el.innerHTML=`<div class="notif-ico">${icon}</div><div class="notif-body"><div class="notif-title">${title}</div><div class="notif-msg">${msg}</div></div><div class="notif-x" onclick="this.parentElement.remove()">✕</div>`;
+  tray.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),300);},4200);
+}
+
+// START MENU
+let smOpen=false;
+function toggleStart(){
+  smOpen=!smOpen;
+  const sm=document.getElementById('start-menu');
+  const btn=document.getElementById('tb-start');
+  if(smOpen){sm.style.display='flex';requestAnimationFrame(()=>sm.classList.add('open'));btn.classList.add('active');}
+  else{sm.classList.remove('open');btn.classList.remove('active');setTimeout(()=>{if(!smOpen)sm.style.display='none';},200);}
+  if(acOpen)toggleAC();
+}
+document.addEventListener('mousedown',e=>{
+  if(smOpen&&!e.target.closest('#start-menu')&&!e.target.closest('#tb-start')&&!e.target.closest('#tb-search')){
+    smOpen=false;document.getElementById('start-menu').classList.remove('open');document.getElementById('tb-start').classList.remove('active');
+    setTimeout(()=>document.getElementById('start-menu').style.display='none',200);
+  }
+});
+
+// ACTION CENTER
+let acOpen=false;
+function toggleAC(){
+  acOpen=!acOpen;
+  document.getElementById('action-center').classList.toggle('open',acOpen);
+  if(smOpen)toggleStart();
+}
+document.addEventListener('mousedown',e=>{
+  if(acOpen&&!e.target.closest('#action-center')&&!e.target.closest('#tb-right')){
+    acOpen=false;document.getElementById('action-center').classList.remove('open');
+  }
+});
+
+// CONTEXT MENU
+document.getElementById('desktop').addEventListener('contextmenu',e=>{
+  if(e.target.closest('.win')||e.target.closest('#taskbar'))return;
+  e.preventDefault();
+  const m=document.getElementById('ctx');m.style.display='block';
+  let x=e.clientX,y=e.clientY;
+  if(x+190>window.innerWidth)x=window.innerWidth-190;
+  if(y+170>window.innerHeight)y=window.innerHeight-170;
+  m.style.left=x+'px';m.style.top=y+'px';
+});
+function closeCtx(){document.getElementById('ctx').style.display='none';}
+document.addEventListener('mousedown',e=>{if(!e.target.closest('#ctx'))closeCtx();});
+
+// WINDOWS
+const appMap={explorer:'win-explorer',settings:'win-settings',terminal:'win-terminal',notepad:'win-notepad',calc:'win-calc',copilot:'win-copilot',edge:'win-edge'};
+const tbMap={explorer:'tb-fe',settings:'tb-set',terminal:'tb-term',notepad:'tb-np',calc:'tb-calc',copilot:'tb-cop',edge:'tb-edge'};
+let zTop=200;
+
+function openApp(app){
+  if(smOpen)toggleStart();
+  const w=document.getElementById(appMap[app]);if(!w)return;
+  w.classList.remove('minimized');w.style.display='flex';
+  focusW(w);
+  if(tbMap[app])document.getElementById(tbMap[app]).classList.add('active');
+  if(app==='terminal')document.getElementById('term-in').focus();
+}
+function closeWin(app){
+  const w=document.getElementById(appMap[app]);
+  if(w){w.style.display='none';w.classList.remove('maximized');}
+  if(tbMap[app])document.getElementById(tbMap[app]).classList.remove('active');
+}
+function minWin(app){
+  const w=document.getElementById(appMap[app]);
+  if(w){w.classList.add('minimized');w.style.display='none';}
+}
+function maxWin(id){
+  const w=document.getElementById(id);if(!w)return;
+  w.classList.toggle('maximized');
+}
+function focusW(el){
+  document.querySelectorAll('.win').forEach(w=>w.classList.remove('focused'));
+  el.classList.add('focused');el.style.zIndex=++zTop;
+}
+document.addEventListener('mousedown',e=>{
+  const w=e.target.closest('.win');if(w)focusW(w);
+});
+
+// DRAG
+let drag=null;
+function startDrag(e,id){
+  if(e.target.closest('.win-ctrls'))return;
+  const w=document.getElementById(id);if(w.classList.contains('maximized'))return;
+  focusW(w);
+  const r=w.getBoundingClientRect();
+  drag={el:w,ox:e.clientX-r.left,oy:e.clientY-r.top};
+  e.preventDefault();
+}
+document.addEventListener('mousemove',e=>{
+  if(!drag)return;
+  let x=e.clientX-drag.ox,y=e.clientY-drag.oy;
+  x=Math.max(0,Math.min(window.innerWidth-drag.el.offsetWidth,x));
+  y=Math.max(0,Math.min(window.innerHeight-80,y));
+  drag.el.style.left=x+'px';drag.el.style.top=y+'px';drag.el.style.right='auto';
+});
+document.addEventListener('mouseup',()=>drag=null);
+
+// RESIZE
+let rz=null;
+function startResize(e,id){
+  const w=document.getElementById(id);
+  rz={el:w,sx:e.clientX,sy:e.clientY,sw:w.offsetWidth,sh:w.offsetHeight};
+  e.preventDefault();e.stopPropagation();
+}
+document.addEventListener('mousemove',e=>{
+  if(!rz)return;
+  rz.el.style.width=Math.max(280,rz.sw+(e.clientX-rz.sx))+'px';
+  rz.el.style.height=Math.max(180,rz.sh+(e.clientY-rz.sy))+'px';
+});
+document.addEventListener('mouseup',()=>rz=null);
+
+// TERMINAL
+const tb=document.getElementById('term-body');
+const tin=document.getElementById('term-in');
+const hist=[];let hi=-1;
+let cwd='C:\\Users\\User';
+function tp(html,cls='tl'){const d=document.createElement('div');d.className=cls;d.innerHTML=html;tb.appendChild(d);tb.scrollTop=9e9;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function termKey(e){
+  if(e.key==='Enter'){
+    const cmd=tin.value.trim();
+    tp(`<span class="tp">PS ${cwd}&gt;</span> ${esc(cmd)}`);
+    if(cmd){hist.unshift(cmd);hi=-1;}
+    tin.value='';runCmd(cmd.toLowerCase().split(' '),cmd);
+    document.getElementById('term-prompt').textContent=`PS ${cwd}>`;
+  }else if(e.key==='ArrowUp'){if(hi<hist.length-1)hi++;tin.value=hist[hi]||'';e.preventDefault();}
+  else if(e.key==='ArrowDown'){if(hi>0)hi--;else{hi=-1;tin.value='';return;}tin.value=hist[hi]||'';e.preventDefault();}
+}
+function runCmd(p,raw){
+  const c=p[0];
+  if(!c)return;
+  if(c==='help'){
+    tp('<span style="color:#60cdff">Available commands:</span>');
+    ['clear/cls','date','dir/ls','echo [text]','exit','get-process','hostname','ipconfig','ping [host]','pwd','systeminfo','ver','whoami'].forEach(x=>tp('  '+x));
+  }else if(c==='cls'||c==='clear'){tb.innerHTML='';}
+  else if(c==='ver'||c==='version'){tp('Windows PowerShell 8.0');tp('Windows 12 Pro — Build 26100.1');}
+  else if(c==='whoami'){tp('WIN12\\User');}
+  else if(c==='hostname'){tp('WIN12-PC');}
+  else if(c==='date'){tp(new Date().toString());}
+  else if(c==='pwd'){tp(cwd);}
+  else if(c==='dir'||c==='ls'){
+    tp(`<span style="color:#666">Directory: ${cwd}</span>`);
+    tp('<span style="color:#666">Mode          Date          Name</span>');
+    ['Report_Q4.docx','Budget.xlsx','Notes.txt','Projects\\','Backup\\'].forEach(f=>tp(`<span class="tp">-a---</span>  ${new Date().toLocaleDateString()}  ${f}`));
+  }else if(c==='cd'){
+    if(!p[1]){tp(cwd);}else if(p[1]==='..'){ const a=cwd.split('\\');a.pop();cwd=a.join('\\')||'C:\\';}
+    else{cwd=(cwd.endsWith('\\')?cwd:cwd+'\\')+p[1];}
+    document.getElementById('term-prompt').textContent=`PS ${cwd}>`;
+  }else if(c==='echo'){tp(esc(raw.slice(5)));}
+  else if(c==='ping'){
+    const h=p[1]||'google.com';tp(`Pinging ${h}:`);
+    ['28ms','30ms','29ms','31ms'].forEach((t,i)=>setTimeout(()=>tp(`<span class="tok">Reply from 142.250.80.14: time=${t} TTL=54</span>`),(i+1)*200));
+    setTimeout(()=>tp(`Sent=4 Received=4 Lost=0`),1000);
+  }else if(c==='ipconfig'){
+    tp('Windows IP Configuration\n');
+    tp('Ethernet adapter Wi-Fi:');
+    tp('   IPv4 Address. . . : 192.168.1.105');
+    tp('   Subnet Mask . . . : 255.255.255.0');
+    tp('   Default Gateway . : 192.168.1.1');
+  }else if(c==='systeminfo'){
+    tp('Host Name:   WIN12-PC');tp('OS Name:     Windows 12 Pro');
+    tp('Version:     10.0.26100');tp('Processor:   Intel Core Ultra 9 275HX');
+    tp('Total RAM:   32,768 MB');
+  }else if(c==='get-process'){
+    tp('<span style="color:#666"> PID   CPU%  MEM     Name</span>');
+    [['1234','2.1','28 MB','explorer'],['5678','12.3','95 MB','msedge'],['9012','0.5','16 MB','notepad'],['3456','0.1','8 MB','copilot']].forEach(x=>tp(`${x[0].padStart(5)} ${x[1].padStart(5)} ${x[2].padStart(7)}  <span class="tp">${x[3]}</span>`));
+  }else if(c==='exit'){closeWin('terminal');}
+  else{tp(`<span class="terr">'${esc(p[0])}' is not recognized. Type 'help' for commands.</span>`);}
+}
+
+// NOTEPAD
+function npStatus(){
+  const ta=document.getElementById('np-area'),txt=ta.value,pos=ta.selectionStart;
+  const lines=txt.substring(0,pos).split('\n');
+  document.getElementById('np-pos').textContent=`Ln ${lines.length}, Col ${lines[lines.length-1].length+1}`;
+}
+
+// CALCULATOR
+let CS={expr:'',cur:'0',op:null,prev:null,rst:false};
+function cDisp(){document.getElementById('calc-result').textContent=CS.cur;document.getElementById('calc-expr').textContent=CS.expr;}
+function cNum(n){
+  if(n==='.'&&CS.cur.includes('.'))return;
+  if(CS.rst||CS.cur==='0'){CS.cur=n==='.'?'0.':n;CS.rst=false;}
+  else if(CS.cur.length<15)CS.cur+=n;
+  cDisp();
+}
+function cOp(op){
+  const v=parseFloat(CS.cur);
+  if(CS.prev!==null&&!CS.rst)CS.cur=cfmt(cCalc(CS.prev,v,CS.op));
+  CS.prev=parseFloat(CS.cur);CS.op=op;CS.rst=true;
+  CS.expr=CS.cur+' '+(op==='/'?'÷':op==='*'?'×':op);
+  cDisp();
+}
+function cFn(f){
+  const v=parseFloat(CS.cur);
+  if(f==='C'){CS={expr:'',cur:'0',op:null,prev:null,rst:false};}
+  else if(f==='+/-')CS.cur=cfmt(-v);
+  else if(f==='%')CS.cur=cfmt(v/100);
+  cDisp();
+}
+function cEq(){
+  if(CS.prev===null||CS.op===null)return;
+  const v=parseFloat(CS.cur);
+  CS.expr=`${CS.prev} ${CS.op==='/'?'÷':CS.op==='*'?'×':CS.op} ${v} =`;
+  CS.cur=cfmt(cCalc(CS.prev,v,CS.op));CS.prev=null;CS.op=null;CS.rst=true;cDisp();
+}
+function cCalc(a,b,op){if(op==='+')return a+b;if(op==='-')return a-b;if(op==='*')return a*b;if(op==='/')return b===0?NaN:a/b;return b;}
+function cfmt(n){if(isNaN(n))return'Error';const s=parseFloat(n.toPrecision(12));return String(s).length>14?s.toExponential(5):String(s);}
+
+// COPILOT
+const copR=[
+  "I'd be happy to help! Can you tell me more about what you need?",
+  "Great question. Windows 12 is built around AI — Copilot is integrated everywhere, including File Explorer, Edge, and Settings.",
+  "I can assist with writing, coding, research, and creative tasks. What would you like to work on?",
+  "That's an interesting topic! Here's what I know based on the latest information available to me.",
+  "I can search the web, summarize documents, draft emails, or just chat. What can I do for you?",
+  "Windows 12's AI capabilities are powered by Azure AI infrastructure with on-device processing for privacy.",
+  "I'm on it! Let me think through the best approach for your request.",
+  "Of course — here's a comprehensive response based on your question.",
+];
+let copI=0;
+function sendCop(){
+  const inp=document.getElementById('cop-in');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addCopMsg('user',msg);
+  const msgs=document.getElementById('cop-msgs');
+  const ty=document.createElement('div');ty.className='cop-msg ai';
+  ty.innerHTML='<div class="cop-av">✨</div><div class="cop-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(ty);msgs.scrollTop=9e9;
+  setTimeout(()=>{ty.remove();addCopMsg('ai',copR[copI++%copR.length]);},1000+Math.random()*800);
+}
+function addCopMsg(r,t){
+  const msgs=document.getElementById('cop-msgs');
+  const el=document.createElement('div');el.className='cop-msg '+r;
+  const av=r==='ai'?'<div class="cop-av">✨</div>':'<div class="cop-av u">👤</div>';
+  el.innerHTML=(r==='ai'?av:'')+'<div class="cop-bubble">'+t+'</div>'+(r==='user'?av:'');
+  msgs.appendChild(el);msgs.scrollTop=9e9;
+}
+function copKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendCop();}}
+
+// FILE EXPLORER
+function setPath(p){
+  document.getElementById('fe-path').textContent='This PC › '+p;
+  document.querySelectorAll('.fe-si').forEach(i=>i.classList.remove('active'));
+}
+
+// SETTINGS
+function showSet(e,page){
+  document.querySelectorAll('#set-main > div').forEach(d=>d.style.display='none');
+  const el=document.getElementById('sp-'+page);if(el)el.style.display='';
+  document.querySelectorAll('.set-item').forEach(i=>i.classList.remove('active'));
+  e.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>4×4×24 — Live Tracker</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #141414;
+    --bg-3: #1c1c1c;
+    --fg: #f5f5f5;
+    --fg-dim: #9a9a9a;
+    --fg-faint: #555;
+    --accent: #ff6b35;
+    --accent-dim: #8a3a1c;
+    --ok: #4ade80;
+    --warn: #fbbf24;
+    --border: #262626;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+  }
+  header {
+    padding: 20px 0 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: var(--fg-dim);
+    font-size: 13px;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--bg-3);
+    border-radius: 2px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .current-lap-card {
+    background: linear-gradient(160deg, #1f1410 0%, #141414 100%);
+    border: 1px solid var(--accent-dim);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .current-lap-card.resting {
+    background: linear-gradient(160deg, #101820 0%, #141414 100%);
+    border-color: #2a4a5c;
+  }
+  .current-lap-card.done {
+    background: linear-gradient(160deg, #0f1d10 0%, #141414 100%);
+    border-color: #2d5a3a;
+  }
+  .lap-label {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .lap-label.active {
+    color: var(--accent);
+  }
+  .lap-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .lap-time {
+    font-size: 15px;
+    color: var(--fg-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown {
+    font-size: 48px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -1px;
+    margin: 16px 0 8px;
+    color: var(--accent);
+  }
+  .countdown.done { color: var(--ok); }
+  .countdown-label {
+    font-size: 13px;
+    color: var(--fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-top: 16px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn.secondary {
+    background: var(--bg-3);
+    color: var(--fg);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--fg-dim);
+    font-size: 13px;
+    padding: 8px;
+    margin-top: 8px;
+  }
+  .checklist {
+    margin-top: 20px;
+    background: var(--bg-2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .checklist-title {
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 12px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2px solid var(--fg-faint);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .check-item.checked .check-box {
+    background: var(--ok);
+    border-color: var(--ok);
+  }
+  .check-item.checked .check-box::after {
+    content: "✓";
+    color: #000;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .check-item.checked .check-text {
+    color: var(--fg-faint);
+    text-decoration: line-through;
+  }
+  .check-text {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .section {
+    margin-bottom: 24px;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .section-chevron {
+    color: var(--fg-faint);
+    transition: transform 0.2s;
+    font-size: 12px;
+  }
+  .section.open .section-chevron { transform: rotate(90deg); }
+  .section-body {
+    display: none;
+    padding: 4px 0 12px;
+  }
+  .section.open .section-body { display: block; }
+  .lap-row {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: var(--bg-2);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+    font-size: 14px;
+  }
+  .lap-row.current {
+    border-left-color: var(--accent);
+    background: var(--bg-3);
+  }
+  .lap-row.completed {
+    opacity: 0.5;
+    border-left-color: var(--ok);
+  }
+  .lap-num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--fg-dim);
+    text-align: center;
+  }
+  .lap-row.current .lap-num { color: var(--accent); }
+  .lap-row.completed .lap-num { color: var(--ok); }
+  .lap-info-time {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .lap-info-note {
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-top: 2px;
+  }
+  .lap-status {
+    align-self: center;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .info-box {
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .info-box strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .info-box.warn strong {
+    color: var(--warn);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .mini-card {
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+  }
+  .mini-card-label {
+    color: var(--fg-dim);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  ul.plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.plain li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  ul.plain li:last-child { border-bottom: none; }
+  .emergency {
+    background: #2a1510;
+    border: 1px solid #5c2a1c;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .emergency strong { color: #ff8a5b; }
+  .food-block {
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .food-label {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .food-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .food-list li {
+    padding: 6px 0 6px 16px;
+    font-size: 14px;
+    position: relative;
+    border-bottom: 1px dashed var(--border);
+  }
+  .food-list li:last-child { border-bottom: none; }
+  .food-list li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-weight: 900;
+  }
+  .shop-cat {
+    margin-bottom: 14px;
+  }
+  .shop-cat-title {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .shop-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: var(--bg-2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .shop-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .shop-item:last-child { border-bottom: none; }
+  .shop-item .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--fg-faint);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .shop-item.checked .check-box {
+    background: var(--ok);
+    border-color: var(--ok);
+  }
+  .shop-item.checked .check-box::after {
+    content: "✓";
+    color: #000;
+    font-weight: 900;
+    font-size: 11px;
+  }
+  .shop-item.checked .shop-text {
+    color: var(--fg-faint);
+    text-decoration: line-through;
+  }
+  .shop-text { flex: 1; }
+  .shop-price {
+    color: var(--fg-dim);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  footer {
+    text-align: center;
+    color: var(--fg-faint);
+    font-size: 11px;
+    padding: 24px 0 16px;
+    letter-spacing: 0.5px;
+  }
+  .reset-link {
+    color: var(--fg-faint);
+    font-size: 11px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>4×4×24 — Live</h1>
+  <div class="subtitle" id="headerStatus">Preparing · Saturday 00:00 start</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+</header>
+
+<div id="currentCard" class="current-lap-card">
+  <div class="lap-label active" id="cardLabel">NEXT UP</div>
+  <div class="lap-title" id="cardTitle">Lap 1</div>
+  <div class="lap-time" id="cardTime">Start 00:00 · 4 km · target 28–30 min</div>
+  <div class="countdown" id="countdown">—</div>
+  <div class="countdown-label" id="countdownLabel">until start</div>
+  <button class="btn" id="actionBtn">I'm starting lap 1</button>
+  <button class="btn ghost" id="undoBtn" style="display:none">Undo last action</button>
+</div>
+
+<div class="checklist" id="checklist">
+  <div class="checklist-title" id="checklistTitle">Pre-lap checklist</div>
+  <div id="checklistItems"></div>
+</div>
+
+<div class="section" id="sec-laps">
+  <div class="section-header" onclick="toggleSection('sec-laps')">
+    <div class="section-title">All laps</div>
+    <div class="section-chevron">▶</div>
+  </div>
+  <div class="section-body" id="allLaps"></div>
+</div>
+
+<div class="section" id="sec-pacing">
+  <div class="section-header" onclick="toggleSection('sec-pacing')">
+    <div class="section-title">Pacing rule</div>
+    <div class="section-chevron">▶</div>
+  </div>
+  <div class="section-body">
+    <div class="info-box">
+      <strong>7:00–7:30/km all 6 laps.</strong> Not your 6:00/km fresh pace. Feels slow lap 1 — that's the point. Walk first 200 m, walk last 200 m. Every lap.
+    </div>
+    <div class="info-box warn">
+      <strong>Speeding up lap 4 is the #1 mistake.</strong> You'll feel good. Don't. Lap 5 pays the bill with interest.
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-food">
+  <div class="section-header" onclick="toggleSection('sec-food')">
+    <div class="section-title">Food plan per lap</div>
+    <div class="section-chevron">▶</div>
+  </div>
+  <div class="section-body">
+    <div class="info-box">
+      <strong>Targets per rest window:</strong> ~300–400 kcal, 300–500 ml fluid, electrolytes. Front-load the eating in the first 30 min after finishing — your stomach closes down once you lie flat.
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">Friday 20:00 · pre-event dinner</div>
+      <ul class="food-list">
+        <li>Pasta with tomato sauce + chicken (~600 kcal)</li>
+        <li>Bread roll</li>
+        <li>1 banana</li>
+        <li>500 ml water</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">Friday 22:30 · light top-up</div>
+      <ul class="food-list">
+        <li>2 slices bread + honey + peanut butter</li>
+        <li>200 ml water (stop drinking after)</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 1 · 00:30 window</div>
+      <ul class="food-list">
+        <li>500 ml water + electrolyte tablet</li>
+        <li>1 banana + bread with honey</li>
+        <li>Espresso (caffeine strike #1)</li>
+        <li>Handful salted almonds</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 2 · 04:30 window · real breakfast</div>
+      <ul class="food-list">
+        <li>500 ml water + electrolyte tablet</li>
+        <li>2 eggs scrambled + 2 slices bread + butter</li>
+        <li>Bowl of oats with honey + banana</li>
+        <li>1 coffee (LAST caffeine of the event)</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 3 · 08:30 window</div>
+      <ul class="food-list">
+        <li>500 ml water + electrolyte tablet</li>
+        <li>2 slices bread + peanut butter + honey</li>
+        <li>1 banana</li>
+        <li>Greek yogurt with berries</li>
+        <li>No more coffee</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 4 · 12:30 window · real lunch</div>
+      <ul class="food-list">
+        <li>500 ml water + electrolyte tablet</li>
+        <li>Pasta with tomato sauce + chicken (~700 kcal)</li>
+        <li>Side of bread, extra salt</li>
+        <li>1 banana</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 5 · 16:30 window · easy on stomach</div>
+      <ul class="food-list">
+        <li>500 ml water + electrolyte tablet</li>
+        <li>1 energy gel or 2 tbsp honey</li>
+        <li>Rice cakes or bread with jam</li>
+        <li>1 banana</li>
+        <li>Square of chocolate if you want</li>
+      </ul>
+    </div>
+
+    <div class="food-block">
+      <div class="food-label">After lap 6 · celebration</div>
+      <ul class="food-list">
+        <li>Big water + electrolytes first</li>
+        <li>Whatever you want. Burger, pizza, Älplermagronen — earn it</li>
+        <li>Protein + carbs for recovery</li>
+      </ul>
+    </div>
+
+    <div class="info-box warn" style="margin-top:14px">
+      <strong>Mid-lap fuel</strong> for laps 4, 5, 6: carry 1 gel or fruit bar in your pocket. Eat halfway through.
+    </div>
+    <div class="info-box warn">
+      <strong>No new foods.</strong> Only things your stomach already knows. Not the day to try a new gel brand.
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-shopping">
+  <div class="section-header" onclick="toggleSection('sec-shopping')">
+    <div class="section-title">Shopping list (Thursday/Friday)</div>
+    <div class="section-chevron">▶</div>
+  </div>
+  <div class="section-body">
+    <div class="info-box">
+      <strong>Total ~55–70 CHF.</strong> Buy today if possible — Friday after 16:00 means rushed, tired shopping.
+    </div>
+
+    <div class="shop-cat">
+      <div class="shop-cat-title">Carbs / baseline</div>
+      <ul id="shop-carbs" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Protein</div>
+      <ul id="shop-protein" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Fruit & quick sugars</div>
+      <ul id="shop-fruit" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Hydration / electrolytes</div>
+      <ul id="shop-hydration" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Sports nutrition</div>
+      <ul id="shop-sports" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Already have? check first</div>
+      <ul id="shop-pantry" class="shop-list"></ul>
+    </div>
+    <div class="shop-cat">
+      <div class="shop-cat-title">Non-food essentials</div>
+      <ul id="shop-gear" class="shop-list"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-trouble">
+  <div class="section-header" onclick="toggleSection('sec-trouble')">
+    <div class="section-title">If things go wrong</div>
+    <div class="section-chevron">▶</div>
+  </div>
+  <div class="section-body">
+    <div class="emergency">
+      <strong>Blister:</strong> Compeed plaster mid-lap, keep going. Don't pop.<br><br>
+      <strong>Sharp localized knee/shin pain:</strong> Only reason to stop. Dull ache = normal.<br><br>
+      <strong>Nausea:</strong> Stop solids. Sip water + salt. Flat Coke in small sips.<br><br>
+      <strong>Want to quit (lap 2 or 5):</strong> Normal. Walk first km, reassess at km 2. 90% of urges pass in 10 min.<br><br>
+      <strong>Missed alarm:</strong> Start the lap late — shorter rest next window. Don't skip.<br><br>
+      <strong>Paracetamol OK. No ibuprofen</strong> (kidney stress during endurance).
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="reset-link" onclick="confirmReset()">Reset tracker</span>
+</footer>
+
+<script>
+  // ===== Lap definitions =====
+  const laps = [
+    { n: 1, start: "00:00", note: "Cold, dark, fresh. Easy does it.", kit: "Tights, long-sleeve base, jacket, beanie, gloves, headlamp, hi-viz" },
+    { n: 2, start: "04:00", note: "Hardest mentally. Coldest body temp.", kit: "Same as lap 1. Extra layer if needed." },
+    { n: 3, start: "08:00", note: "Daylight helps. Ditch the jacket.", kit: "Tights, long sleeve, cap. Gloves optional." },
+    { n: 4, start: "12:00", note: "You'll feel good. Don't speed up.", kit: "Shorts + t-shirt, cap, sunglasses." },
+    { n: 5, start: "16:00", note: "Stiffness peaks. Long warm-up.", kit: "Shorts + long-sleeve, cap." },
+    { n: 6, start: "20:00", note: "Adrenaline lap. Finish with your friend.", kit: "Back to night kit. Headlamp, hi-viz." }
+  ];
+
+  // Prelap base checklist
+  const prelapChecks = [
+    "Shoes on correct feet (laugh now, thank me later)",
+    "Socks dry & clean",
+    "Vaseline on toes + inner thighs + nipples",
+    "Headlamp on + hi-viz (laps 1, 2, 6)",
+    "Water bottle / gel in pocket",
+    "Phone charged, GPS watch started",
+    "2 min warm-up walk outside before go"
+  ];
+
+  // Per-lap post-lap nutrition (what to eat/drink during the rest window AFTER this lap)
+  const postLapNutrition = {
+    1: [
+      "500 ml water + electrolyte tablet",
+      "1 banana + 1 slice bread with honey",
+      "1 espresso or coffee (caffeine strike #1)",
+      "Handful of salted almonds"
+    ],
+    2: [
+      "500 ml water + electrolyte tablet",
+      "BREAKFAST: 2 eggs + 2 slices bread + butter",
+      "Bowl of oats with honey + banana",
+      "1 coffee (last caffeine of the event)",
+      "Extra pinch of salt on the eggs"
+    ],
+    3: [
+      "500 ml water + electrolyte tablet",
+      "2 slices bread with peanut butter + honey",
+      "1 banana",
+      "Greek yogurt with berries if you have it",
+      "NO more coffee after this point"
+    ],
+    4: [
+      "500 ml water + electrolyte tablet",
+      "LUNCH: pasta with tomato sauce + chicken breast",
+      "Side of bread",
+      "1 banana for dessert",
+      "Extra salt on the pasta"
+    ],
+    5: [
+      "500 ml water + electrolyte tablet",
+      "1 energy gel or 2 tbsp honey",
+      "Rice cakes or bread with jam (easy on stomach)",
+      "1 banana",
+      "Small piece of chocolate if you want"
+    ]
+  };
+
+  const postLapBase = [
+    "Walk 2 min, don't sit yet",
+    "Check feet — hotspots or blisters?",
+    "Change socks if damp",
+    "Legs elevated on pillow, lie flat",
+    "Set TWO alarms for next lap",
+    "30 min before next lap: get up + move"
+  ];
+
+  const doneChecks = [
+    "Walk a bit, don't collapse on couch",
+    "Warm shower, not hot",
+    "Big meal: protein + carbs (eggs, meat, pasta, rice)",
+    "Hydrate with electrolytes",
+    "Text friend: you both did it",
+    "Sleep as long as your body wants"
+  ];
+
+  function getPostLapChecklist(lapNum) {
+    const nutrition = postLapNutrition[lapNum] || [];
+    // Nutrition items come first (most important), then recovery
+    return [...nutrition, ...postLapBase];
+  }
+
+  const checklists = {
+    prelap: prelapChecks,
+    done: doneChecks
+  };
+
+  // ===== State =====
+  const STORAGE_KEY = "run4x4x24_v1";
+  let state = loadState();
+
+  function defaultState() {
+    return {
+      currentLap: 1,      // 1..6, which lap is next OR in progress
+      phase: "prelap",    // "prelap" | "running" | "resting" | "done"
+      completed: [],      // array of lap numbers completed
+      checks: {},         // keyed by phase+lap, array of booleans
+      shopChecks: {},     // shopping list checkbox state
+      lastAction: null    // for undo
+    };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      const parsed = JSON.parse(raw);
+      return { ...defaultState(), ...parsed };
+    } catch (e) {
+      return defaultState();
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  // ===== Time helpers =====
+  // Event reference: Saturday of current week, 00:00 local
+  // We compute "target" moments relative to system clock.
+  function getLapStartDate(lapNum) {
+    // Find upcoming Saturday 00:00 (or today if it's Saturday before event end)
+    const now = new Date();
+    const target = new Date(now);
+    // Find the Saturday that is either today or the next one
+    const dayOfWeek = now.getDay(); // 0 Sun .. 6 Sat
+    // We want the Saturday whose 00:00 is closest but such that the event (Sat 00:00 → Sat 20:30) is active or future
+    // If today is Fri, next Sat. If today is Sat and time < 22:00, today. Else next Sat.
+    let daysUntilSat;
+    if (dayOfWeek === 6) {
+      // it's Saturday
+      daysUntilSat = 0;
+      if (now.getHours() >= 22) daysUntilSat = 7;
+    } else {
+      daysUntilSat = (6 - dayOfWeek + 7) % 7;
+      if (daysUntilSat === 0) daysUntilSat = 7;
+    }
+    target.setDate(now.getDate() + daysUntilSat);
+    target.setHours(0, 0, 0, 0);
+    // Lap N starts at (lapNum - 1) * 4 hours from Sat 00:00
+    target.setHours((lapNum - 1) * 4);
+    return target;
+  }
+
+  function fmtDuration(ms) {
+    if (ms < 0) ms = 0;
+    const totalSec = Math.floor(ms / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    if (h > 0) return `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    return `${m}:${String(s).padStart(2,"0")}`;
+  }
+
+  // ===== Render =====
+  function render() {
+    const card = document.getElementById("currentCard");
+    const label = document.getElementById("cardLabel");
+    const title = document.getElementById("cardTitle");
+    const time = document.getElementById("cardTime");
+    const countdown = document.getElementById("countdown");
+    const cdLabel = document.getElementById("countdownLabel");
+    const btn = document.getElementById("actionBtn");
+    const undo = document.getElementById("undoBtn");
+    const checklistTitle = document.getElementById("checklistTitle");
+    const checklistItems = document.getElementById("checklistItems");
+    const headerStatus = document.getElementById("headerStatus");
+    const progressFill = document.getElementById("progressFill");
+
+    // Progress
+    const pct = (state.completed.length / 6) * 100;
+    progressFill.style.width = pct + "%";
+
+    // Undo button
+    undo.style.display = state.lastAction ? "block" : "none";
+
+    if (state.phase === "done") {
+      card.className = "current-lap-card done";
+      label.className = "lap-label";
+      label.textContent = "COMPLETE";
+      title.textContent = "All 6 laps done";
+      time.textContent = "24 km · 24 hours · you did it";
+      countdown.className = "countdown done";
+      countdown.textContent = "✓";
+      cdLabel.textContent = "finished";
+      btn.style.display = "none";
+      checklistTitle.textContent = "Recovery checklist";
+      renderChecks("done", 0, checklistItems);
+      headerStatus.textContent = "Complete · well done";
+      return;
+    }
+
+    const lap = laps[state.currentLap - 1];
+    const lapStart = getLapStartDate(state.currentLap);
+    const now = new Date();
+    const diff = lapStart - now;
+
+    if (state.phase === "prelap") {
+      card.className = "current-lap-card";
+      label.className = "lap-label active";
+      label.textContent = "NEXT UP";
+      title.textContent = `Lap ${lap.n} of 6`;
+      time.textContent = `Start ${lap.start} · 4 km · target 28–30 min · ${lap.note}`;
+      countdown.className = "countdown";
+      if (diff > 0) {
+        countdown.textContent = fmtDuration(diff);
+        cdLabel.textContent = "until start";
+      } else {
+        countdown.textContent = "GO";
+        cdLabel.textContent = "start time reached";
+      }
+      btn.style.display = "block";
+      btn.textContent = `I'm starting lap ${lap.n}`;
+      checklistTitle.textContent = `Pre-lap ${lap.n} checklist · Kit: ${lap.kit}`;
+      renderChecks("prelap", lap.n, checklistItems);
+      headerStatus.textContent = `Lap ${lap.n} of 6 · ${state.completed.length} done`;
+    } else if (state.phase === "running") {
+      card.className = "current-lap-card";
+      label.className = "lap-label active";
+      label.textContent = "RUNNING";
+      title.textContent = `Lap ${lap.n} in progress`;
+      time.textContent = `4 km · hold 7:00–7:30/km · walk last 200 m`;
+      countdown.className = "countdown";
+      // count up from lap start
+      const elapsed = now - lapStart;
+      countdown.textContent = elapsed > 0 ? fmtDuration(elapsed) : "—";
+      cdLabel.textContent = "elapsed";
+      btn.style.display = "block";
+      btn.textContent = `Done — finished lap ${lap.n}`;
+      checklistTitle.textContent = `Mid-lap reminders`;
+      checklistItems.innerHTML = `
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Breathe easy — can you speak a full sentence?</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Land midfoot, short strides</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Walk the last 200 m</div></div>
+      `;
+      // mid-lap checks don't persist
+      checklistItems.querySelectorAll(".check-item").forEach(el => {
+        el.addEventListener("click", () => el.classList.toggle("checked"));
+      });
+      headerStatus.textContent = `Running lap ${lap.n}`;
+    } else if (state.phase === "resting") {
+      const nextLap = state.currentLap + 1;
+      card.className = "current-lap-card resting";
+      label.className = "lap-label";
+      label.textContent = "RESTING";
+      const lastDone = laps[state.currentLap - 1];
+      title.textContent = `Lap ${lastDone.n} done`;
+      const nextLapInfo = laps[nextLap - 1];
+      if (nextLapInfo) {
+        time.textContent = `Next: lap ${nextLap} at ${nextLapInfo.start}`;
+        const nextStart = getLapStartDate(nextLap);
+        const toNext = nextStart - now;
+        countdown.className = "countdown";
+        countdown.textContent = toNext > 0 ? fmtDuration(toNext) : "GO";
+        cdLabel.textContent = toNext > 0 ? "until next lap" : "start now";
+      } else {
+        time.textContent = "Final lap complete";
+        countdown.textContent = "✓";
+        cdLabel.textContent = "done";
+      }
+      btn.style.display = "block";
+      btn.textContent = nextLapInfo ? `I'm starting lap ${nextLap}` : "Finish challenge";
+      checklistTitle.textContent = `Post-lap ${lastDone.n} protocol`;
+      renderChecks("postlap", lastDone.n, checklistItems);
+      headerStatus.textContent = `Resting · ${state.completed.length} of 6 done`;
+    }
+
+    renderAllLaps();
+  }
+
+  function renderChecks(phase, lapNum, container) {
+    const key = `${phase}_${lapNum}`;
+    let list;
+    if (phase === "postlap") {
+      list = getPostLapChecklist(lapNum);
+    } else {
+      list = checklists[phase] || [];
+    }
+    if (!state.checks[key]) {
+      state.checks[key] = new Array(list.length).fill(false);
+    }
+    // Resize if list length changed (safety)
+    if (state.checks[key].length !== list.length) {
+      state.checks[key] = new Array(list.length).fill(false);
+    }
+    container.innerHTML = "";
+    list.forEach((text, i) => {
+      const el = document.createElement("div");
+      el.className = "check-item" + (state.checks[key][i] ? " checked" : "");
+      // Nutrition items get a subtle marker
+      const isNutrition = phase === "postlap" && i < (postLapNutrition[lapNum]?.length || 0);
+      el.innerHTML = `<div class="check-box"></div><div class="check-text">${isNutrition ? "🍴 " : ""}${text}</div>`;
+      el.addEventListener("click", () => {
+        state.checks[key][i] = !state.checks[key][i];
+        saveState();
+        render();
+      });
+      container.appendChild(el);
+    });
+  }
+
+  function renderAllLaps() {
+    const container = document.getElementById("allLaps");
+    container.innerHTML = "";
+    laps.forEach(l => {
+      const row = document.createElement("div");
+      let cls = "lap-row";
+      let status = "";
+      if (state.completed.includes(l.n)) {
+        cls += " completed";
+        status = "DONE";
+      } else if (l.n === state.currentLap && state.phase !== "done") {
+        cls += " current";
+        status = state.phase === "running" ? "NOW" : "NEXT";
+      }
+      row.className = cls;
+      row.innerHTML = `
+        <div class="lap-num">${l.n}</div>
+        <div>
+          <div class="lap-info-time">${l.start}</div>
+          <div class="lap-info-note">${l.note}</div>
+        </div>
+        <div class="lap-status">${status}</div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  // ===== Actions =====
+  function handleAction() {
+    state.lastAction = JSON.parse(JSON.stringify({
+      currentLap: state.currentLap,
+      phase: state.phase,
+      completed: [...state.completed]
+    }));
+
+    if (state.phase === "prelap") {
+      state.phase = "running";
+    } else if (state.phase === "running") {
+      if (!state.completed.includes(state.currentLap)) {
+        state.completed.push(state.currentLap);
+      }
+      if (state.currentLap >= 6) {
+        state.phase = "done";
+      } else {
+        state.phase = "resting";
+      }
+    } else if (state.phase === "resting") {
+      state.currentLap += 1;
+      state.phase = "prelap";
+    }
+    saveState();
+    render();
+  }
+
+  function undoAction() {
+    if (!state.lastAction) return;
+    state.currentLap = state.lastAction.currentLap;
+    state.phase = state.lastAction.phase;
+    state.completed = state.lastAction.completed;
+    state.lastAction = null;
+    saveState();
+    render();
+  }
+
+  function confirmReset() {
+    if (confirm("Reset the tracker? This clears all progress and check marks.")) {
+      state = defaultState();
+      saveState();
+      render();
+    }
+  }
+
+  function toggleSection(id) {
+    document.getElementById(id).classList.toggle("open");
+  }
+
+  // ===== Shopping list =====
+  const shopping = {
+    carbs: [
+      { t: "Bread — 1 loaf (whole or sourdough)", p: "~4" },
+      { t: "Pasta — 500 g", p: "~2" },
+      { t: "Oats — 500 g pack", p: "~3" },
+      { t: "Rice cakes — 1 pack", p: "~3" }
+    ],
+    protein: [
+      { t: "Eggs — 6 pack", p: "~4" },
+      { t: "Chicken breast — 400 g", p: "~10" },
+      { t: "Greek yogurt — 500 g", p: "~4" },
+      { t: "Peanut butter — 1 jar", p: "~5" }
+    ],
+    fruit: [
+      { t: "Bananas — 8 (6 for laps + 2 extra)", p: "~3" },
+      { t: "Berries — 1 pack (optional)", p: "~4" },
+      { t: "Honey — 1 jar", p: "~5" },
+      { t: "Jam — 1 jar", p: "~4" }
+    ],
+    hydration: [
+      { t: "Electrolyte tablets — 1 tube (8+ tabs)", p: "~7" },
+      { t: "Lemons — 2", p: "~2" },
+      { t: "Salt — check pantry first", p: "—" },
+      { t: "Mineral water — 2× 1.5 L (optional, tap works)", p: "~2" }
+    ],
+    sports: [
+      { t: "Energy gels — 3 (for laps 4, 5, 6)", p: "~6" },
+      { t: "Fruit bars / Ovomaltine bars — 3", p: "~5" },
+      { t: "Dark chocolate — 1 bar", p: "~3" }
+    ],
+    pantry: [
+      { t: "Butter" },
+      { t: "Tomato sauce (passata or jar)" },
+      { t: "Olive oil" },
+      { t: "Pepper" },
+      { t: "Coffee / espresso" },
+      { t: "Salted almonds or mixed nuts" }
+    ],
+    gear: [
+      { t: "Compeed blister plasters" },
+      { t: "Vaseline or anti-chafe balm" },
+      { t: "Paracetamol (NOT ibuprofen)" },
+      { t: "Power bank (charged)" },
+      { t: "Headlamp batteries (fresh)" },
+      { t: "6 clean pairs of running socks" }
+    ]
+  };
+
+  function renderShopping() {
+    Object.keys(shopping).forEach(cat => {
+      const ul = document.getElementById("shop-" + cat);
+      if (!ul) return;
+      ul.innerHTML = "";
+      shopping[cat].forEach((item, i) => {
+        const key = `shop_${cat}_${i}`;
+        const checked = state.shopChecks && state.shopChecks[key];
+        const li = document.createElement("li");
+        li.className = "shop-item" + (checked ? " checked" : "");
+        li.innerHTML = `
+          <div class="check-box"></div>
+          <div class="shop-text">${item.t}</div>
+          ${item.p ? `<div class="shop-price">${item.p} CHF</div>` : ""}
+        `;
+        li.addEventListener("click", () => {
+          if (!state.shopChecks) state.shopChecks = {};
+          state.shopChecks[key] = !state.shopChecks[key];
+          saveState();
+          renderShopping();
+        });
+        ul.appendChild(li);
+      });
+    });
+  }
+
+  document.getElementById("actionBtn").addEventListener("click", handleAction);
+  document.getElementById("undoBtn").addEventListener("click", undoAction);
+
+  // Tick every second for countdown
+  render();
+  renderShopping();
+  setInterval(render, 1000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAVE INCIDENT BRIEF // 2026.04.20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0b0a;
+  --bg-alt: #111311;
+  --bg-hi: #161816;
+  --border: #1f241f;
+  --border-hi: #2a312a;
+  --text: #d4dcd4;
+  --text-dim: #6b7568;
+  --text-faint: #3d433d;
+  --green: #4ade80;
+  --green-dim: #2d6b43;
+  --amber: #e5a13a;
+  --red: #ef4444;
+  --red-dim: #6b2020;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(74, 222, 128, 0.015) 0px,
+    rgba(74, 222, 128, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ───── HEADER ───── */
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.header .brand {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.header .brand::before {
+  content: '▶ ';
+  color: var(--green-dim);
+}
+
+.header .status {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 6px;
+  animation: pulse 1.6s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+  50% { opacity: 0.4; box-shadow: 0 0 0 5px rgba(74, 222, 128, 0); }
+}
+
+/* ───── TITLE ───── */
+.title-block {
+  padding: 34px 0 20px;
+  border-bottom: 1px dashed var(--border);
+}
+.title-block .eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.title-block h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.title-block h1 .accent { color: var(--green); }
+.title-block .sub {
+  color: var(--text-dim);
+  margin-top: 14px;
+  font-size: 13px;
+  max-width: 60ch;
+}
+
+/* ───── TABS ───── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-top: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  background: transparent;
+  color: var(--text-dim);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 14px 20px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text); }
+.tab.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.tab .num {
+  color: var(--text-faint);
+  margin-right: 8px;
+}
+.tab.active .num { color: var(--green-dim); }
+
+/* ───── PANES ───── */
+.pane { display: none; padding: 32px 0 60px; animation: fadeIn 0.3s ease; }
+.pane.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───── SECTION HEADERS ───── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: var(--green-dim);
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+p { margin-bottom: 14px; color: var(--text); }
+p.muted { color: var(--text-dim); }
+
+/* ───── STAT GRID ───── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+.stat {
+  background: var(--bg-alt);
+  padding: 20px 18px;
+}
+.stat .label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.stat .value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat .value.pos { color: var(--green); }
+.stat .value.neg { color: var(--red); }
+.stat .value.warn { color: var(--amber); }
+.stat .delta {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ───── TL;DR BOX ───── */
+.callout {
+  border: 1px solid var(--green-dim);
+  border-left: 3px solid var(--green);
+  background: rgba(74, 222, 128, 0.03);
+  padding: 18px 20px;
+  margin: 24px 0;
+}
+.callout .tag {
+  display: inline-block;
+  background: var(--green);
+  color: var(--bg);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.warn {
+  border-color: var(--red-dim);
+  border-left-color: var(--red);
+  background: rgba(239, 68, 68, 0.03);
+}
+.callout.warn .tag { background: var(--red); color: var(--bg); }
+
+.callout.amber {
+  border-color: #4a3510;
+  border-left-color: var(--amber);
+  background: rgba(229, 161, 58, 0.03);
+}
+.callout.amber .tag { background: var(--amber); color: var(--bg); }
+
+/* ───── TIMELINE ───── */
+.timeline {
+  margin: 24px 0;
+  border-left: 1px solid var(--border-hi);
+  padding-left: 0;
+}
+.tl-item {
+  position: relative;
+  padding: 0 0 22px 24px;
+  margin-left: 0;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  background: var(--bg);
+  border: 2px solid var(--green);
+  border-radius: 50%;
+}
+.tl-item.ghost::before { border-color: var(--text-faint); }
+.tl-item .ts {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.tl-item.ghost .ts { color: var(--text-faint); }
+.tl-item .desc { font-size: 13px; color: var(--text); }
+
+/* ───── ATTACK STEPS ───── */
+.steps {
+  counter-reset: stepcount;
+  margin: 20px 0;
+}
+.step {
+  counter-increment: stepcount;
+  position: relative;
+  padding: 16px 18px 16px 56px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.step::before {
+  content: counter(stepcount, decimal-leading-zero);
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 13px;
+}
+.step h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.step p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ───── RISK TABLE ───── */
+.risk-table {
+  border: 1px solid var(--border);
+  margin: 20px 0;
+}
+.risk-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 110px;
+  border-bottom: 1px solid var(--border);
+  align-items: stretch;
+}
+.risk-row:last-child { border-bottom: none; }
+.risk-row.head {
+  background: var(--bg-alt);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.risk-row > div {
+  padding: 14px 14px;
+  font-size: 12.5px;
+}
+.risk-row .rank {
+  font-weight: 700;
+  color: var(--green);
+  border-right: 1px solid var(--border);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.risk-row .level {
+  border-left: 1px solid var(--border);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.level.l-crit { color: var(--red); }
+.level.l-high { color: var(--amber); }
+.level.l-med  { color: #d4a84a; }
+.level.l-low  { color: var(--green); }
+.level.l-none { color: var(--text-dim); }
+
+.risk-row .body h4 {
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.risk-row .body p {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* ───── ACTION BLOCKS ───── */
+.action-block {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  margin-bottom: 20px;
+  background: var(--bg-alt);
+}
+.action-block.hedge { border-left-color: var(--amber); }
+.action-block.monitor { border-left-color: #6ab7ff; }
+
+.action-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.action-head .code {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.15em;
+}
+.action-block.hedge .action-head .code { color: var(--amber); }
+.action-block.monitor .action-head .code { color: #6ab7ff; }
+
+.action-head h3 {
+  font-size: 16px;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+.action-head .meta {
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+}
+
+.action-body {
+  padding: 14px 18px 18px;
+}
+.action-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.action-body li {
+  padding: 10px 0 10px 26px;
+  border-bottom: 1px dashed var(--border);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text);
+  position: relative;
+}
+.action-body li:last-child { border-bottom: none; }
+.action-body li::before {
+  content: '▸';
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  color: var(--green);
+}
+.action-block.hedge .action-body li::before { color: var(--amber); }
+.action-block.monitor .action-body li::before { color: #6ab7ff; }
+
+.action-body li strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text);
+  font-size: 12.5px;
+}
+.action-body li span {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+/* ───── DISCLAIMER ───── */
+.disclaimer {
+  margin-top: 40px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border-hi);
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.disclaimer strong { color: var(--amber); }
+
+/* ───── FOOTER ───── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 0 26px;
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cursor::after {
+  content: '_';
+  animation: blink 1s steps(2) infinite;
+  color: var(--green);
+  font-weight: 700;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ───── SOURCES LIST ───── */
+.sources {
+  margin-top: 28px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.sources h4 {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.sources ul { list-style: none; padding: 0; }
+.sources li { padding: 3px 0; color: var(--text-dim); }
+.sources li::before { content: '// '; color: var(--text-faint); }
+
+/* ───── RESPONSIVE ───── */
+@media (max-width: 640px) {
+  body { font-size: 13px; }
+  .wrap { padding: 0 14px; }
+  .tab { padding: 12px 14px; font-size: 11px; }
+  .stat { padding: 16px 14px; }
+  .stat .value { font-size: 22px; }
+  .risk-row { grid-template-columns: 60px 1fr 80px; }
+  .risk-row > div { padding: 10px 10px; font-size: 11.5px; }
+  .header { font-size: 10px; }
+  .header .status { gap: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">AAVE.INCIDENT.BRIEF</div>
+    <div class="status">
+      <span><span class="live-dot"></span>LIVE</span>
+      <span id="clock">2026.04.20</span>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="title-block">
+    <div class="eyebrow">// SITUATIONAL REPORT — DEFI CONTAGION EVENT</div>
+    <h1>The <span class="accent">Aave</span> crisis that<br>Aave didn't cause<span class="cursor"></span></h1>
+    <p class="sub">A $292M exploit of Kelp DAO's rsETH bridge cascaded into DeFi's largest lending protocol, leaving $196M in bad debt, $5B+ in frozen stablecoins, and fresh questions about cross-chain collateral assumptions.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="1"><span class="num">01</span>BRIEFING</button>
+    <button class="tab" data-tab="2"><span class="num">02</span>INTEL</button>
+    <button class="tab" data-tab="3"><span class="num">03</span>ACTION</button>
+  </div>
+
+  <!-- ═══════════ TAB 1: BRIEFING ═══════════ -->
+  <div class="pane active" id="pane-1">
+
+    <div class="section-label">KEY METRICS · AS OF 2026.04.20</div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">STOLEN</div>
+        <div class="value neg">$292M</div>
+        <div class="delta">116,500 rsETH</div>
+      </div>
+      <div class="stat">
+        <div class="label">AAVE BAD DEBT</div>
+        <div class="value neg">$196M</div>
+        <div class="delta">borrowed against stolen collateral</div>
+      </div>
+      <div class="stat">
+        <div class="label">AAVE OUTFLOWS</div>
+        <div class="value neg">~$10.1B</div>
+        <div class="delta">TVL 26.4B → 17.9B</div>
+      </div>
+      <div class="stat">
+        <div class="label">AAVE TOKEN</div>
+        <div class="value neg">−16%</div>
+        <div class="delta">$110 → ~$90</div>
+      </div>
+      <div class="stat">
+        <div class="label">STABLES FROZEN</div>
+        <div class="value warn">$5.1B+</div>
+        <div class="delta">USDT + USDC pools @ 100%</div>
+      </div>
+      <div class="stat">
+        <div class="label">PROTOCOL EXPLOIT</div>
+        <div class="value pos">NONE</div>
+        <div class="delta">Aave contracts intact</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">TL;DR</span>
+      <p>Attackers drained Kelp DAO's rsETH bridge, deposited the stolen tokens on Aave V3 as collateral, and borrowed real wrapped ETH against them. Aave's code worked exactly as designed — the collateral it accepted was backed by an asset on a chain Aave doesn't control. When that backing vanished, the protocol was left with ~$196M in bad debt and ~$10B in panic withdrawals.</p>
+    </div>
+
+    <div class="section-label">EVENT TIMELINE</div>
+    <div class="timeline">
+      <div class="tl-item ghost">
+        <div class="ts">T−10H · APR 18</div>
+        <div class="desc">Attacker wallet funded via Tornado Cash. Attribution later suggests North Korea affiliation (Cyvers / LayerZero).</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">T−0 · APR 18 — BRIDGE EXPLOIT</div>
+        <div class="desc">Forged cross-chain messages on Kelp DAO's LayerZero-based bridge release 116,500 rsETH (~$292M) to attacker-controlled address.</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">T+MINUTES · APR 18</div>
+        <div class="desc">PeckShield flags the outflow. Attacker deposits stolen rsETH into Aave V3 as collateral, borrows wrapped ETH.</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">T+HOURS · APR 18</div>
+        <div class="desc">Aave freezes rsETH markets on V3 and V4. Kelp DAO pauses rsETH contracts on Ethereum and L2s. WETH utilization → 100%.</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">APR 19 · SUNDAY</div>
+        <div class="desc">Whales (Justin Sun, MEXC, others) pull billions. USDT + USDC pools hit 100% utilization. TVL drops $6.6B by morning. AAVE token −16%.</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">APR 19 · MESSAGE SHIFT</div>
+        <div class="desc">Aave language changes from "Umbrella reserve will cover deficit" to "explore paths to offset deficit" — raising questions about stkAAVE slashing.</div>
+      </div>
+      <div class="tl-item">
+        <div class="ts">APR 20 · NOW</div>
+        <div class="desc">Outflows cumulative ~$10.1B per EmberCN. Stuck depositors borrowing ~$300M against their own trapped stables at a loss to extract liquidity. Contagion freezes in place at SparkLend, Fluid, Lido earnETH, Ethena bridges, Curve.</div>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <span class="tag">READ NEXT</span>
+      <p>Tab <strong>02 INTEL</strong> → how the attack worked and a ranked breakdown of who is actually exposed.<br>Tab <strong>03 ACTION</strong> → personal playbook for exit, hedge, and monitor.</p>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ TAB 2: INTEL ═══════════ -->
+  <div class="pane" id="pane-2">
+
+    <div class="section-label">ATTACK MECHANICS</div>
+    <h2>How $292M became Aave's problem</h2>
+    <p class="muted">The exploit did not break cryptography or bypass Aave's smart contracts. It exploited a configuration weakness in cross-chain message verification, then used Aave's normal lending rules against it.</p>
+
+    <div class="steps">
+      <div class="step">
+        <h4>Forged cross-chain message on Kelp's bridge</h4>
+        <p>Kelp DAO's bridge — built on LayerZero — accepts verified messages from other chains to release rsETH on Ethereum. Attackers submitted forged messages that passed the bridge's (misconfigured) verification layer.</p>
+      </div>
+      <div class="step">
+        <h4>116,500 rsETH released to attacker wallet</h4>
+        <p>Roughly $292M worth of rsETH — ~18% of total rsETH supply — appears in an attacker address with no corresponding ETH backing on the source chain.</p>
+      </div>
+      <div class="step">
+        <h4>Unbacked rsETH deposited on Aave V3</h4>
+        <p>Aave's oracle still reported rsETH at peg. The protocol saw valid-looking collateral and accepted it. Attackers deposited the full amount.</p>
+      </div>
+      <div class="step">
+        <h4>Wrapped ETH borrowed against fake collateral</h4>
+        <p>Using the standard loan-to-value rules, attackers borrowed real WETH out of Aave's liquidity pools — across Aave, Compound and Euler, total borrowed reached ~$236M, with the bulk (~$196M) on Aave.</p>
+      </div>
+      <div class="step">
+        <h4>Aave freezes rsETH markets — too late for this batch</h4>
+        <p>Borrowing stops on V3/V4 rsETH markets. But the existing bad-debt position is already open. Aave is left holding a claim against collateral whose backing no longer exists.</p>
+      </div>
+      <div class="step">
+        <h4>Whale-led bank run locks the pools</h4>
+        <p>Large depositors (Justin Sun, MEXC, funds) race to withdraw. ETH, then USDT, then USDC pools hit 100% utilization. Remaining users can't withdraw — many start borrowing against their own stuck stables at ~75% LTV just to get any liquidity out.</p>
+      </div>
+    </div>
+
+    <div class="section-label">RISK RANKING · WHO'S EXPOSED</div>
+    <h2>Exposure, ranked by severity</h2>
+
+    <div class="risk-table">
+      <div class="risk-row head">
+        <div class="rank">RANK</div>
+        <div class="body">PARTY · DESCRIPTION</div>
+        <div class="level">LEVEL</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">01</div>
+        <div class="body">
+          <h4>Aave depositors stuck in 100%-utilization pools</h4>
+          <p>USDT, USDC, ETH/WETH lenders. Can't withdraw until loans repaid or new liquidity arrives. Forced into distressed workaround: borrow against your own deposit at ~75 cents on the dollar.</p>
+        </div>
+        <div class="level l-crit">CRITICAL</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">02</div>
+        <div class="body">
+          <h4>Remaining rsETH holders & bridge users</h4>
+          <p>Kelp paused contracts. On-mainnet rsETH declared fully backed by Aave, but positions still illiquid and exposed to any further reserve shortfall. Bridge-in-transit funds at highest risk.</p>
+        </div>
+        <div class="level l-high">HIGH</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">03</div>
+        <div class="body">
+          <h4>stkAAVE stakers (safety module)</h4>
+          <p>Aave's shift from "Umbrella covers deficit" to "explore paths to offset" raises the probability that stkAAVE positions absorb residual bad debt via slashing. First real stress test of the Umbrella model.</p>
+        </div>
+        <div class="level l-med">MEDIUM</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">04</div>
+        <div class="body">
+          <h4>AAVE token holders</h4>
+          <p>Already −16% to ~$90. Further downside if Umbrella is insufficient, if governance socializes loss, or if TVL doesn't recover. Upside if Aave absorbs the hit cleanly and emerges with credibility intact.</p>
+        </div>
+        <div class="level l-med">MEDIUM</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">05</div>
+        <div class="body">
+          <h4>Users of other LRTs / cross-chain collateral</h4>
+          <p>ezETH, weETH, pufETH, and similar liquid restaking tokens share the same structural assumption: that off-chain/cross-chain backing holds. Same bridge-layer risk class. SparkLend, Fluid, Lido earnETH, Ethena already paused related activity as precaution.</p>
+        </div>
+        <div class="level l-high">HIGH</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">06</div>
+        <div class="body">
+          <h4>LayerZero-based protocols broadly</h4>
+          <p>Incident points at a misconfigured verification setup, not a LayerZero core flaw — but any protocol using LayerZero OFT/bridge patterns should re-audit its DVN/security stack configuration. Ethena, Curve, BitGo WBTC paused as precaution.</p>
+        </div>
+        <div class="level l-med">MEDIUM</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">07</div>
+        <div class="body">
+          <h4>ETH / broader crypto markets</h4>
+          <p>ETH down ~2% on the event. Limited direct contagion so far — majors absorbing the panic with modest drawdowns. Risk is reputational (DeFi skeptics' "I told you so" moment) more than mechanical.</p>
+        </div>
+        <div class="level l-low">LOW</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="rank">08</div>
+        <div class="body">
+          <h4>Non-DeFi crypto holders (cold-stored BTC/ETH, no Aave exposure)</h4>
+          <p>No mechanical exposure. Only second-order sentiment risk if the event triggers wider de-risking.</p>
+        </div>
+        <div class="level l-none">NONE</div>
+      </div>
+    </div>
+
+    <div class="section-label">ATTRIBUTION & CONTEXT</div>
+    <h3>Attackers</h3>
+    <p class="muted">Cyvers and LayerZero both signal likely North Korean affiliation, based on scale, tradecraft, and use of Tornado Cash for funding the origin wallet. This would place the incident alongside the April 1 Drift exploit (~$285M, also DPRK-attributed) in a pattern of large-scale DeFi targeting this month.</p>
+
+    <h3>Cluster context</h3>
+    <p class="muted">April 2026 has seen CoW Swap, Zerion, Rhea Finance, Silo Finance and Drift all exploited, on top of Kelp/Aave. The shared thread is cross-chain messaging and modular infrastructure with inconsistent security baselines — individually audited protocols inheriting risk from their integrations.</p>
+
+    <h3>Aave-specific weak spot</h3>
+    <p class="muted">Aave parted ways with risk provider Chaos Labs on April 6 over budget and direction of Aave V4. The Kelp incident lands two weeks later and represents the first real stress test of the Umbrella safety module introduced in June 2025. How the DAO resolves the deficit — Umbrella, stkAAVE slashing, treasury, or socialized — sets precedent.</p>
+
+    <div class="sources">
+      <h4>SOURCES</h4>
+      <ul>
+        <li>CoinDesk · Aave records $6B TVL drop as Kelp hack exposes structural risk (2026.04.19)</li>
+        <li>CoinDesk · $300M borrowing spike on Aave signals liquidity crunch (2026.04.20)</li>
+        <li>Bloomberg · Crypto hack sparks $9B outflows from top DeFi lender (2026.04.20)</li>
+        <li>Unchained · Aave's TVL tanks $6.6B as Kelp DAO hack sparks bad debt (2026.04.20)</li>
+        <li>Decrypt · Kelp DAO exploit sparks Aave liquidity crunch</li>
+        <li>CoinCentral · KelpDAO hack triggers $13B DeFi wipeout</li>
+        <li>PeckShield / Chaos Labs / EmberCN · on-chain data</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ TAB 3: ACTION ═══════════ -->
+  <div class="pane" id="pane-3">
+
+    <div class="section-label">PERSONAL PLAYBOOK · EXIT / HEDGE / MONITOR</div>
+    <h2>What to actually do</h2>
+    <p class="muted">These are decision prompts, not instructions. Your action depends on where your money actually sits. Start by locating yourself in the risk ranking on tab 02.</p>
+
+    <!-- EXIT -->
+    <div class="action-block">
+      <div class="action-head">
+        <h3>EXIT</h3>
+        <span class="code">// REDUCE_EXPOSURE</span>
+        <span class="meta">IF YOU HOLD AT-RISK POSITIONS</span>
+      </div>
+      <div class="action-body">
+        <ul>
+          <li>
+            <strong>Stuck in a frozen Aave pool? Don't panic-borrow blindly.</strong>
+            <span>The "borrow against your own stables at 75% LTV" escape hatch works but costs you 25% plus interest. Calculate whether you actually need liquidity now or can wait for utilization to normalize as loans get repaid.</span>
+          </li>
+          <li>
+            <strong>If you hold rsETH — understand what you have.</strong>
+            <span>Aave says on-mainnet rsETH remains fully backed. Kelp has paused contracts. Exit liquidity is thin. Decide: hold and trust backing, or accept the market discount to get out cleanly when markets reopen.</span>
+          </li>
+          <li>
+            <strong>Audit your other liquid restaking token exposure.</strong>
+            <span>ezETH, weETH, pufETH, other LRTs inherit the same class of bridge/cross-chain-backing risk. The fact that a specific bridge got exploited today doesn't mean others are safe — it means you now know the failure mode exists.</span>
+          </li>
+          <li>
+            <strong>Consider reducing total Aave footprint if you're overweight.</strong>
+            <span>Not because the protocol is broken (it isn't), but because the Umbrella mechanism may need to absorb losses and governance direction is uncertain post-Chaos Labs split. Diversification across lenders is cheap insurance.</span>
+          </li>
+          <li>
+            <strong>Move earmarked dry powder off-exchange / off-protocol.</strong>
+            <span>Hardware wallet, custodied stables, or cold storage. Liquidity you need to be sure of should not be earning yield in a protocol that might freeze.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HEDGE -->
+    <div class="action-block hedge">
+      <div class="action-head">
+        <h3>HEDGE</h3>
+        <span class="code">// NEUTRALIZE_TAIL_RISK</span>
+        <span class="meta">IF YOU CAN'T OR WON'T EXIT</span>
+      </div>
+      <div class="action-body">
+        <ul>
+          <li>
+            <strong>Short or buy puts on AAVE if you hold significant spot.</strong>
+            <span>AAVE down 16% already. Further downside if Umbrella is tapped hard, stkAAVE slashes, or TVL doesn't recover. Deribit / Aevo / Hyperliquid perps let you offset a concentrated position without selling it.</span>
+          </li>
+          <li>
+            <strong>Pair-trade: short AAVE against a cleaner DeFi lender.</strong>
+            <span>If you believe Aave specifically takes the reputational hit but DeFi-lending as a category survives, shorting AAVE against a basket (MORPHO, MKR, etc.) isolates the Aave-specific risk.</span>
+          </li>
+          <li>
+            <strong>Hedge ETH exposure if you expect further contagion.</strong>
+            <span>So far ETH is only −2%. If you think DeFi de-risking has further to run, a partial ETH put hedge covers the tail. If you don't, skip — hedging costs money and this may already be the bottom of the move.</span>
+          </li>
+          <li>
+            <strong>Do NOT hedge by selling stuck collateral at distressed prices.</strong>
+            <span>Re-borrowing your way into lower LTV is a real, visible cost. Make sure the hedge premium is cheaper than the loss you'd take to free up that collateral.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MONITOR -->
+    <div class="action-block monitor">
+      <div class="action-head">
+        <h3>MONITOR</h3>
+        <span class="code">// SIGNALS_TO_WATCH</span>
+        <span class="meta">IF YOU'RE CHOOSING TO WAIT</span>
+      </div>
+      <div class="action-body">
+        <ul>
+          <li>
+            <strong>Aave governance forum &amp; Snapshot.</strong>
+            <span>The proposal on how to cover the deficit (Umbrella draw vs. stkAAVE slash vs. treasury vs. socialized loss) is the single most important signal. Language shift from "will cover" to "explore paths" suggests this is still being negotiated.</span>
+          </li>
+          <li>
+            <strong>Aavescan pool utilization — ETH, USDT, USDC.</strong>
+            <span>When utilization drops below 100%, normal withdrawals resume. This is your "is my money unstuck?" dashboard.</span>
+          </li>
+          <li>
+            <strong>stkAAVE slashing events on-chain.</strong>
+            <span>If Umbrella is triggered, the event is visible. If you stake AAVE and the event fires, your position takes a real haircut — know before you read about it.</span>
+          </li>
+          <li>
+            <strong>Kelp DAO status + rsETH reserve reports.</strong>
+            <span>Resumption of contracts, transparent post-mortem, and verified backing ratio are prerequisites for any normal rsETH price action. Silence or delay is bearish.</span>
+          </li>
+          <li>
+            <strong>AAVE token at key levels.</strong>
+            <span>Current ~$90, down from ~$110. Watch whether it stabilizes, breaks down further, or recovers as Umbrella resolution becomes clearer. Volume matters more than price alone.</span>
+          </li>
+          <li>
+            <strong>Other LRT/bridge protocols for "paused" announcements.</strong>
+            <span>SparkLend, Fluid, Lido earnETH, Ethena, Curve, BitGo WBTC have already paused LayerZero-related activity. More pauses = broader contagion. Resumptions = stabilization.</span>
+          </li>
+          <li>
+            <strong>Attribution confirmation (DPRK/Lazarus).</strong>
+            <span>Regulatory response to confirmed North Korean attacks has historically been sharper than to generic exploits. Matters for downstream regulation of cross-chain infra.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="tag">DECISION FRAMING</span>
+      <p>The hardest part is separating three different questions: <strong>(1)</strong> Is Aave's protocol broken? — No. <strong>(2)</strong> Will Aave absorb this cleanly? — Unclear, depends on Umbrella resolution. <strong>(3)</strong> What's my exposure right now? — Only you can answer. Make decisions based on your actual position, not the headline.</p>
+    </div>
+
+    <div class="disclaimer">
+      <strong>NOT FINANCIAL ADVICE.</strong> This brief synthesizes public reporting as of 2026.04.20 for personal risk tracking and education. Situations involving frozen liquidity and pending governance decisions change hour-by-hour. Verify claims against primary sources before acting on any position.
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>BRIEF // V1.0 // 2026.04.20</div>
+    <div>BUILT FOR PERSONAL RISK TRACKING</div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('.pane');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panes.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + t.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+
+  // Clock
+  function updateClock() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('clock').textContent =
+      `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} · ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>

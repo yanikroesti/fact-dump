@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;
+  --surface:#16181c;
+  --panel:#1e2127;
+  --border:#2a2d35;
+  --border2:#353840;
+  --text:#e8eaf0;
+  --muted:#7a7f8e;
+  --dim:#3a3e4a;
+  --radius:10px;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 16px}
+h1{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:28px;font-family:var(--mono)}
+
+.grid{display:grid;grid-template-columns:260px 1fr;gap:16px;width:100%;max-width:780px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.panel-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:14px;font-family:var(--mono)}
+
+/* Color wheel */
+#cvs{display:block;touch-action:none;cursor:crosshair;border-radius:50%}
+.wheel-wrap{display:flex;justify-content:center}
+
+/* Preview */
+#prev{height:72px;border-radius:8px;border:1px solid var(--border);margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden;transition:border-color .15s}
+#prev:hover{border-color:var(--border2)}
+#prev-label{position:absolute;bottom:7px;right:9px;font-family:var(--mono);font-size:11px;opacity:0;transition:opacity .15s;background:rgba(0,0,0,.5);padding:2px 6px;border-radius:4px}
+#prev:hover #prev-label{opacity:1}
+
+/* Output rows */
+.out-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
+.out-row:last-child{border-bottom:none}
+.out-key{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);width:40px}
+.out-val{flex:1;font-family:var(--mono);font-size:12px;color:var(--text)}
+.copy-btn{background:none;border:1px solid var(--border);border-radius:5px;padding:2px 8px;font-size:10px;font-family:var(--mono);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .12s}
+.copy-btn:hover{border-color:var(--border2);color:var(--text)}
+.copy-btn.ok{border-color:#3a7d5a;color:#5cc48a}
+
+/* Sliders grid */
+.sliders-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:780px;width:100%}
+.slider-row{margin-bottom:12px}
+.slider-row:last-child{margin-bottom:0}
+.slider-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.slider-lbl span:first-child{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.05em}
+.slider-lbl span:last-child{font-size:12px;font-family:var(--mono);color:var(--text)}
+input[type=range]{-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;outline:none;width:100%;display:block;padding:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:var(--grad,var(--dim))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2.5px solid rgba(0,0,0,.4);box-shadow:0 1px 4px rgba(0,0,0,.5);margin-top:-5px;cursor:pointer}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--grad,var(--dim))}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2.5px solid rgba(0,0,0,.4);cursor:pointer;appearance:none}
+
+/* Bottom row: hex + recent */
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:780px;width:100%}
+.hex-input{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:9px 13px;color:var(--text);width:100%;text-transform:uppercase;letter-spacing:.06em;outline:none;transition:border-color .12s}
+.hex-input:focus{border-color:var(--border2)}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;min-height:28px}
+.swatch{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.08);cursor:pointer;flex-shrink:0;transition:transform .1s,outline .1s}
+.swatch:hover{transform:scale(1.12);outline:2px solid rgba(255,255,255,.2);outline-offset:1px}
+
+/* Preset palette */
+.preset-wrap{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;max-width:780px;width:100%}
+.preset{width:100%;padding-top:100%;border-radius:4px;cursor:pointer;border:none;position:relative;transition:transform .1s;border:1px solid rgba(255,255,255,.06)}
+.preset:hover{transform:scaleY(1.25);z-index:1}
+
+/* Luminance badge */
+.lum-badge{display:inline-block;font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:4px;margin-left:8px;letter-spacing:.05em;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<h1>⬛ Color Picker</h1>
+
+<!-- Top: wheel + output -->
+<div class="grid" style="margin-bottom:12px">
+  <div class="panel">
+    <div class="panel-label">Wheel</div>
+    <div class="wheel-wrap"><canvas id="cvs" width="224" height="224" style="width:224px;height:224px"></canvas></div>
+  </div>
+  <div class="panel">
+    <div class="panel-label">Selected Color</div>
+    <div id="prev" title="Click to copy HEX">
+      <span id="prev-label">click to copy</span>
+    </div>
+    <div class="out-row"><span class="out-key">HEX</span><span class="out-val" id="oHex">#FF0000</span><button class="copy-btn" id="bHex">copy</button></div>
+    <div class="out-row"><span class="out-key">RGB</span><span class="out-val" id="oRgb">rgb(255, 0, 0)</span><button class="copy-btn" id="bRgb">copy</button></div>
+    <div class="out-row"><span class="out-key">HSL</span><span class="out-val" id="oHsl">hsl(0, 100%, 50%)</span><button class="copy-btn" id="bHsl">copy</button></div>
+    <div class="out-row"><span class="out-key">HSV</span><span class="out-val" id="oHsv">hsv(0, 100%, 100%)</span><button class="copy-btn" id="bHsv">copy</button></div>
+    <div class="out-row"><span class="out-key">CMYK</span><span class="out-val" id="oCmyk">cmyk(0, 100, 100, 0)</span><button class="copy-btn" id="bCmyk">copy</button></div>
+    <div style="padding-top:10px;font-size:11px;color:var(--muted);font-family:var(--mono)">
+      Luminance: <span id="lumBadge" class="lum-badge">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sliders -->
+<div class="sliders-grid" style="margin-bottom:12px">
+  <div class="panel">
+    <div class="panel-label">RGB Sliders</div>
+    <div class="slider-row"><div class="slider-lbl"><span>R — Red</span><span id="rV">255</span></div><input type="range" id="rS" min="0" max="255" step="1"></div>
+    <div class="slider-row"><div class="slider-lbl"><span>G — Green</span><span id="gV">0</span></div><input type="range" id="gS" min="0" max="255" step="1"></div>
+    <div class="slider-row"><div class="slider-lbl"><span>B — Blue</span><span id="bV">0</span></div><input type="range" id="bS" min="0" max="255" step="1"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-label">HSL Sliders</div>
+    <div class="slider-row"><div class="slider-lbl"><span>H — Hue</span><span id="hV">0°</span></div><input type="range" id="hSl" min="0" max="359" step="1"></div>
+    <div class="slider-row"><div class="slider-lbl"><span>S — Saturation</span><span id="sV">100%</span></div><input type="range" id="sSl" min="0" max="100" step="1"></div>
+    <div class="slider-row"><div class="slider-lbl"><span>L — Lightness</span><span id="lV">50%</span></div><input type="range" id="lSl" min="0" max="100" step="1"></div>
+  </div>
+</div>
+
+<!-- Hex input + recent -->
+<div class="bottom-grid" style="margin-bottom:12px">
+  <div class="panel">
+    <div class="panel-label">Hex Input</div>
+    <input type="text" class="hex-input" id="hexIn" maxlength="7" value="#FF0000" placeholder="#RRGGBB">
+  </div>
+  <div class="panel">
+    <div class="panel-label">Recent Colors</div>
+    <div class="swatches" id="recentEl"></div>
+  </div>
+</div>
+
+<!-- Presets -->
+<div class="panel" style="max-width:780px;width:100%;margin-bottom:0">
+  <div class="panel-label">Preset Palette</div>
+  <div class="preset-wrap" id="presets"></div>
+</div>
+
+<script>
+(function(){
+// Canvas setup
+const CV = document.getElementById('cvs');
+const CTX = CV.getContext('2d');
+const dpr = Math.min(window.devicePixelRatio || 1, 2);
+const SIZE = 224;
+CV.width = SIZE * dpr;
+CV.height = SIZE * dpr;
+CV.style.width = SIZE + 'px';
+CV.style.height = SIZE + 'px';
+CTX.scale(dpr, dpr);
+
+const cx = SIZE / 2, cy = SIZE / 2;
+const OR = 106, IR = 80;
+const sqH = Math.floor(IR / Math.SQRT2) - 4; // half-side of SV square
+
+// State in HSV
+let st = { h: 0, s: 1, v: 1 };
+let rec = [];
+let drag = null;
+
+// === COLOR MATH ===
+function hsvRgb(h, s, v) {
+  h = ((h % 360) + 360) % 360;
+  const c = v * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = v - c;
+  let r = 0, g = 0, b = 0;
+  if (h < 60)       { r = c; g = x; }
+  else if (h < 120) { r = x; g = c; }
+  else if (h < 180) { g = c; b = x; }
+  else if (h < 240) { g = x; b = c; }
+  else if (h < 300) { r = x; b = c; }
+  else              { r = c; b = x; }
+  return [Math.round((r+m)*255), Math.round((g+m)*255), Math.round((b+m)*255)];
+}
+
+function rgbHsv(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r,g,b), mn = Math.min(r,g,b), d = mx - mn;
+  let h = 0;
+  if (d) {
+    if (mx === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (mx === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+  }
+  return { h: h * 360, s: mx ? d / mx : 0, v: mx };
+}
+
+function rgbHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r,g,b), mn = Math.min(r,g,b), l = (mx+mn)/2, d = mx - mn;
+  let h = 0, s = 0;
+  if (d) {
+    s = d / (1 - Math.abs(2*l - 1));
+    if (mx === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (mx === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+  }
+  return { h: h * 360, s: s * 100, l: l * 100 };
+}
+
+function hslRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const c = (1 - Math.abs(2*l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c/2;
+  let r = 0, g = 0, b = 0;
+  if (h < 60)       { r = c; g = x; }
+  else if (h < 120) { r = x; g = c; }
+  else if (h < 180) { g = c; b = x; }
+  else if (h < 240) { g = x; b = c; }
+  else if (h < 300) { r = x; b = c; }
+  else              { r = c; b = x; }
+  return [Math.round((r+m)*255), Math.round((g+m)*255), Math.round((b+m)*255)];
+}
+
+function rgbCmyk(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const k = 1 - Math.max(r, g, b);
+  if (k >= 1) return [0, 0, 0, 100];
+  return [
+    Math.round((1-r-k) / (1-k) * 100),
+    Math.round((1-g-k) / (1-k) * 100),
+    Math.round((1-b-k) / (1-k) * 100),
+    Math.round(k * 100)
+  ];
+}
+
+function toHex(r, g, b) {
+  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0').toUpperCase()).join('');
+}
+
+function fromHex(s) {
+  s = (s || '').replace(/[^0-9a-fA-F]/g, '');
+  if (s.length === 3) s = s.split('').map(c => c+c).join('');
+  if (s.length !== 6) return null;
+  const n = parseInt(s, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function luminance(r, g, b) {
+  const lin = v => { v /= 255; return v <= .04045 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4); };
+  return .2126*lin(r) + .7152*lin(g) + .0722*lin(b);
+}
+
+// === DRAW WHEEL ===
+function draw() {
+  CTX.clearRect(0, 0, SIZE, SIZE);
+
+  // Hue ring
+  for (let h = 0; h < 360; h++) {
+    const a1 = (h - 90 - .9) * Math.PI / 180;
+    const a2 = (h - 90 + 1.9) * Math.PI / 180;
+    CTX.beginPath();
+    CTX.arc(cx, cy, OR, a1, a2);
+    CTX.arc(cx, cy, IR, a2, a1, true);
+    CTX.closePath();
+    CTX.fillStyle = `hsl(${h},100%,50%)`;
+    CTX.fill();
+  }
+
+  // Hue ring marker
+  const ha = (st.h - 90) * Math.PI / 180;
+  const mr = (OR + IR) / 2;
+  const hx = cx + Math.cos(ha) * mr, hy = cy + Math.sin(ha) * mr;
+  CTX.beginPath(); CTX.arc(hx, hy, 10, 0, Math.PI*2);
+  CTX.strokeStyle = 'rgba(255,255,255,.95)'; CTX.lineWidth = 2.5; CTX.stroke();
+  CTX.beginPath(); CTX.arc(hx, hy, 10, 0, Math.PI*2);
+  CTX.strokeStyle = 'rgba(0,0,0,.3)'; CTX.lineWidth = 1; CTX.stroke();
+
+  // SV square
+  const sx = cx - sqH, sy = cy - sqH, sw = sqH * 2;
+  const [pr, pg, pb] = hsvRgb(st.h, 1, 1);
+  const gH = CTX.createLinearGradient(sx, 0, sx + sw, 0);
+  gH.addColorStop(0, '#fff');
+  gH.addColorStop(1, `rgb(${pr},${pg},${pb})`);
+  CTX.fillStyle = gH;
+  CTX.fillRect(sx, sy, sw, sw);
+  const gV = CTX.createLinearGradient(0, sy, 0, sy + sw);
+  gV.addColorStop(0, 'rgba(0,0,0,0)');
+  gV.addColorStop(1, 'rgba(0,0,0,1)');
+  CTX.fillStyle = gV;
+  CTX.fillRect(sx, sy, sw, sw);
+
+  // SV marker
+  const px = sx + st.s * sw, py = sy + (1 - st.v) * sw;
+  CTX.beginPath(); CTX.arc(px, py, 7, 0, Math.PI*2);
+  CTX.strokeStyle = 'rgba(255,255,255,.95)'; CTX.lineWidth = 2; CTX.stroke();
+  CTX.beginPath(); CTX.arc(px, py, 7, 0, Math.PI*2);
+  CTX.strokeStyle = 'rgba(0,0,0,.4)'; CTX.lineWidth = 1; CTX.stroke();
+}
+
+// === UPDATE UI ===
+function update(skipHex) {
+  const [r, g, b] = hsvRgb(st.h, st.s, st.v);
+  const hex = toHex(r, g, b);
+  const hsl = rgbHsl(r, g, b);
+  const cm = rgbCmyk(r, g, b);
+  const H = Math.round(st.h), S = Math.round(st.s*100), V = Math.round(st.v*100);
+  const HL = Math.round(hsl.h), SL = Math.round(hsl.s), LL = Math.round(hsl.l);
+  const lum = luminance(r, g, b);
+  const isDark = lum < .18;
+
+  document.getElementById('prev').style.background = hex;
+  document.getElementById('oHex').textContent = hex;
+  document.getElementById('oRgb').textContent = `rgb(${r}, ${g}, ${b})`;
+  document.getElementById('oHsl').textContent = `hsl(${HL}, ${SL}%, ${LL}%)`;
+  document.getElementById('oHsv').textContent = `hsv(${H}, ${S}%, ${V}%)`;
+  document.getElementById('oCmyk').textContent = `cmyk(${cm[0]}, ${cm[1]}, ${cm[2]}, ${cm[3]})`;
+
+  const lb = document.getElementById('lumBadge');
+  lb.textContent = `${(lum * 100).toFixed(1)}% — ${isDark ? 'dark' : lum > .7 ? 'bright' : 'mid'}`;
+  lb.style.background = isDark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.15)';
+  lb.style.color = isDark ? '#888' : '#555';
+
+  document.getElementById('rS').value = r; document.getElementById('rV').textContent = r;
+  document.getElementById('gS').value = g; document.getElementById('gV').textContent = g;
+  document.getElementById('bS').value = b; document.getElementById('bV').textContent = b;
+  document.getElementById('hSl').value = HL; document.getElementById('hV').textContent = HL + '°';
+  document.getElementById('sSl').value = SL; document.getElementById('sV').textContent = SL + '%';
+  document.getElementById('lSl').value = LL; document.getElementById('lV').textContent = LL + '%';
+  if (!skipHex) document.getElementById('hexIn').value = hex;
+
+  // Dynamic slider track gradients
+  const set = (id, g) => document.getElementById(id).style.setProperty('--grad', g);
+  set('rS', `linear-gradient(to right,rgb(0,${g},${b}),rgb(255,${g},${b}))`);
+  set('gS', `linear-gradient(to right,rgb(${r},0,${b}),rgb(${r},255,${b}))`);
+  set('bS', `linear-gradient(to right,rgb(${r},${g},0),rgb(${r},${g},255))`);
+  set('hSl', 'linear-gradient(to right,hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%))');
+  set('sSl', `linear-gradient(to right,hsl(${HL},0%,${LL}%),hsl(${HL},100%,${LL}%))`);
+  set('lSl', `linear-gradient(to right,hsl(${HL},${SL}%,0%),hsl(${HL},${SL}%,50%),hsl(${HL},${SL}%,100%))`);
+
+  draw();
+}
+
+// === CANVAS EVENTS ===
+function canvasXY(e) {
+  const rect = CV.getBoundingClientRect();
+  return [e.clientX - rect.left, e.clientY - rect.top];
+}
+
+CV.addEventListener('pointerdown', e => {
+  CV.setPointerCapture(e.pointerId);
+  drag = null;
+  const [x, y] = canvasXY(e);
+  const dx = x - cx, dy = y - cy;
+  if (Math.abs(dx) <= sqH && Math.abs(dy) <= sqH) drag = 'sq';
+  else drag = 'ring';
+  doD(x, y);
+});
+CV.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const [x, y] = canvasXY(e);
+  doD(x, y);
+});
+CV.addEventListener('pointerup', () => { if (drag) addRec(); drag = null; });
+
+function doD(x, y) {
+  if (drag === 'ring') {
+    let a = Math.atan2(y - cy, x - cx) * 180 / Math.PI + 90;
+    st.h = (a + 360) % 360;
+  } else {
+    st.s = Math.max(0, Math.min(1, (x - (cx - sqH)) / (sqH * 2)));
+    st.v = Math.max(0, Math.min(1, 1 - (y - (cy - sqH)) / (sqH * 2)));
+  }
+  update();
+}
+
+// === RGB SLIDERS ===
+function fromRgbSliders() {
+  const r = +document.getElementById('rS').value;
+  const g = +document.getElementById('gS').value;
+  const b = +document.getElementById('bS').value;
+  const hsv = rgbHsv(r, g, b);
+  if (hsv.s > 0.005 || hsv.v < 0.01) st.h = hsv.h;
+  st.s = hsv.s; st.v = hsv.v;
+  update();
+}
+['rS','gS','bS'].forEach(id => {
+  document.getElementById(id).addEventListener('input', fromRgbSliders);
+  document.getElementById(id).addEventListener('change', addRec);
+});
+
+// === HSL SLIDERS ===
+function fromHslSliders() {
+  const hl = +document.getElementById('hSl').value;
+  const sl = +document.getElementById('sSl').value;
+  const ll = +document.getElementById('lSl').value;
+  const [r, g, b] = hslRgb(hl, sl, ll);
+  const hsv = rgbHsv(r, g, b);
+  st.h = hsv.s > 0.005 ? hsv.h : hl;
+  st.s = hsv.s; st.v = hsv.v;
+  update();
+}
+['hSl','sSl','lSl'].forEach(id => {
+  document.getElementById(id).addEventListener('input', fromHslSliders);
+  document.getElementById(id).addEventListener('change', addRec);
+});
+
+// === HEX INPUT ===
+document.getElementById('hexIn').addEventListener('input', e => {
+  const rgb = fromHex(e.target.value);
+  if (rgb) {
+    const hsv = rgbHsv(...rgb);
+    st.h = hsv.s > 0.005 ? hsv.h : st.h;
+    st.s = hsv.s; st.v = hsv.v;
+    update(true);
+  }
+});
+document.getElementById('hexIn').addEventListener('change', addRec);
+
+// Click preview → copy hex
+document.getElementById('prev').addEventListener('click', () => {
+  const hex = document.getElementById('oHex').textContent;
+  navigator.clipboard.writeText(hex).catch(() => {});
+  const el = document.getElementById('prev');
+  el.style.outline = '2px solid rgba(255,255,255,.3)';
+  setTimeout(() => el.style.outline = '', 600);
+});
+
+// === COPY BUTTONS ===
+[['bHex','oHex'],['bRgb','oRgb'],['bHsl','oHsl'],['bHsv','oHsv'],['bCmyk','oCmyk']].forEach(([bid, vid]) => {
+  document.getElementById(bid).addEventListener('click', () => {
+    navigator.clipboard.writeText(document.getElementById(vid).textContent).catch(() => {});
+    const el = document.getElementById(bid);
+    el.textContent = '✓ copied'; el.classList.add('ok');
+    setTimeout(() => { el.textContent = 'copy'; el.classList.remove('ok'); }, 1400);
+  });
+});
+
+// === RECENT COLORS ===
+function addRec() {
+  const [r, g, b] = hsvRgb(st.h, st.s, st.v);
+  const hex = toHex(r, g, b);
+  rec = [hex, ...rec.filter(c => c !== hex)].slice(0, 24);
+  document.getElementById('recentEl').innerHTML = rec.map(c =>
+    `<div class="swatch" style="background:${c}" title="${c}" onclick="pickHex('${c}')"></div>`
+  ).join('');
+}
+
+window.pickHex = function(hex) {
+  const rgb = fromHex(hex);
+  if (rgb) {
+    const hsv = rgbHsv(...rgb);
+    st.h = hsv.s > 0.005 ? hsv.h : st.h;
+    st.s = hsv.s; st.v = hsv.v;
+    update();
+  }
+};
+
+// === PRESET PALETTE ===
+const PRESETS = [
+  '#FF0000','#FF4400','#FF8800','#FFCC00','#FFFF00','#AAEE00','#22CC00','#00BB55',
+  '#00CCAA','#00BBDD','#0088FF','#0044CC','#4422BB','#8811BB','#CC11AA','#EE1177',
+  '#FFFFFF','#DDDDDD','#AAAAAA','#777777','#444444','#222222','#111111','#000000',
+  '#FF9999','#FFCC99','#FFFFAA','#AAFFAA','#AAEEFF','#AABBFF','#DDAAFF','#FFAADD',
+  '#CC4444','#CC8844','#BBBB22','#44AA44','#228899','#2244AA','#7733AA','#AA2277',
+  '#330000','#332200','#333300','#003300','#003333','#000033','#220033','#330011',
+];
+document.getElementById('presets').innerHTML = PRESETS.map(c =>
+  `<button class="preset" style="background:${c}" title="${c}" onclick="pickHex('${c}')"></button>`
+).join('');
+
+// Init
+st = { h: 210, s: 0.85, v: 0.92 };
+update();
+addRec();
+})();
+</script>
+</body>
+</html>

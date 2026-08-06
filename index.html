@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dump/ — yanik's junk drawer</title>
+<meta name="description" content="dump.yanikroesti.ch — tools, games, research briefs, school packs and concept demos. Everything ends up here.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Cpath d='M40 10 24 54' stroke='%23d4ff47' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #101013;
+  --surface-2: #16161a;
+  --line: rgba(255,255,255,0.07);
+  --line-hi: rgba(255,255,255,0.14);
+  --ink: #f2f2ef;
+  --muted: #8b8b95;
+  --faint: #55555e;
+  --lime: #d4ff47;
+  --c-research: #7ab8ff;
+  --c-learning: #f6c453;
+  --c-tools: #5eead4;
+  --c-games: #c884fc;
+  --c-concepts: #ff8a70;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.44, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--lime); color: #000; }
+
+/* ── background layers ─────────────────────────────── */
+.bg-dots {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 30%, transparent 75%);
+}
+.bg-glow {
+  position: fixed; z-index: 0; pointer-events: none;
+  width: 1100px; height: 1100px; top: -520px; left: 50%;
+  background: radial-gradient(circle, rgba(212,255,71,0.05) 0%, transparent 62%);
+  animation: glowDrift 46s ease-in-out infinite alternate;
+}
+@keyframes glowDrift {
+  from { transform: translateX(-78%); }
+  to   { transform: translateX(-22%); }
+}
+
+main, header, footer { position: relative; z-index: 1; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── header ────────────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.8rem clamp(1.1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  background: rgba(10,10,11,0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.brand {
+  font-weight: 700; font-size: 1.05rem; letter-spacing: -0.04em;
+  display: inline-flex; align-items: baseline;
+}
+.brand .slash { color: var(--lime); display: inline-block; transition: transform 0.5s var(--ease-spring); }
+.brand:hover .slash { transform: rotate(14deg) translateY(-1px); }
+
+.head-meta {
+  margin-left: auto; display: flex; align-items: center; gap: 0.55rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted);
+}
+
+.pill-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+  color: var(--lime); border: 1px solid rgba(212,255,71,0.35);
+  padding: 0.32rem 0.7rem; border-radius: 99px;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.18s var(--ease-spring);
+  white-space: nowrap;
+}
+.pill-link .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--lime);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,255,71,0.5); }
+  55%      { box-shadow: 0 0 0 5px rgba(212,255,71,0); }
+}
+.pill-link:hover {
+  background: rgba(212,255,71,0.1);
+  box-shadow: 0 0 18px rgba(212,255,71,0.15);
+  transform: translateY(-1px);
+}
+
+.dice-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 9px;
+  border: 1px solid var(--line-hi); background: transparent; color: var(--muted);
+  cursor: pointer; transition: color 0.15s, border-color 0.15s, transform 0.3s var(--ease-spring);
+}
+.dice-btn:hover { color: var(--lime); border-color: rgba(212,255,71,0.4); transform: rotate(-14deg) scale(1.08); }
+.dice-btn svg { width: 16px; height: 16px; }
+
+@media (max-width: 640px) {
+  .head-count { display: none; }
+}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero { padding: clamp(2.6rem, 7vw, 5.5rem) clamp(1.1rem, 4vw, 2.5rem) clamp(1.6rem, 3vw, 2.6rem); }
+
+.hero h1 {
+  font-size: clamp(4.2rem, 14vw, 10rem);
+  font-weight: 700; letter-spacing: -0.045em; line-height: 1.04;
+  display: flex; user-select: none;
+  overflow: hidden; padding-bottom: 0.05em; margin-bottom: -0.05em;
+}
+.hero h1 .ltr { display: inline-block; }
+.hero h1 .ltr i {
+  font-style: normal; display: inline-block;
+  transform: translateY(112%);
+  animation: riseUp 0.9s var(--ease-out) forwards;
+  transition: transform 0.35s var(--ease-spring), color 0.35s;
+}
+.hero h1:hover .ltr i { color: var(--lime); }
+.hero h1 .ltr:nth-child(1) i { animation-delay: 0.06s; }
+.hero h1 .ltr:nth-child(2) i { animation-delay: 0.13s; }
+.hero h1 .ltr:nth-child(3) i { animation-delay: 0.20s; }
+.hero h1 .ltr:nth-child(4) i { animation-delay: 0.27s; }
+.hero h1 .ltr:nth-child(5) i { animation-delay: 0.36s; color: var(--lime); }
+.hero h1:hover .ltr:nth-child(1) i { transition-delay: 0.00s; transform: translateY(-4%); }
+.hero h1:hover .ltr:nth-child(2) i { transition-delay: 0.04s; transform: translateY(-4%); }
+.hero h1:hover .ltr:nth-child(3) i { transition-delay: 0.08s; transform: translateY(-4%); }
+.hero h1:hover .ltr:nth-child(4) i { transition-delay: 0.12s; transform: translateY(-4%); }
+.hero h1:hover .ltr:nth-child(5) i { transition-delay: 0.16s; transform: translateY(-4%) rotate(8deg); }
+@keyframes riseUp { to { transform: translateY(0); } }
+
+.tagline {
+  margin-top: 1.4rem;
+  font-size: clamp(1rem, 2.6vw, 1.45rem);
+  color: var(--muted); font-weight: 500; letter-spacing: -0.01em;
+  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.55s forwards;
+}
+.tagline .rot-wrap {
+  display: inline-block; position: relative; vertical-align: bottom;
+  min-width: 9ch; text-align: left;
+}
+.tagline .rot {
+  display: inline-block; font-weight: 600;
+}
+.tagline .rot .ch {
+  display: inline-block; white-space: pre;
+  transition: transform 0.3s var(--ease-out), opacity 0.3s;
+}
+.tagline .rot.out .ch { transform: translateY(-0.65em) rotateX(70deg); opacity: 0; }
+
+.hero-stats {
+  margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; color: var(--faint);
+  letter-spacing: 0.04em;
+  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.7s forwards;
+}
+.hero-stats b { color: var(--muted); font-weight: 500; }
+
+@keyframes fadeRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* notebox banner */
+.satellite {
+  margin: 1.9rem 0 0; display: inline-flex; align-items: center; gap: 0.8rem;
+  border: 1px dashed rgba(212,255,71,0.4); border-radius: 14px;
+  padding: 0.75rem 1.1rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.25s var(--ease-spring);
+  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.85s forwards;
+  max-width: 100%;
+}
+.satellite:hover { background: rgba(212,255,71,0.06); border-color: var(--lime); transform: translateY(-2px); }
+.satellite .box-ico {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(212,255,71,0.2), rgba(212,255,71,0.05));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--lime);
+}
+.satellite .box-ico svg { width: 17px; height: 17px; }
+.satellite .sat-txt { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+.satellite .sat-txt b { color: var(--ink); font-weight: 600; display: block; font-size: 0.86rem; }
+.satellite .sat-txt span { color: var(--lime); font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; }
+.satellite .go {
+  margin-left: 0.3rem; color: var(--lime); flex-shrink: 0;
+  transition: transform 0.25s var(--ease-spring);
+}
+.satellite:hover .go { transform: translate(3px, -3px); }
+
+/* ── toolbar ───────────────────────────────────────── */
+.toolbar {
+  position: sticky; top: 53px; z-index: 40;
+  padding: 0.7rem clamp(1.1rem, 4vw, 2.5rem);
+  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  background: rgba(10,10,11,0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.chips {
+  display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; flex: 1; min-width: 0; padding: 2px;
+  mask-image: linear-gradient(90deg, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+}
+.chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
+  padding: 0.42rem 0.8rem; border-radius: 99px; white-space: nowrap;
+  border: 1px solid var(--line-hi); color: var(--muted);
+  background: transparent; cursor: pointer; user-select: none; flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 0.42rem;
+  transition: color 0.16s, border-color 0.16s, background 0.16s, transform 0.3s var(--ease-spring);
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--cc, var(--muted)); transition: box-shadow 0.2s; }
+.chip .n { opacity: 0.55; }
+.chip:hover { color: var(--ink); border-color: var(--cc, var(--line-hi)); transform: translateY(-1px); }
+.chip:active { transform: scale(0.94); }
+.chip.on {
+  color: #000; background: var(--cc, var(--ink)); border-color: var(--cc, var(--ink));
+  font-weight: 700;
+}
+.chip.on i { background: #000; }
+.chip.on .n { opacity: 0.7; }
+
+.search-box { position: relative; flex-shrink: 0; width: 240px; }
+.search-box svg {
+  position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
+  width: 13px; height: 13px; color: var(--faint); pointer-events: none;
+}
+.search-box .key {
+  position: absolute; right: 0.55rem; top: 50%; transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
+  border: 1px solid var(--line); border-radius: 5px; padding: 0.08rem 0.38rem;
+  pointer-events: none;
+}
+#search {
+  width: 100%; background: rgba(255,255,255,0.045);
+  border: 1px solid var(--line-hi); border-radius: 10px;
+  color: var(--ink); font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem;
+  padding: 0.5rem 2.2rem 0.5rem 2rem; outline: none;
+  transition: border-color 0.16s, background 0.16s, box-shadow 0.16s;
+}
+#search::placeholder { color: var(--faint); }
+#search:focus {
+  border-color: rgba(212,255,71,0.5);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 3px rgba(212,255,71,0.09);
+}
+
+@media (max-width: 760px) {
+  .toolbar { flex-direction: column-reverse; align-items: stretch; gap: 0.55rem; }
+  .search-box { width: 100%; }
+  .search-box .key { display: none; }
+}
+@media (pointer: coarse) {
+  .chip { padding: 0.6rem 0.95rem; font-size: 0.66rem; }
+  #search { padding-top: 0.68rem; padding-bottom: 0.68rem; }
+}
+
+/* ── content ───────────────────────────────────────── */
+main { padding: 0 clamp(1.1rem, 4vw, 2.5rem) 4rem; max-width: 1460px; margin: 0 auto; }
+
+/* featured card */
+.feature {
+  margin-top: 1.6rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;
+  border: 1px solid rgba(122,184,255,0.22); border-radius: 20px;
+  background:
+    radial-gradient(ellipse 90% 130% at 88% 50%, rgba(78,142,201,0.16), transparent 55%),
+    linear-gradient(120deg, #0d1119, #0b0e15 60%);
+  padding: clamp(1.3rem, 3.4vw, 2.2rem);
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+.feature:hover {
+  border-color: rgba(122,184,255,0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.5);
+}
+.feature .f-badges { display: flex; gap: 0.4rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
+.f-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.09em;
+  padding: 0.22rem 0.6rem; border-radius: 99px; text-transform: uppercase;
+}
+.f-badge.new { background: var(--lime); color: #000; font-weight: 700; animation: pulse 2.4s ease-in-out infinite; }
+.f-badge.ghost { border: 1px solid var(--line-hi); color: var(--muted); }
+.feature h2 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
+}
+.feature p { margin-top: 0.6rem; color: var(--muted); font-size: 0.92rem; line-height: 1.6; max-width: 52ch; }
+.feature .f-cta {
+  margin-top: 1.1rem; display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #9ec8ff;
+}
+.feature .f-cta svg { transition: transform 0.25s var(--ease-spring); }
+.feature:hover .f-cta svg { transform: translateX(4px); }
+
+.f-art { width: 190px; height: 190px; flex-shrink: 0; position: relative; }
+.f-art svg { width: 100%; height: 100%; animation: artFloat 7s ease-in-out infinite alternate; }
+@keyframes artFloat {
+  from { transform: translateY(-5px) rotate(-2deg); }
+  to   { transform: translateY(5px) rotate(2deg); }
+}
+@media (max-width: 700px) {
+  .feature { grid-template-columns: 1fr; }
+  .f-art { display: none; }
+}
+
+/* sections */
+.section { margin-top: 2.8rem; }
+.section.hidden { display: none; }
+
+.sec-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 1.1rem; }
+.sec-head h2 {
+  font-size: 1.06rem; font-weight: 700; letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 0.55rem;
+}
+.sec-head h2 i { width: 9px; height: 9px; border-radius: 3px; background: var(--cc); flex-shrink: 0; }
+.sec-head .cnt { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--faint); }
+.sec-head .rule {
+  flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-hi), transparent);
+  transform-origin: left; transform: scaleX(0); transition: transform 1s var(--ease-out) 0.15s;
+}
+.section.in .rule { transform: scaleX(1); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: 13px;
+}
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; gap: 11px; } }
+
+/* ── card ──────────────────────────────────────────── */
+.card {
+  --mx: 50%; --my: 50%;
+  position: relative;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.05rem 1.1rem 0.95rem;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.25s var(--ease-out), box-shadow 0.25s;
+  will-change: transform;
+}
+.card.hidden { display: none; }
+
+/* pointer spotlight */
+.card::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(340px circle at var(--mx) var(--my), color-mix(in srgb, var(--pa) 9%, transparent), transparent 65%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.card:hover::before { opacity: 1; }
+.card:hover {
+  border-color: color-mix(in srgb, var(--pa) 45%, var(--line-hi));
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+}
+
+/* entrance */
+.card.reveal { opacity: 0; transform: translateY(16px); filter: blur(5px); }
+.card.reveal.in {
+  opacity: 1; transform: translateY(0); filter: blur(0);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out), filter 0.55s var(--ease-out),
+    border-color 0.2s, box-shadow 0.25s;
+  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s, 0s;
+}
+
+.c-head { display: flex; align-items: center; gap: 0.5rem; }
+.c-ico {
+  width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--pa) 26%, #17171b), color-mix(in srgb, var(--pa) 8%, #101014));
+  color: var(--pa);
+  border: 1px solid color-mix(in srgb, var(--pa) 22%, transparent);
+  transition: transform 0.35s var(--ease-spring);
+}
+.card:hover .c-ico { transform: rotate(-6deg) scale(1.07); }
+.c-ico svg { width: 17px; height: 17px; }
+
+.c-lang {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.08em;
+  color: var(--faint); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.14rem 0.4rem;
+}
+
+.c-arrow { margin-left: auto; color: var(--faint); transition: transform 0.25s var(--ease-spring), color 0.2s; }
+.card:hover .c-arrow { transform: translate(3px, -3px); color: var(--pa); }
+
+.c-title { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.28; }
+.c-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.58; flex: 1; }
+
+.c-meta {
+  display: flex; align-items: center; gap: 0.6rem; margin-top: 0.15rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
+}
+.c-cat { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--cat); }
+.c-cat i { width: 6px; height: 6px; border-radius: 50%; background: var(--cat); }
+.c-date { margin-left: auto; }
+
+/* empty state */
+.empty {
+  margin-top: 3.2rem; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); line-height: 2.1;
+  display: none;
+}
+.empty.show { display: block; }
+.empty b { color: var(--muted); font-weight: 500; }
+.empty button {
+  margin-top: 0.6rem; background: none; border: 1px solid var(--line-hi); color: var(--muted);
+  font-family: inherit; font-size: 0.62rem; padding: 0.35rem 0.9rem; border-radius: 8px; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.empty button:hover { color: var(--lime); border-color: rgba(212,255,71,0.4); }
+
+/* ── footer ────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 2.6rem clamp(1.1rem, 4vw, 2.5rem) 2.2rem;
+  background: linear-gradient(180deg, transparent, rgba(212,255,71,0.02));
+}
+.foot-grid {
+  max-width: 1460px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem;
+}
+@media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+.foot-brand { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.04em; }
+.foot-brand .slash { color: var(--lime); }
+.foot-about { margin-top: 0.6rem; font-size: 0.76rem; color: var(--muted); line-height: 1.7; max-width: 34ch; }
+
+.foot-h {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 0.8rem;
+}
+.foot-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.foot-list a {
+  font-size: 0.78rem; color: var(--muted);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: color 0.15s, transform 0.2s var(--ease-out);
+}
+.foot-list a:hover { color: var(--lime); transform: translateX(3px); }
+.foot-list .ext { font-size: 0.62rem; color: var(--faint); }
+
+.colophon { font-size: 0.76rem; color: var(--muted); line-height: 1.7; }
+.colophon b { color: var(--ink); font-weight: 600; }
+.colophon .sig {
+  display: inline-block; margin-top: 0.55rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--lime);
+}
+
+.foot-base {
+  max-width: 1460px; margin: 2.4rem auto 0; padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
+}
+
+/* ── reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001s !important; animation-delay: 0s !important; transition-duration: 0.001s !important; }
+  html { scroll-behavior: auto; }
+  .card.reveal { opacity: 1; transform: none; filter: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-dots"></div>
+<div class="bg-glow"></div>
+
+<header>
+  <a class="brand" href="#" aria-label="dump — home">dump<span class="slash">/</span></a>
+  <div class="head-meta">
+    <span class="head-count" id="head-count"></span>
+    <button class="dice-btn" id="dice" title="open something random" aria-label="open a random page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <a class="pill-link" href="https://note.yanikroesti.com" target="_blank" rel="noopener">
+      <span class="dot"></span>notebox&nbsp;&nearr;
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 aria-label="dump/">
+    <span class="ltr"><i>d</i></span><span class="ltr"><i>u</i></span><span class="ltr"><i>m</i></span><span class="ltr"><i>p</i></span><span class="ltr"><i>/</i></span>
+  </h1>
+  <p class="tagline">the junk drawer of yanikroesti.ch — a home for
+    <span class="rot-wrap"><span class="rot" id="rot"></span></span>
+  </p>
+  <div class="hero-stats">
+    <span><b id="stat-count">—</b> pages</span>
+    <span><b>5</b> categories</span>
+    <span>est. <b>04.2026</b></span>
+    <span>updated <b>08.2026</b></span>
+    <span>no cookies · no tracking · just files</span>
+  </div>
+  <a class="satellite" href="https://note.yanikroesti.com" target="_blank" rel="noopener">
+    <span class="box-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
+    </span>
+    <span class="sat-txt">
+      <b>NoteBox moved out.</b>
+      The note-taking app now lives on its own subdomain — <span>note.yanikroesti.com</span>
+    </span>
+    <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+  </a>
+</section>
+
+<nav class="toolbar" aria-label="filter projects">
+  <div class="chips" id="chips" role="tablist"></div>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+    <input id="search" type="text" placeholder="search the dump…" autocomplete="off" spellcheck="false" aria-label="search projects">
+    <span class="key">/</span>
+  </div>
+</nav>
+
+<main>
+  <a class="feature" href="artifacts/global-births-2025.html" target="_blank" rel="noopener" id="feature-card">
+    <div>
+      <div class="f-badges">
+        <span class="f-badge new">new</span>
+        <span class="f-badge ghost">infographic</span>
+        <span class="f-badge ghost">aug ’26</span>
+      </div>
+      <h2>The World’s 132M Births</h2>
+      <p>A Voronoi treemap of every country on earth, sized by its share of 2025’s births — 177 nations, real flags, interactive tooltips. Built from UN World Population Prospects estimates.</p>
+      <span class="f-cta">open the poster
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </div>
+    <div class="f-art" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="#0d1119" stroke="rgba(240,229,203,0.2)"/>
+        <path d="M100 4 A96 96 0 0 1 196 100 L145 118 L108 92 L92 30 Z" fill="#8fb2a0"/>
+        <path d="M196 100 A96 96 0 0 1 130 191 L118 140 L145 118 Z" fill="#7f9f8e"/>
+        <path d="M130 191 A96 96 0 0 1 30 172 L72 128 L118 140 Z" fill="#c4a163"/>
+        <path d="M30 172 A96 96 0 0 1 6 82 L52 88 L72 128 Z" fill="#b28f55"/>
+        <path d="M6 82 A96 96 0 0 1 46 20 L74 54 L52 88 Z" fill="#636fa5"/>
+        <path d="M46 20 A96 96 0 0 1 100 4 L92 30 L74 54 Z" fill="#4e8ec9"/>
+        <path d="M92 30 L108 92 L145 118 L118 140 L72 128 L52 88 L74 54 Z" fill="#9dbcab"/>
+        <circle cx="100" cy="97" r="17" fill="#f4f2ec" opacity="0.95"/>
+        <circle cx="100" cy="97" r="17" fill="none" stroke="rgba(10,14,20,0.5)" stroke-width="2"/>
+        <path d="M83 91 h34 v4.5 H83 Z" fill="#f0941f"/><path d="M83 99.5 h34 v4.5 H83 Z" fill="#1a7f3c"/>
+        <circle cx="100" cy="97" r="3.4" fill="none" stroke="#1c2f66" stroke-width="1.4"/>
+        <circle cx="152" cy="72" r="9" fill="#e0392c"/>
+        <circle cx="56" cy="146" r="10" fill="#1c7a38"/>
+        <circle cx="140" cy="160" r="8" fill="#cf2b2b"/>
+        <circle cx="42" cy="60" r="7" fill="#3c3b6e"/>
+      </svg>
+    </div>
+  </a>
+
+  <div id="sections"></div>
+
+  <div class="empty" id="empty">
+    <b>nothing in the dump matches.</b><br>
+    try another word or category<br>
+    <button id="empty-clear">reset filters</button>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand">dump<span class="slash">/</span></div>
+      <p class="foot-about">Little projects, research rabbit holes, school packs and half-serious experiments. Nothing here is polished on purpose — that’s the point of a dump.</p>
+    </div>
+    <div>
+      <div class="foot-h">satellites</div>
+      <ul class="foot-list">
+        <li><a href="https://note.yanikroesti.com" target="_blank" rel="noopener">note.yanikroesti.com <span class="ext">&nearr;</span></a></li>
+        <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
+        <li><a href="https://github.com/yanikroesti/notebox" target="_blank" rel="noopener">github / notebox <span class="ext">&nearr;</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-h">colophon</div>
+      <p class="colophon">Curated by <b>Yanik Rösti</b>.<br>Redesign, motion &amp; taxonomy by <b>Claude</b> (Fable&nbsp;5, Anthropic).
+      <span class="sig">// designed &amp; built by claude — 08.2026</span></p>
+    </div>
+  </div>
+  <div class="foot-base">
+    <span id="foot-count"></span>
+    <span>vanilla html · css · js — no framework, no build step</span>
+    <span style="margin-left:auto">dump.yanikroesti.ch</span>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════ data ═══════════════
+   cat: research | learning | tools | games | concepts
+   pa = per-page accent pulled from each page's own design */
+const CATS = {
+  research: { label: 'research', color: 'var(--c-research)', hex: '#7ab8ff' },
+  learning: { label: 'learning', color: 'var(--c-learning)', hex: '#f6c453' },
+  tools:    { label: 'tools',    color: 'var(--c-tools)',    hex: '#5eead4' },
+  games:    { label: 'games',    color: 'var(--c-games)',    hex: '#c884fc' },
+  concepts: { label: 'concepts', color: 'var(--c-concepts)', hex: '#ff8a70' },
+};
+
+const PAGES = [
+  // research
+  { t: "The World’s 132M Births", f: "artifacts/global-births-2025.html", cat: "research", lang: "en", kind: "chart", pa: "#8fb2a0", d: "Voronoi treemap of 2025 births: 177 countries sized by share, flags and tooltips.", m: "aug ’26" },
+  { t: "Bloodline Atlas", f: "artifacts/bloodline.html", cat: "research", lang: "en", kind: "chart", pa: "#b8963a", d: "Interactive timeline of 33 European mass-death events plus birth-rate data since 1800.", m: "apr ’26" },
+  { t: "When Central Banks Go Broke", f: "artifacts/central-bank-map.html", cat: "research", lang: "en", kind: "chart", pa: "#f59e0b", d: "Canvas world map of central banks in loss or negative equity, filterable by severity.", m: "apr ’26" },
+  { t: "How Federal Reserve QE Works", f: "artifacts/fed_qe_explanation.html", cat: "research", lang: "en", kind: "article", pa: "#3498db", d: "Illustrated explainer of quantitative easing with process flow, timeline and charts.", m: "apr ’26" },
+  { t: "Aave Incident Brief", f: "artifacts/aave_incident_brief.html", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Terminal-styled incident brief on the April 2026 Aave crisis and its market fallout.", m: "apr ’26" },
+  { t: "Circle Insider Brief", f: "artifacts/circle_insider_brief.html", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Myth-vs-fact breakdown of Circle (CRCL) insider selling: Form 4s, lockups, three lenses.", m: "may ’26" },
+  { t: "Schweiz: Demografische Trends", f: "artifacts/swiss_trends_html.html", cat: "research", lang: "de", kind: "chart", pa: "#dc2626", d: "Tabbed dashboard on Swiss voter turnout, birth rates and governance metrics.", m: "apr ’26" },
+  { t: "The Demographic Time Bomb", f: "artifacts/switzerland_demographic_crisis.html", cat: "research", lang: "en", kind: "article", pa: "#c8373a", d: "Long-form illustrated essay on Switzerland’s aging crisis, pensions and scenarios.", m: "may ’26" },
+  { t: "The Shrinking Mind", f: "artifacts/the-shrinking-mind.html", cat: "research", lang: "en", kind: "article", pa: "#8a2418", d: "Long-form essay on nutrition and brain health — B12, omega-3 and iron studies.", m: "may ’26" },
+  { t: "Willpower Protocol", f: "artifacts/ego-depletion-guide.html", cat: "research", lang: "en", kind: "guide", pa: "#c2410c", d: "8-step wizard on ego depletion: recovery, evening blocks, fuel and a daily preflight.", m: "apr ’26" },
+  { t: "The Seed Phrase", f: "artifacts/seed_phrase_book.html", cat: "research", lang: "en", kind: "guide", pa: "#c8a84b", d: "Multi-chapter book on BIP39 seed phrases and key security, with text-to-speech.", m: "may ’26" },
+  // learning
+  { t: "Algebra — BZI Prüfungsvorbereitung", f: "artifacts/algebra_bzi.html", cat: "learning", lang: "de", kind: "study", pa: "#c5392c", d: "Exam-prep pack with tabbed chapters, rules, worked examples and practice problems.", m: "apr ’26" },
+  { t: "Der Kaufvertrag", f: "artifacts/Kaufvertrag_Komplett.html", cat: "learning", lang: "de", kind: "study", pa: "#8b8b95", d: "ABU study sheet on purchase contracts — overview plus tabbed process timeline.", m: "apr ’26" },
+  { t: "Kaufvertrag & Störungen — Lernpaket", f: "artifacts/kaufvertrag_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on contracts & breaches: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
+  { t: "Geld & Kauf — Lernpaket", f: "artifacts/geld_und_kauf_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on money & purchasing: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
+  { t: "Elternabend: Markt & Konsum", f: "artifacts/elternabend.html", cat: "learning", lang: "de", kind: "slides", pa: "#e8a838", d: "Slideshow for a parents’ evening: Maslow, Wirtschaftskreislauf and BIP explained.", m: "apr ’26" },
+  { t: "A8 Leissigentunnel", f: "artifacts/a8 tunnel 2page.html", cat: "learning", lang: "de", kind: "slides", pa: "#1a5fa8", d: "Two-page ABU handout on the A8 tunnel roadworks: reasons, timeline, impact.", m: "may ’26" },
+  { t: "Ebola-Ausbruch Kongo", f: "artifacts/ebola kongo 2page.html", cat: "learning", lang: "de", kind: "slides", pa: "#8b1a1a", d: "Two-page ABU handout on the DR Congo Ebola outbreak with stats and relevance.", m: "may ’26" },
+  { t: "Lerndoku: Stromstossschaltung", f: "artifacts/lerndoku_stromstossschaltung.html", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on impulse-relay switching, with diagrams.", m: "may ’26" },
+  { t: "Lerndoku: Treppenhausautomat", f: "artifacts/lerndoku_treppenhausautomat.html", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on staircase timer circuits, with diagrams.", m: "may ’26" },
+  { t: "A1–A3 Drone Course Reader", f: "artifacts/story-reader.html", cat: "learning", lang: "de", kind: "course", pa: "#a391dc", d: "PIN-locked reader serving all 8 BAZL A1–A3 drone certification course modules.", m: "may ’26" },
+  { t: "Roadmap: Data Center Engineer", f: "artifacts/roadmap.html", cat: "learning", lang: "de", kind: "course", pa: "#b8372e", d: "4-phase career roadmap from Elektroinstallateur EFZ to data-center engineer.", m: "apr ’26" },
+  // tools
+  { t: "Color Picker", f: "artifacts/color-picker.html", cat: "tools", lang: "en", kind: "tool", pa: "#5cc48a", d: "Color wheel + RGB/HSL sliders with HEX, RGB, HSL, HSV and CMYK output.", m: "may ’26" },
+  { t: "Format Picker", f: "artifacts/format-picker.html", cat: "tools", lang: "en", kind: "tool", pa: "#5b8fff", d: "Aspect-ratio and dimension calculator with lock, swap and custom ratios.", m: "may ’26" },
+  { t: "QR Generator", f: "artifacts/qr-generator.html", cat: "tools", lang: "en", kind: "tool", pa: "#e8ff00", d: "Dark industrial QR-code maker with text input and PNG download.", m: "apr ’26" },
+  { t: "Pulse — Metronome", f: "artifacts/metronome.html", cat: "tools", lang: "en", kind: "tool", pa: "#5eead4", d: "Metronome with rotary BPM dial, tap tempo and beat accents via Web Audio.", m: "jun ’26" },
+  { t: "4×4×24 — Live Tracker", f: "artifacts/4x4x24_tracker.html", cat: "tools", lang: "en", kind: "tracker", pa: "#ff6b35", d: "Lap tracker for the 4-every-4-for-24 running challenge, with countdowns.", m: "apr ’26" },
+  // games
+  { t: "Terminal Chess", f: "artifacts/chess.html", cat: "games", lang: "en", kind: "game", pa: "#4ec9b0", d: "Terminal-styled chess against a minimax AI — move list, captures, promotion.", m: "apr ’26" },
+  { t: "Block Blast", f: "artifacts/blockblast.html", cat: "games", lang: "en", kind: "game", pa: "#00f0ff", d: "Neon-arcade 8×8 block puzzle: drag pieces, clear lines, chase the high score.", m: "apr ’26" },
+  { t: "Minecraft — Browser Edition", f: "artifacts/minecraft.html", cat: "games", lang: "en", kind: "game", pa: "#f0c030", d: "Voxel clone in Three.js with terrain chunks, block break/place and fly mode.", m: "may ’26" },
+  // concepts
+  { t: "macOS Æther", f: "artifacts/macos_aether.html", cat: "concepts", lang: "en", kind: "concept", pa: "#ff6b35", d: "Interactive desktop concept with liquid-glass UI, animated wallpaper, menu bar.", m: "may ’26" },
+  { t: "Windows 12", f: "artifacts/windows12.html", cat: "concepts", lang: "en", kind: "concept", pa: "#0078d4", d: "Interactive Windows 12 mockup: taskbar, start menu, file explorer, terminal.", m: "may ’26" },
+  { t: "Goldhive", f: "artifacts/Goldhive — Pure Gold from Nature.html", cat: "concepts", lang: "en", kind: "concept", pa: "#d4af37", d: "Dark-gold honey brand landing page concept built in React.", m: "apr ’26" },
+];
+
+/* kind → icon path (24×24, stroke) */
+const ICONS = {
+  chart:   '<rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/>',
+  article: '<path d="M6 3h9l4 4v14H6z"/><path d="M14.5 3v4.5H19"/><path d="M9 12h7M9 15.5h7"/>',
+  guide:   '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/><path d="M9 8h6"/>',
+  study:   '<path d="M2.5 9.5 12 4.5l9.5 5L12 14.5z"/><path d="M6.5 12v4.5c0 1 2.5 2.5 5.5 2.5s5.5-1.5 5.5-2.5V12"/><path d="M21.5 9.5V15"/>',
+  slides:  '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v3.5M8.5 20.5h7"/><path d="M7.5 10.5 10 13l3-3.5 3.5 3.5"/>',
+  course:  '<circle cx="12" cy="12" r="9"/><path d="M10 8.8l5 3.2-5 3.2z"/>',
+  tool:    '<path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="1.9" fill="currentColor" stroke="none"/><circle cx="15.5" cy="12" r="1.9" fill="currentColor" stroke="none"/><circle cx="7" cy="17" r="1.9" fill="currentColor" stroke="none"/>',
+  tracker: '<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l3 2"/><path d="M9.5 2.5h5M12 2.5v3.5"/>',
+  game:    '<path d="M6.5 7h11a5 5 0 0 1 5 5.4l-.4 3.2a3.2 3.2 0 0 1-5.7 1.6L15 15.5H9l-1.4 1.7a3.2 3.2 0 0 1-5.7-1.6l-.4-3.2A5 5 0 0 1 6.5 7z"/><path d="M8 10.5v3M6.5 12h3"/><circle cx="16" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="18.2" cy="13.2" r="1" fill="currentColor" stroke="none"/>',
+  concept: '<path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z"/><path d="M19 16.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
+};
+
+const CAT_ORDER = ['research', 'learning', 'tools', 'games', 'concepts'];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══════════════ build DOM ═══════════════ */
+const sectionsEl = document.getElementById('sections');
+const cardEls = [];
+
+CAT_ORDER.forEach(cat => {
+  const items = PAGES.filter(p => p.cat === cat);
+  const sec = document.createElement('section');
+  sec.className = 'section';
+  sec.dataset.cat = cat;
+  sec.style.setProperty('--cc', CATS[cat].color);
+  sec.innerHTML =
+    `<div class="sec-head">
+       <h2><i></i>${CATS[cat].label}</h2>
+       <span class="cnt">${String(items.length).padStart(2, '0')}</span>
+       <span class="rule"></span>
+     </div>
+     <div class="grid"></div>`;
+  const grid = sec.querySelector('.grid');
+
+  items.forEach(p => {
+    const a = document.createElement('a');
+    a.className = 'card reveal';
+    a.href = encodeURI(p.f);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.dataset.cat = p.cat;
+    a.dataset.search = (p.t + ' ' + p.d + ' ' + CATS[p.cat].label + ' ' + p.kind + ' ' + p.lang).toLowerCase();
+    a.style.setProperty('--pa', p.pa);
+    a.style.setProperty('--cat', CATS[p.cat].color);
+    a.innerHTML =
+      `<div class="c-head">
+         <span class="c-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[p.kind] || ICONS.article}</svg></span>
+         <span class="c-lang">${p.lang.toUpperCase()}</span>
+         <svg class="c-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+       </div>
+       <h3 class="c-title">${p.t}</h3>
+       <p class="c-desc">${p.d}</p>
+       <div class="c-meta">
+         <span class="c-cat"><i></i>${CATS[p.cat].label}</span>
+         <span class="c-date">${p.m}</span>
+       </div>`;
+    grid.appendChild(a);
+    cardEls.push(a);
+  });
+
+  sectionsEl.appendChild(sec);
+});
+
+/* counts */
+const total = PAGES.length;
+document.getElementById('stat-count').textContent = total;
+document.getElementById('head-count').textContent = total + ' pages';
+document.getElementById('foot-count').textContent = total + ' pages and counting';
+
+/* ═══════════════ chips ═══════════════ */
+const chipsEl = document.getElementById('chips');
+let activeCat = null;
+
+function makeChip(cat) {
+  const chip = document.createElement('button');
+  chip.className = 'chip';
+  chip.setAttribute('role', 'tab');
+  if (cat) {
+    const n = PAGES.filter(p => p.cat === cat).length;
+    chip.style.setProperty('--cc', CATS[cat].hex);
+    chip.innerHTML = `<i></i>${CATS[cat].label} <span class="n">${n}</span>`;
+    chip.dataset.cat = cat;
+  } else {
+    chip.innerHTML = `all <span class="n">${total}</span>`;
+    chip.classList.add('on');
+  }
+  chip.addEventListener('click', () => {
+    activeCat = (cat && activeCat !== cat) ? cat : null;
+    document.querySelectorAll('.chip').forEach(c =>
+      c.classList.toggle('on', activeCat ? c.dataset.cat === activeCat : !c.dataset.cat));
+    applyFilter();
+  });
+  chipsEl.appendChild(chip);
+}
+makeChip(null);
+CAT_ORDER.forEach(makeChip);
+
+/* ═══════════════ search ═══════════════ */
+const searchEl = document.getElementById('search');
+let query = '';
+let debounce = null;
+searchEl.addEventListener('input', () => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    query = searchEl.value.toLowerCase().trim();
+    applyFilter();
+  }, 90);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== searchEl) { e.preventDefault(); searchEl.focus(); }
+  if (e.key === 'Escape' && document.activeElement === searchEl) {
+    if (searchEl.value) { searchEl.value = ''; query = ''; applyFilter(); }
+    else searchEl.blur();
+  }
+});
+
+function resetFilters() {
+  activeCat = null; query = ''; searchEl.value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', !c.dataset.cat));
+  applyFilter();
+}
+document.getElementById('empty-clear').addEventListener('click', resetFilters);
+
+/* ═══════════════ FLIP filtering ═══════════════ */
+const featureEl = document.getElementById('feature-card');
+
+function matches(el) {
+  if (activeCat && el.dataset.cat !== activeCat) return false;
+  if (query && !el.dataset.search.includes(query)) return false;
+  return true;
+}
+
+function applyFilter() {
+  // FIRST: positions of currently visible cards
+  const first = new Map();
+  if (!reduceMotion) {
+    cardEls.forEach(el => { if (!el.classList.contains('hidden')) first.set(el, el.getBoundingClientRect()); });
+  }
+
+  let shown = 0;
+  cardEls.forEach(el => {
+    const ok = matches(el);
+    el.classList.toggle('hidden', !ok);
+    if (ok) shown++;
+  });
+
+  // hide empty sections, feature card only in default/matching view
+  document.querySelectorAll('.section').forEach(sec => {
+    const any = sec.querySelector('.card:not(.hidden)');
+    sec.classList.toggle('hidden', !any);
+  });
+  const featureVisible = !activeCat && !query;
+  featureEl.style.display = featureVisible ? '' : 'none';
+
+  document.getElementById('empty').classList.toggle('show', shown === 0);
+  document.getElementById('head-count').textContent =
+    (activeCat || query) ? shown + ' / ' + total + ' pages' : total + ' pages';
+
+  // LAST + INVERT + PLAY
+  if (!reduceMotion) {
+    cardEls.forEach(el => {
+      if (el.classList.contains('hidden')) return;
+      const prev = first.get(el);
+      el.classList.add('in');           // ensure entrance state resolved
+      el.style.setProperty('--d', '0s');
+      if (prev) {
+        const now = el.getBoundingClientRect();
+        const dx = prev.left - now.left, dy = prev.top - now.top;
+        if (dx || dy) {
+          el.animate(
+            [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+            { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+          );
+        }
+      } else {
+        el.animate(
+          [{ opacity: 0, transform: 'translateY(14px) scale(0.97)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }],
+          { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
+      }
+    });
+  }
+}
+
+/* ═══════════════ entrance reveal ═══════════════ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    if (en.target.classList.contains('section')) { en.target.classList.add('in'); io.unobserve(en.target); return; }
+    en.target.classList.add('in');
+    io.unobserve(en.target);
+  });
+}, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+
+document.querySelectorAll('.section').forEach(s => io.observe(s));
+
+// stagger delay per card based on its index within the viewport batch
+cardEls.forEach((el, i) => {
+  el.style.setProperty('--d', Math.min((i % 12) * 0.05, 0.5) + 's');
+  io.observe(el);
+});
+
+/* ═══════════════ pointer spotlight (delegated) ═══════════════ */
+const fineHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+if (fineHover && !reduceMotion) {
+  let raf = null;
+  document.addEventListener('pointermove', e => {
+    const card = e.target.closest && e.target.closest('.card');
+    if (!card) return;
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = null;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    });
+  }, { passive: true });
+}
+
+/* ═══════════════ rotating word ═══════════════ */
+const ROT_WORDS = [
+  ['research', 'var(--c-research)'],
+  ['school packs', 'var(--c-learning)'],
+  ['little tools', 'var(--c-tools)'],
+  ['games', 'var(--c-games)'],
+  ['concepts', 'var(--c-concepts)'],
+  ['experiments', 'var(--lime)'],
+];
+const rotEl = document.getElementById('rot');
+let rotIdx = 0;
+
+function setRotWord(word, color, animate) {
+  rotEl.innerHTML = '';
+  rotEl.style.color = color;
+  [...word].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'ch';
+    s.textContent = ch;
+    if (animate && !reduceMotion) {
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(0.65em) rotateX(-70deg)';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        s.style.transitionDelay = (i * 28) + 'ms';
+        s.style.opacity = '1';
+        s.style.transform = 'translateY(0) rotateX(0)';
+      }));
+    }
+    rotEl.appendChild(s);
+  });
+}
+setRotWord(ROT_WORDS[0][0], ROT_WORDS[0][1], false);
+
+if (!reduceMotion) {
+  setInterval(() => {
+    rotEl.classList.add('out');
+    setTimeout(() => {
+      rotEl.classList.remove('out');
+      rotIdx = (rotIdx + 1) % ROT_WORDS.length;
+      setRotWord(ROT_WORDS[rotIdx][0], ROT_WORDS[rotIdx][1], true);
+    }, 320);
+  }, 2700);
+}
+
+/* ═══════════════ dice ═══════════════ */
+document.getElementById('dice').addEventListener('click', () => {
+  const pool = cardEls.filter(el => !el.classList.contains('hidden'));
+  const pick = pool.length ? pool : cardEls;
+  const el = pick[Math.floor(Math.random() * pick.length)];
+  window.open(el.href, '_blank', 'noopener');
+});
+
+/* initial paint */
+applyFilter();
+</script>
+</body>
+</html>

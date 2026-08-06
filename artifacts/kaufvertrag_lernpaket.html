@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaufvertrag &amp; Störungen — Lernpaket</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --surface-alt: #EDEAE3;
+  --ink: #1A1A18;
+  --ink-soft: #5A5750;
+  --ink-mute: #888378;
+  --accent: #C0392B;
+  --accent-light: #F8E8E6;
+  --accent-dark: #962D23;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --border: #D5D0C8;
+  --border-soft: #E5E1DA;
+  --shadow: 0 2px 12px rgba(26,26,24,0.08);
+  --shadow-sm: 0 1px 4px rgba(26,26,24,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+header {
+  text-align: center;
+  padding: 40px 0 28px;
+  border-bottom: 3px solid var(--ink);
+  margin-bottom: 28px;
+}
+header h1 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+header .subtitle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+header .meta {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+}
+
+.tab-nav {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 32px;
+  position: sticky;
+  top: 8px;
+  z-index: 100;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.tab-btn {
+  flex: 1;
+  min-width: max-content;
+  background: transparent;
+  border: none;
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: 9px;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  margin: 36px 0 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+h2:first-child { margin-top: 0; }
+h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin: 22px 0 10px;
+  color: var(--ink);
+}
+h4 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  color: var(--ink);
+}
+p { margin-bottom: 12px; color: var(--ink); }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+
+.intro {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.card-title .num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.card-title h3 { margin: 0; }
+.card-title .pin {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.badge.or { background: var(--info-light); color: var(--info); }
+.badge.law { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--accent-light); color: var(--accent); }
+
+.info-box {
+  border-left: 3px solid var(--info);
+  background: var(--info-light);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 12px 0;
+  font-size: 0.94rem;
+}
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--accent); background: var(--accent-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: top;
+}
+th {
+  background: var(--surface-alt);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+tr:last-child td { border-bottom: none; }
+
+.reveal-btn {
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.18s;
+  letter-spacing: 0.02em;
+}
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--ink-soft); }
+
+.solution {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--success-light);
+  border-left: 3px solid var(--success);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.94rem;
+}
+.solution.show { display: block; animation: fadeIn 0.2s; }
+.solution h4 {
+  margin-top: 0;
+  color: var(--success);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.begriff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.begriff {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.begriff dt {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.begriff dt .law-ref {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink-mute);
+  margin-left: 6px;
+}
+.begriff dd {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.begriff-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+.cat-chip {
+  background: var(--surface-alt);
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+.flash-stage {
+  position: relative;
+  margin: 18px 0 14px;
+}
+.flash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  min-height: 220px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: all 0.2s;
+}
+.flash-card:hover { box-shadow: 0 4px 18px rgba(26,26,24,0.12); }
+.flash-card .side-label {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+.flash-card .law-ref-flash {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+}
+.flash-front { font-family: var(--font-display); font-size: 1.8rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+
+.flash-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.flash-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.bad { color: var(--accent); border-color: var(--accent-light); }
+.flash-btn.bad:hover { background: var(--accent-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  padding: 0 8px;
+}
+.flash-stats {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+}
+.flash-stats span strong { color: var(--ink); }
+
+.progress {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-alt);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.day {
+  display: flex;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  align-items: flex-start;
+}
+.day-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--accent);
+  min-width: 50px;
+}
+.day-content { flex: 1; }
+.day-content h4 {
+  margin: 4px 0 4px;
+  font-size: 1rem;
+}
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  position: relative;
+}
+.day .check:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+.day .check:checked::after {
+  content: '✓';
+  color: white;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.milestone {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: white;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.milestone-icon {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+.quiz-q {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.quiz-q .q-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.quiz-q .q-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.quiz-q .q-topic {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.quiz-q .q-source {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  margin-left: auto;
+}
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+.schema {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+.schema-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: start;
+}
+.schema-row:last-child { border-bottom: none; }
+.schema-key {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.schema-key small {
+  display: block;
+  font-weight: 500;
+  color: var(--ink-mute);
+  font-size: 0.76rem;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+.compare-col {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.compare-col h4 {
+  margin-top: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border-soft);
+  margin-bottom: 10px;
+}
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--accent); color: var(--accent); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+.fact {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+/* ── ABLAUF FLOWCHART ── */
+.flow {
+  margin: 16px 0;
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+.flow-step {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  position: relative;
+}
+.flow-step.kaeufer { border-color: var(--info); background: var(--info-light); }
+.flow-step.verkaeufer { border-color: var(--accent); background: var(--accent-light); }
+.flow-step h5 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  color: var(--ink-soft);
+}
+.flow-step strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+.flow-step .law {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+  margin-top: 4px;
+  display: block;
+}
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--ink-mute);
+  font-weight: 700;
+}
+.flow-step.center {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: var(--surface-alt);
+  border-color: var(--ink);
+}
+
+/* ── MUSTERBRIEF ── */
+.musterbrief {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--ink);
+  position: relative;
+}
+.musterbrief::before {
+  content: 'MUSTER';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.1em;
+}
+.musterbrief .placeholder {
+  background: var(--warn-light);
+  color: var(--warn);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.4rem; }
+  .flow { grid-template-columns: 1fr; }
+  .flow-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Kaufvertrag &amp; Störungen</h1>
+  <div class="subtitle">BZI ABU · TK2 · Sektion 5 · Lernpaket</div>
+  <div class="meta">Grundlagen · Ablauf · Eigentum · Quittung · Kaufarten · Vertragsverletzungen · Garantie · Mängelrüge</div>
+</header>
+
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════ THEORIE ════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<p class="intro">Alles zum Kaufvertrag und seinen Störungen — die kritischen OR-Artikel, die Wahlrechte bei Mängeln und Lieferverzug, und Musterbriefe für die Mängelrüge.</p>
+
+<!-- 1 Grundlagen -->
+<h2>1 · Grundlagen</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.1</span><h3>Vertragsparteien &amp; Pflichten</h3></div>
+  <p>Geregelt in <span class="badge or">OR 184 ff.</span> Der Kaufvertrag ist ein <strong>zweiseitiger Vertrag</strong> mit gegenseitigen Pflichten:</p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Käufer</div><div class="schema-val">Bezahlt den Kaufpreis</div></div>
+    <div class="schema-row"><div class="schema-key">Verkäufer</div><div class="schema-val">Übergibt die Sache + überträgt das Eigentum</div></div>
+  </div>
+  <div class="info-box"><strong>Mündliche Verträge sind gültig</strong> <span class="badge or">OR 1</span> — bei Alltagskäufen reicht die Willensübereinstimmung. Schriftform nur bei Spezialfällen (Lehrvertrag, Konsumkredit, Grundstückkauf).</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.2</span><h3>Eigentum vs. Besitz <span class="pin">prüfungsrelevant</span></h3></div>
+  <p>Die Begriffe werden gerne vermischt — sind aber klar verschieden:</p>
+  <div class="compare">
+    <div class="compare-col pro">
+      <h4>Eigentum</h4>
+      <ul>
+        <li>Rechtliche Verfügungsgewalt</li>
+        <li>Darf verkaufen, verschenken, vernichten</li>
+        <li>Geht <strong>mit der Lieferung</strong> über (ZGB 714, 715)</li>
+        <li>Beispiel: Käufer nach Übergabe</li>
+      </ul>
+    </div>
+    <div class="compare-col con">
+      <h4>Besitz</h4>
+      <ul>
+        <li>Tatsächliche Sachherrschaft (Sache "in der Hand")</li>
+        <li>Darf nutzen — aber <strong>nicht verkaufen</strong></li>
+        <li>Beispiel: Mieter, Leasingnehmer</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box danger"><strong>Achtung Leasing:</strong> Beim Leasing bleibst du <em>Besitzer</em>, der Leasinggeber bleibt <em>Eigentümer</em> — du darfst das Auto nicht verkaufen.</div>
+  <div class="info-box success"><strong>Achtung Konsumkredit:</strong> Wer mit Konsumkredit kauft, ist sofort <em>Eigentümer</em> (das Auto wurde verkauft, der Kredit ist nur die Finanzierung) — und darf es verkaufen.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.3</span><h3>Eigentumsübertragung &amp; "Nutzen und Gefahr"</h3></div>
+  <p>Bei beweglichen Sachen geht das Eigentum <strong>mit der Übergabe / Lieferung</strong> über <span class="badge or">OR 184 I · ZGB 714, 715</span>.</p>
+  <div class="info-box danger"><strong>Achtung — Fallstrick:</strong> <span class="badge or">OR 185</span> sagt, dass <strong>Nutzen und Gefahr bereits mit Vertragsabschluss</strong> auf den Käufer übergehen — auch wenn die Sache noch nicht geliefert wurde! Wenn die Sache zwischen Vertragsschluss und Lieferung ohne Verschulden des Verkäufers untergeht (Blitz, Brand …), trägt der Käufer das Risiko und muss trotzdem zahlen.</div>
+  <p><strong>Repetitionsfall (Anton's Oldtimer):</strong> Anton verkauft den Oldtimer. In der Nacht schlägt der Blitz in die Garage. Muss Anton das Geld zurückgeben? <strong>Nein</strong> — Nutzen und Gefahr sind bei Vertragsabschluss übergegangen <span class="badge or">OR 185</span>.</p>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">1.4</span><h3>Transportkosten &amp; Garantiezeit</h3></div>
+  <ul>
+    <li><strong>Transportkosten:</strong> Ohne andere Vereinbarung trägt sie der <strong>Käufer</strong> <span class="badge or">OR 189 I</span></li>
+    <li><strong>Garantie / Gewährleistung:</strong> <strong>2 Jahre</strong> ab Übergabe bei Fahrnis (beweglichen Sachen) <span class="badge or">OR 210</span></li>
+    <li><strong>Quittung:</strong> Mindestens <strong>5 Jahre</strong> aufbewahren (Verjährung Privatkäufe), idealerweise <strong>10 Jahre</strong> <span class="badge or">OR 127</span></li>
+  </ul>
+</div>
+
+<!-- 2 Ablauf -->
+<h2>2 · Ablauf eines Kaufvertrages</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.1</span><h3>Die 6 Stationen</h3></div>
+  <div class="flow">
+    <div class="flow-step kaeufer">
+      <h5>Käufer</h5>
+      <strong>1. Anfrage</strong>
+      Auskunft über Preis, Liefer- und Zahlungsbedingungen — <em>unverbindlich</em>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step verkaeufer">
+      <h5>Verkäufer</h5>
+      <strong>2. Angebot / Offerte</strong>
+      Verbindliches oder unverbindliches Angebot
+      <span class="law">OR 3–7</span>
+    </div>
+
+    <div class="flow-step kaeufer">
+      <h5>Käufer</h5>
+      <strong>3. Bestellung</strong>
+      Annahme der Offerte = Vertrag abgeschlossen
+      <span class="law">OR 1</span>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step verkaeufer">
+      <h5>Verkäufer</h5>
+      <strong>4. Lieferung</strong>
+      Übergabe + Eigentumsübertragung; Garantie 2 J.
+      <span class="law">OR 184, 210</span>
+    </div>
+
+    <div class="flow-step kaeufer">
+      <h5>Käufer</h5>
+      <strong>5. Bezahlung</strong>
+      Gemäss vereinbarten Bedingungen
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step verkaeufer">
+      <h5>Verkäufer</h5>
+      <strong>6. Quittung</strong>
+      Bescheinigt die geleistete Zahlung
+      <span class="law">OR 88</span>
+    </div>
+  </div>
+  <div class="info-box"><strong>Aufbewahrung:</strong> Quittungen 10 Jahre lang behalten — sie sind das Beweismittel <span class="badge or">OR 127</span>.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.2</span><h3>Anfrage · Angebot · Bestellung — verbindlich oder nicht? <span class="pin">prüfungsrelevant</span></h3></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Form</th><th>Verbindlich?</th><th>Quelle</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Anfrage</strong> (Käufer)</td><td>Nein — keine Verpflichtung</td><td>—</td></tr>
+      <tr><td><strong>Schaufenster</strong> mit Preis</td><td><strong>Ja</strong> — Verkäufer muss zum Preis verkaufen</td><td>Ausnahme: <em>offensichtlicher Irrtum</em> <span class="badge or">OR 23</span></td></tr>
+      <tr><td><strong>Katalog / Prospekt / Inserat</strong></td><td><strong>Nein</strong> — gilt als unverbindlicher Antrag</td><td><span class="badge or">OR 7</span></td></tr>
+      <tr><td><strong>Mündliche / schriftliche Offerte</strong> (direkt an Person)</td><td><strong>Ja</strong> — bindet Verkäufer</td><td><span class="badge or">OR 3–6</span></td></tr>
+      <tr><td><strong>Bestellung</strong> = Annahme der Offerte</td><td><strong>Ja</strong> — Vertrag ist abgeschlossen</td><td><span class="badge or">OR 1</span></td></tr>
+    </tbody>
+  </table></div>
+  <h4>Wie lange ist eine Offerte gültig?</h4>
+  <ul>
+    <li><strong>Unter Anwesenden / Telefon:</strong> sofort annehmen <span class="badge or">OR 4</span></li>
+    <li><strong>Brief, E-Mail, Fax:</strong> angemessene Frist (= solange auf Antwort gerechnet werden darf) <span class="badge or">OR 5</span></li>
+    <li><strong>Mit Befristung:</strong> bis zum gesetzten Datum <span class="badge or">OR 3</span></li>
+  </ul>
+  <div class="info-box warn"><strong>Beispiel offensichtlicher Irrtum:</strong> 1l-Wodka für Fr. 3.– angeschrieben. Muss <em>nicht</em> verkauft werden — wesentlicher / offensichtlicher Irrtum <span class="badge or">OR 23</span>.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.3</span><h3>Quittung — was muss drin stehen?</h3></div>
+  <p>Eine Quittung bestätigt, dass der Käufer bezahlt hat <span class="badge or">OR 88</span>. Inhalt:</p>
+  <ul>
+    <li><strong>Käufer</strong> (Name)</li>
+    <li><strong>Produkt</strong> (genaue Bezeichnung)</li>
+    <li><strong>Preis</strong> (Betrag, Währung)</li>
+    <li><strong>Datum</strong></li>
+    <li><strong>Unterschrift Verkäufer</strong></li>
+  </ul>
+  <div class="info-box success"><strong>Warum aufbewahren?</strong> Beweis für Garantieansprüche (2 J.) und Verjährung von Privatkäufen (5 J.). Empfehlung: <span class="fact">10 Jahre</span> wegen <span class="badge or">OR 127</span>.</div>
+</div>
+
+<!-- 3 Kaufarten -->
+<h2>3 · Kaufarten</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">3.1</span><h3>Übersicht der wichtigsten Kaufarten</h3></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Art</th><th>Erklärung</th><th>Besonderheit</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Handkauf / Barkauf</strong></td><td>Ware und Geld werden gleichzeitig ausgetauscht (Zug um Zug)</td><td>Sicher, keine Schuld <span class="badge or">OR 184 II</span></td></tr>
+      <tr><td><strong>Kreditkauf</strong></td><td>Bezahlung erst nach vereinbarter Frist</td><td>Risiko Überschuldung; Zinsen möglich</td></tr>
+      <tr><td><strong>Versandkauf</strong></td><td>Online / Katalog; Lieferung gegen Rechnung</td><td>Käufer prüft bei Erhalt</td></tr>
+      <tr><td><strong>Haustürkauf</strong></td><td>Verkauf in der Wohnung des Käufers, unangemeldet</td><td><strong>7 Tage Widerrufsrecht</strong> (eingeschriebener Brief)</td></tr>
+      <tr><td><strong>Internetkauf</strong></td><td>Online-Shopping</td><td>Sichere Shops wählen (https, Impressum, Bewertungen)</td></tr>
+      <tr><td><strong>Mietkauf / Abzahlungskauf</strong></td><td>Raten — Eigentum erst nach letzter Rate</td><td>Endpreis oft viel höher; Überschuldungsgefahr</td></tr>
+    </tbody>
+  </table></div>
+  <div class="info-box"><strong>Unbestellte Ware:</strong> Wer dir Ware ohne Bestellung schickt, kann nichts verlangen. Du musst sie weder zurücksenden noch bezahlen.</div>
+</div>
+
+<!-- 4 Vertragsverletzungen -->
+<h2>4 · Vertragsverletzungen — die 3 Hauptfälle <span class="pin" style="font-size:0.7rem;background:var(--accent);color:white;padding:3px 8px;border-radius:4px;">klausurkritisch</span></h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.1</span><h3>Übersicht der 5 Szenarien</h3></div>
+  <p>Ein Kaufvertrag verläuft nach einem Schema. Wenn etwas schiefgeht, hängt die Reaktion davon ab, <em>was</em> schiefgeht und <em>wer</em> in Verzug ist:</p>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">① Einwandfreie Lieferung</div><div class="schema-val">Alles ok → Käufer <strong>bezahlt</strong></div></div>
+    <div class="schema-row"><div class="schema-key">② Mangelhafte Lieferung</div><div class="schema-val">Mängelrüge → Wandelung / Minderung / Ersatzlieferung (Reparatur nicht im Gesetz)</div></div>
+    <div class="schema-row"><div class="schema-key">③ Nichtlieferung</div><div class="schema-val">Mahnung mit Nachfrist → Vertragsrücktritt / Schadenersatz mit Lieferung / Schadenersatz ohne Lieferung</div></div>
+    <div class="schema-row"><div class="schema-key">④ Nichtbezahlung</div><div class="schema-val">Mahnung → Verzugszins → Betreibung (Zahlungsbefehl)</div></div>
+  </div>
+  <div class="info-box success"><strong>Merksatz:</strong> Die <em>Mängelrüge</em> ist der Türöffner zu den Wahlrechten bei Mängeln. Die <em>Mahnung mit Nachfrist</em> ist der Türöffner zu den Wahlrechten bei Lieferverzug.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.2</span><h3>Lieferverzug — Verkäufer liefert nicht (rechtzeitig)</h3></div>
+  <p><strong>"In Verzug sein"</strong> bedeutet: im Rückstand sein mit der vereinbarten Leistung.</p>
+  <h4>Schritt 1: Liefermahnung</h4>
+  <p>Schriftlich; muss zwingend eine <strong>realistische Nachfrist</strong> enthalten <span class="badge or">OR 102</span>.</p>
+  <h4>Schritt 2: Wenn Nachfrist verstreicht — 3 Wahlrechte <span class="badge or">OR 107</span></h4>
+  <ol>
+    <li><strong>Vom Vertrag zurücktreten</strong> (= keine Lieferung mehr verlangen, Geld zurück, falls schon bezahlt)</li>
+    <li><strong>Schadenersatz</strong> + auf Lieferung bestehen</li>
+    <li><strong>Schadenersatz</strong> + auf Lieferung verzichten</li>
+  </ol>
+  <div class="info-box warn"><strong>Praxisbeispiel:</strong> HiFi-Anlage für eine Party — wird zu spät geliefert, Gäste fordern Eintritt zurück. Lösung: <strong>Schadenersatz fordern und auf Lieferung verzichten</strong> — die Anlage nützt jetzt nichts mehr.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.3</span><h3>Mangelhafte Lieferung</h3></div>
+  <h4>Schritt 1: Käufer-Pflichten <span class="badge or">OR 201</span></h4>
+  <ol>
+    <li><strong>Ware sofort prüfen</strong></li>
+    <li><strong>Mangel sofort melden</strong> = Mängelrüge (siehe Sektion 6)</li>
+  </ol>
+  <p>Wer das verpasst, verliert seine Garantieansprüche!</p>
+  <h4>Schritt 2: Die 3 gesetzlichen Wahlrechte</h4>
+  <div class="schema">
+    <div class="schema-row"><div class="schema-key">Wandelung<small>OR 205</small></div><div class="schema-val">Vom Vertrag zurücktreten — Geld gegen Sache zurück. Nicht möglich, wenn der Mangel das Gerät nicht unbrauchbar macht.</div></div>
+    <div class="schema-row"><div class="schema-key">Minderung<small>OR 205</small></div><div class="schema-val">Preis reduzieren — Ware behalten</div></div>
+    <div class="schema-row"><div class="schema-key">Ersatzlieferung<small>OR 206</small></div><div class="schema-val">Mängelfreie neue Ware verlangen — nur bei Gattungskauf (austauschbare Ware)</div></div>
+  </div>
+  <h4>4. Wahlmöglichkeit (nicht im Gesetz)</h4>
+  <p><strong>Reparatur</strong> — wird oft in den AGB als ausschliessliches Recht des Käufers vereinbart. Nach mehreren erfolglosen Reparaturversuchen kann der Käufer aber Ersatz oder Wandelung verlangen.</p>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">4.4</span><h3>Zahlungsverzug — Käufer bezahlt nicht</h3></div>
+  <ol>
+    <li><strong>1. Mahnung</strong>, ggf. 2./3. Mahnung</li>
+    <li><strong>Verzugszins</strong> <span class="fact">5 % pro Jahr</span> <span class="badge or">OR 104</span></li>
+    <li><strong>Betreibung</strong> einleiten — Zahlungsbefehl <span class="badge law">SchKG</span></li>
+  </ol>
+  <div class="info-box danger"><strong>SchKG</strong> = Bundesgesetz über <em>Schuldbetreibung und Konkurs</em>. Bei Privatpersonen ohne HR-Eintrag → Betreibung auf Pfändung.</div>
+</div>
+
+<!-- 5 Garantie -->
+<h2>5 · Garantie / Gewährleistung</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.1</span><h3>Was sagt das Gesetz?</h3></div>
+  <p>"Garantie" ist umgangssprachlich für das <strong>Gewährleistungsrecht</strong> im OR. Der Verkäufer hat die <strong>Gewährleistungspflicht</strong>, der Käufer das <strong>Gewährleistungsrecht</strong>.</p>
+  <h4>Voraussetzungen für Ansprüche</h4>
+  <ol>
+    <li>Es muss ein <strong>Mangel</strong> vorliegen</li>
+    <li>Der Mangel muss <strong>sofort gemeldet</strong> werden</li>
+    <li>Der Anspruch darf <strong>nicht verjährt</strong> sein (2 Jahre <span class="badge or">OR 210</span>)</li>
+  </ol>
+  <h4>Was kann der Käufer verlangen?</h4>
+  <ul>
+    <li><strong>Wandelung</strong> (Vertragsrücktritt) <span class="badge or">OR 205</span></li>
+    <li><strong>Minderung</strong> (Preisreduktion) <span class="badge or">OR 205</span></li>
+    <li><strong>Ersatzlieferung</strong> bei Gattungskauf <span class="badge or">OR 206</span></li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.2</span><h3>Achtung AGB — andere Regeln möglich</h3></div>
+  <div class="info-box warn"><strong>Wichtig:</strong> Die gesetzliche Regelung ist <em>nicht zwingend</em>. AGB können sie ändern!</div>
+  <h4>Häufige Varianten in AGB</h4>
+  <ul>
+    <li><strong>Reparatur statt Wahlrecht:</strong> Vertraglich nur Anspruch auf Reparatur — aber nach mehreren erfolglosen Versuchen darf der Käufer doch Ersatz oder Wandelung verlangen</li>
+    <li><strong>Ausschluss von Leistungen:</strong> Bestimmte Teile werden nicht ersetzt; Transportkosten zur Reparatur trägt der Käufer</li>
+  </ul>
+  <h4>Tipps</h4>
+  <ul>
+    <li>Vertrag und AGB <strong>aufmerksam durchlesen</strong></li>
+    <li>Bei schlechten Konditionen → anderen Händler suchen</li>
+    <li>Steht im Vertrag nichts → es gelten die <strong>gesetzlichen Regeln</strong></li>
+    <li>Mehrere erfolglose Reparaturen → Ersatz oder Rücktritt verlangen</li>
+  </ul>
+</div>
+
+<!-- 6 Mängelrüge -->
+<h2>6 · Mängelrüge — wie sie aussieht</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.1</span><h3>Muster — Mängelrüge allgemein</h3></div>
+  <div class="musterbrief"><span class="placeholder">[Vorname Name]</span>
+<span class="placeholder">[Strasse Nr.]</span>
+<span class="placeholder">[PLZ Ort]</span>
+<span class="placeholder">[Tel. / E-Mail]</span>
+
+<strong>Einschreiben</strong>
+
+<span class="placeholder">[Unternehmen]</span>
+<span class="placeholder">[Strasse Nr.]</span>
+<span class="placeholder">[PLZ Ort]</span>
+
+<span class="placeholder">[Ort, Datum]</span>
+
+<strong>Mängelrüge; Kaufvertrag vom <span class="placeholder">[Datum]</span></strong>
+
+Sehr geehrte Damen und Herren
+
+Am <span class="placeholder">[Datum]</span> habe ich bei Ihnen <span class="placeholder">[Produkt]</span>
+gekauft. Bereits nach kurzer Zeit häuften sich die Mängel.
+Genauer gesagt bestehen die folgenden Mängel:
+
+– <span class="placeholder">[Mangel 1 präzis beschreiben]</span>
+– <span class="placeholder">[Mangel 2]</span>
+– <span class="placeholder">[Mangel 3]</span>
+
+Gemäss Obligationenrecht hat der Käufer das Recht, den Kauf
+rückgängig zu machen, eine Preisminderung oder Ersatzware zu
+fordern.
+
+Ich bitte Sie, mir bis am <span class="placeholder">[Datum]</span> mitzuteilen, wie Sie in
+dieser Sache vorgehen wollen. Sollte ich bis dahin keine Antwort
+von Ihnen erhalten haben, werde ich den Rechtsweg beschreiten.
+
+Besten Dank für Ihre Rückmeldung und freundliche Grüsse
+
+<span class="placeholder">[Unterschrift / Vorname Nachname]</span>
+
+Anlagen: Kopie Quittung</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.2</span><h3>Muster — mit konkretem Vorschlag (Ersatzlieferung)</h3></div>
+  <div class="musterbrief"><strong>Mängelrüge Ihrer Lieferung <span class="placeholder">[Artikelnummer]</span></strong>
+
+Sehr geehrte Damen und Herren
+
+Am <span class="placeholder">[Datum]</span> habe ich bei Ihnen folgendes Gerät
+gekauft: <span class="placeholder">[Genaue Artikelangabe]</span>.
+
+In der Zwischenzeit ist die Lieferung bei mir eingetroffen.
+Wie ich Ihnen bereits telefonisch am <span class="placeholder">[Datum]</span> mitgeteilt
+habe, ist das von Ihnen gelieferte Gerät mangelhaft. Es bestehen
+folgende Mängel:
+
+<span class="placeholder">[Genaue Beschreibung der Mängel]</span>
+
+Nach Obligationenrecht habe ich als Käufer das Recht auf
+die Rückgabe des mangelhaften Geräts oder auf eine Preis-
+minderung. Ich bin bereit, auf die Rückgabe und Rückerstattung
+zu verzichten, wenn Sie die Mängel bis zum <span class="placeholder">[Datum]</span> kostenlos
+beheben oder mir ein funktionstaugliches Ersatzgerät liefern.
+
+Bitte teilen Sie mir bis am <span class="placeholder">[Datum]</span> mit, wie Sie weiter
+vorgehen wollen. Wenn eine Reparatur oder Ersatzlieferung
+nicht möglich ist, werde ich auf die Rückgabe bestehen und
+die Rückerstattung des Kaufpreises verlangen. Ich bitte Sie
+in diesem Fall, mir den Betrag von CHF <span class="placeholder">[Betrag]</span> bis zum
+<span class="placeholder">[Datum]</span> auf folgendes Konto zu überweisen:
+
+<span class="placeholder">[Kontoangaben mit IBAN]</span>
+
+Das defekte Gerät werde ich nach Ablauf dieser Frist
+zurücksenden.
+
+Besten Dank und freundliche Grüsse
+
+<span class="placeholder">[Unterschrift]</span></div>
+  <div class="info-box success"><strong>Warum Einschreiben?</strong> Beweis, dass und wann du die Mängelrüge geschickt hast. Wichtig für die Frist (sofortige Meldung) und falls es zum Rechtsstreit kommt.</div>
+</div>
+
+</section>
+
+<!-- ════════════ BEGRIFFE ════════════ -->
+<section class="tab-pane" id="begriffe">
+
+<p class="intro">Alle wichtigen Begriffe rund um Kaufvertrag und Störungen — alphabetisch, mit Suche und Kategorie-Filter.</p>
+
+<input type="text" class="begriff-search" id="begriffSearch" placeholder="🔍 Begriff suchen…">
+<div class="cat-filter" id="catFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="ablauf">Ablauf</button>
+  <button class="cat-chip" data-cat="kauf">Kaufarten</button>
+  <button class="cat-chip" data-cat="stoerung">Störungen</button>
+  <button class="cat-chip" data-cat="garantie">Garantie</button>
+</div>
+
+<dl class="begriff-grid" id="begriffGrid"></dl>
+
+</section>
+
+<!-- ════════════ KARTEIKARTEN ════════════ -->
+<section class="tab-pane" id="karten">
+
+<p class="intro">Karteikarten zum aktiven Wiederholen. Klick zum Umdrehen, dann <strong>👍 gewusst</strong> oder <strong>👎 nochmal</strong>.</p>
+
+<div class="cat-filter" id="cardCatFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="ablauf">Ablauf</button>
+  <button class="cat-chip" data-cat="kauf">Kaufarten</button>
+  <button class="cat-chip" data-cat="stoerung">Störungen</button>
+  <button class="cat-chip" data-cat="garantie">Garantie</button>
+</div>
+
+<div class="progress"><div class="progress-fill" id="cardProgress"></div></div>
+
+<div class="flash-stage">
+  <div class="flash-card" id="flashCard" onclick="flipCard()">
+    <span class="side-label" id="flashSide">VORDERSEITE</span>
+    <span class="law-ref-flash" id="flashLawRef"></span>
+    <div id="flashContent" class="flash-front">Klick zum Starten</div>
+  </div>
+</div>
+<p class="flash-hint">Tipp: Leertaste = umdrehen · ← → = navigieren · J = gewusst · F = nochmal</p>
+
+<div class="flash-controls">
+  <button class="flash-btn" onclick="prevCard()">← Zurück</button>
+  <button class="flash-btn bad" id="flashBad" onclick="rateCard(false)" disabled>👎 Nochmal</button>
+  <span class="flash-counter" id="flashCounter">0 / 0</span>
+  <button class="flash-btn good" id="flashGood" onclick="rateCard(true)" disabled>👍 Gewusst</button>
+  <button class="flash-btn" onclick="nextCard()">Weiter →</button>
+</div>
+<div class="flash-controls" style="margin-top:6px;">
+  <button class="flash-btn" onclick="shuffleCards()">🔀 Mischen</button>
+  <button class="flash-btn" onclick="resetCards()">↻ Zurücksetzen</button>
+</div>
+<div class="flash-stats">
+  <span><strong id="statsKnown">0</strong> gewusst</span>
+  <span><strong id="statsUnknown">0</strong> nochmal</span>
+  <span><strong id="statsTotal">0</strong> total</span>
+</div>
+
+</section>
+
+<!-- ════════════ QUIZ ════════════ -->
+<section class="tab-pane" id="quiz">
+
+<p class="intro">Echte BZI-Aufgaben (mit Original-Lösungen aus dem Lösungsbogen) plus ein paar zusätzliche Übungsfragen.</p>
+
+<div class="cat-filter">
+  <button class="cat-chip active" onclick="revealAll(true)">Alle Lösungen anzeigen</button>
+  <button class="cat-chip" onclick="revealAll(false)">Alle verstecken</button>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q1</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Wie heissen die Vertragsparteien beim Kaufvertrag?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Käufer und Verkäufer <span class="badge or">OR 184</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q2</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Sind mündliche Kaufverträge gültig?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Ja <span class="badge or">OR 1</span> — Willensübereinstimmung genügt.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q3</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Welche Verpflichtung geht der Käufer mit einer Anfrage ein?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Keine. Die Anfrage ist unverbindlich.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q4</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Sind Offerten immer verbindlich?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Nein <span class="badge or">OR 7</span> — Kataloge, Prospekte, Inserate gelten als <em>unverbindliche Anträge</em>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q5</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Muss eine Ware im Schaufenster zum angeschriebenen Preis verkauft werden?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Ja — Ausnahme: offensichtlicher Irrtum <span class="badge or">OR 23</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q6</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Eigentum &amp; Offerte</span></div>
+  <p class="q-text">Paul erhält per Post einen Prospekt eines Elektronikgeschäfts mit einer Playstation für CHF 399.–. Im Geschäft heisst es, der Artikel sei ausverkauft. Erläutere die Rechtslage.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Prospekte gelten als <strong>unverbindliche Anträge</strong> <span class="badge or">OR 7</span>. Das Geschäft ist nicht an diesen Antrag gebunden — Paul kann nicht auf den Verkauf bestehen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q7</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Eine 1l-Flasche Wodka ist im Laden mit Fr. 3.– offensichtlich falsch angeschrieben. Muss sie zum angeschriebenen Preis verkauft werden?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Nein — <strong>offensichtlicher Irrtum</strong> <span class="badge or">OR 23</span>. Der Preis ist erkennbar falsch; ein vernünftiger Käufer kann sich nicht in gutem Glauben darauf berufen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q8</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Wann genau gilt ein Kaufvertrag als zustande gekommen?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Bei der <strong>Annahme</strong> einer verbindlichen Offerte (= Bestellung) <span class="badge or">OR 1</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q9</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Wann findet der Eigentumsübertrag bei beweglichen Sachen im Normalfall statt?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Mit der <strong>Lieferung / Übergabe</strong> <span class="badge or">ZGB 714, 715</span> · <span class="badge or">OR 184 I</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q10</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Wer bezahlt die Transportkosten der Ware?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Im Normalfall der <strong>Käufer</strong> <span class="badge or">OR 189 I</span>, ausser etwas anderes wurde vereinbart.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q11</span><span class="q-topic">Ablauf</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Welchen Inhalt sollte eine Quittung enthalten?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Angaben zum <strong>Käufer, Produkt, Preis, Datum</strong> und <strong>Unterschrift Verkäufer</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q12</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Aufgaben Kaufvertrag</span></div>
+  <p class="q-text">Warum sollte man die Kaufquittung mindestens 5 Jahre lang aufbewahren?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Als <strong>Beweis für Garantieansprüche</strong> (2 Jahre) und für die <strong>Verjährung</strong> von Privatkäufen (5 Jahre) <span class="badge or">OR 127</span>. Empfehlung: 10 Jahre.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q13</span><span class="q-topic">Grundlagen</span><span class="q-source">BZI Repetitionsfall — Anton</span></div>
+  <p class="q-text">Anton hat von seinem Grossvater einen seltenen, wertvollen Oldtimer geerbt. Mit einem Sammler schliesst er einen Kaufvertrag ab. Der Käufer will das Auto am nächsten Tag abholen. Leider schlägt der Blitz während des nächtlichen Gewitters in die Garage ein, sodass das ganze Gebäude — trotz Blitzableiter — mitsamt dem teuren, schon verkauften Oldtimer verbrennt. <strong>Muss Anton nun das Geld zurückgeben?</strong></p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Nein.</strong> Nutzen und Gefahr gehen <strong>beim Vertragsabschluss</strong> auf den Käufer über <span class="badge or">OR 185</span>. Da Anton das Auto bereits verkauft hatte und kein Verschulden vorliegt (Blitzschlag = höhere Gewalt), trägt der Käufer das Risiko und muss trotzdem zahlen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q14</span><span class="q-topic">Eigentum/Besitz</span><span class="q-source">BZI Eigentum &amp; Offerte</span></div>
+  <p class="q-text">Korrigiere: „Ich habe ein Auto gemietet. Aufgrund dieses Vertrags bin ich Eigentümer dieses Autos."</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Falsch — als Mieter bin ich nur <strong>Besitzer</strong>, nicht Eigentümer.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q15</span><span class="q-topic">Eigentum/Besitz</span><span class="q-source">BZI Eigentum &amp; Offerte</span></div>
+  <p class="q-text">Korrigiere: „Ich habe für ein Auto einen Leasingvertrag abgeschlossen. Weil ich Eigentümer dieses Autos bin, kann ich es verkaufen."</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Falsch — als Leasingnehmer bin ich <strong>Besitzer</strong>, nicht Eigentümer. Deshalb darf ich das Auto <strong>nicht verkaufen</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q16</span><span class="q-topic">Eigentum/Besitz</span><span class="q-source">BZI Eigentum &amp; Offerte</span></div>
+  <p class="q-text">Korrigiere: „Um ein Auto zu kaufen, habe ich einen Konsumkredit aufgenommen. Weil ich nur Besitzer und nicht auch Eigentümer dieses Autos bin, darf ich es nicht verkaufen."</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Falsch — beim Konsumkredit bin ich <strong>Eigentümer</strong> (das Auto wurde gekauft, der Kredit ist nur die Finanzierung). Ich darf es verkaufen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q17</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Nenne die drei häufigsten Vertragsverletzungen bei Kaufverträgen.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li><strong>Lieferverzug</strong></li><li><strong>Zahlungsverzug</strong></li><li><strong>Mangelhafte Lieferung</strong></li></ol></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q18</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Was bedeutet „in Verzug sein"? Beschreibe in eigenen Worten.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Im <strong>Rückstand</strong> sein mit der vereinbarten Leistung — also nicht termingerecht liefern oder nicht termingerecht bezahlen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q19</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Was muss zwingend in einer Liefermahnung stehen?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Eine <strong>neue, realistische Frist</strong> (Nachfrist) <span class="badge or">OR 102</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q20</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Welche Möglichkeiten hast du, wenn eine Lieferung auch nach Ablauf der Nachfrist nicht eintrifft?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><span class="badge or">OR 102 / 107</span> — drei Wahlrechte:</p><ol><li><strong>Vom Vertrag zurücktreten</strong></li><li><strong>Schadenersatz fordern und auf Lieferung bestehen</strong></li><li><strong>Schadenersatz fordern und auf Lieferung verzichten</strong></li></ol></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q21</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Du bestellst eine Hi-Fi-Anlage für eine grosse Party. Trotz korrekter Mahnung wird die Anlage nicht termingerecht geliefert. Die Gäste sind mit der schlechten Qualität (deine Ersatzanlage) unzufrieden und fordern Eintrittsgeld zurück. Was kannst du tun?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Schadenersatz fordern und auf Lieferung verzichten</strong> — die Anlage nützt nach der Party nichts mehr <span class="badge or">OR 107</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q22</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Welche zwei Pflichten hast du als Käufer bei einer mangelhaften Lieferung?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><span class="badge or">OR 201</span></p><ol><li><strong>Ware sofort prüfen</strong></li><li><strong>Mangel sofort melden</strong> (Mängelrüge)</li></ol></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q23</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Das Versandhaus liefert dir 12 bestellte DVDs, davon 8 wegen schlechter Verpackung kaputt. Du schreibst eine Mängelrüge. Welche drei Möglichkeiten hast du gemäss Gesetz?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><span class="badge or">OR 205 / 206</span></p><ul><li><strong>Ersatzlieferung</strong></li><li><strong>Minderung</strong> (Preisreduktion)</li><li><strong>Wandelung</strong> (vom Vertrag zurücktreten)</li></ul></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q24</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Wie heisst die vierte Wahlmöglichkeit beim Vorliegen eines Mangels (nicht im Gesetz erwähnt)?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Reparatur</strong> — wird oft in den AGB als ausschliessliches Recht des Käufers vereinbart.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q25</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Was bedeutet Zahlungsverzug?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Mit der <strong>Bezahlung im Rückstand</strong> sein.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q26</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Wie hoch ist der Verzugszins gemäss Gesetz?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><span class="fact">5 % pro Jahr</span> <span class="badge or">OR 104</span>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q27</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Ursula hat grosszügig bei Versandhäusern Kleider eingekauft und Rechnungen sowie Mahnungen ignoriert. Was können die Geschäfte gegen Ursula unternehmen?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Sie können Ursula <strong>betreiben (auf Pfändung)</strong> — Zahlungsbefehl beim Betreibungsamt.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q28</span><span class="q-topic">Störungen</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Was bedeutet SchKG?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Bundesgesetz über Schuldbetreibung und Konkurs.</strong></p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q29</span><span class="q-topic">Garantie</span><span class="q-source">BZI Kaufvertragsstörungen</span></div>
+  <p class="q-text">Wie lange dauert der Garantieanspruch, wenn nichts anderes abgemacht worden ist?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>2 Jahre</strong> <span class="badge or">OR 210</span>. Aber: Mängel müssen <em>sofort</em> nach Entdeckung gemeldet werden, sonst verfällt der Anspruch.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q30</span><span class="q-topic">Garantie</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Du kaufst ein Notebook. Im Kaufvertrag steht in den AGB: „Der Käufer hat ausschliesslich Anspruch auf Reparatur." Nach drei erfolglosen Reparaturen funktioniert das Gerät immer noch nicht. Welche Rechte hast du?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Trotz der AGB-Klausel kannst du nach mehreren erfolglosen Reparaturversuchen <strong>Ersatz</strong> oder <strong>Wandelung</strong> verlangen — gemäss Rechtsprechung. Die AGB-Beschränkung ist dann nicht mehr gültig.</p></div>
+</div>
+
+</section>
+
+<!-- ════════════ LERNPLAN ════════════ -->
+<section class="tab-pane" id="lernplan">
+
+<p class="intro">Ca. 10-Tage-Plan, fokussiert nur auf Kaufvertrag und Störungen. Hak ab, was du erledigt hast — der Fortschritt zeigt sich in der Leiste.</p>
+
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">1</div><div class="day-content"><h4>Setup &amp; Überblick</h4><ul class="day-tasks"><li>Theorie-Tab durchscrollen, alle 6 Sektionen</li><li>Auf welche Sektionen sind „prüfungsrelevant"-Pins gesetzt? (1.2 Eigentum/Besitz, 2.2 Anfrage/Offerte, 4 Vertragsverletzungen)</li><li>15 Min Karteikarten (Kategorie: Grundlagen)</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">2</div><div class="day-content"><h4>Grundlagen + Eigentum/Besitz</h4><ul class="day-tasks"><li>Theorie 1.1 – 1.4 lesen</li><li>Eigentum vs. Besitz: 3 Fälle (Mieter, Leasingnehmer, Konsumkreditkäufer) auswendig</li><li>OR 184, 185, 189, 210 ans Smartphone als Notiz</li><li>Quiz Q1, Q2, Q9, Q10, Q14, Q15, Q16</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">3</div><div class="day-content"><h4>Ablauf &amp; Offerte</h4><ul class="day-tasks"><li>Theorie 2.1 (Flowchart) — die 6 Stationen auswendig</li><li>Theorie 2.2 verbindlich vs. unverbindlich (Tabelle merken)</li><li>Quiz Q3 – Q8 (alle Offerte-Fragen)</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">4</div><div class="day-content"><h4>Quittung &amp; Anton's Oldtimer</h4><ul class="day-tasks"><li>Theorie 2.3 (Quittung-Inhalt: 5 Punkte)</li><li>OR 185 verstehen — das ist der Trick beim Anton-Fall</li><li>Quiz Q11, Q12, Q13 (Repetitionsfall!)</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Meilenstein Tag 4:</strong><p>Du beherrschst Grundlagen, Ablauf, Eigentum/Besitz und den Anton-Fall. Etwa 40 % geschafft.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">5</div><div class="day-content"><h4>Kaufarten</h4><ul class="day-tasks"><li>Theorie 3 — Tabelle der Kaufarten</li><li>Besonderheiten merken: Haustürkauf 7 Tage Widerruf; Mietkauf-Risiko</li><li>Karteikarten Kategorie „Kaufarten" durch</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">6</div><div class="day-content"><h4>Vertragsverletzungen — die kritischste Sektion</h4><ul class="day-tasks"><li>Theorie 4.1 (Übersicht) + 4.2 Lieferverzug</li><li>3 Wahlrechte bei Lieferverzug auswendig (OR 107)</li><li>Quiz Q17 – Q21</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">7</div><div class="day-content"><h4>Mangelhafte Lieferung &amp; Zahlungsverzug</h4><ul class="day-tasks"><li>Theorie 4.3 + 4.4</li><li>3 Wahlrechte bei Mängeln (Wandelung/Minderung/Ersatzlieferung) + 4. Reparatur</li><li>Verzugszins 5 % (OR 104) merken</li><li>Quiz Q22 – Q28</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">8</div><div class="day-content"><h4>Garantie &amp; Mängelrüge schreiben</h4><ul class="day-tasks"><li>Theorie 5 + 6 (Garantie + Musterbriefe)</li><li>AGB-Falle merken: Reparatur-Klausel hat Grenzen</li><li>Versuche, eine Mängelrüge selber zu skizzieren (5 Min)</li><li>Quiz Q29 + Q30</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Meilenstein Tag 8:</strong><p>Stoff komplett durchgearbeitet. Jetzt nur noch Wiederholung &amp; Festigung.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">9</div><div class="day-content"><h4>Karteikarten-Marathon</h4><ul class="day-tasks"><li>Alle Karteikarten 1× komplett durchgehen</li><li>„Nochmal"-Karten markieren — auf die fokussieren</li><li>Schwerpunkt: Kategorie „Störungen" und „Garantie"</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">10</div><div class="day-content"><h4>Quiz komplett &amp; Schwachstellen</h4><ul class="day-tasks"><li>Alle 30 Quiz-Fragen <em>ohne</em> Lösung anzeigen lösen</li><li>Wo gehakt? → entsprechende Theorie-Sektion nochmal</li><li>OR-Artikel-Cheatsheet erstellen (1 A4): OR 1, 7, 23, 102, 104, 107, 184, 185, 189, 201, 205, 206, 210</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">11</div><div class="day-content"><h4>Prüfungstag — leichter Tag</h4><ul class="day-tasks"><li>Karteikarten 1× durch (nur die schwierigen)</li><li>Quiz Q13 (Anton) + Q21 (HiFi-Anlage) + Q23 (DVDs) nochmal</li><li>Früh ins Bett — kein neuer Stoff!</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Prüfungstag</strong><p>Bei Rechtsfällen: Wer macht was falsch? Liefer- oder Zahlungsverzug oder Mangel? Welcher OR-Artikel? Du kannst das.</p></div></div>
+
+</section>
+
+</div>
+
+<script>
+// ═══ TAB SWITCHING ═══
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+// ═══ QUIZ REVEAL ═══
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  // Grundlagen
+  { term: 'Kaufvertrag', cat: 'grund', ref: 'OR 184', def: 'Verkäufer übergibt Sache + Eigentum, Käufer bezahlt Kaufpreis. Zwei Pflichten je Seite.' },
+  { term: 'Käufer', cat: 'grund', ref: 'OR 184', def: 'Vertragspartei, die den Kaufpreis bezahlt und Sache + Eigentum erhält.' },
+  { term: 'Verkäufer', cat: 'grund', ref: 'OR 184', def: 'Vertragspartei, die die Sache übergibt und das Eigentum überträgt.' },
+  { term: 'Willensübereinstimmung', cat: 'grund', ref: 'OR 1', def: 'Beide Parteien wollen dasselbe — genügt für mündliche Verträge bei Alltagskäufen.' },
+  { term: 'Eigentum', cat: 'grund', ref: 'ZGB 714', def: 'Rechtliche Verfügungsgewalt über eine Sache — darf verkaufen, verschenken, vernichten.' },
+  { term: 'Besitz', cat: 'grund', def: 'Tatsächliche Sachherrschaft (Sache "in der Hand") — Mieter, Leasingnehmer. Darf nicht verkaufen.' },
+  { term: 'Eigentumsübertragung', cat: 'grund', ref: 'OR 184 I · ZGB 714', def: 'Bei beweglichen Sachen mit der Übergabe / Lieferung. Vorher gehört die Sache dem Verkäufer.' },
+  { term: 'Nutzen und Gefahr', cat: 'grund', ref: 'OR 185', def: 'Gehen schon bei Vertragsabschluss auf den Käufer über (auch wenn die Sache noch nicht geliefert ist!) — Risiko z.B. Brand, Blitz.' },
+  { term: 'Fahrniskauf', cat: 'grund', def: 'Kauf einer beweglichen Sache. Im Gegensatz zum Grundstückkauf nicht formgebunden.' },
+  { term: 'Gattungskauf', cat: 'grund', def: 'Kauf einer austauschbaren Sache (z.B. 12 DVDs). Ersatzlieferung möglich.' },
+  // Ablauf
+  { term: 'Anfrage', cat: 'ablauf', def: 'Auskunftsersuchen des Käufers über Preis und Bedingungen — unverbindlich, keine Verpflichtung.' },
+  { term: 'Offerte / Angebot', cat: 'ablauf', ref: 'OR 3-7', def: 'Vorschlag zum Vertragsabschluss. Verbindlich bei Schaufenster, mündlich/schriftlich; unverbindlich bei Kataloge/Prospekte.' },
+  { term: 'Bestellung', cat: 'ablauf', ref: 'OR 1', def: 'Annahme einer Offerte = Vertragsabschluss. Beide Parteien sind ab jetzt gebunden.' },
+  { term: 'Schaufenster-Preis', cat: 'ablauf', def: 'Verbindlich — Verkäufer muss zum angeschriebenen Preis verkaufen. Ausnahme: offensichtlicher Irrtum (OR 23).' },
+  { term: 'Katalog / Prospekt / Inserat', cat: 'ablauf', ref: 'OR 7', def: 'Gilt als unverbindlicher Antrag. Verkäufer ist nicht daran gebunden.' },
+  { term: 'Offensichtlicher Irrtum', cat: 'ablauf', ref: 'OR 23', def: 'Klar erkennbar falsche Angabe (z.B. 1l-Wodka für Fr. 3.–). Vertrag in diesem Punkt anfechtbar.' },
+  { term: 'Quittung', cat: 'ablauf', ref: 'OR 88', def: 'Bestätigung des Verkäufers, dass der Käufer bezahlt hat. Inhalt: Käufer, Produkt, Preis, Datum, Unterschrift.' },
+  { term: 'Aufbewahrungspflicht', cat: 'ablauf', ref: 'OR 127', def: 'Quittungen 10 Jahre aufbewahren — wichtig als Beweis bei Garantie und Verjährung (5 J. Privatkauf).' },
+  { term: 'Transportkosten', cat: 'ablauf', ref: 'OR 189 I', def: 'Trägt im Normalfall der Käufer, ausser etwas anderes wurde vereinbart.' },
+  // Kaufarten
+  { term: 'Handkauf / Barkauf', cat: 'kauf', ref: 'OR 184 II', def: 'Ware und Geld werden gleichzeitig (Zug um Zug) ausgetauscht. Sicherste Form.' },
+  { term: 'Kreditkauf', cat: 'kauf', def: 'Bezahlung erst nach vereinbarter Frist. Käufer hat Schuld; Risiko Überschuldung.' },
+  { term: 'Mietkauf / Abzahlungskauf', cat: 'kauf', def: 'Ratenkauf — Eigentum erst nach letzter Rate. Endpreis oft viel höher als Barkauf.' },
+  { term: 'Versandkauf', cat: 'kauf', def: 'Online / Katalog; Lieferung gegen Rechnung. Käufer prüft bei Erhalt.' },
+  { term: 'Haustürkauf', cat: 'kauf', def: 'Verkauf in der Wohnung des Käufers, unangemeldet. 7 Tage schriftliches Widerrufsrecht.' },
+  { term: 'Internetkauf', cat: 'kauf', def: 'Online-Shopping. Sichere Shops wählen (https, Impressum, Bewertungen).' },
+  // Störungen
+  { term: 'Vertragsverletzung', cat: 'stoerung', def: 'Eine Partei erfüllt nicht oder nicht richtig. Drei Hauptfälle: Lieferverzug, Zahlungsverzug, mangelhafte Lieferung.' },
+  { term: 'Lieferverzug', cat: 'stoerung', ref: 'OR 102', def: 'Verkäufer liefert nicht oder nicht rechtzeitig. Käufer kann mahnen mit Nachfrist.' },
+  { term: 'Liefermahnung', cat: 'stoerung', ref: 'OR 102', def: 'Schriftliche Aufforderung an säumigen Verkäufer mit angemessener Nachfrist. Voraussetzung für die 3 Wahlrechte.' },
+  { term: 'Wahlrechte bei Lieferverzug', cat: 'stoerung', ref: 'OR 107', def: '1. Vertragsrücktritt · 2. Schadenersatz + Lieferung · 3. Schadenersatz ohne Lieferung.' },
+  { term: 'Mangelhafte Lieferung', cat: 'stoerung', ref: 'OR 197 ff.', def: 'Ware hat einen Mangel (Defekt, fehlende Eigenschaft). Käufer muss sofort prüfen und melden (Mängelrüge).' },
+  { term: 'Mängelrüge', cat: 'stoerung', ref: 'OR 201', def: 'Sofortige schriftliche Beanstandung mangelhafter Ware. Pflicht — sonst Verlust der Garantieansprüche. Empfehlung: Einschreiben.' },
+  { term: 'Wandelung', cat: 'stoerung', ref: 'OR 205', def: 'Vom Vertrag zurücktreten — Geld gegen Sache zurück. Eines der 3 gesetzlichen Wahlrechte bei Mängeln.' },
+  { term: 'Minderung', cat: 'stoerung', ref: 'OR 205', def: 'Preis reduzieren, Ware behalten. Eines der 3 gesetzlichen Wahlrechte.' },
+  { term: 'Ersatzlieferung', cat: 'stoerung', ref: 'OR 206', def: 'Mängelfreie neue Ware verlangen — nur bei Gattungskauf möglich.' },
+  { term: 'Reparatur', cat: 'stoerung', def: 'Vierte (nicht gesetzliche) Wahlmöglichkeit. Oft in AGB als ausschliessliches Recht vereinbart.' },
+  { term: 'Zahlungsverzug', cat: 'stoerung', ref: 'OR 102', def: 'Käufer ist mit Bezahlung im Rückstand. Verkäufer kann mahnen → Verzugszins → Betreibung.' },
+  { term: 'Verzugszins', cat: 'stoerung', ref: 'OR 104', def: '5 % p.a. bei Zahlungsverzug, sofern keine andere Vereinbarung.' },
+  { term: 'SchKG', cat: 'stoerung', def: 'Bundesgesetz über Schuldbetreibung und Konkurs. Regelt das Eintreiben von Schulden.' },
+  { term: 'Betreibung', cat: 'stoerung', def: 'Staatliches Verfahren zum Eintreiben einer Schuld. Privatpersonen: meist Betreibung auf Pfändung.' },
+  { term: 'Zahlungsbefehl', cat: 'stoerung', def: 'Offizielle Aufforderung des Betreibungsamts. Beginn des Betreibungsverfahrens.' },
+  // Garantie
+  { term: 'Gewährleistung', cat: 'garantie', ref: 'OR 197 ff.', def: 'Gesetzlicher Begriff für „Garantie". Verkäufer haftet 2 Jahre für Mängel ab Übergabe (Fahrnis).' },
+  { term: 'Garantiezeit', cat: 'garantie', ref: 'OR 210', def: '2 Jahre ab Übergabe bei beweglichen Sachen — sofern nichts anderes vereinbart wurde.' },
+  { term: 'AGB-Klausel', cat: 'garantie', def: 'Allgemeine Geschäftsbedingungen können die gesetzlichen Garantieregeln verschärfen oder einschränken — z.B. nur Reparatur statt Wahlrechte.' },
+  { term: 'Mangel', cat: 'garantie', def: 'Fehlende oder schlechte Eigenschaft, die Ware unbrauchbar macht oder den Wert deutlich mindert.' },
+];
+
+function renderBegriffe(filter, searchTerm) {
+  const grid = document.getElementById('begriffGrid');
+  const search = (searchTerm || '').toLowerCase();
+  const filtered = BEGRIFFE.filter(b => {
+    const matchCat = filter === 'all' || b.cat === filter;
+    const matchSearch = !search || b.term.toLowerCase().includes(search) || b.def.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+  grid.innerHTML = filtered.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>
+  `).join('') || `<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px;">Keine Begriffe gefunden.</div>`;
+}
+
+let currentBegriffeFilter = 'all';
+let currentBegriffeSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentBegriffeFilter = chip.dataset.cat;
+    renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+  });
+});
+document.getElementById('begriffSearch').addEventListener('input', (e) => {
+  currentBegriffeSearch = e.target.value;
+  renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+});
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+const EXTRA_CARDS = [
+  { term: 'Garantiezeit Fahrniskauf', cat: 'garantie', def: '<strong>2 Jahre</strong> ab Übergabe.', ref: 'OR 210' },
+  { term: 'Verzugszins (gesetzlich)', cat: 'stoerung', def: '<strong>5 % p.a.</strong>', ref: 'OR 104' },
+  { term: 'Widerruf Haustürkauf', cat: 'kauf', def: '<strong>7 Tage</strong> schriftlich (Einschreiben).', ref: '' },
+  { term: '3 Wahlrechte bei Mangel', cat: 'stoerung', def: 'Wandelung · Minderung · Ersatzlieferung. (4. praktisch: Reparatur)', ref: 'OR 205, 206' },
+  { term: '3 Wahlrechte bei Lieferverzug', cat: 'stoerung', def: 'Vertragsrücktritt · Schadenersatz + Lieferung · Schadenersatz ohne Lieferung.', ref: 'OR 107' },
+  { term: 'Käuferpflichten bei Mängeln', cat: 'stoerung', def: '1. Ware sofort prüfen · 2. Mangel sofort melden (Mängelrüge).', ref: 'OR 201' },
+  { term: 'Quittung — 5 Inhalte', cat: 'ablauf', def: 'Käufer · Produkt · Preis · Datum · Unterschrift Verkäufer.', ref: 'OR 88' },
+  { term: 'Quittung aufbewahren', cat: 'ablauf', def: '<strong>5–10 Jahre</strong> (Verjährung Privatkäufe + Garantiebeweis).', ref: 'OR 127' },
+  { term: 'Anton-Fall — wer trägt das Risiko?', cat: 'grund', def: 'Der <strong>Käufer</strong>! Nutzen und Gefahr gehen bei Vertragsabschluss über.', ref: 'OR 185' },
+  { term: 'Eigentumsübertragung', cat: 'grund', def: 'Bei <strong>Übergabe / Lieferung</strong> der Sache.', ref: 'OR 184 I · ZGB 714' },
+  { term: 'Mieter / Leasingnehmer', cat: 'grund', def: 'Sind <strong>Besitzer</strong>, nicht Eigentümer — dürfen die Sache nicht verkaufen.', ref: '' },
+  { term: 'Konsumkredit-Käufer', cat: 'grund', def: 'Ist <strong>Eigentümer</strong> — darf die Sache verkaufen.', ref: '' },
+  { term: 'Schaufenster-Preis', cat: 'ablauf', def: '<strong>Verbindlich</strong>, ausser offensichtlicher Irrtum.', ref: 'OR 23' },
+  { term: 'Katalog / Prospekt-Preis', cat: 'ablauf', def: '<strong>Unverbindlich</strong> — gilt als unverbindlicher Antrag.', ref: 'OR 7' },
+  { term: '3 Hauptfälle Vertragsverletzung', cat: 'stoerung', def: 'Lieferverzug · Zahlungsverzug · Mangelhafte Lieferung.', ref: '' },
+  { term: 'SchKG', cat: 'stoerung', def: 'Bundesgesetz über <strong>Schuldbetreibung und Konkurs</strong>.', ref: '' },
+  { term: 'Liefermahnung — Pflichtinhalt', cat: 'stoerung', def: 'Eine <strong>neue, realistische Frist</strong> (Nachfrist).', ref: 'OR 102' },
+];
+const ALL_CARDS = [...BEGRIFFE, ...EXTRA_CARDS];
+let cardSet = [];
+let cardIdx = 0;
+let cardFlipped = false;
+let knownIds = new Set();
+let unknownIds = new Set();
+let cardCatFilter = 'all';
+
+function buildCardSet() {
+  cardSet = ALL_CARDS.filter(c => cardCatFilter === 'all' || c.cat === cardCatFilter);
+  cardSet = cardSet.map(c => ({...c, _id: ALL_CARDS.indexOf(c)}));
+  cardIdx = 0;
+  cardFlipped = false;
+  knownIds = new Set();
+  unknownIds = new Set();
+  renderCard();
+  updateCardStats();
+}
+function renderCard() {
+  if (cardSet.length === 0) {
+    document.getElementById('flashContent').innerHTML = 'Keine Karten in dieser Kategorie';
+    document.getElementById('flashContent').className = 'flash-front';
+    document.getElementById('flashCounter').textContent = '0 / 0';
+    document.getElementById('flashSide').textContent = '';
+    document.getElementById('flashLawRef').textContent = '';
+    return;
+  }
+  const c = cardSet[cardIdx];
+  const content = document.getElementById('flashContent');
+  const side = document.getElementById('flashSide');
+  const ref = document.getElementById('flashLawRef');
+  if (cardFlipped) {
+    content.innerHTML = c.def;
+    content.className = 'flash-back';
+    side.textContent = 'RÜCKSEITE';
+    ref.textContent = c.ref || '';
+  } else {
+    content.innerHTML = c.term;
+    content.className = 'flash-front';
+    side.textContent = 'VORDERSEITE';
+    ref.textContent = '';
+  }
+  document.getElementById('flashCounter').textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  document.getElementById('flashGood').disabled = !cardFlipped;
+  document.getElementById('flashBad').disabled = !cardFlipped;
+  const totalRated = knownIds.size + unknownIds.size;
+  document.getElementById('cardProgress').style.width = `${(totalRated / cardSet.length) * 100}%`;
+}
+function flipCard() { if (cardSet.length === 0) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (cardSet.length === 0) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (cardSet.length === 0) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) {
+  if (cardSet.length === 0) return;
+  const id = cardSet[cardIdx]._id;
+  if (known) { knownIds.add(id); unknownIds.delete(id); }
+  else { unknownIds.add(id); knownIds.delete(id); }
+  updateCardStats();
+  nextCard();
+}
+function shuffleCards() {
+  cardSet.sort(() => Math.random() - 0.5);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+function resetCards() {
+  knownIds.clear(); unknownIds.clear();
+  cardIdx = 0; cardFlipped = false;
+  renderCard(); updateCardStats();
+}
+function updateCardStats() {
+  document.getElementById('statsKnown').textContent = knownIds.size;
+  document.getElementById('statsUnknown').textContent = unknownIds.size;
+  document.getElementById('statsTotal').textContent = cardSet.length;
+}
+document.querySelectorAll('#cardCatFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#cardCatFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    cardCatFilter = chip.dataset.cat;
+    buildCardSet();
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); flipCard(); }
+  else if (e.code === 'ArrowRight') nextCard();
+  else if (e.code === 'ArrowLeft') prevCard();
+  else if (e.code === 'KeyJ' && cardFlipped) rateCard(true);
+  else if (e.code === 'KeyF' && cardFlipped) rateCard(false);
+});
+buildCardSet();
+
+// ═══ LERNPLAN PROGRESS ═══
+function updatePlanProgress() {
+  const all = document.querySelectorAll('.day .check');
+  const done = document.querySelectorAll('.day .check:checked').length;
+  document.getElementById('planProgress').style.width = `${(done / all.length) * 100}%`;
+}
+document.querySelectorAll('.day .check').forEach(cb => cb.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+
+</body>
+</html>

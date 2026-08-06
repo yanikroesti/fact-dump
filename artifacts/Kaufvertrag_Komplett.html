@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Der Kaufvertrag — ABU Kap. 2.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0D0D0D;
+    --ink-mid:   #3A3A3A;
+    --ink-soft:  #6B6B6B;
+    --ink-faint: #A8A8A8;
+    --paper:     #F9F8F6;
+    --paper-2:   #F0EEE9;
+    --paper-3:   #E5E2DB;
+    --rule:      #D0CCC4;
+    --rule-bold: #999590;
+    --accent:    #1A1A1A;
+    --k-bg:      #EDEBE7;
+    --v-bg:      #F4F3F0;
+    --serif:     'Playfair Display', Georgia, serif;
+    --sans:      'Figtree', system-ui, sans-serif;
+    --mono:      'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── MASTHEAD ─────────────────────────────────────────────────── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2.5rem 3rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,.35);
+  }
+
+  .masthead-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .masthead-kicker {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .18em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .masthead-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+  }
+
+  .masthead-meta {
+    font-size: .8rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    font-family: var(--mono);
+  }
+
+  /* ── TABS ─────────────────────────────────────────────────────── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .85rem 1.8rem;
+    cursor: pointer;
+    position: relative;
+    transition: color .2s;
+  }
+
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--paper);
+    transform: scaleX(0);
+    transition: transform .25s cubic-bezier(.4,0,.2,1);
+  }
+
+  .tab-btn.active { color: var(--paper); }
+  .tab-btn.active::after { transform: scaleX(1); }
+  .tab-btn:hover { color: rgba(255,255,255,.75); }
+
+  /* ── SECTIONS ─────────────────────────────────────────────────── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── LAYOUT WRAPPER ───────────────────────────────────────────── */
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+  }
+
+  /* ── SECTION HEADER ───────────────────────────────────────────── */
+  .sec-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 2.4rem;
+    padding-bottom: .9rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .sec-num {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-faint);
+    letter-spacing: .15em;
+  }
+
+  .sec-title {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+
+  /* ── BLOCK LABELS ─────────────────────────────────────────────── */
+  .block-label {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: .6rem;
+    padding-bottom: .3rem;
+    border-bottom: 1px solid var(--rule);
+    margin-top: 2rem;
+  }
+
+  /* ── DEFINITION BOX ───────────────────────────────────────────── */
+  .definition {
+    background: var(--paper-2);
+    border-left: 3px solid var(--ink);
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .definition p {
+    font-size: .95rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  .definition strong { color: var(--ink); }
+
+  .or-ref {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--ink-soft);
+    margin-top: .5rem;
+  }
+
+  /* ── PARTEIEN ─────────────────────────────────────────────────── */
+  .parteien {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule-bold);
+    border: 1px solid var(--rule-bold);
+    margin-bottom: .5rem;
+  }
+
+  .partei {
+    padding: 1.2rem 1.4rem;
+    background: var(--paper);
+  }
+
+  .partei-k { background: var(--k-bg); }
+  .partei-v { background: var(--v-bg); }
+
+  .partei-kuerzel {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+
+  .partei-name {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink-mid);
+    margin-bottom: .4rem;
+  }
+
+  .partei-desc {
+    font-size: .8rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── ABLAUF FLOW ──────────────────────────────────────────────── */
+  .ablauf { margin-top: .5rem; }
+
+  .phase {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0;
+    position: relative;
+    animation: fadeIn .4s ease both;
+  }
+
+  .phase:not(:last-child) .phase-line {
+    position: absolute;
+    left: 25px;
+    top: 52px;
+    bottom: 0;
+    width: 2px;
+    background: var(--rule);
+  }
+
+  .phase-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .phase-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    transition: background .2s;
+  }
+
+  .phase:hover .phase-dot {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .phase-content {
+    padding: .9rem 0 1.2rem 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase:last-child .phase-content { border-bottom: none; }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+  }
+
+  .phase-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  .phase-side {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--paper-2);
+    padding: .15rem .5rem;
+    border: 1px solid var(--rule);
+  }
+
+  .phase-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+
+  .phase-points li {
+    font-size: .85rem;
+    color: var(--ink-mid);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .phase-points li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  .phase-or {
+    font-family: var(--mono);
+    font-size: .68rem;
+    color: var(--ink-faint);
+    margin-top: .5rem;
+  }
+
+  /* ── BEGRIFFE TABLE ───────────────────────────────────────────── */
+  .begriffe {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+    margin-top: .5rem;
+  }
+
+  .begriffe tr:nth-child(even) td { background: var(--paper-2); }
+  .begriffe tr:nth-child(odd) td  { background: var(--paper); }
+
+  .begriffe td {
+    padding: .7rem .9rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .begriffe td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--ink);
+    width: 30%;
+  }
+
+  .begriffe td:last-child { color: var(--ink-mid); }
+
+  /* ── TIMELINE TABLE ───────────────────────────────────────────── */
+  .tl-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tl-table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    font-size: .82rem;
+  }
+
+  .tl-table thead tr {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .tl-table thead th {
+    padding: .7rem 1rem;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,.1);
+  }
+
+  .tl-table thead th:last-child { border-right: none; }
+
+  .tl-table tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background .15s;
+  }
+
+  .tl-table tbody tr.row-k { background: var(--k-bg); }
+  .tl-table tbody tr.row-v { background: var(--v-bg); }
+  .tl-table tbody tr:hover { filter: brightness(.97); }
+
+  .tl-table td {
+    padding: .85rem 1rem;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .tl-nr {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--ink-faint);
+    width: 44px;
+    text-align: center;
+    padding-right: .5rem !important;
+  }
+
+  .tl-wann {
+    font-weight: 600;
+    color: var(--ink);
+    width: 160px;
+  }
+
+  .tl-seite {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    width: 64px;
+  }
+
+  .tl-kat {
+    width: 110px;
+  }
+
+  .kat-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .2rem .55rem;
+    border: 1px solid var(--rule-bold);
+    color: var(--ink-mid);
+    font-weight: 600;
+    background: rgba(255,255,255,.6);
+  }
+
+  .tl-grund { color: var(--ink-mid); }
+
+  .tl-or {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    width: 100px;
+  }
+
+  /* ── LEGEND ───────────────────────────────────────────────────── */
+  .legend {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: .75rem;
+    color: var(--ink-soft);
+    font-family: var(--mono);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--rule-bold);
+  }
+
+  /* ── ANIMATIONS ───────────────────────────────────────────────── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section.active .phase {
+    animation: fadeIn .35s ease both;
+  }
+
+  .section.active .phase:nth-child(1)  { animation-delay: .04s; }
+  .section.active .phase:nth-child(2)  { animation-delay: .08s; }
+  .section.active .phase:nth-child(3)  { animation-delay: .12s; }
+  .section.active .phase:nth-child(4)  { animation-delay: .16s; }
+  .section.active .phase:nth-child(5)  { animation-delay: .20s; }
+  .section.active .phase:nth-child(6)  { animation-delay: .24s; }
+  .section.active .phase:nth-child(7)  { animation-delay: .28s; }
+  .section.active .phase:nth-child(8)  { animation-delay: .32s; }
+  .section.active .phase:nth-child(9)  { animation-delay: .36s; }
+
+  .section.active .tl-table tbody tr {
+    animation: fadeIn .3s ease both;
+  }
+
+  .section.active .tl-table tbody tr:nth-child(1) { animation-delay: .04s; }
+  .section.active .tl-table tbody tr:nth-child(2) { animation-delay: .08s; }
+  .section.active .tl-table tbody tr:nth-child(3) { animation-delay: .12s; }
+  .section.active .tl-table tbody tr:nth-child(4) { animation-delay: .16s; }
+  .section.active .tl-table tbody tr:nth-child(5) { animation-delay: .20s; }
+  .section.active .tl-table tbody tr:nth-child(6) { animation-delay: .24s; }
+  .section.active .tl-table tbody tr:nth-child(7) { animation-delay: .28s; }
+  .section.active .tl-table tbody tr:nth-child(8) { animation-delay: .32s; }
+  .section.active .tl-table tbody tr:nth-child(9) { animation-delay: .36s; }
+
+  /* ── FOOTER ───────────────────────────────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
+    letter-spacing: .08em;
+  }
+
+  /* ── PRINT ────────────────────────────────────────────────────── */
+  @media print {
+    .masthead { position: static; background: white; color: black; }
+    .tabs { display: none; }
+    .section { display: block !important; }
+    .section + .section { page-break-before: always; }
+    .phase-line { background: #999 !important; }
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .wrap { padding: 2rem 1.2rem; }
+    .masthead { padding: 1.5rem 1.2rem 0; }
+    .masthead-top { flex-direction: column; gap: .5rem; }
+    .parteien { grid-template-columns: 1fr; }
+    .tab-btn { padding: .75rem 1rem; font-size: .65rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ──────────────────────────────────────────────────────── -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div>
+      <div class="masthead-kicker">ABU — Allgemeinbildung · Kapitel 2.2 · Geld und Kauf</div>
+      <h1 class="masthead-title">Der Kaufvertrag</h1>
+    </div>
+    <div class="masthead-meta">Lernmittel S. 39–42</div>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('uebersicht', this)">01 — Übersichtsblatt</button>
+    <button class="tab-btn"        onclick="switchTab('timeline', this)">02 — Timeline</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: ÜBERSICHTSBLATT                                        -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section id="uebersicht" class="section active">
+<div class="wrap">
+
+  <div class="sec-header">
+    <span class="sec-num">01 /</span>
+    <h2 class="sec-title">Übersichtsblatt</h2>
+  </div>
+
+  <!-- DEFINITION -->
+  <div class="block-label">Definition</div>
+  <div class="definition">
+    <p>Ein <strong>Kaufvertrag</strong> entsteht durch eine <strong>übereinstimmende gegenseitige Willenserklärung</strong> beider Parteien. Er kann mündlich, schriftlich oder durch konkludentes Handeln abgeschlossen werden — etwa beim täglichen Einkauf an der Kasse.</p>
+    <div class="or-ref">Rechtsgrundlage: Obligationenrecht OR Art. 1 (Zustandekommen) · OR Art. 184 ff. (Kaufvertrag)</div>
+  </div>
+
+  <!-- PARTEIEN -->
+  <div class="block-label">Parteien</div>
+  <div class="parteien">
+    <div class="partei partei-k">
+      <div class="partei-kuerzel">K</div>
+      <div class="partei-name">Käuferin / Käufer</div>
+      <div class="partei-desc">Bestellt, zahlt den Kaufpreis und nimmt die Ware entgegen</div>
+    </div>
+    <div class="partei partei-v">
+      <div class="partei-kuerzel">V</div>
+      <div class="partei-name">Verkäuferin / Verkäufer</div>
+      <div class="partei-desc">Liefert die Ware, stellt Rechnung und Quittung aus</div>
+    </div>
+  </div>
+
+  <!-- ABLAUF -->
+  <div class="block-label">Ablauf eines Kaufvertrags</div>
+  <div class="ablauf">
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">01</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Anfrage</span>
+          <span class="phase-side">Käufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Käufer richtet Anfrage an Anbieter (schriftlich oder mündlich)</li>
+          <li>Nennt Produkt, Preisvorstellung und gewünschten Liefertermin</li>
+          <li>Anfragen sind kostenlos und begründen keine Verpflichtungen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">02</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Angebot / Offerte</span>
+          <span class="phase-side">Verkäufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Verkäufer macht verbindliches Angebot (im OR «Antrag» genannt)</li>
+          <li>Grundsätzlich verbindlich; kann als «unverbindlich» deklariert werden</li>
+          <li>Befristete Angebote verlieren nach Fristablauf die Gültigkeit (OR 3)</li>
+          <li>Mündliche Angebote müssen sofort angenommen werden (OR 4)</li>
+          <li>Tarife, Preislisten und Inserate sind unverbindlich (OR 7)</li>
+        </ul>
+        <div class="phase-or">OR 3, 4, 7, 23</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">03</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Bestellung</span>
+          <span class="phase-side">Käufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Käufer gibt Willenserklärung ab — Kaufvertrag kommt zustande</li>
+          <li>Widerruf möglich, muss aber möglichst rasch erfolgen (OR 9)</li>
+          <li>Mündliche Bestellungen sind bindend — schriftlich bestätigen lassen</li>
+        </ul>
+        <div class="phase-or">OR 1, 9</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">04</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Lieferung mit Rechnung</span>
+          <span class="phase-side">Verkäufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Verkäufer liefert Ware gemäss Vereinbarung und stellt Rechnung aus</li>
+          <li>Mahnkauf: Lieferfrist vereinbart — bei Überschreitung Nachfrist setzen (OR 107)</li>
+          <li>Fixkauf: Genauer Liefertermin — Verzug tritt automatisch ein (OR 108)</li>
+        </ul>
+        <div class="phase-or">OR 107, 108</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">05</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Gewährleistung / Garantie</span>
+          <span class="phase-side">Verkäufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Verkäufer haftet für mangelfreie Lieferung gemäss Vereinbarung (OR 197)</li>
+          <li>Gilt für sofort und erst später entdeckte Mängel</li>
+          <li>In der Regel zwei Jahre</li>
+        </ul>
+        <div class="phase-or">OR 197</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">06</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Prüfung &amp; Mängelrüge</span>
+          <span class="phase-side">Käufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Ware sofort nach Erhalt prüfen (OR 201 Abs. 1)</li>
+          <li>Mängel schriftlich melden: Mängelrüge, empfohlen als Einschreiben</li>
+          <li>Optionen bei Mängeln: Ersatzlieferung, Minderung (Rabatt) oder Wandelung (OR 206)</li>
+        </ul>
+        <div class="phase-or">OR 201, 206</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">07</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Bezahlung</span>
+          <span class="phase-side">Käufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Käufer begleicht Rechnung innert vereinbarter Zahlungsfrist</li>
+          <li>Bei Verzug muss Verkäufer mahnen (OR 102); Nachfrist: 5/10/15 Tage</li>
+          <li>Verzugszins bis 5% möglich; bei Nichtbezahlung droht Betreibung</li>
+        </ul>
+        <div class="phase-or">OR 88, 102</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-line"></div>
+      <div class="phase-left"><div class="phase-dot">08</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Quittung</span>
+          <span class="phase-side">Verkäufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Käufer hat Recht auf Quittung als Zahlungsnachweis (OR 88)</li>
+          <li>Bei Überweisung: Rechnung + Kontoauszug gilt als Quittung</li>
+          <li>Bei Barzahlung: Vermerk «Betrag dankend erhalten» mit Unterschrift</li>
+        </ul>
+        <div class="phase-or">OR 88</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-left"><div class="phase-dot">09</div></div>
+      <div class="phase-content">
+        <div class="phase-header">
+          <span class="phase-name">Aufbewahrung</span>
+          <span class="phase-side">Käufer</span>
+        </div>
+        <ul class="phase-points">
+          <li>Rechnungen und Quittungen 5–10 Jahre aufbewahren (Beweis &amp; Versicherung)</li>
+          <li>Verjährungsfristen im OR geregelt</li>
+          <li>Wichtige Dokumente auch physisch (Papier im Ordner) ablegen</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /ablauf -->
+
+  <!-- BEGRIFFE -->
+  <div class="block-label" style="margin-top:2.8rem">Wichtige Rechtsbegriffe</div>
+  <table class="begriffe">
+    <tbody>
+      <tr><td>Willenserklärung</td><td>Ausdrückliche oder stillschweigende Erklärung, einen Vertrag eingehen zu wollen</td></tr>
+      <tr><td>Antrag / Offerte</td><td>Verbindliches Angebot einer Vertragspartei (OR 3–7)</td></tr>
+      <tr><td>Mahnkauf</td><td>Lieferfrist vereinbart; bei Überschreitung muss Käufer eine Nachfrist setzen (OR 107)</td></tr>
+      <tr><td>Fixkauf</td><td>Genauer Liefertermin festgelegt; Verzug tritt automatisch ein (OR 108)</td></tr>
+      <tr><td>Gewährleistung</td><td>Haftung des Verkäufers für Mängel, in der Regel 2 Jahre (OR 197)</td></tr>
+      <tr><td>Mängelrüge</td><td>Schriftliche Meldung eines Mangels durch den Käufer (OR 201)</td></tr>
+      <tr><td>Wandelung</td><td>Rückgängigmachen des Kaufvertrags wegen Mängeln (OR 206)</td></tr>
+      <tr><td>Zahlungsverzug</td><td>Käufer hält Zahlungsfrist nicht ein; Mahnung durch Verkäufer erforderlich (OR 102)</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: TIMELINE                                               -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section id="timeline" class="section">
+<div class="wrap">
+
+  <div class="sec-header">
+    <span class="sec-num">02 /</span>
+    <h2 class="sec-title">Timeline — Ablauf</h2>
+  </div>
+
+  <div style="font-size:.82rem;color:var(--ink-soft);margin-bottom:1.4rem;">
+    Chronologische Abfolge der 9 Phasen eines Kaufvertrags · ohne Vertragsverletzungen · Lernmittel S. 39–42
+  </div>
+
+  <div class="tl-wrap">
+    <table class="tl-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Wann / Phase</th>
+          <th>Seite</th>
+          <th>Kategorie</th>
+          <th>Grund / Beschreibung</th>
+          <th>OR-Artikel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-k">
+          <td class="tl-nr">01</td>
+          <td class="tl-wann">Anfrage</td>
+          <td class="tl-seite">S. 40</td>
+          <td class="tl-kat"><span class="kat-badge">Käufer</span></td>
+          <td class="tl-grund">Käufer bekundet Interesse und nennt Produktvorstellung, Preisrahmen sowie gewünschten Liefertermin. Keine Verpflichtungen entstehen.</td>
+          <td class="tl-or">—</td>
+        </tr>
+        <tr class="row-v">
+          <td class="tl-nr">02</td>
+          <td class="tl-wann">Angebot / Offerte</td>
+          <td class="tl-seite">S. 40</td>
+          <td class="tl-kat"><span class="kat-badge">Verkäufer</span></td>
+          <td class="tl-grund">Verkäufer unterbreitet verbindliches Angebot («Antrag» laut OR). Befristete Angebote verlieren nach Ablauf die Gültigkeit. Mündliche Angebote müssen sofort angenommen werden.</td>
+          <td class="tl-or">OR 3, 4, 7, 23</td>
+        </tr>
+        <tr class="row-k">
+          <td class="tl-nr">03</td>
+          <td class="tl-wann">Bestellung</td>
+          <td class="tl-seite">S. 40</td>
+          <td class="tl-kat"><span class="kat-badge">Käufer</span></td>
+          <td class="tl-grund">Käufer gibt Willenserklärung ab und nimmt das Angebot an — Kaufvertrag kommt zustande. Widerruf muss rasch erfolgen.</td>
+          <td class="tl-or">OR 1, 9</td>
+        </tr>
+        <tr class="row-v">
+          <td class="tl-nr">04</td>
+          <td class="tl-wann">Lieferung mit Rechnung</td>
+          <td class="tl-seite">S. 41</td>
+          <td class="tl-kat"><span class="kat-badge">Verkäufer</span></td>
+          <td class="tl-grund">Verkäufer liefert Ware gemäss Vereinbarung und stellt Rechnung aus. Unterschied: Mahnkauf (Nachfrist nötig) vs. Fixkauf (automatisch in Verzug).</td>
+          <td class="tl-or">OR 107, 108</td>
+        </tr>
+        <tr class="row-v">
+          <td class="tl-nr">05</td>
+          <td class="tl-wann">Gewährleistung / Garantie</td>
+          <td class="tl-seite">S. 41</td>
+          <td class="tl-kat"><span class="kat-badge">Verkäufer</span></td>
+          <td class="tl-grund">Verkäufer haftet für mangelfreie Lieferung gemäss Vereinbarung. Gilt für sofort und erst später entdeckte Mängel. In der Regel zwei Jahre.</td>
+          <td class="tl-or">OR 197</td>
+        </tr>
+        <tr class="row-k">
+          <td class="tl-nr">06</td>
+          <td class="tl-wann">Prüfung &amp; Mängelrüge</td>
+          <td class="tl-seite">S. 41</td>
+          <td class="tl-kat"><span class="kat-badge">Käufer</span></td>
+          <td class="tl-grund">Käufer prüft Ware sofort nach Erhalt. Mängel schriftlich melden (Mängelrüge). Optionen: Ersatzlieferung, Minderung (Rabatt) oder Wandelung.</td>
+          <td class="tl-or">OR 201, 206</td>
+        </tr>
+        <tr class="row-k">
+          <td class="tl-nr">07</td>
+          <td class="tl-wann">Bezahlung</td>
+          <td class="tl-seite">S. 41–42</td>
+          <td class="tl-kat"><span class="kat-badge">Käufer</span></td>
+          <td class="tl-grund">Käufer begleicht Rechnung innert vereinbarter Zahlungsfrist. Bei Verzug muss Verkäufer mahnen; angemessene Nachfrist und Verzugszins bis 5% möglich.</td>
+          <td class="tl-or">OR 88, 102</td>
+        </tr>
+        <tr class="row-v">
+          <td class="tl-nr">08</td>
+          <td class="tl-wann">Quittung</td>
+          <td class="tl-seite">S. 42</td>
+          <td class="tl-kat"><span class="kat-badge">Verkäufer</span></td>
+          <td class="tl-grund">Käufer hat Recht auf Quittung als Zahlungsnachweis. Bei Überweisung gilt Rechnung + Kontoauszug. Bei Barzahlung: Vermerk «Betrag dankend erhalten».</td>
+          <td class="tl-or">OR 88</td>
+        </tr>
+        <tr class="row-k">
+          <td class="tl-nr">09</td>
+          <td class="tl-wann">Aufbewahrung</td>
+          <td class="tl-seite">S. 42</td>
+          <td class="tl-kat"><span class="kat-badge">Käufer</span></td>
+          <td class="tl-grund">Rechnungen und Quittungen 5–10 Jahre aufbewahren — als Beweis und für Versicherungsfälle. Wichtige Dokumente auch auf Papier ablegen.</td>
+          <td class="tl-or">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--k-bg)"></div>
+      <span>Käufer-Phase</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--v-bg)"></div>
+      <span>Verkäufer-Phase</span>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  ABU — Allgemeinbildung &nbsp;·&nbsp; Kapitel 2.2 Geld und Kauf &nbsp;·&nbsp; Lernmittel S. 39–42 &nbsp;·&nbsp; Obligationenrecht (OR)
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

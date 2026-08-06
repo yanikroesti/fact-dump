@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lerndokumentation – Stromstoßschaltung | Yanik Rösti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest:     #1E4A12;
+      --forest-mid: #2D6B1C;
+      --sage:       #5A8F3C;
+      --mint:       #90BF6E;
+      --mint-light: #C4DFB0;
+      --bark:       #6B4A2A;
+      --soil:       #A07248;
+      --soil-light: #D4B08A;
+      --cream:      #F2EDE2;
+      --paper:      #FAFAF4;
+      --white:      #FFFFFF;
+      --text:       #1A1F16;
+      --text-mid:   #3D4838;
+      --text-light: #6B7562;
+      --border:     #C0D4A8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: #E8E2D6;
+      color: var(--text);
+      font-size: 10.5pt;
+      line-height: 1.65;
+    }
+
+    @media print {
+      body { background: white; font-size: 9.5pt; }
+      .page { box-shadow: none !important; margin: 0 !important; max-width: 100% !important; }
+      .no-print { display: none; }
+    }
+
+    .page {
+      max-width: 215mm;
+      margin: 28px auto;
+      background: var(--paper);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--forest);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-organic {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 200px 180px at 88% 120%, rgba(144,191,110,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 120px 100px at 72% -20%, rgba(90,143,60,0.25) 0%, transparent 70%);
+    }
+    .header-leaf {
+      position: absolute; right: 28px; top: 16px;
+      width: 70px; height: 70px; opacity: 0.18;
+    }
+    .header-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: start; gap: 20px;
+      padding: 28px 36px 22px;
+    }
+    .header-label {
+      font-family: 'Fira Mono', monospace;
+      font-size: 7.5pt; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 6px;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24pt; font-weight: 400;
+      letter-spacing: -0.3px; line-height: 1.15; margin-bottom: 4px;
+    }
+    .header h2 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11pt; font-weight: 300;
+      color: var(--mint-light); margin-bottom: 18px; letter-spacing: 0.3px;
+    }
+    .header-meta {
+      font-family: 'Fira Mono', monospace; font-size: 8pt;
+      color: rgba(255,255,255,0.7); line-height: 2;
+      display: grid; grid-template-columns: auto auto; gap: 0 24px;
+    }
+    .header-meta span { color: rgba(255,255,255,0.45); }
+    .header-badge {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px; padding: 14px 18px; text-align: center;
+    }
+    .badge-school {
+      font-family: 'Playfair Display', serif;
+      font-size: 16pt; color: var(--mint); line-height: 1; margin-bottom: 4px;
+    }
+    .badge-sub {
+      font-family: 'Fira Mono', monospace; font-size: 7pt;
+      color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .header-stripe {
+      height: 5px;
+      background: linear-gradient(90deg, var(--mint) 0%, var(--sage) 40%, var(--soil) 70%, var(--soil-light) 100%);
+    }
+
+    /* ── CONTENT ── */
+    .content { padding: 30px 36px 36px; }
+
+    .section { margin-bottom: 30px; }
+
+    .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .sec-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--forest); color: white;
+      font-family: 'Playfair Display', serif; font-size: 12pt;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: 14pt; color: var(--forest); font-weight: 700; }
+    .sec-sub { font-size: 8.5pt; color: var(--soil); font-style: italic; margin-left: 2px; }
+    .section-divider {
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--forest) 0%, var(--mint-light) 60%, transparent 100%);
+      margin-bottom: 16px;
+    }
+
+    .callout {
+      background: linear-gradient(135deg, rgba(90,143,60,0.08) 0%, rgba(144,191,110,0.06) 100%);
+      border-left: 3px solid var(--sage);
+      padding: 12px 16px; border-radius: 0 5px 5px 0; margin: 12px 0; font-size: 10pt;
+    }
+    .callout.bark { background: rgba(107,74,42,0.06); border-left-color: var(--bark); }
+    .callout strong { color: var(--forest); }
+
+    .nin {
+      display: inline-block; background: var(--bark); color: white;
+      padding: 1px 6px; border-radius: 3px;
+      font-family: 'Fira Mono', monospace; font-size: 7.5pt; vertical-align: middle; margin-left: 4px;
+    }
+
+    /* Toggle state diagram */
+    .toggle-flow {
+      display: flex; align-items: center; gap: 0;
+      margin: 14px 0; flex-wrap: wrap;
+    }
+    .toggle-state {
+      background: var(--forest); color: white;
+      padding: 10px 18px; border-radius: 4px;
+      font-family: 'Fira Mono', monospace; font-size: 9.5pt;
+      text-align: center; min-width: 80px;
+    }
+    .toggle-state.off {
+      background: rgba(107,74,42,0.15);
+      color: var(--bark);
+      border: 1.5px solid var(--soil-light);
+    }
+    .toggle-arrow {
+      padding: 0 10px;
+      font-size: 14pt; color: var(--sage);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .toggle-arrow span {
+      font-family: 'Fira Mono', monospace; font-size: 7pt;
+      color: var(--text-light); white-space: nowrap;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .step { display: flex; gap: 12px; align-items: flex-start; }
+    .step-n {
+      width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+      background: var(--sage); color: white; font-size: 9pt; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .step-body { font-size: 10pt; }
+    .step-body strong { color: var(--forest); }
+
+    .schema-box {
+      background: white; border: 1.5px solid var(--border);
+      border-radius: 6px; padding: 18px 16px 12px;
+      margin: 14px 0; text-align: center;
+    }
+    .schema-caption {
+      font-family: 'Fira Mono', monospace; font-size: 7.5pt;
+      color: var(--text-light); text-align: right;
+      margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border);
+    }
+
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; }
+    thead tr th {
+      background: var(--forest); color: white; padding: 7px 11px;
+      text-align: left; font-weight: 400;
+      font-family: 'Fira Mono', monospace; font-size: 8pt; letter-spacing: 0.3px;
+    }
+    tbody tr td { padding: 6px 11px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tbody tr:nth-child(even) td { background: rgba(192,212,168,0.12); }
+    tbody tr:last-child td { border-bottom: 2px solid var(--forest-mid); }
+    tbody tr:hover td { background: rgba(90,143,60,0.06); }
+
+    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+    .pros { background: rgba(30,74,18,0.06); border: 1px solid rgba(90,143,60,0.25); padding: 13px 15px; border-radius: 5px; }
+    .cons { background: rgba(107,74,42,0.06); border: 1px solid rgba(160,114,72,0.25); padding: 13px 15px; border-radius: 5px; }
+    .pros h4 { color: var(--forest); margin-bottom: 7px; font-size: 10pt; }
+    .cons h4 { color: var(--bark); margin-bottom: 7px; font-size: 10pt; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table th:first-child { background: var(--bark); }
+    .compare-table td:first-child {
+      font-weight: 600; color: var(--forest);
+      background: rgba(30,74,18,0.04); font-family: 'Fira Mono', monospace; font-size: 8.5pt;
+    }
+    .compare-tha { background: #2D6B1C !important; }
+    .compare-tss { background: #5A3A1A !important; }
+    .cell-good { color: #2D6B1C; font-weight: 600; }
+    .cell-neutral { color: var(--soil); }
+
+    ul { padding-left: 16px; }
+    li { margin: 3px 0; font-size: 9.5pt; }
+    p { margin: 8px 0; font-size: 10pt; }
+
+    .sign-line { border-bottom: 1px solid var(--text-light); margin-top: 30px; margin-bottom: 4px; }
+
+    .footer {
+      background: var(--forest); color: rgba(255,255,255,0.6);
+      padding: 11px 36px;
+      font-family: 'Fira Mono', monospace; font-size: 7.5pt;
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .footer strong { color: var(--mint); }
+
+    .print-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--forest); color: white; border: none;
+      padding: 11px 20px; border-radius: 30px;
+      font-family: 'Source Sans 3', sans-serif; font-size: 10pt;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25); transition: background 0.2s;
+    }
+    .print-btn:hover { background: var(--forest-mid); }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Drucken / PDF</button>
+
+<div class="page">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <div class="header">
+    <div class="header-organic"></div>
+    <svg class="header-leaf" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 5 C70 10, 95 35, 90 60 C85 80, 60 95, 50 95 C40 95, 15 80, 10 60 C5 35, 30 10, 50 5Z" fill="white"/>
+      <line x1="50" y1="5" x2="50" y2="95" stroke="#1E4A12" stroke-width="2"/>
+      <line x1="50" y1="35" x2="30" y2="50" stroke="#1E4A12" stroke-width="1"/>
+      <line x1="50" y1="45" x2="70" y2="58" stroke="#1E4A12" stroke-width="1"/>
+      <line x1="50" y1="58" x2="25" y2="68" stroke="#1E4A12" stroke-width="1"/>
+      <line x1="50" y1="68" x2="72" y2="75" stroke="#1E4A12" stroke-width="1"/>
+    </svg>
+    <div class="header-inner">
+      <div>
+        <div class="header-label">Lerndokumentation · EFZ Elektroinstallateur</div>
+        <h1>Stromstoßschaltung</h1>
+        <h2>Schrittschaltung mit Impulsrelais — Aufbau, Zeichnung und Beschrieb</h2>
+        <div class="header-meta">
+          <div><span>Lernender</span><br>Yanik Rösti</div>
+          <div><span>Klasse</span><br>ELI 25a — Lehrjahr 1</div>
+          <div><span>Datum</span><br>15. Mai 2026</div>
+          <div><span>Norm</span><br>NIN 2020</div>
+        </div>
+      </div>
+      <div class="header-badge">
+        <div class="badge-school">BZI</div>
+        <div class="badge-sub">Interlaken</div>
+      </div>
+    </div>
+  </div>
+  <div class="header-stripe"></div>
+
+  <div class="content">
+
+    <!-- ── 1. LERNZIELE ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">1</div>
+        <div>
+          <div class="sec-title">Lernziele</div>
+          <div class="sec-sub">Was ich nach dieser Lerndokumentation weiss und kann</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+      <ul>
+        <li>Ich kann das Funktionsprinzip der Stromstoßschaltung (bistabiles Impulsrelais) erklären.</li>
+        <li>Ich kann den Unterschied zwischen Stromstoßschaltung und Treppenhausautomat benennen.</li>
+        <li>Ich kann den Stromlaufplan einer Stromstoßschaltung lesen und zeichnen (NIN 2020).</li>
+        <li>Ich kann ein Installationsschema für eine typische Stromstoßinstallation erstellen.</li>
+        <li>Ich kann einen Klemmenplan und eine vollständige Materialliste anfertigen.</li>
+        <li>Ich kann Vor- und Nachteile sowie typische Anwendungsgebiete der Stromstoßschaltung nennen.</li>
+      </ul>
+    </div>
+
+    <!-- ── 2. THEORIE ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">2</div>
+        <div>
+          <div class="sec-title">Theorie / Funktionsprinzip</div>
+          <div class="sec-sub">Wie funktioniert die Stromstoßschaltung?</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout">
+        <strong>Definition:</strong> Die Stromstoßschaltung (auch Schrittschaltung) verwendet ein <em>bistabiles Impulsrelais</em>. Jeder kurze Tastendruck schaltet den Zustand um: Ein → Aus → Ein → Aus … Das Relais <strong>merkt sich</strong> seinen Zustand auch ohne dauernden Strom.
+        <span class="nin">NIN 2020</span>
+      </div>
+
+      <p>Das Kernprinzip ist das <strong>bistabile Verhalten</strong>: Das Relais hat zwei stabile Schaltstellungen. Ein kurzer Stromstoss (Impuls durch Tastendruck) kippt es von einer Stellung in die andere — und es bleibt dort, bis der nächste Impuls kommt. Deshalb auch «Schrittschaltung»: jeder Schritt ist ein Zustandswechsel.</p>
+
+      <!-- Toggle flow diagram -->
+      <div style="margin: 16px 0 8px 0; font-weight: 600; color: var(--forest); font-size: 10pt;">Schaltlogik — Zustandswechsel bei jedem Tastendruck:</div>
+      <div class="toggle-flow">
+        <div class="toggle-state off">AUS<br><small style="font-size:7pt;opacity:0.7">Ruhezustand</small></div>
+        <div class="toggle-arrow">→<br><span>Tastendruck</span></div>
+        <div class="toggle-state">EIN<br><small style="font-size:7pt;opacity:0.7">Leuchte an</small></div>
+        <div class="toggle-arrow">→<br><span>Tastendruck</span></div>
+        <div class="toggle-state off">AUS<br><small style="font-size:7pt;opacity:0.7">Leuchte aus</small></div>
+        <div class="toggle-arrow">→<br><span>Tastendruck</span></div>
+        <div class="toggle-state">EIN<br><small style="font-size:7pt;opacity:0.7">Leuchte an</small></div>
+        <div class="toggle-arrow" style="font-size:10pt; color: var(--text-light)">→ …</div>
+      </div>
+
+      <div class="steps" style="margin-top: 14px;">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body"><strong>Ruhezustand (AUS):</strong> Das Impulsrelais ist in Stellung «Aus». Kontakt K1 geöffnet. Die Leuchte ist stromlos.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body"><strong>1. Tastendruck:</strong> Kurzer Impuls fliesst durch die Relaisspule. Das Relais kippt in Stellung «Ein». Kontakt K1 schliesst → Leuchte leuchtet.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-body"><strong>Taster losgelassen:</strong> Das Relais <em>bleibt</em> in Stellung «Ein» — auch ohne Strom. Die Leuchte leuchtet weiter.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div class="step-body"><strong>2. Tastendruck:</strong> Nächster Impuls. Das Relais kippt zurück in «Aus». Kontakt K1 öffnet → Leuchte erlischt. Zustand bleibt, bis wieder gedrückt wird.</div>
+        </div>
+      </div>
+
+      <div class="callout bark" style="margin-top: 12px;">
+        <strong>Bistabiles Verhalten:</strong> Im Gegensatz zu einem gewöhnlichen Relais (monostabil) braucht das Impulsrelais keinen Dauerstrom, um seinen Zustand zu halten. Einmal umgeschaltet, bleibt es in dieser Stellung — auch nach einem Stromausfall (je nach Relaistyp).
+      </div>
+    </div>
+
+    <!-- ── 3. STROMLAUFPLAN ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">3</div>
+        <div>
+          <div class="sec-title">Stromlaufplan</div>
+          <div class="sec-sub">Gemäss NIN 2020 — basierend auf hochgeladenem Schema</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="schema-box">
+        <svg viewBox="0 0 740 370" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:700px; height:auto;">
+          <defs>
+            <marker id="arr2" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+              <polygon points="0,0 6,2.5 0,5" fill="#555"/>
+            </marker>
+          </defs>
+
+          <rect width="740" height="370" fill="#FFFFFF" rx="4"/>
+
+          <!-- Zone labels -->
+          <text x="370" y="18" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8.5" fill="#5A8F3C" font-weight="500" letter-spacing="2">STEUERKREIS</text>
+          <text x="370" y="210" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8.5" fill="#5A8F3C" font-weight="500" letter-spacing="2">LASTKREIS</text>
+          <line x1="30" y1="182" x2="710" y2="182" stroke="#C0D4A8" stroke-width="1" stroke-dasharray="6,4"/>
+
+          <!-- ── ZVE ── -->
+          <rect x="28" y="32" width="62" height="68" rx="3" fill="rgba(30,74,18,0.06)" stroke="#1E4A12" stroke-width="1.8"/>
+          <text x="59" y="56" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10" fill="#1E4A12" font-weight="700">ZVE</text>
+          <text x="59" y="70" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#555">230V~</text>
+          <text x="59" y="82" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#555">50Hz</text>
+          <circle cx="90" cy="47" r="3" fill="#8B4513"/>
+          <circle cx="90" cy="85" r="3" fill="#00006B"/>
+          <text x="95" y="51" font-family="'Fira Mono',monospace" font-size="8" fill="#8B4513" font-weight="500">L</text>
+          <text x="95" y="89" font-family="'Fira Mono',monospace" font-size="8" fill="#00006B" font-weight="500">N</text>
+
+          <!-- L wire → Taster group -->
+          <line x1="90" y1="47" x2="148" y2="47" stroke="#8B4513" stroke-width="2.2"/>
+
+          <!-- Taster group (3 parallel, magenta/pink as in schema) -->
+          <rect x="148" y="24" width="90" height="90" rx="3" fill="rgba(180,60,180,0.06)" stroke="#B03AB0" stroke-width="1" stroke-dasharray="4,2"/>
+          <text x="193" y="38" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#B03AB0">parallel</text>
+
+          <!-- Taster 1 -->
+          <line x1="148" y1="50" x2="165" y2="50" stroke="#B03AB0" stroke-width="1.8"/>
+          <circle cx="167" cy="50" r="2.5" fill="#B03AB0"/>
+          <line x1="167" y1="50" x2="167" y2="44" stroke="#B03AB0" stroke-width="1.8"/>
+          <line x1="167" y1="44" x2="183" y2="44" stroke="#B03AB0" stroke-width="1.8" transform="rotate(-22,167,50)"/>
+          <circle cx="185" cy="50" r="2.5" fill="#B03AB0"/>
+          <line x1="185" y1="50" x2="238" y2="50" stroke="#B03AB0" stroke-width="1.8"/>
+          <!-- Taster 2 -->
+          <line x1="148" y1="67" x2="165" y2="67" stroke="#B03AB0" stroke-width="1.8"/>
+          <circle cx="167" cy="67" r="2.5" fill="#B03AB0"/>
+          <line x1="167" y1="67" x2="167" y2="61" stroke="#B03AB0" stroke-width="1.8"/>
+          <line x1="167" y1="61" x2="183" y2="61" stroke="#B03AB0" stroke-width="1.8" transform="rotate(-22,167,67)"/>
+          <circle cx="185" cy="67" r="2.5" fill="#B03AB0"/>
+          <line x1="185" y1="67" x2="238" y2="67" stroke="#B03AB0" stroke-width="1.8"/>
+          <!-- Taster 3 -->
+          <line x1="148" y1="84" x2="165" y2="84" stroke="#B03AB0" stroke-width="1.8"/>
+          <circle cx="167" cy="84" r="2.5" fill="#B03AB0"/>
+          <line x1="167" y1="84" x2="167" y2="78" stroke="#B03AB0" stroke-width="1.8"/>
+          <line x1="167" y1="78" x2="183" y2="78" stroke="#B03AB0" stroke-width="1.8" transform="rotate(-22,167,84)"/>
+          <circle cx="185" cy="84" r="2.5" fill="#B03AB0"/>
+          <line x1="185" y1="84" x2="238" y2="84" stroke="#B03AB0" stroke-width="1.8"/>
+          <!-- Collect -->
+          <line x1="238" y1="50" x2="238" y2="84" stroke="#B03AB0" stroke-width="1.8"/>
+          <line x1="238" y1="67" x2="272" y2="67" stroke="#B03AB0" stroke-width="2.2"/>
+
+          <text x="160" y="120" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#B03AB0" font-weight="500">S1 · S2 · S3</text>
+          <text x="160" y="131" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#777">Drucktaster</text>
+
+          <!-- ── Impulsrelais Spule ── -->
+          <line x1="272" y1="67" x2="296" y2="67" stroke="#B03AB0" stroke-width="2.2"/>
+          <rect x="296" y="52" width="100" height="30" rx="3" fill="rgba(107,74,42,0.08)" stroke="#6B4A2A" stroke-width="1.8"/>
+          <!-- Coil windings -->
+          <path d="M304,67 Q307,57 312,67 Q317,77 322,67 Q327,57 332,67 Q337,77 342,67 Q347,57 352,67 Q357,77 362,67 Q367,57 372,67 Q377,77 382,67" fill="none" stroke="#5A8F3C" stroke-width="1.2"/>
+          <!-- Bistable symbol: double arrow inside box -->
+          <text x="346" y="60" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8" fill="#6B4A2A">⇔</text>
+          <text x="346" y="98" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#6B4A2A" font-weight="500">K1 — Spule (A1)</text>
+          <text x="346" y="108" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#888">Impulsrelais (bistabil)</text>
+          <!-- Wire coil to N -->
+          <line x1="396" y1="67" x2="450" y2="67" stroke="#B03AB0" stroke-width="2.2"/>
+          <!-- N bus -->
+          <line x1="90" y1="85" x2="660" y2="85" stroke="#00006B" stroke-width="1.4" stroke-dasharray="5,3" opacity="0.5"/>
+          <line x1="450" y1="67" x2="450" y2="85" stroke="#00006B" stroke-width="1.8"/>
+          <circle cx="450" cy="85" r="3" fill="#00006B"/>
+
+          <!-- ── LASTKREIS ── -->
+          <!-- L down from ZVE -->
+          <line x1="90" y1="47" x2="90" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+          <line x1="90" y1="225" x2="280" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+
+          <!-- K1 Bistabil-Kontakt -->
+          <line x1="280" y1="225" x2="300" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+          <circle cx="302" cy="225" r="3" fill="#1E4A12"/>
+          <!-- Bistable contact blade (closed = memory state) -->
+          <line x1="302" y1="225" x2="318" y2="210" stroke="#1E4A12" stroke-width="2"/>
+          <circle cx="330" cy="225" r="3" fill="#1E4A12"/>
+          <!-- Double-headed arrow = bistable -->
+          <text x="315" y="202" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="9" fill="#1E4A12">⇔</text>
+          <line x1="330" y1="225" x2="360" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+
+          <text x="315" y="254" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">K1 (bistabil)</text>
+          <text x="315" y="264" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#888">Arbeitskontakt</text>
+
+          <!-- ── Leuchte EL1 ── -->
+          <line x1="360" y1="225" x2="415" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+          <circle cx="448" cy="225" r="24" fill="rgba(255,235,80,0.12)" stroke="#1E4A12" stroke-width="2"/>
+          <line x1="433" y1="210" x2="463" y2="240" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="463" y1="210" x2="433" y2="240" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="472" y1="225" x2="510" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+          <text x="448" y="262" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">EL1</text>
+
+          <!-- ── Leuchte EL2 (parallel) ── -->
+          <!-- Connect parallel -->
+          <line x1="510" y1="225" x2="528" y2="225" stroke="#8B4513" stroke-width="2.2"/>
+          <!-- vertical junction -->
+          <circle cx="510" cy="225" r="3" fill="#8B4513"/>
+          <line x1="510" y1="225" x2="510" y2="245" stroke="#8B4513" stroke-width="1.6"/>
+          <line x1="510" y1="245" x2="560" y2="245" stroke="#8B4513" stroke-width="1.6"/>
+
+          <circle cx="576" cy="245" r="20" fill="rgba(255,235,80,0.12)" stroke="#1E4A12" stroke-width="2"/>
+          <line x1="562" y1="231" x2="590" y2="259" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="590" y1="231" x2="562" y2="259" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="596" y1="245" x2="630" y2="245" stroke="#8B4513" stroke-width="1.6"/>
+          <line x1="630" y1="225" x2="630" y2="245" stroke="#8B4513" stroke-width="1.6"/>
+          <circle cx="630" cy="225" r="3" fill="#8B4513"/>
+          <line x1="528" y1="225" x2="660" y2="225" stroke="#8B4513" stroke-width="1.4" opacity="0.3"/>
+          <text x="576" y="278" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">EL2</text>
+          <!-- parallel label -->
+          <text x="540" y="242" font-family="'Fira Mono',monospace" font-size="7" fill="#888">parallel</text>
+
+          <!-- N return -->
+          <line x1="660" y1="225" x2="660" y2="85" stroke="#00006B" stroke-width="1.8"/>
+          <circle cx="660" cy="85" r="3" fill="#00006B"/>
+
+          <!-- PE branch (to lamp bodies) -->
+          <line x1="448" y1="248" x2="448" y2="285" stroke="#2A7A20" stroke-width="1.8"/>
+          <line x1="448" y1="285" x2="576" y2="285" stroke="#2A7A20" stroke-width="1.8"/>
+          <line x1="576" y1="265" x2="576" y2="285" stroke="#2A7A20" stroke-width="1.8"/>
+          <text x="512" y="298" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#2A7A20">PE — Schutzleiter (grün-gelb)</text>
+
+          <!-- ── Legend boxes ── -->
+          <rect x="28" y="316" width="74" height="34" rx="3" fill="rgba(30,74,18,0.07)" stroke="#1E4A12" stroke-width="1"/>
+          <text x="65" y="330" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">④  ZVE</text>
+          <text x="65" y="341" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#666">230V~ / 50Hz</text>
+
+          <rect x="114" y="316" width="84" height="34" rx="3" fill="rgba(176,58,176,0.07)" stroke="#B03AB0" stroke-width="1"/>
+          <text x="156" y="330" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">③  Taster</text>
+          <text x="156" y="341" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#666">S1/S2/S3 parallel</text>
+
+          <rect x="210" y="316" width="110" height="34" rx="3" fill="rgba(107,74,42,0.08)" stroke="#6B4A2A" stroke-width="1"/>
+          <text x="265" y="330" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">②  Impulsrelais</text>
+          <text x="265" y="341" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#666">K1 bistabil (⇔)</text>
+
+          <rect x="332" y="316" width="84" height="34" rx="3" fill="rgba(255,220,60,0.1)" stroke="#8B6914" stroke-width="1"/>
+          <text x="374" y="330" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12" font-weight="500">①  Leuchten</text>
+          <text x="374" y="341" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#666">EL1/EL2 parallel</text>
+
+          <!-- Wire colours -->
+          <line x1="430" y1="326" x2="450" y2="326" stroke="#B03AB0" stroke-width="1.8"/>
+          <text x="454" y="330" font-family="'Fira Mono',monospace" font-size="7" fill="#B03AB0">Steuer/Taster</text>
+          <line x1="430" y1="341" x2="450" y2="341" stroke="#8B4513" stroke-width="2"/>
+          <text x="454" y="345" font-family="'Fira Mono',monospace" font-size="7" fill="#8B4513">Phase L (braun)</text>
+          <line x1="540" y1="326" x2="560" y2="326" stroke="#00006B" stroke-width="2"/>
+          <text x="564" y="330" font-family="'Fira Mono',monospace" font-size="7" fill="#00006B">Neutral N (blau)</text>
+          <line x1="540" y1="341" x2="560" y2="341" stroke="#2A7A20" stroke-width="2"/>
+          <text x="564" y="345" font-family="'Fira Mono',monospace" font-size="7" fill="#2A7A20">PE (grün-gelb)</text>
+
+          <!-- Title block -->
+          <rect x="0" y="352" width="740" height="18" fill="#1E4A12"/>
+          <text x="12" y="364" font-family="'Fira Mono',monospace" font-size="7" fill="rgba(255,255,255,0.7)">Stromlaufplan — Stromstoßschaltung / Impulsrelais (bistabil) — NIN 2020 — Yanik Rösti — ELI 25a — 15.05.2026</text>
+        </svg>
+        <div class="schema-caption">Abb. 1 — Stromlaufplan Stromstoßschaltung mit bistabilem Impulsrelais K1, zwei parallele Leuchten EL1/EL2, NIN 2020</div>
+      </div>
+
+      <p>Der <strong>Steuerkreis</strong> (oben) enthält die parallelen Taster S1–S3 und die Relaisspule K1. Der <strong>Lastkreis</strong> (unten) zeigt den bistabilen Kontakt K1 sowie die zwei Leuchten EL1 und EL2 in Parallelschaltung. Das ⇔-Symbol kennzeichnet das bistabile (speichernde) Verhalten des Impulsrelais.</p>
+    </div>
+
+    <!-- ── 4. INSTALLATIONSSCHEMA ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">4</div>
+        <div>
+          <div class="sec-title">Installationsschema</div>
+          <div class="sec-sub">Leitungsführung — 3 Taster, 2 Leuchten</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="schema-box">
+        <svg viewBox="0 0 700 270" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:660px; height:auto;">
+          <rect width="700" height="270" fill="#FFFFFF" rx="4"/>
+
+          <!-- Building shell -->
+          <rect x="55" y="16" width="590" height="230" rx="4" fill="rgba(192,212,168,0.05)" stroke="#C0D4A8" stroke-width="1.2"/>
+          <text x="350" y="12" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8" fill="#5A8F3C" letter-spacing="2">RAUMINSTALLATION (schematisch)</text>
+
+          <!-- ── ZVE ── -->
+          <rect x="78" y="186" width="74" height="42" rx="3" fill="rgba(30,74,18,0.08)" stroke="#1E4A12" stroke-width="1.5"/>
+          <text x="115" y="203" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10" fill="#1E4A12" font-weight="700">ZVE</text>
+          <text x="115" y="216" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#666">230V~/50Hz</text>
+
+          <!-- ── Impulsrelais ── -->
+          <rect x="182" y="182" width="120" height="50" rx="3" fill="rgba(107,74,42,0.08)" stroke="#6B4A2A" stroke-width="1.5"/>
+          <text x="242" y="198" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="8.5" fill="#6B4A2A" font-weight="600">Stromstoß-</text>
+          <text x="242" y="210" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="8.5" fill="#6B4A2A" font-weight="600">schalter K1</text>
+          <text x="242" y="222" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7" fill="#888">bistabil ⇔</text>
+
+          <!-- ── Leuchten ── -->
+          <!-- EL1 -->
+          <circle cx="400" cy="100" r="22" fill="rgba(255,230,80,0.15)" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="386" y1="86" x2="414" y2="114" stroke="#1E4A12" stroke-width="1.6"/>
+          <line x1="414" y1="86" x2="386" y2="114" stroke="#1E4A12" stroke-width="1.6"/>
+          <text x="400" y="134" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12">EL1</text>
+
+          <!-- EL2 -->
+          <circle cx="530" cy="100" r="22" fill="rgba(255,230,80,0.15)" stroke="#1E4A12" stroke-width="1.8"/>
+          <line x1="516" y1="86" x2="544" y2="114" stroke="#1E4A12" stroke-width="1.6"/>
+          <line x1="544" y1="86" x2="516" y2="114" stroke="#1E4A12" stroke-width="1.6"/>
+          <text x="530" y="134" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="7.5" fill="#1E4A12">EL2</text>
+          <text x="465" y="92" font-family="'Fira Mono',monospace" font-size="7" fill="#888">parallel</text>
+
+          <!-- ── Taster ── -->
+          <rect x="560" y="186" width="74" height="26" rx="3" fill="rgba(176,58,176,0.1)" stroke="#B03AB0" stroke-width="1.5"/>
+          <text x="597" y="203" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8" fill="#1E4A12" font-weight="500">S1 (Raum A)</text>
+
+          <rect x="560" y="140" width="74" height="26" rx="3" fill="rgba(176,58,176,0.1)" stroke="#B03AB0" stroke-width="1.5"/>
+          <text x="597" y="157" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8" fill="#1E4A12" font-weight="500">S2 (Raum B)</text>
+
+          <rect x="560" y="50" width="74" height="26" rx="3" fill="rgba(176,58,176,0.1)" stroke="#B03AB0" stroke-width="1.5"/>
+          <text x="597" y="67" text-anchor="middle" font-family="'Fira Mono',monospace" font-size="8" fill="#1E4A12" font-weight="500">S3 (Raum C)</text>
+
+          <!-- ── Wires ── -->
+          <!-- ZVE → Relais -->
+          <line x1="152" y1="207" x2="182" y2="207" stroke="#8B4513" stroke-width="2"/>
+
+          <!-- Relais → EL1 (Last L) -->
+          <line x1="302" y1="205" x2="370" y2="205" stroke="#8B4513" stroke-width="2"/>
+          <line x1="370" y1="100" x2="370" y2="205" stroke="#8B4513" stroke-width="1.6"/>
+          <line x1="370" y1="100" x2="378" y2="100" stroke="#8B4513" stroke-width="2"/>
+
+          <!-- EL1 → EL2 (parallel) -->
+          <line x1="422" y1="100" x2="508" y2="100" stroke="#8B4513" stroke-width="2"/>
+
+          <!-- N return from lamps -->
+          <line x1="552" y1="100" x2="620" y2="100" stroke="#00006B" stroke-width="2"/>
+          <line x1="620" y1="100" x2="620" y2="220" stroke="#00006B" stroke-width="1.6"/>
+          <line x1="302" y1="220" x2="620" y2="220" stroke="#00006B" stroke-width="1.6" stroke-dasharray="4,3"/>
+          <line x1="302" y1="207" x2="302" y2="220" stroke="#00006B" stroke-width="1.6"/>
+
+          <!-- PE -->
+          <line x1="400" y1="122" x2="400" y2="150" stroke="#2A7A20" stroke-width="1.6" stroke-dasharray="3,2"/>
+          <line x1="400" y1="150" x2="530" y2="150" stroke="#2A7A20" stroke-width="1.6" stroke-dasharray="3,2"/>
+          <line x1="530" y1="122" x2="530" y2="150" stroke="#2A7A20" stroke-width="1.6" stroke-dasharray="3,2"/>
+          <line x1="400" y1="150" x2="152" y2="150" stroke="#2A7A20" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.6"/>
+
+          <!-- Taster Steuerleitung -->
+          <line x1="560" y1="199" x2="545" y2="199" stroke="#B03AB0" stroke-width="1.4"/>
+          <line x1="545" y1="57" x2="545" y2="230" stroke="#B03AB0" stroke-width="1.4" stroke-dasharray="3,2"/>
+          <line x1="560" y1="153" x2="545" y2="153" stroke="#B03AB0" stroke-width="1.4"/>
+          <line x1="560" y1="63" x2="545" y2="63" stroke="#B03AB0" stroke-width="1.4"/>
+          <line x1="302" y1="230" x2="545" y2="230" stroke="#B03AB0" stroke-width="1.4" stroke-dasharray="3,2"/>
+          <line x1="302" y1="207" x2="302" y2="230" stroke="#B03AB0" stroke-width="1.2" opacity="0.5"/>
+
+          <!-- Legend -->
+          <line x1="78" y1="248" x2="98" y2="248" stroke="#8B4513" stroke-width="2"/>
+          <text x="102" y="252" font-family="'Fira Mono',monospace" font-size="7" fill="#8B4513">Last (L) NYM-J 3×1.5</text>
+          <line x1="210" y1="248" x2="230" y2="248" stroke="#00006B" stroke-width="2"/>
+          <text x="234" y="252" font-family="'Fira Mono',monospace" font-size="7" fill="#00006B">Neutral (N)</text>
+          <line x1="310" y1="248" x2="330" y2="248" stroke="#B03AB0" stroke-width="1.4" stroke-dasharray="3,2"/>
+          <text x="334" y="252" font-family="'Fira Mono',monospace" font-size="7" fill="#B03AB0">Steuerleitung Taster NYM-J 2×1.5</text>
+          <line x1="530" y1="248" x2="550" y2="248" stroke="#2A7A20" stroke-width="1.6" stroke-dasharray="3,2"/>
+          <text x="554" y="252" font-family="'Fira Mono',monospace" font-size="7" fill="#2A7A20">PE</text>
+        </svg>
+        <div class="schema-caption">Abb. 2 — Installationsschema Stromstoßschaltung, 3 Taster, 2 parallele Leuchten (schematisch, NIN 2020)</div>
+      </div>
+    </div>
+
+    <!-- ── 5. KLEMMENPLAN ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">5</div>
+        <div>
+          <div class="sec-title">Klemmenplan</div>
+          <div class="sec-sub">Klemmenbeschriftung Verteiler — Klemmenleiste X1</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Klemme</th>
+            <th>Bezeichnung</th>
+            <th>Von</th>
+            <th>Nach</th>
+            <th>Leiterfarbe</th>
+            <th>Querschnitt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>X1:1</strong></td>
+            <td>L — Phase</td>
+            <td>ZVE / Sicherung F1</td>
+            <td>Impulsrelais K1 (A1, Versorgung)</td>
+            <td style="color:#8B4513">● Braun (L)</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:2</strong></td>
+            <td>N — Nullleiter</td>
+            <td>ZVE / N-Schiene</td>
+            <td>Impulsrelais K1 (A2, N)</td>
+            <td style="color:#00008B">● Blau (N)</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:3</strong></td>
+            <td>PE — Schutzleiter</td>
+            <td>ZVE / PE-Schiene</td>
+            <td>Leuchten EL1/EL2 (Gehäuse)</td>
+            <td style="color:#3A7A20">●● Grün-Gelb</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:4</strong></td>
+            <td>S — Tastereingang</td>
+            <td>Taster S1 (Raum A)</td>
+            <td>Impulsrelais K1 (Impulseingang)</td>
+            <td style="color:#B03AB0">● Violett/Schwarz</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:5</strong></td>
+            <td>S — Tastereingang</td>
+            <td>Taster S2 (Raum B) parallel</td>
+            <td>Impulsrelais K1 (Impulseingang)</td>
+            <td style="color:#B03AB0">● Violett/Schwarz</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:6</strong></td>
+            <td>S — Tastereingang</td>
+            <td>Taster S3 (Raum C) parallel</td>
+            <td>Impulsrelais K1 (Impulseingang)</td>
+            <td style="color:#B03AB0">● Violett/Schwarz</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:7</strong></td>
+            <td>Last-Ausgang L</td>
+            <td>Impulsrelais K1 (Kontakt out)</td>
+            <td>Leuchten EL1 / EL2 (L parallel)</td>
+            <td style="color:#8B4513">● Braun (L)</td>
+            <td>1.5 mm²</td>
+          </tr>
+          <tr>
+            <td><strong>X1:8</strong></td>
+            <td>N-Ausgang</td>
+            <td>N-Schiene</td>
+            <td>Leuchten EL1 / EL2 (N parallel)</td>
+            <td style="color:#00008B">● Blau (N)</td>
+            <td>1.5 mm²</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 6. MATERIALLISTE ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">6</div>
+        <div>
+          <div class="sec-title">Materialliste</div>
+          <div class="sec-sub">Benötigte Komponenten — 3 Taster, 2 Leuchten</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Pos.</th>
+            <th>Bezeichnung</th>
+            <th>Typ / Norm</th>
+            <th>Menge</th>
+            <th>Einh.</th>
+            <th>Bemerkung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Stromstoßschalter (Impulsrelais)</td>
+            <td>z.B. Finder 26.01, 230V~, REG</td>
+            <td>1</td>
+            <td>Stk.</td>
+            <td>Bistabil, 1 Wechsler, 10A</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Drucktaster (Schliesser)</td>
+            <td>UP, IP20, 10A, 250V~</td>
+            <td>3</td>
+            <td>Stk.</td>
+            <td>S1 Raum A, S2 Raum B, S3 Raum C</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Leuchte</td>
+            <td>LED, IP20–44, 230V~, ≥500 lm</td>
+            <td>2</td>
+            <td>Stk.</td>
+            <td>EL1 und EL2, parallel geschaltet</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Leitungsschutzschalter</td>
+            <td>B10A, 1-polig, REG</td>
+            <td>1</td>
+            <td>Stk.</td>
+            <td>Absicherung Beleuchtungskreis</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Installationsleitung Lastkreis</td>
+            <td>NYM-J 3×1.5 mm²</td>
+            <td>~20</td>
+            <td>m</td>
+            <td>L / N / PE zu Leuchten</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Installationsleitung Steuerkreis</td>
+            <td>NYM-J 2×1.5 mm²</td>
+            <td>~15</td>
+            <td>m</td>
+            <td>Taster-Steuerleitung parallel</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Reihenklemmen</td>
+            <td>2.5 mm², z.B. Phoenix PT 2.5</td>
+            <td>8</td>
+            <td>Stk.</td>
+            <td>Klemmenleiste X1</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Hutschiene</td>
+            <td>DIN EN 60715, 35 mm</td>
+            <td>0.2</td>
+            <td>m</td>
+            <td>Impulsrelais im Verteiler</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Unterputz-Installationsdose</td>
+            <td>UP, Ø 60 mm</td>
+            <td>3</td>
+            <td>Stk.</td>
+            <td>Für Taster S1 / S2 / S3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 7. VERGLEICH: STROMSTOSSSCHALTUNG vs. TREPPENHAUSAUTOMAT ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">7</div>
+        <div>
+          <div class="sec-title">Vergleich: Stromstoßschaltung vs. Treppenhausautomat</div>
+          <div class="sec-sub">Gemeinsamkeiten und Unterschiede auf einen Blick</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Merkmal</th>
+            <th class="compare-tha" style="width:36%">⏱ Treppenhausautomat</th>
+            <th class="compare-tss" style="width:36%">⇔ Stromstoßschaltung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Schaltprinzip</td>
+            <td>Monostabil — kehrt nach Zeit zurück</td>
+            <td>Bistabil — speichert Zustand dauerhaft</td>
+          </tr>
+          <tr>
+            <td>Ausschalten</td>
+            <td class="cell-good">Automatisch nach eingestellter Zeit</td>
+            <td class="cell-neutral">Manuell: nächster Tastendruck</td>
+          </tr>
+          <tr>
+            <td>Einschalten</td>
+            <td>Tastendruck (Impuls)</td>
+            <td>Tastendruck (Impuls)</td>
+          </tr>
+          <tr>
+            <td>Taster-Anordnung</td>
+            <td>Parallel (beliebig viele)</td>
+            <td>Parallel (beliebig viele)</td>
+          </tr>
+          <tr>
+            <td>Dauerlicht möglich</td>
+            <td class="cell-neutral">Nein (ohne Bypass)</td>
+            <td class="cell-good">Ja — Licht bleibt bis zum nächsten Druck</td>
+          </tr>
+          <tr>
+            <td>Energieeffizienz</td>
+            <td class="cell-good">Sehr gut — vergisst nie auszuschalten</td>
+            <td class="cell-neutral">Abhängig vom Benutzer</td>
+          </tr>
+          <tr>
+            <td>Anwendung</td>
+            <td>Treppenhäuser, Korridore, Keller</td>
+            <td>Wohnräume, Büros, mehrere Bedienorte</td>
+          </tr>
+          <tr>
+            <td>Relaistyp</td>
+            <td>Zeitrelais (monostabil)</td>
+            <td>Impulsrelais (bistabil)</td>
+          </tr>
+          <tr>
+            <td>Zustand nach Stromausfall</td>
+            <td class="cell-good">Immer AUS (sicher)</td>
+            <td class="cell-neutral">Relaistyp-abhängig (oft AUS)</td>
+          </tr>
+          <tr>
+            <td>Ähnlich wie …</td>
+            <td>Küchentimer — läuft ab und stop</td>
+            <td>Lichtschalter — drücken = umschalten</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout" style="margin-top: 14px;">
+        <strong>Merksatz:</strong> Der Treppenhausautomat <em>denkt</em> fürs Ausschalten — der Stromstoßschalter <em>erinnert sich</em> an den letzten Zustand. Beide verwenden Taster (nicht Schalter) und beide erlauben beliebig viele Bedienorte durch Parallelschaltung.
+      </div>
+    </div>
+
+    <!-- ── 8. VOR-/NACHTEILE & ANWENDUNG ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">8</div>
+        <div>
+          <div class="sec-title">Vor- und Nachteile / Anwendungsgebiete</div>
+          <div class="sec-sub">Bewertung der Stromstoßschaltung</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>✓ Vorteile</h4>
+          <ul>
+            <li>Beliebig viele Taster (alle parallel)</li>
+            <li>Dauerlicht möglich — bleibt bis nächster Druck</li>
+            <li>Einfach zu bedienen — wie ein normaler Schalter</li>
+            <li>Kein Zeitablauf stört bei langer Anwesenheit</li>
+            <li>Einfache Nachrüstung (Taster ergänzen)</li>
+            <li>Kostengünstig, technisch bewährt</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>✗ Nachteile</h4>
+          <ul>
+            <li>Kein automatisches Ausschalten (Vergessen möglich)</li>
+            <li>Zustand nicht sofort erkennbar ohne Leuchte zu sehen</li>
+            <li>Nicht für Notbeleuchtung geeignet (kein def. AUS-Zustand)</li>
+            <li>Bei Stromausfall Zustandsverlust (typisch)</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="font-weight:600; color:var(--forest); margin-top:14px; margin-bottom:8px;">Typische Anwendungsgebiete:</p>
+      <ul>
+        <li><strong>Wohnräume</strong> mit mehreren Bedienorten (z.B. Wohnzimmer: Eingang, Sofa, Terrassentür)</li>
+        <li>Büroflächen und Besprechungsräume</li>
+        <li>Schlafzimmer (Bett + Türe)</li>
+        <li>Grosse Hallen mit mehreren Zugängen</li>
+        <li>Überall dort, wo kein automatisches Ausschalten gewünscht ist</li>
+      </ul>
+    </div>
+
+    <!-- ── 9. ZUSAMMENFASSUNG ── -->
+    <div class="section">
+      <div class="section-head">
+        <div class="sec-num">9</div>
+        <div>
+          <div class="sec-title">Zusammenfassung / Reflexion</div>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+      <div class="callout">
+        Die Stromstoßschaltung ist die digitale Variante des klassischen Lichtschalters: Statt eines Kippers wechselt ein bistabiles Relais bei jedem Impuls seinen Zustand. Dadurch lässt sich eine Leuchte von <strong>beliebig vielen Orten</strong> aus ein- und ausschalten — ohne die Komplexität einer Wechsel- oder Kreuzschaltung. Die wichtigste Erkenntnis: Bei Treppenhausautomat <em>und</em> Stromstoßschaltung werden Taster (nicht Schalter) und Parallelschaltung eingesetzt — der Unterschied liegt allein im Relaistyp und damit im Schaltverhalten.
+      </div>
+
+      <table style="margin-top:20px">
+        <thead>
+          <tr><th colspan="2">Visum / Unterschrift</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:50%; padding: 14px 12px;">
+              Lernender: <strong>Yanik Rösti</strong>
+              <div class="sign-line"></div>
+              <span style="font-size:8pt; color:var(--text-light); font-family:'Fira Mono',monospace">Datum: 15.05.2026</span>
+            </td>
+            <td style="padding: 14px 12px;">
+              Berufsbildner:
+              <div class="sign-line"></div>
+              <span style="font-size:8pt; color:var(--text-light); font-family:'Fira Mono',monospace">Datum: _______________</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /content -->
+
+  <div class="footer">
+    <span>EFZ Elektroinstallateur · BZI Interlaken · ELI 25a</span>
+    <strong>Stromstoßschaltung — Impulsrelais bistabil</strong>
+    <span>NIN 2020 · Yanik Rösti · 15.05.2026</span>
+  </div>
+
+</div>
+</body>
+</html>
