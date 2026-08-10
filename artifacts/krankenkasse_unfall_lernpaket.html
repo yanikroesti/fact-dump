@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krankenkasse &amp; Unfallversicherung — Lernpaket | BZI ABU</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · Allgemeinbildung · Risiko und Sicherheit</div>
+  <h1>Krankenkasse &amp; Unfallversicherung</h1>
+  <div class="meta">Lernpaket zu Ordner 03 + 04 — Theorie, Rechner, Karteikarten, Quiz und Lernplan</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="rechner">Rechner</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     THEORIE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<p class="intro">Der ganze Stoff aus den Ordnern <strong>03 Krankenkasse</strong> und <strong>04 Unfallversicherung</strong> — geordnet nach Prüfungslogik. Alles, was <span class="badge exam">Prüfungsstoff</span> markiert ist, kommt in Prüfungen erfahrungsgemäss am häufigsten dran.</p>
+
+<div class="info-box">
+  <p><strong>Der rote Faden der ganzen Prüfung:</strong> Bei jedem Fall zuerst zwei Fragen stellen —<br>
+  1. <strong>Krankheit oder Unfall?</strong> (entscheidet: KVG oder UVG)<br>
+  2. <strong>Grundversicherung oder Zusatzversicherung?</strong> (entscheidet: obligatorisch/KVG oder freiwillig/VVG)<br>
+  Danach erst rechnen oder Leistungen aufzählen.</p>
+</div>
+
+<div class="section-label">Teil A — Krankenversicherung (KVG)</div>
+
+<h2>1 · Das System in 60 Sekunden</h2>
+
+<div class="compare">
+  <div class="compare-col kvg">
+    <h4>Grundversicherung</h4>
+    <ul>
+      <li><strong>Obligatorisch</strong> für alle in der Schweiz wohnhaften Personen</li>
+      <li>Gesetz: <strong>KVG</strong> (Krankenversicherungsgesetz, seit 1.1.1996)</li>
+      <li>Leistungen bei <strong>allen</strong> Kassen exakt <strong>gleich</strong> — nur die Prämie ist verschieden</li>
+      <li><strong>Freizügigkeit</strong>: Kasse frei wählbar, sie <strong>muss</strong> dich aufnehmen</li>
+      <li><strong>Keine</strong> Vorbehalte, <strong>keine</strong> Gesundheitsprüfung</li>
+      <li>Deckt Krankheit, Mutterschaft und Unfall (falls keine UV zahlt)</li>
+    </ul>
+  </div>
+  <div class="compare-col con">
+    <h4>Zusatzversicherung</h4>
+    <ul>
+      <li><strong>Freiwillig</strong></li>
+      <li>Gesetz: <strong>VVG</strong> (Versicherungsvertragsgesetz) = <strong>Privatrecht</strong></li>
+      <li>Leistungen und Prämien von Kasse zu Kasse <strong>verschieden</strong></li>
+      <li>Kasse darf dich <strong>ablehnen</strong>, Vorbehalte anbringen oder im Schadenfall kündigen</li>
+      <li><strong>Gesundheitsprüfung</strong> + evtl. <strong>Karenzfrist</strong></li>
+      <li>Ab einem gewissen Alter oft kein Abschluss mehr möglich</li>
+    </ul>
+  </div>
+</div>
+
+<div class="info-box success">
+  <p><span class="badge exam">Prüfungsstoff</span> Der <strong>Hauptunterschied</strong> in einem Satz: Die Grundleistungen sind <strong>obligatorisch</strong> versichert und unterstehen dem <strong>KVG</strong> — die Zusatzleistungen sind <strong>freiwillig</strong> und unterstehen dem <strong>Privatrecht (VVG)</strong>.</p>
+</div>
+
+<h3>Kernbegriffe sauber definiert</h3>
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Krankheit<small>KVG</small></div><div class="schema-val">Beeinträchtigung der körperlichen oder geistigen Gesundheit, die <strong>nicht auf einen Unfall</strong> zurückzuführen ist.</div></div>
+  <div class="schema-row"><div class="schema-key">Krankenkasse</div><div class="schema-val">Versicherer, der die obligatorische Krankenpflegeversicherung (OKP) anbietet. Muss vom <strong>Eidgenössischen Departement des Innern (EDI)</strong> anerkannt sein.</div></div>
+  <div class="schema-row"><div class="schema-key">OKP</div><div class="schema-val">Obligatorische Krankenpflegeversicherung = das offizielle Wort für die Grundversicherung.</div></div>
+  <div class="schema-row"><div class="schema-key">Freizügigkeit</div><div class="schema-val">Der Versicherte kann die Kasse <strong>frei wählen</strong>; sie muss ihn <strong>vorbehaltlos</strong> aufnehmen. Achtung: Freizügigkeit heisst <em>nicht</em> freie Spitalwahl und <em>nicht</em>, dass die KV freiwillig wäre.</div></div>
+  <div class="schema-row"><div class="schema-key">Karenzfrist</div><div class="schema-val">Zeit zwischen Eintritt in die Kasse und Beginn der Leistungen. <strong>Nur bei Zusatzversicherungen.</strong></div></div>
+  <div class="schema-row"><div class="schema-key">Vorbehalt</div><div class="schema-val">Befristeter oder unbefristeter Leistungsausschluss, wenn beim Antragsteller schon ein ungünstiges Gesundheitsrisiko besteht. <strong>Nur bei Zusatzversicherungen.</strong></div></div>
+  <div class="schema-row"><div class="schema-key">Ambulant</div><div class="schema-val">Behandlung ohne Übernachtung (Arzt- oder Spitaltermin, 1 Tag).</div></div>
+  <div class="schema-row"><div class="schema-key">Stationär</div><div class="schema-val">Behandlung <strong>mit</strong> Übernachtung im Spital.</div></div>
+</div>
+
+<h2>2 · Was zahlt die Grundversicherung?</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.1</span><h3>Leistungen der Grundversicherung</h3></div>
+  <ul>
+    <li>Behandlung bei <strong>Arzt, Chiropraktor, Physiotherapeut, Hebamme</strong> usw.</li>
+    <li>Behandlung und Aufenthalt in der <strong>allgemeinen Abteilung</strong> eines Spitals (auf der kantonalen Spitalliste), <strong>zeitlich unbegrenzt</strong></li>
+    <li><strong>Vom Arzt verordnete Medikamente</strong>, die auf der Spezialitätenliste (SL) / Arzneimittelliste stehen (ca. 2500 Medikamente)</li>
+    <li><strong>Ärztlich verordnete Analysen</strong> (z. B. Labor)</li>
+    <li><strong>Pflege zu Hause (Spitex)</strong> oder im Pflegeheim — aber <strong>nur Pflege</strong>, keine Haushalthilfe</li>
+    <li><strong>Alternativmedizin</strong> (5 Methoden, wenn der Arzt entsprechend befähigt ist): Akupunktur, Homöopathie, traditionelle chinesische Medizin (TCM), Phytotherapie, anthroposophische Medizin</li>
+    <li><strong>Prävention / Vorsorge</strong>: Impfungen, Untersuchungen von Kindern im Vorschulalter, gynäkologische Vorsorge, Mammografie (Brustkrebsfrüherkennung)</li>
+    <li>Beitrag an medizinisch notwendige <strong>Rettungs-, Bergungs- und Transportkosten</strong></li>
+    <li><strong>Zahnbehandlungen nur ausnahmsweise</strong> — bei schwerer, nicht vermeidbarer Erkrankung des Kausystems</li>
+    <li><strong>Mutterschaft</strong>: Kontrolluntersuchungen, Entbindung usw. — <strong>ohne jede Kostenbeteiligung</strong></li>
+    <li><strong>Unfall</strong>: gleiche Leistungen wie bei Krankheit — <em>sofern keine Unfallversicherung dafür aufkommt</em></li>
+    <li><strong>Notfälle im Ausland</strong>: bis zum <strong>doppelten Betrag</strong> dessen, was die Behandlung in der Schweiz kosten würde</li>
+  </ul>
+  <div class="info-box warn"><p><strong>Klassische Fangfrage:</strong> Zahlt die Grundversicherung die Haushalthilfe? <strong>Nein.</strong> Nur <em>pflegerische</em> Handlungen (z. B. Wunde reinigen und neu verbinden) durch anerkannte Leistungserbringer.</p></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">2.2</span><h3>Typische Zusatzversicherungen</h3></div>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Zusatzversicherung</th><th>Was sie bringt</th></tr>
+    <tr><td><strong>Spital privat</strong></td><td>Einzelzimmer + Behandlung durch Chefarzt oder Arzt eigener Wahl</td></tr>
+    <tr><td><strong>Spital halbprivat</strong></td><td>Zweibettzimmer + Chefarzt</td></tr>
+    <tr><td><strong>Allgemeine Abteilung ganze Schweiz</strong></td><td>Deckt die Differenz, wenn du in einem Kanton mit höheren Tarifen behandelt wirst als in deinem Wohnkanton</td></tr>
+    <tr><td><strong>Zahnstellungskorrektur bei Kindern</strong></td><td>Zahnspange &amp; Co. (Grundversicherung zahlt hier nichts)</td></tr>
+    <tr><td><strong>Alternativmedizin / ambulant</strong></td><td>Nichtärztliche Therapeuten, Brillen &amp; Kontaktlinsen, Schutzimpfungen, weitere Komplementärmedizin</td></tr>
+    <tr><td><strong>Psychotherapie</strong></td><td>Über den Grundleistungsumfang hinaus</td></tr>
+    <tr><td><strong>Reisezusatzversicherung</strong></td><td>Für Länder mit hohen Gesundheits- und Transportkosten (USA, Japan …)</td></tr>
+    <tr><td><strong>Krankentaggeldversicherung</strong></td><td><strong>Lohnersatz</strong>, wenn die Lohnfortzahlungspflicht des Arbeitgebers erlischt</td></tr>
+  </table>
+  </div>
+  <div class="info-box"><p><span class="badge exam">Prüfungsstoff</span> Nenne drei Zusatzleistungen: <strong>freie Spitalwahl in der ganzen Schweiz · Spitalaufenthalt halbprivat/privat · Zahnbehandlungen</strong>. Das ist die Musterlösung aus dem Leitprogramm.</p></div>
+</div>
+
+<h2>3 · Kostenbeteiligung — die Prüfungsrechnung</h2>
+
+<div class="info-box danger">
+  <p><span class="badge exam">Prüfungsstoff</span> Das ist die Aufgabe, die fast garantiert kommt. Lerne die drei Bausteine und die Reihenfolge.</p>
+</div>
+
+<div class="schema">
+  <div class="schema-row">
+    <div class="schema-key">1. Franchise<small>jährlich</small></div>
+    <div class="schema-val">Grundbetrag, den du pro Jahr <strong>zuerst und vollständig selber</strong> zahlst.<br>
+    Erwachsene: ordentlich <span class="fact">300.–</span>, wählbar bis <span class="fact">2500.–</span> (Stufen: 500 / 1000 / 1500 / 2000 / 2500).<br>
+    Kinder bis 18: ordentlich <span class="fact">0.–</span>, wählbar bis <span class="fact">600.–</span> (Stufen: 100 / 200 / 300 / 400 / 500).</div>
+  </div>
+  <div class="schema-row">
+    <div class="schema-key">2. Selbstbehalt<small>10 %</small></div>
+    <div class="schema-val"><strong>10 %</strong> von allem, was <em>über</em> der Franchise liegt.<br>
+    Maximal <span class="fact">700.– pro Jahr</span> für Erwachsene, <span class="fact">350.– pro Jahr</span> für Kinder bis 18.<br>
+    <strong>20 %</strong> bei Medikamenten, wenn du ohne medizinischen Grund das teure Originalpräparat statt ein Generikum willst.</div>
+  </div>
+  <div class="schema-row">
+    <div class="schema-key">3. Spitalbeitrag<small>pro Tag</small></div>
+    <div class="schema-val"><span class="fact">15.– pro Tag</span> bei stationärem Aufenthalt für Erwachsene über 25 — <strong>zusätzlich</strong> zu Franchise und Selbstbehalt.</div>
+  </div>
+  <div class="schema-row">
+    <div class="schema-key">Ausnahme</div>
+    <div class="schema-val"><strong>Mutterschaft: keine Kostenbeteiligung.</strong> Keine Franchise, kein Selbstbehalt, kein Spitalbeitrag.</div>
+  </div>
+</div>
+
+<h3>Das Rechenschema (immer in dieser Reihenfolge)</h3>
+<div class="card compact">
+  <ol>
+    <li><strong>Alle Rechnungen des Jahres zusammenzählen</strong> → Total</li>
+    <li><strong>Franchise abziehen</strong> (nur so viel, wie noch offen ist — max. der gewählte Betrag)</li>
+    <li><strong>Vom Rest 10 % rechnen</strong> = Selbstbehalt, aber <strong>höchstens 700.–</strong></li>
+    <li><strong>Eigener Anteil</strong> = Franchise + Selbstbehalt (+ evtl. Spitalbeitrag)</li>
+    <li><strong>Anteil Krankenkasse</strong> = Total − eigener Anteil</li>
+  </ol>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">Bsp</span><h3>Musterlösung Anna Graber (Auftrag 2)</h3></div>
+  <p>Franchise 300.–, Selbstbehalt 10 %. Drei Arztrechnungen im Jahr: 180.– · 235.– · 450.–</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Rechnung</th><th class="num">Betrag</th><th class="num">Franchise</th><th class="num">Selbstbehalt</th><th class="num">Anteil KK</th><th class="num">Anteil Graber</th></tr>
+    <tr><td>1. Arztrechnung</td><td class="num">180.–</td><td class="num">180.–</td><td class="num">—</td><td class="num">—</td><td class="num">180.–</td></tr>
+    <tr><td>2. Arztrechnung</td><td class="num">235.–</td><td class="num">120.–</td><td class="num">11.50</td><td class="num">103.50</td><td class="num">131.50</td></tr>
+    <tr><td>3. Arztrechnung</td><td class="num">450.–</td><td class="num">—</td><td class="num">45.–</td><td class="num">405.–</td><td class="num">45.–</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>865.–</strong></td><td class="num"><strong>300.–</strong></td><td class="num"><strong>56.50</strong></td><td class="num"><strong>508.50</strong></td><td class="num"><strong>356.50</strong></td></tr>
+  </table>
+  </div>
+  <div class="info-box success">
+    <p><strong>Der schnelle Rechnungsweg</strong> (empfohlen — spart in der Prüfung Zeit):<br>
+    180 + 235 + 450 = <strong>865.–</strong> · minus Franchise 300.– = <strong>565.–</strong> · davon 10 % = <strong>56.50</strong><br>
+    Ich zahle: 300.– + 56.50 = <strong>356.50</strong> — die Kasse zahlt <strong>508.50</strong>.</p>
+  </div>
+</div>
+
+<div class="card compact">
+  <div class="card-title"><span class="num">Bsp</span><h3>Frau Huber (A5) — Kontrollbeispiel</h3></div>
+  <p>Franchise 300.–, Rechnungen 1300.– / 700.– / 400.– = Total 2400.–<br>
+  2400 − 300 = 2100 · davon 10 % = 210.– &nbsp;→&nbsp; Frau Huber zahlt <strong>510.–</strong>, die Kasse <strong>1890.–</strong>.</p>
+</div>
+
+<h2>4 · Wie senke ich meine Prämie?</h2>
+
+<p><span class="badge exam">Prüfungsstoff</span> Auftrag 3 verlangt fünf Möglichkeiten mit Erklärung. Hier sind alle — merk dir mindestens fünf, die du auch erklären kannst.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Möglichkeit</th><th>Wie es funktioniert</th><th>Effekt</th></tr>
+  <tr><td><strong>1. Alternatives Versicherungsmodell</strong></td><td>Hausarzt-, HMO-, Telmed- oder PPO-Modell wählen (siehe Kapitel 5)</td><td>bis −20 %</td></tr>
+  <tr><td><strong>2. Franchise erhöhen</strong></td><td>Statt 300.– bis 2500.– wählen. Im Krankheitsfall muss man diesen Betrag aber auch zahlen können</td><td>bis ca. −45 %</td></tr>
+  <tr><td><strong>3. Unfalldeckung ausschliessen (sistieren)</strong></td><td>Wer <strong>≥ 8 Std./Woche</strong> beim gleichen Arbeitgeber arbeitet, ist über diesen gegen BU <em>und</em> NBU versichert → Unfall bei der Kasse herausnehmen</td><td>max. −7 %</td></tr>
+  <tr><td><strong>4. Zusatzversicherungen kündigen</strong></td><td>Prüfen, welche man wirklich braucht. Medizinisch nicht nötig — die Grundversicherung deckt das Wesentliche</td><td>je nach Police</td></tr>
+  <tr><td><strong>5. Krankenversicherer wechseln</strong></td><td>Prämien vergleichen (priminfo.ch, comparis.ch) und auf den Termin kündigen</td><td>oft mehrere 100.–/Jahr</td></tr>
+  <tr><td><strong>6. Prämienverbilligung beantragen</strong></td><td>Kanton zahlt bei bescheidenem Einkommen Beiträge direkt an den Versicherer. In manchen Kantonen automatisch, sonst auf Antrag bei der Wohngemeinde</td><td>einkommensabhängig</td></tr>
+  <tr><td><strong>7. Sistierung bei langem Dienst</strong></td><td>Ab <strong>60 aufeinanderfolgenden Diensttagen</strong> (Militär-, Zivil-, Rotkreuzdienst, Zivilschutz): Marschbefehl/Aufgebot einreichen, am besten <strong>8 Wochen vorher</strong></td><td>keine Prämie in dieser Zeit</td></tr>
+  <tr><td><strong>8. Second Opinion (Zweitmeinung)</strong></td><td>Verpflichtung, vor bestimmten Operationen eine Zweitmeinung beim Vertrauensarzt einzuholen</td><td>Rabatt auf Zusatzvers.</td></tr>
+  <tr><td><strong>9. Zurückhaltung bei Arztbesuchen</strong></td><td>Nicht wegen jeder Kleinigkeit zum Arzt — weniger Kosten für alle</td><td>indirekt</td></tr>
+  <tr><td><strong>10. Gesund leben</strong></td><td>Bewegung, Ernährung, Schlaf → weniger krank → höhere Franchise wird tragbar</td><td>indirekt</td></tr>
+</table>
+</div>
+
+<div class="info-box warn">
+  <p><strong>Junge Erwachsene:</strong> Zwischen <strong>19 und 25 Jahren</strong> gibt es eine eigene, tiefere Prämienstufe. Die drei Altersklassen sind: <strong>Kinder 0–18</strong> · <strong>junge Erwachsene 19–25</strong> · <strong>Erwachsene ab 26</strong>.</p>
+</div>
+
+<div class="info-box">
+  <p><strong>Warum sind die Prämien nicht für alle gleich?</strong> Die Prämienhöhe hängt ab von <strong>Wohnkanton</strong> (bzw. Prämienregion), <strong>Versicherer</strong>, <strong>Altersklasse</strong>, <strong>Franchise</strong> und <strong>Modell</strong>. Sie hängt <strong>nicht</strong> vom Einkommen ab — es ist eine <strong>Kopfprämie</strong>. Der soziale Ausgleich passiert über die Prämienverbilligung.</p>
+</div>
+
+<h2>5 · Die Versicherungsmodelle</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Modell</th><th>Was du versprichst</th><th>Prämienreduktion</th></tr>
+  <tr><td><strong>Standardmodell</strong></td><td>Nichts — freie Arztwahl</td><td>0 %</td></tr>
+  <tr><td><strong>Hausarzt-Modell</strong></td><td>Im Krankheitsfall <strong>immer zuerst zum gewählten Hausarzt</strong>. Er überweist erst bei Bedarf an den Spezialisten</td><td>ca. 5–15 % (bis 20 %)</td></tr>
+  <tr><td><strong>HMO-Modell</strong><br><small>Health Maintenance Organization</small></td><td>Immer zuerst ins <strong>Gesundheitszentrum</strong> (fest angestellte Ärzte, meist in Städten). Auch im Notfall ist der HMO-Arzt erste Anlaufstelle</td><td>bis 20–25 %</td></tr>
+  <tr><td><strong>Telmed-Modell</strong></td><td>Vor dem ersten Arztbesuch <strong>telefonische Beratung</strong> einholen</td><td>bis 20 %</td></tr>
+  <tr><td><strong>PPO-Modell</strong><br><small>Preferred Provider Organization</small></td><td>Nur <strong>von der Kasse bezeichnete Ärzte/Spitäler</strong> aufsuchen. Im Unterschied zum Hausarztmodell darf man von Fall zu Fall frei aus der Liste wählen</td><td>ca. 10 %</td></tr>
+</table>
+</div>
+
+<div class="info-box">
+  <p><strong>Gatekeeper-Prinzip:</strong> Beim Hausarzt- und HMO-Modell wirkt der Arzt als <strong>Pförtner</strong>. Er verhindert, dass Patienten zu schnell oder unnötig bei teuren Spezialisten landen. Beim HMO erhält der Arzt eine <strong>monatliche Pauschale</strong> pro Patient, beim Managed-Care-Modell trägt er <strong>Budgetmitverantwortung</strong>.</p>
+</div>
+
+<h2>6 · Wechseln &amp; Kündigen — die Fristen</h2>
+
+<div class="info-box danger"><p><span class="badge exam">Prüfungsstoff</span> Fristen werden gerne abgefragt. Merke dir: <strong>Es zählt der Eingang beim Versicherer, nicht der Poststempel.</strong> Immer <strong>eingeschrieben</strong> senden.</p></div>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Situation</th><th>Kündigung auf</th><th>Muss beim Versicherer sein bis</th></tr>
+  <tr><td><strong>Ordentliche Franchise 300.– + Standardmodell</strong></td><td>30. Juni</td><td><strong>31. März</strong> (3 Monate Frist)</td></tr>
+  <tr><td><strong>Ordentliche Franchise 300.– + Standardmodell</strong></td><td>31. Dezember</td><td><strong>30. November</strong></td></tr>
+  <tr><td><strong>Höhere Franchise oder alternatives Modell</strong> (HMO, Telmed, Hausarzt)</td><td>nur 31. Dezember</td><td><strong>30. November</strong></td></tr>
+  <tr><td><strong>Nach Mitteilung der neuen Prämie</strong> (kommt meist im Oktober) — gilt für <em>alle</em> Modelle und Franchisen, auch wenn die Prämie sinkt</td><td>31. Dezember</td><td><strong>30. November</strong> (1 Monat verkürzte Frist)</td></tr>
+  <tr><td><strong>Franchise senken</strong></td><td>auf Jahresbeginn</td><td><strong>30. November</strong>, schriftlich</td></tr>
+  <tr><td><strong>Franchise erhöhen</strong> (bei gleicher Kasse bleiben)</td><td>auf Jahresbeginn</td><td><strong>31. Dezember</strong>, schriftlich</td></tr>
+</table>
+</div>
+
+<h3>Beim Wechsel unbedingt wissen</h3>
+<ul>
+  <li>Der neue Versicherer darf in der Grundversicherung <strong>keine Vorbehalte</strong> anbringen und <strong>keine Bedingungen</strong> stellen — Aufnahme ohne Wenn und Aber.</li>
+  <li>Die Kündigung wird <strong>erst wirksam</strong>, wenn der neue Versicherer dem alten die Aufnahme mitgeteilt hat. Der Versicherungsschutz bleibt in jedem Fall erhalten.</li>
+  <li><strong>Grund- und Zusatzversicherung dürfen bei verschiedenen Anbietern sein.</strong> Der Abschluss der Grundversicherung darf nicht von einer Zusatzversicherung abhängig gemacht werden.</li>
+  <li>Zusatzversicherungen können beim bisherigen Versicherer bleiben. Ihre Kündigungsfristen stehen in den <strong>AVB</strong> (Allgemeine Versicherungsbedingungen).</li>
+  <li>Eine Prämienerhöhung bei der Zusatzversicherung muss <strong>mindestens zwei Monate im Voraus</strong> angekündigt werden. Verspätet = Erhöhung verschiebt sich (Mitteilung im November → Erhöhung erst ab 1. Februar).</li>
+</ul>
+
+<div class="card compact">
+  <div class="card-title"><span class="num">6.1</span><h3>Aufbau Kündigungsschreiben (Musterlösung)</h3></div>
+  <p style="font-family:var(--font-mono); font-size:0.86rem; line-height:1.7; white-space:pre-wrap; background:var(--surface-alt); padding:14px; border-radius:6px;">Absender (Name, Strasse, PLZ Ort)
+
+                              <strong>Einschreiben</strong>
+                              Name der Krankenkasse
+                              Strasse
+                              PLZ Ort
+
+                              Ort, Datum
+
+<strong>Kündigung der obligatorischen Grundversicherung</strong>
+
+Sehr geehrte Damen und Herren
+
+Hiermit kündige ich meine obligatorische Grundversicherung
+per 31. Dezember 20XX und werde dann bei einem anderen
+Krankenversicherer nach KVG versichert sein. Allfällige
+Zusatzversicherungen, die ich bei Ihnen abgeschlossen habe,
+bleiben von der Kündigung unberührt.
+
+Besten Dank für Ihre Kenntnisnahme.
+
+                              Freundliche Grüsse
+                              Unterschrift</p>
+  <p><strong>Für die Anmeldung bei der neuen Kasse</strong> zusätzlich angeben: gewünschte <strong>Franchise</strong>, <strong>Unfalldeckung ja/nein</strong>, <strong>Art der Prämienzahlung</strong> (monatlich/halbjährlich/jährlich), <strong>Bank- oder Postverbindung</strong> — und die Bitte, dass die neue Kasse sich bei der alten meldet. Beilagen: Kündigungsschreiben und Police.</p>
+</div>
+
+<h2>7 · Die Arztrechnung kontrollieren</h2>
+
+<div class="compare">
+  <div class="compare-col kvg">
+    <h4>Tiers garant («TG»)</h4>
+    <ul>
+      <li>Der Arzt schickt die Rechnung <strong>dir</strong>.</li>
+      <li><strong>Du bezahlst zuerst</strong> und schickst das Original an die Kasse.</li>
+      <li>Die Kasse kontrolliert und vergütet dir das Honorar.</li>
+      <li>Der Beleg heisst <strong>Rückforderungsbeleg</strong>.</li>
+    </ul>
+  </div>
+  <div class="compare-col uvg">
+    <h4>Tiers payant («TP»)</h4>
+    <ul>
+      <li>Die Rechnung geht <strong>direkt an die Kasse</strong>.</li>
+      <li>Du erhältst nur eine <strong>Rechnungskopie</strong>.</li>
+      <li>Braucht eine <strong>Vereinbarung mit dem Arzt</strong>.</li>
+      <li>Vorteil, wenn man die Rechnung nicht vorschiessen kann.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Was du auch als Laie kontrollieren kannst</h3>
+<ul>
+  <li><strong>Personalien</strong>: Betrifft die Rechnung überhaupt dich? Ist sie von deinem Arzt?</li>
+  <li><strong>Behandlungsdaten</strong>: Warst du an diesen Daten wirklich dort? (Auch telefonische Konsultationen werden verrechnet.)</li>
+  <li><strong>Anzahl Konsultationen</strong> und <strong>Dauer</strong>: <span class="fact">00.0010</span> = erste 5 Minuten, <span class="fact">00.0020</span> = jede weiteren 5 Min., <span class="fact">00.0030</span> = letzte 5 Min.</li>
+  <li><strong>Medikamente</strong>: Stimmen Name, Dosierung und Anzahl mit der Packung überein? Preise auf spezialitätenliste.ch prüfbar.</li>
+  <li><strong>Pflichtleistungscode, Spalte «P»</strong>: <strong>1</strong> = Pflichtleistung, die OKP muss zahlen · <strong>0</strong> = Nicht-Pflichtleistung.</li>
+  <li>Unstimmigkeiten <strong>direkt auf der Rechnung markieren</strong> und an den Versicherer schicken, bei dem man zum Zeitpunkt der Behandlung versichert war — oder direkt beim Rechnungssteller reklamieren.</li>
+</ul>
+
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">TARMED</div><div class="schema-val"><strong>Einzelleistungstarif</strong> für alle ambulanten ärztlichen Leistungen in der Schweiz — im Spital, in der Praxis und beim Patienten zuhause. Rund <strong>4600 Tarifpositionen</strong>.</div></div>
+  <div class="schema-row"><div class="schema-key">Tarifnummern</div><div class="schema-val"><span class="fact">001</span> = TARMED · <span class="fact">316</span> = Analysenliste · <span class="fact">400</span> = Spezialitätenliste (alle von der Grundversicherung bezahlten Medikamente)</div></div>
+  <div class="schema-row"><div class="schema-key">Taxpunkt (TP)</div><div class="schema-val">Bewertung der Leistung — <strong>schweizweit gleich</strong>. AL = ärztliche Leistung, TL = technische Leistung (Infrastruktur, Praxispersonal).</div></div>
+  <div class="schema-row"><div class="schema-key">Taxpunktwert (TPW)</div><div class="schema-val">Der Frankenwert eines Taxpunkts — <strong>von Kanton zu Kanton verschieden</strong>.<br><strong>Preis = Taxpunkt × Taxpunktwert</strong> (Beispiel: 9,57 × 0,89 + 8,19 × 0,89 = 15.81)</div></div>
+  <div class="schema-row"><div class="schema-key">Tessiner Code</div><div class="schema-val">Diagnose-Code aus einem Grossbuchstaben + Zahl (z. B. «N1» = allergische Hauterkrankung/Ekzem). Sehr breit gefasst — die genaue Diagnose steht nicht auf der Rechnung.</div></div>
+  <div class="schema-row"><div class="schema-key">WZW-Kriterien</div><div class="schema-val"><strong>W</strong>irksam (bringt Abhilfe) · <strong>Z</strong>weckmässig (die richtige Behandlung fürs Leiden) · <strong>W</strong>irtschaftlich (keine gleichwertige, günstigere Alternative). Jede ärztliche Leistung muss alle drei erfüllen.</div></div>
+</div>
+
+<h2>8 · Solidarität, Prämienfranken, Wettbewerb</h2>
+
+<div class="card">
+  <div class="card-title"><span class="num">8.1</span><h3>Das Solidaritätsprinzip</h3></div>
+  <p><span class="badge exam">Prüfungsstoff</span> Musterantwort in zwei bis drei Sätzen:</p>
+  <div class="info-box success"><p>«Alle zahlen Geld in eine Kasse, um ein Risiko finanziell abzusichern. Nur wer einen versicherten Schaden erleidet, wird aus dieser Kasse entschädigt. <strong>Viele zahlen wenig, damit Wenigen viel geholfen werden kann.</strong> Man hilft sich gegenseitig und verhält sich damit solidarisch.»</p></div>
+  <p>Solidarität besteht zwischen <strong>Jung und Alt</strong>, <strong>Gesunden und Kranken</strong>, <strong>Mann und Frau</strong>. Die Grundversicherung ist solidarisch — die Zusatzversicherung nicht.</p>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">8.2</span><h3>Wohin fliesst der Prämienfranken?</h3></div>
+  <p>Von 100 Franken Prämie gehen …</p>
+  <div class="money-bar">
+    <div class="money-seg" style="width:36%; background:#0E6B72;">36 Spital</div>
+    <div class="money-seg" style="width:22%; background:#2C5C8C;">22 Ärzte</div>
+    <div class="money-seg" style="width:17%; background:#B7791F;">17 Medi</div>
+    <div class="money-seg" style="width:8%;  background:#27774A;">8</div>
+    <div class="money-seg" style="width:7%;  background:#8E5572;">7</div>
+    <div class="money-seg" style="width:5%;  background:#6B7280;">5</div>
+    <div class="money-seg" style="width:5%;  background:#C0392B;">5</div>
+  </div>
+  <div class="money-legend">
+    <span><i style="background:#0E6B72"></i>36.– Spitäler (ambulant + stationär)</span>
+    <span><i style="background:#2C5C8C"></i>22.– Ärzte / Behandlungen</span>
+    <span><i style="background:#B7791F"></i>17.– Medikamente</span>
+    <span><i style="background:#27774A"></i>8.– Spitex &amp; Pflegeheime</span>
+    <span><i style="background:#8E5572"></i>7.– Physiotherapie &amp; Übriges</span>
+    <span><i style="background:#6B7280"></i>5.– Labor</span>
+    <span><i style="background:#C0392B"></i>5.– Verwaltungskosten</span>
+  </div>
+  <div class="info-box"><p><strong>Merksatz:</strong> Von jedem Prämienfranken gehen <strong>95 Rappen an Leistungen</strong> und nur <strong>5 Rappen an die Verwaltung</strong>. Drei Viertel der Kosten verursachen <strong>Spitäler, Medikamente und Ärzte</strong>.</p></div>
+</div>
+
+<div class="card compact">
+  <div class="card-title"><span class="num">8.3</span><h3>Kein Gewinn — aber Reserven</h3></div>
+  <ul>
+    <li>Krankenversicherer dürfen in der OKP <strong>von Gesetzes wegen keinen Gewinn</strong> machen. Überschüsse kommen vollumfänglich den Versicherten zugute.</li>
+    <li><strong>Reserven</strong> = Eigenkapital, gesetzliche Mindesthöhe, Polster gegen Schwankungen.</li>
+    <li><strong>Rückstellungen</strong> = Fremdkapital, für bereits erbrachte, aber noch nicht bezahlte Leistungen.</li>
+    <li>Der <strong>Wettbewerb</strong> unter den Kassen soll Servicequalität und effiziente Abwicklung fördern — die Leistungen bleiben aber identisch.</li>
+    <li>Die Rechnungskontrolle der Versicherer spart jährlich rund <strong>3 Milliarden Franken</strong>.</li>
+  </ul>
+</div>
+
+<div class="card compact">
+  <div class="card-title"><span class="num">8.4</span><h3>Gesundheitsförderung Schweiz</h3></div>
+  <p>Stiftung, getragen von <strong>Kantonen und Versicherern</strong>, unter Kontrolle des Bundes. Jede Person in der Schweiz zahlt jährlich <span class="fact">4.80</span>, eingezogen über die Krankenkassenprämie.</p>
+</div>
+
+<div class="section-label">Teil B — Unfallversicherung (UVG)</div>
+
+<h2>9 · Krankheit oder Unfall?</h2>
+
+<div class="info-box danger">
+  <p><span class="badge exam">Prüfungsstoff</span> <strong>Die wichtigste Definition des ganzen Kapitels.</strong> Lerne sie wörtlich:</p>
+  <p style="margin-top:8px;">Ein <strong>Unfall</strong> ist die <strong>plötzliche</strong>, <strong>nicht beabsichtigte</strong> <strong>schädigende Einwirkung</strong> eines <strong>ungewöhnlichen äusseren Faktors</strong> auf den menschlichen Körper, die eine Beeinträchtigung der körperlichen, geistigen oder psychischen Gesundheit oder den Tod zur Folge hat.</p>
+</div>
+
+<h3>Die 5 Merkmale — alle müssen erfüllt sein</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Merkmal</th><th>Frage, die du dir stellst</th><th>Kein Unfall, wenn …</th></tr>
+  <tr><td><strong>1. Körperschaden</strong></td><td>Gibt es eine Beeinträchtigung der Gesundheit (oder den Tod)?</td><td>gar nichts passiert ist</td></tr>
+  <tr><td><strong>2. Einwirkung von aussen</strong></td><td>Kam die Ursache von <em>ausserhalb</em> des Körpers?</td><td>die Ursache im Körper liegt (Gicht, Herzinfarkt, Tumor)</td></tr>
+  <tr><td><strong>3. Ungewöhnlicher Vorfall</strong></td><td>War der äussere Faktor <em>ungewöhnlich</em> — also nicht Alltag?</td><td>es normale Belastung ist (Rückenschmerzen nach einer Woche Baustellenarbeit)</td></tr>
+  <tr><td><strong>4. Plötzliche Einwirkung</strong></td><td>Geschah es in einem Moment, nicht schleichend?</td><td>es sich über Tage/Wochen aufgebaut hat</td></tr>
+  <tr><td><strong>5. Unfreiwilliges Ereignis</strong></td><td>War es <em>nicht beabsichtigt</em>?</td><td>man sich absichtlich verletzt (Selbstverstümmelung)</td></tr>
+</table>
+</div>
+
+<h3>Musterlösung Auftrag 5 — «Unfall im Sinne des Gesetzes»</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Fall</th><th>Körper&shy;schaden</th><th>von aussen</th><th>ungewöhn&shy;lich</th><th>plötzlich</th><th>unfrei&shy;willig</th><th>Unfall?</th></tr>
+  <tr><td><strong>1</strong> Peter S. — Rückenschmerzen nach einer Woche Baustelle</td><td class="ja">ja</td><td class="ja">ja</td><td class="nein">nein</td><td class="nein">nein</td><td class="ja">ja</td><td class="nein">NEIN</td></tr>
+  <tr><td><strong>2</strong> Karin N. — mit dem Roller auf nasser Strasse gestürzt, Handgelenkschmerzen</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">JA</td></tr>
+  <tr><td><strong>3</strong> Luzia A. — beim Joggen über Wurzel gestürzt, am nächsten Morgen Bluterguss</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">JA</td></tr>
+  <tr><td><strong>4</strong> Martin H. — plötzlicher Knieschmerz beim Wandern, Diagnose Gicht</td><td class="ja">ja</td><td class="nein">nein</td><td class="nein">nein</td><td class="ja">ja</td><td class="ja">ja</td><td class="nein">NEIN</td></tr>
+  <tr><td><strong>5</strong> Kurt V. — fügt sich absichtlich Schnittwunden zu</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="ja">ja</td><td class="nein">nein</td><td class="nein">NEIN</td></tr>
+</table>
+</div>
+
+<div class="info-box">
+  <p><strong>Lernhilfe zu den drei Nein-Fällen:</strong> Fall 1 scheitert an <em>ungewöhnlich</em> + <em>plötzlich</em> (schleichende Überlastung). Fall 4 scheitert an <em>von aussen</em> + <em>ungewöhnlich</em> (die Ursache ist eine Krankheit im Körper — der Schmerz kam nur zufällig beim Wandern). Fall 5 scheitert einzig an <em>unfreiwillig</em> — Absicht ist nie ein Unfall.</p>
+</div>
+
+<h3>Unfall oder Krankheit — Übungsfälle mit Lösung</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Aussage</th><th>Unfall</th><th>Krankheit</th></tr>
+  <tr><td>Herr Matt liegt mit einem Hirntumor in der Klinik</td><td></td><td class="nein">✕</td></tr>
+  <tr><td>Ein Stürmer liegt mit ausgekugelter Schulter auf der Notfallstation</td><td class="ja">✕</td><td></td></tr>
+  <tr><td>Nach einem Gleitschirmunfall: Beinbruch und Hirnerschütterung</td><td class="ja">✕</td><td></td></tr>
+  <tr><td>Matthias erleidet in der RS eine Hirnhautentzündung</td><td></td><td class="nein">✕</td></tr>
+  <tr><td>Frau Tobler ist im 5. Monat schwanger</td><td></td><td class="nein">✕ <small>(Mutterschaft — KVG, ohne Kostenbeteiligung)</small></td></tr>
+  <tr><td>Der Skirennfahrer muss nach schwerem Sturz sechs Wochen in die Reha</td><td class="ja">✕</td><td></td></tr>
+  <tr><td>Frau Gerber erleidet eine Frühgeburt als Folge eines Velosturzes</td><td class="ja">✕</td><td></td></tr>
+  <tr><td>Felix Probst erleidet beim Tennisspielen einen Herzinfarkt</td><td></td><td class="nein">✕ <small>(Ursache im Körper)</small></td></tr>
+</table>
+</div>
+
+<div class="info-box warn">
+  <p><strong>Merkregel für die Klassiker:</strong> Herzinfarkt, Tumor, Hirnhautentzündung, Gicht und Schwangerschaft passieren <em>im</em> Körper → <strong>Krankheit</strong>. Sturz, Zusammenprall, Ausrenken, Bruch kommen <em>von aussen</em> → <strong>Unfall</strong>. Der Ort (Sportplatz, Reha-Klinik) sagt gar nichts aus — es zählt nur die <strong>Ursache</strong>.</p>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">9.1</span><h3>Der Fremdkörper im Essen — der Cervelat-Fall</h3></div>
+  <p>Beim Essen auf einen Knochensplitter gebissen und ein Stück Zahn abgebrochen — zahlt die Unfallversicherung?</p>
+  <p><strong>Ja, wenn der Fremdkörper in diesem Nahrungsmittel normalerweise nicht vorkommt.</strong></p>
+  <div class="compare">
+    <div class="compare-col pro">
+      <h4>Gilt als ungewöhnlich → Unfall</h4>
+      <ul><li>Steinchen im Reisgericht</li><li>Nussschale in der Nusstorte</li><li>Knochensplitter in Wurstwaren</li></ul>
+    </div>
+    <div class="compare-col con">
+      <h4>Gilt <em>nicht</em> als ungewöhnlich → kein Unfall</h4>
+      <ul><li>Figur im Dreikönigskuchen</li><li>Schrotkugel im Hirschpfeffer</li><li>Salzkorn in der Salzbrezel</li></ul>
+    </div>
+  </div>
+  <div class="info-box danger"><p><strong>Praxistipp aus dem Unterricht:</strong> Den Fremdkörper — das «corpus delicti» — unbedingt <strong>aufbewahren</strong>. Sonst verweigert die Versicherung die Leistung. Ohne Fremdkörper braucht es <strong>Zeugen</strong>, die ihn gesehen haben.</p></div>
+</div>
+
+<h2>10 · UKS — die unfallähnliche Körperschädigung</h2>
+
+<p>Manche Verletzungen sind typische «Unfall-Verletzungen», auch wenn kein ungewöhnlicher äusserer Faktor nachweisbar ist. Dafür gibt es im UVG eine eigene Liste — die <strong>unfallähnlichen Körperschädigungen (UKS)</strong>. Sie werden von der Unfallversicherung übernommen, <strong>ausser</strong> der Versicherer beweist, dass die Schädigung <strong>überwiegend auf Abnützung oder Erkrankung</strong> zurückzuführen ist.</p>
+
+<div class="card compact">
+  <h4>Die Liste (8 Positionen)</h4>
+  <ul>
+    <li>Knochenbrüche</li>
+    <li>Verrenkungen von Gelenken</li>
+    <li>Meniskusrisse</li>
+    <li>Muskelrisse</li>
+    <li>Muskelzerrungen</li>
+    <li>Sehnenrisse</li>
+    <li>Bandläsionen</li>
+    <li>Trommelfellverletzungen</li>
+  </ul>
+</div>
+
+<h3>Der Fall aus den Unterlagen: Kausalzusammenhang &amp; Leistungseinstellung</h3>
+<div class="card">
+  <p><strong>Was passiert ist:</strong> Ereignis vom 27.08.2021 — Sturz beim Fussball im Zweikampf aufs linke Knie. Erstkonsultation sechs Tage später. MRI im Dezember zeigt eine Läsion des Innenmeniskus. Im März 2022 Operation (Teilmeniskektomie).</p>
+  <p><strong>Was der Versicherer entschieden hat:</strong> Der beratende Arzt kommt zum Schluss, die Rissbildung sei <strong>überwiegend Ausdruck einer degenerativen Veränderung</strong> und nicht durch das Ereignis verursacht. Zudem war bei der Konsultation sechs Tage nach dem Sturz an der <em>Innenseite</em> kein Befund dokumentiert, sondern nur an der Aussenseite. Ergebnis: <strong>Leistungseinstellung per 29./30.12.2021</strong> — ab diesem Datum muss sich der Versicherte für die Kostenübernahme an seine <strong>Krankenkasse</strong> wenden.</p>
+  <div class="info-box">
+    <p><strong>Das Prinzip dahinter — merken:</strong></p>
+    <ul style="margin-bottom:0;">
+      <li>Die Leistungspflicht der UV besteht so lange, wie zwischen Ereignis und Beschwerden ein <strong>natürlicher Kausalzusammenhang</strong> besteht.</li>
+      <li>Sind die Beschwerden mit <strong>überwiegender Wahrscheinlichkeit</strong> nicht mehr Folge des Unfalls, sondern altersentsprechend degenerativ oder unfallfremd → <strong>Leistungspflicht endet</strong>.</li>
+      <li>Beweismass ist die <strong>überwiegende Wahrscheinlichkeit</strong>, nicht die absolute Sicherheit.</li>
+      <li>Der Versicherte kann eine <strong>einsprachefähige Verfügung</strong> verlangen, wenn er nicht einverstanden ist.</li>
+      <li>Praktische Folge: Ab der Leistungseinstellung zahlt die Krankenkasse — <strong>mit</strong> Franchise und Selbstbehalt.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>11 · BU und NBU — die SUVA-Systematik</h2>
+
+<div class="compare">
+  <div class="compare-col uvg">
+    <h4>BU — Berufsunfall</h4>
+    <ul>
+      <li><strong>Wer:</strong> <em>alle</em> in der Schweiz beschäftigten Arbeitnehmenden — ohne Mindeststundenzahl</li>
+      <li><strong>Was:</strong> Unfälle bei der Arbeit + <strong>Berufskrankheiten</strong></li>
+      <li><strong>Prämie:</strong> zahlt <strong>vollumfänglich der Arbeitgeber</strong></li>
+      <li><strong>Meldung:</strong> dem direkten Vorgesetzten oder der Betriebsleitung — auch wenn die Arbeit nicht unterbrochen wird</li>
+    </ul>
+  </div>
+  <div class="compare-col kvg">
+    <h4>NBU — Nichtberufsunfall</h4>
+    <ul>
+      <li><strong>Wer:</strong> nur wer <strong>mindestens 8 Stunden pro Woche</strong> beim selben Arbeitgeber arbeitet</li>
+      <li><strong>Was:</strong> Freizeitunfälle <strong>inklusive Arbeitsweg</strong></li>
+      <li><strong>Prämie:</strong> zahlt der <strong>Arbeitnehmer</strong> (Lohnabzug) — geschuldet ist sie durch den Arbeitgeber</li>
+      <li><strong>Unter 8 Std./Woche:</strong> Freizeitunfälle <em>nicht</em> versichert; Unfälle auf dem <strong>Arbeitsweg gelten dann als Berufsunfall</strong></li>
+    </ul>
+  </div>
+</div>
+
+<h3>Leistungen (gleich bei BU und NBU)</h3>
+<ul>
+  <li><strong>Heilbehandlung</strong> — sämtliche ambulanten und stationären Heilungskosten, <strong>ohne Franchise und ohne Selbstbehalt</strong></li>
+  <li><strong>Taggeld</strong> bis <strong>80 % des Lohnes</strong> bei teilweiser oder voller Arbeitsunfähigkeit (ab dem 3. Tag)</li>
+  <li><strong>Invalidenrente</strong> bei bleibenden wirtschaftlichen Unfallfolgen — bei 100 % Erwerbsunfähigkeit lebenslänglich <strong>80 % des versicherten Lohnes</strong></li>
+  <li><strong>Hinterlassenenrenten</strong> an Witwe/Witwer und Kinder</li>
+  <li><strong>Integritätsentschädigung</strong> bei bleibenden körperlichen Schäden (z. B. Verlust eines Arms)</li>
+  <li>Transport-, Rettungs- und Bestattungskosten</li>
+</ul>
+
+<div class="card compact">
+  <div class="card-title"><span class="num">11.1</span><h3>Abredeversicherung</h3></div>
+  <p>Nach dem Ende des Arbeitsverhältnisses läuft der NBU-Schutz des bisherigen Arbeitgebers noch rund <strong>30 Tage</strong> weiter. Mit der <strong>Abredeversicherung</strong> kann man ihn auf <strong>maximal 6 Monate</strong> verlängern — sinnvoll zwischen zwei Stellen oder vor einer längeren Reise. Im Lehrmittel taucht der Begriff auch als <strong>«Einzelabrede»</strong> auf: <em>Verlängerung der Unfallversicherung nach Austritt aus dem Unternehmen.</em></p>
+</div>
+
+<div class="info-box warn">
+  <p><strong>Die Verbindung zur Krankenkasse:</strong> Wer über den Arbeitgeber gegen BU <em>und</em> NBU versichert ist, kann die <strong>Unfalldeckung bei der Krankenkasse sistieren</strong> → bis <strong>7 % tiefere Prämie</strong>. Endet die Anstellung, muss man das der Kasse <strong>sofort melden</strong> — der Unfallschutz tritt dann umgehend wieder in Kraft (und die Prämie steigt wieder).</p>
+</div>
+
+<h2>12 · UVG gegen KVG — der Leistungsvergleich</h2>
+
+<div class="info-box danger"><p><span class="badge exam">Prüfungsstoff</span> Antwort auf «Sind die Leistungen der Unfallversicherung besser als jene der Krankenkasse?» → <strong>Ja</strong> — sie hat die gleichen Leistungen wie die Kasse (Arzt, Medikamente, allgemeine Abteilung), aber <strong>ohne Franchise und Selbstbehalt</strong>, und dazu noch <strong>Taggeld, Renten, Integritätsentschädigung und Sachschäden</strong>.</p></div>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bereich</th><th>UVG (Unfallversicherung)</th><th>KVG (Krankenkasse)</th></tr>
+  <tr><td><strong>Heilungskosten</strong></td><td>Sämtliche ambulanten und stationären Heilungskosten werden übernommen</td><td>Übernahme mit <strong>10 % Selbstbehalt + Franchise</strong>, gleich wie bei Krankheit</td></tr>
+  <tr><td><strong>Sachschäden</strong></td><td>Gewisse Sachschäden gedeckt</td><td>Nicht vorgesehen — nur über eine Zusatzversicherung</td></tr>
+  <tr><td><strong>Taggeld</strong></td><td>Bei Arbeitsunfähigkeit zahlt der Unfallversicherer ein Taggeld</td><td><strong>Kein Taggeld.</strong> Wer z. B. weniger als 8 Std./Woche angestellt ist, erhält nach einem Freizeitunfall kein Taggeld</td></tr>
+  <tr><td><strong>Invalidenrente</strong></td><td>Bei 100 % Erwerbsunfähigkeit lebenslänglich <strong>80 % des versicherten Lohnes</strong></td><td><strong>Keine</strong> Invalidenrente</td></tr>
+  <tr><td><strong>Todesfall</strong></td><td>Witwen/Witwer, Kinder und geschiedene Ehegatten erhalten eine <strong>Todesfallrente</strong></td><td><strong>Keine</strong> Todesfallrente</td></tr>
+  <tr><td><strong>Integritätsleistungen</strong></td><td>Bei bleibenden körperlichen Schäden eine <strong>Integritätsentschädigung</strong></td><td><strong>Keine</strong> Integritätsentschädigung</td></tr>
+</table>
+</div>
+
+<div class="section-label">Teil C — Überblick übrige Versicherungen</div>
+
+<h2>13 · Wer zahlt was? — Fallzuordnung</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Fall</th><th>Zuständige Versicherung</th></tr>
+  <tr><td>Ein Motorradfahrer fährt auf dem Zebrastreifen eine alte Dame an</td><td><strong>Motorfahrzeug&shy;haftpflicht</strong></td></tr>
+  <tr><td>Nach einem Hagelschauer ist das Auto voller Dellen</td><td><strong>Teilkasko</strong></td></tr>
+  <tr><td>Beim Einparken zerkratzt Julia die Front ihres eigenen Autos</td><td><strong>Vollkasko</strong></td></tr>
+  <tr><td>Kimo hustet stark und muss die Lunge röntgen lassen</td><td><strong>Krankenversicherung</strong></td></tr>
+  <tr><td>Amélie fährt unachtsam ins Heck des vorderen Autos</td><td><strong>Motorfahrzeug&shy;haftpflicht</strong></td></tr>
+  <tr><td>Luc verletzt sich am Arbeitsplatz an der Hand</td><td><strong>Berufsunfall&shy;versicherung</strong></td></tr>
+  <tr><td>Blinddarmoperation</td><td><strong>Krankenkasse</strong></td></tr>
+  <tr><td>Beinbruch und die Medikamente danach</td><td><strong>Unfallversicherung</strong></td></tr>
+  <tr><td>Hund beisst einen Passanten in die Wade</td><td><strong>Privathaftpflicht</strong></td></tr>
+  <tr><td>Defekte Stereoanlage durch Blitzschlag</td><td><strong>Hausratversicherung</strong></td></tr>
+</table>
+</div>
+
+<h3>Obligatorisch oder freiwillig?</h3>
+<div class="compare">
+  <div class="compare-col pro">
+    <h4>Obligatorisch</h4>
+    <ul>
+      <li>Krankenkasse (Grundversicherung)</li>
+      <li>Unfallversicherung (für Arbeitnehmende)</li>
+      <li>Motorfahrzeughaftpflicht</li>
+    </ul>
+  </div>
+  <div class="compare-col con">
+    <h4>Freiwillig</h4>
+    <ul>
+      <li>Privathaftpflichtversicherung</li>
+      <li>Vollkasko</li>
+      <li>Teilkasko</li>
+      <li>Hausrat- / Mobiliarversicherung</li>
+      <li>Alle Zusatzversicherungen</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Begriffe aus dem Lösungsblatt A16</h3>
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Regress</div><div class="schema-val">Rückgriff auf den Versicherten — die Versicherung zahlt zuerst und holt sich das Geld dann beim Verursacher zurück (z. B. bei Grobfahrlässigkeit).</div></div>
+  <div class="schema-row"><div class="schema-key">Versicherungsbetrug</div><div class="schema-val">Ungerechtfertigter Bezug von Versicherungsleistungen.</div></div>
+  <div class="schema-row"><div class="schema-key">Rente</div><div class="schema-val">Betrag, den die Versicherung regelmässig ausbezahlt.</div></div>
+  <div class="schema-row"><div class="schema-key">Einzelabrede</div><div class="schema-val">Verlängerung der Unfallversicherung nach Austritt aus dem Unternehmen (= Abredeversicherung).</div></div>
+  <div class="schema-row"><div class="schema-key">Selbstbehalt</div><div class="schema-val">Kostenbeteiligung des Versicherten.</div></div>
+  <div class="schema-row"><div class="schema-key">Bonus</div><div class="schema-val">Prämienreduktion für unfallfreies Fahren.</div></div>
+  <div class="schema-row"><div class="schema-key">Unterversicherung</div><div class="schema-val">Die vereinbarte Versicherungssumme liegt deutlich <strong>unter</strong> dem effektiven Wiederbeschaffungswert (typisch bei der Hausratversicherung).</div></div>
+</div>
+
+<h3>Sozialversicherungen — das Nötigste</h3>
+<ul>
+  <li><strong>EO (Erwerbsersatzordnung):</strong> finanziert den <strong>Mutterschaftsurlaub</strong> und leistet einen Beitrag an den Erwerbsausfall während <strong>Militär- oder Zivilschutzdienst</strong>. <em>Nicht</em> für Krankheit oder Invalidität.</li>
+  <li><strong>ALV (Arbeitslosenversicherung):</strong> Voraussetzungen für Taggelder — man muss <strong>arbeitsfähig</strong> sein und <strong>persönlich auf dem Arbeitsamt erscheinen</strong>. Ein Mindestalter oder ein erlernter Beruf sind <em>keine</em> Bedingung.</li>
+  <li><strong>Beitragspflicht AHV/IV/EO/ALV</strong> beginnt für Lernende am <strong>1. Januar des Jahres, in dem sie 18 werden</strong>.</li>
+  <li><strong>1. Säule</strong> = staatliche, obligatorische Säule (AHV/IV) — Existenzsicherung.<br>
+      <strong>2. Säule</strong> = berufliche Vorsorge (BVG/Pensionskasse) — zusammen mit der 1. Säule soll sie den <strong>bisherigen Lebensstandard</strong> sichern.<br>
+      <strong>3. Säule</strong> = <strong>privates Sparen</strong> (nicht die zweite!).</li>
+</ul>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     RECHNER
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="rechner">
+
+<p class="intro">Vier Werkzeuge, die genau das können, was in der Prüfung und im echten Leben gebraucht wird. Rechne damit die Aufträge nach — und prüfe deine eigenen Handrechnungen.</p>
+
+<!-- TOOL 1 -->
+<div class="tool">
+  <h3><span class="badge exam">Prüfungsstoff</span> 1 · Kostenbeteiligungs-Rechner</h3>
+  <p class="tool-desc">Gib alle Arztrechnungen eines Jahres ein. Der Rechner verteilt sie auf Franchise, Selbstbehalt und Kassenanteil — genau nach dem Schema aus Auftrag 2.</p>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="kbFranchise">Franchise</label>
+      <select id="kbFranchise">
+        <option value="300" selected>300.– (ordentlich)</option>
+        <option value="500">500.–</option>
+        <option value="1000">1000.–</option>
+        <option value="1500">1500.–</option>
+        <option value="2000">2000.–</option>
+        <option value="2500">2500.–</option>
+        <option value="0">0.– (Kind, ordentlich)</option>
+        <option value="100">100.– (Kind)</option>
+        <option value="200">200.– (Kind)</option>
+        <option value="400">400.– (Kind)</option>
+        <option value="600">600.– (Kind)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="kbAlter">Versicherte Person</label>
+      <select id="kbAlter">
+        <option value="700" selected>Erwachsene (SB max. 700.–)</option>
+        <option value="350">Kind bis 18 (SB max. 350.–)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="kbSpital">Spitaltage (stationär)</label>
+      <input type="number" id="kbSpital" value="0" min="0" step="1">
+    </div>
+  </div>
+
+  <label style="font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft);">Rechnungen (CHF)</label>
+  <div id="kbBills" style="margin-top:6px;"></div>
+  <div class="btn-row">
+    <button class="btn ghost sm" id="kbAdd">+ Rechnung</button>
+    <button class="btn ghost sm" id="kbDemo">Beispiel Anna Graber laden</button>
+  </div>
+
+  <div class="result" id="kbResult"></div>
+</div>
+
+<!-- TOOL 2 -->
+<div class="tool">
+  <h3>2 · Franchise-Vergleich</h3>
+  <p class="tool-desc">Lohnt sich die hohe Franchise? Der Rechner vergleicht zwei Varianten über ein Jahr — Prämien <em>plus</em> Kostenbeteiligung — und sagt dir, ab welchen Gesundheitskosten sich das Blatt wendet.</p>
+
+  <div class="split">
+    <div>
+      <h4 style="margin-top:0;">Variante A</h4>
+      <div class="field-row">
+        <div class="field">
+          <label for="fvF1">Franchise</label>
+          <select id="fvF1">
+            <option value="300" selected>300.–</option>
+            <option value="500">500.–</option>
+            <option value="1000">1000.–</option>
+            <option value="1500">1500.–</option>
+            <option value="2000">2000.–</option>
+            <option value="2500">2500.–</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fvP1">Prämie / Monat</label>
+          <input type="number" id="fvP1" value="380" min="0" step="5">
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4 style="margin-top:0;">Variante B</h4>
+      <div class="field-row">
+        <div class="field">
+          <label for="fvF2">Franchise</label>
+          <select id="fvF2">
+            <option value="300">300.–</option>
+            <option value="500">500.–</option>
+            <option value="1000">1000.–</option>
+            <option value="1500">1500.–</option>
+            <option value="2000">2000.–</option>
+            <option value="2500" selected>2500.–</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fvP2">Prämie / Monat</label>
+          <input type="number" id="fvP2" value="285" min="0" step="5">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="fvKosten">Erwartete Arzt-/Spitalkosten pro Jahr</label>
+      <input type="number" id="fvKosten" value="1000" min="0" step="100">
+    </div>
+    <div class="field">
+      <label for="fvSbMax">Selbstbehalt-Maximum</label>
+      <select id="fvSbMax">
+        <option value="700" selected>700.– (Erwachsene)</option>
+        <option value="350">350.– (Kind)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="result" id="fvResult"></div>
+  <div class="info-box" style="margin-bottom:0;"><p><strong>Faustregel aus dem K-Tipp-Artikel:</strong> Wer gesund ist und selten zum Arzt muss, spart mit der Maximalfranchise. Wer regelmässig hohe Kosten hat, fährt rein rechnerisch mit 300.– besser. <strong>Aber:</strong> Über mehrere Jahre betrachtet lohnt sich die hohe Franchise oft selbst dann noch, wenn zwischendurch ein teures Jahr dabei ist. Bedingung: Man muss Franchise + 700.– Selbstbehalt jederzeit <strong>flüssig haben</strong> — im schlimmsten Fall früh im Jahr.</p></div>
+</div>
+
+<!-- TOOL 3 -->
+<div class="tool">
+  <h3><span class="badge exam">Prüfungsstoff</span> 3 · Unfall-Checker</h3>
+  <p class="tool-desc">Die fünf gesetzlichen Merkmale durchklicken. Nur wenn <strong>alle fünf</strong> erfüllt sind, liegt versicherungsrechtlich ein Unfall vor.</p>
+
+  <div class="check-list" id="ucList">
+    <label class="check-item"><input type="checkbox" data-uc="1"><span class="ci-text"><b>Körperschaden</b><small>Es gibt eine Beeinträchtigung der körperlichen, geistigen oder psychischen Gesundheit — oder den Tod.</small></span></label>
+    <label class="check-item"><input type="checkbox" data-uc="2"><span class="ci-text"><b>Einwirkung von aussen</b><small>Die Ursache kam von ausserhalb des Körpers — nicht aus dem Körper selbst (Gicht, Herzinfarkt, Tumor).</small></span></label>
+    <label class="check-item"><input type="checkbox" data-uc="3"><span class="ci-text"><b>Ungewöhnlicher Vorfall</b><small>Der äussere Faktor war ungewöhnlich — nicht die normale Alltags- oder Arbeitsbelastung.</small></span></label>
+    <label class="check-item"><input type="checkbox" data-uc="4"><span class="ci-text"><b>Plötzliche Einwirkung</b><small>Es geschah in einem Moment, nicht schleichend über Tage oder Wochen.</small></span></label>
+    <label class="check-item"><input type="checkbox" data-uc="5"><span class="ci-text"><b>Unfreiwilliges Ereignis</b><small>Es war nicht beabsichtigt — keine Selbstverletzung.</small></span></label>
+  </div>
+
+  <div id="ucVerdict"></div>
+  <div class="btn-row" style="margin-top:12px;">
+    <button class="btn ghost sm" id="ucReset">Zurücksetzen</button>
+  </div>
+
+  <div style="margin-top:16px;">
+    <label for="ucCase" style="font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft);">Übungsfall laden</label>
+    <select id="ucCase" style="width:100%; padding:9px 11px; border:1px solid var(--border); border-radius:6px; font-family:var(--font-body); font-size:0.95rem; background:var(--surface); margin-top:4px;">
+      <option value="">— Fall wählen —</option>
+      <option value="1">1 · Peter S. — Rückenschmerzen nach einer Woche Baustellenarbeit</option>
+      <option value="2">2 · Karin N. — mit dem Roller auf nasser Strasse gestürzt</option>
+      <option value="3">3 · Luzia A. — beim Joggen über eine Wurzel gestürzt</option>
+      <option value="4">4 · Martin H. — plötzlicher Knieschmerz, Diagnose Gicht</option>
+      <option value="5">5 · Kurt V. — fügt sich absichtlich Schnittwunden zu</option>
+      <option value="6">6 · Knochensplitter im Cervelat — Zahn bricht ab</option>
+      <option value="7">7 · Herzinfarkt beim Tennisspielen</option>
+    </select>
+  </div>
+</div>
+
+<!-- TOOL 4 -->
+<div class="tool">
+  <h3>4 · Kündigungsfrist-Finder</h3>
+  <p class="tool-desc">Bis wann muss dein Kündigungsschreiben beim Versicherer eintreffen?</p>
+  <div class="field-row">
+    <div class="field">
+      <label for="kfModell">Deine Situation</label>
+      <select id="kfModell">
+        <option value="standard">Franchise 300.– und Standardmodell (freie Arztwahl)</option>
+        <option value="andere">Höhere Franchise oder alternatives Modell (HMO / Telmed / Hausarzt)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="kfPraemie">Neue Prämie schon erhalten? (Herbst-Mitteilung)</label>
+      <select id="kfPraemie">
+        <option value="nein">Nein — normale Kündigung</option>
+        <option value="ja">Ja — verkürzte Frist von 1 Monat</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="kfZiel">Was willst du ändern?</label>
+      <select id="kfZiel">
+        <option value="wechsel">Kasse wechseln / kündigen</option>
+        <option value="senken">Franchise senken</option>
+        <option value="erhoehen">Franchise erhöhen (gleiche Kasse)</option>
+      </select>
+    </div>
+  </div>
+  <div class="result" id="kfResult"></div>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BEGRIFFE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+
+<p class="intro">Alle Fachbegriffe aus beiden Ordnern. Such nach einem Wort oder filtere nach Thema.</p>
+
+<input type="text" class="begriff-search" id="begriffSearch" placeholder="Begriff oder Stichwort suchen …">
+
+<div class="cat-filter" id="catFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundversicherung</button>
+  <button class="cat-chip" data-cat="zusatz">Zusatzversicherung</button>
+  <button class="cat-chip" data-cat="kosten">Kostenbeteiligung</button>
+  <button class="cat-chip" data-cat="modell">Modelle &amp; Prämie</button>
+  <button class="cat-chip" data-cat="rechnung">Rechnung &amp; Tarife</button>
+  <button class="cat-chip" data-cat="unfall">Unfallversicherung</button>
+  <button class="cat-chip" data-cat="uebrig">Übrige Versicherungen</button>
+</div>
+
+<div class="begriff-grid" id="begriffGrid"></div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     KARTEIKARTEN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="karten">
+
+<p class="intro">Karte antippen zum Umdrehen. Ehrlich bewerten — «Nochmal» und «Sitzt» sind nur für dich. Mit den Pfeiltasten ← → blättern, mit der Leertaste umdrehen.</p>
+
+<div class="cat-filter" id="cardFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundversicherung</button>
+  <button class="cat-chip" data-cat="zusatz">Zusatzversicherung</button>
+  <button class="cat-chip" data-cat="kosten">Kostenbeteiligung</button>
+  <button class="cat-chip" data-cat="modell">Modelle &amp; Prämie</button>
+  <button class="cat-chip" data-cat="rechnung">Rechnung &amp; Tarife</button>
+  <button class="cat-chip" data-cat="unfall">Unfallversicherung</button>
+  <button class="cat-chip" data-cat="uebrig">Übrige Versicherungen</button>
+</div>
+
+<div class="flash-stage">
+  <div class="flash-card" id="flashCard" onclick="flipCard()">
+    <span class="side-label" id="flashSide">Frage</span>
+    <span class="law-ref-flash" id="flashRef"></span>
+    <div id="flashContent" class="flash-front">Karteikarten werden geladen …</div>
+  </div>
+</div>
+<p class="flash-hint">Tippen oder Leertaste zum Umdrehen</p>
+
+<div class="flash-controls">
+  <button class="flash-btn" onclick="prevCard()">‹ Zurück</button>
+  <span class="flash-counter" id="flashCounter">0 / 0</span>
+  <button class="flash-btn" onclick="nextCard()">Weiter ›</button>
+</div>
+<div class="flash-controls">
+  <button class="flash-btn bad" onclick="rateCard(false)">Nochmal</button>
+  <button class="flash-btn good" onclick="rateCard(true)">Sitzt</button>
+  <button class="flash-btn" onclick="shuffleCards()">Mischen</button>
+  <button class="flash-btn" onclick="resetCards()">Reset</button>
+</div>
+<div class="flash-stats">
+  <span>Sitzt: <strong id="statKnown">0</strong></span>
+  <span>Nochmal: <strong id="statUnknown">0</strong></span>
+  <span>Offen: <strong id="statOpen">0</strong></span>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     QUIZ
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="quiz">
+
+<p class="intro">28 Prüfungsfragen im Stil der Aufträge und Lösungsblätter. Zuerst selber beantworten — erst dann die Lösung aufdecken.</p>
+
+<div class="btn-row" style="margin-bottom:18px;">
+  <button class="btn ghost sm" onclick="revealAll(true)">Alle Lösungen zeigen</button>
+  <button class="btn ghost sm" onclick="revealAll(false)">Alle verstecken</button>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q1</span><span class="q-topic">Grundlagen</span><span class="q-source">Auftrag 1 / T 209a</span></div>
+  <p class="q-text">Was bedeutet <strong>Franchise</strong>? a) Freizügigkeit im Kassenwechsel · b) Freie Arztwahl bei Krankheit · c) Volle Kostendeckung im Vertragsspital · d) Frei gewählter Jahreskostenbeitrag</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>d) Frei gewählter Jahreskostenbeitrag.</strong> Die Franchise ist der jährliche Grundbetrag, den die versicherte Person selber trägt, bevor die Kasse zu zahlen beginnt.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q2</span><span class="q-topic">Grundlagen</span><span class="q-source">Auftrag 1 / T 209b</span></div>
+  <p class="q-text">Was bedeutet <strong>Selbstbehalt</strong>? a) Obligatorischer Beitrag an die Arztkosten · b) Kein Zutritt zu Privatkliniken · c) Medizinische Hilfsmittel, die ich behalten darf · d) Spitalkosten, die ich bezahlen muss</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>a) Obligatorischer Beitrag an die Arztkosten</strong> — 10 % der Kosten oberhalb der Franchise, maximal 700.– pro Jahr (Kinder 350.–).</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q3</span><span class="q-topic">Grundlagen</span><span class="q-source">Auftrag 1 / T 210</span></div>
+  <p class="q-text"><strong>Freizügigkeit</strong> in der Krankenversicherung bedeutet — richtig oder falsch? <br>a) Ich kann frei wählen, in welches Spital ich eingeliefert werde · b) Ich kann die Versicherungsgesellschaft jederzeit frei wählen, wenn ich wegen Berufs- oder Wohnungswechsel austreten muss · c) Die Krankenversicherung ist eine freiwillige Personenversicherung</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>a) <strong>falsch</strong> · b) <strong>richtig</strong> · c) <strong>falsch</strong> (die Grundversicherung ist obligatorisch).</p><p>Freizügigkeit meint die <strong>freie Wahl des Versicherers</strong> mit Aufnahmepflicht — nicht die freie Spital- oder Arztwahl.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q4</span><span class="q-topic">Grundlagen</span><span class="q-source">Auftrag 1 / T 211</span></div>
+  <p class="q-text">Was versteht man unter <strong>Karenzfrist</strong>?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Die <strong>Zeit zwischen Eintritt in die Krankenkasse und dem Beginn der Versicherungsleistung</strong>. Gibt es nur bei <strong>Zusatzversicherungen</strong> — nicht in der Grundversicherung.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q5</span><span class="q-topic">Zusatzversicherung</span><span class="q-source">Auftrag 1 / V 119</span></div>
+  <p class="q-text">Nenne <strong>drei Zusatzleistungen</strong> einer Krankenkasse, für die sich ein Mitglied einzeln versichern lassen muss.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ul><li>Freie Spitalwahl in der ganzen Schweiz</li><li>Spitalaufenthalt in der Halbprivat- oder Privatabteilung</li><li>Zahnbehandlungen</li></ul><p>Ebenfalls richtig: Alternativmedizin, Brillen/Kontaktlinsen, Zahnstellungskorrekturen bei Kindern, Krankentaggeld, Reisezusatz, Psychotherapie.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q6</span><span class="q-topic">Grundlagen</span><span class="q-source">Auftrag 1 / V 120</span></div>
+  <p class="q-text">Worin liegt der <strong>Hauptunterschied</strong> zwischen den Grund- und den Zusatzleistungen einer Krankenkasse?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Die <strong>Grundleistungen sind obligatorisch</strong> versichert und unterstehen dem <strong>KVG</strong>. Die <strong>Zusatzleistungen sind freiwillig</strong> und unterstehen dem <strong>Privatrecht (VVG)</strong>.</p><p>Folge: In der Grundversicherung besteht Aufnahmepflicht ohne Vorbehalte, bei der Zusatzversicherung darf die Kasse ablehnen, Vorbehalte anbringen oder eine Gesundheitsprüfung verlangen.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q7</span><span class="q-topic">Kostenbeteiligung</span><span class="q-source">Auftrag 1 / V 121</span></div>
+  <p class="q-text">Nenne je <strong>einen Vor- und einen Nachteil</strong>, wenn du eine erhöhte Franchise wählst.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Vorteil:</strong> Die Jahresprämien werden billiger.<br><strong>Nachteil:</strong> Im Krankheitsfall bleibt man an einem erhöhten eigenen Kostenbeitrag hängen — man muss den Betrag jederzeit flüssig haben.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q8</span><span class="q-topic">Grundversicherung</span><span class="q-source">Auftrag 1 / V 122</span></div>
+  <p class="q-text">Was versteht man unter <strong>Komplementärmedizin</strong>, und welche Methoden zahlt die Grundversicherung?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Alte und neue alternative medizinische Methoden, die sich <strong>dem ganzen Menschen widmen</strong> und nicht bloss den körperlichen Symptomen — z. B. Naturheilmittel, homöopathische Medikamente, Akupunktur, Akupressur.</p><p>Die Grundversicherung übernimmt bei entsprechender Befähigung des Arztes: <strong>Akupunktur, Homöopathie, traditionelle chinesische Medizin (TCM), Phytotherapie und anthroposophische Medizin</strong>. Weitergehende Methoden nur über die Zusatzversicherung.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q9</span><span class="q-topic">Grundversicherung</span><span class="q-source">Auftrag 1 / V 123</span></div>
+  <p class="q-text">Nenne zwei Beispiele, die in der Krankenversicherung unter den Begriff <strong>Prävention</strong> fallen.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Untersuchungen zur <strong>Früherkennung von Krankheiten</strong> — z. B. Vorsorgeuntersuchungen in der Schwangerschaft, Krebsvorsorge (Mammografie), Herzkrankheiten. Ebenfalls: <strong>Impfungen</strong> und Untersuchungen von Kindern im Vorschulalter.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q10</span><span class="q-topic">Kostenbeteiligung</span><span class="q-source">Auftrag 2</span></div>
+  <p class="q-text">Anna Graber (volljährig), Franchise 300.–, Selbstbehalt 10 %. Arztrechnungen im Jahr: <strong>180.– · 235.– · 450.–</strong>. Wie viel zahlt sie, wie viel die Kasse?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>180 + 235 + 450 = <strong>865.–</strong><br>865 − 300 (Franchise) = 565.– → davon 10 % = <strong>56.50</strong> Selbstbehalt<br><strong>Anna Graber zahlt 300 + 56.50 = 356.50</strong> · <strong>die Krankenkasse zahlt 508.50</strong></p><p>Aufteilung pro Rechnung: R1 komplett Franchise (180.–) · R2 = 120.– Franchise + 11.50 SB, Kasse 103.50 · R3 = 45.– SB, Kasse 405.–</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q11</span><span class="q-topic">Kostenbeteiligung</span><span class="q-source">Lösungsblatt A5</span></div>
+  <p class="q-text">Frau Huber, Franchise 300.–. Rechnungen: Dr. Müller 1300.– · Dr. Geiger 700.– · Dr. Moll 400.–. Wer zahlt wie viel?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Total 2400.– · minus Franchise 300.– = 2100.– · davon 10 % = 210.–<br><strong>Frau Huber: 510.–</strong> (300 Franchise + 210 Selbstbehalt) · <strong>Krankenkasse: 1890.–</strong></p><p>Der Selbstbehalt liegt noch unter dem Maximum von 700.–, deshalb greift die Obergrenze hier nicht.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q12</span><span class="q-topic">Kostenbeteiligung</span><span class="q-source">Erweiterung</span></div>
+  <p class="q-text">Jemand mit Franchise 300.– hat im Jahr Rechnungen über <strong>total 12 000.–</strong>. Wie hoch ist sein eigener Anteil?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>12 000 − 300 = 11 700 · davon 10 % wären 1170.– — aber der Selbstbehalt ist <strong>bei 700.– gedeckelt</strong>.<br><strong>Eigener Anteil: 300 + 700 = 1000.–</strong> · Kasse: 11 000.–</p><p>Merke: Mehr als <strong>Franchise + 700.–</strong> kann einen die Grundversicherung pro Jahr nie kosten (ausser Spitalbeitrag von 15.–/Tag).</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q13</span><span class="q-topic">Kostenbeteiligung</span><span class="q-source">Generisch</span></div>
+  <p class="q-text">Eine Frau bringt ein Kind zur Welt und liegt 4 Tage im Spital. Welche Kostenbeteiligung zahlt sie?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Keine.</strong> Auf den Leistungen bei <strong>Mutterschaft</strong> wird keine Kostenbeteiligung erhoben — weder Franchise noch Selbstbehalt noch der Spitalbeitrag von 15.– pro Tag.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q14</span><span class="q-topic">Prämie senken</span><span class="q-source">Auftrag 3</span></div>
+  <p class="q-text">Nenne <strong>fünf Möglichkeiten</strong>, wie du deine Prämie senken kannst — und erkläre sie kurz.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li><strong>Alternatives Modell wählen</strong> (Hausarzt, HMO, Telmed, PPO) — man verzichtet auf die freie Arztwahl und geht zuerst zur vereinbarten Stelle → bis 20 % Reduktion.</li><li><strong>Franchise erhöhen</strong> — statt 300.– bis 2500.–; man trägt mehr Kosten selbst und zahlt dafür weniger Prämie.</li><li><strong>Unfalldeckung sistieren</strong> — wer ≥ 8 Std./Woche beim gleichen Arbeitgeber arbeitet, ist über ihn unfallversichert → bis 7 % weniger Prämie.</li><li><strong>Krankenversicherer wechseln</strong> — Prämien auf priminfo.ch oder comparis.ch vergleichen und fristgerecht kündigen.</li><li><strong>Prämienverbilligung beantragen</strong> — der Kanton zahlt bei bescheidenem Einkommen einen Beitrag direkt an den Versicherer.</li></ol><p>Weitere gültige Antworten: Zusatzversicherungen kündigen · Sistierung bei über 60 Tagen Dienst · Second Opinion · Zurückhaltung bei Arztbesuchen · gesund leben.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q15</span><span class="q-topic">Modelle</span><span class="q-source">PPP / Lösungen</span></div>
+  <p class="q-text">Erkläre den Unterschied zwischen <strong>Hausarzt-Modell</strong> und <strong>HMO-Modell</strong>.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Hausarzt-Modell:</strong> Zusammenschluss <em>frei praktizierender</em> Ärztinnen und Ärzte, die einen Vertrag mit der Kasse haben. Man wählt aus einer Liste seinen <strong>persönlichen Hausarzt</strong> und geht im Krankheitsfall immer zuerst zu ihm.</p><p><strong>HMO-Modell:</strong> Man geht immer zuerst in ein <strong>Gesundheitszentrum</strong> mit <em>fest angestellten</em> Ärzten (meist in Städten). Der Arzt erhält eine monatliche Pauschale pro Patient. Auch im Notfall ist der HMO-Arzt erste Anlaufstelle.</p><p>Gemeinsam: Der Arzt ist <strong>Gatekeeper</strong> — er verhindert unnötige Besuche bei teuren Spezialisten. Beide bringen bis zu 20 % Prämienreduktion.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q16</span><span class="q-topic">Modelle</span><span class="q-source">PPP</span></div>
+  <p class="q-text">Was verpflichtest du dich beim <strong>Telmed-Modell</strong> zu tun?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Vor dem ersten Arztbesuch eine telefonische Beratung einholen.</strong> Medizinische Fachpersonen beurteilen die Angaben, geben Verhaltensempfehlungen ab oder leiten an einen Arzt oder ein Spital weiter. Prämienreduktion bis 20 %.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q17</span><span class="q-topic">Fristen</span><span class="q-source">PPP Kündigung</span></div>
+  <p class="q-text">Du hast Franchise 300.– und das Standardmodell. Bis wann musst du kündigen, wenn du <strong>per 30. Juni</strong> die Kasse wechseln willst?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Die Kündigung muss <strong>spätestens am 31. März beim Versicherer eingetroffen sein</strong> (3 Monate Frist). Das gilt <em>nur</em> bei ordentlicher Franchise von 300.– und Standard-Grundversicherung.</p><p><strong>Achtung:</strong> Bei höherer Franchise oder alternativem Modell (HMO, Telmed, Hausarzt) kann man <strong>nur auf Ende Dezember</strong> kündigen — Eingang bis 30. November.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q18</span><span class="q-topic">Fristen</span><span class="q-source">1x1 der KV, S. 15</span></div>
+  <p class="q-text">Im Oktober teilt dir deine Kasse die neue Prämie fürs nächste Jahr mit. Welche Frist gilt jetzt — und gilt sie auch, wenn die Prämie <em>sinkt</em>?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Es gilt eine <strong>verkürzte Kündigungsfrist von einem Monat</strong> auf den <strong>31. Dezember</strong>. Das Kündigungsschreiben muss am <strong>30. November</strong> beim Versicherer eingetroffen sein — am besten <strong>eingeschrieben</strong>.</p><p><strong>Ja</strong>, sie gilt unabhängig davon, ob die Prämie steigt, sinkt oder gleich bleibt — und für <strong>alle Modelle und Franchisen</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q19</span><span class="q-topic">Rechnung</span><span class="q-source">1x1 der KV, S. 24</span></div>
+  <p class="q-text">Erkläre <strong>Tiers garant</strong> und <strong>Tiers payant</strong>.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Tiers garant («TG»):</strong> Der Arzt schickt die Rechnung dem Patienten. Der Patient bezahlt sie und reicht den <strong>Rückforderungsbeleg</strong> beim Versicherer ein, der ihm das Honorar vergütet.</p><p><strong>Tiers payant («TP»):</strong> Die Rechnung geht <strong>direkt an den Krankenversicherer</strong>; der Patient erhält nur eine Rechnungskopie. Braucht eine Vereinbarung mit dem Arzt.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q20</span><span class="q-topic">Rechnung</span><span class="q-source">1x1 der KV, S. 23</span></div>
+  <p class="q-text">Was bedeuten die <strong>WZW-Kriterien</strong>? Erkläre sie an einem Beispiel.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>W</strong>irksam · <strong>Z</strong>weckmässig · <strong>W</strong>irtschaftlich — jede ärztliche Leistung muss alle drei erfüllen.</p><ul><li><strong>Wirksam:</strong> Die Behandlung bringt Abhilfe oder lindert das Leiden.</li><li><strong>Zweckmässig:</strong> Sie ist die richtige Behandlung für dieses Leiden — bei einem frischen Armbruch ist ein Gips zweckmässig, Physiotherapie als Erstmassnahme nicht.</li><li><strong>Wirtschaftlich:</strong> Es gibt keine gleichwertige, günstigere Alternative. Beispiel Kreuzbandriss: Braucht es die Operation, oder bringt Physiotherapie dasselbe Resultat?</li></ul></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q21</span><span class="q-topic">Solidarität</span><span class="q-source">Lösungsblatt A4</span></div>
+  <p class="q-text">Beschreibe in zwei bis drei Sätzen, wie das <strong>Solidaritätsprinzip</strong> funktioniert.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Alle zahlen Geld in eine Kasse, um ein Risiko finanziell abzusichern. Nur wer einen versicherten Schaden erleidet, wird aus dieser Kasse entschädigt. <strong>Viele zahlen wenig, damit Wenigen viel geholfen werden kann.</strong> Man hilft sich gegenseitig und verhält sich damit solidarisch.</p><p>Solidarität besteht zwischen Jung und Alt, Gesunden und Kranken, Mann und Frau.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q22</span><span class="q-topic">Unfall</span><span class="q-source">Auftrag 5 / ATSG</span></div>
+  <p class="q-text">Nenne die <strong>fünf Bedingungen</strong>, die erfüllt sein müssen, damit ein Ereignis versicherungsrechtlich ein <strong>Unfall</strong> ist.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li><strong>Körperschaden</strong></li><li><strong>Einwirkung von aussen</strong></li><li><strong>Ungewöhnlicher Vorfall</strong></li><li><strong>Plötzliche Einwirkung</strong></li><li><strong>Unfreiwilliges Ereignis</strong></li></ol><p>Definition: Ein Unfall ist die <em>plötzliche, nicht beabsichtigte schädigende Einwirkung eines ungewöhnlichen äusseren Faktors auf den menschlichen Körper</em>. Fehlt auch nur eine Bedingung → <strong>kein Unfall</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q23</span><span class="q-topic">Unfall</span><span class="q-source">Auftrag 5, Fall 1 &amp; 4</span></div>
+  <p class="q-text">Warum ist <strong>keines</strong> dieser beiden Ereignisse ein Unfall? <br>a) Student Peter S. arbeitet eine Woche auf dem Bau und hat danach heftige Rückenschmerzen.<br>b) Martin H. verspürt beim Wandern plötzlich Schmerzen im Knie — der Arzt stellt ein Gichtleiden fest.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>a)</strong> Es fehlt der <strong>ungewöhnliche Vorfall</strong> und die <strong>plötzliche Einwirkung</strong> — die Beschwerden entstanden schleichend durch normale Arbeitsbelastung. → <strong>kein Unfall</strong></p><p><strong>b)</strong> Es fehlt die <strong>Einwirkung von aussen</strong> und der <strong>ungewöhnliche Vorfall</strong> — die Ursache (Gicht) liegt <em>im</em> Körper. Der Schmerz trat nur zufällig beim Wandern auf. → <strong>kein Unfall, sondern Krankheit</strong></p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q24</span><span class="q-topic">Unfall</span><span class="q-source">PPP Krankheit oder Unfall</span></div>
+  <p class="q-text">Du beisst in einen Cervelat auf einen Knochensplitter, ein Stück Zahn bricht ab. Zahlt die Unfallversicherung? Was musst du unbedingt tun?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Ja</strong> — ein Knochensplitter kommt in Wurstwaren normalerweise nicht vor, er gilt daher als <strong>ungewöhnlicher äusserer Faktor</strong>. Damit sind alle fünf Bedingungen erfüllt.</p><p><strong>Wichtig:</strong> Den Fremdkörper (das «corpus delicti») <strong>unbedingt aufbewahren</strong> — sonst verweigert die Versicherung die Leistung. Ohne Fremdkörper braucht es <strong>Zeugen</strong>, die ihn gesehen haben.</p><p>Nicht ungewöhnlich und deshalb <em>kein</em> Unfall: Figur im Dreikönigskuchen, Schrotkugel im Hirschpfeffer, Salzkorn in der Salzbrezel.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q25</span><span class="q-topic">Unfall</span><span class="q-source">SUVA-Auftrag</span></div>
+  <p class="q-text">Erkläre den Unterschied zwischen <strong>BU</strong> und <strong>NBU</strong>: Wer ist versichert und wer zahlt die Prämie?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>BU (Berufsunfall):</strong> <em>Alle</em> in der Schweiz beschäftigten Arbeitnehmenden sind obligatorisch gegen Berufsunfälle <strong>und Berufskrankheiten</strong> versichert — unabhängig vom Pensum. Die Prämie geht <strong>vollumfänglich zulasten des Arbeitgebers</strong>.</p><p><strong>NBU (Nichtberufsunfall):</strong> Versichert sind Freizeitunfälle <strong>inklusive Arbeitsweg</strong>, aber nur wer <strong>mindestens 8 Stunden pro Woche</strong> beim selben Arbeitgeber arbeitet. Die Prämie geht zulasten des <strong>Arbeitnehmers</strong> (Lohnabzug); geschuldet ist sie durch den Arbeitgeber.</p><p><strong>Unter 8 Std./Woche:</strong> Freizeitunfälle sind nicht versichert — Unfälle auf dem Arbeitsweg gelten dann als <strong>Berufsunfall</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q26</span><span class="q-topic">Unfall</span><span class="q-source">SUVA-Auftrag</span></div>
+  <p class="q-text">Was ist die <strong>Abredeversicherung</strong> und wann brauchst du sie?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Nach dem Austritt aus dem Betrieb endet der NBU-Schutz nach rund <strong>30 Tagen</strong>. Mit der <strong>Abredeversicherung</strong> (im Lehrmittel auch <strong>Einzelabrede</strong>) kann man ihn auf <strong>maximal 6 Monate</strong> verlängern.</p><p>Sinnvoll, wenn man zwischen zwei Stellen ist, eine Reise macht oder noch keine Unfalldeckung bei der Krankenkasse wieder aktiviert hat.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q27</span><span class="q-topic">UVG vs. KVG</span><span class="q-source">Lösungsblatt A7 / Vergleichstabelle</span></div>
+  <p class="q-text">Stimmt es, dass die Leistungen der <strong>Unfallversicherung besser</strong> sind als jene der Krankenkasse? Begründe in vollständigen Sätzen.</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p><strong>Ja.</strong> Die Unfallversicherung erbringt die gleichen Leistungen wie die Krankenkasse (Arzt- und Arzneimittelkosten, Spitalaufenthalt in der allgemeinen Abteilung), aber <strong>ohne Franchise und ohne Selbstbehalt</strong>. Dazu kommen weitere Leistungen: <strong>Lohnersatz (Taggeld bis 80 %) ab dem dritten Tag, Invalidenrenten, Renten an Angehörige bei Unfalltod, Integritätsentschädigung sowie Transport-, Rettungs- und Bestattungskosten.</strong></p><p>Die Krankenkasse kennt <strong>kein Taggeld, keine Invalidenrente, keine Todesfallrente und keine Integritätsentschädigung</strong>.</p></div>
+</div>
+
+<div class="quiz-q">
+  <div class="q-head"><span class="q-num">Q28</span><span class="q-topic">Kausalität</span><span class="q-source">Visana-Fall aus Ordner 04</span></div>
+  <p class="q-text">Ein Versicherter stürzt beim Fussball aufs Knie. Monate später wird ein Meniskusriss operiert. Der Unfallversicherer stellt die Leistungen rückwirkend ein. Mit welcher Begründung darf er das — und wer zahlt danach?</p>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><p>Die Leistungspflicht der Unfallversicherung besteht nur so lange, wie ein <strong>natürlicher Kausalzusammenhang</strong> zwischen dem Unfallereignis und den Beschwerden besteht. Ergibt die medizinische Beurteilung, dass die Beschwerden <strong>mit überwiegender Wahrscheinlichkeit</strong> nicht mehr Folge des Unfalls sind, sondern auf <strong>degenerative bzw. unfallfremde Veränderungen</strong> zurückgehen, <strong>endet die Leistungspflicht</strong>.</p><p>Ab diesem Zeitpunkt muss sich der Versicherte für die Kostenübernahme an seine <strong>Krankenkasse</strong> wenden — dort gilt dann wieder Franchise und Selbstbehalt. Wer nicht einverstanden ist, kann eine <strong>einsprachefähige Verfügung</strong> verlangen.</p><p>Randnotiz: Meniskusrisse stehen auf der Liste der <strong>unfallähnlichen Körperschädigungen (UKS)</strong> — die UV zahlt dort auch ohne ungewöhnlichen äusseren Faktor, ausser sie beweist die überwiegende Abnützung. Genau dieser Beweis wurde hier geführt.</p></div>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LERNPLAN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+
+<p class="intro">7-Tage-Sprint bis zur Prüfung. Hak ab, was erledigt ist — der Fortschritt bleibt im Browser gespeichert.</p>
+
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="1"><div class="day-num">1</div><div class="day-content"><h4>Das System verstehen</h4><ul class="day-tasks"><li>Theorie Kapitel 1 + 2 lesen</li><li>Grundversicherung vs. Zusatzversicherung: Tabelle auswendig (obligatorisch/KVG ↔ freiwillig/VVG)</li><li>Karteikarten-Filter «Grundversicherung» + «Zusatzversicherung», eine Runde</li><li>Quiz Q1–Q6</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="2"><div class="day-num">2</div><div class="day-content"><h4>Kostenbeteiligung — rechnen bis es sitzt</h4><ul class="day-tasks"><li>Theorie Kapitel 3, das Rechenschema abschreiben</li><li><strong>Rechner 1</strong> öffnen: Beispiel Anna Graber laden, dann von Hand nachrechnen</li><li>Eigene Beispiele erfinden — auch eines, wo der Selbstbehalt bei 700.– anschlägt</li><li>Quiz Q7, Q10, Q11, Q12, Q13</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="3"><div class="day-num">3</div><div class="day-content"><h4>Prämie senken &amp; Modelle</h4><ul class="day-tasks"><li>Theorie Kapitel 4 + 5</li><li>Fünf Sparmöglichkeiten auf ein Blatt schreiben — <em>mit</em> Erklärung, nicht nur Stichwort</li><li>Hausarzt / HMO / Telmed / PPO klar auseinanderhalten</li><li><strong>Rechner 2</strong>: Franchise-Vergleich mit deinen echten Prämien durchspielen</li><li>Quiz Q14, Q15, Q16</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Meilenstein Tag 3:</strong><p>Die halbe Krankenkasse sitzt. Ab jetzt Fristen, Rechnung und dann der ganze Unfallteil.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="4"><div class="day-num">4</div><div class="day-content"><h4>Fristen &amp; Arztrechnung</h4><ul class="day-tasks"><li>Theorie Kapitel 6 + 7</li><li>Fristen-Tabelle abdecken und aus dem Kopf rekonstruieren</li><li>Kündigungsschreiben einmal komplett von Hand schreiben</li><li>TARMED, Tiers garant/payant, WZW — Begriffe im Begriffe-Tab durchgehen</li><li>Quiz Q17, Q18, Q19, Q20</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="5"><div class="day-num">5</div><div class="day-content"><h4>Unfallbegriff — der wichtigste Tag</h4><ul class="day-tasks"><li>Theorie Kapitel 9 + 10</li><li>Die <strong>5 Merkmale</strong> auswendig — sie sind fast sicher in der Prüfung</li><li><strong>Rechner 3</strong>: alle 7 Übungsfälle durchklicken und begründen, <em>warum</em></li><li>Krankheit-oder-Unfall-Tabelle abdecken und selber ausfüllen</li><li>Quiz Q22, Q23, Q24</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="6"><div class="day-num">6</div><div class="day-content"><h4>SUVA, BU/NBU und der Vergleich UVG ↔ KVG</h4><ul class="day-tasks"><li>Theorie Kapitel 11 + 12 + 13</li><li>BU vs. NBU: <strong>8 Stunden</strong>, wer zahlt die Prämie, was mit dem Arbeitsweg</li><li>Vergleichstabelle UVG/KVG: 6 Zeilen auswendig</li><li>Übrige Versicherungen: Fallzuordnung einmal durchgehen</li><li>Quiz Q25, Q26, Q27, Q28</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check" data-day="7"><div class="day-num">7</div><div class="day-content"><h4>Tag vor der Prüfung — nur noch festigen</h4><ul class="day-tasks"><li>Alle Karteikarten einmal durch, nur die «Nochmal»-Karten wiederholen</li><li>Quiz komplett <em>ohne</em> Lösungen durchgehen</li><li>Eine A4-Merkkarte: Zahlen (300 / 2500 / 10 % / 700 / 350 / 15 / 8 Std. / 80 % / 60 Tage / 6 Monate)</li><li>Früh ins Bett — kein neuer Stoff mehr</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Prüfungstag</strong><p>Bei jedem Fall zuerst: Krankheit oder Unfall? Dann: Grund- oder Zusatzversicherung? Beim Rechnen immer zuerst Total, dann Franchise, dann 10 %. Du bist vorbereitet.</p></div></div>
+
+</section>
+
+</div>
+
+<script>
+// ═══ TAB SWITCHING ═══
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+// ═══ QUIZ REVEAL ═══
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+// ═══ HELPERS ═══
+const chf = n => n.toLocaleString('de-CH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const chf0 = n => Math.round(n).toLocaleString('de-CH');
+
+// ═══ TOOL 1 — KOSTENBETEILIGUNG ═══
+const kbBills = document.getElementById('kbBills');
+
+function addBill(value) {
+  const row = document.createElement('div');
+  row.className = 'bill-row';
+  row.innerHTML = `<input type="number" class="kb-bill" min="0" step="10" placeholder="z. B. 180" value="${value !== undefined ? value : ''}">
+                   <button class="btn ghost sm kb-del" type="button">✕</button>`;
+  kbBills.appendChild(row);
+  row.querySelector('.kb-bill').addEventListener('input', calcKB);
+  row.querySelector('.kb-del').addEventListener('click', () => {
+    if (kbBills.children.length > 1) { row.remove(); calcKB(); }
+  });
+}
+
+function calcKB() {
+  const franchise = parseFloat(document.getElementById('kbFranchise').value) || 0;
+  const sbMax = parseFloat(document.getElementById('kbAlter').value) || 700;
+  const spitalTage = parseInt(document.getElementById('kbSpital').value) || 0;
+  const bills = [...document.querySelectorAll('.kb-bill')].map(i => parseFloat(i.value) || 0);
+
+  let restFr = franchise, restSb = sbMax;
+  const rows = [];
+  let tTotal = 0, tFr = 0, tSb = 0, tKk = 0;
+
+  bills.forEach((amount, i) => {
+    if (amount <= 0) return;
+    const fr = Math.min(restFr, amount); restFr -= fr;
+    const rest = amount - fr;
+    const sb = Math.min(rest * 0.1, restSb); restSb -= sb;
+    const kk = amount - fr - sb;
+    rows.push({n: i + 1, amount, fr, sb, kk, eigen: fr + sb});
+    tTotal += amount; tFr += fr; tSb += sb; tKk += kk;
+  });
+
+  const spitalBeitrag = spitalTage * 15;
+  const eigen = tFr + tSb + spitalBeitrag;
+  const box = document.getElementById('kbResult');
+
+  if (!rows.length) {
+    box.innerHTML = '<p style="margin:0; color:var(--ink-mute);">Gib mindestens eine Rechnung ein.</p>';
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="table-wrap" style="margin-top:0;">
+    <table>
+      <tr><th>Rechnung</th><th class="num">Betrag</th><th class="num">Franchise</th><th class="num">Selbstbehalt</th><th class="num">Anteil KK</th><th class="num">Eigener Anteil</th></tr>
+      ${rows.map(r => `<tr><td>${r.n}. Rechnung</td><td class="num">${chf(r.amount)}</td><td class="num">${r.fr ? chf(r.fr) : '—'}</td><td class="num">${r.sb ? chf(r.sb) : '—'}</td><td class="num">${r.kk ? chf(r.kk) : '—'}</td><td class="num">${chf(r.eigen)}</td></tr>`).join('')}
+      ${spitalBeitrag ? `<tr><td>Spitalbeitrag (${spitalTage} × 15.–)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">${chf(spitalBeitrag)}</td></tr>` : ''}
+      <tr><td><strong>Total</strong></td><td class="num"><strong>${chf(tTotal)}</strong></td><td class="num"><strong>${chf(tFr)}</strong></td><td class="num"><strong>${chf(tSb)}</strong></td><td class="num"><strong>${chf(tKk)}</strong></td><td class="num"><strong>${chf(eigen)}</strong></td></tr>
+    </table>
+    </div>
+    <div class="split">
+      <div class="big">CHF ${chf(eigen)}<small>zahlst du selber</small></div>
+      <div class="big">CHF ${chf(tKk)}<small>zahlt die Krankenkasse</small></div>
+    </div>
+    <div class="info-box" style="margin-bottom:0;"><p><strong>Rechnungsweg:</strong> ${chf(tTotal)} − ${chf(tFr)} (Franchise) = ${chf(tTotal - tFr)} → davon 10 % = ${chf(tSb)}${tSb >= sbMax - 0.005 ? ` <strong>(Maximum von ${chf0(sbMax)}.– erreicht)</strong>` : ''}${spitalBeitrag ? ` → + ${chf(spitalBeitrag)} Spitalbeitrag` : ''}<br>Eigener Anteil: <strong>${chf(eigen)}</strong></p></div>`;
+}
+
+document.getElementById('kbAdd').addEventListener('click', () => { addBill(); calcKB(); });
+document.getElementById('kbFranchise').addEventListener('change', calcKB);
+document.getElementById('kbAlter').addEventListener('change', calcKB);
+document.getElementById('kbSpital').addEventListener('input', calcKB);
+document.getElementById('kbDemo').addEventListener('click', () => {
+  kbBills.innerHTML = '';
+  [180, 235, 450].forEach(v => addBill(v));
+  document.getElementById('kbFranchise').value = '300';
+  document.getElementById('kbAlter').value = '700';
+  document.getElementById('kbSpital').value = '0';
+  calcKB();
+});
+[180, 235, 450].forEach(v => addBill(v));
+calcKB();
+
+// ═══ TOOL 2 — FRANCHISE-VERGLEICH ═══
+function jahreskosten(kosten, franchise, praemieMonat, sbMax) {
+  const fr = Math.min(kosten, franchise);
+  const sb = Math.min(Math.max(0, kosten - franchise) * 0.1, sbMax);
+  return {praemie: praemieMonat * 12, fr, sb, total: praemieMonat * 12 + fr + sb};
+}
+
+function calcFV() {
+  const f1 = parseFloat(document.getElementById('fvF1').value);
+  const f2 = parseFloat(document.getElementById('fvF2').value);
+  const p1 = parseFloat(document.getElementById('fvP1').value) || 0;
+  const p2 = parseFloat(document.getElementById('fvP2').value) || 0;
+  const kosten = parseFloat(document.getElementById('fvKosten').value) || 0;
+  const sbMax = parseFloat(document.getElementById('fvSbMax').value);
+
+  const a = jahreskosten(kosten, f1, p1, sbMax);
+  const b = jahreskosten(kosten, f2, p2, sbMax);
+  const diff = Math.abs(a.total - b.total);
+  const winner = a.total < b.total ? 'A' : (b.total < a.total ? 'B' : null);
+
+  // Break-even suchen
+  let breakEven = null, prev = 0;
+  for (let c = 0; c <= 30000; c += 10) {
+    const s = Math.sign(jahreskosten(c, f1, p1, sbMax).total - jahreskosten(c, f2, p2, sbMax).total);
+    if (s !== 0 && prev !== 0 && s !== prev) { breakEven = c; break; }
+    if (s !== 0) prev = s;
+  }
+
+  const max = Math.max(a.total, b.total) || 1;
+  document.getElementById('fvResult').innerHTML = `
+    <h4>Gesamtkosten pro Jahr bei ${chf0(kosten)}.– Gesundheitskosten</h4>
+    <div style="margin:12px 0 6px;">
+      <div style="font-size:0.84rem; font-weight:600; margin-bottom:3px;">Variante A — Franchise ${chf0(f1)}.–</div>
+      <div class="mini-bar${winner === 'A' ? '' : ' alt'}" style="width:${(a.total / max * 100).toFixed(1)}%">CHF ${chf0(a.total)}</div>
+      <div style="font-size:0.8rem; color:var(--ink-soft); font-family:var(--font-mono);">Prämien ${chf0(a.praemie)} + Franchise ${chf0(a.fr)} + Selbstbehalt ${chf0(a.sb)}</div>
+    </div>
+    <div style="margin:12px 0 6px;">
+      <div style="font-size:0.84rem; font-weight:600; margin-bottom:3px;">Variante B — Franchise ${chf0(f2)}.–</div>
+      <div class="mini-bar${winner === 'B' ? '' : ' alt'}" style="width:${(b.total / max * 100).toFixed(1)}%">CHF ${chf0(b.total)}</div>
+      <div style="font-size:0.8rem; color:var(--ink-soft); font-family:var(--font-mono);">Prämien ${chf0(b.praemie)} + Franchise ${chf0(b.fr)} + Selbstbehalt ${chf0(b.sb)}</div>
+    </div>`;
+
+  let kippText;
+  if (breakEven !== null) {
+    const cLow = Math.max(0, breakEven - 100), cHigh = breakEven + 100;
+    const lowWin = jahreskosten(cLow, f1, p1, sbMax).total <= jahreskosten(cLow, f2, p2, sbMax).total ? 'A' : 'B';
+    const highWin = jahreskosten(cHigh, f1, p1, sbMax).total <= jahreskosten(cHigh, f2, p2, sbMax).total ? 'A' : 'B';
+    kippText = `<strong>Kipppunkt bei rund CHF ${chf0(breakEven)}</strong> Gesundheitskosten pro Jahr: bis dorthin ist <strong>Variante ${lowWin}</strong> günstiger, darüber <strong>Variante ${highWin}</strong>.`;
+  } else {
+    kippText = `Bei diesen Prämien ist eine Variante über den ganzen Bereich hinweg günstiger — es gibt keinen Kipppunkt.`;
+  }
+
+  document.getElementById('fvResult').innerHTML += `
+    <div class="verdict ${winner ? 'yes' : 'maybe'}">
+      ${winner ? `Variante ${winner} ist um CHF ${chf0(diff)} pro Jahr günstiger.` : 'Beide Varianten kosten gleich viel.'}
+      <p>${kippText}
+      <br>Im schlimmsten Fall zahlst du bei Variante A maximal <strong>CHF ${chf0(p1 * 12 + f1 + sbMax)}</strong>, bei Variante B maximal <strong>CHF ${chf0(p2 * 12 + f2 + sbMax)}</strong> pro Jahr.</p>
+    </div>`;
+}
+['fvF1','fvF2','fvP1','fvP2','fvKosten','fvSbMax'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcFV));
+calcFV();
+
+// ═══ TOOL 3 — UNFALL-CHECKER ═══
+const UC_LABELS = ['Körperschaden', 'Einwirkung von aussen', 'ungewöhnlicher Vorfall', 'plötzliche Einwirkung', 'unfreiwilliges Ereignis'];
+const UC_CASES = {
+  '1': {v: [1,1,0,0,1], txt: 'Peter S. arbeitet eine Woche auf der Baustelle und hat danach heftige Rückenschmerzen. Die Belastung war normale Arbeit, die Beschwerden kamen schleichend.'},
+  '2': {v: [1,1,1,1,1], txt: 'Karin N. kommt mit dem Roller auf nasser Strasse zu Fall. Keine sichtbare Verletzung, aber Schmerzen im Handgelenk. Auch ohne äusserlich sichtbare Wunde liegt ein Körperschaden vor.'},
+  '3': {v: [1,1,1,1,1], txt: 'Luzia A. stürzt beim Joggen über eine Wurzel und stellt am nächsten Morgen einen Bluterguss fest. Dass sie weitertrainieren konnte und der Schaden erst später sichtbar wurde, ändert nichts.'},
+  '4': {v: [1,0,0,1,1], txt: 'Martin H. verspürt beim Wandern plötzlich Knieschmerzen — der Arzt stellt ein Gichtleiden fest. Die Ursache liegt im Körper, nicht ausserhalb. Das ist eine Krankheit.'},
+  '5': {v: [1,1,1,1,0], txt: 'Kurt V. fügt sich absichtlich Schnittwunden zu, um arbeitsunfähig zu sein. Absicht schliesst den Unfall immer aus — und ist zudem Versicherungsbetrug.'},
+  '6': {v: [1,1,1,1,1], txt: 'Ein Knochensplitter kommt in Wurstwaren normalerweise nicht vor — er gilt als ungewöhnlicher äusserer Faktor. Wichtig: den Fremdkörper aufbewahren, sonst zahlt die Versicherung nicht.'},
+  '7': {v: [1,0,0,1,1], txt: 'Ein Herzinfarkt entsteht im Körper. Dass er beim Tennisspielen auftritt, macht ihn nicht zum Unfall — es ist eine Krankheit.'}
+};
+
+function calcUC(note) {
+  const boxes = [...document.querySelectorAll('#ucList input')];
+  const checked = boxes.map(b => b.checked);
+  const missing = UC_LABELS.filter((_, i) => !checked[i]);
+  const el = document.getElementById('ucVerdict');
+
+  if (missing.length === 5 && !note) {
+    el.innerHTML = `<div class="verdict maybe">Noch nichts angekreuzt.
+      <p>Hak die Bedingungen an, die auf deinen Fall zutreffen — oder lade unten einen Übungsfall.</p></div>`;
+    return;
+  }
+
+  if (!missing.length) {
+    el.innerHTML = `<div class="verdict yes">✓ Das ist ein Unfall im Sinne des Gesetzes.
+      <p>Alle fünf Bedingungen sind erfüllt → die <strong>Unfallversicherung (UVG)</strong> ist zuständig: Heilbehandlung ohne Franchise und Selbstbehalt, Taggeld, allenfalls Renten.${note ? '<br><br>' + note : ''}</p></div>`;
+  } else {
+    const uksHint = (missing.length === 1 && !checked[2])
+      ? '<br><br><strong>Aber prüfen:</strong> Steht die Verletzung auf der <strong>UKS-Liste</strong> (Knochenbruch, Verrenkung, Meniskusriss, Muskelriss, Muskelzerrung, Sehnenriss, Bandläsion, Trommelfellverletzung)? Dann zahlt die UV trotzdem — ausser sie beweist, dass die Schädigung überwiegend von Abnützung oder Krankheit kommt.'
+      : '';
+    el.innerHTML = `<div class="verdict no">✕ Kein Unfall im Sinne des Gesetzes.
+      <p>Es fehlt: <strong>${missing.join(' · ')}</strong>. Fehlt auch nur eine Bedingung, liegt kein Unfall vor → zuständig ist die <strong>Krankenkasse (KVG)</strong>, mit Franchise und Selbstbehalt.${uksHint}${note ? '<br><br>' + note : ''}</p></div>`;
+  }
+}
+
+document.querySelectorAll('#ucList input').forEach(b => b.addEventListener('change', () => {
+  document.getElementById('ucCase').value = '';
+  calcUC();
+}));
+document.getElementById('ucReset').addEventListener('click', () => {
+  document.querySelectorAll('#ucList input').forEach(b => b.checked = false);
+  document.getElementById('ucCase').value = '';
+  calcUC();
+});
+document.getElementById('ucCase').addEventListener('change', e => {
+  const c = UC_CASES[e.target.value];
+  if (!c) { calcUC(); return; }
+  document.querySelectorAll('#ucList input').forEach((b, i) => b.checked = !!c.v[i]);
+  calcUC('<em>' + c.txt + '</em>');
+});
+calcUC();
+
+// ═══ TOOL 4 — KÜNDIGUNGSFRIST ═══
+function calcKF() {
+  const modell = document.getElementById('kfModell').value;
+  const praemie = document.getElementById('kfPraemie').value;
+  const ziel = document.getElementById('kfZiel').value;
+  let titel, frist, hinweis;
+
+  if (ziel === 'senken') {
+    titel = 'Franchise senken';
+    frist = 'bis 30. November';
+    hinweis = 'Der Wechsel zu einer <strong>tieferen</strong> Franchise ist nur auf Ende Jahr möglich. Die Mitteilung muss <strong>schriftlich</strong> bis zum 30. November beim Versicherer eingetroffen sein.';
+  } else if (ziel === 'erhoehen') {
+    titel = 'Franchise erhöhen';
+    frist = 'bis 31. Dezember';
+    hinweis = 'Willst du die Franchise <strong>erhöhen</strong> und bei deiner Kasse bleiben, kannst du ihr das bis zum <strong>31. Dezember</strong> schriftlich mitteilen (Feiertage beachten). Sie gilt dann ab dem 1. Januar.';
+  } else if (praemie === 'ja') {
+    titel = 'Kündigung auf den 31. Dezember';
+    frist = 'bis 30. November';
+    hinweis = 'Nach der Mitteilung der neuen Prämie gilt eine <strong>verkürzte Frist von einem Monat</strong> — unabhängig von Modell und Franchise und unabhängig davon, ob die Prämie steigt, sinkt oder gleich bleibt.';
+  } else if (modell === 'standard') {
+    titel = 'Kündigung auf den 30. Juni oder den 31. Dezember';
+    frist = 'bis 31. März bzw. bis 30. November';
+    hinweis = 'Mit ordentlicher Franchise (300.–, Kinder 0.–) und Standard-Grundversicherung gilt eine <strong>Kündigungsfrist von 3 Monaten</strong> auf Ende Juni oder Ende Dezember.';
+  } else {
+    titel = 'Kündigung nur auf den 31. Dezember';
+    frist = 'bis 30. November';
+    hinweis = 'Bei <strong>höherer Franchise</strong> oder einem <strong>alternativen Modell</strong> (HMO, Telmed, Hausarzt) kann grundsätzlich nur auf Ende Jahr gekündigt werden — 3 Monate Frist.';
+  }
+
+  document.getElementById('kfResult').innerHTML = `
+    <h4>${titel}</h4>
+    <div class="big">${frist}<small>muss beim Versicherer eingetroffen sein</small></div>
+    <p style="margin:12px 0 0; font-size:0.92rem;">${hinweis}</p>
+    <div class="info-box warn" style="margin-bottom:0;"><p><strong>Immer beachten:</strong> Es zählt der <strong>Eingang beim Versicherer</strong>, nicht der Poststempel — deshalb <strong>eingeschrieben</strong> senden. Die Kündigung wird erst wirksam, wenn der neue Versicherer dem alten die Aufnahme gemeldet hat. Zusatzversicherungen bleiben davon unberührt.</p></div>`;
+}
+['kfModell','kfPraemie','kfZiel'].forEach(id => document.getElementById(id).addEventListener('change', calcKF));
+calcKF();
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  // Grundversicherung
+  { term: 'KVG', cat: 'grund', def: 'Krankenversicherungsgesetz — regelt die obligatorische Grundversicherung. In Kraft seit 1. Januar 1996.' },
+  { term: 'OKP', cat: 'grund', def: 'Obligatorische Krankenpflegeversicherung — das offizielle Wort für die Grundversicherung.' },
+  { term: 'Krankheit', cat: 'grund', def: 'Beeinträchtigung der körperlichen oder geistigen Gesundheit, die <strong>nicht</strong> auf einen Unfall zurückzuführen ist.' },
+  { term: 'Krankenkasse', cat: 'grund', def: 'Versicherer, der die obligatorische Krankenpflegeversicherung anbietet. Muss vom Eidgenössischen Departement des Innern (EDI) anerkannt sein.' },
+  { term: 'Obligatorium', cat: 'grund', def: 'Die Grundversicherung ist für alle in der Schweiz wohnhaften Personen zwingend.' },
+  { term: 'Freizügigkeit', cat: 'grund', def: 'Der Versicherte kann die Kasse frei wählen; sie muss ihn <strong>vorbehaltlos</strong> aufnehmen. Nicht zu verwechseln mit freier Arzt- oder Spitalwahl.' },
+  { term: 'Aufnahmepflicht', cat: 'grund', def: 'Jeder gesamtschweizerisch tätige Versicherer muss eine in der Schweiz wohnhafte Person in die Grundversicherung aufnehmen — ohne Gesundheitsprüfung.' },
+  { term: 'Spitalliste', cat: 'grund', def: 'Kantonale Liste der Spitäler, deren Behandlung die Grundversicherung übernimmt. Seit 1.1.2012 gilt die freie Spitalwahl schweizweit — aber nur für gelistete Spitäler.' },
+  { term: 'Spezialitätenliste (SL)', cat: 'grund', def: 'Liste aller Medikamente, die von der Grundversicherung bezahlt werden. Tarifnummer 400 auf der Rechnung.' },
+  { term: 'Komplementärmedizin', cat: 'grund', def: 'Alternative Methoden, die sich dem ganzen Menschen widmen. In der Grundversicherung: Akupunktur, Homöopathie, TCM, Phytotherapie, anthroposophische Medizin.' },
+  { term: 'Ambulante Behandlung', cat: 'grund', def: 'Arzt- oder Spitaltermin ohne Übernachtung (1 Tag).' },
+  { term: 'Stationäre Behandlung', cat: 'grund', def: 'Behandlung mit Übernachtung im Spital.' },
+  { term: 'Prävention', cat: 'grund', def: 'Vorsorge: Impfungen, Kinderuntersuchungen im Vorschulalter, gynäkologische Vorsorge, Mammografie zur Brustkrebsfrüherkennung.' },
+  { term: 'Spitex', cat: 'grund', def: 'Spitalexterne Pflege zu Hause. Die Grundversicherung zahlt die <strong>Pflege</strong>, wenn ärztlich verordnet — aber <strong>nicht</strong> die Haushalthilfe.' },
+  { term: 'Gesundheitsförderung Schweiz', cat: 'grund', def: 'Stiftung von Kantonen und Versicherern unter Bundeskontrolle. Jede Person zahlt jährlich Fr. 4.80, eingezogen über die Prämie.' },
+  // Zusatzversicherung
+  { term: 'VVG', cat: 'zusatz', def: 'Versicherungsvertragsgesetz — regelt die Zusatzversicherungen. Privatrecht, also Vertragsfreiheit.' },
+  { term: 'Karenzfrist', cat: 'zusatz', def: 'Zeit zwischen Eintritt in die Kasse und Beginn der Leistungen. <strong>Nur bei Zusatzversicherungen.</strong>' },
+  { term: 'Vorbehalt', cat: 'zusatz', def: 'Befristeter oder unbefristeter Leistungsausschluss bei bestehendem Gesundheitsrisiko. <strong>Nur bei Zusatzversicherungen</strong> — in der Grundversicherung verboten.' },
+  { term: 'AVB', cat: 'zusatz', def: 'Allgemeine Versicherungsbedingungen — das Kleingedruckte. Massgebend für Leistungen und Kündigungsfristen der Zusatzversicherung.' },
+  { term: 'Spital privat', cat: 'zusatz', def: 'Einzelzimmer im Spital der Wahl, Behandlung durch Chefarzt oder Arzt eigener Wahl.' },
+  { term: 'Spital halbprivat', cat: 'zusatz', def: 'Zweibettzimmer, ebenfalls Behandlung durch den Chefarzt.' },
+  { term: 'Allgemeine Abteilung ganze Schweiz', cat: 'zusatz', def: 'Deckt die Differenz, wenn man in einem Kanton mit höheren Tarifen behandelt wird als im Wohnkanton.' },
+  { term: 'Krankentaggeldversicherung', cat: 'zusatz', def: 'Zusatzversicherung, die Lohnersatz erbringt, wenn die Lohnfortzahlungspflicht des Arbeitgebers erlischt.' },
+  { term: 'Reisezusatzversicherung', cat: 'zusatz', def: 'Für Länder mit hohen Gesundheits- und Transportkosten (USA, Japan). Die Grundversicherung zahlt im Ausland nur bis zum doppelten Schweizer Betrag.' },
+  // Kostenbeteiligung
+  { term: 'Franchise', cat: 'kosten', def: 'Jährlicher Grundbetrag, den man selber trägt. Erwachsene: 300.– bis 2500.–. Kinder: 0.– bis 600.–.' },
+  { term: 'Selbstbehalt', cat: 'kosten', def: '10 % der Kosten oberhalb der Franchise. Maximal 700.–/Jahr (Kinder 350.–). 20 % bei Originalpräparat statt Generikum ohne medizinischen Grund.' },
+  { term: 'Spitalbeitrag', cat: 'kosten', def: 'Fr. 15.– pro Tag bei stationärem Aufenthalt für Erwachsene über 25 — zusätzlich zu Franchise und Selbstbehalt.' },
+  { term: 'Kostenbeteiligung', cat: 'kosten', def: 'Oberbegriff für Franchise + Selbstbehalt (+ Spitalbeitrag). Bei Mutterschaft wird <strong>keine</strong> Kostenbeteiligung erhoben.' },
+  { term: 'Generikum', cat: 'kosten', def: 'Wirkstoffgleiches, günstigeres Nachahmerpräparat. Wer ohne medizinischen Grund das teurere Original will, zahlt 20 % Selbstbehalt.' },
+  // Modelle & Prämie
+  { term: 'Kopfprämie', cat: 'modell', def: 'Die Prämie ist <strong>nicht einkommensabhängig</strong> — jede Person zahlt denselben Betrag (je nach Kanton, Alter, Kasse, Modell, Franchise).' },
+  { term: 'Prämienregion', cat: 'modell', def: 'Innerhalb grösserer Kantone gibt es mehrere Regionen mit unterschiedlichen Prämien.' },
+  { term: 'Hausarzt-Modell', cat: 'modell', def: 'Zusammenschluss frei praktizierender Ärzte mit Kassenvertrag. Man wählt einen persönlichen Hausarzt und geht immer zuerst zu ihm. Reduktion ca. 5–15 %.' },
+  { term: 'HMO-Modell', cat: 'modell', def: 'Health Maintenance Organization — Gesundheitszentrum mit fest angestellten Ärzten, meist in Städten. Immer zuerst dorthin, auch im Notfall. Reduktion bis 20–25 %.' },
+  { term: 'Telmed-Modell', cat: 'modell', def: 'Vor dem ersten Arztbesuch telefonische Beratung einholen. Reduktion bis 20 %.' },
+  { term: 'PPO-Modell', cat: 'modell', def: 'Preferred Provider Organization — man geht nur zu Ärzten und Spitälern von der Liste der Kasse, darf aber von Fall zu Fall frei wählen. Reduktion ca. 10 %.' },
+  { term: 'Gatekeeper', cat: 'modell', def: 'Pförtner-Rolle des Arztes im Hausarzt- und HMO-Modell: Er verhindert, dass Patienten unnötig bei teuren Spezialisten landen.' },
+  { term: 'Managed Care', cat: 'modell', def: 'Oberbegriff für die gesteuerten Modelle. Versicherer und Ärzte erstellen ein Budget pro Kopf, der Arzt trägt Budgetmitverantwortung.' },
+  { term: 'Prämienverbilligung', cat: 'modell', def: 'Beiträge des Kantons für Personen mit bescheidenem Einkommen. Gehen direkt an den Versicherer. In manchen Kantonen automatisch, sonst auf Antrag bei der Wohngemeinde.' },
+  { term: 'Sistierung', cat: 'modell', def: 'Vorübergehendes Aussetzen der Versicherung oder Deckung — z. B. Unfalldeckung während der Anstellung (bis −7 %) oder Prämienpause bei über 60 Tagen Dienst.' },
+  { term: 'Second Opinion', cat: 'modell', def: 'Zweitmeinung beim Vertrauensarzt vor bestimmten Operationen. Gibt bei einigen Versicherern Rabatt auf halbprivate/private Zusatzversicherungen.' },
+  { term: 'priminfo.ch', cat: 'modell', def: 'Offizieller Prämienrechner des Bundesamts für Gesundheit (BAG). Alternativen: comparis.ch, Franchisenrechner von santésuisse.' },
+  { term: 'Kündigungsfrist', cat: 'modell', def: '3 Monate. Standardmodell mit Franchise 300.–: auf Ende Juni oder Dezember. Alle anderen: nur auf Ende Dezember. Nach Prämienmitteilung: verkürzt auf 1 Monat.' },
+  // Rechnung & Tarife
+  { term: 'TARMED', cat: 'rechnung', def: 'Einzelleistungstarif für alle ambulanten ärztlichen Leistungen in der Schweiz. Rund 4600 Tarifpositionen. Tarifnummer 001.' },
+  { term: 'Taxpunkt (TP)', cat: 'rechnung', def: 'Bewertung einer Leistung — schweizweit gleich. AL = ärztliche Leistung, TL = technische Leistung (Infrastruktur und Praxispersonal).' },
+  { term: 'Taxpunktwert (TPW)', cat: 'rechnung', def: 'Frankenwert eines Taxpunkts — <strong>von Kanton zu Kanton verschieden</strong>. Preis = Taxpunkt × Taxpunktwert.' },
+  { term: 'Tiers garant (TG)', cat: 'rechnung', def: 'Der Patient erhält die Rechnung, bezahlt sie und reicht den Rückforderungsbeleg beim Versicherer ein.' },
+  { term: 'Tiers payant (TP)', cat: 'rechnung', def: 'Die Rechnung geht direkt an den Krankenversicherer; der Patient erhält nur eine Kopie.' },
+  { term: 'Rückforderungsbeleg', cat: 'rechnung', def: 'Das Formular, das man beim Tiers garant der Kasse einreicht, um das bezahlte Honorar zurückzuerhalten.' },
+  { term: 'Tessiner Code', cat: 'rechnung', def: 'Diagnose-Code aus Grossbuchstabe + Zahl (z. B. N1 = allergische Hauterkrankung/Ekzem). Sehr breit gefasst.' },
+  { term: 'Pflichtleistungscode', cat: 'rechnung', def: 'Spalte «P» auf der Rechnung: 1 = Pflichtleistung, die OKP muss zahlen · 0 = Nicht-Pflichtleistung.' },
+  { term: 'WZW-Kriterien', cat: 'rechnung', def: '<strong>W</strong>irksam, <strong>Z</strong>weckmässig, <strong>W</strong>irtschaftlich — jede ärztliche Leistung muss alle drei erfüllen.' },
+  { term: 'Überarztung', cat: 'rechnung', def: 'Ein Arzt behandelt oder verschreibt deutlich mehr als vergleichbare Kollegen. Die Versicherer prüfen dies mit statistischen Vergleichswerten.' },
+  { term: 'Reserven', cat: 'rechnung', def: 'Eigenkapital der Versicherer mit gesetzlicher Mindesthöhe — Polster gegen Kostenschwankungen.' },
+  { term: 'Rückstellungen', cat: 'rechnung', def: 'Fremdkapital für bereits erbrachte, aber noch nicht bezahlte Leistungen.' },
+  // Unfallversicherung
+  { term: 'UVG', cat: 'unfall', def: 'Unfallversicherungsgesetz. Obligatorisch für alle Arbeitnehmenden in der Schweiz.' },
+  { term: 'Unfall', cat: 'unfall', def: 'Plötzliche, nicht beabsichtigte schädigende Einwirkung eines ungewöhnlichen äusseren Faktors auf den menschlichen Körper. Alle 5 Merkmale müssen erfüllt sein.' },
+  { term: 'BU', cat: 'unfall', def: 'Berufsunfallversicherung — alle Arbeitnehmenden, inkl. Berufskrankheiten. Prämie zahlt <strong>vollumfänglich der Arbeitgeber</strong>.' },
+  { term: 'NBU', cat: 'unfall', def: 'Nichtberufsunfallversicherung — Freizeitunfälle inkl. Arbeitsweg, aber nur ab <strong>8 Stunden pro Woche</strong> beim selben Arbeitgeber. Prämie zahlt der Arbeitnehmer.' },
+  { term: 'Abredeversicherung', cat: 'unfall', def: 'Verlängerung des NBU-Schutzes nach Austritt aus dem Betrieb auf <strong>maximal 6 Monate</strong> (sonst endet er nach rund 30 Tagen). Im Lehrmittel auch «Einzelabrede».' },
+  { term: 'Taggeld (UVG)', cat: 'unfall', def: 'Bis <strong>80 % des Lohnes</strong> bei teilweiser oder voller Arbeitsunfähigkeit, ab dem dritten Tag.' },
+  { term: 'Invalidenrente (UVG)', cat: 'unfall', def: 'Bei bleibenden wirtschaftlichen Unfallfolgen. Bei 100 % Erwerbsunfähigkeit lebenslänglich 80 % des versicherten Lohnes.' },
+  { term: 'Integritätsentschädigung', cat: 'unfall', def: 'Einmalige Leistung bei bleibenden körperlichen Schäden (z. B. Verlust eines Arms). Gibt es nur im UVG, nicht im KVG.' },
+  { term: 'Hinterlassenenrente', cat: 'unfall', def: 'Rente an Witwe/Witwer, Kinder und geschiedene Ehegatten bei Unfalltod.' },
+  { term: 'Berufskrankheit', cat: 'unfall', def: 'Krankheit, die durch die berufliche Tätigkeit verursacht wird. Über die Berufsunfallversicherung gedeckt.' },
+  { term: 'UKS', cat: 'unfall', def: 'Unfallähnliche Körperschädigung — 8 Verletzungen (Knochenbruch, Verrenkung, Meniskusriss, Muskelriss, Muskelzerrung, Sehnenriss, Bandläsion, Trommelfellverletzung), die die UV auch ohne ungewöhnlichen äusseren Faktor deckt.' },
+  { term: 'Natürlicher Kausalzusammenhang', cat: 'unfall', def: 'Ursache-Wirkung-Beziehung zwischen Unfallereignis und Beschwerden. Fällt er weg, endet die Leistungspflicht der Unfallversicherung.' },
+  { term: 'Überwiegende Wahrscheinlichkeit', cat: 'unfall', def: 'Das Beweismass im Sozialversicherungsrecht — nicht absolute Sicherheit, sondern die deutlich wahrscheinlichste Erklärung.' },
+  { term: 'Leistungseinstellung', cat: 'unfall', def: 'Der Unfallversicherer stellt die Leistungen ein, weil die Beschwerden nicht mehr überwiegend auf den Unfall zurückgehen. Ab dann zahlt die Krankenkasse.' },
+  { term: 'Verfügung', cat: 'unfall', def: 'Formeller, einsprachefähiger Entscheid der Versicherung. Kann man auf Wunsch verlangen, um sich dagegen zu wehren.' },
+  { term: 'Schadenmeldung', cat: 'unfall', def: 'BU und NBU sind dem direkten Vorgesetzten oder der Betriebsleitung zu melden — auch wenn die Arbeit nicht unterbrochen wird. Der Arbeitgeber meldet der Suva.' },
+  // Übrige Versicherungen
+  { term: 'Privathaftpflicht', cat: 'uebrig', def: 'Freiwillig. Deckt Schäden, die man anderen zufügt — z. B. wenn der eigene Hund einen Passanten beisst.' },
+  { term: 'Motorfahrzeughaftpflicht', cat: 'uebrig', def: '<strong>Obligatorisch.</strong> Deckt Schäden, die man mit dem Fahrzeug anderen zufügt.' },
+  { term: 'Teilkasko', cat: 'uebrig', def: 'Freiwillig. Deckt Schäden am eigenen Fahrzeug ohne eigenes Verschulden — Hagel, Diebstahl, Glasbruch, Wild.' },
+  { term: 'Vollkasko', cat: 'uebrig', def: 'Freiwillig. Deckt auch <strong>selbstverschuldete</strong> Schäden am eigenen Fahrzeug.' },
+  { term: 'Hausratversicherung', cat: 'uebrig', def: 'Freiwillig. Deckt das Mobiliar — z. B. eine durch Blitzschlag zerstörte Stereoanlage.' },
+  { term: 'Unterversicherung', cat: 'uebrig', def: 'Die vereinbarte Versicherungssumme liegt deutlich unter dem effektiven Wiederbeschaffungswert.' },
+  { term: 'Regress', cat: 'uebrig', def: 'Rückgriff auf den Versicherten — die Versicherung zahlt zuerst und holt sich das Geld beim Verursacher zurück.' },
+  { term: 'Bonus', cat: 'uebrig', def: 'Prämienreduktion für unfallfreies Fahren.' },
+  { term: 'Versicherungsbetrug', cat: 'uebrig', def: 'Ungerechtfertigter Bezug von Versicherungsleistungen — strafbar.' },
+  { term: 'EO', cat: 'uebrig', def: 'Erwerbsersatzordnung — finanziert den Mutterschaftsurlaub und den Erwerbsausfall während Militär- oder Zivilschutzdienst.' },
+  { term: 'ALV', cat: 'uebrig', def: 'Arbeitslosenversicherung. Für Taggelder muss man arbeitsfähig sein und persönlich auf dem Arbeitsamt erscheinen.' },
+  { term: '3-Säulen-Prinzip', cat: 'uebrig', def: '1. Säule: staatlich, obligatorisch (AHV/IV) · 2. Säule: berufliche Vorsorge (BVG) · 3. Säule: privates Sparen. Säule 1 + 2 sollen den bisherigen Lebensstandard sichern.' },
+];
+
+function renderBegriffe(filter, searchTerm) {
+  const grid = document.getElementById('begriffGrid');
+  const search = (searchTerm || '').toLowerCase();
+  const filtered = BEGRIFFE.filter(b => {
+    const matchCat = filter === 'all' || b.cat === filter;
+    const matchSearch = !search || b.term.toLowerCase().includes(search) || b.def.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+  grid.innerHTML = filtered.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>
+  `).join('') || `<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px;">Keine Begriffe gefunden.</div>`;
+}
+
+let currentBegriffeFilter = 'all';
+let currentBegriffeSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentBegriffeFilter = chip.dataset.cat;
+    renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+  });
+});
+document.getElementById('begriffSearch').addEventListener('input', e => {
+  currentBegriffeSearch = e.target.value;
+  renderBegriffe(currentBegriffeFilter, currentBegriffeSearch);
+});
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+const EXTRA_CARDS = [
+  { term: 'Franchise Erwachsene: Minimum und Maximum', cat: 'kosten', def: '<strong>300.–</strong> bis <strong>2500.–</strong> (Stufen 500 / 1000 / 1500 / 2000 / 2500).' },
+  { term: 'Franchise Kinder bis 18', cat: 'kosten', def: 'Ordentlich <strong>0.–</strong>, wählbar bis <strong>600.–</strong> (Stufen 100 / 200 / 300 / 400 / 500).' },
+  { term: 'Selbstbehalt: Prozentsatz und Maximum', cat: 'kosten', def: '<strong>10 %</strong> über der Franchise, max. <strong>700.–/Jahr</strong> (Kinder <strong>350.–</strong>).' },
+  { term: 'Selbstbehalt bei Originalpräparat statt Generikum', cat: 'kosten', def: '<strong>20 %</strong> — wenn ohne medizinische Notwendigkeit das teurere Original gewünscht wird.' },
+  { term: 'Spitalbeitrag pro Tag', cat: 'kosten', def: '<strong>15.–</strong> für Erwachsene über 25, zusätzlich zu Franchise und Selbstbehalt.' },
+  { term: 'Wo gibt es keine Kostenbeteiligung?', cat: 'kosten', def: 'Bei <strong>Mutterschaft</strong> — weder Franchise noch Selbstbehalt noch Spitalbeitrag.' },
+  { term: 'Rechenschema Kostenbeteiligung', cat: 'kosten', def: 'Total − Franchise = Rest → davon <strong>10 %</strong> (max. 700.–) = Selbstbehalt.<br>Eigener Anteil = Franchise + Selbstbehalt.' },
+  { term: 'Maximaler Eigenanteil pro Jahr', cat: 'kosten', def: '<strong>Franchise + 700.–</strong> (plus allfälliger Spitalbeitrag von 15.–/Tag).' },
+  { term: 'Die 5 Merkmale eines Unfalls', cat: 'unfall', def: 'Körperschaden · Einwirkung von aussen · ungewöhnlicher Vorfall · plötzliche Einwirkung · unfreiwilliges Ereignis.' },
+  { term: 'Ab wie vielen Wochenstunden gilt die NBU?', cat: 'unfall', def: '<strong>8 Stunden pro Woche</strong> beim selben Arbeitgeber.' },
+  { term: 'Wer zahlt die BU-Prämie, wer die NBU-Prämie?', cat: 'unfall', def: 'BU: <strong>vollumfänglich der Arbeitgeber</strong>. NBU: der <strong>Arbeitnehmer</strong> (Lohnabzug).' },
+  { term: 'Arbeitsweg bei weniger als 8 Std./Woche', cat: 'unfall', def: 'Zählt als <strong>Berufsunfall</strong>. Freizeitunfälle sind dann gar nicht versichert.' },
+  { term: 'Taggeld UVG: Höhe und Beginn', cat: 'unfall', def: 'Bis <strong>80 % des Lohnes</strong>, ab dem <strong>3. Tag</strong>.' },
+  { term: 'Abredeversicherung: maximale Dauer', cat: 'unfall', def: '<strong>6 Monate</strong> (ohne sie endet der NBU-Schutz nach rund 30 Tagen).' },
+  { term: 'Prämienreduktion bei Sistierung der Unfalldeckung', cat: 'unfall', def: 'Maximal <strong>7 %</strong>.' },
+  { term: 'Sistierung wegen Dienst — ab wann?', cat: 'modell', def: 'Ab <strong>60 aufeinanderfolgenden Tagen</strong> Militär-, Zivil-, Rotkreuzdienst oder Zivilschutz. Meldung am besten 8 Wochen vorher.' },
+  { term: 'Kündigungsfrist Grundversicherung', cat: 'modell', def: '<strong>3 Monate.</strong> Standard + Franchise 300.–: auf Ende Juni oder Ende Dezember. Alle anderen: nur Ende Dezember.' },
+  { term: 'Frist nach Mitteilung der neuen Prämie', cat: 'modell', def: '<strong>1 Monat</strong> — Eingang bis <strong>30. November</strong>, Kündigung auf den 31. Dezember. Gilt für alle Modelle und Franchisen.' },
+  { term: 'Franchise senken vs. erhöhen — Fristen', cat: 'modell', def: 'Senken: schriftlich bis <strong>30. November</strong>. Erhöhen (gleiche Kasse): bis <strong>31. Dezember</strong>.' },
+  { term: 'Die drei Altersklassen der Prämie', cat: 'modell', def: 'Kinder <strong>0–18</strong> · junge Erwachsene <strong>19–25</strong> · Erwachsene <strong>ab 26</strong>.' },
+  { term: 'Prämienreduktion der Modelle', cat: 'modell', def: 'Hausarzt ca. 5–15 % · HMO bis 20–25 % · Telmed bis 20 % · PPO ca. 10 %.' },
+  { term: 'Wovon hängt die Prämienhöhe ab?', cat: 'modell', def: '<strong>Wohnkanton/Prämienregion · Versicherer · Altersklasse · Franchise · Modell.</strong> Nicht vom Einkommen — es ist eine Kopfprämie.' },
+  { term: '5 Wege, die Prämie zu senken', cat: 'modell', def: 'Alternatives Modell · Franchise erhöhen · Unfalldeckung sistieren · Kasse wechseln · Prämienverbilligung beantragen.' },
+  { term: 'Wohin geht der Prämienfranken?', cat: 'rechnung', def: '<strong>95 Rappen</strong> an Leistungen, <strong>5 Rappen</strong> an die Verwaltung. Grösste Blöcke: Spitäler 36 · Ärzte 22 · Medikamente 17.' },
+  { term: 'Dürfen Krankenversicherer Gewinn machen?', cat: 'grund', def: '<strong>Nein</strong> — in der Grundversicherung von Gesetzes wegen nicht. Überschüsse kommen den Versicherten zugute.' },
+  { term: 'Seit wann gilt das KVG?', cat: 'grund', def: 'Seit dem <strong>1. Januar 1996</strong>.' },
+  { term: 'Alternativmedizin in der Grundversicherung', cat: 'grund', def: '5 Methoden: <strong>Akupunktur · Homöopathie · TCM · Phytotherapie · anthroposophische Medizin</strong>.' },
+  { term: 'Notfall im Ausland — wie viel zahlt die Grundversicherung?', cat: 'grund', def: 'Bis zum <strong>doppelten Betrag</strong> dessen, was die Behandlung in der Schweiz kosten würde.' },
+  { term: 'Grundversicherung vs. Zusatzversicherung', cat: 'zusatz', def: 'Grund: <strong>obligatorisch, KVG</strong>, Aufnahmepflicht, überall gleiche Leistungen.<br>Zusatz: <strong>freiwillig, VVG/Privatrecht</strong>, Gesundheitsprüfung, Ablehnung möglich.' },
+  { term: 'Drei typische Zusatzleistungen', cat: 'zusatz', def: 'Freie Spitalwahl ganze Schweiz · Halbprivat/Privat · Zahnbehandlungen.' },
+  { term: 'TARMED — was und wie viele Positionen?', cat: 'rechnung', def: 'Einzelleistungstarif für alle <strong>ambulanten</strong> ärztlichen Leistungen, rund <strong>4600 Positionen</strong>.' },
+  { term: 'Taxpunkt vs. Taxpunktwert', cat: 'rechnung', def: 'Taxpunkt = <strong>schweizweit gleich</strong>. Taxpunktwert = <strong>je Kanton verschieden</strong>. Preis = TP × TPW.' },
+  { term: 'Konsultationsdauer auf der Rechnung', cat: 'rechnung', def: '00.0010 = erste 5 Min. · 00.0020 = jede weiteren 5 Min. · 00.0030 = letzte 5 Min.' },
+  { term: 'WZW', cat: 'rechnung', def: '<strong>W</strong>irksam · <strong>Z</strong>weckmässig · <strong>W</strong>irtschaftlich.' },
+  { term: 'Obligatorische Versicherungen', cat: 'uebrig', def: 'Krankenkasse (Grundversicherung) · Unfallversicherung für Arbeitnehmende · Motorfahrzeughaftpflicht.' },
+  { term: 'Was zahlt die Unfallversicherung mehr als die Krankenkasse?', cat: 'unfall', def: 'Keine Franchise, kein Selbstbehalt — plus <strong>Taggeld, Invalidenrente, Todesfallrente, Integritätsentschädigung</strong> und gewisse Sachschäden.' },
+  { term: 'UKS — die 8 Positionen', cat: 'unfall', def: 'Knochenbrüche · Verrenkungen von Gelenken · Meniskusrisse · Muskelrisse · Muskelzerrungen · Sehnenrisse · Bandläsionen · Trommelfellverletzungen.' },
+  { term: 'Solidaritätsprinzip in einem Satz', cat: 'grund', def: '<strong>Viele zahlen wenig, damit Wenigen viel geholfen werden kann.</strong> Solidarität zwischen Jung und Alt, Gesunden und Kranken, Mann und Frau.' },
+];
+
+const ALL_CARDS = [...BEGRIFFE, ...EXTRA_CARDS];
+let cardSet = [];
+let cardIdx = 0;
+let cardFlipped = false;
+let knownIds = new Set();
+let unknownIds = new Set();
+let cardCatFilter = 'all';
+
+function buildCardSet() {
+  cardSet = ALL_CARDS.filter(c => cardCatFilter === 'all' || c.cat === cardCatFilter)
+                     .map(c => ({...c, _id: ALL_CARDS.indexOf(c)}));
+  cardIdx = 0;
+  cardFlipped = false;
+  knownIds = new Set();
+  unknownIds = new Set();
+  renderCard();
+  updateCardStats();
+}
+
+function renderCard() {
+  const content = document.getElementById('flashContent');
+  const side = document.getElementById('flashSide');
+  const ref = document.getElementById('flashRef');
+  const counter = document.getElementById('flashCounter');
+
+  if (!cardSet.length) {
+    content.className = 'flash-front';
+    content.textContent = 'Keine Karten in dieser Kategorie.';
+    side.textContent = '—';
+    ref.textContent = '';
+    counter.textContent = '0 / 0';
+    return;
+  }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  ref.textContent = c.ref || '';
+  if (cardFlipped) {
+    side.textContent = 'Antwort';
+    content.className = 'flash-back';
+    content.innerHTML = c.def + (c.ref ? `<span class="ref">${c.ref}</span>` : '');
+  } else {
+    side.textContent = 'Frage';
+    content.className = 'flash-front';
+    content.textContent = c.term;
+  }
+}
+
+function flipCard() { if (!cardSet.length) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (!cardSet.length) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (!cardSet.length) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx]._id;
+  if (known) { knownIds.add(id); unknownIds.delete(id); }
+  else { unknownIds.add(id); knownIds.delete(id); }
+  updateCardStats();
+  nextCard();
+}
+function shuffleCards() {
+  for (let i = cardSet.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]];
+  }
+  cardIdx = 0; cardFlipped = false; renderCard();
+}
+function resetCards() { buildCardSet(); }
+function updateCardStats() {
+  document.getElementById('statKnown').textContent = knownIds.size;
+  document.getElementById('statUnknown').textContent = unknownIds.size;
+  document.getElementById('statOpen').textContent = Math.max(0, cardSet.length - knownIds.size - unknownIds.size);
+}
+
+document.querySelectorAll('#cardFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#cardFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    cardCatFilter = chip.dataset.cat;
+    buildCardSet();
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') { nextCard(); e.preventDefault(); }
+  if (e.key === 'ArrowLeft') { prevCard(); e.preventDefault(); }
+  if (e.key === ' ') { flipCard(); e.preventDefault(); }
+});
+
+buildCardSet();
+
+// ═══ LERNPLAN ═══
+const PLAN_KEY = 'kk-uv-lernplan';
+function updatePlanProgress() {
+  const boxes = [...document.querySelectorAll('.day .check')];
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('planProgress').style.width = (done / boxes.length * 100) + '%';
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]');
+  document.querySelectorAll('.day .check').forEach((b, i) => { if (saved[i]) b.checked = true; });
+} catch (e) {}
+document.querySelectorAll('.day .check').forEach(b => b.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+
+</body>
+</html>
