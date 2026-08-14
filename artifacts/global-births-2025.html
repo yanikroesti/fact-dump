@@ -24,8 +24,10 @@
   .sub { text-align: center; font-size: clamp(16px, 2.2vw, 22px); color: var(--muted); margin: 0 0 8px; font-weight: 400; }
   .chart { position: relative; }
   svg { display: block; width: 100%; height: auto; }
-  .cell { transition: filter .12s ease; }
-  .cell:hover { filter: brightness(1.16) saturate(1.05); }
+  /* highlight via stroke, not filter: a CSS filter on a child of this
+     large SVG re-rasterizes the whole layer on every pointer move */
+  .cell { transition: stroke .12s ease, stroke-width .12s ease; }
+  .cell:hover { stroke: rgba(255,255,255,.92); stroke-width: 2.5; }
   text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
   .nm { fill: #fff; font-weight: 700; text-anchor: middle; paint-order: stroke; stroke: rgba(10,14,20,.4); stroke-width: 2.6px; stroke-linejoin: round; }
   .cd { fill: rgba(255,255,255,.92); font-weight: 700; text-anchor: middle; letter-spacing: .04em; paint-order: stroke; stroke: rgba(10,14,20,.35); stroke-width: 2px; }
