@@ -185,31 +185,45 @@ header {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* notebox banner */
+/* satellite banners — sites that live outside the dump */
+.satellites {
+  margin: 1.9rem 0 0; display: flex; flex-wrap: wrap; gap: 0.7rem;
+}
 .satellite {
-  margin: 1.9rem 0 0; display: inline-flex; align-items: center; gap: 0.8rem;
-  border: 1px dashed rgba(212,255,71,0.4); border-radius: 14px;
+  --sat: var(--lime);
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  border: 1px dashed color-mix(in srgb, var(--sat) 40%, transparent); border-radius: 14px;
   padding: 0.75rem 1.1rem;
   transition: background 0.2s, border-color 0.2s, transform 0.25s var(--ease-spring);
-  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.85s forwards;
-  max-width: 100%;
+  opacity: 0; animation: fadeRise 0.8s var(--ease-out) var(--sd, 0.85s) forwards;
+  max-width: 100%; flex: 1 1 320px;
 }
-.satellite:hover { background: rgba(212,255,71,0.06); border-color: var(--lime); transform: translateY(-2px); }
+.satellite:hover {
+  background: color-mix(in srgb, var(--sat) 7%, transparent);
+  border-color: var(--sat); transform: translateY(-2px);
+}
 .satellite .box-ico {
   width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-  background: linear-gradient(135deg, rgba(212,255,71,0.2), rgba(212,255,71,0.05));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--sat) 22%, transparent), color-mix(in srgb, var(--sat) 5%, transparent));
   display: flex; align-items: center; justify-content: center;
-  color: var(--lime);
+  color: var(--sat);
 }
 .satellite .box-ico svg { width: 17px; height: 17px; }
 .satellite .sat-txt { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
 .satellite .sat-txt b { color: var(--ink); font-weight: 600; display: block; font-size: 0.86rem; }
-.satellite .sat-txt span { color: var(--lime); font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; }
+.satellite .sat-txt span { color: var(--sat); font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; overflow-wrap: anywhere; }
 .satellite .go {
-  margin-left: 0.3rem; color: var(--lime); flex-shrink: 0;
+  margin-left: 0.3rem; color: var(--sat); flex-shrink: 0;
   transition: transform 0.25s var(--ease-spring);
 }
 .satellite:hover .go { transform: translate(3px, -3px); }
+.sat-tag {
+  display: inline-block; margin-left: 0.4rem; vertical-align: 1px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sat);
+  border: 1px solid color-mix(in srgb, var(--sat) 45%, transparent);
+  border-radius: 99px; padding: 0.1rem 0.42rem;
+}
 
 /* ── toolbar ───────────────────────────────────────── */
 .toolbar {
@@ -275,7 +289,10 @@ header {
 }
 
 @media (max-width: 760px) {
-  .toolbar { flex-direction: column-reverse; align-items: stretch; gap: 0.55rem; }
+  /* column + wrap would let .chips size to its content and push the page wide;
+     nowrap + explicit width keeps it scrolling inside the toolbar instead */
+  .toolbar { flex-direction: column-reverse; align-items: stretch; gap: 0.55rem; flex-wrap: nowrap; }
+  .chips { width: 100%; flex: 0 0 auto; }
   .search-box { width: 100%; }
   .search-box .key { display: none; }
 }
@@ -525,16 +542,29 @@ footer {
     <span>updated <b>08.2026</b></span>
     <span>no cookies · no tracking · just files</span>
   </div>
-  <a class="satellite" href="https://note.yanikroesti.com" target="_blank" rel="noopener">
-    <span class="box-ico">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
-    </span>
-    <span class="sat-txt">
-      <b>NoteBox moved out.</b>
-      The note-taking app now lives on its own subdomain — <span>note.yanikroesti.com</span>
-    </span>
-    <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-  </a>
+  <div class="satellites">
+    <a class="satellite" href="https://note.yanikroesti.com" target="_blank" rel="noopener">
+      <span class="box-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
+      </span>
+      <span class="sat-txt">
+        <b>NoteBox moved out.</b>
+        The note-taking app now lives on its own subdomain — <span>note.yanikroesti.com</span>
+      </span>
+      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </a>
+
+    <a class="satellite" style="--sat:#a95cd0; --sd:0.95s" href="http://yanik-hp-elitebook-8460p.tail99e1c9.ts.net:8096" target="_blank" rel="noopener nofollow">
+      <span class="box-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M10 8.4l4.6 2.6-4.6 2.6z"/><path d="M8 20.5h8"/></svg>
+      </span>
+      <span class="sat-txt">
+        <b>Video-Archiv <span class="sat-tag">tailnet only</span></b>
+        Jellyfin media server, reachable from my own devices — <span>yanik-hp-elitebook-8460p&#8203;.tail99e1c9.ts.net:8096</span>
+      </span>
+      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </a>
+  </div>
 </section>
 
 <nav class="toolbar" aria-label="filter projects">
@@ -601,6 +631,7 @@ footer {
       <div class="foot-h">satellites</div>
       <ul class="foot-list">
         <li><a href="https://note.yanikroesti.com" target="_blank" rel="noopener">note.yanikroesti.com <span class="ext">&nearr;</span></a></li>
+        <li><a href="http://yanik-hp-elitebook-8460p.tail99e1c9.ts.net:8096" target="_blank" rel="noopener nofollow">Video-Archiv (Jellyfin) <span class="ext">tailnet only</span></a></li>
         <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
         <li><a href="https://github.com/yanikroesti/notebox" target="_blank" rel="noopener">github / notebox <span class="ext">&nearr;</span></a></li>
       </ul>
