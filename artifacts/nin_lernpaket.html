@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIN 2025 — Lernpaket | BZI ABT</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+/* ── Ergänzungen für das NIN-Paket ── */
+.chk { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; color: var(--warn);
+       background: var(--warn-light); border: 1px solid rgba(183,121,31,0.3);
+       padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+.src { font-size: 0.8rem; color: var(--ink-mute); margin-top: -8px; margin-bottom: 18px; }
+.mono { font-family: var(--font-mono); }
+.formula { background: var(--surface-alt); border-radius: var(--radius-sm); padding: 16px 18px;
+           margin: 14px 0 18px; font-family: var(--font-mono); font-size: 0.95rem;
+           line-height: 1.9; text-align: center; }
+.unit { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-mute); }
+.src-list { font-size: 0.9rem; }
+.src-list li { margin-bottom: 6px; }
+.pyr-mini { display: grid; gap: 3px; margin: 16px 0 20px; }
+.pyr-mini div { padding: 9px 14px; border-radius: var(--radius-sm); font-size: 0.9rem;
+                display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.pyr-mini .lv { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+                text-transform: uppercase; letter-spacing: 0.06em; min-width: 92px; }
+.pyr-mini .sr { font-family: var(--font-mono); font-size: 0.76rem; margin-left: auto; opacity: 0.75; }
+.pyr-mini .p1 { background: var(--surface-alt); width: 55%; }
+.pyr-mini .p2 { background: var(--info-light); width: 70%; }
+.pyr-mini .p3 { background: var(--warn-light); width: 85%; }
+.pyr-mini .p4 { background: var(--accent-light); width: 100%; }
+@media (max-width: 640px) { .pyr-mini div { width: 100% !important; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>NIN 2025</h1>
+  <div class="subtitle">Lernpaket · Wochen-Kurztest</div>
+  <div class="meta">SN 411000:2025 · Stefan Wäfler · ABT · ELI 25a, BZI Interlaken</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="rechner">Rechner</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ═══════════ THEORIE ═══════════ -->
+<section class="tab-pane active" id="theorie">
+
+  <div class="info-box warn">
+    <p><strong>Bevor du loslegst — was belegt ist und was nicht.</strong></p>
+    <p>Gesetzespyramide, SR-Nummern, die Bezeichnung SN 411000 und die Neuerungen 2025 stammen
+    aus Fedlex, Electrosuisse und eit.swiss. Das <em>Schutzkonzept</em> und die Netzsysteme sind
+    der internationale Rahmen aus HD 60364 / IEC 60364, auf dem die NIN aufbaut.</p>
+    <p><strong>Konkrete Zahlen sind mit <span class="chk">⚠ prüfen</span> markiert.</strong>
+    Die NIN ist kostenpflichtig, ihre Tabellen stehen nicht frei im Netz. Die markierten Werte
+    kommen aus der deutschen DIN VDE 0100-410 mit derselben HD-Grundlage — meistens identisch,
+    aber schlag sie einmal in deiner NIN nach. Eine falsch gelernte Zahl ist schlimmer als eine Lücke.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">1</span><h3>Wo die NIN im Recht steht</h3></div>
+    <p>Die häufigste Kurztest-Frage ist nicht «was steht in der NIN», sondern «warum gilt sie
+    überhaupt». Die Antwort ist die Gesetzespyramide — von allgemein oben nach konkret unten.</p>
+
+    <div class="pyr-mini">
+      <div class="p1"><span class="lv">Verfassung</span> Bundesverfassung <span class="sr">SR 101</span></div>
+      <div class="p2"><span class="lv">Gesetz</span> Elektrizitätsgesetz <strong>EleG</strong> (1902) <span class="sr">SR 734.0</span></div>
+      <div class="p3"><span class="lv">Verordnung</span> StV · NEV · <strong>NIV</strong> <span class="sr">734.2 · 734.26 · 734.27</span></div>
+      <div class="p4"><span class="lv">Norm</span> <strong>NIN</strong> — Niederspannungs-Installations-Norm <span class="sr">SN 411000</span></div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Merksatz.</strong> Das <strong>Gesetz</strong> sagt <em>dass</em>,
+      die <strong>Verordnung</strong> sagt <em>wer und wann</em>,
+      die <strong>Norm</strong> sagt <em>wie</em>.</p>
+    </div>
+
+    <h4>Warum die NIN keine Pflicht ist — und trotzdem gilt</h4>
+    <p>Die NIN ist formal eine <strong>private Norm</strong>, kein Gesetz: Electrosuisse gibt sie
+    heraus, nicht der Bund. Aber Verordnungen und Netzbetreiber verlangen die
+    <strong>«anerkannten Regeln der Technik»</strong> — und als solche gilt die NIN.</p>
+    <p>Praktisch: Wer nach NIN baut, gilt als regelkonform. Wer abweicht,
+    <strong>muss gleichwertige Sicherheit beweisen</strong>. Die Beweislast dreht sich um.
+    Das ist die vollständige Antwort auf «Ist die NIN verbindlich?» — nein und ja,
+    und die Begründung gibt den Punkt.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">2</span><h3>Was die NIN 2025 ist</h3></div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>Bezeichnung</th><td class="mono">SN 411000:2025</td></tr>
+          <tr><th>Früher</th><td>SEV 1000</td></tr>
+          <tr><th>Herausgeberin</th><td>Electrosuisse</td></tr>
+          <tr><th>In Kraft seit</th><td><strong>1. Januar 2025</strong></td></tr>
+          <tr><th>Geltungsbereich</th><td>bis <strong>1000 V AC</strong> · bis <strong>1500 V DC</strong></td></tr>
+          <tr><th>Zweck</th><td>Schutz von <strong>Personen, Nutztieren und Sachen</strong></td></tr>
+          <tr><th>Regelt</th><td>Planung · Erstellung · Prüfung</td></tr>
+          <tr><th>Stützt sich auf</th><td>EleG, StV, NEV, NIV · fachlich HD 60364 (Cenelec), darüber IEC 60364</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Was 2025 neu ist</h4>
+    <ul>
+      <li><strong>Neues Kapitel 8.2 — Prosumer.</strong> Kombinierte Erzeugungs- und
+        Verbrauchsanlagen, also Anlagen die Strom beziehen <em>und</em> einspeisen.
+        Berücksichtigt <strong>DC-Anwendungen</strong> im Zusammenhang mit der Energiewende.</li>
+      <li>Aktualisierte Normverweise</li>
+      <li>Überarbeitete Grafiken</li>
+      <li>Strukturelle Anpassungen — B+E, CH-Regelungen und Anmerkungen sind klarer getrennt</li>
+    </ul>
+
+    <div class="info-box danger">
+      <p><strong>Corrigendum.</strong> Zur NIN 2025 gibt es ein <strong>Corrigendum vom Dezember 2025</strong>.
+      Prüf, ob deine Ausgabe die Korrekturen hat — sonst lernst du korrigierte Stellen falsch.</p>
+    </div>
+
+    <div class="info-box warn">
+      <p><strong>Falle speziell für dich.</strong> Deine Lerndokumentationen aus dem 1. Lehrjahr
+      verweisen auf <strong>NIN 2020</strong>. Werte, die sich zwischen Ausgaben ändern können —
+      Strombelastbarkeiten, Füllgrade, Montagehöhen, Klemmenbezeichnungen — nicht von dort
+      übernehmen, sondern in der 2025er gegenprüfen.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">3</span><h3>Wie die NIN aufgebaut ist</h3></div>
+    <p>Im Kurztest zählt Tempo. Wer weiss, in welchem Bereich etwas steht, findet es in Sekunden.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bereich</th><th>Worum es geht</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Grundlagen</strong></td><td>Normen und Vorschriften, Begriffe, Spannungsbereiche, äussere Einflüsse</td></tr>
+          <tr><td><strong>Vorschriften</strong></td><td>Bewilligungen, Arbeitsausführung, Brandgefahr, erste Hilfe</td></tr>
+          <tr><td><strong>Schutzorgane</strong></td><td>Schmelzsicherungen, Leitungsschutzschalter, Motorschutzschalter</td></tr>
+          <tr><td><strong>Schutzsysteme</strong></td><td>Schutz gegen elektrischen Schlag, Erdung, Potenzialausgleich, Fehlerstromschutz, Schutzklassen</td></tr>
+          <tr><td><strong>Bauteile</strong></td><td>Leiter, Schaltgeräte, Beleuchtung, Motoren, Transformatoren, Kondensatoren</td></tr>
+          <tr><td><strong>Prüfen und Spezielles</strong></td><td>Erstprüfung, Überspannungsschutz, Schwimmbäder, Photovoltaik, E-Ladestationen, Energieeffizienz</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Gliederung nach den NIN-Arbeitsblättern von Paul-Emile Müller (Auflage 18, 2025), 42 Kapitel.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">4</span><h3>Das Schutzkonzept</h3></div>
+    <p>Der Stoff, der am häufigsten drankommt — weil er sich in einem Satz abfragen lässt.
+    <strong>Eine Schutzmassnahme besteht immer aus Basisschutz und Fehlerschutz.</strong>
+    Der Zusatzschutz kommt obendrauf.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ebene</th><th>Schützt gegen</th><th>Wie</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Basisschutz</strong></td>
+            <td><strong>direktes</strong> Berühren aktiver Teile</td>
+            <td>Basisisolierung, Abdeckungen, Umhüllungen, Hindernisse, Abstand ausserhalb des Handbereichs</td></tr>
+          <tr><td><strong>Fehlerschutz</strong></td>
+            <td><strong>indirektes</strong> Berühren — Teile, die erst im Fehlerfall Spannung führen</td>
+            <td>meist <strong>automatische Abschaltung der Stromversorgung</strong></td></tr>
+          <tr><td><strong>Zusatzschutz</strong></td>
+            <td>den Fall, dass Basis- <em>und</em> Fehlerschutz versagen</td>
+            <td><strong>Fehlerstrom-Schutzeinrichtung (FI / RCD)</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box danger">
+      <p><strong>Stolperstein.</strong> Der Zusatzschutz ist <strong>nie allein zulässig</strong>.
+      Er ergänzt Basis- und Fehlerschutz, ersetzt sie nicht. «Ein FI reicht als Schutzmassnahme»
+      ist falsch.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Wert</th><th>Grösse</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Bemessungs-Differenzstrom für Zusatzschutz</td><td class="mono">≤ 30 mA</td><td><span class="chk">⚠ prüfen</span></td></tr>
+          <tr><td>Abschaltzeit Endstromkreise ≤ 32 A, System TN, 230/400 V</td><td class="mono">0,4 s</td><td><span class="chk">⚠ prüfen</span></td></tr>
+          <tr><td>Abschaltzeit Verteilstromkreise / &gt; 32 A, System TN</td><td class="mono">5 s</td><td><span class="chk">⚠ prüfen</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Zahlen aus DIN VDE 0100-410 (gleiche HD-60364-Grundlage) — <strong>in der NIN gegenprüfen</strong>.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">5</span><h3>Netzsysteme</h3></div>
+    <p>Die Buchstaben sind kein Zufall, und genau das wird gefragt. Der <strong>erste</strong>
+    Buchstabe beschreibt die Erdung der <strong>Stromquelle</strong>, der <strong>zweite</strong>
+    die Erdung der <strong>Körper</strong> der Betriebsmittel.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Buchstabe</th><th>Stelle</th><th>Bedeutung</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><strong>T</strong></td><td>1.</td><td><em>terre</em> — Stromquelle direkt geerdet</td></tr>
+          <tr><td class="mono"><strong>I</strong></td><td>1.</td><td><em>isolé</em> — Quelle isoliert oder über Impedanz geerdet</td></tr>
+          <tr><td class="mono"><strong>T</strong></td><td>2.</td><td>Körper direkt geerdet, unabhängig von der Quelle</td></tr>
+          <tr><td class="mono"><strong>N</strong></td><td>2.</td><td>Körper mit dem geerdeten Punkt der Quelle verbunden</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>System</th><th>Aufbau</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><strong>TN-S</strong></td><td>N und PE im <strong>ganzen</strong> System <strong>getrennt</strong></td></tr>
+          <tr><td class="mono"><strong>TN-C</strong></td><td>N und PE im ganzen System <strong>kombiniert</strong> — der PEN-Leiter</td></tr>
+          <tr><td class="mono"><strong>TN-C-S</strong></td><td>zuerst kombiniert (PEN), <strong>ab einem Punkt getrennt</strong>. Ab der Trennstelle nie wieder zusammenführen.</td></tr>
+          <tr><td class="mono"><strong>TT</strong></td><td>Quelle geerdet, Körper an eine <strong>eigene, separate</strong> Erde</td></tr>
+          <tr><td class="mono"><strong>IT</strong></td><td>Quelle isoliert/hochohmig geerdet, Körper geerdet. Erster Fehler schaltet nicht ab — er wird gemeldet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Eselsbrücke.</strong> <span class="mono">S</span> = <em>séparé</em>, getrennt.
+      <span class="mono">C</span> = <em>combiné</em>, kombiniert.
+      <span class="mono">TN-C-S</span> liest sich von der Quelle her: erst kombiniert, dann getrennt.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════ RECHNER ═══════════ -->
+<section class="tab-pane" id="rechner">
+
+  <div class="info-box">
+    <p>Diese Rechner sind <strong>Physik, keine Normwerte</strong> — die Formeln gelten unabhängig
+    von der NIN-Ausgabe. Die <em>Grenzwerte</em>, gegen die du das Ergebnis hältst
+    (zulässiger Spannungsfall, Strombelastbarkeit), stehen in der NIN.</p>
+  </div>
+
+  <div class="tool">
+    <h3>Spannungsfall</h3>
+    <p class="tool-desc">Leitung zu dünn oder zu lang — und am Ende kommt zu wenig Spannung an.</p>
+    <div class="formula">
+      einphasig &nbsp; ΔU = (2 · L · I · cos φ) / (κ · A)<br>
+      Drehstrom &nbsp; ΔU = (√3 · L · I · cos φ) / (κ · A)
+    </div>
+    <div class="field-row">
+      <div class="field"><label>System</label>
+        <select id="sfSystem"><option value="1">Einphasig</option><option value="3">Drehstrom</option></select></div>
+      <div class="field"><label>Länge L <span class="unit">m</span></label><input type="number" id="sfL" value="25" step="0.5"></div>
+      <div class="field"><label>Strom I <span class="unit">A</span></label><input type="number" id="sfI" value="16" step="0.5"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Querschnitt A <span class="unit">mm²</span></label><input type="number" id="sfA" value="2.5" step="0.5"></div>
+      <div class="field"><label>cos φ</label><input type="number" id="sfCos" value="1" step="0.05" min="0" max="1"></div>
+      <div class="field"><label>Leiter</label>
+        <select id="sfK"><option value="56">Kupfer κ 56</option><option value="35">Aluminium κ 35</option></select></div>
+      <div class="field"><label>Nennspannung <span class="unit">V</span></label><input type="number" id="sfU" value="230" step="10"></div>
+    </div>
+    <div class="result" id="sfOut"></div>
+  </div>
+
+  <div class="tool">
+    <h3>Mindestquerschnitt</h3>
+    <p class="tool-desc">Umgekehrt gerechnet: wie dick muss die Leitung sein, damit der Spannungsfall unter der Grenze bleibt?</p>
+    <div class="field-row">
+      <div class="field"><label>System</label>
+        <select id="qSystem"><option value="1">Einphasig</option><option value="3">Drehstrom</option></select></div>
+      <div class="field"><label>Länge L <span class="unit">m</span></label><input type="number" id="qL" value="25" step="0.5"></div>
+      <div class="field"><label>Strom I <span class="unit">A</span></label><input type="number" id="qI" value="16" step="0.5"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>cos φ</label><input type="number" id="qCos" value="1" step="0.05" min="0" max="1"></div>
+      <div class="field"><label>Leiter</label>
+        <select id="qK"><option value="56">Kupfer κ 56</option><option value="35">Aluminium κ 35</option></select></div>
+      <div class="field"><label>Nennspannung <span class="unit">V</span></label><input type="number" id="qU" value="230" step="10"></div>
+      <div class="field"><label>max. ΔU <span class="unit">%</span></label><input type="number" id="qMax" value="3" step="0.5"></div>
+    </div>
+    <div class="result" id="qOut"></div>
+  </div>
+
+  <div class="tool">
+    <h3>Ohm und Leistung</h3>
+    <div class="formula">
+      U = R · I &nbsp;·&nbsp; P = U · I &nbsp;·&nbsp; P = I² · R &nbsp;·&nbsp; P = U² / R<br>
+      Drehstrom &nbsp; P = √3 · U · I · cos φ
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Spannung U <span class="unit">V</span></label><input type="number" id="ohmU" value="230" step="1"></div>
+      <div class="field"><label>Strom I <span class="unit">A</span></label><input type="number" id="ohmI" value="16" step="0.5"></div>
+      <div class="field"><label>cos φ</label><input type="number" id="ohmCos" value="1" step="0.05" min="0" max="1"></div>
+      <div class="field"><label>System</label>
+        <select id="ohmSys"><option value="1">Einphasig</option><option value="3">Drehstrom</option></select></div>
+    </div>
+    <div class="result" id="ohmOut"></div>
+  </div>
+
+</section>
+
+<!-- ═══════════ BEGRIFFE ═══════════ -->
+<section class="tab-pane" id="begriffe">
+  <h2>Begriffe</h2>
+  <p>Such nach einem Wort oder filtere nach Bereich.</p>
+  <input type="search" id="begriffSearch" class="begriff-search" placeholder="Begriff suchen …">
+  <div class="cat-filter" id="catFilter">
+    <button class="cat-chip active" data-cat="all">Alle</button>
+    <button class="cat-chip" data-cat="recht">Recht</button>
+    <button class="cat-chip" data-cat="schutz">Schutz</button>
+    <button class="cat-chip" data-cat="netz">Netzsysteme</button>
+    <button class="cat-chip" data-cat="technik">Technik</button>
+  </div>
+  <dl class="begriff-grid" id="begriffGrid"></dl>
+</section>
+
+<!-- ═══════════ KARTEIKARTEN ═══════════ -->
+<section class="tab-pane" id="karten">
+  <h2>Karteikarten</h2>
+  <p>Karte antippen zum Umdrehen. Genau richtig für fünf Minuten am Freitagmorgen.</p>
+  <div class="progress"><div class="progress-fill" id="cardProgress"></div></div>
+  <div class="flash-stage">
+    <div class="flash-card" id="flashCard">
+      <span class="side-label" id="flashSide">Frage</span>
+      <div class="flash-front" id="flashText">…</div>
+    </div>
+  </div>
+  <p class="flash-hint">Tippen zum Umdrehen · Pfeiltasten ← → zum Blättern</p>
+  <div class="flash-controls">
+    <button class="btn ghost sm" id="cardPrev">←</button>
+    <span class="flash-counter" id="cardCount">1 / 1</span>
+    <button class="btn ghost sm" id="cardNext">→</button>
+    <button class="btn sm" id="cardShuffle">Mischen</button>
+  </div>
+</section>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<section class="tab-pane" id="quiz">
+  <h2>Quiz</h2>
+  <p>Fünf Fragen, fünf Minuten — das Format deines Wochen-Kurztests. Erst selbst beantworten, dann aufdecken.</p>
+  <div class="btn-row">
+    <button class="btn" id="quizNew">Neue 5 Fragen</button>
+    <button class="btn ghost" onclick="revealAll(true)">Alle Lösungen</button>
+    <button class="btn ghost" onclick="revealAll(false)">Alle verstecken</button>
+    <button class="btn ghost" id="quizTimer">▶ 5:00 starten</button>
+    <span class="flash-counter mono" id="quizClock">05:00</span>
+  </div>
+  <div id="quizList"></div>
+</section>
+
+<!-- ═══════════ LERNPLAN ═══════════ -->
+<section class="tab-pane" id="lernplan">
+  <h2>Lernplan</h2>
+
+  <div class="info-box">
+    <p><strong>Der Kurztest ist ein Dauerläufer.</strong> Einzeln fast egal — fünf Fragen,
+    fünf Minuten. Aber <strong>alle Kurzteste zusammen ergeben eine ganze Note</strong>.
+    Also nicht büffeln, sondern dranbleiben: zwanzig Minuten pro Woche schlagen drei Stunden
+    vor dem Grosstest.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><h3>Die Woche</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Wann</th><th>Was</th><th>Dauer</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Freitag nach der Lektion</strong></td>
+            <td>Die Fragen, die drankamen, kurz notieren. Was du nicht wusstest, in der NIN nachschlagen und die Seitenzahl dazuschreiben.</td>
+            <td class="mono">5 Min</td></tr>
+          <tr><td><strong>Sonntag</strong></td>
+            <td>Karteikarten — nur die, die du letzte Woche falsch hattest.</td>
+            <td class="mono">10 Min</td></tr>
+          <tr><td><strong>Donnerstagabend</strong></td>
+            <td>Quiz-Tab mit Timer. Der Bot erinnert dich.</td>
+            <td class="mono">5 Min</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><h3>Vor einem Grosstest</h3></div>
+    <ul>
+      <li><strong>Zwei Wochen vorher —</strong> alle bisherigen Kurztest-Fragen sammeln. Das ist
+        dein Themenkatalog; völlig Neues kommt selten.</li>
+      <li><strong>Eine Woche vorher —</strong> Theorie durchlesen und dabei <em>jede</em> Zahl in
+        der NIN gegenprüfen, Seitenzahl notieren.</li>
+      <li><strong>Zwei Tage vorher —</strong> Quiz und Karteikarten gemischt.</li>
+      <li><strong>Am Vorabend —</strong> nur noch Gesetzespyramide und Schutzkonzept.
+        Der Rest ist drin oder nicht.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><h3>Wie man mit der NIN arbeitet</h3></div>
+    <p>Im Kurztest zählt, wie schnell du etwas <strong>findest</strong>, nicht wie viel du auswendig
+    weisst. Kleb Reiter an die Bereiche, die dauernd drankommen — Schutzsysteme, Schutzorgane,
+    Leiterquerschnitte. Und schreib bei jeder Frage, die du nachschlagen musstest, die Seitenzahl
+    in deine Notizen. Nach zehn Wochen hast du dein eigenes Register.</p>
+    <div class="info-box warn">
+      <p><strong>Prüf deine Ausgabe.</strong> Alles mit <span class="chk">⚠ prüfen</span> stammt
+      aus einer Quelle mit derselben Grundlage, aber nicht aus der NIN selbst. Schlag es einmal
+      nach, korrigier es hier — dann stimmt es für den Rest des Jahres.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><h3>Quellen</h3></div>
+    <ul class="src-list">
+      <li><a href="https://www.electrosuisse.ch/de/nin-2025/" target="_blank" rel="noopener">Electrosuisse — NIN 2025</a> · Bezeichnung, Inkrafttreten, Neuerungen</li>
+      <li><a href="https://www.electrosuisse.ch/wp-content/uploads/2025/12/NIN_2025_Corrigendum_Seiten_de.pdf" target="_blank" rel="noopener">Corrigendum NIN 2025</a></li>
+      <li><a href="https://de.wikipedia.org/wiki/Niederspannungs-Installations-Norm" target="_blank" rel="noopener">Wikipedia — NIN</a> · SR-Nummern, SN 411000</li>
+      <li><a href="https://www.eit.swiss/de/recht-und-normen/normen" target="_blank" rel="noopener">eit.swiss — Recht und Normen</a> · anerkannte Regeln der Technik</li>
+      <li><a href="https://www.mueller-pe.ch/nin_inhalt.php" target="_blank" rel="noopener">NIN-Arbeitsblätter, P.-E. Müller</a> · Gliederung des Stoffs</li>
+      <li><a href="https://www.dgwz.de/schutzmassnahmen-gegen-elektrischen-schlag" target="_blank" rel="noopener">DGWZ — Schutz gegen elektrischen Schlag</a> · Schutzkonzept</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<script>
+// ═══ TABS ═══
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ═══ RECHNER ═══
+const num = id => parseFloat(document.getElementById(id).value) || 0;
+const f2 = n => (Math.round(n * 100) / 100).toFixed(2);
+
+function calcSpannungsfall() {
+  const drei = document.getElementById('sfSystem').value === '3';
+  const L = num('sfL'), I = num('sfI'), A = num('sfA'), cos = num('sfCos');
+  const k = num('sfK'), U = num('sfU');
+  if (!L || !I || !A || !k) { document.getElementById('sfOut').innerHTML = '<p>Werte eingeben.</p>'; return; }
+  const faktor = drei ? Math.sqrt(3) : 2;
+  const dU = (faktor * L * I * cos) / (k * A);
+  const pct = U ? (dU / U) * 100 : 0;
+  const ok = pct <= 3;
+  document.getElementById('sfOut').innerHTML =
+    '<div class="big">' + f2(dU) + ' V<small>Spannungsfall absolut</small></div>' +
+    '<p style="margin-top:10px"><strong>' + f2(pct) + ' %</strong> von ' + U + ' V · ' +
+    '<span style="color:' + (ok ? 'var(--success)' : 'var(--danger)') + ';font-weight:600">' +
+    (ok ? 'unter 3 %' : 'über 3 %') + '</span></p>' +
+    '<p style="font-size:.85rem;color:var(--ink-mute);margin-bottom:0">Am Verbraucher noch ' +
+    f2(U - dU) + ' V. Die 3 % sind ein üblicher Richtwert — ' +
+    '<strong>den für deinen Fall geltenden Grenzwert in der NIN nachschlagen.</strong></p>';
+}
+
+function calcQuerschnitt() {
+  const drei = document.getElementById('qSystem').value === '3';
+  const L = num('qL'), I = num('qI'), cos = num('qCos');
+  const k = num('qK'), U = num('qU'), max = num('qMax');
+  if (!L || !I || !k || !U || !max) { document.getElementById('qOut').innerHTML = '<p>Werte eingeben.</p>'; return; }
+  const faktor = drei ? Math.sqrt(3) : 2;
+  const dUmax = U * max / 100;
+  const A = (faktor * L * I * cos) / (k * dUmax);
+  const NORM = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240];
+  const gewaehlt = NORM.find(n => n >= A);
+  document.getElementById('qOut').innerHTML =
+    '<div class="big">' + (gewaehlt ? gewaehlt + ' mm²' : '> 240 mm²') +
+    '<small>nächster Normquerschnitt</small></div>' +
+    '<p style="margin-top:10px">Rechnerisch nötig: <strong>' + f2(A) + ' mm²</strong> · ' +
+    'zulässiger Spannungsfall ' + f2(dUmax) + ' V</p>' +
+    '<p style="font-size:.85rem;color:var(--ink-mute);margin-bottom:0">Das ist nur die Bedingung ' +
+    'aus dem Spannungsfall. <strong>Strombelastbarkeit und Schutzorgan zusätzlich prüfen</strong> — ' +
+    'oft ist einer der beiden der bestimmende Faktor.</p>';
+}
+
+function calcOhm() {
+  const U = num('ohmU'), I = num('ohmI'), cos = num('ohmCos');
+  const drei = document.getElementById('ohmSys').value === '3';
+  if (!U || !I) { document.getElementById('ohmOut').innerHTML = '<p>Werte eingeben.</p>'; return; }
+  const R = U / I;
+  const P = drei ? Math.sqrt(3) * U * I * cos : U * I * cos;
+  document.getElementById('ohmOut').innerHTML =
+    '<div class="big">' + f2(P) + ' W<small>Leistung' + (drei ? ' (Drehstrom)' : '') + '</small></div>' +
+    '<p style="margin-top:10px">Widerstand R = U / I = <strong>' + f2(R) + ' Ω</strong>' +
+    (cos < 1 ? ' · Scheinleistung S = ' + f2(drei ? Math.sqrt(3) * U * I : U * I) + ' VA' : '') + '</p>';
+}
+
+['sfSystem','sfL','sfI','sfA','sfCos','sfK','sfU'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcSpannungsfall));
+['qSystem','qL','qI','qCos','qK','qU','qMax'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcQuerschnitt));
+['ohmU','ohmI','ohmCos','ohmSys'].forEach(id =>
+  document.getElementById(id).addEventListener('input', calcOhm));
+calcSpannungsfall(); calcQuerschnitt(); calcOhm();
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  { term: 'NIN', cat: 'recht', ref: 'SN 411000', def: 'Niederspannungs-Installations-Norm. Herausgeberin Electrosuisse, früher SEV 1000. Sagt <strong>wie</strong> installiert wird.' },
+  { term: 'EleG', cat: 'recht', ref: 'SR 734.0', def: 'Elektrizitätsgesetz vom 24. Juni 1902. Der gesetzliche Rahmen: elektrische Anlagen dürfen Personen, Tiere und Sachen nicht gefährden.' },
+  { term: 'NIV', cat: 'recht', ref: 'SR 734.27', def: 'Niederspannungs-Installationsverordnung. Regelt schweizweit verbindlich, wie Installationen geplant, erstellt, <strong>gemeldet und kontrolliert</strong> werden — inklusive Kontrollperioden und Bewilligungen.' },
+  { term: 'StV', cat: 'recht', ref: 'SR 734.2', def: 'Starkstromverordnung. Erstellung, Betrieb und Instandhaltung von Starkstromanlagen.' },
+  { term: 'NEV', cat: 'recht', ref: 'SR 734.26', def: 'Niederspannungs-Erzeugnisverordnung. Betrifft die <strong>Produkte</strong>, nicht die Installation.' },
+  { term: 'Anerkannte Regeln der Technik', cat: 'recht', def: 'Was in der Fachwelt als richtig gilt und sich bewährt hat. Verordnungen und Netzbetreiber verlangen sie — und die NIN gilt als solche. Darum ist sie faktisch verbindlich, obwohl sie kein Gesetz ist.' },
+  { term: 'HD 60364', cat: 'recht', def: 'Europäisches Harmonisierungsdokument (Cenelec), auf dem die NIN fachlich aufbaut. Darüber steht die internationale IEC 60364. Darum stimmen viele Werte mit der deutschen DIN VDE 0100 überein.' },
+  { term: 'Corrigendum', cat: 'recht', def: 'Berichtigung zu einer Norm. Zur NIN 2025 gibt es eines von Dezember 2025 — prüfen, ob die eigene Ausgabe es enthält.' },
+  { term: 'Prosumer', cat: 'recht', def: 'Anlage, die Strom sowohl <strong>bezieht als auch einspeist</strong>. Neu in NIN 2025 als Kapitel 8.2, mit Blick auf DC-Anwendungen.' },
+
+  { term: 'Basisschutz', cat: 'schutz', def: 'Schutz gegen <strong>direktes</strong> Berühren aktiver Teile: Basisisolierung, Abdeckungen, Umhüllungen, Hindernisse, Abstand ausserhalb des Handbereichs.' },
+  { term: 'Fehlerschutz', cat: 'schutz', def: 'Schutz gegen <strong>indirektes</strong> Berühren — also Teile, die erst im Fehlerfall Spannung führen. Meist durch automatische Abschaltung der Stromversorgung.' },
+  { term: 'Zusatzschutz', cat: 'schutz', def: 'Greift, wenn Basis- <em>und</em> Fehlerschutz versagen. Über eine Fehlerstrom-Schutzeinrichtung. <strong>Nie allein zulässig.</strong>' },
+  { term: 'Schutzmassnahme', cat: 'schutz', def: 'Besteht <strong>immer</strong> aus Basisschutz <em>und</em> Fehlerschutz. Der Zusatzschutz kommt obendrauf, ersetzt aber keinen der beiden.' },
+  { term: 'RCD / FI', cat: 'schutz', def: 'Fehlerstrom-Schutzeinrichtung. Vergleicht hin- und rückfliessenden Strom und schaltet bei Differenz ab. Für Zusatzschutz sehr empfindlich ausgelegt <span class="chk">⚠ Wert prüfen</span>.' },
+  { term: 'Aktive Teile', cat: 'schutz', def: 'Leiter und leitfähige Teile, die im <strong>normalen Betrieb</strong> unter Spannung stehen.' },
+  { term: 'Körper', cat: 'schutz', def: 'Berührbares leitfähiges Teil eines Betriebsmittels, das im Normalbetrieb <em>nicht</em> unter Spannung steht — im Fehlerfall aber schon. Zum Beispiel ein Metallgehäuse.' },
+  { term: 'Handbereich', cat: 'schutz', def: 'Der Bereich, den eine Person von ihrem Standort aus mit der Hand erreichen kann. Ausserhalb davon gilt Basisschutz durch Abstand.' },
+  { term: 'Automatische Abschaltung', cat: 'schutz', def: 'Die verbreitetste Fehlerschutz-Massnahme: im Fehlerfall trennt ein Schutzorgan den Stromkreis innerhalb einer vorgegebenen Zeit <span class="chk">⚠ Zeiten prüfen</span>.' },
+  { term: 'Potenzialausgleich', cat: 'schutz', def: 'Leitende Verbindung, die alle berührbaren leitfähigen Teile auf annähernd dasselbe Potenzial bringt — damit keine gefährliche Spannung zwischen ihnen entsteht.' },
+
+  { term: 'TN-S', cat: 'netz', def: 'N- und PE-Leiter im <strong>ganzen</strong> System <strong>getrennt</strong> geführt. S wie <em>séparé</em>.' },
+  { term: 'TN-C', cat: 'netz', def: 'N und PE im ganzen System in <strong>einem</strong> Leiter kombiniert — dem PEN. C wie <em>combiné</em>.' },
+  { term: 'TN-C-S', cat: 'netz', def: 'Zuerst kombiniert (PEN), <strong>ab einem Punkt getrennt</strong> in N und PE. Ab der Trennstelle dürfen sie nie wieder zusammengeführt werden.' },
+  { term: 'TT', cat: 'netz', def: 'Stromquelle geerdet, Körper an eine <strong>eigene, separate</strong> Erde — unabhängig von der Quelle.' },
+  { term: 'IT', cat: 'netz', def: 'Quelle isoliert oder hochohmig geerdet, Körper geerdet. Der <strong>erste Fehler schaltet nicht ab</strong>, sondern wird gemeldet. Für Anlagen, die nicht ausfallen dürfen.' },
+  { term: 'PEN-Leiter', cat: 'netz', def: 'Leiter, der die Funktion von Neutralleiter (N) und Schutzleiter (PE) in einem übernimmt. Existiert nur im TN-C-Teil.' },
+  { term: 'Erster Buchstabe', cat: 'netz', def: 'Beschreibt die Erdung der <strong>Stromquelle</strong>. T = direkt geerdet (<em>terre</em>), I = isoliert (<em>isolé</em>).' },
+  { term: 'Zweiter Buchstabe', cat: 'netz', def: 'Beschreibt die Erdung der <strong>Körper</strong>. T = eigene Erde, N = mit dem geerdeten Punkt der Quelle verbunden.' },
+
+  { term: 'Spannungsfall', cat: 'technik', def: 'Spannungsverlust über die Leitung. ΔU = (2 · L · I · cos φ) / (κ · A) einphasig, mit √3 statt 2 bei Drehstrom.' },
+  { term: 'κ (Kappa)', cat: 'technik', def: 'Elektrische Leitfähigkeit. Kupfer rund <strong>56 m/(Ω·mm²)</strong>, Aluminium rund <strong>35</strong>. Je höher, desto weniger Verlust.' },
+  { term: 'Normquerschnitte', cat: 'technik', def: 'Die verfügbaren Leiterquerschnitte in mm²: 1.5 · 2.5 · 4 · 6 · 10 · 16 · 25 · 35 · 50 · 70 · 95 · 120 · 150 · 185 · 240. Immer auf den nächstgrösseren aufrunden.' },
+  { term: 'Strombelastbarkeit', cat: 'technik', def: 'Wie viel Strom eine Leitung dauerhaft führen darf. Hängt von Querschnitt, Verlegeart, Häufung und Umgebungstemperatur ab <span class="chk">⚠ Tabelle in der NIN</span>.' },
+  { term: 'Erstprüfung', cat: 'technik', def: 'Prüfung einer neuen Installation vor der Inbetriebnahme — Besichtigen, Erproben, Messen.' },
+  { term: 'Schutzklasse', cat: 'technik', def: 'Klassifiziert Betriebsmittel nach ihrer Schutzmassnahme gegen elektrischen Schlag (I mit Schutzleiter, II schutzisoliert, III für Kleinspannung).' }
+];
+
+function renderBegriffe(filter, searchTerm) {
+  const grid = document.getElementById('begriffGrid');
+  const s = (searchTerm || '').toLowerCase();
+  const list = BEGRIFFE.filter(b =>
+    (filter === 'all' || b.cat === filter) &&
+    (!s || b.term.toLowerCase().includes(s) || b.def.toLowerCase().includes(s)));
+  grid.innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b =>
+    '<div class="begriff" data-cat="' + b.cat + '"><dt>' + b.term +
+    (b.ref ? '<span class="law-ref">' + b.ref + '</span>' : '') + '</dt><dd>' + b.def + '</dd></div>'
+  ).join('') || '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px">Keine Begriffe gefunden.</div>';
+}
+let bFilter = 'all', bSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    bFilter = chip.dataset.cat;
+    renderBegriffe(bFilter, bSearch);
+  });
+});
+document.getElementById('begriffSearch').addEventListener('input', e => {
+  bSearch = e.target.value; renderBegriffe(bFilter, bSearch);
+});
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+const CARDS = [
+  ['Aus welchen zwei Teilen besteht eine Schutzmassnahme immer?', '<strong>Basisschutz</strong> und <strong>Fehlerschutz</strong>. Der Zusatzschutz kommt obendrauf, ersetzt aber keinen der beiden.'],
+  ['Wogegen schützt der Basisschutz?', 'Gegen <strong>direktes</strong> Berühren aktiver Teile. Mittel: Basisisolierung, Abdeckungen, Umhüllungen, Hindernisse, Abstand ausserhalb des Handbereichs.'],
+  ['Wogegen schützt der Fehlerschutz?', 'Gegen <strong>indirektes</strong> Berühren — Teile, die erst im Fehlerfall Spannung führen. Meist durch automatische Abschaltung der Stromversorgung.'],
+  ['Darf ein FI allein als Schutzmassnahme dienen?', '<strong>Nein.</strong> Zusatzschutz ist nie allein zulässig. Er ergänzt Basis- und Fehlerschutz.'],
+  ['Was sagt der erste Buchstabe eines Netzsystems?', 'Die Erdung der <strong>Stromquelle</strong>. T = direkt geerdet (<em>terre</em>), I = isoliert oder über Impedanz (<em>isolé</em>).'],
+  ['Was sagt der zweite Buchstabe?', 'Die Erdung der <strong>Körper</strong>. T = eigene, separate Erde. N = mit dem geerdeten Punkt der Quelle verbunden.'],
+  ['Was bedeutet TN-S?', 'N und PE sind im <strong>ganzen</strong> System <strong>getrennt</strong> geführt. S wie <em>séparé</em>.'],
+  ['Was bedeutet TN-C?', 'N und PE sind im ganzen System <strong>kombiniert</strong> in einem Leiter — dem PEN. C wie <em>combiné</em>.'],
+  ['Was ist bei TN-C-S die wichtigste Regel?', 'Ab der Trennstelle dürfen N und PE <strong>nie wieder zusammengeführt</strong> werden.'],
+  ['Was passiert im IT-System beim ersten Fehler?', 'Es wird <strong>nicht abgeschaltet</strong> — der Fehler wird gemeldet. Für Anlagen, die nicht ausfallen dürfen.'],
+  ['Welche Bezeichnung trägt die NIN?', '<strong>SN 411000</strong>, aktuell Ausgabe 2025. Früher SEV 1000.'],
+  ['Wer gibt die NIN heraus?', '<strong>Electrosuisse</strong> — nicht der Bund. Darum ist sie formal eine private Norm.'],
+  ['Seit wann gilt die NIN 2025?', 'Seit dem <strong>1. Januar 2025</strong>.'],
+  ['Bis zu welcher Spannung gilt die NIN?', '<strong>1000 V Wechselspannung</strong> und <strong>1500 V Gleichspannung</strong>.'],
+  ['Wen oder was schützt die NIN?', '<strong>Personen, Nutztiere und Sachen.</strong>'],
+  ['Was ist 2025 neu dazugekommen?', 'Kapitel <strong>8.2 — Prosumer</strong>: kombinierte Erzeugungs- und Verbrauchsanlagen, mit Blick auf DC-Anwendungen.'],
+  ['Ist die NIN gesetzlich verbindlich?', 'Formal nein — sie ist eine private Norm. Faktisch ja: sie gilt als <strong>anerkannte Regel der Technik</strong>. Wer abweicht, muss gleichwertige Sicherheit <strong>beweisen</strong>.'],
+  ['Welche SR-Nummer hat das EleG?', '<strong>SR 734.0</strong> — Elektrizitätsgesetz vom 24. Juni 1902.'],
+  ['Welche SR-Nummer hat die NIV?', '<strong>SR 734.27</strong> — Niederspannungs-Installationsverordnung.'],
+  ['Was regelt die NIV?', 'Wie Installationen <strong>geplant, erstellt, gemeldet und kontrolliert</strong> werden. Dort stehen Kontrollperioden und Bewilligungen.'],
+  ['Merksatz zur Gesetzespyramide?', 'Das <strong>Gesetz</strong> sagt <em>dass</em>, die <strong>Verordnung</strong> sagt <em>wer und wann</em>, die <strong>Norm</strong> sagt <em>wie</em>.'],
+  ['Formel für den Spannungsfall, einphasig?', 'ΔU = (2 · L · I · cos φ) / (κ · A)'],
+  ['Was ändert sich bei Drehstrom?', 'Statt dem Faktor 2 steht <strong>√3</strong>: ΔU = (√3 · L · I · cos φ) / (κ · A)'],
+  ['Leitfähigkeit κ von Kupfer und Aluminium?', 'Kupfer rund <strong>56</strong>, Aluminium rund <strong>35</strong> m/(Ω·mm²).'],
+  ['Was ist ein Körper im Sinne der Norm?', 'Ein berührbares leitfähiges Teil, das im Normalbetrieb <strong>nicht</strong> unter Spannung steht — im Fehlerfall aber schon. Zum Beispiel ein Metallgehäuse.'],
+  ['Worauf baut die NIN fachlich auf?', 'Auf dem europäischen Harmonisierungsdokument <strong>HD 60364</strong> und darüber auf <strong>IEC 60364</strong>.']
+];
+
+let cardOrder = CARDS.map((_, i) => i), cardIdx = 0, cardFlipped = false;
+const $card = document.getElementById('flashCard');
+function paintCard() {
+  const [q, a] = CARDS[cardOrder[cardIdx]];
+  document.getElementById('flashSide').textContent = cardFlipped ? 'Antwort' : 'Frage';
+  const t = document.getElementById('flashText');
+  t.className = cardFlipped ? 'flash-back' : 'flash-front';
+  t.innerHTML = cardFlipped ? a : q;
+  document.getElementById('cardCount').textContent = (cardIdx + 1) + ' / ' + CARDS.length;
+  document.getElementById('cardProgress').style.width = ((cardIdx + 1) / CARDS.length * 100) + '%';
+}
+$card.addEventListener('click', () => { cardFlipped = !cardFlipped; paintCard(); });
+document.getElementById('cardNext').addEventListener('click', () => {
+  cardIdx = (cardIdx + 1) % CARDS.length; cardFlipped = false; paintCard();
+});
+document.getElementById('cardPrev').addEventListener('click', () => {
+  cardIdx = (cardIdx - 1 + CARDS.length) % CARDS.length; cardFlipped = false; paintCard();
+});
+document.getElementById('cardShuffle').addEventListener('click', () => {
+  for (let i = cardOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardOrder[i], cardOrder[j]] = [cardOrder[j], cardOrder[i]];
+  }
+  cardIdx = 0; cardFlipped = false; paintCard();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.key === 'ArrowRight') document.getElementById('cardNext').click();
+  if (e.key === 'ArrowLeft') document.getElementById('cardPrev').click();
+  if (e.key === ' ') { e.preventDefault(); $card.click(); }
+});
+paintCard();
+
+// ═══ QUIZ ═══
+const FRAGEN = [
+  { t: 'Gesetzespyramide', q: 'Ordne von oben nach unten: NIN, NIV, EleG, Bundesverfassung. Und welche Stufe sagt <em>wie</em> installiert wird?',
+    a: 'Bundesverfassung → EleG (SR 734.0) → NIV (SR 734.27) → NIN (SN 411000).<br>Die <strong>Norm</strong>, also die NIN, sagt <em>wie</em>.' },
+  { t: 'Gesetzespyramide', q: 'Ist die NIN gesetzlich verbindlich? Begründe.',
+    a: 'Formal <strong>nein</strong> — sie ist eine private Norm von Electrosuisse. Faktisch <strong>ja</strong>, weil Verordnungen und Netzbetreiber die «anerkannten Regeln der Technik» verlangen und die NIN als solche gilt. Wer abweicht, muss gleichwertige Sicherheit <strong>beweisen</strong>.' },
+  { t: 'Schutzkonzept', q: 'Aus welchen Teilen besteht eine Schutzmassnahme, und welche Rolle hat der Zusatzschutz?',
+    a: 'Immer aus <strong>Basisschutz</strong> und <strong>Fehlerschutz</strong>. Der Zusatzschutz greift, wenn beide versagen — er ist <strong>nie allein zulässig</strong>.' },
+  { t: 'Schutzkonzept', q: 'Was ist der Unterschied zwischen Basis- und Fehlerschutz?',
+    a: '<strong>Basisschutz</strong> schützt gegen <em>direktes</em> Berühren aktiver Teile (Isolierung, Abdeckung, Abstand). <strong>Fehlerschutz</strong> schützt gegen <em>indirektes</em> Berühren, also Teile, die erst im Fehlerfall Spannung führen — meist durch automatische Abschaltung.' },
+  { t: 'Schutzkonzept', q: 'Nenne drei Mittel des Basisschutzes.',
+    a: 'Basisisolierung · Abdeckungen oder Umhüllungen · Hindernisse · Abstand ausserhalb des Handbereichs (drei davon genügen).' },
+  { t: 'Netzsysteme', q: 'Wofür stehen der erste und der zweite Buchstabe bei TN, TT, IT?',
+    a: 'Erster Buchstabe = Erdung der <strong>Stromquelle</strong> (T = direkt geerdet, I = isoliert). Zweiter Buchstabe = Erdung der <strong>Körper</strong> (T = eigene Erde, N = mit dem geerdeten Punkt der Quelle verbunden).' },
+  { t: 'Netzsysteme', q: 'Erkläre den Unterschied zwischen TN-S, TN-C und TN-C-S.',
+    a: '<strong>TN-S</strong>: N und PE im ganzen System getrennt. <strong>TN-C</strong>: N und PE kombiniert als PEN. <strong>TN-C-S</strong>: zuerst kombiniert, ab einem Punkt getrennt — und ab dort nie wieder zusammenführen.' },
+  { t: 'Netzsysteme', q: 'Was passiert im IT-System beim ersten Fehler, und warum baut man so etwas?',
+    a: 'Es wird <strong>nicht abgeschaltet</strong>, der Fehler wird gemeldet. Man baut es für Anlagen, die nicht ausfallen dürfen — etwa im Spital oder in kritischen Produktionsprozessen.' },
+  { t: 'NIN-Grundlagen', q: 'Bezeichnung, Herausgeberin und Geltungsbereich der NIN?',
+    a: '<strong>SN 411000</strong> (früher SEV 1000), herausgegeben von <strong>Electrosuisse</strong>, gültig bis <strong>1000 V AC</strong> und <strong>1500 V DC</strong>. Schützt Personen, Nutztiere und Sachen.' },
+  { t: 'NIN-Grundlagen', q: 'Was ist in der Ausgabe 2025 neu dazugekommen?',
+    a: 'Das Kapitel <strong>8.2 zu Prosumern</strong> — kombinierte Erzeugungs- und Verbrauchsanlagen, mit Blick auf DC-Anwendungen. Dazu aktualisierte Normverweise, überarbeitete Grafiken und klarere Trennung von B+E, CH-Regelungen und Anmerkungen.' },
+  { t: 'Rechnen', q: 'Nenne die Formel für den Spannungsfall bei Einphasen- und bei Drehstrom.',
+    a: 'Einphasig: ΔU = (2 · L · I · cos φ) / (κ · A)<br>Drehstrom: ΔU = (√3 · L · I · cos φ) / (κ · A)' },
+  { t: 'Rechnen', q: 'Eine Kupferleitung, 2.5 mm², 25 m lang, 16 A, cos φ = 1, 230 V. Wie gross ist der Spannungsfall in Prozent?',
+    a: 'ΔU = (2 · 25 · 16 · 1) / (56 · 2.5) = 800 / 140 = <strong>5.71 V</strong><br>In Prozent: 5.71 / 230 = <strong>2.48 %</strong> — liegt unter dem üblichen Richtwert von 3 %.' }
+];
+
+function shuffleFragen() {
+  const idx = FRAGEN.map((_, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  const pick = idx.slice(0, 5);
+  document.getElementById('quizList').innerHTML = pick.map((n, i) => {
+    const f = FRAGEN[n];
+    return '<div class="quiz-q"><div class="q-head">' +
+      '<span class="q-num">' + (i + 1) + '</span>' +
+      '<span class="q-topic">' + f.t + '</span></div>' +
+      '<p class="q-text">' + f.q + '</p>' +
+      '<button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>' +
+      '<div class="solution"><p>' + f.a + '</p></div></div>';
+  }).join('');
+}
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const shown = sol.classList.toggle('show');
+  btn.textContent = shown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', shown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    btn.nextElementSibling.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+document.getElementById('quizNew').addEventListener('click', shuffleFragen);
+shuffleFragen();
+
+// 5-Minuten-Timer
+let tRest = 300, tId = null;
+const clock = document.getElementById('quizClock');
+function paintClock() {
+  const m = Math.floor(tRest / 60), s = tRest % 60;
+  clock.textContent = m + ':' + String(s).padStart(2, '0');
+  clock.style.color = tRest <= 30 ? 'var(--danger)' : '';
+}
+document.getElementById('quizTimer').addEventListener('click', function () {
+  if (tId) { clearInterval(tId); tId = null; tRest = 300; paintClock(); this.textContent = '▶ 5:00 starten'; return; }
+  this.textContent = '■ Stopp';
+  tId = setInterval(() => {
+    tRest--; paintClock();
+    if (tRest <= 0) { clearInterval(tId); tId = null; clock.textContent = 'Zeit!'; }
+  }, 1000);
+});
+paintClock();
+</script>
+</body>
+</html>

@@ -570,6 +570,17 @@ footer {
       <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
 
+    <a class="satellite" style="--sat:#f2a03d; --sd:0.75s" href="https://schule.yanikroesti.ch" target="_blank" rel="noopener">
+      <span class="box-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2.5 8 12 13l9.5-5L12 3z"/><path d="M6 10.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5.5"/><path d="M21.5 8v5"/></svg>
+      </span>
+      <span class="sat-txt">
+        <b>Schule.</b>
+        Stundenplan, Prüfungen, Noten und Lernpakete der Lehre — <span>schule.yanikroesti.ch</span>
+      </span>
+      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </a>
+
     <a class="satellite" style="--sat:#a95cd0; --sd:0.95s" href="http://100.127.39.18:8096/" target="_blank" rel="noopener nofollow">
       <span class="box-ico">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M10 8.4l4.6 2.6-4.6 2.6z"/><path d="M8 20.5h8"/></svg>
@@ -647,9 +658,11 @@ footer {
       <div class="foot-h">satellites</div>
       <ul class="foot-list">
         <li><a href="https://note.yanikroesti.com" target="_blank" rel="noopener">note.yanikroesti.com <span class="ext">&nearr;</span></a></li>
+        <li><a href="https://schule.yanikroesti.ch" target="_blank" rel="noopener">schule.yanikroesti.ch <span class="ext">&nearr;</span></a></li>
         <li><a href="http://100.127.39.18:8096/" target="_blank" rel="noopener nofollow">Video-Archiv (Jellyfin) <span class="ext">tailnet only</span></a></li>
         <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
         <li><a href="https://github.com/yanikroesti/notebox" target="_blank" rel="noopener">github / notebox <span class="ext">&nearr;</span></a></li>
+        <li><a href="https://github.com/yanikroesti/school" target="_blank" rel="noopener">github / school <span class="ext">&nearr;</span></a></li>
       </ul>
     </div>
     <div>
@@ -695,6 +708,7 @@ const PAGES = [
   { t: "Der Kaufvertrag", f: "artifacts/Kaufvertrag_Komplett.html", cat: "learning", lang: "de", kind: "study", pa: "#8b8b95", d: "ABU study sheet on purchase contracts — overview plus tabbed process timeline.", m: "apr ’26" },
   { t: "Kaufvertrag & Störungen — Lernpaket", f: "artifacts/kaufvertrag_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on contracts & breaches: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
   { t: "Geld & Kauf — Lernpaket", f: "artifacts/geld_und_kauf_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on money & purchasing: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
+  { t: "NIN 2025 — Lernpaket", f: "artifacts/nin_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#f2a03d", d: "Swiss low-voltage installation standard SN 411000:2025 — legal hierarchy, protection concept, earthing systems, voltage-drop calculators, 26 flashcards and a five-minute quiz.", m: "aug ’26" },
   { t: "Krankenkasse & Unfallversicherung — Lernpaket", f: "artifacts/krankenkasse_unfall_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "ABU pack on Swiss health & accident insurance: theory, four calculators, flashcards, quiz and study plan.", m: "aug ’26" },
   { t: "Elternabend: Markt & Konsum", f: "artifacts/elternabend.html", cat: "learning", lang: "de", kind: "slides", pa: "#e8a838", d: "Slideshow for a parents’ evening: Maslow, Wirtschaftskreislauf and BIP explained.", m: "apr ’26" },
   { t: "A8 Leissigentunnel", f: "artifacts/a8 tunnel 2page.html", cat: "learning", lang: "de", kind: "slides", pa: "#1a5fa8", d: "Two-page ABU handout on the A8 tunnel roadworks: reasons, timeline, impact.", m: "may ’26" },
