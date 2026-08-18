@@ -303,6 +303,39 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
 .pyr-mini .p3 { background: var(--warn-light); width: 85%; }
 .pyr-mini .p4 { background: var(--accent-light); width: 100%; }
 @media (max-width: 640px) { .pyr-mini div { width: 100% !important; } }
+
+/* ── Kurzteste und Zeugnis ── */
+.kt-next { border: 2px solid var(--accent); background: var(--accent-light); }
+.kt-next .card-title h3 { color: var(--accent-dark); }
+.kt-when { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-soft); }
+.kt-count { font-family: var(--font-display); font-size: 2.4rem; line-height: 1;
+            color: var(--accent-dark); }
+.kt-count small { display: block; font-family: var(--font-body); font-size: 0.78rem;
+                  font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+                  color: var(--ink-soft); }
+.kt-row { display: grid; grid-template-columns: 92px 1fr 62px 40px; gap: 10px;
+          align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); }
+.kt-row:last-child { border-bottom: 0; }
+.kt-row .d { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); }
+.kt-row .th { font-size: 0.9rem; }
+.kt-row input.g { width: 100%; padding: 6px 8px; text-align: center;
+                  font-family: var(--font-mono); font-weight: 600;
+                  border: 1px solid var(--border); border-radius: var(--radius-sm);
+                  background: var(--surface); color: var(--ink); }
+.kt-row .del { background: none; border: 0; color: var(--ink-mute); cursor: pointer;
+               font-size: 1rem; padding: 4px; }
+.kt-row .del:hover { color: var(--danger); }
+.kt-empty { padding: 20px; text-align: center; color: var(--ink-mute); font-size: 0.9rem; }
+.kt-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px; margin-top: 16px; }
+.kt-stat { background: var(--surface-alt); border-radius: var(--radius-sm); padding: 12px 14px; }
+.kt-stat b { display: block; font-family: var(--font-mono); font-size: 1.5rem; color: var(--ink); }
+.kt-stat span { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em;
+                color: var(--ink-soft); font-weight: 600; }
+.privat { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono);
+          font-size: 0.68rem; font-weight: 600; color: var(--success);
+          background: var(--success-light); border: 1px solid rgba(39,119,74,0.25);
+          padding: 2px 8px; border-radius: 999px; }
 </style>
 </head>
 <body>
@@ -320,6 +353,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   <button class="tab-btn" data-tab="begriffe">Begriffe</button>
   <button class="tab-btn" data-tab="karten">Karteikarten</button>
   <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="kurzteste">Kurzteste</button>
+  <button class="tab-btn" data-tab="zeugnis">Zeugnis</button>
   <button class="tab-btn" data-tab="lernplan">Lernplan</button>
 </nav>
 
@@ -694,6 +729,88 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   </div>
 </section>
 
+
+<!-- ═══════════ KURZTESTE ═══════════ -->
+<section class="tab-pane" id="kurzteste">
+  <h2>Kurzteste</h2>
+  <p>Jede Woche fünf Fragen in fünf Minuten. Einzeln fast egal — <strong>alle zusammen sind eine
+  ganze Note</strong>. Hier trägst du ein, was drankam und wie es lief.</p>
+
+  <div class="info-box success">
+    <p><span class="privat">🔒 bleibt auf diesem Gerät</span> &nbsp; Alles, was du hier einträgst,
+    liegt im <strong>localStorage deines Browsers</strong> — es wird nirgendwohin hochgeladen und
+    steht in keinem Repository. Auf einem anderen Gerät ist die Liste leer.</p>
+  </div>
+
+  <div class="card kt-next" id="ktNext"></div>
+
+  <div class="card">
+    <div class="card-title"><h3>Archiv</h3></div>
+    <p class="tool-desc">Was schon war. Note eintragen, sobald du sie hast.</p>
+    <div id="ktList"></div>
+    <div class="kt-stats" id="ktStats"></div>
+  </div>
+
+  <div class="tool">
+    <h3>Kurztest nachtragen</h3>
+    <div class="field-row">
+      <div class="field"><label>Datum</label><input type="date" id="ktDate"></div>
+      <div class="field" style="flex:2"><label>Thema</label><input type="text" id="ktThema" placeholder="z. B. Schutzmassnahmen"></div>
+      <div class="field"><label>Note</label><input type="number" id="ktNote" step="0.1" min="1" max="6" placeholder="—"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="ktAdd">Eintragen</button>
+      <button class="btn ghost" id="ktExport">Als JSON sichern</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ZEUGNIS ═══════════ -->
+<section class="tab-pane" id="zeugnis">
+  <h2>Zeugnis</h2>
+
+  <div class="info-box success">
+    <p><span class="privat">🔒 bleibt auf diesem Gerät</span> &nbsp; Auch hier: alles im
+    localStorage, nichts wird hochgeladen. Das Zeugnis-PDF selbst liegt im Obsidian-Vault
+    unter <span class="mono">Career/Apprenticeship/Zeugnisse/</span> und geht nie ins Repo.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><h3>Semesterübersicht</h3></div>
+    <p class="tool-desc">Trag deine Semesternoten ein — du siehst den Verlauf über die Lehre.</p>
+    <div id="zList"></div>
+  </div>
+
+  <div class="tool">
+    <h3>Note nachtragen</h3>
+    <div class="field-row">
+      <div class="field"><label>Semester</label>
+        <select id="zSem">
+          <option value="1">1. Semester</option>
+          <option value="2">2. Semester</option>
+          <option value="3" selected>3. Semester</option>
+          <option value="4">4. Semester</option>
+        </select></div>
+      <div class="field" style="flex:2"><label>Fach</label>
+        <select id="zFach">
+          <option>ABT</option><option>HTOG</option><option>ATD</option>
+          <option>ABU</option><option>Sport</option>
+        </select></div>
+      <div class="field"><label>Note</label><input type="number" id="zNote" step="0.1" min="1" max="6" placeholder="—"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="zAdd">Eintragen</button>
+      <button class="btn ghost" id="zExport">Als JSON sichern</button>
+    </div>
+  </div>
+
+  <div class="info-box warn">
+    <p><strong>Das Zeugnis-PDF konnte ich nicht auslesen.</strong> Es ist ein Scan ohne
+    Textebene — da steht für einen Computer nur ein Bild drin, keine Zahlen. Trag die Noten
+    einmal von Hand ein, dann rechnet alles Weitere von selbst.</p>
+  </div>
+</section>
+
 </div>
 
 <script>
@@ -977,6 +1094,135 @@ document.getElementById('quizTimer').addEventListener('click', function () {
   }, 1000);
 });
 paintClock();
+
+// ═══ KURZTESTE (localStorage, verlässt das Gerät nicht) ═══
+const KT_KEY = 'nin-kurzteste', Z_KEY = 'nin-zeugnis';
+const ldd = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } };
+const svv = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const deCH = s => s ? s.split('-').reverse().join('.') : '';
+
+function naechsterFreitag() {
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7));
+  return d;
+}
+function isoOf(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function renderKtNext() {
+  const f = naechsterFreitag();
+  const tage = Math.round((f - new Date().setHours(0, 0, 0, 0)) / 86400000);
+  document.getElementById('ktNext').innerHTML =
+    '<div class="card-title"><h3>Nächster Kurztest</h3>' +
+    '<span class="kt-when">' + deCH(isoOf(f)) + ' · Freitag · bei Stefan Wäfler</span></div>' +
+    '<div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:6px">' +
+      '<div class="kt-count">' + (tage === 0 ? 'heute' : tage) +
+        '<small>' + (tage === 0 ? '' : tage === 1 ? 'Tag' : 'Tage') + '</small></div>' +
+      '<div style="flex:1;min-width:220px">' +
+        '<p style="margin-bottom:8px"><strong>Lernziele — noch nicht erfasst.</strong></p>' +
+        '<p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:0">Sobald du mir die Lernziele ' +
+        'schickst, stehen sie hier als Checkliste. Bis dahin: Theorie-Tab durchgehen, ' +
+        'Karteikarten mischen, Quiz mit Timer.</p>' +
+      '</div></div>';
+}
+
+function renderKt() {
+  const list = ldd(KT_KEY).sort((a, b) => (a.d < b.d ? 1 : -1));
+  const host = document.getElementById('ktList');
+  host.innerHTML = list.length ? list.map((k, i) =>
+    '<div class="kt-row">' +
+      '<span class="d">' + deCH(k.d) + '</span>' +
+      '<span class="th">' + (k.t || '<em style="color:var(--ink-mute)">ohne Thema</em>') + '</span>' +
+      '<input class="g" type="number" step="0.1" min="1" max="6" value="' + (k.n != null ? k.n : '') +
+        '" data-i="' + i + '" placeholder="—">' +
+      '<button class="del" data-del="' + i + '" title="löschen">✕</button>' +
+    '</div>').join('')
+    : '<div class="kt-empty">Noch nichts eingetragen. Nach dem nächsten Freitag hier nachtragen.</div>';
+
+  const noten = list.map(k => parseFloat(k.n)).filter(n => n >= 1 && n <= 6);
+  const schnitt = noten.length ? noten.reduce((a, b) => a + b, 0) / noten.length : null;
+  document.getElementById('ktStats').innerHTML =
+    '<div class="kt-stat"><b>' + list.length + '</b><span>Kurzteste</span></div>' +
+    '<div class="kt-stat"><b>' + noten.length + '</b><span>benotet</span></div>' +
+    '<div class="kt-stat"><b>' + (schnitt ? schnitt.toFixed(2) : '–') + '</b><span>Schnitt = 1 Note</span></div>' +
+    '<div class="kt-stat"><b>' + (schnitt ? (Math.round(schnitt * 2) / 2).toFixed(1) : '–') + '</b><span>gerundet</span></div>';
+}
+
+document.getElementById('ktAdd').addEventListener('click', () => {
+  const d = document.getElementById('ktDate').value;
+  if (!d) { alert('Bitte ein Datum wählen.'); return; }
+  const list = ldd(KT_KEY);
+  list.push({ d, t: document.getElementById('ktThema').value.trim(),
+              n: document.getElementById('ktNote').value || null });
+  svv(KT_KEY, list);
+  document.getElementById('ktThema').value = '';
+  document.getElementById('ktNote').value = '';
+  renderKt();
+});
+document.getElementById('ktList').addEventListener('input', e => {
+  if (!e.target.matches('input.g')) return;
+  const list = ldd(KT_KEY).sort((a, b) => (a.d < b.d ? 1 : -1));
+  list[+e.target.dataset.i].n = e.target.value || null;
+  svv(KT_KEY, list);
+  renderKt();
+});
+document.getElementById('ktList').addEventListener('click', e => {
+  const b = e.target.closest('[data-del]'); if (!b) return;
+  const list = ldd(KT_KEY).sort((a, b2) => (a.d < b2.d ? 1 : -1));
+  list.splice(+b.dataset.del, 1); svv(KT_KEY, list); renderKt();
+});
+function download(name, obj) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' }));
+  a.download = name; a.click(); URL.revokeObjectURL(a.href);
+}
+document.getElementById('ktExport').addEventListener('click', () => download('nin-kurzteste.json', ldd(KT_KEY)));
+document.getElementById('ktDate').value = isoOf(naechsterFreitag());
+renderKtNext(); renderKt();
+
+// ═══ ZEUGNIS ═══
+function renderZ() {
+  const list = ldd(Z_KEY);
+  const sem = [1, 2, 3, 4];
+  const host = document.getElementById('zList');
+  const rows = sem.map(s => {
+    const eintraege = list.filter(x => +x.s === s);
+    if (!eintraege.length) return '';
+    const noten = eintraege.map(e => parseFloat(e.n)).filter(n => n >= 1 && n <= 6);
+    const schnitt = noten.length ? (noten.reduce((a, b) => a + b, 0) / noten.length) : null;
+    return '<div style="margin-bottom:16px">' +
+      '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">' +
+        '<strong>' + s + '. Semester</strong>' +
+        '<span class="kt-when">Schnitt ' + (schnitt ? schnitt.toFixed(2) : '–') + '</span></div>' +
+      eintraege.map((e, i) =>
+        '<div class="kt-row"><span class="d">' + e.f + '</span><span class="th"></span>' +
+        '<input class="g" type="number" step="0.1" min="1" max="6" value="' + (e.n || '') +
+          '" data-z="' + list.indexOf(e) + '">' +
+        '<button class="del" data-zdel="' + list.indexOf(e) + '">✕</button></div>').join('') +
+      '</div>';
+  }).join('');
+  host.innerHTML = rows || '<div class="kt-empty">Noch keine Noten. Trag sie aus dem Zeugnis-PDF ein.</div>';
+}
+document.getElementById('zAdd').addEventListener('click', () => {
+  const list = ldd(Z_KEY);
+  list.push({ s: document.getElementById('zSem').value,
+              f: document.getElementById('zFach').value,
+              n: document.getElementById('zNote').value || null });
+  svv(Z_KEY, list); document.getElementById('zNote').value = ''; renderZ();
+});
+document.getElementById('zList').addEventListener('input', e => {
+  if (!e.target.matches('input.g')) return;
+  const list = ldd(Z_KEY); list[+e.target.dataset.z].n = e.target.value || null;
+  svv(Z_KEY, list);
+});
+document.getElementById('zList').addEventListener('click', e => {
+  const b = e.target.closest('[data-zdel]'); if (!b) return;
+  const list = ldd(Z_KEY); list.splice(+b.dataset.zdel, 1); svv(Z_KEY, list); renderZ();
+});
+document.getElementById('zExport').addEventListener('click', () => download('nin-zeugnis.json', ldd(Z_KEY)));
+renderZ();
+
 </script>
 </body>
 </html>
