@@ -281,6 +281,9 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   .tool { padding: 16px 16px; }
 }
 /* ── Ergänzungen für das NIN-Paket ── */
+.ok-chk { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; color: var(--success);
+         background: var(--success-light); border: 1px solid rgba(39,119,74,0.28);
+         padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
 .chk { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; color: var(--warn);
        background: var(--warn-light); border: 1px solid rgba(183,121,31,0.3);
        padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
@@ -376,10 +379,12 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
     <p>Gesetzespyramide, SR-Nummern, die Bezeichnung SN 411000 und die Neuerungen 2025 stammen
     aus Fedlex, Electrosuisse und eit.swiss. Das <em>Schutzkonzept</em> und die Netzsysteme sind
     der internationale Rahmen aus HD 60364 / IEC 60364, auf dem die NIN aufbaut.</p>
-    <p><strong>Konkrete Zahlen sind mit <span class="chk">⚠ prüfen</span> markiert.</strong>
-    Die NIN ist kostenpflichtig, ihre Tabellen stehen nicht frei im Netz. Die markierten Werte
-    kommen aus der deutschen DIN VDE 0100-410 mit derselben HD-Grundlage — meistens identisch,
-    aber schlag sie einmal in deiner NIN nach. Eine falsch gelernte Zahl ist schlimmer als eine Lücke.</p>
+    <p><strong>Die Abschaltzeiten und der FI-Wert sind inzwischen
+    <span class="ok-chk">✓ geprüft</span></strong> — Yanik hat sie am 18.08.2026 in der eigenen
+    NIN-Ausgabe nachgeschlagen, sie stimmen mit den Quellen überein.</p>
+    <p>Was noch mit <span class="chk">⚠ prüfen</span> markiert ist, sind die
+    <strong>Leiterfarben</strong> in Abschnitt 5. Blau für N und grün-gelb für PE gelten sicher;
+    bei L1/L2/L3 und der PEN-Markierung schlag einmal nach, dann fallen auch diese Marker weg.</p>
   </div>
 
   <div class="card">
@@ -624,13 +629,13 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
       <table>
         <thead><tr><th>Wert</th><th>Grösse</th><th></th></tr></thead>
         <tbody>
-          <tr><td>Bemessungs-Differenzstrom für Zusatzschutz</td><td class="mono">≤ 30 mA</td><td><span class="chk">⚠ prüfen</span></td></tr>
-          <tr><td>Abschaltzeit Endstromkreise ≤ 32 A, System TN, 230/400 V</td><td class="mono">0,4 s</td><td><span class="chk">⚠ prüfen</span></td></tr>
-          <tr><td>Abschaltzeit Verteilstromkreise / &gt; 32 A, System TN</td><td class="mono">5 s</td><td><span class="chk">⚠ prüfen</span></td></tr>
+          <tr><td>Bemessungs-Differenzstrom für Zusatzschutz</td><td class="mono">≤ 30 mA</td><td><span class="ok-chk">✓ geprüft</span></td></tr>
+          <tr><td>Abschaltzeit Endstromkreise ≤ 32 A, System TN, 230/400 V</td><td class="mono">0,4 s</td><td><span class="ok-chk">✓ geprüft</span></td></tr>
+          <tr><td>Abschaltzeit Verteilstromkreise / &gt; 32 A, System TN</td><td class="mono">5 s</td><td><span class="ok-chk">✓ geprüft</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="src">Zahlen aus DIN VDE 0100-410 (gleiche HD-60364-Grundlage) — <strong>in der NIN gegenprüfen</strong>.</p>
+    <p class="src">Die Zahlen kamen aus der DIN VDE 0100-410 (gleiche HD-60364-Grundlage) und wurden am 18.08.2026 <strong>in der NIN gegengeprüft</strong> — sie stimmen.</p>
   </div>
 
   <div class="card">
