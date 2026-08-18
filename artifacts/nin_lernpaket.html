@@ -361,6 +361,16 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
 <!-- ═══════════ THEORIE ═══════════ -->
 <section class="tab-pane active" id="theorie">
 
+  <div class="info-box success">
+    <p><strong>Die vier Lernziele für den Kurztest</strong> — alles darunter ist danach sortiert.</p>
+    <ol style="margin:8px 0 0 18px">
+      <li>Weiss, <strong>wie viele Kapitel</strong> die NIN hat &nbsp;<a href="#k-kapitel" style="font-size:.85em">→ Abschnitt 3</a></li>
+      <li>Kennt je <strong>eine internationale und eine europäische Normenorganisation</strong> &nbsp;<a href="#k-orga" style="font-size:.85em">→ Abschnitt 4</a></li>
+      <li>Kennt die <strong>Schweizer Gesetzespyramide</strong> im Elektrobereich &nbsp;<a href="#k-pyramide" style="font-size:.85em">→ Abschnitt 1</a></li>
+      <li>Kennt die <strong>Symbole der Leiterbezeichnungen</strong> &nbsp;<a href="#k-leiter" style="font-size:.85em">→ Abschnitt 5</a></li>
+    </ol>
+  </div>
+
   <div class="info-box warn">
     <p><strong>Bevor du loslegst — was belegt ist und was nicht.</strong></p>
     <p>Gesetzespyramide, SR-Nummern, die Bezeichnung SN 411000 und die Neuerungen 2025 stammen
@@ -373,7 +383,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="num">1</span><h3>Wo die NIN im Recht steht</h3></div>
+    <div class="card-title" id="k-pyramide"><span class="num">1</span><h3>Wo die NIN im Recht steht</h3></div>
     <p>Die häufigste Kurztest-Frage ist nicht «was steht in der NIN», sondern «warum gilt sie
     überhaupt». Die Antwort ist die Gesetzespyramide — von allgemein oben nach konkret unten.</p>
 
@@ -441,7 +451,129 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="num">3</span><h3>Wie die NIN aufgebaut ist</h3></div>
+    <div class="card-title" id="k-kapitel"><span class="num">3</span><h3>Wie viele Kapitel hat die NIN?</h3></div>
+
+    <div class="info-box success">
+      <p><strong>Antwort: 8.</strong> Sieben klassische Kapitel — sie spiegeln die Teile 1 bis 7 der
+      IEC 60364 — und dazu <strong>Kapitel 8</strong>, das später hinzugekommen ist.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kap.</th><th>Titel</th><th>Worum es geht</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><strong>1</strong></td><td>Anwendungsbereich, Zweck, Grundsätze</td><td>Wofür die Norm gilt und was sie will</td></tr>
+          <tr><td class="mono"><strong>2</strong></td><td>Begriffsbestimmungen</td><td>Das Wörterbuch — hier steht, was «Körper» oder «aktives Teil» heisst</td></tr>
+          <tr><td class="mono"><strong>3</strong></td><td>Bestimmungen allgemeiner Merkmale</td><td>Netzsysteme, äussere Einflüsse, Spannungsbereiche</td></tr>
+          <tr><td class="mono"><strong>4</strong></td><td>Schutzmassnahmen</td><td>Das Herzstück — Schutz gegen elektrischen Schlag und alles Weitere</td></tr>
+          <tr><td class="mono"><strong>5</strong></td><td>Wahl und Anwendung der Betriebsmittel</td><td>Was man einbaut und wie</td></tr>
+          <tr><td class="mono"><strong>6</strong></td><td>Prüfungen</td><td>Erstprüfung, periodische Kontrolle</td></tr>
+          <tr><td class="mono"><strong>7</strong></td><td>Zusatzbestimmungen für Räume und Bereiche besonderer Art</td><td>Badezimmer, Schwimmbad, Baustelle, Landwirtschaft …</td></tr>
+          <tr class="hl"><td class="mono"><strong>8</strong></td><td>Energieeffizienz · Prosumer</td><td><strong>8.1</strong> Energieeffizienz · <strong>8.2</strong> kombinierte Erzeugungs-/Verbrauchsanlagen — <em>8.2 ist neu in der Ausgabe 2025</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Die wichtigsten Unterkapitel</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kapitel 4 — Schutzmassnahmen</th><th>Kapitel 5 — Betriebsmittel</th></tr></thead>
+        <tbody>
+          <tr><td>4.1 Schutz gegen elektrischen Schlag</td><td>5.1 Allgemeine Bestimmungen</td></tr>
+          <tr><td>4.2 Schutz gegen thermische Einflüsse</td><td>5.2 Kabel und Leiter</td></tr>
+          <tr><td>4.3 Schutz gegen Überstrom</td><td>5.3 Schalt-, Schutz- und Steuergeräte</td></tr>
+          <tr><td>4.4 Schutz gegen Überspannung</td><td>5.4 Erdung und Schutzleiter</td></tr>
+          <tr><td>4.5 Schutz gegen Unterspannung</td><td>5.5 Andere Betriebsmittel</td></tr>
+          <tr><td>4.6 Trennen und Schalten</td><td>5.6 Sicherheitsstromversorgung</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box warn">
+      <p><strong>Wenn der Lehrer «7» hört und «8» erwartet — oder umgekehrt.</strong>
+      Die klassische Gliederung hat <strong>7</strong> Kapitel; Kapitel <strong>8</strong> kam später dazu.
+      Sag im Zweifel beides: «Sieben klassische Kapitel, plus Kapitel 8 für Energieeffizienz und
+      Prosumer — also acht.» Das ist immer richtig. <span class="chk">⚠ in deiner NIN kurz nachzählen</span></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" id="k-orga"><span class="num">4</span><h3>Normenorganisationen</h3></div>
+    <p>Die NIN erfindet nichts neu — sie übernimmt internationale Regeln und passt sie auf die
+    Schweiz an. Der Weg geht von oben nach unten:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ebene</th><th>Organisation</th><th>Steht für</th><th>Dokument</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><strong>International</strong></td><td class="mono"><strong>IEC</strong></td>
+            <td>International Electrotechnical Commission</td><td class="mono">IEC 60364</td></tr>
+          <tr class="hl"><td><strong>Europäisch</strong></td><td class="mono"><strong>Cenelec</strong></td>
+            <td>Comité Européen de Normalisation Électrotechnique</td><td class="mono">HD 60364</td></tr>
+          <tr><td>Schweiz</td><td class="mono">Electrosuisse</td>
+            <td>gibt die NIN heraus</td><td class="mono">SN 411000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box success">
+      <p><strong>Wenn nach je einer gefragt wird:</strong> international <strong>IEC</strong>,
+      europäisch <strong>Cenelec</strong>. Das ist die Antwort.</p>
+    </div>
+
+    <p>Falls jemand nach den <em>allgemeinen</em> Organisationen fragt (nicht nur Elektro):
+    international <strong>ISO</strong>, europäisch <strong>CEN</strong>, national <strong>SNV</strong>.
+    IEC und Cenelec sind jeweils die elektrotechnischen Schwesterorganisationen dazu.</p>
+
+    <div class="info-box">
+      <p><strong>Merkkette.</strong> IEC → Cenelec → NIN.
+      Weltweit gedacht, europäisch harmonisiert, schweizerisch umgesetzt.
+      Darum stimmen viele NIN-Werte mit der deutschen DIN VDE 0100 überein — beide kommen
+      aus derselben Quelle.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" id="k-leiter"><span class="num">5</span><h3>Leiterbezeichnungen und ihre Symbole</h3></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Symbol</th><th>Name</th><th>Funktion</th><th>Farbe</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><strong>L1 · L2 · L3</strong></td><td>Aussenleiter (Polleiter, umgangssprachlich «Phasen»)</td>
+            <td>führen die Betriebsspannung</td><td>braun · schwarz · grau <span class="chk">⚠ prüfen</span></td></tr>
+          <tr><td class="mono"><strong>N</strong></td><td>Neutralleiter</td>
+            <td>Rückleiter, mit dem geerdeten Sternpunkt verbunden</td><td><strong>blau</strong></td></tr>
+          <tr><td class="mono"><strong>PE</strong></td><td>Schutzleiter (<em>protective earth</em>)</td>
+            <td>verbindet Körper mit der Erde</td><td><strong>grün-gelb</strong></td></tr>
+          <tr><td class="mono"><strong>PEN</strong></td><td>PEN-Leiter</td>
+            <td>Schutz- <em>und</em> Neutralleiter in einem — nur im TN-C-Teil</td><td>grün-gelb, an den Enden blau markiert <span class="chk">⚠ prüfen</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box danger">
+      <p><strong>Zwei Farben sind unantastbar.</strong> <strong>Grün-gelb</strong> ist ausschliesslich
+      dem Schutzleiter vorbehalten und darf für nichts anderes verwendet werden.
+      <strong>Blau</strong> ist für den Neutralleiter reserviert. Wer eine dieser Farben zweckentfremdet,
+      baut eine Falle für den Nächsten, der die Anlage öffnet.</p>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Alte Bezeichnungen.</strong> L1, L2, L3 hiessen früher <strong>R, S, T</strong>.
+      In alten Anlagen begegnet dir das noch — dann ist besondere Vorsicht angebracht,
+      weil auch die Farbregeln damals andere waren.</p>
+    </div>
+
+    <div class="info-box warn">
+      <p><strong>Farben unbedingt gegenprüfen.</strong> Die Aussenleiterfarben und die PEN-Markierung
+      sind in der Schweiz in der NIN geregelt (Kapitel 5). Blau für N und grün-gelb für PE gelten
+      sicher — bei L1/L2/L3 schlag die Tabelle in deiner Ausgabe nach, bevor du sie auswendig lernst.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="num">6</span><h3>Wie der Stoff gegliedert ist</h3></div>
     <p>Im Kurztest zählt Tempo. Wer weiss, in welchem Bereich etwas steht, findet es in Sekunden.</p>
     <div class="table-wrap">
       <table>
@@ -460,7 +592,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="num">4</span><h3>Das Schutzkonzept</h3></div>
+    <div class="card-title"><span class="num">7</span><h3>Das Schutzkonzept</h3></div>
     <p>Der Stoff, der am häufigsten drankommt — weil er sich in einem Satz abfragen lässt.
     <strong>Eine Schutzmassnahme besteht immer aus Basisschutz und Fehlerschutz.</strong>
     Der Zusatzschutz kommt obendrauf.</p>
@@ -502,7 +634,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="num">5</span><h3>Netzsysteme</h3></div>
+    <div class="card-title"><span class="num">8</span><h3>Netzsysteme</h3></div>
     <p>Die Buchstaben sind kein Zufall, und genau das wird gefragt. Der <strong>erste</strong>
     Buchstabe beschreibt die Erdung der <strong>Stromquelle</strong>, der <strong>zweite</strong>
     die Erdung der <strong>Körper</strong> der Betriebsmittel.</p>
@@ -724,6 +856,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
       <li><a href="https://de.wikipedia.org/wiki/Niederspannungs-Installations-Norm" target="_blank" rel="noopener">Wikipedia — NIN</a> · SR-Nummern, SN 411000</li>
       <li><a href="https://www.eit.swiss/de/recht-und-normen/normen" target="_blank" rel="noopener">eit.swiss — Recht und Normen</a> · anerkannte Regeln der Technik</li>
       <li><a href="https://www.mueller-pe.ch/nin_inhalt.php" target="_blank" rel="noopener">NIN-Arbeitsblätter, P.-E. Müller</a> · Gliederung des Stoffs</li>
+      <li><a href="https://www.ineltec.ch/de/c/was-steckt-hinter-nin-die-niederspannungs-installationsnorm-sn-411000-im-fokus.54688" target="_blank" rel="noopener">Ineltec — Was steckt hinter NIN</a> · IEC und Cenelec als Grundlage</li>
       <li><a href="https://www.dgwz.de/schutzmassnahmen-gegen-elektrischen-schlag" target="_blank" rel="noopener">DGWZ — Schutz gegen elektrischen Schlag</a> · Schutzkonzept</li>
     </ul>
   </div>
@@ -890,6 +1023,15 @@ calcSpannungsfall(); calcQuerschnitt(); calcOhm();
 
 // ═══ BEGRIFFE ═══
 const BEGRIFFE = [
+  { term: 'IEC', cat: 'recht', def: '<strong>International Electrotechnical Commission</strong> — die <strong>internationale</strong> Normenorganisation für Elektrotechnik. Gibt die IEC 60364 heraus, auf der die NIN letztlich beruht.' },
+  { term: 'Cenelec', cat: 'recht', def: '<strong>Comité Européen de Normalisation Électrotechnique</strong> — die <strong>europäische</strong> Normenorganisation für Elektrotechnik. Macht aus IEC-Normen die Harmonisierungsdokumente HD 60364.' },
+  { term: 'ISO / CEN / SNV', cat: 'recht', def: 'Die <em>allgemeinen</em> Pendants: ISO international, CEN europäisch, SNV national. IEC und Cenelec sind die elektrotechnischen Schwesterorganisationen dazu.' },
+  { term: 'Kapitel der NIN', cat: 'recht', def: '<strong>Acht.</strong> Sieben klassische (1 Anwendungsbereich · 2 Begriffe · 3 allgemeine Merkmale · 4 Schutzmassnahmen · 5 Betriebsmittel · 6 Prüfungen · 7 besondere Räume) plus <strong>Kapitel 8</strong> mit 8.1 Energieeffizienz und 8.2 Prosumer.' },
+  { term: 'L1, L2, L3', cat: 'technik', def: '<strong>Aussenleiter</strong> (Polleiter, umgangssprachlich Phasen). Führen die Betriebsspannung. Früher R, S, T.' },
+  { term: 'N (Neutralleiter)', cat: 'technik', def: 'Rückleiter, mit dem geerdeten Sternpunkt verbunden. Farbe <strong>blau</strong> — ausschliesslich dafür reserviert.' },
+  { term: 'PE (Schutzleiter)', cat: 'technik', def: '<em>Protective Earth</em>. Verbindet die Körper der Betriebsmittel mit der Erde. Farbe <strong>grün-gelb</strong> — darf für nichts anderes verwendet werden.' },
+  { term: 'Grün-gelb', cat: 'technik', def: 'Ausschliesslich dem <strong>Schutzleiter</strong> vorbehalten. Nie für einen anderen Zweck verwenden — das ist eine Falle für jeden, der die Anlage später öffnet.' },
+  { term: 'R, S, T', cat: 'technik', def: 'Die <strong>alten</strong> Bezeichnungen für L1, L2, L3. In Altanlagen noch anzutreffen — dort galten auch andere Farbregeln, also besonders vorsichtig sein.' },
   { term: 'NIN', cat: 'recht', ref: 'SN 411000', def: 'Niederspannungs-Installations-Norm. Herausgeberin Electrosuisse, früher SEV 1000. Sagt <strong>wie</strong> installiert wird.' },
   { term: 'EleG', cat: 'recht', ref: 'SR 734.0', def: 'Elektrizitätsgesetz vom 24. Juni 1902. Der gesetzliche Rahmen: elektrische Anlagen dürfen Personen, Tiere und Sachen nicht gefährden.' },
   { term: 'NIV', cat: 'recht', ref: 'SR 734.27', def: 'Niederspannungs-Installationsverordnung. Regelt schweizweit verbindlich, wie Installationen geplant, erstellt, <strong>gemeldet und kontrolliert</strong> werden — inklusive Kontrollperioden und Bewilligungen.' },
@@ -955,6 +1097,16 @@ renderBegriffe('all', '');
 
 // ═══ KARTEIKARTEN ═══
 const CARDS = [
+  ['Wie viele Kapitel hat die NIN?', '<strong>Acht.</strong> Sieben klassische plus Kapitel 8 (8.1 Energieeffizienz, 8.2 Prosumer). Sag im Zweifel beides — «sieben klassische, plus Kapitel 8, also acht».'],
+  ['Nenne die sieben klassischen NIN-Kapitel.', '1 Anwendungsbereich, Zweck, Grundsätze · 2 Begriffsbestimmungen · 3 Bestimmungen allgemeiner Merkmale · 4 Schutzmassnahmen · 5 Wahl und Anwendung der Betriebsmittel · 6 Prüfungen · 7 Zusatzbestimmungen für Räume besonderer Art'],
+  ['In welchem Kapitel stehen die Schutzmassnahmen?', 'In <strong>Kapitel 4</strong>. Unterteilt in 4.1 elektrischer Schlag, 4.2 thermische Einflüsse, 4.3 Überstrom, 4.4 Überspannung, 4.5 Unterspannung, 4.6 Trennen und Schalten.'],
+  ['In welchem Kapitel stehen Kabel und Leiter?', 'In <strong>Kapitel 5</strong> (Wahl und Anwendung der Betriebsmittel), genauer <strong>5.2</strong>.'],
+  ['Nenne je eine internationale und eine europäische Normenorganisation.', 'International <strong>IEC</strong> (International Electrotechnical Commission), europäisch <strong>Cenelec</strong> (Comité Européen de Normalisation Électrotechnique).'],
+  ['Welchen Weg nimmt eine Norm bis in die NIN?', '<strong>IEC → Cenelec → NIN.</strong> Die IEC 60364 wird von Cenelec zum Harmonisierungsdokument HD 60364, und Electrosuisse setzt das als SN 411000 für die Schweiz um.'],
+  ['Wofür stehen L1, L2 und L3?', '<strong>Aussenleiter</strong> (Polleiter, umgangssprachlich Phasen) — sie führen die Betriebsspannung. Früher hiessen sie R, S, T.'],
+  ['Welche Farbe hat der Neutralleiter?', '<strong>Blau</strong> — und diese Farbe ist ausschliesslich für ihn reserviert.'],
+  ['Welche Farbe hat der Schutzleiter, und was gilt für sie?', '<strong>Grün-gelb.</strong> Sie ist ausschliesslich dem Schutzleiter vorbehalten und darf für keinen anderen Zweck verwendet werden.'],
+  ['Was ist ein PEN-Leiter und wo kommt er vor?', 'Er übernimmt <strong>Schutz- und Neutralleiter in einem</strong>. Er existiert nur im <strong>TN-C-Teil</strong> eines Systems — ab der Trennstelle in TN-C-S nicht mehr.'],
   ['Aus welchen zwei Teilen besteht eine Schutzmassnahme immer?', '<strong>Basisschutz</strong> und <strong>Fehlerschutz</strong>. Der Zusatzschutz kommt obendrauf, ersetzt aber keinen der beiden.'],
   ['Wogegen schützt der Basisschutz?', 'Gegen <strong>direktes</strong> Berühren aktiver Teile. Mittel: Basisisolierung, Abdeckungen, Umhüllungen, Hindernisse, Abstand ausserhalb des Handbereichs.'],
   ['Wogegen schützt der Fehlerschutz?', 'Gegen <strong>indirektes</strong> Berühren — Teile, die erst im Fehlerfall Spannung führen. Meist durch automatische Abschaltung der Stromversorgung.'],
@@ -1018,6 +1170,16 @@ paintCard();
 
 // ═══ QUIZ ═══
 const FRAGEN = [
+  { t: 'Lernziel 1', q: 'Wie viele Kapitel hat die NIN? Nenne mindestens vier davon mit Nummer.',
+    a: '<strong>Acht</strong> — sieben klassische plus Kapitel 8.<br>1 Anwendungsbereich, Zweck, Grundsätze · 2 Begriffsbestimmungen · 3 Bestimmungen allgemeiner Merkmale · 4 Schutzmassnahmen · 5 Wahl und Anwendung der Betriebsmittel · 6 Prüfungen · 7 Räume besonderer Art · 8 Energieeffizienz und Prosumer.' },
+  { t: 'Lernziel 2', q: 'Nenne je eine internationale und eine europäische Normenorganisation im Elektrobereich.',
+    a: 'International die <strong>IEC</strong> (International Electrotechnical Commission), europäisch die <strong>Cenelec</strong> (Comité Européen de Normalisation Électrotechnique). Weg: IEC 60364 → HD 60364 → SN 411000.' },
+  { t: 'Lernziel 4', q: 'Nenne die Symbole der Leiterbezeichnungen und die Farbe von N und PE.',
+    a: '<strong>L1, L2, L3</strong> Aussenleiter · <strong>N</strong> Neutralleiter, <strong>blau</strong> · <strong>PE</strong> Schutzleiter, <strong>grün-gelb</strong> · <strong>PEN</strong> beides in einem, nur im TN-C-Teil.' },
+  { t: 'Lernziel 4', q: 'Warum darf grün-gelb für nichts anderes als den Schutzleiter verwendet werden?',
+    a: 'Weil die Farbe weltweit eindeutig für den Schutzleiter reserviert ist. Wer sie zweckentfremdet, bringt jeden in Gefahr, der die Anlage später öffnet und sich auf die Farbe verlässt. Dasselbe gilt für <strong>blau</strong> beim Neutralleiter.' },
+  { t: 'Lernziel 1', q: 'In welchem Kapitel der NIN suchst du die Schutzmassnahmen, in welchem die Kabel?',
+    a: 'Schutzmassnahmen in <strong>Kapitel 4</strong>, Kabel und Leiter in <strong>Kapitel 5</strong> (genauer 5.2, innerhalb «Wahl und Anwendung der Betriebsmittel»).' },
   { t: 'Gesetzespyramide', q: 'Ordne von oben nach unten: NIN, NIV, EleG, Bundesverfassung. Und welche Stufe sagt <em>wie</em> installiert wird?',
     a: 'Bundesverfassung → EleG (SR 734.0) → NIV (SR 734.27) → NIN (SN 411000).<br>Die <strong>Norm</strong>, also die NIN, sagt <em>wie</em>.' },
   { t: 'Gesetzespyramide', q: 'Ist die NIN gesetzlich verbindlich? Begründe.',
