@@ -309,6 +309,19 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
 
 /* ── Kurzteste und Zeugnis ── */
 .kt-next { border: 2px solid var(--accent); background: var(--accent-light); }
+
+/* Lernziel-Checkliste im Kurzteste-Tab */
+.lz-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
+.lz-prog { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-soft); margin-left: auto; }
+.lz { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.lz li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.92rem; line-height: 1.45; }
+.lz input { margin: 3px 0 0; width: 16px; height: 16px; flex: none; cursor: pointer; accent-color: var(--accent); }
+.lz label { cursor: pointer; }
+.lz li.on label { color: var(--ink-soft); }
+.lz li.on .lz-t { text-decoration: line-through; text-decoration-color: var(--ink-mute); }
+.lz .lz-a { font-family: var(--font-mono); font-size: 0.8em; color: var(--accent-dark);
+  background: var(--bg); border-radius: 3px; padding: 1px 5px; white-space: nowrap; }
+.lz .lz-go { font-size: 0.82em; white-space: nowrap; }
 .kt-next .card-title h3 { color: var(--accent-dark); }
 .kt-when { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-soft); }
 .kt-count { font-family: var(--font-display); font-size: 2.4rem; line-height: 1;
@@ -382,9 +395,12 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
     <p><strong>Die Abschaltzeiten und der FI-Wert sind inzwischen
     <span class="ok-chk">✓ geprüft</span></strong> — Yanik hat sie am 18.08.2026 in der eigenen
     NIN-Ausgabe nachgeschlagen, sie stimmen mit den Quellen überein.</p>
-    <p>Was noch mit <span class="chk">⚠ prüfen</span> markiert ist, sind die
-    <strong>Leiterfarben</strong> in Abschnitt 5. Blau für N und grün-gelb für PE gelten sicher;
-    bei L1/L2/L3 und der PEN-Markierung schlag einmal nach, dann fallen auch diese Marker weg.</p>
+    <p><strong>Die Leiterfarben sind seit dem 20.08.2026 ebenfalls
+    <span class="ok-chk">✓ geprüft</span></strong> — braun · schwarz · grau für L1/L2/L3,
+    PEN grün-gelb mit blauer Markierung an den Enden.</p>
+    <p>Übrig bleiben genau zwei Stellen mit <span class="chk">⚠ prüfen</span>: die
+    <strong>Kapitelzahl</strong> in Abschnitt 3 (zähl sie einmal in deiner Ausgabe nach) und
+    die <strong>Strombelastbarkeits-Tabelle</strong> im Begriffe-Tab.</p>
   </div>
 
   <div class="card">
@@ -848,9 +864,11 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
     Leiterquerschnitte. Und schreib bei jeder Frage, die du nachschlagen musstest, die Seitenzahl
     in deine Notizen. Nach zehn Wochen hast du dein eigenes Register.</p>
     <div class="info-box warn">
-      <p><strong>Prüf deine Ausgabe.</strong> Alles mit <span class="chk">⚠ prüfen</span> stammt
-      aus einer Quelle mit derselben Grundlage, aber nicht aus der NIN selbst. Schlag es einmal
-      nach, korrigier es hier — dann stimmt es für den Rest des Jahres.</p>
+      <p><strong>Fast alles ist inzwischen belegt.</strong> Abschaltzeiten, FI-Wert und
+      Leiterfarben hat Yanik in der eigenen Ausgabe nachgeschlagen. Offen sind nur noch die
+      <strong>Kapitelzahl</strong> und die <strong>Strombelastbarkeits-Tabelle</strong> — beide
+      tragen weiter <span class="chk">⚠ prüfen</span>. Einmal nachschlagen, hier korrigieren,
+      dann stimmt es für den Rest des Jahres.</p>
     </div>
   </div>
 
@@ -1052,11 +1070,11 @@ const BEGRIFFE = [
   { term: 'Fehlerschutz', cat: 'schutz', def: 'Schutz gegen <strong>indirektes</strong> Berühren — also Teile, die erst im Fehlerfall Spannung führen. Meist durch automatische Abschaltung der Stromversorgung.' },
   { term: 'Zusatzschutz', cat: 'schutz', def: 'Greift, wenn Basis- <em>und</em> Fehlerschutz versagen. Über eine Fehlerstrom-Schutzeinrichtung. <strong>Nie allein zulässig.</strong>' },
   { term: 'Schutzmassnahme', cat: 'schutz', def: 'Besteht <strong>immer</strong> aus Basisschutz <em>und</em> Fehlerschutz. Der Zusatzschutz kommt obendrauf, ersetzt aber keinen der beiden.' },
-  { term: 'RCD / FI', cat: 'schutz', def: 'Fehlerstrom-Schutzeinrichtung. Vergleicht hin- und rückfliessenden Strom und schaltet bei Differenz ab. Für Zusatzschutz sehr empfindlich ausgelegt <span class="chk">⚠ Wert prüfen</span>.' },
+  { term: 'RCD / FI', cat: 'schutz', def: 'Fehlerstrom-Schutzeinrichtung. Vergleicht hin- und rückfliessenden Strom und schaltet bei Differenz ab. Für Zusatzschutz sehr empfindlich ausgelegt — <strong>≤ 30 mA</strong> <span class="ok-chk">✓ geprüft</span>.' },
   { term: 'Aktive Teile', cat: 'schutz', def: 'Leiter und leitfähige Teile, die im <strong>normalen Betrieb</strong> unter Spannung stehen.' },
   { term: 'Körper', cat: 'schutz', def: 'Berührbares leitfähiges Teil eines Betriebsmittels, das im Normalbetrieb <em>nicht</em> unter Spannung steht — im Fehlerfall aber schon. Zum Beispiel ein Metallgehäuse.' },
   { term: 'Handbereich', cat: 'schutz', def: 'Der Bereich, den eine Person von ihrem Standort aus mit der Hand erreichen kann. Ausserhalb davon gilt Basisschutz durch Abstand.' },
-  { term: 'Automatische Abschaltung', cat: 'schutz', def: 'Die verbreitetste Fehlerschutz-Massnahme: im Fehlerfall trennt ein Schutzorgan den Stromkreis innerhalb einer vorgegebenen Zeit <span class="chk">⚠ Zeiten prüfen</span>.' },
+  { term: 'Automatische Abschaltung', cat: 'schutz', def: 'Die verbreitetste Fehlerschutz-Massnahme: im Fehlerfall trennt ein Schutzorgan den Stromkreis innerhalb einer vorgegebenen Zeit — im TN <strong>0,4 s</strong> für Endstromkreise ≤ 32 A, <strong>5 s</strong> darüber <span class="ok-chk">✓ geprüft</span>.' },
   { term: 'Potenzialausgleich', cat: 'schutz', def: 'Leitende Verbindung, die alle berührbaren leitfähigen Teile auf annähernd dasselbe Potenzial bringt — damit keine gefährliche Spannung zwischen ihnen entsteht.' },
 
   { term: 'TN-S', cat: 'netz', def: 'N- und PE-Leiter im <strong>ganzen</strong> System <strong>getrennt</strong> geführt. S wie <em>séparé</em>.' },
@@ -1264,7 +1282,40 @@ document.getElementById('quizTimer').addEventListener('click', function () {
 paintClock();
 
 // ═══ KURZTESTE (localStorage, verlässt das Gerät nicht) ═══
-const KT_KEY = 'nin-kurzteste', Z_KEY = 'nin-zeugnis';
+const KT_KEY = 'nin-kurzteste', Z_KEY = 'nin-zeugnis', LZ_KEY = 'nin-lernziele';
+
+/* ─── Die vier Lernziele zum Kurztest ───────────────────────────────
+   Wortlaut von Wäfler für den 21.08.2026. Das Abhaken liegt im
+   localStorage — dieselbe Zusage wie im Rest des Tabs: nichts verlaesst
+   das Geraet.
+   Aendert sich hier etwas, auch die <ol> ganz oben im Theorie-Tab
+   anpassen; das ist die Fliesstext-Fassung derselben vier Ziele.     */
+const LERNZIELE = [
+  { id: 'kapitel',  kurz: 'Weiss, wie viele Kapitel die NIN hat',
+    antw: '8',                       ank: 'k-kapitel',  ab: 3 },
+  { id: 'orga',     kurz: 'Kennt je 1 internationale und 1 europäische Normenorganisation',
+    antw: 'IEC · Cenelec',           ank: 'k-orga',     ab: 4 },
+  { id: 'pyramide', kurz: 'Kennt die Schweizer Gesetzespyramide im Elektrobereich',
+    antw: 'BV → EleG → NIV → NIN',   ank: 'k-pyramide', ab: 1 },
+  { id: 'leiter',   kurz: 'Kennt die Symbole der Leiterbezeichnungen',
+    antw: 'L1 L2 L3 · N · PE · PEN', ank: 'k-leiter',   ab: 5 }
+];
+const lzState = () => { try { return JSON.parse(localStorage.getItem(LZ_KEY)) || {}; } catch (e) { return {}; } };
+const lzSave = o => { try { localStorage.setItem(LZ_KEY, JSON.stringify(o)); } catch (e) {} };
+
+/* Die Sprungmarken liegen im Theorie-Tab, der beim Kurzteste-Tab
+   ausgeblendet ist. Ein blosser #-Link findet dort nichts, also erst
+   umschalten, dann springen.                                          */
+function gotoAbschnitt(ankerId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector('.tab-btn[data-tab="theorie"]');
+  if (btn) btn.classList.add('active');
+  document.getElementById('theorie').classList.add('active');
+  const ziel = document.getElementById(ankerId);
+  if (ziel) ziel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  else window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 const ldd = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } };
 const svv = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
 const deCH = s => s ? s.split('-').reverse().join('.') : '';
@@ -1281,18 +1332,48 @@ function isoOf(d) {
 function renderKtNext() {
   const f = naechsterFreitag();
   const tage = Math.round((f - new Date().setHours(0, 0, 0, 0)) / 86400000);
+  const st = lzState();
+  const fertig = LERNZIELE.filter(z => st[z.id]).length;
   document.getElementById('ktNext').innerHTML =
     '<div class="card-title"><h3>Nächster Kurztest</h3>' +
     '<span class="kt-when">' + deCH(isoOf(f)) + ' · Freitag · bei Stefan Wäfler</span></div>' +
     '<div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:6px">' +
       '<div class="kt-count">' + (tage === 0 ? 'heute' : tage) +
         '<small>' + (tage === 0 ? '' : tage === 1 ? 'Tag' : 'Tage') + '</small></div>' +
-      '<div style="flex:1;min-width:220px">' +
-        '<p style="margin-bottom:8px"><strong>Lernziele — noch nicht erfasst.</strong></p>' +
-        '<p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:0">Sobald du mir die Lernziele ' +
-        'schickst, stehen sie hier als Checkliste. Bis dahin: Theorie-Tab durchgehen, ' +
-        'Karteikarten mischen, Quiz mit Timer.</p>' +
+      '<div style="flex:1;min-width:240px">' +
+        '<div class="lz-head"><strong>Lernziele</strong>' +
+          '<span class="lz-prog">' + fertig + ' von ' + LERNZIELE.length + ' sitzt</span></div>' +
+        '<ul class="lz" id="lzList">' +
+          LERNZIELE.map(z =>
+            '<li class="' + (st[z.id] ? 'on' : '') + '">' +
+              '<input type="checkbox" data-lz="' + z.id + '" id="lz-' + z.id + '"' +
+                (st[z.id] ? ' checked' : '') + '>' +
+              '<label for="lz-' + z.id + '">' +
+                '<span class="lz-t">' + z.kurz + '</span> ' +
+                '<span class="lz-a">' + z.antw + '</span> ' +
+                '<a class="lz-go" href="#" data-goto="' + z.ank + '">Abschnitt ' + z.ab + '</a>' +
+              '</label>' +
+            '</li>').join('') +
+        '</ul>' +
       '</div></div>';
+
+  // Abhaken und Springen — beides an der Liste selbst, damit ein
+  // Neuzeichnen die Handler nicht verdoppelt.
+  const liste = document.getElementById('lzList');
+  liste.addEventListener('change', e => {
+    const box = e.target.closest('input[data-lz]');
+    if (!box) return;
+    const st2 = lzState();
+    st2[box.dataset.lz] = box.checked;
+    lzSave(st2);
+    renderKtNext();
+  });
+  liste.addEventListener('click', e => {
+    const a = e.target.closest('a[data-goto]');
+    if (!a) return;
+    e.preventDefault();
+    gotoAbschnitt(a.dataset.goto);
+  });
 }
 
 function renderKt() {
