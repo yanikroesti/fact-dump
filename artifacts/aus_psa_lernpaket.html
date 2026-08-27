@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuS 1 &amp; AuS 2 · PSA · Arbeitsmethoden — Lernpaket | BZI HTOG</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   Kontrast-Nachbesserung — 27.08.2026
+
+   Gemessen auf 375 px: --ink-mute (#85898A) trug auf dem hellen
+   Grund nur 3.53:1. Das ist unter den 4.5:1, die kleine Schrift
+   braucht, und betrifft alles, was mit .meta oder .law-ref
+   gesetzt ist — also gerade die Normverweise, die man beim Lernen
+   liest. Etwas dunkler, gleicher kuehler Ton.
+   ══════════════════════════════════════════════════════════════ */
+:root { --ink-mute: #6C7071; }
+
+/* Auf hellem Grund darf die zurueckgenommene Tinte etwas kraeftiger
+   sein — .tip und .info-box sind hell. */
+.tip .meta, .tip .law-ref, .info-box .law-ref, .info-box .meta { color: var(--ink-soft); }
+
+/* .fact ist DUNKEL (#171D1E) mit heller Schrift. Alles darin muss hell
+   bleiben. Nachgemessen: ein <em> darin erbte --ink-soft, also dunkel
+   auf dunkel — 2.36:1. Ein Kasten, der die Kernaussage traegt, und der
+   Halbsatz darin war fast unlesbar. */
+.fact em, .fact i, .fact .meta, .fact .law-ref, .fact small {
+  color: rgba(246, 246, 243, 0.86);
+}
+.fact strong, .fact b { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · HTOG · Arbeitssicherheit — Kurztest bei A. Berisha</div>
+  <h1>AuS 1 &amp; AuS 2 · PSA · die drei Arbeitsmethoden</h1>
+  <div class="meta">Genau die drei Lernziele vom Blatt — Freitag 28.08.2026, 09:40</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="rechner">Schutzstufe</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ══════════════════════════ THEORIE ══════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+  <div class="intro">
+    <p><strong>Auf dem Blatt stehen drei Lernziele.</strong> Der Lernende …</p>
+    <ul class="check-list">
+      <li class="check-item"><span class="ci-text">weiss, was <strong>AuS 1</strong> und was <strong>AuS 2</strong> ist</span></li>
+      <li class="check-item"><span class="ci-text">weiss, was <strong>PSA</strong> ist</span></li>
+      <li class="check-item"><span class="ci-text">kennt die <strong>drei Arbeitsmethoden</strong></span></li>
+    </ul>
+    <p>Mehr braucht es nicht. Die drei Abschnitte unten sind genau das, in dieser Reihenfolge.</p>
+  </div>
+
+  <div class="info-box">
+    <strong>Woher die Angaben stammen</strong><br>
+    Alles hier ist gegen Schweizer Quellen geprüft, nicht aus dem Gedächtnis geschrieben:
+    <span class="law-ref">ESTI-Bulletin 12/2015 «Arbeiten unter Spannung — PSA»</span>,
+    <span class="law-ref">ESTI-Weisung Nr. 407</span>,
+    <span class="law-ref">StV Art. 66–79</span>,
+    <span class="law-ref">VUV Art. 5</span>,
+    <span class="law-ref">SN EN 50110-1</span>,
+    <span class="law-ref">SN EN 61482-1-2</span>,
+    dazu die Lehrmittelseiten von Electra.ch.
+    Die Quellenliste steht ganz unten.
+  </div>
+
+  <!-- ---------- 1. Arbeitsmethoden ---------- -->
+  <h2 class="section-label">1 · Die drei Arbeitsmethoden</h2>
+
+  <p>Die Grundfrage lautet immer: <strong>Wie nahe komme ich an Spannung heran?</strong>
+  Daraus folgt die Methode — und aus der Methode folgt alles andere.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Nr.</th><th>Arbeitsmethode</th><th>Was das heisst</th><th>Berührung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><strong>Arbeiten im spannungsfreien Zustand</strong></td>
+        <td>Die Anlage ist spannungslos geschaltet <em>und/oder</em> eine Berührung unter Spannung stehender Teile ist ausgeschlossen.</td>
+        <td class="good">gar keine möglich</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><strong>Arbeiten in der Nähe unter Spannung stehender Teile</strong></td>
+        <td>Die <strong>Annäherungszone</strong> wird tangiert — ein <em>unabsichtliches, zufälliges</em> Berühren eines spannungsführenden Teils ist möglich.</td>
+        <td class="warn">zufällig möglich</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><strong>Arbeiten unter Spannung (AuS)</strong></td>
+        <td>Das spannungsführende Teil wird <em>mit einem Werkzeug oder mit Körperteilen berührt</em>.</td>
+        <td class="bad">absichtlich</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="tip">
+    <strong>Der Unterschied in einem Satz:</strong> bei <strong>1</strong> kann nichts passieren,
+    bei <strong>2</strong> kann es <em>versehentlich</em> passieren, bei <strong>3</strong> tut man es <em>mit Absicht</em>.
+    Wer das im Kopf hat, ordnet jede Tätigkeit richtig ein.
+  </div>
+
+  <div class="fact">
+    <strong>Annäherungszone in der Niederspannung: 30 cm.</strong>
+    Sobald du dich mit Körper oder Werkzeug innerhalb dieser 30 cm zu blanken,
+    unter Spannung stehenden Teilen bewegst, bist du mindestens in Arbeitsmethode 2.
+    <span class="ref">ESTI-Bulletin 12/2015</span>
+  </div>
+
+  <h3>Arbeitsmethode 1 heisst: die 5 Sicherheitsregeln</h3>
+  <p>Spannungsfrei ist eine Anlage nicht, weil jemand einen Schalter umgelegt hat,
+  sondern erst, wenn diese fünf Schritte <strong>in dieser Reihenfolge</strong> durch sind:</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Nr.</th><th>Regel</th><th>Konkret</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><strong>Freischalten</strong></td><td>allpolig vom Netz trennen</td></tr>
+      <tr><td class="num">2</td><td><strong>Gegen Wiedereinschalten sichern</strong></td><td>sperren · Schloss · Verbotsschild</td></tr>
+      <tr><td class="num">3</td><td><strong>Spannungsfreiheit feststellen</strong></td><td>allpolig — Messmittel <em>vorher und nachher</em> prüfen</td></tr>
+      <tr><td class="num">4</td><td><strong>Erden und kurzschliessen</strong></td><td>zuerst Erde, dann Leiter verbinden</td></tr>
+      <tr><td class="num">5</td><td><strong>Benachbarte Teile abdecken</strong></td><td>abdecken oder abschranken</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="tip">
+    <strong>Zu Regel 3, der meistvergessenen:</strong> das Messmittel wird <em>zweimal</em> geprüft —
+    vor dem Messen an einer bekannten Spannung und <em>danach noch einmal</em>. Ein Prüfer, der
+    während der Messung kaputtgeht, zeigt sonst «spannungsfrei», obwohl es das nicht ist.
+  </div>
+
+  <!-- ---------- 2. AuS 1 / AuS 2 ---------- -->
+  <h2 class="section-label">2 · AuS 1 und AuS 2</h2>
+
+  <p>Beide gehören zu <strong>Arbeitsmethode 3</strong>. In beiden Fällen berührst du
+  bewusst ein Teil, das unter Spannung steht. Der Unterschied ist <strong>eine einzige Frage</strong>:</p>
+
+  <div class="fact big">
+    Veränderst du die Anlage — oder schaust du nur?
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th></th><th class="kvg">AuS 1</th><th class="uvg">AuS 2</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Definition</strong></td>
+        <td>Unter Spannung stehende Teile werden <strong>bewusst berührt</strong>, es findet aber <strong>keine Veränderung</strong> der Anlage statt.</td>
+        <td>Unter Spannung stehende Teile werden <strong>bewusst berührt</strong> <em>und</em> die Anlage wird <strong>bewusst verändert</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>Wie viele Personen</strong></td>
+        <td class="good">eine Person darf allein</td>
+        <td class="bad">mindestens <strong>zwei</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Ausbildung</strong></td>
+        <td>für diese Tätigkeiten qualifiziert und ausgebildet</td>
+        <td>beide mit <strong>EFZ</strong> in elektrischer Grundbildung <em>und</em> absolviertem <strong>AuS-Kurs</strong>; eine Person ist <strong>Arbeitsverantwortliche/r (AV)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Beispiele</strong></td>
+        <td>Messen (Kurzschlussstrom, Drehfeld, Spannung) · Abdeckungen anbringen und entfernen</td>
+        <td>Betriebsmittel austauschen · Leitungsschutzschalter ersetzen · Verdrahtungsarbeiten</td>
+      </tr>
+      <tr>
+        <td><strong>PSA</strong></td>
+        <td>nötig, <strong>sofern die Anlage nicht mindestens IP2X</strong> bietet</td>
+        <td class="bad"><strong>immer</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Auftrag</strong></td>
+        <td>klar formuliert, <em>nicht zwingend schriftlich</em></td>
+        <td>klar <strong>und schriftlich</strong> — ausser bei Störungsbehebung</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="tip">
+    <strong>Eselsbrücke:</strong> <em>AuS <strong>1</strong> — <strong>1</strong> Person, weil sich <strong>nichts</strong> ändert.
+    AuS <strong>2</strong> — <strong>2</strong> Personen, weil sich etwas ändert.</em>
+    Die Zahl sagt dir gleich beides.
+  </div>
+
+  <div class="info-box danger">
+    <strong>Das betrifft dich persönlich — und ist eine wahrscheinliche Prüfungsfrage</strong><br>
+    <strong>Lernende dürfen ausschliesslich AuS 1.</strong> AuS 2 ist für Lernende <strong>nicht zulässig</strong>,
+    weil dabei die Anlage verändert wird.<br><br>
+    Und selbst AuS 1 gilt erst, wenn alles davon erfüllt ist:
+    <ul>
+      <li>überbetrieblicher Kurs im <strong>3. Lehrjahr (ÜK 3)</strong> absolviert</li>
+      <li>theoretische <em>und</em> praktische Instruktion zu AuS 1</li>
+      <li>Kenntnis der <strong>5 + 5 lebenswichtigen Regeln</strong> im Umgang mit Elektrizität</li>
+      <li>Befähigung durch den Berufsbildner, <strong>schriftlich dokumentiert</strong></li>
+    </ul>
+    Du bist im <strong>2. Lehrjahr</strong> — der ÜK 3 kommt erst. Nach dieser Regel giltst du
+    also noch <em>nicht</em> als «ausgebildet für AuS 1».
+  </div>
+
+  <!-- ---------- 3. PSA ---------- -->
+  <h2 class="section-label">3 · PSA — persönliche Schutzausrüstung</h2>
+
+  <p><strong>PSA</strong> steht für <strong>p</strong>ersönliche <strong>S</strong>chutz<strong>a</strong>usrüstung.
+  Sie ist die <strong>letzte</strong> Schutzstufe: zuerst wird die Gefahr beseitigt, dann technisch
+  abgeschirmt, dann organisatorisch geregelt — und erst zuletzt schützt sich die Person selbst.</p>
+
+  <h3>Zwei Gefahren, zwei Schutzrichtungen</h3>
+  <p>Das ist der Kern. Wer die zwei auseinanderhält, hat PSA verstanden:</p>
+
+  <div class="split">
+    <div class="compare-col">
+      <div class="side-label">Gefahr A — Störlichtbogen</div>
+      <p>Ein Kurzschluss erzeugt einen Lichtbogen mit enormer <strong>Hitze</strong>.
+      Dagegen hilft keine Isolation, sondern <strong>hitzebeständige, schwer entflammbare Kleidung</strong>.</p>
+      <p>Geprüft nach <span class="law-ref">SN EN 61482-1-2</span> (Boxtest), eingeteilt in zwei Klassen:</p>
+      <ul>
+        <li><strong>Klasse 1</strong> — bis <strong>4 kA</strong></li>
+        <li><strong>Klasse 2</strong> — bis <strong>7 kA</strong></li>
+      </ul>
+      <p class="meta">Der Boxtest ist so ausgelegt, dass bei einer Einwirkzeit unter 0,5 s
+      direkt hinter dem Stoff keine Hautverbrennung entsteht.</p>
+    </div>
+    <div class="compare-col">
+      <div class="side-label">Gefahr B — Durchströmung</div>
+      <p>Strom fliesst durch den Körper. Dagegen hilft <strong>Isolierung</strong>.
+      Betroffen sind vor allem <strong>Hände und Kopf</strong>.</p>
+      <ul>
+        <li><strong>Isolierhandschuhe</strong></li>
+        <li><strong>Elektrikerhelm</strong></li>
+      </ul>
+      <p>Es gibt sie für verschiedene Prüfspannungen — <strong>in der Regel reicht 1000 V</strong>,
+      um sich vor dem elektrischen Schlag zu schützen.</p>
+    </div>
+  </div>
+
+  <h3>Was zu einer kompletten Ausrüstung gehört</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Teil</th><th>Wogegen</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Helm mit Gesichtsschutz</strong></td><td>Störlichtbogen (Visier) und Durchströmung (isolierender Helm)</td></tr>
+      <tr><td><strong>Handschuhe</strong></td><td>Hitzeschutzhandschuhe gegen den Lichtbogen, nach Gefahr ergänzt mit <strong>Isolierhandschuhen</strong></td></tr>
+      <tr><td><strong>Schutzjacke</strong></td><td>Störlichtbogen</td></tr>
+      <tr><td><strong>Schutzhose</strong></td><td>Störlichtbogen</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="meta">Quelle: ESTI-Bulletin 12/2015, Abbildung «Komplette PSA».</p>
+
+  <div class="fact">
+    <strong>Zwiebelschalenprinzip.</strong> Niemand zieht die PSA direkt auf die nackte Haut an.
+    Die Schutzwirkung entsteht durch <strong>Schichten mit Luft dazwischen</strong>:<br>
+    <br><strong>Körper → Luft → Unterwäsche → Luft → Schutzkleidung → Luft → Schutzkleidung</strong><br>
+    Genau deshalb ergibt «2× Schutzkleidung Stufe 1» überhaupt einen Sinn.
+    <span class="ref">ESTI-Bulletin 12/2015</span>
+  </div>
+
+  <h3>Die vier Schutzstufen</h3>
+  <p>Die <span class="law-ref">ESTI-Weisung Nr. 407</span> teilt die Wirkung der PSA in die
+  Stufen <strong>0 bis 3</strong> ein. Entscheidend ist der <strong>Kurzschlussstrom</strong> an der
+  Arbeitsstelle — oder, wenn er nicht bekannt ist, die <strong>vorgeschaltete Sicherung</strong>.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Stufe</th><th>Kurzschlussstrom</th><th>oder Sicherung</th><th>Minimale Schutzkleidung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">0</td><td>≤ 1 kA</td><td>—</td>
+        <td class="good">Keine Vorgaben — Empfehlung: 100 % Baumwolle.<br>
+        <span class="meta">≤ 1 kA gilt bezüglich Störlichtbogen als ungefährlich.</span></td>
+      </tr>
+      <tr>
+        <td class="num">1</td><td>&gt; 1 kA ≤ 7 kA</td><td>16 A – 100 A (Diazed/NH)</td>
+        <td>1× Schutzkleidung nach EN 61482-1-2 <strong>Klasse 1</strong><br>
+        + Schutzhelm mit Visier, Hitzeschutzhandschuhe<br>
+        <span class="meta">nach Gefahr ergänzt mit Isolierhandschuhen</span></td>
+      </tr>
+      <tr>
+        <td class="num">2</td><td>&gt; 7 kA ≤ 15 kA</td><td>125 A – 200 A (NH)</td>
+        <td><strong>2×</strong> Schutzkleidung Stufe 1 <em>oder</em> 1× <strong>Klasse 2</strong><br>
+        + Schutzhelm mit Visier, Hitzeschutzhandschuhe</td>
+      </tr>
+      <tr>
+        <td class="num">3</td><td>&gt; 15 kA</td><td>≥ 250 A (NH)</td>
+        <td>1× Stufe 1 <strong>und</strong> 1× Stufe 2<br>
+        + Schutzhelm mit Visier, Hitzeschutzhandschuhe<br>
+        <span class="meta">z. B. in Trafostationen mit 630-kVA-Trafo</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="meta">Probier das im Tab <strong>Schutzstufe</strong> aus — dort gibst du Strom oder
+  Sicherung ein und bekommst die Stufe samt Ausrüstung.</p>
+
+  <h3>Rechtsgrundlagen — falls danach gefragt wird</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Erlass</th><th>Was drinsteht</th></tr></thead>
+    <tbody>
+      <tr><td><span class="law-ref">StV Art. 68</span><br><span class="meta">SR 734.2</span></td>
+          <td>Wer an einer Starkstromanlage arbeitet, <strong>muss entsprechend ausgerüstet sein</strong> — mit ausreichendem Schutz gegen Berührung unter Spannung stehender Teile, gegen Lichtbogen und gegen mechanische Gefahren.</td></tr>
+      <tr><td><span class="law-ref">VUV Art. 5</span><br><span class="meta">SR 832.30</span></td>
+          <td>Der <strong>Arbeitgeber stellt die PSA zur Verfügung</strong>. Der <strong>Arbeitnehmer muss sie benützen</strong> und darf die Wirksamkeit der Schutzeinrichtungen nicht beeinträchtigen.</td></tr>
+      <tr><td><span class="law-ref">ESTI-Weisung Nr. 407</span></td>
+          <td>Beschreibt, <strong>wann welche PSA</strong> zu tragen ist — die Schutzstufen 0–3.</td></tr>
+      <tr><td><span class="law-ref">SN EN 50110-1</span></td>
+          <td>Europäische Norm für den Betrieb elektrischer Anlagen — Grundlage der drei Arbeitsmethoden.</td></tr>
+      <tr><td><span class="law-ref">StV Art. 66–79</span></td>
+          <td>Rechtlicher Rahmen für Arbeiten unter Spannung.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="fact">
+    Vor dem Reden über PSA steht immer die Frage, ob die Arbeit überhaupt unter oder in der Nähe
+    von Spannung ausgeführt werden <em>muss</em> — oder ob die Gefahr anders wegzubekommen ist,
+    etwa durch <strong>Abschalten</strong> oder durch <strong>Reduktion der Ausschaltzeit</strong>.
+  </div>
+
+  <div class="tip">
+    <strong>Der Satz, mit dem das ESTI-Bulletin schliesst:</strong><br>
+    «Tragen Sie wenn nötig immer die persönliche Schutzausrüstung, denn
+    <strong>die nicht getragene PSA ist die schlechteste</strong>!»
+  </div>
+
+  <h3>Noch drei Sätze, die leicht abgefragt werden</h3>
+  <ul>
+    <li>PSA muss eine <strong>Baumusterprüfung</strong> und eine <strong>Konformitätserklärung</strong> nach EN 61482-1-2 haben.</li>
+    <li>Sie ist <strong>regelmässig auf Beschädigungen zu kontrollieren</strong>.</li>
+    <li>Nach dem <strong>Verfallsdatum</strong> muss sie ersetzt werden.</li>
+  </ul>
+
+  <h2 class="section-label">Quellen</h2>
+  <ul class="meta">
+    <li>ESTI, Bulletin 12/2015 — «Arbeiten unter Spannung. Persönliche Schutzausrüstung PSA»
+      <br><span class="q-source">esti.admin.ch/inhalte/pdf/Uebrige/Deutsch/2016_2015/2015-12_psa_d.pdf</span></li>
+    <li>Electra.ch — «Arbeitsmethoden und Elektro-PSA» und «Arbeiten unter Spannung (AuS)»</li>
+    <li>Electra.ch — «Lernende und ‹Arbeiten unter Spannung›?»</li>
+    <li>Suva 84042.d — «5 + 5 lebenswichtige Regeln im Umgang mit Elektrizität»</li>
+    <li>Deine eigene Lerndokumentation 01 «Sicherheit am Arbeitsplatz» (1. Lehrjahr) — die 5 Sicherheitsregeln</li>
+  </ul>
+
+  <div class="info-box warn">
+    <strong>Was ich nicht überprüfen konnte</strong><br>
+    Den genauen Wortlaut der <strong>5 lebenswichtigen Regeln</strong> der Suva (der ersten Fünf,
+    nicht der Sicherheitsregeln) — die Suva-Server waren von hier aus nicht erreichbar. Die
+    <em>5 Sicherheitsregeln</em> oben stammen aus deiner eigenen Lerndoku und stimmen.
+    Falls Berisha die anderen fünf abfragt: das Faltprospekt heisst <strong>Suva 84042.d</strong>.
+  </div>
+
+</section>
+
+<!-- ══════════════════════════ SCHUTZSTUFE ══════════════════════════ -->
+<section class="tab-pane" id="rechner">
+
+  <div class="intro">
+    <p>Die Tabelle aus der <span class="law-ref">ESTI-Weisung Nr. 407</span> als Werkzeug.
+    Gib entweder den <strong>Kurzschlussstrom</strong> ein oder — wenn du ihn nicht kennst —
+    die <strong>vorgeschaltete Sicherung</strong>. Genau so ist die Weisung aufgebaut:
+    Kriterium A oder Kriterium B.</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-desc">Schutzstufen-Finder</div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="ssKa">A · Kurzschlussstrom an der Arbeitsstelle</label>
+        <input type="number" id="ssKa" min="0" step="0.5" placeholder="z. B. 5">
+        <span class="meta">in kA, gemessen L–PE oder aus Netzkenntnissen</span>
+      </div>
+      <div class="field">
+        <label for="ssA">B · oder vorgeschaltete Sicherung</label>
+        <input type="number" id="ssA" min="0" step="1" placeholder="z. B. 63">
+        <span class="meta">in A (Diazed/NH) — nur nötig, wenn A unbekannt</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn primary" type="button" id="ssGo">Stufe bestimmen</button>
+      <button class="btn ghost" type="button" id="ssReset">Zurücksetzen</button>
+    </div>
+
+    <div class="result" id="ssOut" hidden></div>
+  </div>
+
+  <div class="tool">
+    <div class="tool-desc">Einordnen: welche Arbeitsmethode ist das?</div>
+    <p class="meta">Zwei Fragen, und die Methode steht fest.</p>
+
+    <div class="field">
+      <label>1 · Ist die Anlage spannungsfrei — nach allen 5 Sicherheitsregeln?</label>
+      <div class="btn-row">
+        <button class="btn ghost am-btn" type="button" data-q="1" data-v="ja">Ja</button>
+        <button class="btn ghost am-btn" type="button" data-q="1" data-v="nein">Nein</button>
+      </div>
+    </div>
+
+    <div class="field" id="amQ2" hidden>
+      <label>2 · Berührst du spannungsführende Teile absichtlich — mit Werkzeug oder Körper?</label>
+      <div class="btn-row">
+        <button class="btn ghost am-btn" type="button" data-q="2" data-v="ja">Ja, absichtlich</button>
+        <button class="btn ghost am-btn" type="button" data-q="2" data-v="nein">Nein, nur in der Nähe</button>
+      </div>
+    </div>
+
+    <div class="field" id="amQ3" hidden>
+      <label>3 · Veränderst du dabei die Anlage?</label>
+      <div class="btn-row">
+        <button class="btn ghost am-btn" type="button" data-q="3" data-v="ja">Ja — ich baue etwas um</button>
+        <button class="btn ghost am-btn" type="button" data-q="3" data-v="nein">Nein — ich messe oder decke nur ab</button>
+      </div>
+    </div>
+
+    <div class="result" id="amOut" hidden></div>
+    <div class="btn-row"><button class="btn ghost sm" type="button" id="amReset">Von vorn</button></div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════ BEGRIFFE ══════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+  <div class="intro"><p>Die Wörter, die in der Prüfungsfrage stehen können, ohne dass sie erklärt werden.</p></div>
+  <input type="search" class="begriff-search" id="begriffSearch" placeholder="Suchen — z. B. IP2X, Annäherungszone, AV …">
+  <div class="cat-filter" id="begriffCats"></div>
+  <div class="begriff-grid" id="begriffGrid"></div>
+</section>
+
+<!-- ══════════════════════════ KARTEIKARTEN ══════════════════════════ -->
+<section class="tab-pane" id="karten">
+  <div class="intro"><p>Vorderseite lesen, Antwort denken, umdrehen. Ehrlich bewerten — nur was du <em>gewusst</em> hast, ist gewusst.</p></div>
+
+  <div class="cat-filter" id="cardCats"></div>
+
+  <div class="flash-stage">
+    <div class="flash-card" id="flashCard">
+      <div class="flash-counter" id="flashCounter"></div>
+      <div id="flashContent"></div>
+      <div class="flash-hint">Klicken oder Leertaste zum Umdrehen</div>
+    </div>
+  </div>
+
+  <div class="flash-controls">
+    <button class="btn ghost" type="button" id="cardPrev">← Zurück</button>
+    <button class="btn bad" type="button" id="cardNo">Wusste ich nicht</button>
+    <button class="btn good" type="button" id="cardYes">Wusste ich</button>
+    <button class="btn ghost" type="button" id="cardNext">Weiter →</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn ghost sm" type="button" id="cardShuffle">Mischen</button>
+    <button class="btn ghost sm" type="button" id="cardReset">Zurücksetzen</button>
+  </div>
+  <div class="flash-stats" id="flashStats"></div>
+</section>
+
+<!-- ══════════════════════════ QUIZ ══════════════════════════ -->
+<section class="tab-pane" id="quiz">
+  <div class="intro">
+    <p>Vierzehn Fragen im Stil eines Kurztests. Erst selbst antworten, dann aufdecken.</p>
+    <div class="btn-row">
+      <button class="btn ghost sm" type="button" onclick="revealAll(true)">Alle Lösungen zeigen</button>
+      <button class="btn ghost sm" type="button" onclick="revealAll(false)">Alle verstecken</button>
+    </div>
+  </div>
+  <div id="quizList"></div>
+</section>
+
+<!-- ══════════════════════════ LERNPLAN ══════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+  <div class="intro">
+    <p><strong>Es ist Donnerstagabend, die Prüfung ist morgen um 09:40.</strong>
+    Das hier ist kein Wochenplan, sondern ein Abendplan — realistisch für den Abend
+    und zwanzig Minuten am Morgen.</p>
+  </div>
+
+  <div class="progress"><div class="progress-fill" id="planFill"></div></div>
+  <div class="meta" id="planText"></div>
+
+  <div class="day">
+    <div class="day-num">Heute Abend · rund 45 Minuten</div>
+    <div class="day-content">
+      <ul class="check-list" id="planList"></ul>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <span class="milestone-icon">⚡</span>
+    <div>
+      <strong>Wenn du nur zehn Minuten hast</strong><br>
+      Lerne diese drei Sätze auswendig, damit hast du die drei Lernziele abgedeckt:
+      <ol>
+        <li><strong>Drei Arbeitsmethoden:</strong> spannungsfrei — in der Nähe — unter Spannung.
+        Keine Berührung möglich / zufällig möglich / absichtlich.</li>
+        <li><strong>AuS 1 vs. 2:</strong> beides bewusstes Berühren; AuS 1 ohne Veränderung der
+        Anlage und allein erlaubt, AuS 2 mit Veränderung und immer zu zweit. PSA bei AuS 2 immer.</li>
+        <li><strong>PSA:</strong> Helm mit Gesichtsschutz, Handschuhe, Schutzjacke, Schutzhose —
+        gegen Störlichtbogen (Hitze, EN 61482-1-2) und gegen Durchströmung (Isolation, 1000 V).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Morgen früh, kurz vor der Stunde</strong><br>
+    Nur die Karteikarten mit «Wusste ich nicht» durchgehen — nichts Neues mehr anfangen.
+    Neuer Stoff am Prüfungsmorgen verdrängt eher, als dass er hilft.
+  </div>
+</section>
+
+<footer class="meta" style="margin:2.5rem 0 1rem;text-align:center">
+  Erstellt am 27.08.2026 für den Kurztest vom 28.08.2026 · HTOG, A. Berisha ·
+  alle Fachangaben gegen ESTI, Suva und Electra geprüft
+</footer>
+
+</div>
+
+<script>
+/* ═══ TAB SWITCHING ═══ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+/* ═══ QUIZ REVEAL ═══ */
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+/* ═══ WERKZEUG 1 — SCHUTZSTUFEN-FINDER ═══
+   Die Tabelle 6.2.2 aus der ESTI-Weisung Nr. 407, wie sie im
+   ESTI-Bulletin 12/2015 abgedruckt ist. Kriterium A ist der
+   Kurzschlussstrom; ist er unbekannt, gilt Kriterium B, die
+   vorgeschaltete Sicherung.                                         */
+
+const STUFEN = [
+  { nr: 0, kA: '≤ 1 kA', a: '—',
+    kleidung: 'Keine Vorgaben. Empfehlung: 100 % Baumwolle.',
+    zusatz: 'Kurzschlussströme ≤ 1 kA gelten bezüglich Störlichtbogengefahr als ungefährlich.',
+    klasse: 'good' },
+  { nr: 1, kA: '> 1 kA ≤ 7 kA', a: '16 A – 100 A (Diazed/NH)',
+    kleidung: '1× Schutzkleidung nach EN 61482-1-2 <strong>Klasse 1</strong>',
+    zusatz: 'Schutzhelm mit Visier, Hitzeschutzhandschuhe, nach Gefahr ergänzt mit Isolierhandschuhen.',
+    klasse: 'warn' },
+  { nr: 2, kA: '> 7 kA ≤ 15 kA', a: '125 A – 200 A (NH)',
+    kleidung: '<strong>2×</strong> Schutzkleidung Stufe 1 <em>oder</em> 1× Schutzkleidung <strong>Klasse 2</strong>',
+    zusatz: 'Schutzhelm mit Visier, Hitzeschutzhandschuhe, nach Gefahr ergänzt mit Isolierhandschuhen.',
+    klasse: 'warn' },
+  { nr: 3, kA: '> 15 kA', a: '≥ 250 A (NH)',
+    kleidung: '1× Schutzkleidung Stufe 1 <strong>und</strong> 1× Schutzkleidung Stufe 2',
+    zusatz: 'Schutzhelm mit Visier, Hitzeschutzhandschuhe. Beispiel: Trafostation mit 630-kVA-Trafo.',
+    klasse: 'bad' }
+];
+
+function stufeAusKa(ka) {
+  if (ka <= 1) return 0;
+  if (ka <= 7) return 1;
+  if (ka <= 15) return 2;
+  return 3;
+}
+
+/* Kriterium B. Die Weisung nennt Bereiche, keine lückenlose Skala —
+   zwischen 100 A und 125 A sowie zwischen 200 A und 250 A steht dort
+   nichts. Statt eine Zahl zu erfinden, wird auf die nächsthöhere Stufe
+   aufgerundet und das ausdrücklich gesagt. Nach oben sichern ist beim
+   Störlichtbogen die einzig vertretbare Richtung. */
+function stufeAusAmpere(a) {
+  if (a < 16) return { nr: 0, unsicher: true,
+    hinweis: 'Unter 16 A nennt die Weisung keinen Bereich. Bestimme wenn möglich den Kurzschlussstrom.' };
+  if (a <= 100) return { nr: 1, unsicher: false };
+  if (a < 125) return { nr: 2, unsicher: true,
+    hinweis: 'Zwischen 100 A und 125 A liegt in der Weisung eine Lücke — hier auf Stufe 2 aufgerundet.' };
+  if (a <= 200) return { nr: 2, unsicher: false };
+  if (a < 250) return { nr: 3, unsicher: true,
+    hinweis: 'Zwischen 200 A und 250 A liegt in der Weisung eine Lücke — hier auf Stufe 3 aufgerundet.' };
+  return { nr: 3, unsicher: false };
+}
+
+function zeigeStufe(nr, quelle, hinweis) {
+  const s = STUFEN[nr];
+  const out = document.getElementById('ssOut');
+  out.hidden = false;
+  out.className = 'result ' + s.klasse;
+  out.innerHTML =
+    `<div class="verdict">Schutzstufe ${s.nr}</div>` +
+    `<div class="meta">bestimmt über ${quelle}</div>` +
+    (hinweis ? `<div class="tip" style="margin:10px 0">${hinweis}</div>` : '') +
+    `<table style="margin-top:12px">
+       <tr><td><strong>Kurzschlussstrom</strong></td><td>${s.kA}</td></tr>
+       <tr><td><strong>oder Sicherung</strong></td><td>${s.a}</td></tr>
+       <tr><td><strong>Minimale Schutzkleidung</strong></td><td>${s.kleidung}</td></tr>
+       <tr><td><strong>Dazu</strong></td><td>${s.zusatz}</td></tr>
+     </table>`;
+}
+
+document.getElementById('ssGo').addEventListener('click', () => {
+  const ka = parseFloat(document.getElementById('ssKa').value);
+  const a = parseFloat(document.getElementById('ssA').value);
+  const out = document.getElementById('ssOut');
+
+  if (!isNaN(ka) && ka >= 0) {
+    zeigeStufe(stufeAusKa(ka), `Kriterium A — Kurzschlussstrom ${ka} kA`);
+    return;
+  }
+  if (!isNaN(a) && a > 0) {
+    const r = stufeAusAmpere(a);
+    zeigeStufe(r.nr, `Kriterium B — vorgeschaltete Sicherung ${a} A`, r.hinweis);
+    return;
+  }
+  out.hidden = false;
+  out.className = 'result';
+  out.innerHTML = '<div class="verdict">Noch nichts eingegeben</div>' +
+    '<div class="meta">Kurzschlussstrom in kA — oder, wenn unbekannt, die Sicherung in A.</div>';
+});
+
+document.getElementById('ssReset').addEventListener('click', () => {
+  document.getElementById('ssKa').value = '';
+  document.getElementById('ssA').value = '';
+  document.getElementById('ssOut').hidden = true;
+});
+
+/* ═══ WERKZEUG 2 — WELCHE ARBEITSMETHODE? ═══ */
+
+const amState = {};
+
+function amZeige(text, klasse, detail) {
+  const out = document.getElementById('amOut');
+  out.hidden = false;
+  out.className = 'result ' + klasse;
+  out.innerHTML = `<div class="verdict">${text}</div><div class="meta">${detail}</div>`;
+}
+
+document.querySelectorAll('.am-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    amState[b.dataset.q] = b.dataset.v;
+    document.querySelectorAll(`.am-btn[data-q="${b.dataset.q}"]`)
+      .forEach(x => x.classList.remove('primary'));
+    b.classList.add('primary');
+
+    if (b.dataset.q === '1') {
+      if (b.dataset.v === 'ja') {
+        document.getElementById('amQ2').hidden = true;
+        document.getElementById('amQ3').hidden = true;
+        amZeige('Arbeitsmethode 1 — Arbeiten im spannungsfreien Zustand',
+          'good',
+          'Die Anlage ist spannungslos und/oder eine Berührung ist ausgeschlossen. ' +
+          'Voraussetzung: alle 5 Sicherheitsregeln sind durch.');
+      } else {
+        document.getElementById('amQ2').hidden = false;
+        document.getElementById('amQ3').hidden = true;
+        document.getElementById('amOut').hidden = true;
+      }
+      return;
+    }
+
+    if (b.dataset.q === '2') {
+      if (b.dataset.v === 'nein') {
+        document.getElementById('amQ3').hidden = true;
+        amZeige('Arbeitsmethode 2 — Arbeiten in der Nähe unter Spannung stehender Teile',
+          'warn',
+          'Die Annäherungszone (Niederspannung: 30 cm) wird tangiert, ein unabsichtliches ' +
+          'Berühren ist möglich. PSA tragen, sobald der Berührungsschutz IP2X nicht mehr gewährleistet ist.');
+      } else {
+        document.getElementById('amQ3').hidden = false;
+        document.getElementById('amOut').hidden = true;
+      }
+      return;
+    }
+
+    if (b.dataset.q === '3') {
+      if (b.dataset.v === 'nein') {
+        amZeige('Arbeitsmethode 3 — Arbeiten unter Spannung, Stufe AuS 1',
+          'warn',
+          'Bewusstes Berühren ohne Veränderung der Anlage: messen, Abdeckungen an- und abbringen. ' +
+          'Eine Person darf allein arbeiten, wenn sie dafür ausgebildet ist. PSA, sofern nicht ' +
+          'mindestens IP2X. Als Lernender: nur nach ÜK 3 und schriftlicher Befähigung.');
+      } else {
+        amZeige('Arbeitsmethode 3 — Arbeiten unter Spannung, Stufe AuS 2',
+          'bad',
+          'Bewusstes Berühren MIT Veränderung der Anlage. Mindestens zwei Personen, beide mit EFZ ' +
+          'und AuS-Kurs, eine davon Arbeitsverantwortliche/r. PSA immer. Auftrag schriftlich. ' +
+          'Für Lernende NICHT zulässig.');
+      }
+    }
+  });
+});
+
+document.getElementById('amReset').addEventListener('click', () => {
+  document.querySelectorAll('.am-btn').forEach(x => x.classList.remove('primary'));
+  document.getElementById('amQ2').hidden = true;
+  document.getElementById('amQ3').hidden = true;
+  document.getElementById('amOut').hidden = true;
+});
+
+/* ═══ BEGRIFFE ═══ */
+
+const BEGRIFFE = [
+  { term: 'AuS', cat: 'aus', ref: 'StV Art. 66–79',
+    def: 'Arbeiten unter Spannung. Sammelbegriff für Arbeitsmethode 3 — spannungsführende Teile werden bewusst berührt. Unterteilt in AuS 1 und AuS 2.' },
+  { term: 'AuS 1', cat: 'aus',
+    def: 'Bewusstes Berühren unter Spannung stehender Teile <strong>ohne</strong> Veränderung der Anlage. Eine Person darf allein arbeiten. Beispiele: messen, Abdeckungen anbringen und entfernen.' },
+  { term: 'AuS 2', cat: 'aus',
+    def: 'Bewusstes Berühren <strong>mit</strong> Veränderung der Anlage. Mindestens zwei Personen, beide mit EFZ und AuS-Kurs. PSA immer, Auftrag schriftlich. Für Lernende nicht zulässig.' },
+  { term: 'Arbeitsverantwortliche/r (AV)', cat: 'aus',
+    def: 'Bei AuS 2 wird eine der beiden Personen als arbeitsverantwortlich bestimmt. Sie trägt die Verantwortung für den sicheren Ablauf der Arbeit.' },
+  { term: 'Arbeitsmethode 1', cat: 'methode',
+    def: 'Arbeiten im spannungsfreien Zustand. Die Anlage ist spannungslos geschaltet und/oder eine Berührung unter Spannung stehender Teile ist ausgeschlossen.' },
+  { term: 'Arbeitsmethode 2', cat: 'methode',
+    def: 'Arbeiten in der Nähe unter Spannung stehender Teile. Die Annäherungszone wird tangiert — ein unabsichtliches, zufälliges Berühren ist möglich.' },
+  { term: 'Arbeitsmethode 3', cat: 'methode',
+    def: 'Arbeiten unter Spannung. Das spannungsführende Teil wird mit einem Werkzeug oder mit Körperteilen berührt.' },
+  { term: 'Annäherungszone', cat: 'methode', ref: 'ESTI-Bulletin 12/2015',
+    def: 'Der Bereich um unter Spannung stehende Teile, in dem eine Gefährdung besteht. In der <strong>Niederspannung 30 cm</strong>.' },
+  { term: 'PSA', cat: 'psa', ref: 'StV Art. 68',
+    def: 'Persönliche Schutzausrüstung. Die letzte Schutzstufe — sie schützt die Person selbst, nachdem Beseitigen, technisches Abschirmen und organisatorische Regelung ausgeschöpft sind.' },
+  { term: 'Störlichtbogen', cat: 'psa',
+    def: 'Lichtbogen bei einem Kurzschluss. Setzt in Millisekunden enorme Hitze frei und führt zu schweren Verbrennungen. Dagegen hilft keine Isolation, sondern hitzebeständige, schwer entflammbare Kleidung.' },
+  { term: 'Durchströmung', cat: 'psa',
+    def: 'Strom fliesst durch den Körper. Dagegen hilft Isolierung — Isolierhandschuhe und Elektrikerhelm. In der Regel reicht ein Schutz für 1000 V.' },
+  { term: 'IP2X', cat: 'psa',
+    def: 'Schutzart gegen Berührung mit dem Finger. Ist IP2X <strong>nicht</strong> gewährleistet — etwa weil eine Abdeckung entfernt wurde —, muss bei AuS 1 PSA getragen werden.' },
+  { term: 'Zwiebelschalenprinzip', cat: 'psa', ref: 'ESTI-Bulletin 12/2015',
+    def: 'Die Schutzwirkung entsteht durch Schichten mit Luft dazwischen: Körper – Luft – Unterwäsche – Luft – Schutzkleidung – Luft – Schutzkleidung. Deshalb wirkt «2× Stufe 1».' },
+  { term: 'Boxtest', cat: 'psa', ref: 'SN EN 61482-1-2',
+    def: 'Prüfverfahren für Störlichtbogen-Schutzkleidung. Ausgelegt darauf, dass bei einer Einwirkzeit unter 0,5 s direkt hinter dem Stoff keine Hautverbrennung entsteht.' },
+  { term: 'Schutzklasse 1 / 2', cat: 'psa', ref: 'SN EN 61482-1-2',
+    def: 'Einteilung der Störlichtbogen-Schutzkleidung. <strong>Klasse 1 bis 4 kA</strong>, <strong>Klasse 2 bis 7 kA</strong>.' },
+  { term: 'Schutzstufe 0–3', cat: 'psa', ref: 'ESTI-Weisung Nr. 407',
+    def: 'Einteilung, welche PSA wann zu tragen ist. Massgebend ist der Kurzschlussstrom an der Arbeitsstelle — oder, wenn unbekannt, die vorgeschaltete Sicherung.' },
+  { term: 'Baumusterprüfung', cat: 'psa',
+    def: 'PSA muss eine Baumusterprüfung und eine Konformitätserklärung nach EN 61482-1-2 aufweisen, regelmässig auf Beschädigungen kontrolliert und nach Verfallsdatum ersetzt werden.' },
+  { term: 'StV', cat: 'recht', ref: 'SR 734.2',
+    def: 'Starkstromverordnung. Art. 68: Wer an einer Starkstromanlage arbeitet, muss entsprechend ausgerüstet sein — Schutz gegen Berührung, Lichtbogen und mechanische Gefahren.' },
+  { term: 'VUV', cat: 'recht', ref: 'SR 832.30',
+    def: 'Verordnung über die Unfallverhütung. Art. 5: Der Arbeitgeber stellt die PSA zur Verfügung, der Arbeitnehmer muss sie benützen.' },
+  { term: 'ESTI', cat: 'recht',
+    def: 'Eidgenössisches Starkstrominspektorat. Gibt unter anderem die Weisung Nr. 407 heraus, in der steht, wann welche PSA zu tragen ist.' },
+  { term: 'SN EN 50110-1', cat: 'recht',
+    def: 'Europäische Norm für den Betrieb elektrischer Anlagen. Grundlage der drei Arbeitsmethoden.' },
+  { term: '5 Sicherheitsregeln', cat: 'methode',
+    def: 'Freischalten · gegen Wiedereinschalten sichern · Spannungsfreiheit feststellen · erden und kurzschliessen · benachbarte Teile abdecken. Erst danach ist eine Anlage spannungsfrei.' },
+  { term: '5 + 5 lebenswichtige Regeln', cat: 'methode', ref: 'Suva 84042.d',
+    def: 'Suva-Regelwerk für Elektrofachleute: fünf lebenswichtige Regeln plus die fünf Sicherheitsregeln. Ihre Kenntnis ist Voraussetzung, damit Lernende AuS 1 ausführen dürfen.' },
+  { term: 'ÜK 3', cat: 'aus',
+    def: 'Überbetrieblicher Kurs im 3. Lehrjahr. Erst danach — samt Instruktion und schriftlicher Befähigung durch den Berufsbildner — gilt ein Lernender als «ausgebildet für AuS 1».' }
+];
+
+const BEGRIFF_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'methode', label: 'Arbeitsmethoden' },
+  { id: 'aus', label: 'AuS 1 / AuS 2' },
+  { id: 'psa', label: 'PSA' },
+  { id: 'recht', label: 'Recht & Normen' }
+];
+
+let bFilter = 'all', bSearch = '';
+
+function renderBegriffe() {
+  const grid = document.getElementById('begriffGrid');
+  const s = bSearch.toLowerCase();
+  const list = BEGRIFFE.filter(b =>
+    (bFilter === 'all' || b.cat === bFilter) &&
+    (!s || b.term.toLowerCase().includes(s) || b.def.toLowerCase().includes(s)));
+  grid.innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>`).join('') ||
+    '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px">Nichts gefunden.</div>';
+}
+
+document.getElementById('begriffCats').innerHTML = BEGRIFF_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('begriffCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#begriffCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); bFilter = b.dataset.cat; renderBegriffe();
+});
+document.getElementById('begriffSearch').addEventListener('input', e => {
+  bSearch = e.target.value; renderBegriffe();
+});
+renderBegriffe();
+
+/* ═══ KARTEIKARTEN ═══ */
+
+const CARDS = [
+  { cat: 'methode', term: 'Nenne die drei Arbeitsmethoden.',
+    def: '1 · Arbeiten im spannungsfreien Zustand<br>2 · Arbeiten in der Nähe unter Spannung stehender Teile<br>3 · Arbeiten unter Spannung', ref: 'SN EN 50110-1' },
+  { cat: 'methode', term: 'Was heisst Arbeitsmethode 1 genau?',
+    def: 'Die Anlage ist spannungslos geschaltet <em>und/oder</em> eine Berührung unter Spannung stehender Teile ist ausgeschlossen.' },
+  { cat: 'methode', term: 'Was heisst Arbeitsmethode 2 genau?',
+    def: 'Die Annäherungszone wird tangiert — ein <strong>unabsichtliches, zufälliges</strong> Berühren eines spannungsführenden Teils ist möglich.' },
+  { cat: 'methode', term: 'Was heisst Arbeitsmethode 3 genau?',
+    def: 'Das spannungsführende Teil wird <strong>mit einem Werkzeug oder mit Körperteilen berührt</strong> — das ist Arbeiten unter Spannung.' },
+  { cat: 'methode', term: 'Wie unterscheidest du die drei Methoden in einem Satz?',
+    def: 'Bei 1 ist keine Berührung möglich, bei 2 ist sie <em>zufällig</em> möglich, bei 3 geschieht sie <em>absichtlich</em>.' },
+  { cat: 'methode', term: 'Wie gross ist die Annäherungszone in der Niederspannung?',
+    def: '<strong>30 cm</strong>', ref: 'ESTI-Bulletin 12/2015' },
+  { cat: 'methode', term: 'Die 5 Sicherheitsregeln — in der richtigen Reihenfolge.',
+    def: '1 Freischalten<br>2 Gegen Wiedereinschalten sichern<br>3 Spannungsfreiheit feststellen<br>4 Erden und kurzschliessen<br>5 Benachbarte Teile abdecken' },
+  { cat: 'methode', term: 'Warum wird das Messmittel zweimal geprüft?',
+    def: 'Vorher <em>und nachher</em> an bekannter Spannung. Geht der Prüfer während der Messung kaputt, zeigt er sonst fälschlich «spannungsfrei».' },
+
+  { cat: 'aus', term: 'Was ist AuS 1?',
+    def: 'Arbeiten, bei denen unter Spannung stehende Teile <strong>bewusst berührt</strong> werden, jedoch <strong>keine Veränderung</strong> der Anlage stattfindet.' },
+  { cat: 'aus', term: 'Was ist AuS 2?',
+    def: 'Tätigkeiten, bei denen unter Spannung stehende Teile bewusst berührt werden <strong>und die Anlage bewusst verändert wird</strong>.' },
+  { cat: 'aus', term: 'Wie viele Personen bei AuS 1, wie viele bei AuS 2?',
+    def: 'AuS 1: eine Person darf allein arbeiten.<br>AuS 2: <strong>mindestens zwei</strong>, eine davon ist Arbeitsverantwortliche/r.' },
+  { cat: 'aus', term: 'Nenne zwei Beispiele für AuS 1.',
+    def: 'Messungen (Kurzschlussströme, Drehfelder, Spannungen) · Anbringen und Entfernen von Abdeckungen' },
+  { cat: 'aus', term: 'Nenne zwei Beispiele für AuS 2.',
+    def: 'Austausch von Betriebsmitteln · Leitungsschutzschalter ersetzen · Verdrahtungsarbeiten' },
+  { cat: 'aus', term: 'Welche Ausbildung verlangt AuS 2?',
+    def: 'Beide Personen brauchen ein <strong>EFZ</strong> in elektrischer Grundbildung <em>und</em> einen absolvierten <strong>AuS-Kurs</strong>.' },
+  { cat: 'aus', term: 'Wann ist bei AuS 1 PSA nötig?',
+    def: 'Sofern die Anlage <strong>nicht mindestens IP2X</strong> bietet — also sobald der Berührungsschutz fehlt.' },
+  { cat: 'aus', term: 'Wann ist bei AuS 2 PSA nötig?',
+    def: '<strong>Immer.</strong>' },
+  { cat: 'aus', term: 'Muss der Auftrag schriftlich sein?',
+    def: 'AuS 1: klar formuliert, aber nicht zwingend schriftlich.<br>AuS 2: klar <strong>und schriftlich</strong> — ausser bei Störungsbehebung.' },
+  { cat: 'aus', term: 'Was dürfen Lernende beim Arbeiten unter Spannung?',
+    def: '<strong>Nur AuS 1</strong>, und erst nach ÜK 3 im 3. Lehrjahr, Instruktion, Kenntnis der 5 + 5 Regeln und schriftlicher Befähigung. <strong>AuS 2 nie.</strong>' },
+
+  { cat: 'psa', term: 'Wofür steht PSA?',
+    def: '<strong>P</strong>ersönliche <strong>S</strong>chutz<strong>a</strong>usrüstung. Die letzte Schutzstufe, nach Beseitigen, technischem Abschirmen und organisatorischer Regelung.' },
+  { cat: 'psa', term: 'Was gehört zu einer kompletten PSA?',
+    def: 'Helm mit Gesichtsschutz · Handschuhe · Schutzjacke · Schutzhose', ref: 'ESTI-Bulletin 12/2015' },
+  { cat: 'psa', term: 'Gegen welche zwei Gefahren schützt PSA — und wie jeweils?',
+    def: '<strong>Störlichtbogen</strong> → hitzebeständige, schwer entflammbare Kleidung.<br><strong>Durchströmung</strong> → Isolierung: Isolierhandschuhe, Elektrikerhelm.' },
+  { cat: 'psa', term: 'Welche Klassen kennt die Störlichtbogen-Schutzkleidung?',
+    def: '<strong>Klasse 1 bis 4 kA</strong>, <strong>Klasse 2 bis 7 kA</strong>', ref: 'SN EN 61482-1-2' },
+  { cat: 'psa', term: 'Für welche Spannung reichen Isolierhandschuhe in der Regel?',
+    def: '<strong>1000 V</strong> — das genügt normalerweise zum Schutz vor dem elektrischen Schlag.' },
+  { cat: 'psa', term: 'Was ist das Zwiebelschalenprinzip?',
+    def: 'Körper – Luft – Unterwäsche – Luft – Schutzkleidung – Luft – Schutzkleidung. Die Luftschichten machen die Schutzwirkung aus.' },
+  { cat: 'psa', term: 'Ab welchem Kurzschlussstrom gilt Schutzstufe 0?',
+    def: '<strong>≤ 1 kA</strong> — gilt bezüglich Störlichtbogen als ungefährlich. Keine Vorgaben, Empfehlung 100 % Baumwolle.', ref: 'ESTI-Weisung Nr. 407' },
+  { cat: 'psa', term: 'Welche Stufe bei 5 kA Kurzschlussstrom?',
+    def: '<strong>Stufe 1</strong> (> 1 kA ≤ 7 kA): 1× Schutzkleidung Klasse 1, Schutzhelm mit Visier, Hitzeschutzhandschuhe.' },
+  { cat: 'psa', term: 'Welche Stufe bei einer NH-Sicherung von 160 A?',
+    def: '<strong>Stufe 2</strong> (125 A – 200 A): 2× Stufe 1 oder 1× Klasse 2.' },
+  { cat: 'psa', term: 'Wer stellt die PSA zur Verfügung, wer muss sie benutzen?',
+    def: 'Der <strong>Arbeitgeber stellt sie zur Verfügung</strong> (VUV Art. 5), der <strong>Arbeitnehmer muss sie benützen</strong> und darf die Schutzwirkung nicht beeinträchtigen.', ref: 'VUV Art. 5' },
+  { cat: 'psa', term: 'Was verlangt StV Art. 68?',
+    def: 'Wer an einer Starkstromanlage arbeitet, muss entsprechend ausgerüstet sein — ausreichender Schutz gegen Berührung, Lichtbogen und mechanische Gefahren.', ref: 'StV Art. 68' }
+];
+
+const CARD_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'methode', label: 'Arbeitsmethoden' },
+  { id: 'aus', label: 'AuS 1 / 2' },
+  { id: 'psa', label: 'PSA' }
+];
+
+const KEY_KNOWN = 'aus-psa-karten-gewusst';
+let cardSet = [], cardIdx = 0, cardFlipped = false, cardCat = 'all';
+let known = new Set(), unknown = new Set();
+try {
+  const s = JSON.parse(localStorage.getItem(KEY_KNOWN) || '{}');
+  known = new Set(s.k || []); unknown = new Set(s.u || []);
+} catch (e) {}
+
+function saveCards() {
+  try { localStorage.setItem(KEY_KNOWN, JSON.stringify({ k: [...known], u: [...unknown] })); } catch (e) {}
+}
+
+function buildCardSet() {
+  cardSet = CARDS.map((c, i) => ({ ...c, id: i }))
+    .filter(c => cardCat === 'all' || c.cat === cardCat);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  const content = document.getElementById('flashContent');
+  const counter = document.getElementById('flashCounter');
+  if (!cardSet.length) {
+    content.className = 'flash-front';
+    content.textContent = 'Keine Karten in dieser Auswahl.';
+    counter.textContent = '0 / 0';
+    updateCardStats();
+    return;
+  }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) {
+    content.className = 'flash-back';
+    content.innerHTML = c.def + (c.ref ? `<span class="ref">${c.ref}</span>` : '');
+  } else {
+    content.className = 'flash-front';
+    content.innerHTML = c.term;
+  }
+  updateCardStats();
+}
+
+function updateCardStats() {
+  document.getElementById('flashStats').innerHTML =
+    `<span class="good">${known.size} gewusst</span> · ` +
+    `<span class="bad">${unknown.size} noch nicht</span> · ` +
+    `<span class="meta">${CARDS.length} Karten gesamt</span>`;
+}
+
+function flip() { cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (cardSet.length) { cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); } }
+function prevCard() { if (cardSet.length) { cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); } }
+function rate(ok) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx].id;
+  if (ok) { known.add(id); unknown.delete(id); } else { unknown.add(id); known.delete(id); }
+  saveCards(); nextCard();
+}
+
+document.getElementById('cardCats').innerHTML = CARD_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('cardCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#cardCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); cardCat = b.dataset.cat; buildCardSet();
+});
+document.getElementById('flashCard').addEventListener('click', flip);
+document.getElementById('cardNext').addEventListener('click', nextCard);
+document.getElementById('cardPrev').addEventListener('click', prevCard);
+document.getElementById('cardYes').addEventListener('click', () => rate(true));
+document.getElementById('cardNo').addEventListener('click', () => rate(false));
+document.getElementById('cardShuffle').addEventListener('click', () => {
+  for (let i = cardSet.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]];
+  }
+  cardIdx = 0; cardFlipped = false; renderCard();
+});
+document.getElementById('cardReset').addEventListener('click', () => {
+  known.clear(); unknown.clear(); saveCards(); buildCardSet();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); flip(); }
+  if (e.key === 'ArrowRight') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+});
+buildCardSet();
+
+/* ═══ QUIZ ═══ */
+
+const QUIZ = [
+  { t: 'Arbeitsmethoden', q: 'Nenne die drei Arbeitsmethoden.',
+    a: '<strong>1</strong> Arbeiten im spannungsfreien Zustand<br><strong>2</strong> Arbeiten in der Nähe unter Spannung stehender Teile<br><strong>3</strong> Arbeiten unter Spannung' },
+  { t: 'Arbeitsmethoden', q: 'Bei welcher Arbeitsmethode ist ein <em>zufälliges</em> Berühren möglich — und wie heisst sie?',
+    a: 'Bei <strong>Arbeitsmethode 2</strong>, «Arbeiten in der Nähe unter Spannung stehender Teile». Die Annäherungszone wird tangiert.' },
+  { t: 'Arbeitsmethoden', q: 'Wie gross ist die Annäherungszone in der Niederspannung?',
+    a: '<strong>30 cm.</strong>' },
+  { t: 'Arbeitsmethoden', q: 'Zähle die 5 Sicherheitsregeln in der richtigen Reihenfolge auf.',
+    a: '1 Freischalten · 2 Gegen Wiedereinschalten sichern · 3 Spannungsfreiheit feststellen · 4 Erden und kurzschliessen · 5 Benachbarte Teile abdecken' },
+  { t: 'AuS', q: 'Erkläre den Unterschied zwischen AuS 1 und AuS 2 in einem Satz.',
+    a: 'Bei beiden werden spannungsführende Teile bewusst berührt — bei <strong>AuS 1 ohne</strong> Veränderung der Anlage, bei <strong>AuS 2 mit</strong> Veränderung.' },
+  { t: 'AuS', q: 'Du misst den Kurzschlussstrom in einer geöffneten Verteilung. Welche Stufe ist das, und darfst du allein arbeiten?',
+    a: '<strong>AuS 1</strong> — Messen verändert die Anlage nicht. Eine ausgebildete Person darf allein arbeiten. PSA nötig, weil durch die geöffnete Abdeckung <strong>IP2X nicht mehr gewährleistet</strong> ist.' },
+  { t: 'AuS', q: 'Du ersetzt einen Leitungsschutzschalter unter Spannung. Welche Stufe, wie viele Personen, welche Ausbildung?',
+    a: '<strong>AuS 2.</strong> Mindestens zwei Personen, beide mit EFZ in elektrischer Grundbildung <em>und</em> AuS-Kurs; eine davon ist Arbeitsverantwortliche/r. PSA immer, Auftrag schriftlich.' },
+  { t: 'AuS', q: 'Darf ein Lernender AuS 2 ausführen?',
+    a: '<strong>Nein.</strong> Lernende dürfen ausschliesslich AuS 1 — und auch das erst nach ÜK 3 im 3. Lehrjahr, mit Instruktion, Kenntnis der 5 + 5 Regeln und schriftlicher Befähigung durch den Berufsbildner.' },
+  { t: 'PSA', q: 'Wofür steht die Abkürzung PSA, und welche Rolle hat sie in der Schutzreihenfolge?',
+    a: '<strong>Persönliche Schutzausrüstung.</strong> Sie ist die <strong>letzte</strong> Stufe: zuerst Gefahr beseitigen, dann technisch abschirmen, dann organisatorisch regeln — und erst dann schützt sich die Person selbst.' },
+  { t: 'PSA', q: 'Was gehört zu einer kompletten PSA?',
+    a: '<strong>Helm mit Gesichtsschutz · Handschuhe · Schutzjacke · Schutzhose</strong>' },
+  { t: 'PSA', q: 'Gegen welche zwei Gefahren schützt die PSA, und womit jeweils?',
+    a: '<strong>Störlichtbogen</strong> → hitzebeständige, schwer entflammbare Schutzkleidung nach SN EN 61482-1-2.<br><strong>Durchströmung</strong> → Isolierung: Isolierhandschuhe und Elektrikerhelm, in der Regel für 1000 V.' },
+  { t: 'PSA', q: 'Bis zu welchem Störlichtbogenstrom schützen Klasse 1 und Klasse 2?',
+    a: '<strong>Klasse 1 bis 4 kA</strong>, <strong>Klasse 2 bis 7 kA.</strong>' },
+  { t: 'PSA', q: 'Der Kurzschlussstrom an der Arbeitsstelle beträgt 9 kA. Welche Schutzstufe, und welche Kleidung?',
+    a: '<strong>Stufe 2</strong> (> 7 kA ≤ 15 kA): 2× Schutzkleidung Stufe 1 <em>oder</em> 1× Schutzkleidung Klasse 2, dazu Schutzhelm mit Visier und Hitzeschutzhandschuhe.' },
+  { t: 'PSA', q: 'Welche zwei Erlasse regeln die PSA — und was steht jeweils drin?',
+    a: '<strong>StV Art. 68</strong> (SR 734.2): wer an einer Starkstromanlage arbeitet, muss entsprechend ausgerüstet sein.<br><strong>VUV Art. 5</strong> (SR 832.30): der Arbeitgeber stellt die PSA zur Verfügung, der Arbeitnehmer muss sie benützen.' }
+];
+
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">${i + 1}</span><span class="q-topic">${q.t}</span></div>
+    <div class="q-text">${q.q}</div>
+    <button class="reveal-btn" type="button" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution">${q.a}</div>
+  </div>`).join('');
+
+/* ═══ LERNPLAN ═══ */
+
+const PLAN = [
+  'Theorie-Tab lesen — die drei Abschnitte in dieser Reihenfolge (15 min)',
+  'Die Tabelle AuS 1 / AuS 2 abdecken und aus dem Kopf aufsagen (5 min)',
+  'Karteikarten «Arbeitsmethoden» einmal durch (5 min)',
+  'Karteikarten «AuS 1 / 2» einmal durch (5 min)',
+  'Karteikarten «PSA» einmal durch (5 min)',
+  'Quiz durchgehen, erst antworten, dann aufdecken (10 min)',
+  'Zum Schluss: die drei Sätze aus «Wenn du nur zehn Minuten hast» laut sagen'
+];
+
+const PLAN_KEY = 'aus-psa-plan';
+document.getElementById('planList').innerHTML = PLAN.map((t, i) =>
+  `<li class="check-item"><input type="checkbox" class="check" id="pl${i}"><label for="pl${i}" class="ci-text">${t}</label></li>`).join('');
+
+function planProgress() {
+  const boxes = [...document.querySelectorAll('#planList .check')];
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('planFill').style.width = (done / boxes.length * 100) + '%';
+  document.getElementById('planText').textContent =
+    done === boxes.length ? 'Alles durch. Schlaf gut — morgen früh nur noch die roten Karten.'
+                          : `${done} von ${boxes.length} erledigt`;
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]');
+  document.querySelectorAll('#planList .check').forEach((b, i) => { if (saved[i]) b.checked = true; });
+} catch (e) {}
+document.querySelectorAll('#planList .check').forEach(b => b.addEventListener('change', planProgress));
+planProgress();
+
+</script>
+</body>
+</html>
