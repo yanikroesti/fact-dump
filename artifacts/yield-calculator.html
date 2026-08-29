@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeFi Yield Calculator — dump/</title>
+<meta name="description" content="Model staking and lending yield: APR/APY conversion, compounding, gas and fees, measured against bear/base/bull price scenarios.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Cpath d='M14 44 L26 31 L36 39 L50 19' stroke='%235eead4' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0b;
+  --panel: #101013;
+  --panel-2: #16161a;
+  --line: rgba(255,255,255,0.08);
+  --line-hi: rgba(255,255,255,0.15);
+  --ink: #f2f2ef;
+  --muted: #8b8b95;
+  --faint: #5a5a63;
+  --accent: #5eead4;
+  --bear: #f0883e;
+  --base: #9aa4b2;
+  --bull: #4ec9b0;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  min-height: 100vh; overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+::selection { background: var(--accent); color: #04110e; }
+a { color: inherit; text-decoration: none; }
+
+/* header */
+header {
+  display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;
+  padding: 0.85rem clamp(1rem, 3.5vw, 2rem);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 40;
+}
+.back {
+  font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--muted);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  border: 1px solid var(--line-hi); border-radius: 8px; padding: 0.32rem 0.6rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.back:hover { color: var(--accent); border-color: rgba(94,234,212,0.4); }
+h1 { font-size: 1.02rem; font-weight: 700; letter-spacing: -0.03em; }
+h1 span { color: var(--accent); }
+.head-actions { margin-left: auto; display: flex; gap: 0.4rem; }
+.btn {
+  font-family: "JetBrains Mono", monospace; font-size: 0.66rem;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line-hi); border-radius: 8px;
+  padding: 0.4rem 0.7rem; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { color: var(--ink); border-color: var(--muted); }
+.btn.primary { color: var(--accent); border-color: rgba(94,234,212,0.4); }
+.btn.primary:hover { background: rgba(94,234,212,0.1); }
+
+/* layout */
+.wrap {
+  max-width: 1400px; margin: 0 auto;
+  padding: clamp(1rem, 3vw, 1.8rem) clamp(1rem, 3.5vw, 2rem) 4rem;
+  display: grid; grid-template-columns: 370px minmax(0, 1fr); gap: 1.1rem;
+  grid-template-areas: "form hero" "form results";
+  align-items: start;
+}
+#form { grid-area: form; }
+#hero { grid-area: hero; }
+.results { grid-area: results; }
+/* on narrow screens the headline numbers come first, so a change to an
+   input is visible without scrolling back up past the whole form */
+@media (max-width: 1000px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hero" "form" "results"; }
+}
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem; }
+.side { position: sticky; top: 74px; }
+@media (max-width: 1000px) { .side { position: static; } }
+.results { display: flex; flex-direction: column; gap: 1.1rem; min-width: 0; }
+
+/* form */
+.group + .group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
+.group-h {
+  font-family: "JetBrains Mono", monospace; font-size: 0.58rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 0.7rem;
+}
+.field { margin-bottom: 0.7rem; }
+.field:last-child { margin-bottom: 0; }
+label { display: block; font-size: 0.74rem; color: var(--muted); margin-bottom: 0.28rem; }
+label .hint { color: var(--faint); font-size: 0.68rem; }
+
+input[type=number], input[type=text], select {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line-hi); border-radius: 9px;
+  color: var(--ink); font-family: "JetBrains Mono", monospace; font-size: 0.82rem;
+  padding: 0.5rem 0.65rem; outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+input:focus, select:focus { border-color: rgba(94,234,212,0.55); background: rgba(255,255,255,0.06); }
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+select {
+  cursor: pointer; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--faint) 50%), linear-gradient(135deg, var(--faint) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 1.8rem;
+}
+option { background: var(--panel-2); color: var(--ink); }
+
+.row { display: flex; gap: 0.45rem; }
+.row > * { flex: 1; min-width: 0; }
+.row .shrink { flex: 0 0 88px; }
+
+.seg { display: flex; gap: 3px; background: rgba(255,255,255,0.04); border: 1px solid var(--line-hi); border-radius: 9px; padding: 3px; }
+.seg button {
+  flex: 1; background: transparent; border: none; border-radius: 6px; cursor: pointer;
+  color: var(--muted); font-family: "JetBrains Mono", monospace; font-size: 0.66rem;
+  padding: 0.38rem 0.3rem; transition: background 0.15s, color 0.15s; white-space: nowrap;
+}
+.seg button[aria-pressed="true"] { background: var(--accent); color: #04110e; font-weight: 700; }
+.seg button:not([aria-pressed="true"]):hover { color: var(--ink); }
+
+.with-btn { display: flex; gap: 0.4rem; flex: 1; min-width: 0; }
+.with-btn input { flex: 1; min-width: 0; }
+.fetch-msg { font-size: 0.66rem; margin-top: 0.32rem; min-height: 0.95rem; font-family: "JetBrains Mono", monospace; line-height: 1.4; }
+.fetch-msg.ok { color: var(--bull); }
+.fetch-msg.err { color: var(--bear); }
+.fetch-msg.busy { color: var(--faint); }
+
+/* hero stats */
+.hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.stat { background: var(--panel); padding: 0.95rem 1rem; }
+.stat .k { font-family: "JetBrains Mono", monospace; font-size: 0.57rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
+.stat .v { font-size: clamp(1.12rem, 2.5vw, 1.5rem); font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.12; }
+.stat .s { font-family: "JetBrains Mono", monospace; font-size: 0.66rem; color: var(--muted); margin-top: 0.25rem; }
+.pos { color: var(--bull); }
+.neg { color: var(--bear); }
+
+/* chart */
+.chart-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.85rem; }
+.chart-head h2 { font-size: 0.92rem; font-weight: 700; letter-spacing: -0.02em; }
+.chart-head .sub { font-size: 0.7rem; color: var(--faint); }
+.legend { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-left: auto; font-family: "JetBrains Mono", monospace; font-size: 0.64rem; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 2px; border-radius: 2px; margin-right: 0.35rem; vertical-align: 3px; }
+.legend .dash { background: repeating-linear-gradient(90deg, var(--muted) 0 3px, transparent 3px 6px); }
+
+.chart-box { position: relative; }
+svg.chart { display: block; width: 100%; }
+.grid-line { stroke: rgba(255,255,255,0.055); stroke-width: 1; }
+.axis-t { fill: var(--faint); font-family: "JetBrains Mono", monospace; font-size: 10px; }
+.series { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.hodl { fill: none; stroke-width: 1.25; stroke-dasharray: 4 4; opacity: 0.55; }
+.crosshair { stroke: rgba(255,255,255,0.3); stroke-width: 1; stroke-dasharray: 3 3; }
+.cx-dot { stroke: var(--panel); stroke-width: 2; }
+
+#tip {
+  position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.12s;
+  background: rgba(16,16,19,0.97); border: 1px solid var(--line-hi); border-radius: 9px;
+  padding: 0.55rem 0.7rem; font-size: 0.7rem; min-width: 170px; z-index: 5;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.55);
+}
+#tip.on { opacity: 1; }
+#tip .tt { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; color: var(--faint); margin-bottom: 0.4rem; }
+#tip .tr { display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; margin-top: 0.22rem; }
+#tip .tr > span { display: flex; align-items: center; gap: 0.35rem; color: var(--muted); }
+#tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+#tip b { font-family: "JetBrains Mono", monospace; font-weight: 500; color: var(--ink); }
+
+/* scenario cards */
+.scen { display: grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr)); gap: 0.7rem; }
+.scard { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--sc); border-radius: 12px; padding: 0.9rem; }
+.scard .n { font-family: "JetBrains Mono", monospace; font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--sc); margin-bottom: 0.45rem; }
+.scard .big { font-size: 1.16rem; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.scard dl { margin-top: 0.6rem; display: grid; grid-template-columns: auto auto; gap: 0.24rem 0.5rem; font-size: 0.7rem; }
+.scard dt { color: var(--faint); }
+.scard dd { text-align: right; font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+
+/* table + notes */
+details + details { margin-top: 0.2rem; }
+details { border-top: 1px solid var(--line); padding-top: 0.9rem; margin-top: 0.9rem; }
+details:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+summary { cursor: pointer; font-size: 0.78rem; color: var(--muted); list-style: none; display: flex; align-items: center; gap: 0.45rem; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "\25B8"; color: var(--faint); transition: transform 0.18s; display: inline-block; }
+details[open] summary::before { transform: rotate(90deg); }
+summary:hover { color: var(--ink); }
+.tscroll { overflow-x: auto; margin-top: 0.85rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.72rem; font-variant-numeric: tabular-nums; font-family: "JetBrains Mono", monospace; }
+th, td { padding: 0.4rem 0.65rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--faint); font-weight: 500; font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; position: sticky; top: 0; background: var(--panel); }
+
+.note { font-size: 0.72rem; color: var(--faint); line-height: 1.7; margin-top: 0.85rem; }
+.note b { color: var(--muted); font-weight: 500; }
+.note code { font-family: "JetBrains Mono", monospace; color: var(--accent); font-size: 0.9em; }
+.note p + p { margin-top: 0.55rem; }
+
+footer { border-top: 1px solid var(--line); padding: 1.5rem clamp(1rem, 3.5vw, 2rem); font-family: "JetBrains Mono", monospace; font-size: 0.62rem; color: var(--faint); display: flex; gap: 1.2rem; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.001s !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../index.html">&larr; dump/</a>
+  <h1>DeFi Yield <span>Calculator</span></h1>
+  <div class="head-actions">
+    <button class="btn" type="button" id="reset">reset</button>
+    <button class="btn primary" type="button" id="share">copy link</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <form class="panel side" id="form" autocomplete="off">
+
+    <div class="group">
+      <div class="group-h">Position</div>
+      <div class="field">
+        <div class="seg" role="group" aria-label="Position type" id="modeSeg">
+          <button type="button" data-mode="stake" aria-pressed="true">Staking</button>
+          <button type="button" data-mode="lend" aria-pressed="false">Lending</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="amount">Deposit <span class="hint">(token units)</span></label>
+        <input type="number" id="amount" value="10" min="0" step="any">
+      </div>
+      <div class="field">
+        <label for="symbol">Asset &amp; price per token</label>
+        <div class="row">
+          <input type="text" id="symbol" class="shrink" value="ETH" list="tokens" spellcheck="false" aria-label="Token symbol">
+          <div class="with-btn">
+            <input type="number" id="price" value="3000" min="0" step="any" aria-label="Price per token">
+            <button type="button" class="btn" id="fetch" title="Fetch the current price">live</button>
+          </div>
+        </div>
+        <datalist id="tokens">
+          <option value="BTC"></option><option value="ETH"></option><option value="SOL"></option>
+          <option value="USDC"></option><option value="USDT"></option><option value="DAI"></option>
+          <option value="BNB"></option><option value="XRP"></option><option value="ADA"></option>
+          <option value="AVAX"></option><option value="DOT"></option><option value="MATIC"></option>
+          <option value="LINK"></option><option value="ATOM"></option><option value="NEAR"></option>
+          <option value="APT"></option><option value="ARB"></option><option value="OP"></option>
+          <option value="LDO"></option><option value="AAVE"></option><option value="UNI"></option>
+          <option value="TIA"></option><option value="SUI"></option><option value="INJ"></option>
+          <option value="HYPE"></option>
+        </datalist>
+        <div class="fetch-msg" id="fetchmsg"></div>
+      </div>
+      <div class="field">
+        <label for="cur">Currency</label>
+        <select id="cur">
+          <option value="USD">USD</option>
+          <option value="CHF">CHF</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-h">Rate</div>
+      <div class="field">
+        <div class="seg" role="group" aria-label="Rate basis" id="basisSeg">
+          <button type="button" data-basis="apr" aria-pressed="true">APR</button>
+          <button type="button" data-basis="apy" aria-pressed="false">APY</button>
+        </div>
+      </div>
+      <div class="field" id="rateFixed">
+        <label for="rate">Advertised rate <span class="hint">% per year</span></label>
+        <input type="number" id="rate" value="12" step="any">
+      </div>
+      <div class="field" id="rateBandWrap" hidden>
+        <label>Rate band <span class="hint">% per year &mdash; low / base / high</span></label>
+        <div class="row">
+          <input type="number" id="rateLo" value="4" step="any" aria-label="Low rate">
+          <input type="number" id="rateBase" value="8" step="any" aria-label="Base rate">
+          <input type="number" id="rateHi" value="15" step="any" aria-label="High rate">
+        </div>
+      </div>
+      <div class="field">
+        <label for="compound">Compounding</label>
+        <select id="compound">
+          <option value="365">Daily (auto-compound)</option>
+          <option value="52">Weekly</option>
+          <option value="12" selected>Monthly</option>
+          <option value="4">Quarterly</option>
+          <option value="1">Yearly</option>
+          <option value="manual">Manual claims &mdash; custom</option>
+        </select>
+      </div>
+      <div class="field" id="manualWrap" hidden>
+        <label for="manualN">Claims per year</label>
+        <input type="number" id="manualN" value="6" min="1" step="1">
+      </div>
+      <div class="field">
+        <label for="years">Duration <span class="hint">years</span></label>
+        <input type="number" id="years" value="3" min="0.08" step="any">
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-h">Costs</div>
+      <div class="field">
+        <label for="gas">Gas per compound <span class="hint">per claim, in currency</span></label>
+        <input type="number" id="gas" value="0" min="0" step="any">
+      </div>
+      <div class="field">
+        <label for="perf">Performance fee <span class="hint">% of yield earned</span></label>
+        <input type="number" id="perf" value="0" min="0" max="100" step="any">
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-h">Recurring buy &mdash; optional</div>
+      <div class="field">
+        <label for="topup">Add every period <span class="hint">in currency</span></label>
+        <div class="row">
+          <input type="number" id="topup" value="0" min="0" step="any">
+          <select id="topupEvery" aria-label="Top-up interval">
+            <option value="0">never</option>
+            <option value="52">weekly</option>
+            <option value="12" selected>monthly</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-h">Price scenarios</div>
+      <div class="field">
+        <label>Total price change over the whole period <span class="hint">%</span></label>
+        <div class="row">
+          <input type="number" id="pBear" value="-50" step="any" aria-label="Bear price change">
+          <input type="number" id="pBase" value="0" step="any" aria-label="Base price change">
+          <input type="number" id="pBull" value="150" step="any" aria-label="Bull price change">
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="hero" id="hero"></div>
+
+  <section class="results">
+    <div class="panel">
+      <div class="chart-head">
+        <h2>Position value over time</h2>
+        <span class="sub" id="chartsub"></span>
+        <div class="legend">
+          <span><i style="background:var(--bear)"></i>Bear</span>
+          <span><i style="background:var(--base)"></i>Base</span>
+          <span><i style="background:var(--bull)"></i>Bull</span>
+          <span><i class="dash"></i>hold, no yield</span>
+        </div>
+      </div>
+      <div class="chart-box" id="chartbox">
+        <svg class="chart" id="chart" role="img" aria-label="Position value over time under three price scenarios"></svg>
+        <div id="tip"></div>
+      </div>
+      <p class="note" id="benote"></p>
+    </div>
+
+    <div class="scen" id="scen"></div>
+
+    <div class="panel">
+      <details>
+        <summary>Breakdown table &mdash; base scenario</summary>
+        <div class="tscroll"><table id="tbl"></table></div>
+      </details>
+      <details>
+        <summary>How this is calculated</summary>
+        <div class="note">
+          <p><b>Compounding.</b> Yield accrues every day at <code>APR / 365</code> on the compounded balance and sits as unclaimed rewards until a compounding event, which happens <code>n</code> times a year. Only compounded balance earns; pending rewards do not. That is what makes claim frequency matter.</p>
+          <p><b>APR vs APY.</b> APR is the nominal rate before compounding, APY is what you actually end up with. <code>APY = (1 + APR/n)^n &minus; 1</code>. Switch the toggle if the number you were quoted is already an APY &mdash; it is converted back with <code>APR = n &times; ((1+APY)^(1/n) &minus; 1)</code>.</p>
+          <p><b>Costs.</b> The performance fee is taken from each claim before it compounds. Gas is a fixed cost per claim, converted to tokens at that day's price &mdash; so frequent claiming on a small position can cost more than it earns.</p>
+          <p><b>Price scenarios.</b> Each scenario moves the price smoothly from today's value to the end value at a constant rate, so no scenario relies on lucky timing. Rewards are paid in the deposited asset and compound into it, which is how staking and most lending markets behave.</p>
+          <p><b>Break-even.</b> Yield grows your token count by a factor <code>G</code>. You are back at your starting money when price has fallen to <code>1/G</code> of where it started, so the drop you can absorb is <code>1 &minus; 1/G</code>. This figure ignores recurring buys, which each have their own entry price.</p>
+          <p><b>What this does not model:</b> slashing, protocol insolvency, depegs, lock-up or unbonding periods, taxes, or rewards paid in a different token than the one you deposited.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>dump.yanikroesti.ch</span>
+  <span>estimates only &mdash; not financial advice</span>
+  <a href="../index.html">back to the dump</a>
+</footer>
+
+<script>
+"use strict";
+
+var COINS = {
+  BTC:"bitcoin", ETH:"ethereum", SOL:"solana", USDC:"usd-coin", USDT:"tether",
+  DAI:"dai", BNB:"binancecoin", XRP:"ripple", ADA:"cardano", AVAX:"avalanche-2",
+  DOT:"polkadot", MATIC:"matic-network", LINK:"chainlink", ATOM:"cosmos",
+  NEAR:"near", APT:"aptos", ARB:"arbitrum", OP:"optimism", LDO:"lido-dao",
+  AAVE:"aave", UNI:"uniswap", TIA:"celestia", SUI:"sui", INJ:"injective-protocol",
+  HYPE:"hyperliquid"
+};
+
+var $ = function (id) { return document.getElementById(id); };
+var mode = "stake";
+var basis = "apr";
+
+/* ---------- helpers ---------- */
+function num(el, fallback) {
+  var v = parseFloat(el.value);
+  return isFinite(v) ? v : (fallback || 0);
+}
+function cur() { return $("cur").value; }
+function fmtMoney(v) {
+  var abs = Math.abs(v);
+  var d = abs >= 1000 ? 0 : (abs >= 1 ? 2 : 4);
+  try {
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: cur(), maximumFractionDigits: d, minimumFractionDigits: 0 }).format(v);
+  } catch (e) { return v.toFixed(d); }
+}
+function fmtTok(v) {
+  var abs = Math.abs(v);
+  var d = abs >= 1000 ? 2 : (abs >= 1 ? 4 : 6);
+  return v.toLocaleString("en-US", { maximumFractionDigits: d });
+}
+function fmtPct(v, d) {
+  if (d === undefined) d = 2;
+  return (v * 100).toFixed(d) + "%";
+}
+function sign(v) { return v > 0 ? "+" : ""; }
+
+/* ---------- core simulation ---------- */
+/* Daily steps. Yield accrues on the compounded balance only; pending rewards
+   wait for a compounding event. Gas is charged per event in currency and
+   converted to tokens at that day's price. */
+function simulate(o) {
+  var steps = Math.max(1, Math.round(o.years * 365));
+  var tokens = o.tokens0;
+  var pending = 0;
+  var hodl = o.tokens0;
+  var invested = o.tokens0 * o.price0;
+  var gasPaid = 0, feesPaid = 0, grossYield = 0;
+  var daily = o.apr / 365;
+  var series = [];
+
+  function priceAt(d) { return o.price0 * Math.pow(o.priceMult, d / steps); }
+  function snap(d) {
+    var p = priceAt(d);
+    var t = tokens + pending;
+    series.push({ d: d, price: p, tokens: t, value: t * p, hodl: hodl * p, invested: invested });
+  }
+
+  snap(0);
+  for (var d = 1; d <= steps; d++) {
+    var p = priceAt(d);
+    var acc = tokens * daily;
+    pending += acc;
+    grossYield += acc;
+
+    if (Math.floor(d * o.n / 365) > Math.floor((d - 1) * o.n / 365)) {
+      var fee = pending * o.perf;
+      var net = pending - fee;
+      feesPaid += fee * p;
+      var gasTok = p > 0 ? o.gas / p : 0;
+      var charged = Math.min(gasTok, net);
+      gasPaid += charged * p;
+      tokens += net - charged;
+      pending = 0;
+    }
+
+    if (o.topupPerYear > 0 && o.topupAmt > 0 && p > 0 &&
+        Math.floor(d * o.topupPerYear / 365) > Math.floor((d - 1) * o.topupPerYear / 365)) {
+      var bought = o.topupAmt / p;
+      tokens += bought;
+      hodl += bought;
+      invested += o.topupAmt;
+    }
+    snap(d);
+  }
+
+  var last = series[series.length - 1];
+  return {
+    series: series, steps: steps,
+    tokensFinal: last.tokens, valueFinal: last.value, hodlFinal: last.hodl,
+    invested: invested, gasPaid: gasPaid, feesPaid: feesPaid, grossYield: grossYield
+  };
+}
+
+function readInputs() {
+  var n;
+  var cv = $("compound").value;
+  if (cv === "manual") n = Math.max(1, Math.round(num($("manualN"), 6)));
+  else n = parseFloat(cv);
+
+  var years = Math.max(0.02, num($("years"), 1));
+  var rawBase = mode === "lend" ? num($("rateBase"), 8) : num($("rate"), 12);
+  var rawLo = num($("rateLo"), 4), rawHi = num($("rateHi"), 15);
+
+  function toApr(pct) {
+    var r = pct / 100;
+    if (basis === "apy") {
+      if (r <= -1) return -1;
+      return n * (Math.pow(1 + r, 1 / n) - 1);
+    }
+    return r;
+  }
+
+  return {
+    tokens0: Math.max(0, num($("amount"), 0)),
+    price0: Math.max(0, num($("price"), 0)),
+    n: n, years: years,
+    aprBase: toApr(rawBase), aprLo: toApr(rawLo), aprHi: toApr(rawHi),
+    rawBase: rawBase,
+    gas: Math.max(0, num($("gas"), 0)),
+    perf: Math.min(1, Math.max(0, num($("perf"), 0) / 100)),
+    topupAmt: Math.max(0, num($("topup"), 0)),
+    topupPerYear: parseFloat($("topupEvery").value) || 0,
+    scen: [
+      { key: "bear", name: "Bear", pct: num($("pBear"), -50), color: "var(--bear)", raw: "#f0883e" },
+      { key: "base", name: "Base", pct: num($("pBase"), 0), color: "var(--base)", raw: "#9aa4b2" },
+      { key: "bull", name: "Bull", pct: num($("pBull"), 150), color: "var(--bull)", raw: "#4ec9b0" }
+    ]
+  };
+}
+
+/* ---------- state ---------- */
+var STATE = null;
+
+function compute() {
+  var i = readInputs();
+  var base = { tokens0: i.tokens0, price0: i.price0, apr: i.aprBase, n: i.n, years: i.years,
+               gas: i.gas, perf: i.perf, topupAmt: i.topupAmt, topupPerYear: i.topupPerYear };
+
+  var runs = i.scen.map(function (s) {
+    var o = Object.assign({}, base, { priceMult: 1 + s.pct / 100 });
+    return Object.assign({ scen: s }, simulate(o));
+  });
+
+  /* clean run: no top-ups, flat price -> isolates the rate mechanics */
+  var clean = simulate(Object.assign({}, base, { priceMult: 1, topupAmt: 0, topupPerYear: 0 }));
+  var growth = i.tokens0 > 0 ? clean.tokensFinal / i.tokens0 : 1;
+  var effApy = i.years > 0 ? Math.pow(growth, 1 / i.years) - 1 : 0;
+  var grossApy = Math.pow(1 + i.aprBase / i.n, i.n) - 1;
+  var maxDrop = growth > 0 ? 1 - 1 / growth : 0;
+
+  var band = null;
+  if (mode === "lend") {
+    band = {
+      lo: simulate(Object.assign({}, base, { apr: Math.min(i.aprLo, i.aprHi), priceMult: 1 + i.scen[1].pct / 100 })),
+      hi: simulate(Object.assign({}, base, { apr: Math.max(i.aprLo, i.aprHi), priceMult: 1 + i.scen[1].pct / 100 }))
+    };
+  }
+
+  STATE = { i: i, runs: runs, clean: clean, growth: growth, effApy: effApy,
+            grossApy: grossApy, maxDrop: maxDrop, band: band };
+  return STATE;
+}
+
+/* ---------- render ---------- */
+function render() {
+  var s = compute();
+  renderHero(s);
+  renderScenarios(s);
+  renderChart(s);
+  renderTable(s);
+  writeUrl();
+}
+
+function renderHero(s) {
+  var baseRun = s.runs[1];
+  var profit = baseRun.valueFinal - baseRun.invested;
+  var costs = baseRun.gasPaid + baseRun.feesPaid;
+  var cells = [
+    { k: "Final value &mdash; base", v: fmtMoney(baseRun.valueFinal),
+      s: fmtTok(baseRun.tokensFinal) + " " + ($("symbol").value || "tokens") },
+    { k: "Net profit", v: sign(profit) + fmtMoney(profit), cls: profit >= 0 ? "pos" : "neg",
+      s: "on " + fmtMoney(baseRun.invested) + " in" },
+    { k: "Effective APY", v: fmtPct(s.effApy),
+      s: costs > 0 ? "after " + fmtMoney(costs) + " costs" : "advertised " + fmtPct(s.grossApy) + " APY" },
+    { k: "Price drop you survive", v: s.maxDrop > 0 ? "-" + fmtPct(s.maxDrop, 1) : "n/a",
+      s: "before you are down" }
+  ];
+  $("hero").innerHTML = cells.map(function (c) {
+    return '<div class="stat"><div class="k">' + c.k + '</div>' +
+           '<div class="v ' + (c.cls || "") + '">' + c.v + '</div>' +
+           '<div class="s">' + c.s + '</div></div>';
+  }).join("");
+
+  var yrs = s.i.years;
+  $("chartsub").textContent = yrs.toFixed(yrs < 1 ? 2 : 1) + " years, compounding " + s.i.n + "x per year";
+
+  var be = s.i.price0 * (1 / s.growth);
+  $("benote").innerHTML = s.growth > 1
+    ? "<b>Break-even:</b> yield multiplies your tokens by " + s.growth.toFixed(4) + "&times; over " +
+      yrs.toFixed(2) + " years, so you stay whole as long as the price holds above " + fmtMoney(be) +
+      " &mdash; a drop of up to " + fmtPct(s.maxDrop, 1) + ". Below that, the price loss outruns the yield."
+    : "<b>Break-even:</b> at these settings the position does not grow in token terms &mdash; fees and gas eat the whole yield.";
+}
+
+function renderScenarios(s) {
+  $("scen").innerHTML = s.runs.map(function (r) {
+    var profit = r.valueFinal - r.invested;
+    var vsHodl = r.valueFinal - r.hodlFinal;
+    return '<div class="scard" style="--sc:' + r.scen.color + '">' +
+      '<div class="n">' + r.scen.name + " &middot; " + sign(r.scen.pct) + r.scen.pct + "% price" + '</div>' +
+      '<div class="big ' + (profit >= 0 ? "pos" : "neg") + '">' + fmtMoney(r.valueFinal) + '</div>' +
+      '<dl>' +
+        '<dt>Profit</dt><dd class="' + (profit >= 0 ? "pos" : "neg") + '">' + sign(profit) + fmtMoney(profit) + '</dd>' +
+        '<dt>Return</dt><dd>' + sign(profit) + fmtPct(r.invested > 0 ? profit / r.invested : 0, 1) + '</dd>' +
+        '<dt>If you just held</dt><dd>' + fmtMoney(r.hodlFinal) + '</dd>' +
+        '<dt>Yield added</dt><dd class="pos">' + sign(vsHodl) + fmtMoney(vsHodl) + '</dd>' +
+      '</dl></div>';
+  }).join("");
+}
+
+/* ---------- chart ---------- */
+var CH = { pts: null, W: 0, H: 0, pad: null, xOf: null, yOf: null };
+
+function niceTicks(max, count) {
+  if (max <= 0) return [0, 1];
+  var raw = max / count;
+  var mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  var norm = raw / mag;
+  var step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag;
+  var out = [];
+  for (var v = 0; v <= max + step * 0.5; v += step) out.push(v);
+  return out;
+}
+
+function renderChart(s) {
+  var svg = $("chart");
+  var box = $("chartbox");
+  var W = Math.max(320, box.clientWidth || 900);
+  var H = Math.round(Math.min(360, Math.max(230, W * 0.42)));
+  var pad = { l: 56, r: 16, t: 12, b: 26 };
+
+  var N = 121;
+  var runs = s.runs;
+  var steps = runs[0].steps;
+  var idxOf = function (k) { return Math.round(k / (N - 1) * steps); };
+
+  var maxV = 0;
+  runs.forEach(function (r) {
+    for (var k = 0; k < N; k++) {
+      var p = r.series[idxOf(k)];
+      if (p.value > maxV) maxV = p.value;
+      if (p.hodl > maxV) maxV = p.hodl;
+    }
+  });
+  if (s.band) {
+    [s.band.lo, s.band.hi].forEach(function (r) {
+      for (var k = 0; k < N; k++) { var p = r.series[idxOf(k)]; if (p.value > maxV) maxV = p.value; }
+    });
+  }
+  if (!(maxV > 0)) maxV = 1;
+
+  var ticks = niceTicks(maxV, 4);
+  var yMax = ticks[ticks.length - 1];
+  var xOf = function (k) { return pad.l + (k / (N - 1)) * (W - pad.l - pad.r); };
+  var yOf = function (v) { return pad.t + (1 - v / yMax) * (H - pad.t - pad.b); };
+
+  function path(r, key) {
+    var d = "";
+    for (var k = 0; k < N; k++) {
+      var p = r.series[idxOf(k)];
+      d += (k ? "L" : "M") + xOf(k).toFixed(1) + "," + yOf(p[key]).toFixed(1);
+    }
+    return d;
+  }
+
+  var parts = [];
+  ticks.forEach(function (t) {
+    var y = yOf(t).toFixed(1);
+    parts.push('<line class="grid-line" x1="' + pad.l + '" y1="' + y + '" x2="' + (W - pad.r) + '" y2="' + y + '"/>');
+    parts.push('<text class="axis-t" x="' + (pad.l - 8) + '" y="' + (parseFloat(y) + 3.5) + '" text-anchor="end">' + fmtMoney(t) + "</text>");
+  });
+
+  var yrs = s.i.years;
+  for (var k = 0; k <= 4; k++) {
+    var x = xOf(k / 4 * (N - 1));
+    var lbl = (yrs * k / 4);
+    parts.push('<text class="axis-t" x="' + x.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="' + (k === 0 ? "start" : k === 4 ? "end" : "middle") + '">' +
+      (lbl === 0 ? "now" : lbl.toFixed(yrs < 2 ? 1 : 0) + "y") + "</text>");
+  }
+
+  if (s.band) {
+    var up = "", dn = "";
+    for (var k2 = 0; k2 < N; k2++) {
+      var pu = s.band.hi.series[idxOf(k2)];
+      up += (k2 ? "L" : "M") + xOf(k2).toFixed(1) + "," + yOf(pu.value).toFixed(1);
+    }
+    for (var k3 = N - 1; k3 >= 0; k3--) {
+      var pd = s.band.lo.series[idxOf(k3)];
+      dn += "L" + xOf(k3).toFixed(1) + "," + yOf(pd.value).toFixed(1);
+    }
+    parts.push('<path d="' + up + dn + 'Z" fill="#9aa4b2" opacity="0.13"/>');
+  }
+
+  runs.forEach(function (r) {
+    parts.push('<path class="hodl" stroke="' + r.scen.raw + '" d="' + path(r, "hodl") + '"/>');
+  });
+  runs.forEach(function (r) {
+    parts.push('<path class="series" stroke="' + r.scen.raw + '" d="' + path(r, "value") + '"/>');
+  });
+
+  parts.push('<g id="cx" style="display:none">' +
+    '<line class="crosshair" y1="' + pad.t + '" y2="' + (H - pad.b) + '"/>' +
+    runs.map(function (r) { return '<circle class="cx-dot" r="4" fill="' + r.scen.raw + '"/>'; }).join("") +
+    "</g>");
+  parts.push('<rect id="hitzone" x="' + pad.l + '" y="' + pad.t + '" width="' + (W - pad.l - pad.r) +
+    '" height="' + (H - pad.t - pad.b) + '" fill="transparent" style="cursor:crosshair"/>');
+
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.setAttribute("height", H);
+  svg.innerHTML = parts.join("");
+
+  CH = { N: N, idxOf: idxOf, xOf: xOf, yOf: yOf, W: W, H: H, pad: pad, runs: runs };
+  bindHover();
+}
+
+function bindHover() {
+  var hit = $("hitzone"), cx = $("cx"), tip = $("tip"), svg = $("chart"), box = $("chartbox");
+  if (!hit) return;
+  function move(ev) {
+    var rect = svg.getBoundingClientRect();
+    var scale = CH.W / rect.width;
+    var mx = (ev.clientX - rect.left) * scale;
+    var frac = (mx - CH.pad.l) / (CH.W - CH.pad.l - CH.pad.r);
+    var k = Math.round(Math.max(0, Math.min(1, frac)) * (CH.N - 1));
+    var x = CH.xOf(k);
+    cx.style.display = "";
+    cx.querySelector("line").setAttribute("x1", x);
+    cx.querySelector("line").setAttribute("x2", x);
+    var dots = cx.querySelectorAll("circle");
+    var rows = "";
+    CH.runs.forEach(function (r, n) {
+      var p = r.series[CH.idxOf(k)];
+      dots[n].setAttribute("cx", x);
+      dots[n].setAttribute("cy", CH.yOf(p.value));
+      rows += '<div class="tr"><span><i style="background:' + r.scen.raw + '"></i>' + r.scen.name +
+              "</span><b>" + fmtMoney(p.value) + "</b></div>";
+    });
+    var t = STATE.i.years * (k / (CH.N - 1));
+    var months = Math.round(t * 12);
+    tip.innerHTML = '<div class="tt">' + (months < 24 ? months + " months" : (t.toFixed(1) + " years")) + " in</div>" + rows;
+    tip.classList.add("on");
+    var tw = tip.offsetWidth, bw = box.clientWidth;
+    var px = (x / scale) + 14;
+    if (px + tw > bw) px = (x / scale) - tw - 14;
+    tip.style.left = Math.max(0, px) + "px";
+    tip.style.top = "10px";
+  }
+  hit.addEventListener("pointermove", move);
+  hit.addEventListener("pointerdown", move);
+  hit.addEventListener("pointerleave", function () {
+    cx.style.display = "none";
+    tip.classList.remove("on");
+  });
+}
+
+/* ---------- table ---------- */
+function renderTable(s) {
+  var r = s.runs[1];
+  var months = Math.round(s.i.years * 12);
+  var every = months <= 36 ? 1 : (months <= 96 ? 3 : 12);
+  var sym = $("symbol").value || "tok";
+  var rows = ['<thead><tr><th>Month</th><th>' + sym + " held</th><th>Value</th><th>If held</th><th>Price</th><th>Paid in</th></tr></thead><tbody>"];
+  for (var m = 0; m <= months; m += every) {
+    var idx = Math.min(r.series.length - 1, Math.round(m / 12 * 365));
+    var p = r.series[idx];
+    rows.push("<tr><td>" + m + "</td><td>" + fmtTok(p.tokens) + "</td><td>" + fmtMoney(p.value) +
+      "</td><td>" + fmtMoney(p.hodl) + "</td><td>" + fmtMoney(p.price) + "</td><td>" + fmtMoney(p.invested) + "</td></tr>");
+  }
+  rows.push("</tbody>");
+  $("tbl").innerHTML = rows.join("");
+}
+
+/* ---------- url state ---------- */
+var FIELDS = ["amount","symbol","price","cur","rate","rateLo","rateBase","rateHi",
+              "compound","manualN","years","gas","perf","topup","topupEvery","pBear","pBase","pBull"];
+
+function writeUrl() {
+  var q = new URLSearchParams();
+  FIELDS.forEach(function (f) { q.set(f, $(f).value); });
+  q.set("mode", mode);
+  q.set("basis", basis);
+  history.replaceState(null, "", "#" + q.toString());
+}
+function readUrl() {
+  if (!location.hash || location.hash.length < 2) return false;
+  var q = new URLSearchParams(location.hash.slice(1));
+  var any = false;
+  FIELDS.forEach(function (f) { if (q.has(f)) { $(f).value = q.get(f); any = true; } });
+  if (q.has("mode")) { mode = q.get("mode") === "lend" ? "lend" : "stake"; any = true; }
+  if (q.has("basis")) { basis = q.get("basis") === "apy" ? "apy" : "apr"; any = true; }
+  return any;
+}
+
+/* ---------- ui wiring ---------- */
+function syncMode() {
+  Array.prototype.forEach.call($("modeSeg").children, function (b) {
+    b.setAttribute("aria-pressed", String(b.dataset.mode === mode));
+  });
+  $("rateFixed").hidden = mode === "lend";
+  $("rateBandWrap").hidden = mode !== "lend";
+}
+function syncBasis() {
+  Array.prototype.forEach.call($("basisSeg").children, function (b) {
+    b.setAttribute("aria-pressed", String(b.dataset.basis === basis));
+  });
+}
+function syncCompound() { $("manualWrap").hidden = $("compound").value !== "manual"; }
+
+$("modeSeg").addEventListener("click", function (e) {
+  var b = e.target.closest("button"); if (!b) return;
+  mode = b.dataset.mode; syncMode(); render();
+});
+$("basisSeg").addEventListener("click", function (e) {
+  var b = e.target.closest("button"); if (!b) return;
+  basis = b.dataset.basis; syncBasis(); render();
+});
+$("compound").addEventListener("change", function () { syncCompound(); render(); });
+$("form").addEventListener("input", render);
+$("form").addEventListener("change", render);
+$("form").addEventListener("submit", function (e) { e.preventDefault(); });
+
+$("reset").addEventListener("click", function () {
+  location.hash = "";
+  location.reload();
+});
+$("share").addEventListener("click", function () {
+  writeUrl();
+  var btn = $("share");
+  var done = function (ok) {
+    btn.textContent = ok ? "copied" : "copy failed";
+    setTimeout(function () { btn.textContent = "copy link"; }, 1600);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(location.href).then(function () { done(true); }, function () { done(false); });
+  } else { done(false); }
+});
+
+/* ---------- live price ---------- */
+$("fetch").addEventListener("click", function () {
+  var msg = $("fetchmsg");
+  var sym = ($("symbol").value || "").trim();
+  if (!sym) { msg.className = "fetch-msg err"; msg.textContent = "enter a symbol first"; return; }
+  var id = COINS[sym.toUpperCase()] || sym.toLowerCase();
+  var vs = cur().toLowerCase();
+  msg.className = "fetch-msg busy";
+  msg.textContent = "fetching " + id + "...";
+
+  var ctrl = new AbortController();
+  var timer = setTimeout(function () { ctrl.abort(); }, 9000);
+  var url = "https://api.coingecko.com/api/v3/simple/price?ids=" +
+            encodeURIComponent(id) + "&vs_currencies=" + encodeURIComponent(vs);
+
+  fetch(url, { signal: ctrl.signal, mode: "cors" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function (j) {
+      clearTimeout(timer);
+      var row = j[id];
+      var v = row && row[vs];
+      if (typeof v !== "number") throw new Error("unknown-id");
+      $("price").value = v;
+      msg.className = "fetch-msg ok";
+      msg.textContent = sym.toUpperCase() + " = " + fmtMoney(v) + " (live)";
+      render();
+    })
+    .catch(function (err) {
+      clearTimeout(timer);
+      msg.className = "fetch-msg err";
+      if (err && err.message === "unknown-id") {
+        msg.textContent = 'no coin id "' + id + '" - type the price in';
+      } else {
+        msg.textContent = "price API unreachable - type the price in";
+      }
+    });
+});
+
+/* ---------- boot ---------- */
+readUrl();
+syncMode(); syncBasis(); syncCompound();
+render();
+
+var rt = null;
+window.addEventListener("resize", function () {
+  clearTimeout(rt);
+  rt = setTimeout(function () { if (STATE) renderChart(STATE); }, 120);
+});
+</script>
+</body>
+</html>
