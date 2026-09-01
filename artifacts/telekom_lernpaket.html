@@ -305,6 +305,20 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
   color: rgba(246, 246, 243, 0.86);
 }
 .fact strong, .fact b { color: #fff; }
+
+/* ══════════════════════════════════════════════════════════════
+   Loses Fenster auf dem Handy — 01.09.2026
+
+   Die Mikrofon-Vergleichstabelle ist 815 px breit. Sie sitzt korrekt
+   in ihrem .table-wrap und scrollt dort auch (nachgemessen: Kasten
+   324 px, Inhalt 815 px). Trotzdem meldete body eine scrollWidth von
+   587 px, und das Fenster liess sich 235 px weit schieben — obwohl
+   KEIN ungeclipptes Element herausragte.
+
+   .container schneidet jetzt selbst ab. Die Tabelle bleibt in ihrem
+   Kasten scrollbar, die Seite steht still.
+   ══════════════════════════════════════════════════════════════ */
+.container { overflow-x: hidden; }
 </style>
 </head>
 <body>
