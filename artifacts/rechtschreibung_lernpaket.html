@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gross- und Kleinschreibung — Lernpaket | BZI ABU</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   Kontrast-Nachbesserung — 27.08.2026
+
+   Gemessen auf 375 px: --ink-mute (#85898A) trug auf dem hellen
+   Grund nur 3.53:1. Das ist unter den 4.5:1, die kleine Schrift
+   braucht, und betrifft alles, was mit .meta oder .law-ref
+   gesetzt ist — also gerade die Normverweise, die man beim Lernen
+   liest. Etwas dunkler, gleicher kuehler Ton.
+   ══════════════════════════════════════════════════════════════ */
+:root { --ink-mute: #6C7071; }
+
+/* Auf hellem Grund darf die zurueckgenommene Tinte etwas kraeftiger
+   sein — .tip und .info-box sind hell. */
+.tip .meta, .tip .law-ref, .info-box .law-ref, .info-box .meta { color: var(--ink-soft); }
+
+/* .fact ist DUNKEL (#171D1E) mit heller Schrift. Alles darin muss hell
+   bleiben. Nachgemessen: ein <em> darin erbte --ink-soft, also dunkel
+   auf dunkel — 2.36:1. Ein Kasten, der die Kernaussage traegt, und der
+   Halbsatz darin war fast unlesbar. */
+.fact em, .fact i, .fact .meta, .fact .law-ref, .fact small {
+  color: rgba(246, 246, 243, 0.86);
+}
+.fact strong, .fact b { color: #fff; }
+
+/* ══════════════════════════════════════════════════════════════
+   Loses Fenster auf dem Handy — 01.09.2026
+
+   Die Mikrofon-Vergleichstabelle ist 815 px breit. Sie sitzt korrekt
+   in ihrem .table-wrap und scrollt dort auch (nachgemessen: Kasten
+   324 px, Inhalt 815 px). Trotzdem meldete body eine scrollWidth von
+   587 px, und das Fenster liess sich 235 px weit schieben — obwohl
+   KEIN ungeclipptes Element herausragte.
+
+   .container schneidet jetzt selbst ab. Die Tabelle bleibt in ihrem
+   Kasten scrollbar, die Seite steht still.
+   ══════════════════════════════════════════════════════════════ */
+.container { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ABU · Sprache und Kommunikation bei B. Laedrach</div>
+  <h1>Gross- und Kleinschreibung</h1>
+  <div class="meta">Handbuch Kompetenzen S. 120 und das Übungsdossier — Test vom Montag 07.09.2026</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════ THEORIE ════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+  <div class="info-box">
+    <strong>Schweizer Rechtschreibung</strong><br>
+    In der Schweiz gibt es das scharfe s (ß) nicht — es wird immer <strong>ss</strong> geschrieben.
+    Wer aus einer deutschen Übungssammlung lernt, übernimmt sonst eine Schreibweise, die hier als
+    Fehler zählt. Alle Beispiele in diesem Paket sind Schweizerisch geschrieben.
+  </div>
+
+  <div class="intro">
+    <p>Erst die Regeln für <strong>Grossschreibung</strong> (G 1–G 7, E 2.1–E 2.2), dann die für
+    <strong>Kleinschreibung</strong> — inklusive der Ausnahmen und Zusätze, die die Grundregeln wieder
+    kippen. Zum Schluss die fünf <strong>Signalwörter</strong>, mit denen du beim Schreiben systematisch
+    prüfen kannst, ob ein Wort gross gehört.</p>
+  </div>
+
+  <h2 class="section-label">Grossschreibung</h2>
+
+<p>Ein Wort wird gross geschrieben, wenn eine der folgenden Regeln aus dem Übungsdossier zutrifft. Am häufigsten wird bei verkappten Nomen falsch gemacht: bei Verben und Adjektiven, die im Satz wie ein Nomen gebraucht werden (G 3 und G 4).</p>
+
+<h3>G 1 — Direkte Rede und Doppelpunkt</h3>
+<p>Das erste Wort einer direkten Rede schreibt man gross. Zusatz zu G 1: Nach einem Doppelpunkt (ohne direkte Rede) wird grossgeschrieben, wenn ein vollständiger Satz folgt, und kleingeschrieben, wenn kein ganzer Satz folgt.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 1</td><td>Erstes Wort der direkten Rede: gross</td><td>Sie fragte: "Wann kommst du wieder?"</td></tr>
+<tr><td>G 1, Zusatz</td><td>Nach Doppelpunkt, ganzer Satz folgt: gross</td><td>Am besten beginnt man eine Arbeit so: Man legt sich zunächst das Arbeitsmaterial bereit.</td></tr>
+<tr><td>G 1, Zusatz</td><td>Nach Doppelpunkt, kein ganzer Satz folgt: klein</td><td>Und das braucht ihr: viel Papier und etwas Leim.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>G 2 — Nomen</h3>
+<p>Nomen werden grossgeschrieben. Man erkennt sie am Geschlecht (der, die, das), an der Zahl (Baum, Bäume), am Fall (der Baum, des Baumes, dem Baum) und oft an Endungen wie -ung, -tum, -heit, -keit, -nis oder -schaft.</p>
+<div class="tip">Merkhilfe: Steht vor dem Wort ein Artikel, ein Possessivpronomen oder eine Zahl (mein Haus, dieses Feld, einige Menschen, am Abend), ist es ein Nomen.</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 2</td><td>Namen, Gegenstände, Lebewesen, abstrakte Begriffe: gross</td><td>Petra, Herr Müller, London; Pult, Sonne; Baum, Arzt; Freude, Angst, Freiheit</td></tr>
+<tr><td>G 2, Zusatz</td><td>Feste Gefüge (Nomen mit Präposition, mit Präposition und Verb, oder mit Verb) bleiben gross</td><td>auf Abruf, zur Seite; zu Hilfe kommen, in Kauf nehmen; Auto fahren, Angst haben, Recht haben</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>E 2.1 und E 2.2 — Eigennamen</h3>
+<p>Eigennamen sind Nomen und werden deshalb in der Regel grossgeschrieben (E 2.1). Das gilt auch für mehrteilige Eigennamen: Dort schreibt man das erste Wort und alle weiteren Wörter gross, ausser Artikel und Partikeln. Bei Ableitungen von geografischen Eigennamen (E 2.2) gilt: die Form auf -er ist gross, die Form auf -isch ist klein, ausser sie gehört zu einem Namen oder Titel.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>E 2.1</td><td>Eigennamen: gross</td><td>Peter, Paris, Coca-Cola; der Alte Fritz, die Vereinigten Staaten von Amerika</td></tr>
+<tr><td>E 2.2</td><td>Ableitung auf -er: gross</td><td>die Schweizer Käse, die Schweizer Berge</td></tr>
+<tr><td>E 2.2</td><td>Ableitung auf -isch: klein, ausser als Teil eines Titels</td><td>die schweizerischen Landschaften — aber: die Schweizerischen Bundesbahnen</td></tr>
+</tbody>
+</table>
+</div>
+<div class="info-box">Ausnahme innerhalb von E 2.1: In Titeln, besonderen Kalendertagen und historischen Epochen bleibt das Adjektiv gross, auch wenn kein reiner Eigenname vorliegt: der Erste Bürgermeister, der Heilige Abend, der Zweite Weltkrieg.</div>
+
+<h3>G 3 — Substantivierte Verben</h3>
+<p>Verben, die als Nomen gebraucht werden, werden grossgeschrieben. Diese Regel gehört zur Grundregel, dass alle Wörter grossgeschrieben werden, die im Satz wie ein Nomen gebraucht werden (Nominalisierung).</p>
+<div class="tip">Merkhilfe: Steht vor dem Verb ein Artikel (das), eine Präposition (zum, beim) oder ein Possessivpronomen (sein), ist es nominalisiert und damit gross.</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 3</td><td>Verb als Nomen gebraucht: gross</td><td>Das Rauchen stört mich. Zum Lesen ist es hier zu dunkel.</td></tr>
+<tr><td>G 3</td><td>gilt auch ohne Artikel, wenn die Nominalisierung erkennbar ist</td><td>Nur ein Knistern war zu hören. Tiefes Durchatmen beruhigt den Kreislauf.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>G 4 — Substantivierte Adjektive</h3>
+<p>Adjektive, die als Nomen gebraucht werden, schreibt man gross. Ebenso gross schreibt man Adjektive, vor denen eine Mengenangabe steht: viel, alles, manches, einiges, etwas, wenig, nichts, allerlei, lauter.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 4</td><td>Adjektiv als Nomen gebraucht: gross</td><td>Das Gute wird siegen. Ihm gefällt dieses leuchtende Rot.</td></tr>
+<tr><td>G 4</td><td>Adjektiv nach Mengenangabe: gross</td><td>Sie erzählen uns viel Neues. In diesem Laden findest du allerlei Teures.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="info-box">Ausnahme zu G 4: nichts anderes, etwas anderes, viel anderes, alles andere schreibt man klein.</div>
+
+<h3>G 5 und G 6 — Pronomen</h3>
+<p>Pronomen, die als Nomen gebraucht werden, schreibt man gross (G 5). Ausserdem schreibt man das Anredepronomen Sie und das dazugehörende Possessivpronomen Ihr in allen Formen gross, weil es die distanziert höfliche Anrede ist (G 6).</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 5</td><td>Pronomen als Nomen gebraucht: gross</td><td>Sie hat ein gewisses Etwas. Wir standen vor dem Nichts.</td></tr>
+<tr><td>G 6</td><td>Sie / Ihr als höfliche Anrede: immer gross</td><td>Würden Sie mir helfen? Kann ich Ihnen behilflich sein?</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>G 7 — Tageszeiten</h3>
+<p>Tageszeiten nach vorgestern, gestern, heute, morgen und übermorgen schreibt man gross. Fügungen aus Wochentag und Tageszeit schreibt man ausserdem zusammen.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Regel</th><th>Was gilt</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>G 7</td><td>Tageszeit nach vorgestern/gestern/heute/morgen/übermorgen: gross</td><td>heute Morgen, gestern Abend, übermorgen Nachmittag</td></tr>
+<tr><td>G 7</td><td>Wochentag + Tageszeit: zusammengeschrieben, gross</td><td>am Dienstagabend, der Montagmorgen, zum Sonntagmittag</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="fact">Nomen sind immer gross. Wird ein Verb oder Adjektiv wie ein Nomen gebraucht, gilt dasselbe.</div>
+
+  <h2 class="section-label">Kleinschreibung</h2>
+
+<p>Die folgenden Regeln zeigen, wann ein Wort <strong>klein</strong> geschrieben wird, obwohl es wie ein Nomen, ein Adjektiv oder ein Pronomen aussieht. Die G-Nummern sind Grundregeln (FUNDAMENTUM), die E-Nummern sind Ergänzungsregeln (ADDITUM) - Zusätze und Ausnahmen zu den Grundregeln.</p>
+
+<h3>Zusatz zu G 1 - Doppelpunkt ohne direkte Rede</h3>
+<p>Nach einem Doppelpunkt ohne direkte Rede schreibst du klein, wenn kein vollständiger Satz folgt. Folgt ein ganzer Satz, schreibst du gross.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Was folgt nach dem Doppelpunkt?</th><th>Schreibung</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>kein ganzer Satz</td><td>klein</td><td>Und das braucht ihr: viel Papier und etwas Leim.</td></tr>
+<tr><td>ein ganzer Satz</td><td>gross</td><td>Am besten beginnt man eine Arbeit so: Man legt sich zunächst das Arbeitsmaterial bereit.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>G 5 - Pronomen als Stellvertreter</h3>
+<p>Pronomen, die als Stellvertreter von Nomen gebraucht werden, schreibt man klein.</p>
+<p>Beispiele: In diesem Wald hat sich schon mancher verirrt. Ich habe mich mit diesem und jenem unterhalten. Man muss mit beiden reden.</p>
+<p>Solche Stellvertreter-Pronomen sind unter anderem: du, er, sie, wir, ihr; dieser, jener, solcher; welcher, wer, was; beide, einige, etwas; jedermann, jemand; manches, nichts, niemand; sämtliches, viel, wenig; ein jeder, die beiden; der eine, der andere, ein anderer; alle, ein bisschen.</p>
+<div class="tip">Merke zu G 5: Bei "die Deinigen / die deinigen" (deine Angehörigen) und "das Deinige / das deinige" (was dir gehört) sind laut Dossier beide Schreibweisen korrekt.</div>
+
+<h3>G 6 - Vertraute Anrede: du, dein, ihr, euer</h3>
+<p>Die Pronomen du/dein und ihr/euer schreibt man in allen Formen klein (= vertraute Anrede).</p>
+<p>Beispiele: Würdest du mir helfen? Kann ich dir behilflich sein? Hast du dich gut erholt?</p>
+
+<h3>ADDITUM E 2.2 - Ableitungen auf -isch</h3>
+<p>Ableitungen von geografischen Eigennamen auf -isch schreibt man klein - ausser sie gehören zu einem Namen oder Titel, dann bleibt es gross. (Ableitungen auf -er dagegen sind immer gross, siehe Grossschreibung.)</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Fall</th><th>Schreibung</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>Ableitung auf -isch</td><td>klein</td><td>die schweizerischen Landschaften</td></tr>
+<tr><td>-isch, aber Teil eines Titels/Namens</td><td>gross</td><td>die Schweizerischen Bundesbahnen (= Titel)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>ADDITUM E 2.3 - Ehemalige Nomen</h3>
+<p>Ehemalige Nomen, die die Funktion anderer Wortarten übernommen haben, schreibt man klein.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Fall</th><th>Wörter</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>Verbindung mit sein, werden, bleiben</td><td>angst (und bange), schade, gram, leid, pleite, schuld</td><td>Mir ist angst. Er blieb ihr noch lange gram.</td></tr>
+<tr><td>aus Nomen entstandene Verbzusätze</td><td>teil-, preis- u. ä.</td><td>Er nimmt daran teil. (teilnehmen) - Sie gibt ihr Ziel nicht preis. (preisgeben)</td></tr>
+<tr><td>aus Nomen entstandene Partikeln auf -s / -ens</td><td>abends, hungers, rechtens, namens</td><td>Abend -&gt; abends - Hunger -&gt; hungers (sterben) - Recht -&gt; rechtens (sein) - Name -&gt; namens</td></tr>
+<tr><td>aus Nomen entstandene Präpositionen</td><td>dank, kraft, laut, statt/anstatt, trotz, wegen, von ... wegen, um ... willen, zeit</td><td>&ndash;</td></tr>
+<tr><td>feste Wendungen mit Mengenangabe</td><td>ein bisschen, ein paar, ein wenig</td><td>aber: ein Paar Stiefel (Nomen, gross)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>G 4 - Ausnahme: nichts anderes &amp; Co.</h3>
+<p>Normalerweise wird ein Adjektiv nach einer Mengenangabe (viel, etwas, nichts ...) gross geschrieben. Bei "anderes" bleibt es aber klein.</p>
+<p>Ausnahmen, klein: nichts anderes - etwas anderes - viel anderes - alles andere.</p>
+
+<h3>ADDITUM E 4.1 - Eingespartes Nomen</h3>
+<p>Wenn nach einem Adjektiv ein Nomen eingespart worden ist, das im Text sonst noch vorkommt, schreibt man das Adjektiv klein.</p>
+<p>Beispiele: Der Verkäufer zeigte mir seine Auswahl an Krawatten, die gestreiften und gepunkteten gefielen mir am besten. Wir müssen die Früchte sortieren, die grossen kommen zum Verkauf, die kleinen in unseren Keller.</p>
+
+<h3>ADDITUM E 4.2 - Superlative mit am</h3>
+<p>Superlative mit am, die sich mit Wie? erfragen lassen, werden kleingeschrieben.</p>
+<p>Beispiel: Dieses Bild gefällt mir am besten. (Wie gefällt mir das Bild?)</p>
+<div class="tip">Frageprobe: Lässt sich der Superlativ mit "Wie?" erfragen, schreibst du klein. Lässt er sich mit "Woran?" oder "Worauf?" erfragen, schreibst du gross (z. B. Es fehlte ihnen am Nötigsten. - Woran fehlte es ihnen?).</div>
+<p>Fest gross bleiben zwei Ausdrücke, unabhängig von der Frageprobe: aufs Herzlichste (= auf das Herzlichste) und das Beste.</p>
+
+<h3>ADDITUM E 4.3 - Zahladjektive: ein, ander, viel, wenig</h3>
+<p>Die folgenden Zahladjektive (einschliesslich ihrer Vergleichsformen) werden kleingeschrieben: ein - ander - viel - wenig.</p>
+<p>Vergleichsformen: viel - mehr - am meisten; wenig - weniger - am wenigsten.</p>
+<p>Beispiele: Zum Erfolg trugen auch die vielen bei, die ohne Entgelt mitgearbeitet hatten. Die meisten haben diesen Film schon einmal gesehen. Die einen kommen, die anderen gehen.</p>
+
+<h3>ADDITUM E 4.4 - Feste Wortverbindungen aus Präposition und Adjektiv</h3>
+<p>Feste Wortverbindungen aus reiner Präposition und Adjektiv schreibt man klein.</p>
+<p>Beispiele: in bar - gegen bar - auf ewig - von fern - von früh auf - von früher her - von klein auf - von nah - bis später - gegen unbekannt - durch dick und dünn - von nah und fern - von früh bis spät - jenseits von gut und böse - über kurz oder lang - schwarz auf weiss - blau in blau - grau in grau - binnen kurzem - vor kurzem - seit kurzem - seit langem - vor langem - seit längerem - vor längerem - von nahem - von neuem - seit neuestem - von weitem - bei weitem - bis auf weiteres - ohne weiteres.</p>
+
+<h3>Wenn beides richtig ist - je nach Bedeutung</h3>
+<p>Dieselbe Wortfamilie kann klein oder gross geschrieben werden - je nachdem, ob das Wort noch als Nomen gebraucht wird oder seine Funktion gewechselt hat.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Wort / Wendung</th><th>klein</th><th>gross</th></tr></thead>
+<tbody>
+<tr><td>Angst</td><td>angst (und bange) werden</td><td>Angst haben</td></tr>
+<tr><td>Leid</td><td>leid sein</td><td>Leid tun</td></tr>
+<tr><td>Schuld</td><td>schuld bleiben</td><td>Schuld tragen</td></tr>
+<tr><td>Pleite</td><td>pleite sein</td><td>Pleite gehen</td></tr>
+<tr><td>Teil</td><td>Er nimmt daran teil. (teilnehmen)</td><td>Ich habe meinen Teil schon beigetragen.</td></tr>
+<tr><td>ein paar</td><td>ein paar Leute</td><td>ein Paar Stiefel</td></tr>
+<tr><td>am + Superlativ</td><td>am besten (Wie?)</td><td>am Nötigsten (Woran?)</td></tr>
+<tr><td>Deinige</td><td>die deinigen</td><td>die Deinigen</td></tr>
+</tbody>
+</table>
+</div>
+<div class="fact">Nicht das Wort entscheidet über Gross- oder Kleinschreibung, sondern seine Funktion im Satz.</div>
+
+  <h2 class="section-label">Signalwörter – wie erkennst du, dass grossgeschrieben wird?</h2>
+
+<p>Neben der Grundprüfung über Geschlecht, Zahl und Fall gibt es Wörter, die direkt vor dem gesuchten Wort stehen und dir verraten: Hier folgt ein Nomen oder ein Wort, das wie ein Nomen gebraucht wird. Diese Signalwörter kannst du beim Schreiben systematisch abfragen.</p>
+
+<h3>Signal 1: der Artikel oder Begleiter davor</h3>
+<p>Steht vor einem Wort ein Artikel oder ein anderer Begleiter, ist das Wort in der Regel ein Nomen (G 2). Der Begleiter versteckt sich dabei oft in einer verschmolzenen Präposition.</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Signal</th><th>was gilt</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>Artikel/Begleiter (der, die, das, mein, dieses, einige)</td><td>Wort danach ist Nomen – gross</td><td>mein Haus, dieses Feld, einige Menschen, die Angst</td></tr>
+<tr><td>versteckter Artikel (am, im, zur, zum)</td><td>Präposition + Artikel verschmolzen – trotzdem Signal</td><td>am Abend = an dem Abend</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip">
+<p>Merkhilfe: Kannst du die Partikel auseinandernehmen (am = an dem, im = in dem, zur = zu der, zum = zu dem)? Dann steckt ein Artikel drin – das Wort danach ist gross.</p>
+</div>
+
+<h3>Signal 2: das Adjektiv davor</h3>
+<p>Steht ein Adjektiv vor einem Verb oder einem anderen Adjektiv, das wie ein Nomen gebraucht wird (Nominalisierung), wird grossgeschrieben (G 3, G 4).</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Signal</th><th>was gilt</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>Adjektiv vor einem nominalisierten Verb</td><td>Nominalisierung – gross</td><td>Tiefes Durchatmen beruhigt den Kreislauf.</td></tr>
+<tr><td>Adjektiv vor einem nominalisierten Adjektiv</td><td>Nominalisierung – gross</td><td>Ihm gefällt dieses leuchtende Rot.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+<p>Vorsicht, Falle (E 4.1): Steht zwar ein Artikel vor dem Adjektiv, wurde aber das zugehörige Nomen im Text schon genannt und danach eingespart, bleibt das Adjektiv klein. Beispiel: Wir müssen die Früchte sortieren, die grossen kommen zum Verkauf, die kleinen in unseren Keller.</p>
+</div>
+
+<h3>Signal 3: die Präposition davor</h3>
+<p>Eine Präposition direkt vor dem Wort ist ebenfalls ein Signal – entweder für ein festes Gefüge mit Nomen oder, verschmolzen mit einem Artikel, für ein nominalisiertes Verb (G 2 Zusatz, G 3).</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Signal</th><th>was gilt</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>Präposition vor einem Nomen (festes Gefüge)</td><td>Nomen bleibt gross</td><td>auf Abruf, in Bezug auf, im Grunde, zur Not, zur Seite, ausser Acht lassen</td></tr>
+<tr><td>Präposition + Artikel vor einem nominalisierten Verb</td><td>Nominalisierung – gross</td><td>Zum Lesen ist es hier zu dunkel. Beim Springen musst du gut aufpassen.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Signal 4: die Mengenangabe davor</h3>
+<p>Steht vor einem Adjektiv eine Mengenangabe, wird das Adjektiv wie ein Nomen gebraucht und deshalb grossgeschrieben (G 4).</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Signal</th><th>was gilt</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>viel, alles, manches, einiges, etwas, wenig, nichts, allerlei, lauter</td><td>Adjektiv danach – gross</td><td>Sie erzählen uns viel Neues. In diesem Laden findest du allerlei Teures.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip">
+<p>Ausnahmen bleiben klein (G 4): nichts anderes, etwas anderes, viel anderes, alles andere.</p>
+</div>
+
+<h3>Signal 5: die typische Endung</h3>
+<p>Auch am Wortende erkennst du oft ein Nomen. Diese Endungen sind ein sicheres Signal (G 2).</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Endung</th><th>Beispiele</th></tr>
+</thead>
+<tbody>
+<tr><td>-ung</td><td>Meinung, Bewegung</td></tr>
+<tr><td>-heit</td><td>Gelegenheit, Seltenheit, Klarheit</td></tr>
+<tr><td>-keit</td><td>Möglichkeit, Dankbarkeit, Fähigkeit</td></tr>
+<tr><td>-nis</td><td>Finsternis, Fäulnis, Verzeichnis</td></tr>
+<tr><td>-tum</td><td>Irrtum, Reichtum</td></tr>
+<tr><td>-schaft</td><td>Seilschaft, Gemeinschaft, Eigenschaft</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="fact">
+<p>Prüfliste im Kopf: Artikel oder Begleiter davor? Dann gross.</p>
+<p>Adjektiv vor einem Verb oder Adjektiv, das als Nomen gebraucht wird? Dann gross.</p>
+<p>Präposition unmittelbar davor (fest oder verschmolzen mit Artikel)? Dann gross.</p>
+<p>Mengenangabe davor (viel, alles, etwas, nichts, wenig …)? Dann gross.</p>
+<p>Endung -ung, -heit, -keit, -nis, -tum oder -schaft? Dann gross.</p>
+</div>
+
+  <h2 class="section-label">Quellen</h2>
+  <ul class="meta">
+    <li>Handbuch Kompetenzen, S. 120 — Gross- und Kleinschreibung</li>
+    <li>Übungsdossier ABU (Aufgaben und Lösungen: Leasing, «erst gekauft», Risiken, Vom-Ski-fahren, Übung 13c/d/e)</li>
+  </ul>
+
+</section>
+
+<!-- ════════════════════════ BEGRIFFE ════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+  <div class="intro"><p>Regelnummern und Kernbegriffe zum Nachschlagen — suchbar und nach Kategorie filterbar.</p></div>
+  <input type="search" class="begriff-search" id="begriffSearch" placeholder="Suchen — z. B. G 3, Nominalisierung, ein bisschen …">
+  <div class="cat-filter" id="begriffCats"></div>
+  <div class="begriff-grid" id="begriffGrid"></div>
+</section>
+
+<!-- ════════════════════════ KARTEIKARTEN ════════════════════════ -->
+<section class="tab-pane" id="karten">
+  <div class="intro"><p>Lücke füllen (gross oder klein?), dann umdrehen. Ehrlich bewerten — nur was du <em>gewusst</em> hast, ist gewusst.</p></div>
+
+  <div class="cat-filter" id="cardCats"></div>
+
+  <div class="flash-stage">
+    <div class="flash-card" id="flashCard">
+      <div class="flash-counter" id="flashCounter"></div>
+      <div id="flashContent"></div>
+      <div class="flash-hint">Klicken oder Leertaste zum Umdrehen</div>
+    </div>
+  </div>
+
+  <div class="flash-controls">
+    <button class="btn ghost" type="button" id="cardPrev">← Zurück</button>
+    <button class="btn bad" type="button" id="cardNo">Wusste ich nicht</button>
+    <button class="btn good" type="button" id="cardYes">Wusste ich</button>
+    <button class="btn ghost" type="button" id="cardNext">Weiter →</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn ghost sm" type="button" id="cardShuffle">Mischen</button>
+    <button class="btn ghost sm" type="button" id="cardReset">Zurücksetzen</button>
+  </div>
+  <div class="flash-stats" id="flashStats"></div>
+</section>
+
+<!-- ════════════════════════ QUIZ ════════════════════════ -->
+<section class="tab-pane" id="quiz">
+  <div class="intro">
+    <p>Zwanzig Lücken aus echten Übungssätzen — Risiken, Bakterien, Jack London, Mekka, Vom-Ski-fahren und mehr. Erst selbst antworten, dann aufdecken.</p>
+    <div class="btn-row">
+      <button class="btn ghost sm" type="button" onclick="revealAll(true)">Alle Lösungen zeigen</button>
+      <button class="btn ghost sm" type="button" onclick="revealAll(false)">Alle verstecken</button>
+    </div>
+  </div>
+  <div id="quizList"></div>
+</section>
+
+<!-- ════════════════════════ LERNPLAN ════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+  <div class="intro">
+    <p><strong>Heute ist Dienstagabend, der Test ist am Montag um 08:00.</strong>
+    Das ergibt einen Abend zum Lesen, einen Abend Karteikarten, eine Übungsrunde am Sonntag
+    und eine kurze Wiederholung am Montagmorgen — mit Puffer dazwischen für den Rest der Woche.</p>
+  </div>
+
+  <div class="progress"><div class="progress-fill" id="planFill"></div></div>
+  <div class="meta" id="planText"></div>
+
+  <div class="day">
+    <div class="day-num">Mi 02.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Abend · ~50 Min</span></div>
+    <div class="day-content">
+      <h4>Theorie lesen</h4>
+      <ul class="check-list" id="planListD1"></ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-num">Fr 04.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Abend · ~50 Min</span></div>
+    <div class="day-content">
+      <h4>Karteikarten</h4>
+      <ul class="check-list" id="planListD2"></ul>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <span class="milestone-icon">⚡</span>
+    <div>
+      <strong>Wenn du nur zehn Minuten hast</strong><br>
+      Diese fünf Signale auswendig, dann sitzt das Wichtigste:
+      <ol>
+        <li><strong>Artikel oder Begleiter davor</strong> (der, mein, dieses, am = an dem) → gross.</li>
+        <li><strong>Adjektiv vor nominalisiertem Verb/Adjektiv</strong> (tiefes Durchatmen, leuchtendes Rot) → gross.</li>
+        <li><strong>Präposition davor</strong> (fest oder mit Artikel verschmolzen: zur Seite, zum Lesen) → gross.</li>
+        <li><strong>Mengenangabe davor</strong> (viel, alles, etwas, nichts, wenig …) → gross — ausser bei «anderes».</li>
+        <li><strong>Endung</strong> -ung, -heit, -keit, -nis, -tum, -schaft → gross.</li>
+      </ol>
+      Und die Gegenprobe: du/dein, ihr/euer, ein/ander/viel/wenig als Zahladjektiv, feste Präposition+Adjektiv-Wendungen (in bar, seit kurzem) — die bleiben immer klein.
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-num">So 06.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">~45 Min</span></div>
+    <div class="day-content">
+      <h4>Übungsrunde</h4>
+      <ul class="check-list" id="planListD3"></ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-num">Mo 07.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Morgen · ~15 Min</span></div>
+    <div class="day-content">
+      <h4>Nur noch auffrischen — nichts Neues mehr</h4>
+      <ul class="check-list" id="planListD4"></ul>
+    </div>
+  </div>
+
+  <div class="info-box warn">
+    <strong>Montagmorgen, vor der Prüfung</strong><br>
+    Nur die Karteikarten mit «Wusste ich nicht» durchgehen, die Prüfliste laut aufsagen — nichts Neues mehr anfangen.
+  </div>
+</section>
+
+<footer class="meta" style="margin:2.5rem 0 1rem;text-align:center">
+  Erstellt am 01.09.2026 für den Test vom 07.09.2026 · ABU, B. Laedrach
+</footer>
+
+</div>
+
+<script>
+/* ═══ TAB SWITCHING ═══ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+/* ═══ QUIZ REVEAL ═══ */
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+/* ═══ BEGRIFFE ═══ */
+
+const BEGRIFFE = [
+    {"term":"G 1 – Direkte Rede","cat":"gross","ref":"G1","def":"Das erste Wort einer direkten Rede schreibt man gross. Beispiel: Sie fragte: «<b>W</b>ann kommst du wieder?»"},
+    {"term":"G 1 Zusatz – nach Doppelpunkt","cat":"signal","ref":"G1 Zusatz","def":"Nach einem Doppelpunkt (ohne direkte Rede) gross, wenn ein vollständiger Satz folgt; klein, wenn kein ganzer Satz folgt. Beispiel: Und das braucht ihr: <b>v</b>iel Papier und etwas Leim."},
+    {"term":"G 2 – Nomen","cat":"gross","ref":"G2","def":"Nomen werden grossgeschrieben. Erkennbar am Geschlecht (der/die/das), an der Zahl (Baum–Bäume), am Fall, an typischen Endungen (-ung, -heit, -keit, -nis, -schaft, -tum) oder am Begleiter (Artikel, auch versteckt: <i>am</i> Abend = an dem Abend)."},
+    {"term":"G 2 Zusatz – Feste Gefüge","cat":"gross","ref":"G2 Zusatz","def":"Nomen bleiben auch in festen Gefügen gross: Nomen + Präposition (in Bezug auf, zur Seite), Nomen + Präposition + Verb (in Kauf nehmen, zu Grunde gehen), Nomen + Verb (Auto fahren, Rad fahren, Mass halten)."},
+    {"term":"G 3 – Verben als Nomen","cat":"gross","ref":"G3","def":"Verben, die als Nomen gebraucht werden (Nominalisierung), schreibt man gross. Beispiel: Das Rauchen stört mich. Beim Springen musst du aufpassen."},
+    {"term":"G 4 – Adjektive als Nomen / nach Mengenangabe","cat":"gross","ref":"G4","def":"Adjektive, die als Nomen gebraucht werden, schreibt man gross. Ebenso Adjektive, vor denen eine Mengenangabe steht: viel, alles, manches, einiges, etwas, wenig, nichts, allerlei, lauter. Beispiel: Sie erzählen uns viel Neues."},
+    {"term":"G 4 – Ausnahme «anderes»","cat":"klein","ref":"G4","def":"Klein bleiben trotz Mengenangabe: nichts anderes, etwas anderes, viel anderes, alles andere."},
+    {"term":"G 5 – Pronomen als Nomen","cat":"gross","ref":"G5","def":"Pronomen, die als Nomen gebraucht werden, schreibt man gross. Beispiel: Sie hat ein gewisses Etwas. Er bot ihm das Du an. Wir standen vor dem Nichts. Ich heisse Niemand."},
+    {"term":"G 5 – Pronomen als Stellvertreter","cat":"klein","ref":"G5","def":"Pronomen, die als Stellvertreter von Nomen gebraucht werden, schreibt man klein: dieser, jener, welcher, wer, was, beide, einige, etwas, jedermann, jemand, manches, nichts, niemand, viel, wenig. Beispiel: In diesem Wald hat sich schon mancher verirrt."},
+    {"term":"G 6 – Höfliche Anrede Sie/Ihr","cat":"gross","ref":"G6","def":"Das Pronomen Sie und das Possessivpronomen Ihr schreibt man in allen Formen gross (distanziert höfliche Anrede). Beispiel: Würden Sie mir helfen? Bestehen Ihrerseits Bedenken?"},
+    {"term":"G 6 – Vertraute Anrede du/ihr","cat":"klein","ref":"G6","def":"Die Pronomen du/dein und ihr/euer schreibt man in allen Formen klein (vertraute Anrede). Beispiel: Würdest du mir helfen? Hast du dich gut erholt?"},
+    {"term":"G 7 – Tageszeiten","cat":"gross","ref":"G7","def":"Tageszeiten nach vorgestern – gestern – heute – morgen – übermorgen schreibt man gross. Fügungen aus Tag und Tageszeit schreibt man zusammen. Beispiel: heute Morgen, übermorgen Nachmittag, am Dienstagabend."},
+    {"term":"G 7 – Beachte: Adverbien auf -s","cat":"klein","ref":"G7","def":"Aus Tageszeiten gebildete Adverbien auf -s bleiben klein: morgens, nachts, vormittags, mittags, sonntags. Beispiel: Er ist sonntags nie zu Hause."},
+    {"term":"E 2.1 – Eigennamen","cat":"gross","ref":"E2.1","def":"Eigennamen sind Nomen und werden deshalb in der Regel grossgeschrieben. In mehrteiligen Eigennamen schreibt man das erste Wort und alle weiteren Wörter gross, ausser Artikeln und Partikeln. Beispiel: die Vereinigten Staaten von Amerika, der Schiefe Turm zu Pisa."},
+    {"term":"E 2.1 – Ausnahmen (Titel, Kalendertage, Epochen)","cat":"gross","ref":"E2.1","def":"Auch ohne Eigenname gross: Titel (der Erste Bürgermeister, der Technische Leiter), besondere Kalendertage (der Heilige Abend, der Erste Mai), bestimmte historische Ereignisse/Epochen (der Zweite Weltkrieg, die Goldenen Zwanziger Jahre, die Französische Revolution), fachsprachliche Bezeichnungen in der Biologie (das Fleissige Lieschen)."},
+    {"term":"E 2.1 – Feste Verbindung ohne Eigennamen","cat":"klein","ref":"E2.1","def":"Gehört das Adjektiv in einer festen Verbindung aus Adjektiv und Nomen nicht zu einem Eigennamen oder Titel, bleibt das Adjektiv klein: der griechische Salat, das olympische Feuer, das grosse Los, die innere Medizin."},
+    {"term":"E 2.2 – Geografische Ableitung auf -er","cat":"gross","ref":"E2.2","def":"Ableitungen von geografischen Eigennamen auf -er schreibt man gross. Beispiel: die Schweizer Käse, die Zürcher Altstadt."},
+    {"term":"E 2.2 – Geografische Ableitung auf -isch","cat":"klein","ref":"E2.2","def":"Ableitungen von geografischen Eigennamen auf -isch schreibt man klein, ausser wenn sie zu einem Namen oder Titel gehören. Beispiel: die schweizerischen Landschaften, aber: die Schweizerischen Bundesbahnen (= Titel)."},
+    {"term":"E 2.3 – Ehemalige Nomen mit sein/werden/bleiben","cat":"klein","ref":"E2.3","def":"angst (und bange), schade, gram, leid, pleite, schuld schreibt man klein, wenn sie mit sein, werden oder bleiben verbunden sind. Beispiel: Mir ist angst. Er blieb ihr noch lange gram."},
+    {"term":"E 2.3 – Aus Nomen entstandene Verbzusätze","cat":"klein","ref":"E2.3","def":"teil (teilnehmen) und preis (preisgeben) sind aus Nomen entstandene Verbzusätze und bleiben klein. Beispiel: Er nimmt daran teil. Sie gibt ihr Ziel nicht preis."},
+    {"term":"E 2.3 – Partikeln auf -s / -ens","cat":"klein","ref":"E2.3","def":"Aus Nomen entstandene Partikeln bleiben klein: abends, hungers (sterben), rechtens (sein), namens."},
+    {"term":"E 2.3 – Präpositionen aus Nomen","cat":"klein","ref":"E2.3","def":"Diese aus Nomen entstandenen Präpositionen schreibt man klein: dank, kraft, laut, statt, an…statt, trotz, wegen, von…wegen, um…willen, zeit."},
+    {"term":"E 2.3 – ein bisschen / ein paar","cat":"klein","ref":"E2.3","def":"ein bisschen, ein paar und ein wenig schreibt man klein. Achtung: ein Paar Stiefel ist ein echtes Nomen (zwei zusammengehörende Stücke) und bleibt gross."},
+    {"term":"E 4.1 – Eingespartes Nomen","cat":"klein","ref":"E4.1","def":"Wenn nach einem Adjektiv ein Nomen eingespart worden ist, das im Text sonst noch vorkommt, schreibt man das Adjektiv klein. Beispiel: Wir müssen die Früchte sortieren, die grossen kommen zum Verkauf, die kleinen in unseren Keller."},
+    {"term":"E 4.2 – Superlativ mit Wie?","cat":"klein","ref":"E4.2","def":"Superlative mit am, die sich mit Wie? erfragen lassen, werden kleingeschrieben. Beispiel: Dieses Bild gefällt mir am besten. (Wie gefällt mir das Bild?)"},
+    {"term":"E 4.2 – Superlativ mit Woran?/Worauf?","cat":"gross","ref":"E4.2","def":"Kann man den Superlativ mit Woran? oder Worauf? erfragen, ist er substantiviert und wird grossgeschrieben. Beispiel: Es fehlte ihnen am Nötigsten. (Woran fehlte es ihnen?) Wir freuen uns auf das Schönste. (Worauf freuen wir uns?)"},
+    {"term":"E 4.3 – Zahladjektive ein/ander/viel/wenig","cat":"klein","ref":"E4.3","def":"Die Zahladjektive ein, ander, viel, wenig bleiben auch in ihren Vergleichsformen klein: mehr, am meisten, weniger, am wenigsten. Beispiel: Die meisten haben diesen Film schon gesehen. Die einen kommen, die anderen gehen."},
+    {"term":"E 4.4 – Feste Wortverbindungen Präposition + Adjektiv","cat":"klein","ref":"E4.4","def":"Feste Wortverbindungen aus reiner Präposition und Adjektiv schreibt man klein: in bar, von nah und fern, seit kurzem, vor langem, bei weitem, ohne weiteres, schwarz auf weiss, von klein auf, bis später."},
+    {"term":"Nominalisierung","cat":"begriff","ref":"","def":"Wenn ein Verb, Adjektiv oder Pronomen wie ein Nomen gebraucht wird (meist mit Artikel oder Mengenwort davor), spricht man von Nominalisierung. Sie wird immer grossgeschrieben (G 3, G 4, G 5)."},
+    {"term":"Eigenname","cat":"begriff","ref":"E2.1","def":"Ein Wort, das eine einmalige, ganz bestimmte Person, Sache oder Ort bezeichnet (Peter, Paris, Coca-Cola). Eigennamen sind Nomen und werden gross geschrieben."},
+    {"term":"Superlativ","cat":"begriff","ref":"E4.2","def":"Die höchste Vergleichsform eines Adjektivs (gut – besser – am besten). Ob ein Superlativ mit am gross oder klein geschrieben wird, hängt von der Frage ab (Wie? = klein, Woran?/Worauf? = gross)."},
+    {"term":"Signalwörter für Grossschreibung (Adjektiv/Pronomen als Nomen)","cat":"signal","ref":"G4","def":"viel, alles, manches, einiges, etwas, wenig, nichts, allerlei, lauter – nach diesen Mengenangaben wird das folgende Adjektiv wie ein Nomen grossgeschrieben. Beispiel: viel Neues, allerlei Teures."},
+    {"term":"Signalwörter für Kleinschreibung (Zahladjektive)","cat":"signal","ref":"E4.3","def":"ein, ander, viel, wenig sowie ihre Vergleichsformen (mehr, am meisten, weniger, am wenigsten) bleiben immer klein, auch mit Artikel davor."}
+];
+
+const BEGRIFF_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'gross', label: 'Grossschreibung' },
+  { id: 'klein', label: 'Kleinschreibung' },
+  { id: 'signal', label: 'Signalwörter' },
+  { id: 'begriff', label: 'Begriffe' }
+];
+
+let bFilter = 'all', bSearch = '';
+
+function renderBegriffe() {
+  const grid = document.getElementById('begriffGrid');
+  const s = bSearch.toLowerCase();
+  const list = BEGRIFFE.filter(b =>
+    (bFilter === 'all' || b.cat === bFilter) &&
+    (!s || b.term.toLowerCase().includes(s) || b.def.toLowerCase().includes(s)));
+  grid.innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>`).join('') ||
+    '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px">Nichts gefunden.</div>';
+}
+
+document.getElementById('begriffCats').innerHTML = BEGRIFF_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('begriffCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#begriffCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); bFilter = b.dataset.cat; renderBegriffe();
+});
+document.getElementById('begriffSearch').addEventListener('input', e => {
+  bSearch = e.target.value; renderBegriffe();
+});
+renderBegriffe();
+
+/* ═══ KARTEIKARTEN ═══ */
+
+const CARDS = [
+    {"cat":"gross","ref":"G1","term":"Sie fragte: «___ann kommst du wieder?», und nahm die Agenda hervor.","def":"W(ann) – gross, weil es das erste Wort einer direkten Rede ist (G 1)."},
+    {"cat":"gross","ref":"G1 Zusatz","term":"Am besten beginnt man eine Arbeit so: ___an legt sich zunächst das Arbeitsmaterial bereit.","def":"M(an) – gross, weil nach dem Doppelpunkt ein vollständiger Satz folgt (G 1 Zusatz)."},
+    {"cat":"klein","ref":"G1 Zusatz","term":"Und das braucht ihr: ___iel Papier und etwas Leim.","def":"v(iel) – klein, weil nach dem Doppelpunkt kein ganzer Satz folgt, nur eine Aufzählung (G 1 Zusatz)."},
+    {"cat":"gross","ref":"G2","term":"Er besuchte seinen Freund und dessen ganze ___amilie.","def":"F(amilie) – Nomen (Lebewesen-Gruppe), deshalb gross (G 2)."},
+    {"cat":"gross","ref":"G2 Zusatz","term":"Sie stand ihm in jeder Situation zur ___eite.","def":"S(eite) – festes Gefüge Nomen + Präposition («zur Seite»), das Nomen bleibt gross (G 2 Zusatz)."},
+    {"cat":"gross","ref":"G2 Zusatz","term":"Er nahm die Verspätung gerne in ___auf.","def":"K(auf) – festes Gefüge «in Kauf nehmen» (Nomen + Präposition + Verb), gross (G 2 Zusatz)."},
+    {"cat":"gross","ref":"G2 Zusatz","term":"Am Sonntag sind wir ___ad gefahren.","def":"R(ad) – festes Gefüge Nomen + Verb («Rad fahren»), das Nomen bleibt gross (G 2 Zusatz)."},
+    {"cat":"gross","ref":"G3","term":"Nur ein ___nistern störte die Stille im Wald.","def":"K(nistern) – als Nomen gebrauchtes Verb (Nominalisierung), gross (G 3)."},
+    {"cat":"gross","ref":"G3","term":"Beim ___pringen musst du gut landen.","def":"S(pringen) – nominalisiertes Verb nach Präposition, gross (G 3)."},
+    {"cat":"gross","ref":"G3","term":"Das ___ahren auf Brettern ist mir leicht gefallen.","def":"F(ahren) – nominalisiertes Verb als Satzsubjekt, gross (G 3)."},
+    {"cat":"gross","ref":"G4","term":"Sie erzählen uns viel ___eues.","def":"N(eues) – Adjektiv nach Mengenangabe «viel», als Nomen gebraucht, gross (G 4)."},
+    {"cat":"gross","ref":"G4","term":"In diesem Laden findest du allerlei ___eures.","def":"T(eures) – Adjektiv nach Mengenangabe «allerlei», gross (G 4)."},
+    {"cat":"klein","ref":"G4","term":"Ich habe dieses Jahr nichts ___nderes erlebt.","def":"a(nderes) – klein, feste Ausnahme: «nichts anderes» bleibt immer klein (G 4)."},
+    {"cat":"gross","ref":"G4","term":"Der ___eueste Schrei kam aus Paris.","def":"N(eueste) – Superlativ als Nomen gebraucht (mit Artikel «der»), gross (G 4)."},
+    {"cat":"gross","ref":"G5","term":"Sie hat ein gewisses ___twas.","def":"E(twas) – Pronomen, das als Nomen gebraucht wird, gross (G 5)."},
+    {"cat":"gross","ref":"G5","term":"Wir standen vor dem ___ichts.","def":"N(ichts) – Pronomen als Nomen gebraucht, gross (G 5)."},
+    {"cat":"klein","ref":"G5","term":"In diesem Wald hat sich schon ___ancher verirrt.","def":"m(ancher) – klein, Pronomen als Stellvertreter eines Nomens (G 5)."},
+    {"cat":"klein","ref":"G5","term":"Ich habe mich mit diesem und ___enem unterhalten.","def":"j(enem) – klein, Pronomen als Stellvertreter, nicht als Nomen gebraucht (G 5)."},
+    {"cat":"gross","ref":"G6","term":"Würden ___ie mir bitte helfen?","def":"S(ie) – gross, distanziert höfliche Anrede (G 6)."},
+    {"cat":"klein","ref":"G6","term":"Hast ___u ___ich am Wochenende gut erholt?","def":"d(u), d(ich) – klein, vertraute Anrede (G 6)."},
+    {"cat":"gross","ref":"G7","term":"___eute ___orgen bin ich zu spät aufgestanden.","def":"H(eute) M(orgen) – gross, Tageszeit nach «heute», mit dem Tag zusammengeschrieben (G 7)."},
+    {"cat":"klein","ref":"G7","term":"Er ist ___onntags nie zu Hause.","def":"s(onntags) – klein, aus Tag und Tageszeit gebildetes Adverb auf -s (G 7, Beachte)."},
+    {"cat":"gross","ref":"E2.1","term":"Sie besuchte den ___iefen ___urm von Pisa.","def":"S(chiefen) T(urm) – beide Teile gross, mehrteiliger Eigenname (E 2.1)."},
+    {"cat":"klein","ref":"E2.1","term":"Er isst gerne ___riechischen Salat.","def":"g(riechischen) – klein, feste Verbindung Adjektiv + Nomen ohne Eigennamen (E 2.1)."},
+    {"cat":"gross","ref":"E2.1","term":"Am ___eiligen ___bend gibt es bei uns Geschenke.","def":"H(eiligen) A(bend) – gross, besonderer Kalendertag, Ausnahme zu E 2.1."},
+    {"cat":"gross","ref":"E2.2","term":"Wir kauften ___chweizer Käse auf dem Markt.","def":"S(chweizer) – gross, Ableitung von einem geografischen Eigennamen auf -er (E 2.2)."},
+    {"cat":"klein","ref":"E2.2","term":"Die ___chweizerischen Landschaften sind sehr vielfältig.","def":"s(chweizerischen) – klein, Ableitung auf -isch, kein Titel (E 2.2)."},
+    {"cat":"gross","ref":"E2.2","term":"Er reiste mit den ___chweizerischen Bundesbahnen.","def":"S(chweizerischen) – gross, Ausnahme: gehört zu einem Titel (E 2.2)."},
+    {"cat":"klein","ref":"E2.3","term":"Ihm wird ___ngst und ___ange, wenn er daran denkt.","def":"a(ngst), b(ange) – klein, ehemaliges Nomen mit «werden» (E 2.3)."},
+    {"cat":"klein","ref":"E2.3","term":"Er nimmt gerne daran ___eil.","def":"t(eil) – klein, aus Nomen entstandener Verbzusatz «teilnehmen» (E 2.3)."},
+    {"cat":"klein","ref":"E2.3","term":"Sie gibt ihr Ziel nicht ___reis.","def":"p(reis) – klein, aus Nomen entstandener Verbzusatz «preisgeben» (E 2.3)."},
+    {"cat":"klein","ref":"E2.3","term":"Er erledigte das ___ank guter Vorbereitung.","def":"d(ank) – klein, aus Nomen entstandene Präposition (E 2.3)."},
+    {"cat":"klein","ref":"E2.3","term":"Sie reiste ___rotz des schlechten Wetters.","def":"t(rotz) – klein, aus Nomen entstandene Präposition (E 2.3)."},
+    {"cat":"gross","ref":"E2.3","term":"Bei diesem Wetter braucht man ein gutes ___aar Schuhe.","def":"P(aar) – gross! Hier ist «Paar» ein echtes Nomen (zwei zusammengehörende Schuhe), Ausnahme zu «ein paar» (E 2.3)."},
+    {"cat":"klein","ref":"E4.1","term":"Die Früchte wurden sortiert: die grossen kamen zum Verkauf, die ___leinen in den Keller.","def":"k(leinen) – klein, «Früchte» wurde eingespart, kommt aber im Text sonst vor (E 4.1)."},
+    {"cat":"klein","ref":"E4.1","term":"Zwei Männer betraten den Raum; der ___rste trug einen Anzug, der zweite Jeans.","def":"e(rste) – klein, «Mann» wurde eingespart, kommt im Text noch vor (E 4.1)."},
+    {"cat":"klein","ref":"E4.2","term":"Dieses Bild gefällt mir am ___esten.","def":"b(esten) – klein, mit «Wie?» erfragbar: Wie gefällt mir das Bild? (E 4.2)"},
+    {"cat":"gross","ref":"E4.2","term":"Es fehlte ihnen am ___ötigsten.","def":"N(ötigsten) – gross, mit «Woran?» erfragbar: Woran fehlte es ihnen? (E 4.2)"},
+    {"cat":"klein","ref":"E4.3","term":"Die ___eisten kannten die Geschichte schon.","def":"m(eisten) – klein, Vergleichsform von «viel», bleibt trotz Artikel klein (E 4.3)."},
+    {"cat":"klein","ref":"E4.3","term":"Die ___inen kommen, die ___nderen gehen wieder.","def":"e(inen), a(nderen) – klein, Zahladjektive ein/ander bleiben immer klein (E 4.3)."},
+    {"cat":"klein","ref":"E4.4","term":"Er bezahlt immer ___n ___ar, nie mit Karte.","def":"i(n) b(ar) – klein, feste Wortverbindung aus Präposition und Adjektiv (E 4.4)."},
+    {"cat":"klein","ref":"E4.4","term":"Wir kennen uns schon ___on ___lein auf.","def":"v(on) k(lein) auf – klein, feste Wortverbindung (E 4.4)."},
+    {"cat":"klein","ref":"E4.4","term":"Das musst du mir ___chwarz auf ___eiss geben.","def":"s(chwarz) w(eiss) – klein, feste Wortverbindung (E 4.4)."},
+    {"cat":"klein","ref":"E4.4","term":"Auf Wiedersehen, ___is ___päter!","def":"b(is) s(päter) – klein, feste Wortverbindung aus Präposition und Adjektiv (E 4.4)."},
+    {"cat":"signal","ref":"G4","term":"Welche Signalwörter vor einem Adjektiv deuten auf Grossschreibung hin (G 4)?","def":"viel, alles, manches, einiges, etwas, wenig, nichts, allerlei, lauter – danach wird das Adjektiv wie ein Nomen gross geschrieben (z. B. viel Neues)."},
+    {"cat":"signal","ref":"E4.3","term":"Welche vier Zahladjektive bleiben laut E 4.3 immer klein – auch gesteigert?","def":"ein – ander – viel – wenig, ebenso ihre Vergleichsformen: mehr, am meisten, weniger, am wenigsten."},
+    {"cat":"signal","ref":"E2.3","term":"Welche Präpositionen sind aus Nomen entstanden und deshalb klein (E 2.3)?","def":"dank, kraft, laut, statt, an…statt, trotz, wegen, von…wegen, um…willen, zeit."},
+    {"cat":"signal","ref":"G7","term":"Welche fünf Wörter signalisieren bei Tageszeiten Grossschreibung (G 7)?","def":"vorgestern, gestern, heute, morgen, übermorgen – danach wird die Tageszeit gross und mit dem Tag zusammengeschrieben (z. B. heute Morgen)."},
+    {"cat":"signal","ref":"E4.2","term":"Mit welcher Frage prüfst du, ob ein Superlativ mit «am» klein bleibt?","def":"Mit «Wie?». Lässt sich der Superlativ mit Wie? erfragen, bleibt er klein (am besten). Fragst du mit Woran?/Worauf?, ist er gross (am Nötigsten)."},
+    {"cat":"signal","ref":"G6","term":"Woran erkennst du, ob du/ihr oder Sie/Ihr richtig ist?","def":"Sie/Ihr = distanziert höfliche Anrede → immer gross. du/dein, ihr/euer = vertraute Anrede → immer klein."}
+];
+
+const CARD_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'gross', label: 'Grossschreibung' },
+  { id: 'klein', label: 'Kleinschreibung' },
+  { id: 'signal', label: 'Signalwörter' }
+];
+
+const KEY_KNOWN = 'rechtschreibung-karten-gewusst';
+let cardSet = [], cardIdx = 0, cardFlipped = false, cardCat = 'all';
+let known = new Set(), unknown = new Set();
+try {
+  const s = JSON.parse(localStorage.getItem(KEY_KNOWN) || '{}');
+  known = new Set(s.k || []); unknown = new Set(s.u || []);
+} catch (e) {}
+
+function saveCards() {
+  try { localStorage.setItem(KEY_KNOWN, JSON.stringify({ k: [...known], u: [...unknown] })); } catch (e) {}
+}
+
+function buildCardSet() {
+  cardSet = CARDS.map((c, i) => ({ ...c, id: i }))
+    .filter(c => cardCat === 'all' || c.cat === cardCat);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  const content = document.getElementById('flashContent');
+  const counter = document.getElementById('flashCounter');
+  if (!cardSet.length) {
+    content.className = 'flash-front';
+    content.textContent = 'Keine Karten in dieser Auswahl.';
+    counter.textContent = '0 / 0';
+    updateCardStats();
+    return;
+  }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) {
+    content.className = 'flash-back';
+    content.innerHTML = c.def + (c.ref ? `<span class="ref">${c.ref}</span>` : '');
+  } else {
+    content.className = 'flash-front';
+    content.innerHTML = c.term;
+  }
+  updateCardStats();
+}
+
+function updateCardStats() {
+  document.getElementById('flashStats').innerHTML =
+    `<span class="good">${known.size} gewusst</span> · ` +
+    `<span class="bad">${unknown.size} noch nicht</span> · ` +
+    `<span class="meta">${CARDS.length} Karten gesamt</span>`;
+}
+
+function flip() { cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (cardSet.length) { cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); } }
+function prevCard() { if (cardSet.length) { cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); } }
+function rate(ok) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx].id;
+  if (ok) { known.add(id); unknown.delete(id); } else { unknown.add(id); known.delete(id); }
+  saveCards(); nextCard();
+}
+
+document.getElementById('cardCats').innerHTML = CARD_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('cardCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#cardCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); cardCat = b.dataset.cat; buildCardSet();
+});
+document.getElementById('flashCard').addEventListener('click', flip);
+document.getElementById('cardNext').addEventListener('click', nextCard);
+document.getElementById('cardPrev').addEventListener('click', prevCard);
+document.getElementById('cardYes').addEventListener('click', () => rate(true));
+document.getElementById('cardNo').addEventListener('click', () => rate(false));
+document.getElementById('cardShuffle').addEventListener('click', () => {
+  for (let i = cardSet.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]];
+  }
+  cardIdx = 0; cardFlipped = false; renderCard();
+});
+document.getElementById('cardReset').addEventListener('click', () => {
+  known.clear(); unknown.clear(); saveCards(); buildCardSet();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); flip(); }
+  if (e.key === 'ArrowRight') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+});
+buildCardSet();
+
+/* ═══ QUIZ ═══ */
+
+const QUIZ = [
+    {"t":"Risiken","q":"___lles Leben auf der Erde unterliegt Risiken.","a":"Alles – Satzanfang wird immer grossgeschrieben."},
+    {"t":"Risiken","q":"Paradoxerweise muss der Mensch das ___isiko suchen, um Unsicherheit in Sicherheit zu verwandeln.","a":"Risiko – Nomen (abstrakter Begriff), deshalb gross (G 2)."},
+    {"t":"Risiken","q":"Er fürchtet sich vor ___tomkraftwerken statt vor Sonnenbrand.","a":"Atomkraftwerken – Nomen, deshalb gross (G 2)."},
+    {"t":"Risiken","q":"Auch der Staat hat die Aufgabe, für die soziale Sicherheit seiner ___ürgerinnen und ___ürger zu sorgen.","a":"Bürgerinnen, Bürger – beides Nomen (Lebewesen), deshalb gross (G 2)."},
+    {"t":"Risiken","q":"Er hält das ___ngefährliche für riskant und das Gefährliche für harmlos.","a":"Ungefährliche – Adjektiv, das als Nomen gebraucht wird (mit Artikel «das»), deshalb gross (G 4)."},
+    {"t":"Bakterien","q":"Selbst in der ___rktis ist es einigen Bakterienarten nicht zu kalt.","a":"Arktis – Eigenname (geografische Bezeichnung), deshalb gross (E 2.1)."},
+    {"t":"Bakterien","q":"Das ___irken der Bakterien kann nützlich oder schädlich sein.","a":"Wirken – als Nomen gebrauchtes Verb (Nominalisierung), deshalb gross (G 3)."},
+    {"t":"Zeitung","q":"Viele Leute schätzen es, wenn sie schon beim ___rühstücken die Zeitung lesen können.","a":"Frühstücken – nominalisiertes Verb nach der Präposition «beim», deshalb gross (G 3)."},
+    {"t":"Jack London","q":"Er zog als ___andstreicher durch die USA und arbeitete als Goldsucher.","a":"Landstreicher – Nomen (Person), deshalb gross (G 2)."},
+    {"t":"Mekka","q":"In ___ekka steht die Kaaba, ein Gebäude wie ein grosser schwarzer Würfel.","a":"Mekka – Eigenname (Stadt), deshalb gross (E 2.1)."},
+    {"t":"Wein","q":"Der rote Wein kann jahrelang gelagert werden, der ___eisse hingegen sollte höchstens zwei oder drei Jahre warten.","a":"weisse – klein, denn es ist ein gewöhnliches Adjektiv (Farbe), kein Bestandteil eines Eigennamens (E 2.1)."},
+    {"t":"Abstrakte Kunst","q":"Abstrakte Kunst entstand am Anfang des 20. ___ahrhunderts.","a":"Jahrhunderts – Nomen, deshalb gross (G 2)."},
+    {"t":"Gleichberechtigung","q":"Vor über hundert Jahren war die ___rauenbewegung entstanden, die Gleichberechtigung von Frau und Mann forderte.","a":"Frauenbewegung – Nomen (zusammengesetzt), deshalb gross (G 2)."},
+    {"t":"Mexiko","q":"Mexiko produziert vor allem für die benachbarten ___ereinigten Staaten, zum Beispiel Autos und Textilien.","a":"Vereinigten – Teil des mehrteiligen Eigennamens «die Vereinigten Staaten», deshalb gross (E 2.1)."},
+    {"t":"Vom Ski fahren","q":"Das ___chönste im Winter ist für mich und wohl für die meisten das Skifahren.","a":"Schönste – Adjektiv, das als Nomen gebraucht wird (mit Artikel «das»), deshalb gross (G 4)."},
+    {"t":"Vom Ski fahren","q":"Skilauf ist der schönste Sport, das grosse ___rleben im Winter!","a":"Erleben – nominalisiertes Verb, deshalb gross (G 3). «grosse» davor bleibt ein normales, klein geschriebenes Adjektiv."},
+    {"t":"Vom Ski fahren","q":"In der Schweizer Skischule bin ich aufs ___este instruiert worden.","a":"Beste – substantivierter Superlativ nach «aufs» (vergleichbar mit «aufs Herzlichste»), deshalb gross (E 4.2)."},
+    {"t":"Vom Ski fahren","q":"Die Skiinstruktoren beherrschen die Materie ___ank guter Ausbildung und harter Prüfung.","a":"dank – klein, aus einem Nomen entstandene Präposition (E 2.3)."},
+    {"t":"Vom Ski fahren","q":"An Sonntagen rasen oft ___underte vom Skisport Begeisterte über die hartgefahrenen Pisten.","a":"Hunderte – substantiviertes Zahlwort (als Nomen gebraucht), deshalb gross (G 4)."},
+    {"t":"Vom Ski fahren","q":"Über die hartgefahrenen Pisten rasen ___ross und ___lein, Junge und Alte.","a":"Gross, Klein – hier als Nomen gebrauchte Adjektive (= alle Leute), deshalb gross (G 4)."}
+];
+
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">${i + 1}</span><span class="q-topic">${q.t}</span></div>
+    <div class="q-text">${q.q}</div>
+    <button class="reveal-btn" type="button" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution">${q.a}</div>
+  </div>`).join('');
+
+/* ═══ LERNPLAN ═══ */
+
+const PLAN_D1 = [
+  'Theorie-Tab lesen — Grossschreibung, G 1 bis G 7 (20 Min)',
+  'Theorie-Tab lesen — E 2.1 und E 2.2, Eigennamen (10 Min)',
+  'Theorie-Tab lesen — Kleinschreibung komplett (15 Min)',
+  'Begriffe-Tab einmal komplett durchlesen (5 Min)'
+];
+const PLAN_D2 = [
+  'Karteikarten Kategorie Grossschreibung einmal durch (15 Min)',
+  'Karteikarten Kategorie Kleinschreibung einmal durch (15 Min)',
+  'Karteikarten Kategorie Signalwörter einmal durch (10 Min)',
+  'Alle Karteikarten mischen und einmal komplett durchgehen (10 Min)'
+];
+const PLAN_D3 = [
+  'Quiz komplett durchspielen, erst selbst antworten, dann aufdecken (20 Min)',
+  'Bei jeder falschen Antwort: passende Regel im Theorie-Tab nachlesen (15 Min)',
+  'Karteikarten mit «Wusste ich nicht» nochmals durchgehen (10 Min)'
+];
+const PLAN_D4 = [
+  'Nur Karteikarten mit «Wusste ich nicht» durchgehen',
+  'Die fünf Signale aus «Wenn du nur zehn Minuten hast» laut aufsagen',
+  'Ausnahmen nochmals prüfen: nichts anderes, ein bisschen/ein paar, dank/trotz/wegen'
+];
+
+const PLAN_KEY = 'rechtschreibung-plan';
+
+function fillPlan(id, items, prefix) {
+  document.getElementById(id).innerHTML = items.map((t, i) =>
+    `<li class="check-item"><input type="checkbox" class="check" id="${prefix}${i}"><label for="${prefix}${i}" class="ci-text">${t}</label></li>`).join('');
+}
+fillPlan('planListD1', PLAN_D1, 'p1_');
+fillPlan('planListD2', PLAN_D2, 'p2_');
+fillPlan('planListD3', PLAN_D3, 'p3_');
+fillPlan('planListD4', PLAN_D4, 'p4_');
+
+function planProgress() {
+  const boxes = [...document.querySelectorAll('#lernplan .check')];
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('planFill').style.width = (done / boxes.length * 100) + '%';
+  document.getElementById('planText').textContent =
+    done === boxes.length ? 'Alles durch. Am Montagmorgen nur noch die roten Karten.'
+                          : `${done} von ${boxes.length} erledigt`;
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]');
+  document.querySelectorAll('#lernplan .check').forEach((b, i) => { if (saved[i]) b.checked = true; });
+} catch (e) {}
+document.querySelectorAll('#lernplan .check').forEach(b => b.addEventListener('change', planProgress));
+planProgress();
+
+</script>
+</body>
+</html>
