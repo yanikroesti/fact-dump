@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telekommunikation — Grundlagen | BZI ATD</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   Kontrast-Nachbesserung — 27.08.2026
+
+   Gemessen auf 375 px: --ink-mute (#85898A) trug auf dem hellen
+   Grund nur 3.53:1. Das ist unter den 4.5:1, die kleine Schrift
+   braucht, und betrifft alles, was mit .meta oder .law-ref
+   gesetzt ist — also gerade die Normverweise, die man beim Lernen
+   liest. Etwas dunkler, gleicher kuehler Ton.
+   ══════════════════════════════════════════════════════════════ */
+:root { --ink-mute: #6C7071; }
+
+/* Auf hellem Grund darf die zurueckgenommene Tinte etwas kraeftiger
+   sein — .tip und .info-box sind hell. */
+.tip .meta, .tip .law-ref, .info-box .law-ref, .info-box .meta { color: var(--ink-soft); }
+
+/* .fact ist DUNKEL (#171D1E) mit heller Schrift. Alles darin muss hell
+   bleiben. Nachgemessen: ein <em> darin erbte --ink-soft, also dunkel
+   auf dunkel — 2.36:1. Ein Kasten, der die Kernaussage traegt, und der
+   Halbsatz darin war fast unlesbar. */
+.fact em, .fact i, .fact .meta, .fact .law-ref, .fact small {
+  color: rgba(246, 246, 243, 0.86);
+}
+.fact strong, .fact b { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ATD · Telekommunikation bei S. Aeschlimann</div>
+  <h1>Telekommunikation — Grundlagen</h1>
+  <div class="meta">Kapitel 1 und 2, Seiten 1.1–2.7 — Test vom Freitag 04.09.2026</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════ THEORIE ════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+  <div class="info-box warn">
+    <strong>Was hier fehlt</strong><br>
+    Der Test am Freitag geht über <strong>Kapitel 1 und Kapitel 2</strong>. Im Vault liegt aber nur
+    die Notiz zur Lektion vom <strong>28.08.</strong>, und die deckt ausschliesslich <strong>Kapitel 2</strong>
+    ab — DTMF, Schalldruck und Einwirkungsdauer, Schallgeschwindigkeit, die Mikrofonarten. Zu
+    <strong>Kapitel 1, der Systemübersicht</strong>, liegt <strong>kein Material</strong> vor — dieses
+    Paket kann Kapitel 1 deshalb nicht abdecken. Yanik: bitte deine Unterlagen zu Kapitel 1 nachliefern,
+    dann wird das Paket ergänzt.
+  </div>
+
+  <div class="intro">
+    <p>Was unten steht, ist genau der Stoff aus der Notiz vom 28.08. — in dieser Reihenfolge:
+    DTMF, Schalldruck &amp; Einwirkungsdauer, Schallgeschwindigkeit, die fünf Mikrofonarten.</p>
+  </div>
+
+  <div class="info-box">
+    <strong>Woher die Angaben stammen</strong><br>
+    Die gesamte Notiz vom 28.08. war ursprünglich leer und ist deshalb komplett recherchiert,
+    nicht mitdiktiert. Der DTMF-Abschnitt ist mit Quellen belegt (Wikipedia, dcode.fr,
+    mediacollege.com). Die drei anderen Abschnitte — Schalldruck, Schallgeschwindigkeit,
+    Mikrofonarten — tragen zusätzlich den ausdrücklichen Vermerk <strong>«bitte gegenprüfen«</strong>.
+    Am stärksten betroffen ist die Tabelle «Zulässige Einwirkzeit je Pegel» — sie ist aus der
+    3-dB-Regel <em>berechnet</em>, nicht einzeln zitiert. Einzelne Angaben sind unten zusätzlich mit
+    <span class="law-ref">law-ref</span>-Markierungen versehen.
+  </div>
+
+  <h2 class="section-label">DTMF — Mehrfrequenzwahlverfahren</h2>
+
+<p>DTMF steht für <strong>Dual-Tone Multi-Frequency</strong>. Jede Taste eines
+Tastentelefons erzeugt nicht einen, sondern <strong>zwei gleichzeitige Töne</strong>
+— einen aus der Gruppe der tiefen Frequenzen (Zeile) und einen aus der Gruppe der
+hohen Frequenzen (Spalte).</p>
+
+<h3>Warum zwei Töne?</h3>
+
+<p>Ein einzelner Ton pro Taste liesse sich auf einer Leitung leicht verwechseln
+oder durch Störungen verfälschen. Die Überlagerung von zwei Frequenzen aus zwei
+unterschiedlichen Gruppen ist dagegen eindeutig: Die Auswertelektronik muss nur
+erkennen, welche der vier tiefen und welche der vier hohen Frequenzen gleichzeitig
+anliegen, um die Taste zweifelsfrei zu bestimmen.</p>
+
+<div class="fact">Jede Taste = 1 tiefe Frequenz (Zeile) + 1 hohe Frequenz (Spalte), gleichzeitig gesendet.</div>
+
+<h3>Das Kombinationsraster (4×4)</h3>
+
+<p>Insgesamt sind es acht Frequenzen — vier tiefe für die Zeilen, vier hohe für
+die Spalten. Zusammen ergeben sie das vollständige 4×4-Raster:</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1209 Hz</th>
+<th>1336 Hz</th>
+<th>1477 Hz</th>
+<th>1633 Hz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>697 Hz</th>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr>
+<th>770 Hz</th>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>B</td>
+</tr>
+<tr>
+<th>852 Hz</th>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>C</td>
+</tr>
+<tr>
+<th>941 Hz</th>
+<td>*</td>
+<td>0</td>
+<td>#</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Beispiel: Die Taste <strong>«5»</strong> entspricht der Überlagerung von
+<strong>770 Hz + 1336 Hz</strong>, gleichzeitig gesendet.</p>
+
+<div class="tip">Merkhilfe: Zeile = tiefe Frequenz, Spalte = hohe Frequenz. Zusammen ergibt jede Kombination genau eine Taste.</div>
+
+<h3>Warum genau diese acht Frequenzen?</h3>
+
+<p>Die acht Frequenzen sind bewusst so gewählt, dass <strong>keine eine
+Harmonische</strong> — also ein ganzzahliges Vielfaches — einer anderen ist. So
+verwechselt die Auswertelektronik nichts, selbst wenn die Töne über eine
+schlechte Leitung übertragen oder dabei verzerrt werden.</p>
+
+<h3>Die Spalte A–D</h3>
+
+<p>Die vierte Spalte mit den Tasten A, B, C und D ist bei gewöhnlichen Telefonen
+<strong>nicht vorhanden</strong>. Sie wurde für Sonderanwendungen definiert —
+zum Beispiel militärische bzw. Prioritäts-Telefonie — und taucht in der Praxis
+kaum auf.</p>
+
+<div class="info-box">
+Dieser Abschnitt ist recherchiert, nicht mitdiktiert — die Original-Notiz zum 28.08.2026 war leer.
+Bitte gegenprüfen: <span class="law-ref">Wikipedia — Mehrfrequenzwahlverfahren</span>,
+<span class="law-ref">dcode.fr — DTMF Code</span>,
+<span class="law-ref">mediacollege.com — DTMF</span>.
+</div>
+
+  <h2 class="section-label">Schalldruck und Einwirkungsdauer</h2>
+
+<p><em>Hinweis: Dieser Abschnitt ist in der Quellnotiz als „recherchiert (nicht mitdiktiert), bitte gegenprüfen“ markiert — nicht im Unterricht mitgeschrieben.</em></p>
+
+<p>Schalldruck wird in <strong>dB(A)</strong> angegeben — Dezibel, A-bewertet nach dem
+menschlichen Hörempfinden. Die Skala ist logarithmisch: Sie beschreibt nicht die Lautstärke
+im Alltagssinn, sondern das Verhältnis der Schallenergie zu einer Referenzgrösse.</p>
+
+<h3>Referenzwerte im Alltag</h3>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>dB(A)</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>0 dB</td><td>Hörschwelle</td></tr>
+<tr><td>40 dB</td><td>leise Unterhaltung / Bibliothek</td></tr>
+<tr><td>60 dB</td><td>normales Gespräch</td></tr>
+<tr><td>80 dB</td><td>lauter Verkehr, schreiendes Baby</td></tr>
+<tr><td>120 dB</td><td>Schmerzgrenze</td></tr>
+<tr><td>ab 130–135 dB</td><td>sofortige, bleibende Gehörschädigung möglich (Knalltrauma)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Die Grundregel: 85 dB(A) bei 8 Stunden</h3>
+
+<p>Der anerkannte Richtwert lautet: <strong>85 dB(A) über 8 Stunden</strong> täglich ist die
+Grenze, ab der das Risiko einer dauerhaften Gehörschädigung entsteht. Bei kurzzeitigen
+Alltagsgeräuschen bis rund 80 dB besteht in der Regel keine Gefahr.</p>
+
+<div class="fact">85 dB(A) / 8 h ist der Grenzwert für die tägliche Lärmbelastung.</div>
+
+<h3>Der Zusammenhang: Schalldruck und zulässige Einwirkungsdauer</h3>
+
+<p>Schalldruck und Einwirkungsdauer stehen in einem <strong>logarithmischen, nicht linearen</strong>
+Zusammenhang zueinander — das ist die Austauschregel:</p>
+
+<div class="tip">Jede Erhöhung des Pegels um <strong>+3 dB verdoppelt die Schallenergie</strong>
+und <strong>halbiert gleichzeitig die noch zulässige Einwirkzeit</strong>. Umgekehrt gilt:
+je leiser, desto länger ist eine Einwirkung ohne Risiko zulässig.</div>
+
+<p>Ausgehend von der Referenz 85 dB(A) bei 8 Stunden ergibt sich damit für jeden höheren
+Pegel die entsprechend kürzere zulässige Zeit:</p>
+
+<h3>Zulässige Einwirkzeit je Pegel</h3>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Pegel</th><th>Max. Einwirkzeit</th></tr>
+</thead>
+<tbody>
+<tr><td>85 dB(A)</td><td>8 h</td></tr>
+<tr><td>88 dB(A)</td><td>4 h</td></tr>
+<tr><td>91 dB(A)</td><td>2 h</td></tr>
+<tr><td>94 dB(A)</td><td>1 h</td></tr>
+<tr><td>97 dB(A)</td><td>30 min</td></tr>
+<tr><td>100 dB(A)</td><td>15 min</td></tr>
+<tr><td>103 dB(A)</td><td>~7.5 min</td></tr>
+<tr><td>106 dB(A)</td><td>~3¾ min</td></tr>
+<tr><td>109 dB(A)</td><td>~1⅛ min</td></tr>
+<tr><td>112 dB(A)</td><td>~56 s</td></tr>
+<tr><td>115 dB(A)</td><td>~28 s</td></tr>
+<tr><td>118 dB(A)</td><td>~14 s</td></tr>
+<tr><td>121 dB(A)</td><td>~7 s</td></tr>
+<tr><td>ab ~130 dB(C) Spitzenpegel</td><td>sofort schädlich, egal wie kurz — Knalltrauma-Gefahr</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">Die Zwischenwerte dieser Tabelle sind kein einzeln zitierter
+Originalwert, sondern eine rechnerische Anwendung der 3-dB-Austauschregel auf die
+verifizierte 85 dB/8h-Referenz. Bitte trotzdem gegenprüfen.</div>
+
+<p>Wichtig für die Praxis: Es zählt die <strong>Gesamtdosis</strong> — Pegel und Dauer
+zusammen. Kurze, sehr laute Spitzen (Knall, Presslufthammer) sind oft gefährlicher als
+gleichbleibender Dauerlärm bei niedrigerem Pegel.</p>
+
+<p><span class="law-ref">Quelle: Suva — Merkblatt Akustische Grenz- und Richtwerte:
+Lärmschutz</span></p>
+
+  <h2 class="section-label">Schallgeschwindigkeit</h2>
+
+<div class="info-box">Dieser Abschnitt ist recherchiert (nicht mitdiktiert) und noch nicht gegengeprüft.</div>
+
+<p>Wie schnell sich Schall ausbreitet, hängt von der <strong>Elastizität</strong> und der <strong>Dichte</strong> des Mediums ab, bei Gasen zusätzlich von der Temperatur. Es gilt die Grundregel <strong>Gase &lt; Flüssigkeiten &lt; Festkörper</strong>: Festkörper sind zwar deutlich dichter als Gase oder Flüssigkeiten, aber ihre viel höhere Steifigkeit (Elastizitätsmodul) überwiegt diesen Effekt — deshalb leiten sie Schall am schnellsten.</p>
+
+<h3>Luft und Wasser</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Medium</th><th>Schallgeschwindigkeit</th></tr></thead>
+<tbody>
+<tr><td>Luft (20 °C, trocken)</td><td>343 m/s</td></tr>
+<tr><td>Wasser (20 °C)</td><td>1484 m/s</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip">In Wasser steigt die Schallgeschwindigkeit mit der Temperatur: 1407 m/s bei 0 °C, 1484 m/s bei 20 °C, 1555 m/s bei 75 °C.</div>
+
+<h3>Festkörper: longitudinal und transversal</h3>
+
+<p>Gase und Flüssigkeiten übertragen Schall nur als longitudinale (Druck-)Welle. Festkörper übertragen zusätzlich transversale (Scher-)Wellen — deshalb gibt es für jeden Werkstoff zwei Werte.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Werkstoff</th><th>Longitudinal</th><th>Transversal</th></tr></thead>
+<tbody>
+<tr><td>Beton</td><td>3655 m/s</td><td>2240 m/s</td></tr>
+<tr><td>Buchenholz</td><td>3300 m/s</td><td>—</td></tr>
+<tr><td>Kupfer</td><td>4660 m/s</td><td>2260 m/s</td></tr>
+<tr><td>Eisen</td><td>5170 m/s</td><td>2810 m/s</td></tr>
+<tr><td>Stahl</td><td>5850 m/s</td><td>3230 m/s</td></tr>
+<tr><td>Aluminium</td><td>6250–6350 m/s</td><td>3100 m/s</td></tr>
+<tr><td>Diamant</td><td>18 000 m/s</td><td>12 200 m/s</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="fact">Schall in Stahl ist rund 15× schneller als in Luft.</div>
+
+<div class="tip">Bei Holz kommt zusätzlich die Faserrichtung dazu: längs zur Faser läuft Schall deutlich schneller als quer dazu.</div>
+
+<p><span class="law-ref">Quelle: Wikipedia — Schallgeschwindigkeit; silenti.de — Wie schnell ist der Schall?</span></p>
+
+  <h2 class="section-label">Die fünf Mikrofonarten</h2>
+
+<p>Alle Mikrofone wandeln Schalldruck (mechanische Energie) in elektrische Energie um. Der Unterschied liegt im <strong>Wandlerprinzip</strong> — und genau danach lassen sich die fünf Typen unterscheiden.</p>
+
+<div class="info-box">Dieser ganze Abschnitt ist laut Notiz recherchiert (nicht mitdiktiert) — bitte gegen das Lehrmittel gegenprüfen. Das Lernziel selbst spricht nur von «drei Mikrofonarten»; hier stehen trotzdem alle fünf gängigen technischen Typen, weil das Kohlemikrofon historisch für die Telefonie besonders relevant ist.</div>
+
+<h3>1. Kohlemikrofon</h3>
+<p><strong>Funktionsweise:</strong> Die Membran wird durch Schall in Schwingung versetzt und drückt dabei auf ein Behältnis mit Kohlekörnern. Je stärker der Druck, desto mehr Kontaktstellen zwischen den Körnern — der elektrische Widerstand ändert sich im Rhythmus des Schalls und moduliert so die Stromstärke im Stromkreis.</p>
+<p><strong>Einsatz:</strong> Das klassische Telefonmikrofon (erfunden 1878 von David Edward Hughes) — einfachste Beschaltung, sehr robust, aber schlechte Klangqualität. War bis vor relativ kurzer Zeit noch in Telefonhörern verbaut. Braucht eine Speisespannung (einfacher Stromkreis).</p>
+
+<h3>2. Dynamisches Mikrofon (Tauchspulmikrofon)</h3>
+<p><strong>Funktionsweise:</strong> Die Membran ist mit einer Spule verbunden, die in ein Magnetfeld eintaucht. Schall bewegt die Membran, die Spule bewegt sich im Magnetfeld, und es wird eine Spannung induziert (Generatorprinzip).</p>
+<p><strong>Einsatz:</strong> Sehr robust, verträgt hohe Lautstärken, braucht keine externe Stromversorgung — deshalb das Bühnen- und Live-Mikrofon schlechthin (Gesang, Reden, Instrumentenabnahme).</p>
+
+<h3>3. Kondensatormikrofon</h3>
+<p><strong>Funktionsweise:</strong> Membran und eine feste Metallfläche dahinter bilden zusammen einen Kondensator. Schall bewegt die Membran, der Plattenabstand ändert sich, damit ändert sich die Kapazität — das wird in ein elektrisches Signal umgesetzt.</p>
+<p><strong>Einsatz:</strong> Sehr präzise und empfindlich, hohe Klangqualität — Studio-Standard für Gesang und Instrumente (Grossmembran = voller/wärmer, Kleinmembran = präziser für Details). Braucht zwingend eine externe Spannungsversorgung (Phantomspeisung).</p>
+
+<h3>4. Bändchenmikrofon</h3>
+<p><strong>Funktionsweise:</strong> Ein sehr dünnes, zickzack-gefaltetes Aluminiumband hängt statt einer klassischen Membran zwischen zwei Dauermagneten. Schall bewegt das Bändchen im Magnetfeld, die Spannung wird direkt induziert — ähnliches Prinzip wie beim dynamischen Mikrofon, aber ohne Spule.</p>
+<p><strong>Einsatz:</strong> Charakteristisch warmer, gedämpfter Klang (natürliche Höhendämpfung über 10 kHz) — beliebt für Vintage- und Studioaufnahmen, mechanisch aber empfindlicher als dynamische Mikrofone. Braucht meist keine Speisespannung.</p>
+
+<h3>5. Piezo-/Kristallmikrofon</h3>
+<p><strong>Funktionsweise:</strong> Nutzt den piezoelektrischen Effekt: Ein Kristall bzw. eine Piezo-Keramik (meist Blei-Zirkonat-Titanat, PZT) gibt bei mechanischer Verformung eine elektrische Ladung ab. Die Membran überträgt den Schalldruck direkt auf das Piezo-Element.</p>
+<p><strong>Einsatz:</strong> Historisch populär in den 1930er- bis 1950er-Jahren (einfach, robust), aber hoher Klirrfaktor — für hochwertige Aufnahmen ungeeignet. Heute vor allem als Kontaktmikrofon (nimmt Körperschall/Vibrationen statt Luftschall ab, z. B. an Instrumenten oder Oberflächen). Braucht keine Speisespannung.</p>
+
+<div class="fact">Speisespannung nötig nur bei zwei Typen: Kohlemikrofon (einfacher Stromkreis) und Kondensatormikrofon (Phantomspeisung). Dynamisch, Bändchen und Piezo/Kristall erzeugen ihre Spannung selbst und kommen ohne externe Stromversorgung aus.</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Typ</th><th>Wandlerprinzip</th><th>Klangqualität</th><th>Robustheit</th><th>Speisung nötig?</th><th>Typischer Einsatz</th></tr>
+</thead>
+<tbody>
+<tr><td>Kohlemikrofon</td><td>Widerstandsänderung (Kohlekörner)</td><td>schlecht</td><td>sehr robust</td><td>ja (einfacher Stromkreis)</td><td>klassisches Telefon</td></tr>
+<tr><td>Dynamisch</td><td>Induktion (Spule im Magnetfeld)</td><td>gut</td><td>sehr robust</td><td>nein</td><td>Bühne/Live</td></tr>
+<tr><td>Kondensator</td><td>Kapazitätsänderung</td><td>sehr gut/präzise</td><td>empfindlich</td><td>ja (Phantomspeisung)</td><td>Studio</td></tr>
+<tr><td>Bändchen</td><td>Induktion (Band im Magnetfeld)</td><td>warm, gedämpft</td><td>empfindlich</td><td>meist nein</td><td>Vintage-/Studio-Sound</td></tr>
+<tr><td>Piezo/Kristall</td><td>Piezoelektrischer Effekt</td><td>mässig (hoher Klirrfaktor)</td><td>robust</td><td>nein</td><td>historisch / heute Kontaktmikrofon</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip">Merkhilfe zur Speisespannung: Kohle- und Kondensatormikrofon brauchen aussen angelegten Strom, weil ihr Signal auf einer Widerstands- bzw. Kapazitätsänderung beruht, die erst mit angelegter Spannung messbar wird. Dynamisch, Bändchen und Piezo erzeugen ihre Spannung dagegen selbst (Induktion bzw. piezoelektrischer Effekt) und brauchen deshalb keine externe Stromversorgung.</div>
+
+  <h2 class="section-label">Quellen</h2>
+  <ul class="meta">
+    <li>Wikipedia — Mehrfrequenzwahlverfahren (DTMF), Schallgeschwindigkeit</li>
+    <li>dcode.fr — DTMF Code</li>
+    <li>mediacollege.com — DTMF</li>
+    <li>Suva — Merkblatt Akustische Grenz- und Richtwerte: Lärmschutz</li>
+    <li>silenti.de — Wie schnell ist der Schall?</li>
+    <li>Deine eigene Notiz vom 28.08.2026 (Career/Apprenticeship/Fächer/ATD/Telekommunikation/notes/28.8.26.md) — als leer markiert, deshalb komplett recherchiert</li>
+  </ul>
+
+  <div class="info-box warn">
+    <strong>Zu Kapitel 1 liegt nichts vor</strong><br>
+    Dieses Paket deckt nur Kapitel 2 ab. Bring deine Unterlagen zur Systemübersicht (Kapitel 1)
+    mit, dann wird das Paket ergänzt — bis dahin bitte diesen Teil separat wiederholen.
+  </div>
+
+</section>
+
+<!-- ════════════════════════ BEGRIFFE ════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+  <div class="intro"><p>Die Wörter, die in der Prüfungsfrage stehen können, ohne dass sie erklärt werden.</p></div>
+  <input type="search" class="begriff-search" id="begriffSearch" placeholder="Suchen — z. B. DTMF, Phantomspeisung, Knalltrauma …">
+  <div class="cat-filter" id="begriffCats"></div>
+  <div class="begriff-grid" id="begriffGrid"></div>
+</section>
+
+<!-- ════════════════════════ KARTEIKARTEN ════════════════════════ -->
+<section class="tab-pane" id="karten">
+  <div class="intro"><p>Vorderseite lesen, Antwort denken, umdrehen. Ehrlich bewerten — nur was du <em>gewusst</em> hast, ist gewusst.</p></div>
+
+  <div class="cat-filter" id="cardCats"></div>
+
+  <div class="flash-stage">
+    <div class="flash-card" id="flashCard">
+      <div class="flash-counter" id="flashCounter"></div>
+      <div id="flashContent"></div>
+      <div class="flash-hint">Klicken oder Leertaste zum Umdrehen</div>
+    </div>
+  </div>
+
+  <div class="flash-controls">
+    <button class="btn ghost" type="button" id="cardPrev">← Zurück</button>
+    <button class="btn bad" type="button" id="cardNo">Wusste ich nicht</button>
+    <button class="btn good" type="button" id="cardYes">Wusste ich</button>
+    <button class="btn ghost" type="button" id="cardNext">Weiter →</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn ghost sm" type="button" id="cardShuffle">Mischen</button>
+    <button class="btn ghost sm" type="button" id="cardReset">Zurücksetzen</button>
+  </div>
+  <div class="flash-stats" id="flashStats"></div>
+</section>
+
+<!-- ════════════════════════ QUIZ ════════════════════════ -->
+<section class="tab-pane" id="quiz">
+  <div class="intro">
+    <p>Fünfzehn Fragen im Stil eines Kurztests. Erst selbst antworten, dann aufdecken.</p>
+    <div class="btn-row">
+      <button class="btn ghost sm" type="button" onclick="revealAll(true)">Alle Lösungen zeigen</button>
+      <button class="btn ghost sm" type="button" onclick="revealAll(false)">Alle verstecken</button>
+    </div>
+  </div>
+  <div id="quizList"></div>
+</section>
+
+<!-- ════════════════════════ LERNPLAN ════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+  <div class="intro">
+    <p><strong>Heute ist Dienstagabend, der Test ist am Freitag um 08:00.</strong>
+    Das ergibt zwei ganze Lernabende — Mittwoch und Donnerstag — plus eine kurze
+    Wiederholung am Freitagmorgen. Der Plan deckt nur Kapitel 2 ab, weil nur dazu Material vorliegt
+    (siehe Hinweis im Theorie-Tab).</p>
+  </div>
+
+  <div class="progress"><div class="progress-fill" id="planFill"></div></div>
+  <div class="meta" id="planText"></div>
+
+  <div class="day">
+    <div class="day-num">Mi 02.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Abend · ~50 Min</span></div>
+    <div class="day-content">
+      <h4>DTMF fest verankern</h4>
+      <ul class="check-list" id="planListD1"></ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-num">Do 03.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Abend · ~75 Min</span></div>
+    <div class="day-content">
+      <h4>Schalldruck, Schallgeschwindigkeit, Mikrofone</h4>
+      <ul class="check-list" id="planListD2"></ul>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <span class="milestone-icon">⚡</span>
+    <div>
+      <strong>Wenn du nur zehn Minuten hast</strong><br>
+      Diese vier Sätze auswendig, dann ist das Wichtigste aus Kapitel 2 drin:
+      <ol>
+        <li><strong>DTMF:</strong> jede Taste = eine tiefe Frequenz (Zeile) + eine hohe Frequenz
+        (Spalte), gleichzeitig gesendet — keine der 8 Frequenzen ist ein Vielfaches einer anderen.</li>
+        <li><strong>85 dB(A) / 8 h</strong> ist der Grenzwert. +3 dB verdoppelt die Energie und
+        halbiert die zulässige Zeit — logarithmisch, nicht linear.</li>
+        <li><strong>Schallgeschwindigkeit:</strong> Gase &lt; Flüssigkeiten &lt; Festkörper,
+        weil die Steifigkeit des Festkörpers die höhere Dichte überwiegt.</li>
+        <li><strong>Mikrofone:</strong> nur Kohle- und Kondensatormikrofon brauchen Speisespannung
+        (Widerstand bzw. Kapazität) — dynamisch, Bändchen und Piezo erzeugen ihre Spannung selbst.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-num">Fr 04.09.<br><span style="font-family:var(--font-body);font-size:0.62rem;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em">Morgen · ~15 Min</span></div>
+    <div class="day-content">
+      <h4>Nur noch auffrischen — nichts Neues mehr</h4>
+      <ul class="check-list" id="planListD3"></ul>
+    </div>
+  </div>
+
+  <div class="info-box warn">
+    <strong>Morgen früh, vor der Prüfung</strong><br>
+    Nur die Karteikarten mit «Wusste ich nicht» durchgehen — nichts Neues mehr anfangen.
+    Und prüfen, ob die Unterlagen zu Kapitel 1 inzwischen da sind (siehe Theorie-Tab ganz oben).
+  </div>
+</section>
+
+<footer class="meta" style="margin:2.5rem 0 1rem;text-align:center">
+  Erstellt am 01.09.2026 für den Test vom 04.09.2026 · ATD, S. Aeschlimann ·
+  deckt nur Kapitel 2 ab — Kapitel 1 fehlt, siehe Hinweis oben
+</footer>
+
+</div>
+
+<script>
+/* ═══ TAB SWITCHING ═══ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+/* ═══ QUIZ REVEAL ═══ */
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'L\u00f6sung verstecken' : 'L\u00f6sung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show', show);
+    btn.textContent = show ? 'L\u00f6sung verstecken' : 'L\u00f6sung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+/* ═══ BEGRIFFE ═══ */
+
+const BEGRIFFE = [{"term": "DTMF (Mehrfrequenzwahlverfahren)", "cat": "dtmf", "ref": "Quelle: Wikipedia, dcode.fr, mediacollege.com — recherchiert (nicht mitdiktiert), bitte gegenprüfen", "def": "Dual-Tone Multi-Frequency: Jede Taste eines Tastentelefons erzeugt <b>zwei gleichzeitige Töne</b> — einen aus der Gruppe der tiefen Frequenzen (Zeile), einen aus der Gruppe der hohen Frequenzen (Spalte)."}, {"term": "Tiefe Frequenzen (DTMF-Zeilen)", "cat": "dtmf", "def": "697 Hz · 770 Hz · 852 Hz · 941 Hz — je eine pro Tastenzeile."}, {"term": "Hohe Frequenzen (DTMF-Spalten)", "cat": "dtmf", "def": "1209 Hz · 1336 Hz · 1477 Hz · 1633 Hz — je eine pro Tastenspalte."}, {"term": "DTMF-Kombinationsraster", "cat": "dtmf", "def": "4×4-Tabelle: Jede Taste (0–9, *, #, A–D) entspricht einer eindeutigen Kombination aus einer tiefen und einer hohen Frequenz."}, {"term": "Warum genau diese 8 DTMF-Frequenzen?", "cat": "dtmf", "def": "Keine der 8 Frequenzen ist eine <b>Harmonische</b> (ein Vielfaches) einer anderen — so bleibt die Decodierung eindeutig, auch bei Verzerrung auf schlechten Leitungen."}, {"term": "DTMF-Spalte A–D", "cat": "dtmf", "def": "Vierte Spalte für Sonderanwendungen (z. B. militärische/Prioritäts-Telefonie) — auf normalen Telefonen <b>nicht vorhanden</b>, taucht in der Praxis kaum auf."}, {"term": "dB(A) — Schalldruckpegel", "cat": "schall", "ref": "Recherchiert (nicht mitdiktiert), bitte gegenprüfen", "def": "A-bewerteter Schalldruckpegel — Standard-Masseinheit für Lautstärke im Alltags- und Arbeitsschutzkontext."}, {"term": "Hörschwelle", "cat": "schall", "def": "0 dB — leisester für den Menschen gerade noch hörbarer Schalldruck."}, {"term": "Schmerzgrenze", "cat": "schall", "def": "120 dB — ab hier wird Schall als schmerzhaft empfunden."}, {"term": "Grundregel 85 dB(A) / 8 h", "cat": "schall", "ref": "Quelle: Suva-Merkblatt Lärmschutz — recherchiert, bitte gegenprüfen", "def": "Anerkannter Richtwert: <b>85 dB(A) über 8 Stunden</b> täglich ist die Grenze, ab der das Risiko einer dauerhaften Gehörschädigung entsteht. Darunter (kurzzeitige Alltagsgeräusche bis ~80 dB) besteht i. d. R. keine Gefahr."}, {"term": "Austauschregel (3-dB-Regel)", "cat": "schall", "ref": "Quelle: Suva-Merkblatt Lärmschutz — recherchiert, bitte gegenprüfen", "def": "Jede Erhöhung um <b>+3 dB verdoppelt die Schallenergie</b> und <b>halbiert</b> die zulässige Einwirkzeit — logarithmischer, kein linearer Zusammenhang."}, {"term": "Knalltrauma", "cat": "schall", "def": "Sofortige, bleibende Gehörschädigung durch sehr hohen Spitzenpegel — ab ca. <b>130–135 dB(C)</b> möglich, unabhängig von der Dauer."}, {"term": "Gesamtdosis (Lärm)", "cat": "schall", "def": "Für das Gehörschädigungsrisiko zählen <b>Pegel und Dauer zusammen</b> — kurze, sehr laute Spitzen (Knall, Presslufthammer) sind oft gefährlicher als gleichbleibender Dauerlärm bei niedrigerem Pegel."}, {"term": "Zulässige Einwirkzeit nach Pegel (Tabelle)", "cat": "schall", "ref": "Berechnet aus 85 dB/8h-Referenz + 3-dB-Austauschregel; die Zwischenwerte sind kein einzeln zitiertes Original, sondern eine Anwendung der Formel — bitte gegenprüfen", "def": "Beispiele: 85 dB(A)→8h · 88 dB(A)→4h · 91 dB(A)→2h · 94 dB(A)→1h · 97 dB(A)→30min · 100 dB(A)→15min · 103 dB(A)→~7.5min · 106 dB(A)→~3¾ min · 109 dB(A)→~1⅝ min · 112 dB(A)→56s · 115 dB(A)→28s · 118 dB(A)→14s · 121 dB(A)→7s."}, {"term": "Schallgeschwindigkeit", "cat": "schall", "ref": "Quelle: Wikipedia, silenti.de — recherchiert, bitte gegenprüfen", "def": "Abhängig von <b>Elastizität</b> und <b>Dichte</b> des Mediums (bei Gasen zusätzlich von der Temperatur)."}, {"term": "Grundregel Schallgeschwindigkeit", "cat": "schall", "def": "Gase &lt; Flüssigkeiten &lt; Festkörper — Festkörper sind zwar am dichtesten, ihre viel höhere Steifigkeit (Elastizitätsmodul) überwiegt aber, daher leiten sie Schall am schnellsten."}, {"term": "Schallgeschwindigkeit in Luft", "cat": "schall", "def": "343 m/s bei 20 °C, trocken."}, {"term": "Schallgeschwindigkeit in Wasser", "cat": "schall", "def": "1484 m/s bei 20 °C (0 °C: 1407 m/s · 75 °C: 1555 m/s — steigt mit der Temperatur)."}, {"term": "Longitudinalwelle", "cat": "schall", "def": "Druckwelle — Schwingungsrichtung parallel zur Ausbreitungsrichtung; existiert in Gasen, Flüssigkeiten und Festkörpern."}, {"term": "Transversalwelle", "cat": "schall", "def": "Scherwelle — Schwingungsrichtung quer zur Ausbreitungsrichtung; existiert <b>nur in Festkörpern</b>."}, {"term": "Wandlerprinzip (Mikrofon)", "cat": "mikrofon", "ref": "Quelle: Wikipedia u. a. — recherchiert, bitte gegenprüfen. Das Lernziel nennt 3 Mikrofonarten, hier alle 5 gängigen technischen Typen (Kohlemikrofon historisch relevant für Telefonie)", "def": "Grundprinzip jedes Mikrofons: <b>Schalldruck (mechanische Energie) → elektrische Energie</b>. Die verschiedenen Mikrofonarten unterscheiden sich nur im Wandlerprinzip."}, {"term": "Kohlemikrofon", "cat": "mikrofon", "def": "Membran presst auf Kohlekörner → <b>elektrischer Widerstand ändert sich</b> mit dem Schalldruck. Klassisches Telefonmikrofon (David Edward Hughes, 1878), einfachste Beschaltung, robust, aber schlechte Klangqualität."}, {"term": "Dynamisches Mikrofon (Tauchspulmikrofon)", "cat": "mikrofon", "def": "Membran bewegt eine Spule im Magnetfeld → <b>Spannung wird induziert</b> (Generatorprinzip). Sehr robust, keine externe Stromversorgung nötig — das Bühnen-/Live-Mikrofon."}, {"term": "Kondensatormikrofon", "cat": "mikrofon", "def": "Membran und feste Metallfläche bilden einen Kondensator → Schall ändert den Plattenabstand → <b>Kapazität ändert sich</b>. Braucht Phantomspeisung. Studio-Standard, sehr präzise."}, {"term": "Bändchenmikrofon", "cat": "mikrofon", "def": "Zickzack-gefaltetes Aluminiumband hängt zwischen zwei Dauermagneten; Schall bewegt das Bändchen im Magnetfeld → Spannung wird direkt induziert (wie dynamisch, aber ohne Spule). Warmer, gedämpfter Klang, mechanisch empfindlich."}, {"term": "Piezo-/Kristallmikrofon", "cat": "mikrofon", "def": "Nutzt den <b>piezoelektrischen Effekt</b>: Kristall/Piezo-Keramik (meist PZT) gibt bei Druck eine elektrische Ladung ab. Historisch populär (1930er–1950er), heute vor allem als Kontaktmikrofon."}, {"term": "Phantomspeisung", "cat": "mikrofon", "def": "Externe Spannungsversorgung, die ein Kondensatormikrofon zum Betrieb benötigt."}];
+
+const BEGRIFF_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'dtmf', label: 'DTMF' },
+  { id: 'schall', label: 'Schalldruck & Schallgeschwindigkeit' },
+  { id: 'mikrofon', label: 'Mikrofone' }
+];
+
+let bFilter = 'all', bSearch = '';
+
+function renderBegriffe() {
+  const grid = document.getElementById('begriffGrid');
+  const s = bSearch.toLowerCase();
+  const list = BEGRIFFE.filter(b =>
+    (bFilter === 'all' || b.cat === bFilter) &&
+    (!s || b.term.toLowerCase().includes(s) || b.def.toLowerCase().includes(s)));
+  grid.innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `
+    <div class="begriff" data-cat="${b.cat}">
+      <dt>${b.term}${b.ref ? `<span class="law-ref">${b.ref}</span>` : ''}</dt>
+      <dd>${b.def}</dd>
+    </div>`).join('') ||
+    '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px">Nichts gefunden.</div>';
+}
+
+document.getElementById('begriffCats').innerHTML = BEGRIFF_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('begriffCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#begriffCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); bFilter = b.dataset.cat; renderBegriffe();
+});
+document.getElementById('begriffSearch').addEventListener('input', e => {
+  bSearch = e.target.value; renderBegriffe();
+});
+renderBegriffe();
+
+/* ═══ KARTEIKARTEN ═══ */
+
+const CARDS = [{"cat": "dtmf", "term": "Was bedeutet DTMF ausgeschrieben?", "def": "Dual-Tone Multi-Frequency (deutsch: Mehrfrequenzwahlverfahren)."}, {"cat": "dtmf", "term": "Wie viele Töne erzeugt eine Taste beim DTMF-Verfahren gleichzeitig?", "def": "Zwei — einen aus der Gruppe der tiefen Frequenzen (Zeile) und einen aus der Gruppe der hohen Frequenzen (Spalte)."}, {"cat": "dtmf", "term": "Nenne die 4 tiefen DTMF-Frequenzen (Zeilen).", "def": "697 Hz, 770 Hz, 852 Hz, 941 Hz."}, {"cat": "dtmf", "term": "Nenne die 4 hohen DTMF-Frequenzen (Spalten).", "def": "1209 Hz, 1336 Hz, 1477 Hz, 1633 Hz."}, {"cat": "dtmf", "term": "Welche zwei Frequenzen ergeben zusammen die Taste \"5\"?", "def": "770 Hz + 1336 Hz (gleichzeitig)."}, {"cat": "dtmf", "term": "Warum ist keine der 8 DTMF-Frequenzen eine Harmonische einer anderen?", "def": "Damit die Auswertelektronik die Kombinationen auch bei Verzerrung auf schlechten Leitungen eindeutig unterscheiden kann."}, {"cat": "dtmf", "term": "Wofür ist die 4. DTMF-Spalte (A–D) gedacht, und wo kommt sie vor?", "def": "Für Sonderanwendungen wie militärische/Prioritäts-Telefonie — auf normalen Telefonen nicht vorhanden."}, {"cat": "dtmf", "term": "Welche Taste ergibt die Kombination 852 Hz + 1477 Hz?", "def": "Die Taste \"9\"."}, {"cat": "schall", "term": "Wie viel dB(A) entspricht der Hörschwelle?", "def": "0 dB."}, {"cat": "schall", "term": "Wie viel dB entspricht der Schmerzgrenze?", "def": "120 dB."}, {"cat": "schall", "term": "Nenne 2 Alltagsbeispiele um 60–80 dB.", "def": "60 dB: normales Gespräch. 80 dB: lauter Verkehr / schreiendes Baby."}, {"cat": "schall", "term": "Wie lautet die Grundregel für das Gehörschädigungsrisiko am Arbeitsplatz?", "def": "85 dB(A) über 8 Stunden täglich — ab hier entsteht das Risiko einer dauerhaften Gehörschädigung."}, {"cat": "schall", "term": "Was besagt die Austauschregel (+3-dB-Regel)?", "def": "Jede Erhöhung um 3 dB verdoppelt die Schallenergie und halbiert die zulässige Einwirkzeit."}, {"cat": "schall", "term": "Bei welchem Pegel ist die max. Einwirkzeit noch 4 Stunden (ausgehend von 85 dB/8h)?", "def": "88 dB(A).", "ref": "Berechnet mit der 3-dB-Regel, nicht einzeln zitiert — bitte gegenprüfen"}, {"cat": "schall", "term": "Bei welchem Pegel ist die max. Einwirkzeit noch 1 Stunde?", "def": "94 dB(A).", "ref": "Berechnet mit der 3-dB-Regel, nicht einzeln zitiert — bitte gegenprüfen"}, {"cat": "schall", "term": "Bei welchem Pegel ist die max. Einwirkzeit noch ca. 15 Minuten?", "def": "100 dB(A).", "ref": "Berechnet mit der 3-dB-Regel, nicht einzeln zitiert — bitte gegenprüfen"}, {"cat": "schall", "term": "Ab welchem Spitzenpegel droht ein Knalltrauma unabhängig von der Dauer?", "def": "Ab ca. 130–135 dB(C) — sofortige, bleibende Gehörschädigung möglich."}, {"cat": "schall", "term": "Was zählt für das Gehörschädigungsrisiko: nur der Pegel oder auch die Dauer?", "def": "Beides zusammen — die Gesamtdosis (Pegel und Dauer)."}, {"cat": "schall", "term": "Warum können kurze laute Spitzen (z. B. Presslufthammer) gefährlicher sein als Dauerlärm?", "def": "Weil für das Risiko die Gesamtdosis zählt — ein sehr hoher kurzer Pegel kann mehr Schaden anrichten als niedrigerer Dauerlärm."}, {"cat": "schall", "term": "Von welchen zwei Materialeigenschaften hängt die Schallgeschwindigkeit ab?", "def": "Elastizität und Dichte des Mediums (bei Gasen zusätzlich von der Temperatur)."}, {"cat": "schall", "term": "Nenne die Grundregel: in welcher Reihenfolge steigt die Schallgeschwindigkeit?", "def": "Gase &lt; Flüssigkeiten &lt; Festkörper."}, {"cat": "schall", "term": "Warum leiten Festkörper Schall am schnellsten, obwohl sie am dichtesten sind?", "def": "Weil ihre viel höhere Steifigkeit (Elastizitätsmodul) den Dichte-Nachteil überwiegt."}, {"cat": "schall", "term": "Wie schnell ist Schall in Luft bei 20 °C?", "def": "343 m/s."}, {"cat": "schall", "term": "Wie schnell ist Schall in Wasser bei 20 °C?", "def": "1484 m/s."}, {"cat": "schall", "term": "Steigt oder sinkt die Schallgeschwindigkeit in Wasser mit der Temperatur?", "def": "Sie steigt (0 °C: 1407 m/s → 75 °C: 1555 m/s)."}, {"cat": "schall", "term": "Welche zwei Wellenarten gibt es in Festkörpern, und warum deshalb zwei Geschwindigkeitswerte pro Werkstoff?", "def": "Longitudinale (Druck-)Wellen und transversale (Scher-)Wellen — Festkörper übertragen anders als Gase/Flüssigkeiten beide Arten."}, {"cat": "schall", "term": "Wie viel schneller ist Schall in Stahl als in Luft?", "def": "Rund 15× schneller."}, {"cat": "schall", "term": "Was beeinflusst die Schallgeschwindigkeit in Holz zusätzlich?", "def": "Die Faserrichtung — längs zur Faser läuft Schall deutlich schneller als quer dazu."}, {"cat": "mikrofon", "term": "Was wandeln alle Mikrofone um, und was unterscheidet die Typen?", "def": "Alle wandeln Schalldruck (mechanische Energie) in elektrische Energie um — der Unterschied liegt im Wandlerprinzip."}, {"cat": "mikrofon", "term": "Wie funktioniert ein Kohlemikrofon?", "def": "Membran presst auf Kohlekörner; je stärker der Druck, desto mehr Kontaktstellen zwischen den Körnern → der elektrische Widerstand ändert sich im Rhythmus des Schalls."}, {"cat": "mikrofon", "term": "Wer erfand das Kohlemikrofon, und wann?", "def": "David Edward Hughes, im Jahr 1878."}, {"cat": "mikrofon", "term": "Wofür wurde das Kohlemikrofon klassisch eingesetzt?", "def": "Als klassisches Telefonmikrofon — einfachste Beschaltung, robust, aber schlechte Klangqualität."}, {"cat": "mikrofon", "term": "Wie funktioniert ein dynamisches Mikrofon (Tauchspulmikrofon)?", "def": "Die Membran bewegt eine Spule, die in ein Magnetfeld eintaucht → es wird eine Spannung induziert (Generatorprinzip)."}, {"cat": "mikrofon", "term": "Warum ist das dynamische Mikrofon das typische Bühnen-/Live-Mikrofon?", "def": "Sehr robust, verträgt hohe Lautstärken, braucht keine externe Stromversorgung."}, {"cat": "mikrofon", "term": "Wie funktioniert ein Kondensatormikrofon?", "def": "Membran und feste Metallfläche bilden einen Kondensator; Schall ändert den Plattenabstand → die Kapazität ändert sich, was in ein elektrisches Signal umgesetzt wird."}, {"cat": "mikrofon", "term": "Was braucht ein Kondensatormikrofon zum Betrieb, und wofür wird es typischerweise eingesetzt?", "def": "Eine externe Spannungsversorgung (Phantomspeisung); Einsatz: Studio-Standard für Gesang und Instrumente."}, {"cat": "mikrofon", "term": "Wie funktioniert ein Bändchenmikrofon?", "def": "Ein zickzack-gefaltetes Aluminiumband hängt zwischen zwei Dauermagneten; Schall bewegt das Bändchen im Magnetfeld, wodurch direkt eine Spannung induziert wird."}, {"cat": "mikrofon", "term": "Was ist klanglich typisch für ein Bändchenmikrofon?", "def": "Ein warmer, gedämpfter Klang (natürliche Höhendämpfung über 10 kHz), mechanisch aber empfindlicher als dynamische Mikrofone."}, {"cat": "mikrofon", "term": "Wie funktioniert ein Piezo-/Kristallmikrofon?", "def": "Ein Kristall bzw. eine Piezo-Keramik (meist PZT) gibt bei mechanischer Verformung/Druck eine elektrische Ladung ab (piezoelektrischer Effekt)."}, {"cat": "mikrofon", "term": "Wofür wird das Piezomikrofon heute vor allem eingesetzt?", "def": "Als Kontaktmikrofon — nimmt Körperschall/Vibrationen statt Luftschall ab (z. B. an Instrumenten oder Oberflächen)."}];
+
+const CARD_CATS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'dtmf', label: 'DTMF' },
+  { id: 'schall', label: 'Schall' },
+  { id: 'mikrofon', label: 'Mikrofone' }
+];
+
+const KEY_KNOWN = 'telekom-karten-gewusst';
+let cardSet = [], cardIdx = 0, cardFlipped = false, cardCat = 'all';
+let known = new Set(), unknown = new Set();
+try {
+  const s = JSON.parse(localStorage.getItem(KEY_KNOWN) || '{}');
+  known = new Set(s.k || []); unknown = new Set(s.u || []);
+} catch (e) {}
+
+function saveCards() {
+  try { localStorage.setItem(KEY_KNOWN, JSON.stringify({ k: [...known], u: [...unknown] })); } catch (e) {}
+}
+
+function buildCardSet() {
+  cardSet = CARDS.map((c, i) => ({ ...c, id: i }))
+    .filter(c => cardCat === 'all' || c.cat === cardCat);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  const content = document.getElementById('flashContent');
+  const counter = document.getElementById('flashCounter');
+  if (!cardSet.length) {
+    content.className = 'flash-front';
+    content.textContent = 'Keine Karten in dieser Auswahl.';
+    counter.textContent = '0 / 0';
+    updateCardStats();
+    return;
+  }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) {
+    content.className = 'flash-back';
+    content.innerHTML = c.def + (c.ref ? `<span class="ref">${c.ref}</span>` : '');
+  } else {
+    content.className = 'flash-front';
+    content.innerHTML = c.term;
+  }
+  updateCardStats();
+}
+
+function updateCardStats() {
+  document.getElementById('flashStats').innerHTML =
+    `<span class="good">${known.size} gewusst</span> · ` +
+    `<span class="bad">${unknown.size} noch nicht</span> · ` +
+    `<span class="meta">${CARDS.length} Karten gesamt</span>`;
+}
+
+function flip() { cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (cardSet.length) { cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); } }
+function prevCard() { if (cardSet.length) { cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); } }
+function rate(ok) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx].id;
+  if (ok) { known.add(id); unknown.delete(id); } else { unknown.add(id); known.delete(id); }
+  saveCards(); nextCard();
+}
+
+document.getElementById('cardCats').innerHTML = CARD_CATS.map(c =>
+  `<button class="cat-chip${c.id === 'all' ? ' active' : ''}" type="button" data-cat="${c.id}">${c.label}</button>`).join('');
+document.getElementById('cardCats').addEventListener('click', e => {
+  const b = e.target.closest('.cat-chip'); if (!b) return;
+  document.querySelectorAll('#cardCats .cat-chip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); cardCat = b.dataset.cat; buildCardSet();
+});
+document.getElementById('flashCard').addEventListener('click', flip);
+document.getElementById('cardNext').addEventListener('click', nextCard);
+document.getElementById('cardPrev').addEventListener('click', prevCard);
+document.getElementById('cardYes').addEventListener('click', () => rate(true));
+document.getElementById('cardNo').addEventListener('click', () => rate(false));
+document.getElementById('cardShuffle').addEventListener('click', () => {
+  for (let i = cardSet.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]];
+  }
+  cardIdx = 0; cardFlipped = false; renderCard();
+});
+document.getElementById('cardReset').addEventListener('click', () => {
+  known.clear(); unknown.clear(); saveCards(); buildCardSet();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); flip(); }
+  if (e.key === 'ArrowRight') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+});
+buildCardSet();
+
+/* ═══ QUIZ ═══ */
+
+const QUIZ = [{"t": "DTMF", "q": "Welche zwei Frequenzen ergeben die Taste \"5\"?", "a": "770 Hz + 1336 Hz."}, {"t": "DTMF", "q": "Warum ist keine der 8 DTMF-Frequenzen ein Vielfaches (Harmonische) einer anderen?", "a": "Damit die Kombinationen auch bei gestörter/verzerrter Übertragung eindeutig decodierbar bleiben."}, {"t": "DTMF", "q": "Wozu dient die vierte DTMF-Spalte (A–D), und warum sieht man sie im Alltag kaum?", "a": "Für Sonderanwendungen (z. B. militärische/Prioritäts-Telefonie) — normale Telefone haben sie nicht verbaut."}, {"t": "Schalldruck", "q": "Wie lautet die Grundregel zum Gehörschädigungsrisiko (Pegel + Dauer)?", "a": "85 dB(A) über 8 Stunden täglich ist die anerkannte Grenze, ab der Gehörschädigungsrisiko entsteht."}, {"t": "Einwirkungsdauer", "q": "Was passiert mit der zulässigen Einwirkzeit, wenn der Pegel um 3 dB steigt?", "a": "Sie halbiert sich (Austauschregel: +3 dB = doppelte Schallenergie)."}, {"t": "Schalldruck", "q": "Ist der Zusammenhang zwischen Pegel und zulässiger Einwirkzeit linear oder logarithmisch?", "a": "Logarithmisch."}, {"t": "Einwirkungsdauer", "q": "Ab welchem Spitzenpegel droht sofortige, bleibende Gehörschädigung unabhängig von der Dauer?", "a": "Ab ca. 130–135 dB(C) (Knalltrauma)."}, {"t": "Schallgeschwindigkeit", "q": "In welcher Reihenfolge nimmt die Schallgeschwindigkeit zu: Gase, Flüssigkeiten, Festkörper?", "a": "Gase &lt; Flüssigkeiten &lt; Festkörper."}, {"t": "Schallgeschwindigkeit", "q": "Wie schnell ist Schall in Luft bei 20 °C?", "a": "343 m/s."}, {"t": "Schallgeschwindigkeit", "q": "Warum leiten Festkörper Schall schneller als Flüssigkeiten, obwohl beide dichter sind als Gase?", "a": "Ihre hohe Steifigkeit (Elastizitätsmodul) überwiegt den Dichte-Nachteil."}, {"t": "Schallgeschwindigkeit", "q": "Welche zwei Wellenarten treten in Festkörpern auf?", "a": "Longitudinale (Druck-)Wellen und transversale (Scher-)Wellen."}, {"t": "Mikrofon", "q": "Welches physikalische Prinzip nutzt das Kondensatormikrofon?", "a": "Kapazitätsänderung durch Änderung des Plattenabstands zwischen Membran und fester Gegenelektrode."}, {"t": "Mikrofon", "q": "Welches Mikrofon braucht keine externe Stromversorgung und ist das klassische Bühnenmikrofon?", "a": "Das dynamische Mikrofon (Tauchspulmikrofon)."}, {"t": "Mikrofon", "q": "Welches Wandlerprinzip nutzt das Kohlemikrofon?", "a": "Widerstandsänderung durch Kohlekörner, die je nach Schalldruck unterschiedlich stark Kontakt haben."}, {"t": "Mikrofon", "q": "Welches Mikrofon nutzt den piezoelektrischen Effekt, und wofür wird es heute hauptsächlich verwendet?", "a": "Das Piezo-/Kristallmikrofon — heute vor allem als Kontaktmikrofon."}];
+
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">${i + 1}</span><span class="q-topic">${q.t}</span></div>
+    <div class="q-text">${q.q}</div>
+    <button class="reveal-btn" type="button" onclick="toggleSol(this)">L\u00f6sung anzeigen</button>
+    <div class="solution">${q.a}</div>
+  </div>`).join('');
+
+/* ═══ LERNPLAN ═══ */
+
+const PLAN_D1 = [
+  'Theorie-Tab lesen — Abschnitt DTMF (10 Min)',
+  'Begriffe-Tab, Kategorie DTMF, einmal durchlesen (10 Min)',
+  'Karteikarten Kategorie DTMF einmal durch (10 Min)',
+  'Quiz-Fragen zu DTMF beantworten, dann aufdecken (10 Min)',
+  'Das 4×4-Kombinationsraster ohne Vorlage aus dem Kopf aufzeichnen (5 Min)'
+];
+const PLAN_D2 = [
+  'Theorie-Tab lesen — Schalldruck &amp; Einwirkungsdauer, Schallgeschwindigkeit, Mikrofonarten (25 Min)',
+  'Begriffe-Tab, Kategorie Schalldruck &amp; Schallgeschwindigkeit, durchlesen (10 Min)',
+  'Karteikarten Kategorie Schall einmal durch (10 Min)',
+  'Karteikarten Kategorie Mikrofone einmal durch (10 Min)',
+  'Quiz-Fragen zu Schalldruck, Einwirkungsdauer, Schallgeschwindigkeit und Mikrofon beantworten (15 Min)',
+  'Alle Karteikarten mischen und einmal komplett durchgehen (10 Min)'
+];
+const PLAN_D3 = [
+  'Nur Karteikarten mit «Wusste ich nicht» durchgehen',
+  'DTMF-Kombinationsraster nochmals laut aufsagen',
+  'Die vier Sätze aus «Wenn du nur zehn Minuten hast» laut sagen',
+  'Prüfen: liegen inzwischen Unterlagen zu Kapitel 1 vor?'
+];
+
+const PLAN_KEY = 'telekom-plan';
+
+function fillPlan(id, items, prefix) {
+  document.getElementById(id).innerHTML = items.map((t, i) =>
+    `<li class="check-item"><input type="checkbox" class="check" id="${prefix}${i}"><label for="${prefix}${i}" class="ci-text">${t}</label></li>`).join('');
+}
+fillPlan('planListD1', PLAN_D1, 'p1_');
+fillPlan('planListD2', PLAN_D2, 'p2_');
+fillPlan('planListD3', PLAN_D3, 'p3_');
+
+function planProgress() {
+  const boxes = [...document.querySelectorAll('#lernplan .check')];
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('planFill').style.width = (done / boxes.length * 100) + '%';
+  document.getElementById('planText').textContent =
+    done === boxes.length ? 'Alles durch. Am Freitagmorgen nur noch die roten Karten.'
+                          : `${done} von ${boxes.length} erledigt`;
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]');
+  document.querySelectorAll('#lernplan .check').forEach((b, i) => { if (saved[i]) b.checked = true; });
+} catch (e) {}
+document.querySelectorAll('#lernplan .check').forEach(b => b.addEventListener('change', planProgress));
+planProgress();
+
+</script>
+</body>
+</html>
