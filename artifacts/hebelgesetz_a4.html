@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeitsauftrag Drehmoment und Hebelgesetz — A4 Abgabeblatt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171D1E;
+  --ink-soft:#52585A;
+  --ink-mute:#85898A;
+  --accent:#0E6B72;
+  --accent-light:#E4F1F1;
+  --rule:#C9CBC5;
+  --rule-soft:#E3E5E0;
+  --grid:#E9EAE5;
+  --font-body:'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:'Azeret Mono', ui-monospace, 'Consolas', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{background:#9A9C97;}
+
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:#9A9C97;
+  line-height:1.35;
+  -webkit-font-smoothing:antialiased;
+  padding:18px 12px 48px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+/* ══ HINWEIS (wird nicht gedruckt) ══ */
+.noprint{
+  width:210mm;
+  max-width:100%;
+  background:#FFF;
+  border:1px solid var(--ink);
+  border-left:5px solid var(--accent);
+  padding:12px 14px;
+  font-size:12px;
+  line-height:1.5;
+  color:var(--ink-soft);
+}
+.noprint b{color:var(--ink);font-weight:700;}
+.noprint .np-title{
+  font-family:var(--font-mono);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;display:block;margin-bottom:5px;
+}
+.noprint ul{margin:6px 0 0 16px;}
+.noprint li{margin-bottom:3px;}
+
+/* ══ DAS BLATT ══ */
+.sheet{
+  width:210mm;
+  min-height:297mm;
+  padding:14mm;
+  background:#FFFFFF;
+  color:var(--ink);
+  font-size:8.4pt;
+  overflow:hidden;
+}
+
+/* ── Kopf ── */
+.kopf{border-bottom:2.2px solid var(--ink);padding-bottom:1.7mm;margin-bottom:2.4mm;}
+.kopf .fach{
+  font-family:var(--font-mono);
+  font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;
+}
+.kopf h1{font-size:13pt;font-weight:700;letter-spacing:-.015em;line-height:1.1;margin:.6mm 0 1.4mm;}
+.kopfzeile{display:flex;flex-wrap:wrap;gap:1.2mm 4.6mm;align-items:flex-end;font-size:7.8pt;}
+.feld{display:flex;align-items:flex-end;gap:1.4mm;}
+.feld .lab{
+  font-family:var(--font-mono);
+  font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:500;padding-bottom:.3mm;white-space:nowrap;
+}
+.feld .val{font-weight:600;white-space:nowrap;}
+.feld .linie{display:inline-block;border-bottom:1px solid var(--ink);height:4mm;}
+.linie.w-name{width:44mm;}
+.linie.w-datum{width:22mm;}
+
+/* ── Formelkasten ── */
+.formeln{
+  border:1.4px solid var(--ink);
+  background:var(--accent-light);
+  padding:1.5mm 2.4mm;
+  margin-bottom:2.4mm;
+}
+.formeln .ftitel{
+  font-family:var(--font-mono);
+  font-size:6.6pt;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--accent);margin-bottom:1.2mm;
+}
+.frow{display:flex;flex-wrap:wrap;gap:1.2mm 5mm;}
+.fitem{flex:1 1 46mm;min-width:46mm;}
+.fitem .fml{font-family:var(--font-mono);font-weight:600;font-size:8.6pt;display:block;line-height:1.25;}
+.fitem .fbe{font-size:7pt;color:var(--ink-soft);line-height:1.25;display:block;}
+.fnote{
+  margin-top:1.2mm;padding-top:1.1mm;
+  border-top:1px solid rgba(14,107,114,.3);
+  font-size:7pt;color:var(--ink-soft);line-height:1.3;
+}
+.mono{font-family:var(--font-mono);}
+
+/* ── Aufgabenblock ── */
+.block{border:1.4px solid var(--ink);margin-bottom:2.2mm;}
+.block:last-of-type{margin-bottom:0;}
+.bkopf{background:var(--ink);color:#FFF;padding:1.1mm 2.6mm;display:flex;align-items:baseline;gap:2.6mm;}
+.bkopf .nr{font-family:var(--font-mono);font-size:6.8pt;letter-spacing:.14em;font-weight:600;opacity:.7;white-space:nowrap;}
+.bkopf .btitel{font-size:9.2pt;font-weight:700;letter-spacing:-.01em;line-height:1.2;}
+.bbody{padding:1.6mm 2.6mm 1.8mm;}
+
+.zeile-label{
+  font-family:var(--font-mono);
+  font-size:6.4pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:.7mm;line-height:1.2;
+}
+.anwendung{font-size:7.9pt;line-height:1.3;margin-bottom:1.6mm;}
+.anwendung .inl{
+  font-family:var(--font-mono);font-size:6.4pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:1.2mm;
+}
+.anwendung b{font-weight:600;}
+
+/* Skizzenfeld */
+.skizze{
+  border:1.2px dashed var(--ink);
+  height:41mm;
+  position:relative;
+  background-color:#FFF;
+  background-image:
+    linear-gradient(to right, var(--grid) .28mm, transparent .28mm),
+    linear-gradient(to bottom, var(--grid) .28mm, transparent .28mm);
+  background-size:5mm 5mm;
+  margin-bottom:1.6mm;
+}
+.skizze .hint{
+  position:absolute;right:1.4mm;bottom:1mm;
+  font-family:var(--font-mono);font-size:6pt;color:var(--ink-mute);letter-spacing:.05em;
+}
+
+/* Gegeben / Rechnung */
+.rechenteil{display:flex;gap:3.2mm;align-items:stretch;margin-bottom:1.6mm;}
+.geg{flex:0 0 44mm;}
+.rec{flex:1 1 auto;border-left:1px solid var(--rule);padding-left:3.2mm;}
+
+.werte{font-family:var(--font-mono);font-size:7.3pt;line-height:1.48;}
+.werte div{white-space:nowrap;}
+.werte .kom{color:var(--ink-mute);font-family:var(--font-body);font-size:6.8pt;}
+
+.schritte{font-family:var(--font-mono);font-size:7.4pt;line-height:1.48;}
+.schritte .s{display:block;}
+.schritte .erg{font-weight:600;}
+.schritte .mark{background:var(--accent-light);box-shadow:0 0 0 .55mm var(--accent-light);}
+.schritte .kommentar{
+  font-family:var(--font-body);font-size:6.9pt;color:var(--ink-mute);
+  display:block;line-height:1.35;
+}
+
+/* Antwortsatz */
+.antwort{border-top:1.2px solid var(--ink);padding-top:1.3mm;font-size:7.9pt;line-height:1.32;}
+.antwort .alab{
+  font-family:var(--font-mono);font-size:6.4pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:1.4mm;
+}
+.antwort b{font-weight:600;}
+
+/* ── Fuss ── */
+.fuss{
+  margin-top:1.8mm;padding-top:1.2mm;border-top:1px solid var(--rule-soft);
+  display:flex;justify-content:space-between;gap:4mm;
+  font-family:var(--font-mono);font-size:6.2pt;color:var(--ink-mute);letter-spacing:.04em;
+}
+
+/* ══ MOBILE — nur Bildschirm ══ */
+@media screen and (max-width:800px){
+  body{padding:12px 8px 32px;}
+  .sheet{width:100%;min-height:0;padding:14px;font-size:11.5px;}
+  .noprint{width:100%;}
+  .kopf h1{font-size:19px;}
+  .bkopf{flex-direction:column;gap:2px;}
+  .bkopf .btitel{font-size:14px;}
+  .rechenteil{flex-direction:column;gap:8px;}
+  .geg{flex:1 1 auto;}
+  .rec{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-top:8px;}
+  .werte div{white-space:normal;}
+  .werte,.schritte{font-size:11px;}
+  .anwendung,.antwort{font-size:11.5px;}
+  .skizze{height:34mm;}
+  .kopfzeile{gap:5px 12px;font-size:11px;}
+  .linie.w-name{width:40vw;}
+  .fitem{flex:1 1 100%;min-width:0;}
+  .fuss{flex-direction:column;gap:2px;font-size:9px;}
+}
+
+/* ══ DRUCK ══ */
+@page{
+  size:A4 portrait;
+  margin:14mm;
+}
+
+@media print{
+  html,body{background:#FFFFFF;}
+  body{display:block;padding:0;gap:0;}
+  .noprint{display:none !important;}
+  .sheet{
+    width:auto;min-height:0;padding:0;
+    border:none;box-shadow:none;font-size:8.4pt;
+  }
+  .block,.formeln,.skizze,.rechenteil{break-inside:avoid;page-break-inside:avoid;}
+  .bkopf{background:var(--ink) !important;color:#FFF !important;}
+  .bkopf,.formeln,.skizze,.schritte .mark{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HINWEIS — wird nicht gedruckt ══════════ -->
+<div class="noprint">
+  <span class="np-title">Nicht drucken &middot; nur für dich</span>
+  <b>Das hier ist ein Entwurf, keine fertige Abgabe.</b> Beni Moser will deine Arbeit sehen, nicht meine.
+  <ul>
+    <li><b>Die Skizzen zeichnest du von Hand</b> in die leeren Rahmen. Eine gedruckte Skizze fällt sofort auf &mdash; und Skizzieren ist Punkt 2 des Auftrags.</li>
+    <li><b>Miss die Zahlen zuhause an deinem eigenen Gegenstand nach.</b> Schlüssellänge, Radabstand, Griffabstand: Meter anlegen, eintragen, neu rechnen. Die Werte hier sind ein Muster, damit du den Rechenweg vor dir hast.</li>
+    <li>Ist eine Kraft unklar, darfst du sie laut Auftrag <b>schätzen</b> &mdash; schreib dann kurz dazu, wie du geschätzt hast.</li>
+    <li>Drucken: Ctrl+P, A4 hochformat, Skalierung 100 %, Hintergrundgrafiken einschalten. Das Blatt ist auf <b>eine</b> Seite ausgelegt.</li>
+  </ul>
+</div>
+
+<!-- ══════════ A4-BLATT ══════════ -->
+<div class="sheet">
+
+  <!-- ── Kopf ── -->
+  <div class="kopf">
+    <div class="fach">Elektrotechnik und Physik &middot; ATD &middot; BZI Interlaken</div>
+    <h1>Arbeitsauftrag Drehmoment und Hebelgesetz</h1>
+    <div class="kopfzeile">
+      <div class="feld"><span class="lab">Name</span><span class="linie w-name"></span></div>
+      <div class="feld"><span class="lab">Klasse</span><span class="val">ELI 25a</span></div>
+      <div class="feld"><span class="lab">Lehrperson</span><span class="val">Beni Moser</span></div>
+      <div class="feld"><span class="lab">Datum</span><span class="linie w-datum"></span></div>
+    </div>
+  </div>
+
+  <!-- ── Formelkasten ── -->
+  <div class="formeln">
+    <div class="ftitel">So rechnest du</div>
+    <div class="frow">
+      <div class="fitem">
+        <span class="fml">M = F &middot; r</span>
+        <span class="fbe">Drehmoment = Kraft &middot; Hebelarm</span>
+      </div>
+      <div class="fitem">
+        <span class="fml">F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></span>
+        <span class="fbe">Hebelgesetz im Gleichgewicht</span>
+      </div>
+      <div class="fitem">
+        <span class="fml">F = m &middot; g</span>
+        <span class="fbe">g = 9,81 m/s&sup2; &middot; 1 kg &rarr; 9,81 N</span>
+      </div>
+    </div>
+    <div class="fnote">Einheiten <span class="mono">[M] = Nm, [F] = N, [r] = m</span> &middot; Hebelarm <b>r</b> = <b>senkrechter</b> Abstand vom Drehpunkt zur Wirkungslinie der Kraft &middot; Umstellen: <span class="mono">F = M / r</span>, <span class="mono">r = M / F</span>.</div>
+  </div>
+
+  <!-- ══ BLOCK 1 ══ -->
+  <div class="block">
+    <div class="bkopf">
+      <span class="nr">Anwendung 1</span>
+      <span class="btitel">Schraubenschlüssel &mdash; Anzugsmoment an der Kabeltrasse</span>
+    </div>
+    <div class="bbody">
+
+      <div class="anwendung">
+        <span class="inl">Anwendung</span>M10-Schraube der Kabeltrasse, angezogen mit dem Gabelschlüssel. <b>Einseitiger Hebel</b>: Drehpunkt ist
+        die Schraubenachse, die Handkraft greift am Schlüsselende an. Verlangt sind <b>40 Nm</b>. Gesucht ist die
+        Handkraft &mdash; bei kurzem und bei langem Schlüssel.
+      </div>
+
+      <div class="zeile-label">Skizze &mdash; von Hand zeichnen: Drehpunkt, Hebelarm r, Kraftpfeil F</div>
+      <div class="skizze"><span class="hint">Skizze 1</span></div>
+
+      <div class="rechenteil">
+        <div class="geg">
+          <div class="zeile-label">Gegeben / Gesucht</div>
+          <div class="werte">
+            <div>M&nbsp;&nbsp;= 40 Nm</div>
+            <div>r<sub>1</sub>&nbsp;&nbsp;= 0,20 m <span class="kom">kurzer Schlüssel</span></div>
+            <div>r<sub>2</sub>&nbsp;&nbsp;= 0,30 m <span class="kom">langer Schlüssel</span></div>
+            <div>g&nbsp;&nbsp;= 9,81 m/s&sup2;</div>
+            <div>Gesucht: F<sub>1</sub>, F<sub>2</sub></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="zeile-label">Rechnung</div>
+          <div class="schritte">
+            <span class="s">M = F &middot; r&nbsp;&nbsp;&rarr;&nbsp;&nbsp;F = M / r</span>
+            <span class="s">F<sub>1</sub> = 40 Nm / 0,20 m = <span class="erg mark">200 N</span></span>
+            <span class="s">F<sub>2</sub> = 40 Nm / 0,30 m = <span class="erg mark">133,3 N</span></span>
+            <span class="kommentar">Zum Vergleich als Masse: m = F / g</span>
+            <span class="s">m<sub>1</sub> = 200 N / 9,81 m/s&sup2; = <span class="erg">20,4 kg</span></span>
+            <span class="s">m<sub>2</sub> = 133,3 N / 9,81 m/s&sup2; = <span class="erg">13,6 kg</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="antwort">
+        <span class="alab">Antwort</span>
+        Bei 0,20 m Hebelarm braucht es <b>200 N</b> Handkraft (20,4 kg), bei 0,30 m nur noch <b>133,3 N</b> (13,6 kg) &mdash;
+        das Drehmoment ist beide Male 40 Nm. <b>Mehr Hebelarm heisst weniger Kraft für dasselbe Drehmoment.</b>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ BLOCK 2 ══ -->
+  <div class="block">
+    <div class="bkopf">
+      <span class="nr">Anwendung 2</span>
+      <span class="btitel">Schubkarre mit Kabelrollen &mdash; eigener Versuch</span>
+    </div>
+    <div class="bbody">
+
+      <div class="anwendung">
+        <span class="inl">Anwendung</span>Schubkarre mit 60 kg Kabelrollen, Abstände mit dem Meter nachgemessen. Auch sie ist ein
+        <b>einseitiger Hebel</b>: Drehpunkt ist die Radachse, die Last zieht dazwischen nach unten, die Handkraft
+        hebt am Griffende. Gesucht ist die Kraft an den Griffen.
+      </div>
+
+      <div class="zeile-label">Skizze &mdash; von Hand zeichnen: Rad als Drehpunkt, r<sub>1</sub>, r<sub>2</sub>, beide Kraftpfeile</div>
+      <div class="skizze"><span class="hint">Skizze 2</span></div>
+
+      <div class="rechenteil">
+        <div class="geg">
+          <div class="zeile-label">Gegeben / Gesucht</div>
+          <div class="werte">
+            <div>m&nbsp;&nbsp;= 60 kg <span class="kom">Ladung</span></div>
+            <div>r<sub>1</sub>&nbsp;&nbsp;= 0,50 m <span class="kom">Rad &rarr; Last</span></div>
+            <div>r<sub>2</sub>&nbsp;&nbsp;= 1,40 m <span class="kom">Rad &rarr; Griffe</span></div>
+            <div>g&nbsp;&nbsp;= 9,81 m/s&sup2;</div>
+            <div>Gesucht: F<sub>2</sub></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="zeile-label">Rechnung</div>
+          <div class="schritte">
+            <span class="s">F<sub>1</sub> = m &middot; g = 60 kg &middot; 9,81 m/s&sup2; = <span class="erg">588,6 N</span></span>
+            <span class="s">M<sub>1</sub> = F<sub>1</sub> &middot; r<sub>1</sub> = 588,6 N &middot; 0,50 m = <span class="erg mark">294,3 Nm</span></span>
+            <span class="kommentar">Gleichgewicht: F<sub>1</sub>&middot;r<sub>1</sub> = F<sub>2</sub>&middot;r<sub>2</sub> &rarr; F<sub>2</sub> = M<sub>1</sub> / r<sub>2</sub></span>
+            <span class="s">F<sub>2</sub> = 294,3 Nm / 1,40 m = <span class="erg mark">210,2 N</span></span>
+            <span class="s">m<sub>Hand</sub> = 210,2 N / 9,81 m/s&sup2; = <span class="erg">21,4 kg</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="antwort">
+        <span class="alab">Antwort</span>
+        Die Griffe müssen mit rund <b>210 N</b> gehalten werden, das entspricht 21,4 kg &mdash; nur gut ein Drittel der
+        60 kg Ladung, den Rest trägt das Rad. <b>Je näher die Last beim Rad, desto leichter geht die Karre.</b>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="fuss">
+    <span>ELI 25a &middot; BZI Interlaken &middot; Abgabe 07.09.2026</span>
+    <span>Arbeitsauftrag vom 31.08.2026 &middot; benotet, 4 Punkte am Test vom 14.09.2026</span>
+  </div>
+
+</div>
+
+</body>
+</html>
