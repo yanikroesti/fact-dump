@@ -831,6 +831,7 @@ const BEGRIFFE = [
     {"term":"E 2.3 – ein bisschen / ein paar","cat":"klein","ref":"E2.3","def":"ein bisschen, ein paar und ein wenig schreibt man klein. Achtung: ein Paar Stiefel ist ein echtes Nomen (zwei zusammengehörende Stücke) und bleibt gross."},
     {"term":"E 4.1 – Eingespartes Nomen","cat":"klein","ref":"E4.1","def":"Wenn nach einem Adjektiv ein Nomen eingespart worden ist, das im Text sonst noch vorkommt, schreibt man das Adjektiv klein. Beispiel: Wir müssen die Früchte sortieren, die grossen kommen zum Verkauf, die kleinen in unseren Keller."},
     {"term":"E 4.2 – Superlativ mit Wie?","cat":"klein","ref":"E4.2","def":"Superlative mit am, die sich mit Wie? erfragen lassen, werden kleingeschrieben. Beispiel: Dieses Bild gefällt mir am besten. (Wie gefällt mir das Bild?)"},
+    {"term":"E 4.2 – Das Paar aus dem Dossier","cat":"klein","ref":"E4.2","def":"Lädrachs Übungsblatt stellt beide Fälle direkt nebeneinander – daran entscheidet sich die Regel:<br><b>klein:</b> Die Rosen blühen im Frühsommer <b>am schönsten</b>. (<i>Wie</i> blühen sie?)<br><b>gross:</b> Er erfreute sich <b>am Schönsten</b>, was die Reise zu bieten hatte. (<i>Woran</i> erfreute er sich?)<br>Dasselbe Wort, zwei Schreibungen. Immer zuerst die Frage stellen."},
     {"term":"E 4.2 – Superlativ mit Woran?/Worauf?","cat":"gross","ref":"E4.2","def":"Kann man den Superlativ mit Woran? oder Worauf? erfragen, ist er substantiviert und wird grossgeschrieben. Beispiel: Es fehlte ihnen am Nötigsten. (Woran fehlte es ihnen?) Wir freuen uns auf das Schönste. (Worauf freuen wir uns?)"},
     {"term":"E 4.3 – Zahladjektive ein/ander/viel/wenig","cat":"klein","ref":"E4.3","def":"Die Zahladjektive ein, ander, viel, wenig bleiben auch in ihren Vergleichsformen klein: mehr, am meisten, weniger, am wenigsten. Beispiel: Die meisten haben diesen Film schon gesehen. Die einen kommen, die anderen gehen."},
     {"term":"E 4.4 – Feste Wortverbindungen Präposition + Adjektiv","cat":"klein","ref":"E4.4","def":"Feste Wortverbindungen aus reiner Präposition und Adjektiv schreibt man klein: in bar, von nah und fern, seit kurzem, vor langem, bei weitem, ohne weiteres, schwarz auf weiss, von klein auf, bis später."},
@@ -890,6 +891,10 @@ const CARDS = [
     {"cat":"gross","ref":"G3","term":"Nur ein ___nistern störte die Stille im Wald.","def":"K(nistern) – als Nomen gebrauchtes Verb (Nominalisierung), gross (G 3)."},
     {"cat":"gross","ref":"G3","term":"Beim ___pringen musst du gut landen.","def":"S(pringen) – nominalisiertes Verb nach Präposition, gross (G 3)."},
     {"cat":"gross","ref":"G3","term":"Das ___ahren auf Brettern ist mir leicht gefallen.","def":"F(ahren) – nominalisiertes Verb als Satzsubjekt, gross (G 3)."},
+    {"cat":"gross","ref":"G4","term":"Ich wünsche alles ___ute zum Geburtstag.","def":"G(ute) – Adjektiv nach der Mengenangabe «alles», als Nomen gebraucht, gross (G 4). Steht so im Dossier."},
+    {"cat":"klein","ref":"E4.2","term":"Die Rosen blühen im Frühsommer am ___chönsten.","def":"s(chönsten) – klein. Frage: <i>Wie</i> blühen sie? → Superlativ mit am, kleingeschrieben (E 4.2)."},
+    {"cat":"gross","ref":"E4.2","term":"Er erfreute sich am ___chönsten, was die Reise zu bieten hatte.","def":"S(chönsten) – gross. Frage: <i>Woran</i> erfreute er sich? → substantiviert, grossgeschrieben (E 4.2). Gleiches Wort wie oben, andere Frage."},
+    {"cat":"gross","ref":"G7","term":"Der letzte ___ittwoch war kalt und regnerisch.","def":"M(ittwoch) – Wochentage sind Nomen und werden immer grossgeschrieben (G 2/G 7). Nur die Adverbien auf -s bleiben klein: mittwochs."},
     {"cat":"gross","ref":"G4","term":"Sie erzählen uns viel ___eues.","def":"N(eues) – Adjektiv nach Mengenangabe «viel», als Nomen gebraucht, gross (G 4)."},
     {"cat":"gross","ref":"G4","term":"In diesem Laden findest du allerlei ___eures.","def":"T(eures) – Adjektiv nach Mengenangabe «allerlei», gross (G 4)."},
     {"cat":"klein","ref":"G4","term":"Ich habe dieses Jahr nichts ___nderes erlebt.","def":"a(nderes) – klein, feste Ausnahme: «nichts anderes» bleibt immer klein (G 4)."},
@@ -1031,6 +1036,11 @@ buildCardSet();
 /* ═══ QUIZ ═══ */
 
 const QUIZ = [
+    {"t":"Superlativ","q":"Die Rosen blühen im Frühsommer am ___chönsten.","a":"schönsten – klein. <i>Wie</i> blühen sie? Superlativ mit am, der sich mit Wie? erfragen lässt → klein (E 4.2)."},
+    {"t":"Superlativ","q":"Er erfreute sich am ___chönsten, was die Reise zu bieten hatte.","a":"Schönsten – gross. <i>Woran</i> erfreute er sich? Nicht mit Wie? erfragbar → substantiviert, gross (E 4.2)."},
+    {"t":"Superlativ","q":"Die Brotpreise wurden am ___eringsten erhöht.","a":"geringsten – klein. <i>Wie</i> wurden sie erhöht? → klein (E 4.2)."},
+    {"t":"Mengenangabe","q":"Ich wünsche alles ___ute zum Geburtstag.","a":"Gute – gross. Nach der Mengenangabe «alles» wird das Adjektiv wie ein Nomen gebraucht (G 4)."},
+    {"t":"Wochentag","q":"Der letzte ___ittwoch war kalt und regnerisch.","a":"Mittwoch – gross. Wochentage sind Nomen (G 2). Klein bleibt nur das Adverb: mittwochs."},
     {"t":"Risiken","q":"___lles Leben auf der Erde unterliegt Risiken.","a":"Alles – Satzanfang wird immer grossgeschrieben."},
     {"t":"Risiken","q":"Paradoxerweise muss der Mensch das ___isiko suchen, um Unsicherheit in Sicherheit zu verwandeln.","a":"Risiko – Nomen (abstrakter Begriff), deshalb gross (G 2)."},
     {"t":"Risiken","q":"Er fürchtet sich vor ___tomkraftwerken statt vor Sonnenbrand.","a":"Atomkraftwerken – Nomen, deshalb gross (G 2)."},
