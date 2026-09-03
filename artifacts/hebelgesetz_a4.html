@@ -59,6 +59,74 @@ body{
 .noprint ul{margin:6px 0 0 16px;}
 .noprint li{margin-bottom:3px;}
 
+/* ══ IDEEN AUS DEM HAUSHALT (wird nicht gedruckt) ══ */
+.ideen-box .np-lead{margin-top:4px;}
+.ideen{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));
+  gap:12px;
+  margin-top:12px;
+}
+.idee{
+  border:1px solid var(--rule);
+  border-top:3px solid var(--accent);
+  background:#FCFCFB;
+  padding:10px 12px 11px;
+  font-size:11.5px;
+  line-height:1.5;
+  color:var(--ink-soft);
+  min-width:0;
+}
+.idee h4{
+  font-size:13px;font-weight:700;color:var(--ink);
+  line-height:1.25;letter-spacing:-.01em;margin-bottom:7px;
+}
+.idee h4 .art{
+  display:block;margin-top:3px;
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+}
+.idee .was{margin-bottom:9px;}
+.idee strong{color:var(--ink);font-weight:600;}
+.idee .rechnung{
+  border:1px solid rgba(14,107,114,.28);
+  background:var(--accent-light);
+  padding:8px 9px;margin-bottom:9px;
+  font-family:var(--font-mono);font-size:10.5px;line-height:1.5;
+  color:var(--ink);overflow-wrap:break-word;
+}
+.idee .rechnung p{margin-bottom:5px;}
+.idee .rechnung p:last-child{margin-bottom:0;}
+.idee .rechnung em{font-family:var(--font-body);font-size:10.5px;color:var(--ink-soft);}
+.ideen .antwort{
+  border:none;border-top:1.5px solid var(--ink);
+  padding:7px 0 0;margin-bottom:8px;
+  font-size:11.5px;line-height:1.5;color:var(--ink-soft);
+}
+.idee .messen{
+  font-size:10.5px;line-height:1.45;color:var(--ink-mute);
+}
+.idee .korrektur{
+  margin-top:8px;padding-top:6px;
+  border-top:1px dotted var(--rule);
+  font-size:10px;line-height:1.45;color:var(--ink-mute);
+}
+.idee .korrektur strong{color:var(--ink-mute);font-weight:600;}
+
+/* Trennung: hier hören die Hinweise auf, hier beginnt das Blatt */
+.blatt-marke{
+  width:210mm;max-width:100%;
+  background:none;border:none;padding:0;
+  display:flex;align-items:center;gap:10px;
+  margin-top:4px;
+}
+.blatt-marke .bm-line{flex:1 1 auto;height:0;border-top:2px dashed var(--ink);opacity:.55;}
+.blatt-marke .bm-text{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:600;color:var(--ink);
+  white-space:nowrap;
+}
+
 /* ══ DAS BLATT ══ */
 .sheet{
   width:210mm;
@@ -188,6 +256,9 @@ body{
   body{padding:12px 8px 32px;}
   .sheet{width:100%;min-height:0;padding:14px;font-size:11.5px;}
   .noprint{width:100%;}
+  .ideen{grid-template-columns:1fr;gap:10px;}
+  .blatt-marke{width:100%;gap:7px;}
+  .blatt-marke .bm-text{white-space:normal;font-size:8.5px;letter-spacing:.1em;}
   .kopf h1{font-size:19px;}
   .bkopf{flex-direction:column;gap:2px;}
   .bkopf .btitel{font-size:14px;}
@@ -239,6 +310,162 @@ body{
     <li>Ist eine Kraft unklar, darfst du sie laut Auftrag <b>schätzen</b> &mdash; schreib dann kurz dazu, wie du geschätzt hast.</li>
     <li>Drucken: Ctrl+P, A4 hochformat, Skalierung 100 %, Hintergrundgrafiken einschalten. Das Blatt ist auf <b>eine</b> Seite ausgelegt.</li>
   </ul>
+</div>
+
+<!-- ══════════ IDEEN — wird nicht gedruckt ══════════ -->
+<div class="noprint ideen-box">
+  <span class="np-title">Nicht drucken &middot; Auswahlliste</span>
+  <b>F&uuml;nf Ideen aus dem Haushalt &mdash; such dir zwei aus.</b>
+  <div class="np-lead">Diese vier Beispiele werden <b>nicht mitgedruckt</b>; sie stehen nur hier zum Aussuchen. Die zwei, die du nimmst, tr&auml;gst du oben ins Blatt ein &mdash; mit deiner eigenen Skizze von Hand und mit den Massen, die du zuhause an deinem eigenen Gegenstand nachgemessen hast. Die Zahlen unten sind Muster, damit du den Rechenweg vor dir hast.</div>
+
+  <div class="ideen">
+
+    <div class="idee">
+      <h4>Nussknacker (Zangen-Nussknacker) <span class="art">einseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p class="was">Der metallene Zangen-Nussknacker aus der Besteckschublade, der um die Weihnachtszeit bei den Baumn&uuml;ssen liegt. Der <strong>Drehpunkt</strong> ist das Gelenk (der Niet) ganz hinten am geschlossenen Ende. Die <strong>Last</strong> ist die Nuss, die dicht beim Gelenk in der geriffelten Mulde sitzt. Die <strong>Kraft</strong> ist die Hand ganz aussen an den Griffenden. Weil Last und Kraft auf derselben Seite des Drehpunkts liegen und die Last dazwischen sitzt, ist es ein einseitiger Hebel. Der Kraftarm ist viermal so lang wie der Lastarm &ndash; darum reicht eine bescheidene Handkraft f&uuml;r eine sehr grosse Kraft an der Nuss.</p>
+      <div class="rechnung">
+        <p><strong>Gegeben:</strong><br>
+        Lastarm (Gelenk bis Nuss) r<sub>1</sub> = 0,04 m<br>
+        Kraftarm (Gelenk bis Hand) r<sub>2</sub> = 0,16 m<br>
+        Knackkraft der Baumnuss F<sub>1</sub> = 300 N (Messungen im Schraubstock ergeben f&uuml;r Waln&uuml;sse im Mittel rund 300 N; einzelne N&uuml;sse geben schon bei 100 N nach, andere halten bis 500 N stand. Quelle: Ucke/Schlichting, &laquo;Physik zum Knacken&raquo;, Physik in unserer Zeit 6/2005)<br>
+        <strong>Gesucht:</strong> Handkraft F<sub>2</sub> und das Drehmoment M</p>
+        <p><strong>Formel (Hebelgesetz):</strong> F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></p>
+        <p><strong>Umstellung:</strong> F<sub>2</sub> = (F<sub>1</sub> &middot; r<sub>1</sub>) / r<sub>2</sub></p>
+        <p><strong>Einsetzen:</strong> F<sub>2</sub> = (300 N &middot; 0,04 m) / 0,16 m = 12 Nm / 0,16 m</p>
+        <p><strong>Ergebnis:</strong> F<sub>2</sub> = 75 N</p>
+        <p><strong>Drehmoment:</strong> M = F &middot; r = 300 N &middot; 0,04 m = <strong>12 Nm</strong> (auf der Kraftseite gleich gross: 75 N &middot; 0,16 m = 12 Nm)</p>
+      </div>
+      <p class="antwort"><strong>Antwort:</strong> Ich muss mit rund 75 N am Griff dr&uuml;cken &ndash; das entspricht dem Gewicht von etwa 7,6 kg &ndash; und erzeuge damit an der Nuss eine Kraft von 300 N. Der Hebel verst&auml;rkt meine Kraft um den Faktor 4, weil der Kraftarm viermal so lang ist wie der Lastarm. Auf beiden Seiten wirkt dasselbe Drehmoment von 12 Nm.</p>
+      <p class="messen">Nachmessen: (1) Gelenk bis Mitte der Nussmulde = Lastarm r<sub>1</sub>, (2) Gelenk bis zu der Stelle, wo die Handfl&auml;che tats&auml;chlich dr&uuml;ckt = Kraftarm r<sub>2</sub>.</p>
+      <p class="korrektur"><strong>Gegengepr&uuml;ft:</strong> Die Hebelart und die ganze Rechnung stimmen (75 N &middot; 0,16 m = 12 Nm = 300 N &middot; 0,04 m; 75 N / 9,81 m/s&sup2; = 7,6 kg). Korrigiert wurde nur der Streubereich der Knackkraft: die gemessenen Werte sind Mittel 300 N bei einer Streuung von 100 N bis 500 N (Ucke/Schlichting, Physik in unserer Zeit 6/2005). Der Rechenwert 300 N bleibt unver&auml;ndert richtig.</p>
+    </div>
+
+    <div class="idee">
+      <h4>Kronkorken-Flaschen&ouml;ffner <span class="art">einseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p class="was">Der einfache Blech&ouml;ffner aus der K&uuml;chenschublade, mit dem eine Rivella- oder Bierflasche ge&ouml;ffnet wird. Der <strong>Drehpunkt</strong> ist die Nase des &Ouml;ffners, die <em>oben auf</em> dem Kronkorken aufliegt &ndash; und zwar auf der Seite, die von der Hand <em>weg</em> zeigt. Die <strong>Last</strong> ist der Haken, der auf der Handseite <em>unter</em> den Kronkorkenrand greift und den Deckelrand nach oben reisst. Die <strong>Kraft</strong> ist die Hand am hinteren Ende des &Ouml;ffners &ndash; sie zieht nach oben. Die Last liegt damit <em>zwischen</em> Drehpunkt und Kraft, beide auf derselben Seite des Drehpunkts: das ist das Erkennungszeichen des einseitigen Hebels. Merkregel: einseitiger Hebel = Last und Kraft auf derselben Seite, ihre Kr&auml;fte zeigen in entgegengesetzte Richtungen; zweiseitiger Hebel = Drehpunkt liegt dazwischen, beide Kr&auml;fte zeigen in dieselbe Richtung (wie bei der Wippe).</p>
+      <div class="rechnung">
+        <p><strong>Gegeben:</strong><br>
+        Lastarm (Auflagenase bis Haken, etwa ein Kronkorken-Durchmesser) r<sub>1</sub> = 0,03 m<br>
+        Kraftarm (Auflagenase bis Hand am &Ouml;ffnerende) r<sub>2</sub> = 0,12 m<br>
+        Kraft zum Aufbiegen des Kronkorkens F<sub>1</sub> = 250 N (<em>gesch&auml;tzt</em> &ndash; f&uuml;r Kronkorken sind keine Messwerte greifbar; der Auftrag erlaubt Sch&auml;tzungen)<br>
+        <strong>Gesucht:</strong> Handkraft F<sub>2</sub> und das Drehmoment M</p>
+        <p><strong>Formel (Hebelgesetz):</strong> F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></p>
+        <p><strong>Umstellung:</strong> F<sub>2</sub> = (F<sub>1</sub> &middot; r<sub>1</sub>) / r<sub>2</sub></p>
+        <p><strong>Einsetzen:</strong> F<sub>2</sub> = (250 N &middot; 0,03 m) / 0,12 m = 7,5 Nm / 0,12 m</p>
+        <p><strong>Ergebnis:</strong> F<sub>2</sub> = 62,5 N &asymp; rund 63 N</p>
+        <p><strong>Drehmoment:</strong> M = F &middot; r = 250 N &middot; 0,03 m = <strong>7,5 Nm</strong> (auf der Kraftseite gleich gross: 62,5 N &middot; 0,12 m = 7,5 Nm)</p>
+      </div>
+      <p class="antwort"><strong>Antwort:</strong> Mit rund 63 N Handkraft &ndash; also gut 6 kg Gewichtskraft, das schafft jede Hand locker &ndash; reisse ich den Kronkorken mit 250 N auf. Der &Ouml;ffner vervierfacht meine Kraft, weil der Kraftarm viermal so lang ist wie der Lastarm. W&auml;re der &Ouml;ffner nur halb so lang (r<sub>2</sub> = 0,06 m), br&auml;uchte ich mit 125 N schon die doppelte Kraft.</p>
+      <p class="messen">Nachmessen: (1) von der Auflagenase bis zum Haken = Lastarm r<sub>1</sub>, (2) von der Auflagenase bis zur Mitte des Handgriffs = Kraftarm r<sub>2</sub>.</p>
+      <p class="korrektur"><strong>Gegengepr&uuml;ft:</strong> Hier war die Hebelart falsch. Der Kapselheber ist ein <strong>einseitiger</strong> Hebel, nicht ein zweiseitiger &ndash; der Kronkorken (Last) liegt zwischen dem Auflagepunkt (Drehpunkt) und der Hand, also alles auf derselben Seite. Falsch beschrieben war auch die Geometrie: der Haken greift auf der Handseite unter den Rand, und man zieht den Griff nach oben. Die Zahlen waren alle richtig und bleiben unver&auml;ndert; nur 62,5 N wurde auf rund 63 N gerundet, weil die Ausgangskraft gesch&auml;tzt ist.</p>
+    </div>
+
+    <div class="idee">
+      <h4>Grill- bzw. Salatzange <span class="art">einseitiger Hebel &middot; Kraftarm k&uuml;rzer als Lastarm</span></h4>
+      <p class="was">Die federnde Edelstahlzange, mit der man R&ouml;sti wendet oder Salat sch&ouml;pft. Der <strong>Drehpunkt</strong> ist der gebogene Federb&uuml;gel am hinteren Ende, wo die beiden Schenkel zusammenh&auml;ngen. Die <strong>Kraft</strong> ist die Hand, die etwa im vorderen Drittel zupackt. Die <strong>Last</strong> ist die Klemmkraft ganz vorne an den Zangenspitzen. Auch hier liegen Kraft und Last auf derselben Seite, also einseitiger Hebel &ndash; aber hier liegt die <em>Kraft</em> zwischen Drehpunkt und Last. Der Kraftarm ist damit k&uuml;rzer als der Lastarm, und die Zange verkleinert meine Kraft, statt sie zu verst&auml;rken. Der Gewinn liegt daf&uuml;r im Weg: eine kleine Handbewegung &ouml;ffnet die Spitzen weit.</p>
+      <div class="rechnung">
+        <p><strong>Gegeben:</strong><br>
+        Kraftarm (Federb&uuml;gel bis Hand) r<sub>1</sub> = 0,08 m<br>
+        Lastarm (Federb&uuml;gel bis Zangenspitze) r<sub>2</sub> = 0,24 m<br>
+        Masse des R&ouml;stist&uuml;cks m = 0,30 kg, g = 9,81 m/s&sup2;<br>
+        <strong>Gesucht:</strong> n&ouml;tige Handkraft F<sub>1</sub></p>
+        <p><strong>Schritt 1 &ndash; Gewichtskraft:</strong> F<sub>G</sub> = m &middot; g = 0,30 kg &middot; 9,81 m/s&sup2; = 2,94 N</p>
+        <p><strong>Schritt 2 &ndash; Klemmkraft:</strong> Damit das St&uuml;ck durch Reibung nicht herausrutscht, muss ich es rund dreimal so stark klemmen, wie es wiegt (<em>gesch&auml;tzt</em>):<br>
+        F<sub>2</sub> = 3 &middot; 2,94 N = 8,82 N</p>
+        <p><strong>Formel (Hebelgesetz):</strong> F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></p>
+        <p><strong>Umstellung:</strong> F<sub>1</sub> = (F<sub>2</sub> &middot; r<sub>2</sub>) / r<sub>1</sub></p>
+        <p><strong>Einsetzen:</strong> F<sub>1</sub> = (8,82 N &middot; 0,24 m) / 0,08 m = 2,12 Nm / 0,08 m</p>
+        <p><strong>Ergebnis:</strong> F<sub>1</sub> = 26,5 N</p>
+        <p><strong>Drehmoment:</strong> M = F &middot; r = 8,82 N &middot; 0,24 m = <strong>2,12 Nm</strong> (auf der Kraftseite gleich gross: 26,5 N &middot; 0,08 m = 2,12 Nm)</p>
+      </div>
+      <p class="antwort"><strong>Antwort:</strong> Ich muss mit etwa 26,5 N zudr&uuml;cken, damit vorne an der Spitze noch 8,82 N Klemmkraft ankommen &ndash; also dreimal so viel Kraft, wie an der Last wirkt. Das ist der umgekehrte Fall zum Nussknacker: Weil der Kraftarm k&uuml;rzer ist als der Lastarm, verliere ich Kraft und gewinne daf&uuml;r Weg und Feingef&uuml;hl. Genau darum greift man instinktiv weiter vorne, wenn etwas Schweres in der Zange ist.</p>
+      <p class="messen">Nachmessen: (1) Federb&uuml;gel bis zur Stelle, wo Daumen und Finger dr&uuml;cken = Kraftarm r<sub>1</sub>, (2) Federb&uuml;gel bis zur Zangenspitze = Lastarm r<sub>2</sub>.</p>
+      <p class="korrektur"><strong>Gegengepr&uuml;ft:</strong> Kein Fehler gefunden. Hebelart richtig, Rechnung nachgerechnet (0,30 &middot; 9,81 = 2,94 N; 3 &middot; 2,94 = 8,82 N; 8,82 &middot; 0,24 / 0,08 = 26,5 N). Erg&auml;nzt wurde nur die Gegenprobe auf der Kraftseite.</p>
+    </div>
+
+    <div class="idee">
+      <h4>Haushaltsschere <span class="art">zweiseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p class="was">Die normale Schere aus der K&uuml;chenschublade. Der <strong>Drehpunkt</strong> ist die Schraube in der Mitte. Die <strong>Kraft</strong> ist die Hand am Griff, die <strong>Last</strong> ist das Material zwischen den Schneiden. Anders als bei den drei Beispielen oben liegt der Drehpunkt hier <strong>zwischen</strong> Kraft und Last &ndash; das ist der <strong>zweiseitige</strong> Hebel. Dieselbe Bauart haben Kombizange, Wippe und Nagelschere.</p>
+      <div class="rechnung">
+        <p><strong>Gegeben:</strong><br>
+        Kraftarm (Schraube bis Handmitte am Griff) r<sub>1</sub> = 0,09 m<br>
+        Lastarm (Schraube bis Schneidstelle nahe am Gelenk) r<sub>2</sub> = 0,03 m<br>
+        Handkraft F<sub>1</sub> = 40 N (<em>gesch&auml;tzt</em> &ndash; etwa das Gewicht von 4 kg, wie man es beim Zudr&uuml;cken sp&uuml;rt)<br>
+        <strong>Gesucht:</strong> Schneidkraft F<sub>2</sub></p>
+        <p><strong>Formel (Hebelgesetz):</strong> F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></p>
+        <p><strong>Umstellung:</strong> F<sub>2</sub> = (F<sub>1</sub> &middot; r<sub>1</sub>) / r<sub>2</sub></p>
+        <p><strong>Einsetzen:</strong> F<sub>2</sub> = (40 N &middot; 0,09 m) / 0,03 m = 3,6 Nm / 0,03 m</p>
+        <p><strong>Ergebnis:</strong> F<sub>2</sub> = <strong>120 N</strong> &nbsp;(das entspricht rund 12,2 kg)</p>
+        <p><strong>Drehmoment:</strong> M = F<sub>1</sub> &middot; r<sub>1</sub> = 40 N &middot; 0,09 m = <strong>3,6 Nm</strong><br>
+        (auf der Lastseite gleich gross: 120 N &middot; 0,03 m = 3,6 Nm)</p>
+        <p><strong>Gegenprobe &ndash; vorne an der Spitze geschnitten (r<sub>2</sub> = 0,08 m):</strong><br>
+        F<sub>2</sub> = 3,6 Nm / 0,08 m = <strong>45 N</strong></p>
+      </div>
+      <p class="antwort"><strong>Antwort:</strong> Mit 40 N Handkraft schneide ich nahe am Gelenk mit 120 N &ndash; dreimal so viel, wie ich aufwende. Ganz vorne an der Spitze sind es nur noch 45 N. Darum schneidet man Dickes hinten beim Gelenk und Feines vorne an der Spitze: hinten hat man die Kraft, vorne die Genauigkeit.</p>
+      <p class="messen">Nachmessen: (1) Mitte der Schraube bis zur Mitte deiner Hand am Griff = r<sub>1</sub>, (2) Mitte der Schraube bis zu der Stelle auf der Schneide, an der das Material liegt = r<sub>2</sub>. Beide Male vom selben Punkt aus messen.</p>
+    </div>
+    <div class="idee">
+      <h4>T&uuml;rklinke (Zimmert&uuml;re) <span class="art">reines Drehmoment &ndash; nur eine Kraft</span></h4>
+      <p class="was">Die T&uuml;rklinke jedes Zimmers. Die <strong>Drehachse</strong> ist der Vierkantstift, der im Schloss steckt &ndash; die Klinke dreht sich genau um diesen Punkt. Die <strong>Kraft</strong> ist die Hand, die am &auml;usseren Ende des Griffs nach unten dr&uuml;ckt. Hier gibt es keine zweite Kraft an einem zweiten Hebelarm, die man ausrechnen k&ouml;nnte: Ich erzeuge einfach ein Drehmoment, das die Schlossnuss verdrehen und die Fallenfeder zusammendr&uuml;cken muss. Es gilt darum nur M = F &middot; r &ndash; das ist der reine Drehmoment-Fall ohne Hebelgesetz.</p>
+      <div class="rechnung">
+        <p><strong>Gegeben:</strong><br>
+        Hebelarm (Drehachse bis Handmitte am Griffende) r = 0,11 m<br>
+        Handkraft F = 22 N (<em>gesch&auml;tzt</em> &ndash; etwa das Gewicht von 2,2 kg, das man beim Runterdr&uuml;cken sp&uuml;rt. Zum Vergleich: f&uuml;r barrierefreie T&uuml;ren d&uuml;rfen nach DIN 18040 bzw. DIN EN 12217 Klasse 3 h&ouml;chstens 25 N und 2,5 Nm n&ouml;tig sein &ndash; die Sch&auml;tzung liegt also knapp unter dem zul&auml;ssigen Maximum, ist damit ein realistischer oberer Wert)<br>
+        <strong>Gesucht:</strong> Drehmoment M, und die Kraft F<sub>2</sub> bei halbem Hebelarm</p>
+        <p><strong>Formel:</strong> M = F &middot; r</p>
+        <p><strong>Einsetzen:</strong> M = 22 N &middot; 0,11 m</p>
+        <p><strong>Ergebnis:</strong> M = <strong>2,42 Nm</strong></p>
+        <p><strong>Gegenprobe &ndash; nahe an der Achse angefasst (r<sub>2</sub> = 0,05 m):</strong><br>
+        Umstellung: F<sub>2</sub> = M / r<sub>2</sub><br>
+        Einsetzen: F<sub>2</sub> = 2,42 Nm / 0,05 m = <strong>48,4 N</strong></p>
+      </div>
+      <p class="antwort"><strong>Antwort:</strong> Um die T&uuml;re zu &ouml;ffnen, braucht das Schloss ein Drehmoment von rund 2,42 Nm. Fasse ich die Klinke ganz aussen bei 0,11 m an, gen&uuml;gen daf&uuml;r 22 N. Greife ich direkt bei der Achse auf 0,05 m, brauche ich f&uuml;r dasselbe Drehmoment 48,4 N &ndash; mehr als das Doppelte. Das Drehmoment bleibt gleich, nur die n&ouml;tige Kraft &auml;ndert sich mit dem Hebelarm. Genau darum sind T&uuml;rklinken lang und keine Kn&auml;ufe.</p>
+      <p class="messen">Nachmessen: (1) Mitte der Drehachse (Vierkantstift) bis zum &auml;usseren Ende des Griffs = Hebelarm r, (2) Mitte der Drehachse bis zu der Stelle nahe am Schild, an der man zum Vergleich anfasst = r<sub>2</sub>.</p>
+      <p class="korrektur"><strong>Gegengepr&uuml;ft:</strong> Die Rechnung stimmt (22 N &middot; 0,11 m = 2,42 Nm; 2,42 Nm / 0,05 m = 48,4 N). Erg&auml;nzt wurde nur der Beleg f&uuml;r die gesch&auml;tzten 22 N: die Norm f&uuml;r barrierefreie T&uuml;ren begrenzt die Bedienkraft am T&uuml;rdr&uuml;cker auf 25 N und das Bet&auml;tigungsmoment auf 2,5 Nm. Die Zahl selbst bleibt unver&auml;ndert.</p>
+    </div>
+
+  </div>
+</div>
+
+<!--
+GEGENPRUEFUNG (jede Zeile nachgerechnet)
+
+Beispiel 1 Nussknacker: Hebelart RICHTIG (einseitig, Last zwischen Drehpunkt und
+Kraft). Rechnung richtig: 300*0,04/0,16 = 75 N; M = 12 Nm beidseitig; 75/9,81 = 7,6 kg.
+KORRIGIERT: Streubereich der Knackkraft war erfunden (150-410 N). Messwerte:
+Mittel 300 N, Streuung 100-500 N.
+Quelle: Ucke/Schlichting, "Physik zum Knacken", Phys. Unserer Zeit 6/2005 (36) 286-288,
+https://www.uni-muenster.de/imperia/md/content/fachbereich_physik/didaktik_physik/publikationen/32_nussknacker.pdf
+
+Beispiel 2 Flaschenoeffner: HEBELART WAR FALSCH. Kapselheber = EINSEITIGER Hebel
+(Last/Kronkorken zwischen Drehpunkt und Hand), nicht zweiseitig. Geometrie und
+Kraftrichtung ebenfalls falsch beschrieben (Haken auf der Handseite, Griff wird
+hochgezogen). Merkregel stand verkehrt: verschiedene Seiten -> gleiche Richtung.
+Zahlen waren alle richtig: 250*0,03/0,12 = 62,5 N; M = 7,5 Nm; halber Kraftarm -> 125 N.
+62,5 N auf rund 63 N gerundet, weil 250 N eine Schaetzung ist.
+Quellen: https://www.schulmodell.eu/component/content/article.html?id=530%3Ahebel
+https://spark.iop.org/forces-acting-levers
+
+Beispiel 3 Grillzange: KEIN FEHLER. Hebelart richtig (einseitig, Kraft zwischen
+Drehpunkt und Last, Kraft wird verkleinert, Weg gewonnen). 0,30*9,81 = 2,943 -> 2,94 N;
+3*2,94 = 8,82 N; 8,82*0,24 = 2,1168 -> 2,12 Nm; 2,1168/0,08 = 26,46 -> 26,5 N.
+Nur die Gegenprobe 26,5*0,08 = 2,12 Nm ergaenzt, damit es wie Beispiel 1 aussieht.
+
+Beispiel 4 Tuerklinke: Rechnung KEIN FEHLER (2,42 Nm; 48,4 N; Faktor 2,2;
+22/9,81 = 2,2 kg). Nur der Beleg fuer die geschaetzten 22 N ergaenzt.
+Quelle: https://eph-barrierefreiheit.de/planungshilfe/tueren/ (DIN 18040 /
+DIN EN 12217 Klasse 3: max. 25 N bzw. 2,5 Nm am Tuerdruecker)
+
+Durchgehend geprueft: g = 9,81 m/s2 ueberall, m -> F immer als F = m*g (nicht
+umgekehrt), Einheiten N * m = Nm korrekt, Schweizer Schreibweise (kein scharfes s),
+Komma als Dezimaltrennzeichen.
+-->
+
+<!-- ══════════ TRENNUNG — ab hier das Blatt ══════════ -->
+<div class="noprint blatt-marke">
+  <span class="bm-line"></span>
+  <span class="bm-text">Ab hier: das Blatt, das gedruckt wird</span>
+  <span class="bm-line"></span>
 </div>
 
 <!-- ══════════ A4-BLATT ══════════ -->
