@@ -826,6 +826,7 @@ const PAGES = [
   { t: "Krankenkasse & Unfallversicherung — Lernpaket", f: "artifacts/krankenkasse_unfall_lernpaket.html", dt: "2026-08-10", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "ABU pack on Swiss health & accident insurance: theory, four calculators, flashcards, quiz and study plan.", m: "aug ’26" },
   { t: "AuS 1 & 2 · PSA · Arbeitsmethoden — Lernpaket", f: "artifacts/aus_psa_lernpaket.html", dt: "2026-08-27", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss electrical safety: live working levels 1 and 2, personal protective equipment, the three working methods — with an ESTI protection-level finder, 29 flashcards and a quiz.", m: "aug ’26" },
   { t: "Telekommunikation — Grundlagen", f: "artifacts/telekom_lernpaket.html", dt: "2026-09-01", cat: "learning", lang: "de", kind: "study", pa: "#2c5c8c", d: "All 75 original exercises from the teacher’s two worksheets — chapters 1 (system overview) and 2 (telephony fundamentals), pages 1.1–2.7 — each answered and adversarially re-checked, with 44 verified, 26 corrected and 5 flagged as disputed. 61 terms, 79 flashcards, 35 quiz questions.", m: "sep ’26" },
+  { t: "Elektrotechnik & Physik — Lernpaket", f: "artifacts/moser_et_physik_lernpaket.html", dt: "2026-09-03", cat: "learning", lang: "de", kind: "study", pa: "#2a7049", d: "Moser’s major test: meter-range extension with series resistor and shunt, voltage- and current-error measuring circuits, Wheatstone bridge with Thévenin equivalent, heat energy and thermal expansion, torque and levers — four calculators showing every step, 25 worked examples, 57 terms, 56 flashcards, 24 quiz questions.", m: "sep ’26" },
   { t: "Arbeitsauftrag Hebelgesetz — A4", f: "artifacts/hebelgesetz_a4.html", dt: "2026-09-02", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-ready A4 hand-in sheet for the graded torque/lever assignment: formula box, two worked examples (wrench at 40 Nm, wheelbarrow at 60 kg) and two blank frames for hand-drawn sketches.", m: "sep ’26" },
   { t: "Gross- und Kleinschreibung — Lernpaket", f: "artifacts/rechtschreibung_lernpaket.html", dt: "2026-09-01", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss German capitalisation rules from Handbuch Kompetenzen S.120 and Lädrach’s Übungsdossier — all 14 rule codes (G1–G7, E2.1–E2.3, E4.1–E4.4) with his own example sentences, 34 terms, 54 flashcards and a 25-question quiz.", m: "sep ’26" },
   { t: "Elternabend: Markt & Konsum", f: "artifacts/elternabend.html", dt: "2026-04-04", cat: "learning", lang: "de", kind: "slides", pa: "#e8a838", d: "Slideshow for a parents’ evening: Maslow, Wirtschaftskreislauf and BIP explained.", m: "apr ’26" },
@@ -900,7 +901,7 @@ CAT_ORDER.forEach(cat => {
     /* dt is the day-accurate date (may be absent); month drives the timeframe
        filter. m stays the human label printed on the card. */
     a.dataset.dt = p.dt || '';
-    a.dataset.month = p.dt ? p.dt.slice(0, 7) : '';
+    a.dataset.month = monthKeyOf(p);
     a.dataset.search = (p.t + ' ' + p.d + ' ' + CATS[p.cat].label + ' ' + p.kind + ' ' + p.lang + ' ' + p.m).toLowerCase();
     a.style.setProperty('--pa', p.pa);
     a.style.setProperty('--cat', CATS[p.cat].color);
@@ -1007,10 +1008,22 @@ let range = '';         // '' = all time, else 'YYYY-MM'
    instead of needing a new chip row every few weeks */
 const rangeEl = document.getElementById('range');
 const rangePick = document.getElementById('rangepick');
+const MON3 = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06',
+               jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+/* the four entries without a provable dt still print a month on the card
+   (m:, marked with a leading ~). Filtering by that month must find them,
+   otherwise the card says one thing and the filter does another. They keep
+   no dt, so they still sort to the end in both directions. */
+function monthKeyOf(p) {
+  if (p.dt) return p.dt.slice(0, 7);
+  const mm = /^([a-z]{3})\D*(\d{2})$/i.exec(String(p.m || '').trim());
+  const num = mm && MON3[mm[1].toLowerCase()];
+  return num ? '20' + mm[2] + '-' + num : '';
+}
 const monthCount = new Map();
 PAGES.forEach(p => {
-  if (!p.dt) return;
-  const k = p.dt.slice(0, 7);
+  const k = monthKeyOf(p);
+  if (!k) return;
   monthCount.set(k, (monthCount.get(k) || 0) + 1);
 });
 const MONTHS = [...monthCount.keys()].sort().reverse();
