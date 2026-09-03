@@ -13,6 +13,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
+  /* the page has one committed dark look — telling the UA that keeps native
+     widgets (select popup, scrollbars, focus rings) dark in a light OS too */
+  color-scheme: dark;
   --bg: #0a0a0b;
   --surface: #101013;
   --surface-2: #16161a;
@@ -136,8 +139,20 @@ header {
 .dice-btn:hover { color: var(--lime); border-color: rgba(212,255,71,0.4); transform: rotate(-14deg) scale(1.08); }
 .dice-btn svg { width: 16px; height: 16px; }
 
+/* visually gone, still readable by screen readers — used for the live
+   result line on small screens and for the long form of short labels */
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+/* the count is the page's aria-live result line, so it is hidden visually
+   rather than removed from the accessibility tree */
 @media (max-width: 640px) {
-  .head-count { display: none; }
+  .head-count {
+    position: absolute; width: 1px; height: 1px;
+    margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
 }
 
 /* ── hero ──────────────────────────────────────────── */
@@ -255,7 +270,10 @@ header {
 
 .chips {
   display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: none;
-  -webkit-overflow-scrolling: touch; flex: 1; min-width: 0; padding: 2px;
+  /* wide basis on purpose: rather than squeezing the category chips into a
+     scroller once sort + timeframe joined the bar, the toolbar wraps to a
+     second row and every chip stays visible */
+  -webkit-overflow-scrolling: touch; flex: 1 1 560px; min-width: 0; padding: 2px;
   mask-image: linear-gradient(90deg, #000 92%, transparent);
   -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
 }
@@ -273,12 +291,73 @@ header {
 .chip .n { opacity: 0.55; }
 .chip:hover { color: var(--ink); border-color: var(--cc, var(--line-hi)); transform: translateY(-1px); }
 .chip:active { transform: scale(0.94); }
-.chip.on {
+.chip.on,
+.chip[aria-pressed="true"] {
   color: #000; background: var(--cc, var(--ink)); border-color: var(--cc, var(--ink));
   font-weight: 700;
 }
 .chip.on i { background: #000; }
 .chip.on .n { opacity: 0.7; }
+
+/* keyboard focus — the toolbar had none before the sort group arrived */
+.chip:focus-visible,
+.dice-btn:focus-visible,
+.empty button:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--lime); outline-offset: 2px;
+}
+.card:focus-visible { border-radius: 16px; }
+
+/* ── sort + timeframe ──────────────────────────────────
+   Both are built out of the chip vocabulary already on this bar: mono
+   type, 99px pills, the same borders. The sort group is three chips in a
+   ring; the timeframe is a native <select> wearing the same ring, so it
+   keeps its own keyboard behaviour and scales as months pile up. */
+.tb-tools {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-wrap: wrap; flex-shrink: 0; max-width: 100%;
+}
+
+.seg {
+  display: inline-flex; align-items: center; gap: 3px; flex-wrap: wrap;
+  border: 1px solid var(--line-hi); border-radius: 99px;
+  padding: 3px 4px 3px 0; max-width: 100%;
+}
+.seg-lbl, .pick-lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.13em;
+  /* --muted, not the --faint used for decorative captions: these two name
+     the controls next to them and have to stay readable */
+  text-transform: uppercase; color: var(--muted);
+  padding-left: 0.7rem; padding-right: 0.1rem; user-select: none;
+}
+.seg .chip { border-color: transparent; }
+.seg .chip:hover { border-color: var(--line-hi); }
+.seg .chip[aria-pressed="true"] { border-color: var(--ink); }
+
+.pick {
+  display: inline-flex; align-items: center; gap: 0.15rem;
+  border: 1px solid var(--line-hi); border-radius: 99px;
+  padding: 3px 0.35rem 3px 0; cursor: pointer;
+  transition: border-color 0.16s, background 0.16s;
+}
+.pick:hover { border-color: var(--line-hi); }
+.pick:focus-within { border-color: rgba(212,255,71,0.55); box-shadow: 0 0 0 3px rgba(212,255,71,0.09); }
+.pick-sel {
+  appearance: none; -webkit-appearance: none;
+  background: transparent; border: 0; outline: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
+  color: var(--muted); cursor: pointer;
+  padding: 0.42rem 1.25rem 0.42rem 0.5rem; border-radius: 99px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b95' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.4rem center; background-size: 9px;
+  transition: color 0.16s;
+}
+.pick-sel:hover { color: var(--ink); }
+.pick-sel option { background: var(--surface-2); color: var(--ink); }
+/* a chosen month lights the pill the way an active chip does */
+.pick.on { border-color: var(--lime); }
+.pick.on .pick-sel { color: var(--lime); font-weight: 700; }
+.pick.on .pick-lbl { color: var(--lime); opacity: 0.75; }
 
 .search-box { position: relative; flex-shrink: 0; width: 240px; }
 .search-box svg {
@@ -306,16 +385,27 @@ header {
 }
 
 @media (max-width: 760px) {
-  /* column + wrap would let .chips size to its content and push the page wide;
-     nowrap + explicit width keeps it scrolling inside the toolbar instead */
-  .toolbar { flex-direction: column-reverse; align-items: stretch; gap: 0.55rem; flex-wrap: nowrap; }
-  .chips { width: 100%; flex: 0 0 auto; }
-  .search-box { width: 100%; }
+  /* Four controls would stack four rows deep in a sticky bar, so the phone
+     layout is an explicit grid instead: search + timeframe share the top
+     line, the sort group takes the second, and the category chips keep the
+     bottom line to themselves — still scrolling sideways inside the bar
+     rather than pushing the page wide. */
+  .toolbar {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; gap: 0.5rem;
+  }
+  .tb-tools { display: contents; }
+  .search-box { grid-column: 1; grid-row: 1; width: 100%; }
   .search-box .key { display: none; }
+  .pick { grid-column: 2; grid-row: 1; }
+  .seg { grid-column: 1 / -1; grid-row: 2; padding-left: 4px; }
+  .seg-lbl { display: none; }   /* the three buttons caption themselves */
+  .chips { grid-column: 1 / -1; grid-row: 3; width: 100%; }
 }
 @media (pointer: coarse) {
   .chip { padding: 0.6rem 0.95rem; font-size: 0.66rem; }
   #search { padding-top: 0.68rem; padding-bottom: 0.68rem; }
+  .pick-sel { padding-top: 0.6rem; padding-bottom: 0.6rem; font-size: 0.66rem; }
 }
 
 /* ── content ───────────────────────────────────────── */
@@ -389,6 +479,18 @@ main { padding: 0 clamp(1.1rem, 4vw, 2.5rem) 4rem; max-width: 1460px; margin: 0 
   gap: 13px;
 }
 @media (max-width: 560px) { .grid { grid-template-columns: 1fr; gap: 11px; } }
+
+/* date view — one flat list, so the category headline is gone. Each card
+   keeps its category colour as a spine on the left instead. */
+.grid.flat .card { box-shadow: inset 3px 0 0 color-mix(in srgb, var(--cat) 55%, transparent); }
+.grid.flat .card:hover { box-shadow: inset 3px 0 0 var(--cat), 0 14px 34px rgba(0,0,0,0.45); }
+/* the four pages the git history could not date: marked in the date list so
+   that sitting at the end reads as deliberate, not as a sorting glitch */
+.grid.flat .card[data-dt=""] .c-date { opacity: 0.75; }
+.grid.flat .card[data-dt=""] .c-date::before { content: '~ '; }
+.sec-head .sub {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--faint);
+}
 
 /* ── card ──────────────────────────────────────────── */
 .card {
@@ -534,7 +636,7 @@ footer {
 <header>
   <a class="brand" href="#" aria-label="dump — home">dump<span class="slash">/</span></a>
   <div class="head-meta">
-    <span class="head-count" id="head-count"></span>
+    <span class="head-count" id="head-count" role="status" aria-live="polite" aria-atomic="true"></span>
     <button class="dice-btn" id="dice" title="open something random" aria-label="open a random page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/></svg>
     </button>
@@ -555,7 +657,7 @@ footer {
     <span><b id="stat-count">—</b> pages</span>
     <span><b>5</b> categories</span>
     <span>est. <b>04.2026</b></span>
-    <span>updated <b>08.2026</b></span>
+    <span>updated <b>09.2026</b></span>
     <span>no cookies · no tracking · just files</span>
   </div>
   <div class="satellites">
@@ -594,14 +696,26 @@ footer {
   </div>
 </section>
 
-<nav class="toolbar" aria-label="filter projects">
-  <div class="chips" id="chips" role="tablist"></div>
+<nav class="toolbar" aria-label="filter and sort projects">
+  <div class="chips" id="chips" role="group" aria-label="filter by category"></div>
+
   <div class="search-box">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
     <input id="search" type="text" placeholder="search the dump…" autocomplete="off" spellcheck="false" aria-label="search projects">
     <span class="key">/</span>
   </div>
-</nav>
+  <div class="tb-tools">
+    <div class="seg" role="group" aria-label="sort order" id="sortseg">
+      <span class="seg-lbl" aria-hidden="true">sort</span>
+      <button type="button" class="chip" data-sort="cat" aria-pressed="true" aria-label="sort by category">category</button>
+      <button type="button" class="chip" data-sort="new" aria-pressed="false" aria-label="sort newest first">newest</button>
+      <button type="button" class="chip" data-sort="old" aria-pressed="false" aria-label="sort oldest first">oldest</button>
+    </div>
+    <label class="pick" id="rangepick">
+      <span class="pick-lbl">when</span>
+      <select class="pick-sel" id="range"></select>
+    </label>
+  </div></nav>
 
 <main>
   <a class="feature" href="artifacts/global-births-2025.html" target="_blank" rel="noopener" id="feature-card">
@@ -643,7 +757,7 @@ footer {
 
   <div class="empty" id="empty">
     <b>nothing in the dump matches.</b><br>
-    try another word or category<br>
+    try another word, category or month<br>
     <button id="empty-clear">reset filters</button>
   </div>
 </main>
@@ -692,49 +806,49 @@ const CATS = {
 
 const PAGES = [
   // research
-  { t: "The World’s 132M Births", f: "artifacts/global-births-2025.html", cat: "research", lang: "en", kind: "chart", pa: "#8fb2a0", d: "Voronoi treemap of 2025 births: 177 countries sized by share, flags and tooltips.", m: "aug ’26" },
-  { t: "Bloodline Atlas", f: "artifacts/bloodline.html", cat: "research", lang: "en", kind: "chart", pa: "#b8963a", d: "Interactive timeline of 33 European mass-death events plus birth-rate data since 1800.", m: "apr ’26" },
-  { t: "When Central Banks Go Broke", f: "artifacts/central-bank-map.html", cat: "research", lang: "en", kind: "chart", pa: "#f59e0b", d: "Canvas world map of central banks in loss or negative equity, filterable by severity.", m: "apr ’26" },
-  { t: "How Federal Reserve QE Works", f: "artifacts/fed_qe_explanation.html", cat: "research", lang: "en", kind: "article", pa: "#3498db", d: "Illustrated explainer of quantitative easing with process flow, timeline and charts.", m: "apr ’26" },
-  { t: "Aave Incident Brief", f: "artifacts/aave_incident_brief.html", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Terminal-styled incident brief on the April 2026 Aave crisis and its market fallout.", m: "apr ’26" },
-  { t: "Circle Insider Brief", f: "artifacts/circle_insider_brief.html", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Myth-vs-fact breakdown of Circle (CRCL) insider selling: Form 4s, lockups, three lenses.", m: "may ’26" },
-  { t: "Schweiz: Demografische Trends", f: "artifacts/swiss_trends_html.html", cat: "research", lang: "de", kind: "chart", pa: "#dc2626", d: "Tabbed dashboard on Swiss voter turnout, birth rates and governance metrics.", m: "apr ’26" },
-  { t: "The Demographic Time Bomb", f: "artifacts/switzerland_demographic_crisis.html", cat: "research", lang: "en", kind: "article", pa: "#c8373a", d: "Long-form illustrated essay on Switzerland’s aging crisis, pensions and scenarios.", m: "may ’26" },
-  { t: "The Shrinking Mind", f: "artifacts/the-shrinking-mind.html", cat: "research", lang: "en", kind: "article", pa: "#8a2418", d: "Long-form essay on nutrition and brain health — B12, omega-3 and iron studies.", m: "may ’26" },
-  { t: "Willpower Protocol", f: "artifacts/ego-depletion-guide.html", cat: "research", lang: "en", kind: "guide", pa: "#c2410c", d: "8-step wizard on ego depletion: recovery, evening blocks, fuel and a daily preflight.", m: "apr ’26" },
-  { t: "The Seed Phrase", f: "artifacts/seed_phrase_book.html", cat: "research", lang: "en", kind: "guide", pa: "#c8a84b", d: "Multi-chapter book on BIP39 seed phrases and key security, with text-to-speech.", m: "may ’26" },
+  { t: "The World’s 132M Births", f: "artifacts/global-births-2025.html", dt: "2026-08-06", cat: "research", lang: "en", kind: "chart", pa: "#8fb2a0", d: "Voronoi treemap of 2025 births: 177 countries sized by share, flags and tooltips.", m: "aug ’26" },
+  { t: "Bloodline Atlas", f: "artifacts/bloodline.html", dt: "2026-04-11", cat: "research", lang: "en", kind: "chart", pa: "#b8963a", d: "Interactive timeline of 33 European mass-death events plus birth-rate data since 1800.", m: "apr ’26" },
+  { t: "When Central Banks Go Broke", f: "artifacts/central-bank-map.html", dt: "2026-04-04", cat: "research", lang: "en", kind: "chart", pa: "#f59e0b", d: "Canvas world map of central banks in loss or negative equity, filterable by severity.", m: "apr ’26" },
+  { t: "How Federal Reserve QE Works", f: "artifacts/fed_qe_explanation.html", dt: "2026-04-04", cat: "research", lang: "en", kind: "article", pa: "#3498db", d: "Illustrated explainer of quantitative easing with process flow, timeline and charts.", m: "apr ’26" },
+  { t: "Aave Incident Brief", f: "artifacts/aave_incident_brief.html", dt: "2026-04-20", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Terminal-styled incident brief on the April 2026 Aave crisis and its market fallout.", m: "apr ’26" },
+  { t: "Circle Insider Brief", f: "artifacts/circle_insider_brief.html", dt: "2026-05-25", cat: "research", lang: "en", kind: "article", pa: "#4ade80", d: "Myth-vs-fact breakdown of Circle (CRCL) insider selling: Form 4s, lockups, three lenses.", m: "may ’26" },
+  { t: "Schweiz: Demografische Trends", f: "artifacts/swiss_trends_html.html", dt: "2026-04-04", cat: "research", lang: "de", kind: "chart", pa: "#dc2626", d: "Tabbed dashboard on Swiss voter turnout, birth rates and governance metrics.", m: "apr ’26" },
+  { t: "The Demographic Time Bomb", f: "artifacts/switzerland_demographic_crisis.html", dt: "2026-05-25", cat: "research", lang: "en", kind: "article", pa: "#c8373a", d: "Long-form illustrated essay on Switzerland’s aging crisis, pensions and scenarios.", m: "may ’26" },
+  { t: "The Shrinking Mind", f: "artifacts/the-shrinking-mind.html", dt: "2026-05-03", cat: "research", lang: "en", kind: "article", pa: "#8a2418", d: "Long-form essay on nutrition and brain health — B12, omega-3 and iron studies.", m: "may ’26" },
+  { t: "Willpower Protocol", f: "artifacts/ego-depletion-guide.html", dt: "2026-04-05", cat: "research", lang: "en", kind: "guide", pa: "#c2410c", d: "8-step wizard on ego depletion: recovery, evening blocks, fuel and a daily preflight.", m: "apr ’26" },
+  { t: "The Seed Phrase", f: "artifacts/seed_phrase_book.html", dt: "2026-05-15", cat: "research", lang: "en", kind: "guide", pa: "#c8a84b", d: "Multi-chapter book on BIP39 seed phrases and key security, with text-to-speech.", m: "may ’26" },
   // learning
-  { t: "Algebra — BZI Prüfungsvorbereitung", f: "artifacts/algebra_bzi.html", cat: "learning", lang: "de", kind: "study", pa: "#c5392c", d: "Exam-prep pack with tabbed chapters, rules, worked examples and practice problems.", m: "apr ’26" },
-  { t: "Der Kaufvertrag", f: "artifacts/Kaufvertrag_Komplett.html", cat: "learning", lang: "de", kind: "study", pa: "#8b8b95", d: "ABU study sheet on purchase contracts — overview plus tabbed process timeline.", m: "apr ’26" },
-  { t: "Kaufvertrag & Störungen — Lernpaket", f: "artifacts/kaufvertrag_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on contracts & breaches: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
-  { t: "Geld & Kauf — Lernpaket", f: "artifacts/geld_und_kauf_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on money & purchasing: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
-  { t: "NIN 2025 — Lernpaket", f: "artifacts/nin_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#f2a03d", d: "Swiss low-voltage installation standard SN 411000:2025 — legal hierarchy, protection concept, earthing systems, voltage-drop calculators, 26 flashcards and a five-minute quiz.", m: "aug ’26" },
-  { t: "Krankenkasse & Unfallversicherung — Lernpaket", f: "artifacts/krankenkasse_unfall_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "ABU pack on Swiss health & accident insurance: theory, four calculators, flashcards, quiz and study plan.", m: "aug ’26" },
-  { t: "AuS 1 & 2 · PSA · Arbeitsmethoden — Lernpaket", f: "artifacts/aus_psa_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss electrical safety: live working levels 1 and 2, personal protective equipment, the three working methods — with an ESTI protection-level finder, 29 flashcards and a quiz.", m: "aug ’26" },
-  { t: "Telekommunikation — Grundlagen", f: "artifacts/telekom_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#2c5c8c", d: "All 75 original exercises from the teacher’s two worksheets — chapters 1 (system overview) and 2 (telephony fundamentals), pages 1.1–2.7 — each answered and adversarially re-checked, with 44 verified, 26 corrected and 5 flagged as disputed. 61 terms, 79 flashcards, 35 quiz questions.", m: "sep ’26" },
-  { t: "Arbeitsauftrag Hebelgesetz — A4", f: "artifacts/hebelgesetz_a4.html", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-ready A4 hand-in sheet for the graded torque/lever assignment: formula box, two worked examples (wrench at 40 Nm, wheelbarrow at 60 kg) and two blank frames for hand-drawn sketches.", m: "sep ’26" },
-  { t: "Gross- und Kleinschreibung — Lernpaket", f: "artifacts/rechtschreibung_lernpaket.html", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss German capitalisation rules from Handbuch Kompetenzen S.120 and Lädrach’s Übungsdossier — all 14 rule codes (G1–G7, E2.1–E2.3, E4.1–E4.4) with his own example sentences, 34 terms, 54 flashcards and a 25-question quiz.", m: "sep ’26" },
-  { t: "Elternabend: Markt & Konsum", f: "artifacts/elternabend.html", cat: "learning", lang: "de", kind: "slides", pa: "#e8a838", d: "Slideshow for a parents’ evening: Maslow, Wirtschaftskreislauf and BIP explained.", m: "apr ’26" },
+  { t: "Algebra — BZI Prüfungsvorbereitung", f: "artifacts/algebra_bzi.html", dt: "2026-04-22", cat: "learning", lang: "de", kind: "study", pa: "#c5392c", d: "Exam-prep pack with tabbed chapters, rules, worked examples and practice problems.", m: "apr ’26" },
+  { t: "Der Kaufvertrag", f: "artifacts/Kaufvertrag_Komplett.html", dt: "2026-04-22", cat: "learning", lang: "de", kind: "study", pa: "#8b8b95", d: "ABU study sheet on purchase contracts — overview plus tabbed process timeline.", m: "apr ’26" },
+  { t: "Kaufvertrag & Störungen — Lernpaket", f: "artifacts/kaufvertrag_lernpaket.html", dt: "2026-04-29", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on contracts & breaches: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
+  { t: "Geld & Kauf — Lernpaket", f: "artifacts/geld_und_kauf_lernpaket.html", dt: "2026-04-29", cat: "learning", lang: "de", kind: "study", pa: "#c0392b", d: "ABU pack on money & purchasing: theory, terms, flashcards, quiz and study plan.", m: "apr ’26" },
+  { t: "NIN 2025 — Lernpaket", f: "artifacts/nin_lernpaket.html", dt: "2026-08-17", cat: "learning", lang: "de", kind: "study", pa: "#f2a03d", d: "Swiss low-voltage installation standard SN 411000:2025 — legal hierarchy, protection concept, earthing systems, voltage-drop calculators, 26 flashcards and a five-minute quiz.", m: "aug ’26" },
+  { t: "Krankenkasse & Unfallversicherung — Lernpaket", f: "artifacts/krankenkasse_unfall_lernpaket.html", dt: "2026-08-10", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "ABU pack on Swiss health & accident insurance: theory, four calculators, flashcards, quiz and study plan.", m: "aug ’26" },
+  { t: "AuS 1 & 2 · PSA · Arbeitsmethoden — Lernpaket", f: "artifacts/aus_psa_lernpaket.html", dt: "2026-08-27", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss electrical safety: live working levels 1 and 2, personal protective equipment, the three working methods — with an ESTI protection-level finder, 29 flashcards and a quiz.", m: "aug ’26" },
+  { t: "Telekommunikation — Grundlagen", f: "artifacts/telekom_lernpaket.html", dt: "2026-09-01", cat: "learning", lang: "de", kind: "study", pa: "#2c5c8c", d: "All 75 original exercises from the teacher’s two worksheets — chapters 1 (system overview) and 2 (telephony fundamentals), pages 1.1–2.7 — each answered and adversarially re-checked, with 44 verified, 26 corrected and 5 flagged as disputed. 61 terms, 79 flashcards, 35 quiz questions.", m: "sep ’26" },
+  { t: "Arbeitsauftrag Hebelgesetz — A4", f: "artifacts/hebelgesetz_a4.html", dt: "2026-09-02", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-ready A4 hand-in sheet for the graded torque/lever assignment: formula box, two worked examples (wrench at 40 Nm, wheelbarrow at 60 kg) and two blank frames for hand-drawn sketches.", m: "sep ’26" },
+  { t: "Gross- und Kleinschreibung — Lernpaket", f: "artifacts/rechtschreibung_lernpaket.html", dt: "2026-09-01", cat: "learning", lang: "de", kind: "study", pa: "#0e6b72", d: "Swiss German capitalisation rules from Handbuch Kompetenzen S.120 and Lädrach’s Übungsdossier — all 14 rule codes (G1–G7, E2.1–E2.3, E4.1–E4.4) with his own example sentences, 34 terms, 54 flashcards and a 25-question quiz.", m: "sep ’26" },
+  { t: "Elternabend: Markt & Konsum", f: "artifacts/elternabend.html", dt: "2026-04-04", cat: "learning", lang: "de", kind: "slides", pa: "#e8a838", d: "Slideshow for a parents’ evening: Maslow, Wirtschaftskreislauf and BIP explained.", m: "apr ’26" },
   { t: "A8 Leissigentunnel", f: "artifacts/a8 tunnel 2page.html", cat: "learning", lang: "de", kind: "slides", pa: "#1a5fa8", d: "Two-page ABU handout on the A8 tunnel roadworks: reasons, timeline, impact.", m: "may ’26" },
   { t: "Ebola-Ausbruch Kongo", f: "artifacts/ebola kongo 2page.html", cat: "learning", lang: "de", kind: "slides", pa: "#8b1a1a", d: "Two-page ABU handout on the DR Congo Ebola outbreak with stats and relevance.", m: "may ’26" },
-  { t: "Lerndoku: Stromstossschaltung", f: "artifacts/lerndoku_stromstossschaltung.html", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on impulse-relay switching, with diagrams.", m: "may ’26" },
-  { t: "Lerndoku: Treppenhausautomat", f: "artifacts/lerndoku_treppenhausautomat.html", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on staircase timer circuits, with diagrams.", m: "may ’26" },
+  { t: "Lerndoku: Stromstossschaltung", f: "artifacts/lerndoku_stromstossschaltung.html", dt: "2026-05-15", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on impulse-relay switching, with diagrams.", m: "may ’26" },
+  { t: "Lerndoku: Treppenhausautomat", f: "artifacts/lerndoku_treppenhausautomat.html", dt: "2026-05-15", cat: "learning", lang: "de", kind: "study", pa: "#4c8a3f", d: "Print-styled apprentice learning doc on staircase timer circuits, with diagrams.", m: "may ’26" },
   { t: "A1–A3 Drone Course Reader", f: "artifacts/story-reader.html", cat: "learning", lang: "de", kind: "course", pa: "#a391dc", d: "PIN-locked reader serving all 8 BAZL A1–A3 drone certification course modules.", m: "may ’26" },
-  { t: "Roadmap: Data Center Engineer", f: "artifacts/roadmap.html", cat: "learning", lang: "de", kind: "course", pa: "#b8372e", d: "4-phase career roadmap from Elektroinstallateur EFZ to data-center engineer.", m: "apr ’26" },
+  { t: "Roadmap: Data Center Engineer", f: "artifacts/roadmap.html", dt: "2026-04-11", cat: "learning", lang: "de", kind: "course", pa: "#b8372e", d: "4-phase career roadmap from Elektroinstallateur EFZ to data-center engineer.", m: "apr ’26" },
   // tools
-  { t: "DeFi Yield Calculator", f: "artifacts/yield-calculator.html", cat: "tools", lang: "en", kind: "tool", pa: "#5eead4", d: "Staking and lending yield: compounding, fees and gas, against bear/base/bull price scenarios.", m: "aug ’26" },
-  { t: "Color Picker", f: "artifacts/color-picker.html", cat: "tools", lang: "en", kind: "tool", pa: "#5cc48a", d: "Color wheel + RGB/HSL sliders with HEX, RGB, HSL, HSV and CMYK output.", m: "may ’26" },
-  { t: "Format Picker", f: "artifacts/format-picker.html", cat: "tools", lang: "en", kind: "tool", pa: "#5b8fff", d: "Aspect-ratio and dimension calculator with lock, swap and custom ratios.", m: "may ’26" },
-  { t: "QR Generator", f: "artifacts/qr-generator.html", cat: "tools", lang: "en", kind: "tool", pa: "#e8ff00", d: "Dark industrial QR-code maker with text input and PNG download.", m: "apr ’26" },
-  { t: "Pulse — Metronome", f: "artifacts/metronome.html", cat: "tools", lang: "en", kind: "tool", pa: "#5eead4", d: "Metronome with rotary BPM dial, tap tempo and beat accents via Web Audio.", m: "jun ’26" },
-  { t: "4×4×24 — Live Tracker", f: "artifacts/4x4x24_tracker.html", cat: "tools", lang: "en", kind: "tracker", pa: "#ff6b35", d: "Lap tracker for the 4-every-4-for-24 running challenge, with countdowns.", m: "apr ’26" },
+  { t: "DeFi Yield Calculator", f: "artifacts/yield-calculator.html", dt: "2026-08-29", cat: "tools", lang: "en", kind: "tool", pa: "#5eead4", d: "Staking and lending yield: compounding, fees and gas, against bear/base/bull price scenarios.", m: "aug ’26" },
+  { t: "Color Picker", f: "artifacts/color-picker.html", dt: "2026-05-25", cat: "tools", lang: "en", kind: "tool", pa: "#5cc48a", d: "Color wheel + RGB/HSL sliders with HEX, RGB, HSL, HSV and CMYK output.", m: "may ’26" },
+  { t: "Format Picker", f: "artifacts/format-picker.html", dt: "2026-05-30", cat: "tools", lang: "en", kind: "tool", pa: "#5b8fff", d: "Aspect-ratio and dimension calculator with lock, swap and custom ratios.", m: "may ’26" },
+  { t: "QR Generator", f: "artifacts/qr-generator.html", dt: "2026-04-22", cat: "tools", lang: "en", kind: "tool", pa: "#e8ff00", d: "Dark industrial QR-code maker with text input and PNG download.", m: "apr ’26" },
+  { t: "Pulse — Metronome", f: "artifacts/metronome.html", dt: "2026-06-22", cat: "tools", lang: "en", kind: "tool", pa: "#5eead4", d: "Metronome with rotary BPM dial, tap tempo and beat accents via Web Audio.", m: "jun ’26" },
+  { t: "4×4×24 — Live Tracker", f: "artifacts/4x4x24_tracker.html", dt: "2026-04-16", cat: "tools", lang: "en", kind: "tracker", pa: "#ff6b35", d: "Lap tracker for the 4-every-4-for-24 running challenge, with countdowns.", m: "apr ’26" },
   // games
-  { t: "Terminal Chess", f: "artifacts/chess.html", cat: "games", lang: "en", kind: "game", pa: "#4ec9b0", d: "Terminal-styled chess against a minimax AI — move list, captures, promotion.", m: "apr ’26" },
-  { t: "Block Blast", f: "artifacts/blockblast.html", cat: "games", lang: "en", kind: "game", pa: "#00f0ff", d: "Neon-arcade 8×8 block puzzle: drag pieces, clear lines, chase the high score.", m: "apr ’26" },
-  { t: "Minecraft — Browser Edition", f: "artifacts/minecraft.html", cat: "games", lang: "en", kind: "game", pa: "#f0c030", d: "Voxel clone in Three.js with terrain chunks, block break/place and fly mode.", m: "may ’26" },
+  { t: "Terminal Chess", f: "artifacts/chess.html", dt: "2026-04-05", cat: "games", lang: "en", kind: "game", pa: "#4ec9b0", d: "Terminal-styled chess against a minimax AI — move list, captures, promotion.", m: "apr ’26" },
+  { t: "Block Blast", f: "artifacts/blockblast.html", dt: "2026-04-19", cat: "games", lang: "en", kind: "game", pa: "#00f0ff", d: "Neon-arcade 8×8 block puzzle: drag pieces, clear lines, chase the high score.", m: "apr ’26" },
+  { t: "Minecraft — Browser Edition", f: "artifacts/minecraft.html", dt: "2026-05-20", cat: "games", lang: "en", kind: "game", pa: "#f0c030", d: "Voxel clone in Three.js with terrain chunks, block break/place and fly mode.", m: "may ’26" },
   // concepts
-  { t: "macOS Æther", f: "artifacts/macos_aether.html", cat: "concepts", lang: "en", kind: "concept", pa: "#ff6b35", d: "Interactive desktop concept with liquid-glass UI, animated wallpaper, menu bar.", m: "may ’26" },
-  { t: "Windows 12", f: "artifacts/windows12.html", cat: "concepts", lang: "en", kind: "concept", pa: "#0078d4", d: "Interactive Windows 12 mockup: taskbar, start menu, file explorer, terminal.", m: "may ’26" },
+  { t: "macOS Æther", f: "artifacts/macos_aether.html", dt: "2026-05-12", cat: "concepts", lang: "en", kind: "concept", pa: "#ff6b35", d: "Interactive desktop concept with liquid-glass UI, animated wallpaper, menu bar.", m: "may ’26" },
+  { t: "Windows 12", f: "artifacts/windows12.html", dt: "2026-05-11", cat: "concepts", lang: "en", kind: "concept", pa: "#0078d4", d: "Interactive Windows 12 mockup: taskbar, start menu, file explorer, terminal.", m: "may ’26" },
   { t: "Goldhive", f: "artifacts/Goldhive — Pure Gold from Nature.html", cat: "concepts", lang: "en", kind: "concept", pa: "#d4af37", d: "Dark-gold honey brand landing page concept built in React.", m: "apr ’26" },
 ];
 
@@ -758,6 +872,7 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ═══════════════ build DOM ═══════════════ */
 const sectionsEl = document.getElementById('sections');
 const cardEls = [];
+const catGrids = {};
 
 CAT_ORDER.forEach(cat => {
   const items = PAGES.filter(p => p.cat === cat);
@@ -773,6 +888,7 @@ CAT_ORDER.forEach(cat => {
      </div>
      <div class="grid"></div>`;
   const grid = sec.querySelector('.grid');
+  catGrids[cat] = grid;
 
   items.forEach(p => {
     const a = document.createElement('a');
@@ -781,7 +897,11 @@ CAT_ORDER.forEach(cat => {
     a.target = '_blank';
     a.rel = 'noopener';
     a.dataset.cat = p.cat;
-    a.dataset.search = (p.t + ' ' + p.d + ' ' + CATS[p.cat].label + ' ' + p.kind + ' ' + p.lang).toLowerCase();
+    /* dt is the day-accurate date (may be absent); month drives the timeframe
+       filter. m stays the human label printed on the card. */
+    a.dataset.dt = p.dt || '';
+    a.dataset.month = p.dt ? p.dt.slice(0, 7) : '';
+    a.dataset.search = (p.t + ' ' + p.d + ' ' + CATS[p.cat].label + ' ' + p.kind + ' ' + p.lang + ' ' + p.m).toLowerCase();
     a.style.setProperty('--pa', p.pa);
     a.style.setProperty('--cat', CATS[p.cat].color);
     a.innerHTML =
@@ -794,7 +914,7 @@ CAT_ORDER.forEach(cat => {
        <p class="c-desc">${p.d}</p>
        <div class="c-meta">
          <span class="c-cat"><i></i>${CATS[p.cat].label}</span>
-         <span class="c-date">${p.m}</span>
+         <span class="c-date"${p.dt ? '' : ' title="month is an estimate — the history holds no exact date"'}>${p.m}</span>
        </div>`;
     grid.appendChild(a);
     cardEls.push(a);
@@ -802,6 +922,25 @@ CAT_ORDER.forEach(cat => {
 
   sectionsEl.appendChild(sec);
 });
+
+/* The date view is its own section: sorting by date moves every card into
+   this one grid and empties the category sections. Same markup, same
+   section chrome — only the headline changes. */
+const flatSec = document.createElement('section');
+flatSec.className = 'section hidden';
+flatSec.dataset.flat = '';
+flatSec.style.setProperty('--cc', 'var(--lime)');
+flatSec.innerHTML =
+  `<div class="sec-head">
+     <h2><i></i>by date</h2>
+     <span class="sub" id="flat-sub"></span>
+     <span class="cnt">00</span>
+     <span class="rule"></span>
+   </div>
+   <div class="grid flat"></div>`;
+sectionsEl.appendChild(flatSec);
+const flatGrid = flatSec.querySelector('.grid');
+const flatSub = flatSec.querySelector('.sub');
 
 /* counts */
 const total = PAGES.length;
@@ -816,7 +955,6 @@ let activeCat = null;
 function makeChip(cat) {
   const chip = document.createElement('button');
   chip.className = 'chip';
-  chip.setAttribute('role', 'tab');
   if (cat) {
     const n = PAGES.filter(p => p.cat === cat).length;
     chip.style.setProperty('--cc', CATS[cat].hex);
@@ -828,9 +966,7 @@ function makeChip(cat) {
   }
   chip.addEventListener('click', () => {
     activeCat = (cat && activeCat !== cat) ? cat : null;
-    document.querySelectorAll('.chip').forEach(c =>
-      c.classList.toggle('on', activeCat ? c.dataset.cat === activeCat : !c.dataset.cat));
-    applyFilter();
+    syncControls(); saveView(); applyFilter();
   });
   chipsEl.appendChild(chip);
 }
@@ -857,20 +993,116 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ═══════════════ sort + timeframe ═══════════════ */
+const MON = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+function monthLabel(ym) {
+  const p = ym.split('-');
+  return MON[+p[1] - 1] + ' ’' + p[0].slice(2);
+}
+
+let sortMode = 'cat';   // 'cat' | 'new' | 'old'
+let range = '';         // '' = all time, else 'YYYY-MM'
+
+/* one option per month that actually occurs — the list grows with the dump
+   instead of needing a new chip row every few weeks */
+const rangeEl = document.getElementById('range');
+const rangePick = document.getElementById('rangepick');
+const monthCount = new Map();
+PAGES.forEach(p => {
+  if (!p.dt) return;
+  const k = p.dt.slice(0, 7);
+  monthCount.set(k, (monthCount.get(k) || 0) + 1);
+});
+const MONTHS = [...monthCount.keys()].sort().reverse();
+rangeEl.innerHTML =
+  '<option value="">all time</option>' +
+  MONTHS.map(k => `<option value="${k}">${monthLabel(k)} · ${monthCount.get(k)}</option>`).join('');
+
+const sortBtns = [...document.querySelectorAll('#sortseg .chip')];
+sortBtns.forEach(b => b.addEventListener('click', () => {
+  sortMode = b.dataset.sort;
+  syncControls(); saveView(); applyFilter();
+}));
+rangeEl.addEventListener('change', () => {
+  range = rangeEl.value;
+  syncControls(); saveView(); applyFilter();
+});
+
+/* push state into the controls — used on load, on every change and on reset */
+function syncControls() {
+  chipsEl.querySelectorAll('.chip').forEach(c => {
+    const on = activeCat ? c.dataset.cat === activeCat : !c.dataset.cat;
+    c.classList.toggle('on', on);
+    /* the category chips are toggles, not tabs — same aria contract as the
+       sort group next to them, so the whole bar reads the same way */
+    c.setAttribute('aria-pressed', String(on));
+  });
+  sortBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sort === sortMode)));
+  rangeEl.value = range;
+  rangePick.classList.toggle('on', !!range);
+}
+
+/* ═══════════════ remembered view ═══════════════
+   category, sort and timeframe survive a visit; the search box does not —
+   a stale query string on return would look like a broken page. */
+const STORE = 'dump.view.v1';
+function saveView() {
+  try {
+    localStorage.setItem(STORE, JSON.stringify({ cat: activeCat, sort: sortMode, range }));
+  } catch (e) { /* private mode / storage off — the page just forgets */ }
+}
+function restoreView() {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) { return; }
+  if (!s || typeof s !== 'object') return;
+  if (s.cat && CATS[s.cat]) activeCat = s.cat;
+  if (s.sort === 'new' || s.sort === 'old') sortMode = s.sort;
+  if (s.range && MONTHS.indexOf(s.range) !== -1) range = s.range;
+}
+
 function resetFilters() {
   activeCat = null; query = ''; searchEl.value = '';
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', !c.dataset.cat));
-  applyFilter();
+  sortMode = 'cat'; range = '';
+  syncControls(); saveView(); applyFilter();
 }
 document.getElementById('empty-clear').addEventListener('click', resetFilters);
 
 /* ═══════════════ FLIP filtering ═══════════════ */
 const featureEl = document.getElementById('feature-card');
+const headCountEl = document.getElementById('head-count');
 
 function matches(el) {
   if (activeCat && el.dataset.cat !== activeCat) return false;
+  if (range && el.dataset.month !== range) return false;
   if (query && !el.dataset.search.includes(query)) return false;
   return true;
+}
+
+/* cards without a known date go last in BOTH directions — the git history
+   could not prove a date for them, so they are not guessed into a slot */
+function sortedCards(mode) {
+  return cardEls.slice().sort((a, b) => {
+    const da = a.dataset.dt, db = b.dataset.dt;
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return mode === 'old' ? da.localeCompare(db) : db.localeCompare(da);
+  });
+}
+
+/* moving the same nodes around (never re-creating them) is what lets the
+   FLIP pass below animate the switch between the two layouts */
+let layout = 'cat';
+function applyLayout(mode) {
+  if (mode === layout) return;
+  if (mode === 'cat') {
+    CAT_ORDER.forEach(cat => cardEls.forEach(el => {
+      if (el.dataset.cat === cat) catGrids[cat].appendChild(el);
+    }));
+  } else {
+    sortedCards(mode).forEach(el => flatGrid.appendChild(el));
+  }
+  layout = mode;
 }
 
 function applyFilter() {
@@ -887,17 +1119,40 @@ function applyFilter() {
     if (ok) shown++;
   });
 
-  // hide empty sections, feature card only in default/matching view
-  document.querySelectorAll('.section').forEach(sec => {
-    const any = sec.querySelector('.card:not(.hidden)');
-    sec.classList.toggle('hidden', !any);
+  // regroup: category sections, or the single date-sorted list
+  applyLayout(sortMode);
+  const byDate = sortMode !== 'cat';
+
+  document.querySelectorAll('.section[data-cat]').forEach(sec => {
+    const vis = sec.querySelectorAll('.card:not(.hidden)').length;
+    sec.classList.toggle('hidden', byDate || vis === 0);
+    sec.querySelector('.cnt').textContent = String(vis).padStart(2, '0');
   });
-  const featureVisible = !activeCat && !query;
-  featureEl.style.display = featureVisible ? '' : 'none';
+  flatSec.classList.toggle('hidden', !byDate || shown === 0);
+  if (byDate) {
+    flatSec.classList.add('in');
+    flatSec.querySelector('.cnt').textContent = String(shown).padStart(2, '0');
+    flatSub.textContent = sortMode === 'new' ? 'newest first' : 'oldest first';
+  }
+
+  // the feature card is the default-view highlight, not a list item
+  const filtered = !!(activeCat || query || range);
+  featureEl.style.display = (!filtered && !byDate) ? '' : 'none';
 
   document.getElementById('empty').classList.toggle('show', shown === 0);
-  document.getElementById('head-count').textContent =
-    (activeCat || query) ? shown + ' / ' + total + ' pages' : total + ' pages';
+
+  const detail = [
+    activeCat ? CATS[activeCat].label : '',
+    range ? monthLabel(range) : '',
+    byDate ? (sortMode === 'new' ? 'newest first' : 'oldest first') : '',
+  ].filter(Boolean).join(' · ');
+  headCountEl.textContent = filtered ? shown + ' / ' + total + ' pages' : total + ' pages';
+  if (detail) {
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = ' — ' + detail;
+    headCountEl.appendChild(sr);
+  }
 
   // LAST + INVERT + PLAY
   if (!reduceMotion) {
@@ -1012,7 +1267,11 @@ document.getElementById('dice').addEventListener('click', () => {
   window.open(el.href, '_blank', 'noopener');
 });
 
-/* initial paint */
+/* initial paint — the remembered view is put in place before the first
+   measurement, so nothing flies across the screen on load */
+restoreView();
+syncControls();
+applyLayout(sortMode);
 applyFilter();
 </script>
 </body>
