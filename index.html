@@ -854,6 +854,22 @@ const PAGES = [
   { t: "Goldhive", f: "artifacts/Goldhive — Pure Gold from Nature.html", cat: "concepts", lang: "en", kind: "concept", pa: "#d4af37", d: "Dark-gold honey brand landing page concept built in React.", m: "apr ’26" },
 ];
 
+/* MON3/monthKeyOf stehen hier oben, NICHT weiter unten bei der Toolbar:
+   die Kartenerzeugung ruft monthKeyOf auf, und ein const weiter unten
+   liegt zu diesem Zeitpunkt noch in der temporal dead zone. */
+const MON3 = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06',
+               jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+/* the four entries without a provable dt still print a month on the card
+   (m:, marked with a leading ~). Filtering by that month must find them,
+   otherwise the card says one thing and the filter does another. They keep
+   no dt, so they still sort to the end in both directions. */
+function monthKeyOf(p) {
+  if (p.dt) return p.dt.slice(0, 7);
+  const mm = /^([a-z]{3})\D*(\d{2})$/i.exec(String(p.m || '').trim());
+  const num = mm && MON3[mm[1].toLowerCase()];
+  return num ? '20' + mm[2] + '-' + num : '';
+}
+
 /* kind → icon path (24×24, stroke) */
 const ICONS = {
   chart:   '<rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/>',
@@ -1009,18 +1025,6 @@ let range = '';         // '' = all time, else 'YYYY-MM'
    instead of needing a new chip row every few weeks */
 const rangeEl = document.getElementById('range');
 const rangePick = document.getElementById('rangepick');
-const MON3 = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06',
-               jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
-/* the four entries without a provable dt still print a month on the card
-   (m:, marked with a leading ~). Filtering by that month must find them,
-   otherwise the card says one thing and the filter does another. They keep
-   no dt, so they still sort to the end in both directions. */
-function monthKeyOf(p) {
-  if (p.dt) return p.dt.slice(0, 7);
-  const mm = /^([a-z]{3})\D*(\d{2})$/i.exec(String(p.m || '').trim());
-  const num = mm && MON3[mm[1].toLowerCase()];
-  return num ? '20' + mm[2] + '-' + num : '';
-}
 const monthCount = new Map();
 PAGES.forEach(p => {
   const k = monthKeyOf(p);
