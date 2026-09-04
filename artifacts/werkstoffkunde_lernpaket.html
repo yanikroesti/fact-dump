@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visuelles Lernpaket Werkstoffkunde für ABT: Werkstoffgruppen, Eigenschaften, Zustandsänderungen, Korrosion und Säuren/Basen als Zusatz.">
+  <title>Werkstoffkunde — visuelles Lernpaket</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Azeret+Mono:wght@400;500;600&display=swap');
+    :root {
+      --bg: #f4f5f1; --surface: #ffffff; --surface-alt: #e9ece5;
+      --ink: #18211e; --ink-soft: #424a47; --ink-mute: #6c7071;
+      --line: #cbd2ca; --line-soft: #dde2dc; --accent: #a94b18;
+      --accent-pale: #f8e5d8; --teal: #17676a; --teal-pale: #dceded;
+      --blue: #315d93; --blue-pale: #e1eafa; --yellow: #f0c84b;
+      --danger: #a33232; --danger-pale: #fae3e3; --radius: 10px;
+      --font-body: Archivo, Arial, sans-serif; --font-mono: 'Azeret Mono', monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.58; }
+    .container { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; overflow-x: hidden; }
+    header { border-bottom: 2px solid var(--ink); padding: 0 0 24px; margin-bottom: 18px; }
+    .eyebrow, .meta, .source, .chip, .q-topic, .small-label { font-family: var(--font-mono); font-size: .76rem; letter-spacing: .03em; }
+    .eyebrow { display: flex; flex-wrap: wrap; gap: 7px; color: var(--ink-soft); margin: 0 0 12px; }
+    .chip { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: var(--surface); }
+    .chip.extra { background: var(--accent-pale); border-color: #dfb89f; color: #692b0c; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; font-size: clamp(2.25rem, 7vw, 4.4rem); line-height: .95; letter-spacing: -.06em; margin-bottom: 14px; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.45rem); line-height: 1.05; letter-spacing: -.045em; margin: 36px 0 12px; }
+    h3 { font-size: 1.08rem; margin: 24px 0 8px; }
+    .lead { max-width: 700px; font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 0; }
+    .tab-nav { display: flex; gap: 4px; margin: 18px 0 30px; padding: 5px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface-alt); overflow-x: auto; position: sticky; top: 8px; z-index: 10; }
+    .tab-btn, .filter, .plain-btn { cursor: pointer; font: inherit; }
+    .tab-btn { flex: 1 0 auto; border: 0; background: transparent; color: var(--ink-soft); padding: 10px 13px; border-radius: 8px; font-size: .88rem; font-weight: 700; white-space: nowrap; }
+    .tab-btn:hover, .tab-btn:focus-visible { color: var(--ink); outline: 2px solid var(--teal); outline-offset: 2px; }
+    .tab-btn.active { color: var(--bg); background: var(--ink); }
+    .tab-pane { display: none; animation: appear .2s ease; }
+    .tab-pane.active { display: block; }
+    @keyframes appear { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .intro, .note, .warning, .extra-box, .fact, .tool, .source-box { border-radius: var(--radius); padding: 18px 20px; margin: 16px 0; }
+    .intro { background: var(--ink); color: #f8f8f4; }
+    .intro h2 { margin-top: 0; color: #fff; }
+    .intro p:last-child, .note p:last-child, .warning p:last-child, .extra-box p:last-child { margin-bottom: 0; }
+    .note { border: 1px solid #a5cbcc; background: var(--teal-pale); }
+    .warning { border-left: 5px solid var(--accent); background: var(--accent-pale); }
+    .extra-box { border: 1px dashed #ce9d7e; background: #fff6f0; }
+    .fact { background: var(--ink); color: #f6f6f3; }
+    .fact em, .fact i, .fact .meta, .fact .law-ref, .fact small { color: rgba(246,246,243,.86); }
+    .fact strong, .fact b { color: #fff; }
+    .tip .meta, .tip .law-ref, .info-box .law-ref, .info-box .meta { color: var(--ink-soft); }
+    .grid { display: grid; gap: 12px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card { background: var(--surface); border: 1px solid var(--line); padding: 16px; border-radius: var(--radius); min-width: 0; }
+    .card h3 { margin: 0 0 6px; }
+    .card p { color: var(--ink-soft); margin-bottom: 0; font-size: .94rem; }
+    .icon { display: block; color: var(--accent); font: 600 1.55rem/1 var(--font-mono); margin-bottom: 12px; }
+    .small-label { color: var(--ink-mute); text-transform: uppercase; }
+    .table-wrap { overflow-x: auto; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+    table { border-collapse: collapse; width: 100%; min-width: 620px; background: var(--surface); font-size: .93rem; }
+    th, td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line-soft); }
+    th { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; background: var(--surface-alt); }
+    tr:last-child td { border-bottom: 0; }
+    .map { display: grid; grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr) 36px minmax(0, 1fr); gap: 8px; align-items: stretch; margin: 16px 0; }
+    .map-node { text-align: center; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 14px 9px; min-height: 106px; display: flex; flex-direction: column; justify-content: center; }
+    .map-node strong { display: block; font-size: 1.03rem; }
+    .map-node span { color: var(--ink-soft); font-size: .83rem; margin-top: 4px; }
+    .map-node.hot { background: var(--accent-pale); border-color: #dbac8d; }
+    .map-node.cool { background: var(--blue-pale); border-color: #b5c6e2; }
+    .arrow { display: flex; align-items: center; justify-content: center; font: 700 1.5rem/1 var(--font-mono); color: var(--ink-soft); }
+    .state-wrap { display: grid; grid-template-columns: 1fr 54px 1fr 54px 1fr; gap: 4px; align-items: center; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .state { min-height: 124px; border-radius: 9px; padding: 14px; display: flex; flex-direction: column; justify-content: center; }
+    .state strong { font-size: 1.15rem; }
+    .state small { color: var(--ink-soft); }
+    .state.solid { background: #e5eaed; } .state.liquid { background: var(--blue-pale); } .state.gas { background: #f8edc7; }
+    .state-arrow { text-align: center; color: var(--accent); font: 700 1.4rem/1.1 var(--font-mono); }
+    .state-arrow small { display: block; margin-top: 4px; font-size: .65rem; color: var(--ink-soft); }
+    .flow { display: grid; grid-template-columns: 1fr 42px 1fr 42px 1fr; gap: 5px; align-items: stretch; margin: 16px 0; }
+    .flow-step { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 15px; }
+    .flow-step strong { display: block; margin-bottom: 6px; }
+    .flow-step p { color: var(--ink-soft); font-size: .9rem; margin-bottom: 0; }
+    .flow-arrow { align-self: center; color: var(--accent); text-align: center; font: 700 1.5rem/1 var(--font-mono); }
+    .visual-board { background: #17201d; color: #f6f6f3; padding: clamp(18px, 4vw, 34px); border-radius: 14px; margin: 16px 0; }
+    .visual-board h2 { color: #fff; margin-top: 0; }
+    .visual-board .meta { color: #c1cbc5; }
+    .week-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .week { padding: 14px; border-radius: 9px; background: rgba(255,255,255,.08); border-top: 4px solid var(--yellow); }
+    .week strong { display: block; color: #fff; }
+    .week p { font-size: .88rem; color: #d9e0dc; margin: 7px 0 0; }
+    .lens-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .lens { min-height: 118px; padding: 15px; background: var(--surface); color: var(--ink); border-radius: 8px; }
+    .lens b { display: block; font: 600 .76rem var(--font-mono); color: var(--accent); text-transform: uppercase; }
+    .lens p { font-size: .9rem; margin: 7px 0 0; color: var(--ink-soft); }
+    .ph-wrap { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .ph-scale { height: 16px; border-radius: 999px; background: linear-gradient(90deg, #be3d48 0%, #e9733e 26%, #f0c84b 43%, #6fbe72 50%, #48a7a5 65%, #35689f 100%); position: relative; margin: 20px 0 8px; }
+    .ph-labels { display: flex; justify-content: space-between; color: var(--ink-soft); font: .72rem var(--font-mono); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 30px; }
+    .ph-readout { min-height: 52px; margin-top: 12px; padding: 12px; border-radius: 8px; background: var(--surface-alt); font-weight: 600; }
+    .term-search { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+    .term-search:focus { outline: 3px solid #9bc9c9; border-color: var(--teal); }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; }
+    .filter { border: 1px solid var(--line); background: var(--surface); padding: 7px 10px; border-radius: 999px; color: var(--ink-soft); font-size: .85rem; }
+    .filter.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .terms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .term { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 13px; }
+    .term b { display: block; } .term span { display: block; color: var(--ink-soft); font-size: .9rem; margin-top: 3px; }
+    .flash { border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--surface); min-height: 240px; display: grid; grid-template-rows: 1fr auto; }
+    .flash-body { cursor: pointer; display: grid; place-items: center; padding: 30px; text-align: center; font-size: clamp(1.15rem, 3vw, 1.65rem); font-weight: 700; }
+    .flash-body.back { font-weight: 400; font-size: 1.05rem; text-align: left; align-content: center; }
+    .flash-foot { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--surface-alt); }
+    .plain-btn { border: 1px solid var(--ink); border-radius: 7px; padding: 9px 12px; color: var(--ink); background: var(--surface); font-weight: 700; }
+    .plain-btn.primary { background: var(--ink); color: #fff; }
+    .plain-btn.good { border-color: var(--teal); color: var(--teal); }
+    .plain-btn.bad { border-color: var(--danger); color: var(--danger); }
+    .counter { margin-left: auto; align-self: center; color: var(--ink-soft); font: .75rem var(--font-mono); }
+    .quiz-item { border: 1px solid var(--line); border-radius: 9px; background: var(--surface); margin: 9px 0; overflow: hidden; }
+    .quiz-item summary { cursor: pointer; list-style: none; padding: 15px; font-weight: 700; }
+    .quiz-item summary::-webkit-details-marker { display: none; }
+    .quiz-item summary::before { content: '+'; color: var(--accent); font: 700 1.1rem var(--font-mono); margin-right: 10px; }
+    .quiz-item[open] summary::before { content: '–'; }
+    .quiz-answer { border-top: 1px solid var(--line-soft); padding: 14px 15px; color: var(--ink-soft); }
+    .quiz-answer strong { color: var(--ink); }
+    .plan { list-style: none; margin: 0; padding: 0; }
+    .plan li { display: grid; grid-template-columns: 25px 1fr; gap: 11px; align-items: start; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .plan input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--teal); }
+    .progress { height: 10px; background: var(--surface-alt); border-radius: 999px; overflow: hidden; margin: 16px 0 6px; }
+    .progress span { display: block; width: 0%; height: 100%; transition: width .2s ease; background: var(--teal); }
+    .source-box { background: var(--surface-alt); border: 1px solid var(--line); }
+    .source-box ul { margin: 8px 0 0; padding-left: 20px; }
+    a { color: #155c8c; } a:hover { color: #0c3f63; }
+    .muted { color: var(--ink-soft); } .hidden { display: none; }
+    @media (max-width: 700px) {
+      .container { padding: 18px 14px 60px; }
+      .grid.two, .grid.four, .terms, .week-map { grid-template-columns: 1fr; }
+      .map { grid-template-columns: 1fr; } .map .arrow { transform: rotate(90deg); min-height: 22px; }
+      .state-wrap, .flow { grid-template-columns: 1fr; } .state-arrow, .flow-arrow { transform: rotate(90deg); min-height: 24px; }
+      .lens-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: 9px 11px; font-size: .82rem; }
+      .counter { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+<main class="container">
+  <header>
+    <div class="eyebrow"><span class="chip">ABT · Werkstoffkunde</span><span class="chip">21.08.–04.09.2026</span><span class="chip extra">Säuren &amp; Basen = Zusatz</span></div>
+    <h1>Werkstoffe<br>lesen lernen.</h1>
+    <p class="lead">Ein ruhiges, visuelles Lernpaket aus deinen drei Freitagsnotizen. Erst die Landkarte, dann ein Thema nach dem anderen. Säuren und Basen sind drin, aber deutlich als <strong>Zusatzstoff</strong> markiert.</p>
+  </header>
+
+  <nav class="tab-nav" aria-label="Lernpaket-Reiter">
+    <button class="tab-btn active" data-tab="theorie">Theorie</button>
+    <button class="tab-btn" data-tab="visuals">Visuals</button>
+    <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+    <button class="tab-btn" data-tab="karten">Karteikarten</button>
+    <button class="tab-btn" data-tab="quiz">Quiz</button>
+    <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+  </nav>
+
+  <section class="tab-pane active" id="theorie">
+    <div class="intro">
+      <h2>Erst das Raster.</h2>
+      <p>Bei jeder Prüfungsfrage gehst du in derselben Reihenfolge vor: <strong>Welcher Werkstoff?</strong> → <strong>Welche Eigenschaft?</strong> → <strong>Welche Veränderung oder Umgebung?</strong> Das verhindert, dass die vielen Begriffe durcheinanderfallen.</p>
+    </div>
+
+    <div class="note"><strong>Was ist prüfungsnah?</strong> Werkstoffgruppen, Reinstoff/Gemisch, die vier Eigenschaftskategorien, Aggregatszustände, Zustandsänderungen, Belastungen, Sprödigkeit und die Wärmeformeln stammen aus deinen Mitschriften. Säuren/Basen sind auf deinen Wunsch als <strong>Zusatz</strong> ergänzt. Die ausführlichen Abschnitte zu elektrischen Eigenschaften, Redox und Korrosion tragen in den Notizen selbst den Vermerk «recherchiert, nicht mitdiktiert» — sie sind hier sichtbar als Vertiefung markiert, nicht als bestätigter Prüfungsstoff.</div>
+
+    <h2>1 · Die Landkarte</h2>
+    <div class="map" aria-label="Werkstoff-Landkarte">
+      <div class="map-node"><strong>Werkstoff</strong><span>Metall · Naturstoff · Kunststoff · Verbundwerkstoff</span></div>
+      <div class="arrow">→</div>
+      <div class="map-node hot"><strong>Eigenschaft</strong><span>mechanisch · elektrisch · thermisch · chemisch/ökologisch</span></div>
+      <div class="arrow">→</div>
+      <div class="map-node cool"><strong>Entscheid</strong><span>Passt der Stoff zur Belastung und Umgebung?</span></div>
+    </div>
+
+    <div class="grid four">
+      <article class="card"><span class="icon">01</span><h3>Mechanisch</h3><p>Festigkeit, Härte, Elastizität, Plastizität, Sprödigkeit, Dichte.</p></article>
+      <article class="card"><span class="icon">02</span><h3>Elektrisch</h3><p>Leitfähigkeit. <span class="small-label">Vertiefung:</span> Durchschlagsfestigkeit, Dielektrizität, Magnetismus.</p></article>
+      <article class="card"><span class="icon">03</span><h3>Thermisch</h3><p>Schmelzpunkt, Wärmekapazität, Wärmeleitung, Ausdehnung.</p></article>
+      <article class="card"><span class="icon">04</span><h3>Chemisch</h3><p>Oxide. <span class="small-label">Vertiefung:</span> Korrosion, Giftigkeit, UV-Beständigkeit, Abbaubarkeit.</p></article>
+    </div>
+
+    <h2>2 · Werkstoffgruppen ohne Nebel</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Gruppe</th><th>Unterteilung / Beispiel aus der Notiz</th><th>Merksatz</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Metalle</strong></td><td>Eisen / Nichteisen; Leicht- und Schwermetalle</td><td>Metalle wählst du oft wegen Leitfähigkeit, Festigkeit oder Formbarkeit.</td></tr>
+        <tr><td><strong>Naturstoffe</strong></td><td>organisch / unorganisch, z. B. Holz oder Mineralien</td><td>Die Herkunft ist natürlich, die Eigenschaften können trotzdem sehr unterschiedlich sein.</td></tr>
+        <tr><td><strong>Kunststoffe</strong></td><td>Thermoplast, Duroplast, Elastomer</td><td>Die Frage lautet oft: Wird er bei Wärme formbar, bleibt er hart oder elastisch?</td></tr>
+        <tr><td><strong>Verbundwerkstoffe</strong></td><td>z. B. Carbon oder Polyester-Verbund</td><td>Mehrere Werkstoffe werden kombiniert, damit ihre Stärken zusammenwirken.</td></tr>
+        <tr><td><strong>Halbleiter / Supraleiter</strong></td><td><span class="chip">offenes Stichwort</span></td><td>Diese Gruppe steht am 21.08. in deiner Mitschrift, aber ohne Erklärung. Nicht raten: bei Wäfler nachfragen.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Reinstoff oder Gemisch?</h3>
+    <div class="grid two">
+      <div class="card"><h3>Reinstoff</h3><p>Besteht aus einer einzigen chemischen Substanz, z. B. einem Element oder einer Verbindung.</p></div>
+      <div class="card"><h3>Gemisch</h3><p>Besteht aus mehreren Stoffen. Eine Legierung wie Messing ist ein homogenes Metallgemisch.</p></div>
+    </div>
+
+    <div class="warning"><strong>Saubere Formulierung für die Prüfung:</strong> Deine Notiz nennt als Unterrichtsgrenze <strong>Stahl unter 2,06&nbsp;% C</strong> und <strong>Guss über 2,06&nbsp;% C</strong>. Verwende für die Prüfung diese Lehrmittelgrenze. Die Branchenquelle worldsteel fasst Stahl breiter als Eisen-Kohlenstoff-Legierung mit weniger als 2&nbsp;% Kohlenstoff zusammen — das ist keine Aufforderung, den Unterrichtswert umzuschreiben.</div>
+    <div class="warning"><strong>Offene Grenzfrage:</strong> Am 21.08. steht <strong>Leichtmetall &lt; 5 kg/dm³</strong> und <strong>Schwermetall ≥ 5 kg/dm³</strong>; am 04.09. steht bei Leichtmetall <strong>≤ 5 kg/dm³</strong>. Das widerspricht sich genau bei 5 kg/dm³. Diese Seite entscheidet den Grenzfall nicht — bitte bei Wäfler klären.</div>
+
+    <h2>3 · Fest, flüssig, gasförmig</h2>
+    <div class="state-wrap">
+      <div class="state solid"><strong>fest</strong><small>eigene Form · eigenes Volumen</small></div>
+      <div class="state-arrow">⇄<small>schmelzen<br>erstarren</small></div>
+      <div class="state liquid"><strong>flüssig</strong><small>Gefässform · eigenes Volumen</small></div>
+      <div class="state-arrow">⇄<small>verdampfen<br>kondensieren</small></div>
+      <div class="state gas"><strong>gasförmig</strong><small>keine eigene Form · füllt Raum</small></div>
+    </div>
+    <p class="muted"><strong>Direkter Weg:</strong> fest → gasförmig = <strong>Sublimieren</strong>; gasförmig → fest = <strong>Resublimieren</strong>. Denk an eine Abkürzung, die den flüssigen Zustand überspringt.</p>
+    <div class="grid two">
+      <div class="fact"><strong>Wärmekapazität:</strong><br><em>Q = m · c · ΔT</em><br><small>Wärmemenge = Masse · spezifische Wärmekapazität · Temperaturänderung</small></div>
+      <div class="fact"><strong>Wärmeausdehnung:</strong><br><em>ΔL = L₀ · α · ΔT</em><br><small>Längenänderung = Ausgangslänge · Ausdehnungskoeffizient · Temperaturänderung</small></div>
+    </div>
+    <div class="note"><strong>Weitere Begriffe aus der 28.08.-Mitschrift:</strong> Brennbarkeit, Hitzebeständigkeit, Wärmeleitfähigkeit, Giftigkeit/LD50, Abbaubarkeit und Spannungsreihe. Die Notiz markiert diese Erklärungen als <em>recherchiert, nicht mitdiktiert</em>; deshalb findest du sie in <strong>Begriffe</strong> als sichtbare Vertiefung statt als bestätigten Prüfungsstoff.</div>
+
+    <h2>4 · Verformung und Belastung</h2>
+    <div class="grid two">
+      <div class="card"><h3>Elastisch</h3><p>Nach der Belastung wieder zurück in die ursprüngliche Form. Beispiel: eine Feder im normalen Arbeitsbereich.</p></div>
+      <div class="card"><h3>Plastisch</h3><p>Die Verformung bleibt. Ein gebogener Draht bleibt nach dem Biegen in der neuen Form.</p></div>
+      <div class="card"><h3>Spröd</h3><p>Bricht mit wenig bleibender Verformung. <span class="small-label">Vertiefung:</span> UV kann Kunststoffe mit der Zeit spröde und rissig machen.</p></div>
+      <div class="card"><h3>Zäh</h3><p>Verformt sich vor dem Bruch deutlich. Das Gegenteil von spröd ist nicht «weich», sondern zäh.</p></div>
+    </div>
+    <div class="fact"><strong>Belastung merken:</strong> Feder → Torsion · Schraube → Zug. Bei der Dichte gilt <em>ρ = m / V</em>: Masse durch Volumen.</div>
+
+    <h3>Fünf Belastungsarten</h3>
+    <div class="grid two">
+      <div class="card"><h3>Zug</h3><p>Der Werkstoff wird auseinandergezogen: Kabel, Seil oder Schraube.</p></div>
+      <div class="card"><h3>Biegung</h3><p>Er wird gekrümmt: Brücke, Regalbrett oder Ski.</p></div>
+      <div class="card"><h3>Druck</h3><p>Er wird zusammengedrückt: Fundament, Mauer oder Säule.</p></div>
+      <div class="card"><h3>Scherung</h3><p>Kräfte verschieben zwei Flächen gegeneinander: Niet, Schraubenverbindung oder Blechschere.</p></div>
+      <div class="card"><h3>Torsion</h3><p>Er wird verdreht: Feder, Welle oder Schraubenzieher.</p></div>
+    </div>
+    <div class="warning"><strong>Kleine Korrektur zur Rohnotiz:</strong> Jenseits der Elastizitätsgrenze beginnt eine bleibende (plastische) Verformung. Das bedeutet <em>nicht automatisch</em> Bruch; wann ein Werkstoff bricht, hängt vom Material und der Belastung ab.</div>
+
+    <h3>Härte prüfen</h3>
+    <div class="grid two">
+      <div class="card"><h3>Brinell</h3><p>Merkkarte aus der Notiz: <strong>Kugel</strong>.</p></div>
+      <div class="card"><h3>Rockwell</h3><p>Merkkarte aus der Notiz: <strong>Kegel</strong>.</p></div>
+      <div class="card"><h3>Vickers</h3><p>Merkkarte aus der Notiz: <strong>Pyramide</strong>.</p></div>
+    </div>
+    <p class="muted">Bei allen drei Verfahren wird ein definierter Prüfkörper mit definierter Kraft und Zeit in den Werkstoff gedrückt. Härte bedeutet: Widerstand gegen das Eindringen eines anderen Körpers.</p>
+
+    <h2>5 · Oxide &amp; Ammoniumnitrat</h2>
+    <div class="grid two">
+      <div class="card"><h3>CO₂ oder CO?</h3><p>Beide sind Oxide, also Verbindungen mit Sauerstoff. <strong>CO₂</strong> enthält zwei Sauerstoff-Atome, <strong>CO</strong> eines.</p></div>
+      <div class="card"><h3>Ammoniumnitrat</h3><p>Deine Notiz nennt es als Grundbestandteil von Dünger. Mit einem Brennstoff kann es explosionsfähig werden. Das ist nur der Unterrichtskontext: nie Stoffe mischen oder damit experimentieren.</p></div>
+    </div>
+
+    <h2>6 · Oxidation, Redox und Korrosion <span class="chip extra">Vertiefung · nicht mitdiktiert</span></h2>
+    <div class="warning"><strong>Prüfstatus:</strong> In der 04.09.-Notiz sind Oxide (CO und CO₂) behandelt. Die Erklärungen zu Elektronenübertragung, Redox, Opferanode und Korrosion sind dort ausdrücklich als recherchiert markiert. Nutze diesen Abschnitt zum Verstehen; frag bei Wäfler nach, falls er ihn prüft.</div>
+    <p>Fachlich sauber: <strong>Oxidation</strong> ist Elektronenabgabe, <strong>Reduktion</strong> Elektronenaufnahme. Beide gehören zusammen: Deshalb heisst der Vorgang <strong>Redoxreaktion</strong>.</p>
+    <div class="flow" aria-label="Vereinfachter Ablauf von Eisenkorrosion">
+      <div class="flow-step"><strong>1 · Umgebung</strong><p>Eisen/Stahl kommt mit Wasser und Sauerstoff in Kontakt.</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><strong>2 · Redox</strong><p>Eisen gibt Elektronen ab; an anderer Stelle werden Elektronen aufgenommen.</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><strong>3 · Korrosion</strong><p>Korrosionsprodukte entstehen. Bei unlegiertem Stahl schützt die Rostschicht nicht dauerhaft.</p></div>
+    </div>
+    <p class="muted">Empa beschreibt Metallkorrosion als natürliche Redoxreaktion von Metall, Wasser und Sauerstoff. Zink kann Eisen als Opferanode schützen, weil Zink leichter oxidiert. Die vollständigen Teilreaktionen lernst du nur, wenn sie Wäfler verlangt.</p>
+
+    <h3>Schnell oder langsam? <span class="chip extra">Vertiefung</span></h3>
+    <div class="grid two">
+      <div class="card"><h3>Schnelle Oxidation</h3><p>Viel Energie wird in kurzer Zeit frei, z. B. bei einer Verbrennung. Wärme oder Licht können sichtbar sein.</p></div>
+      <div class="card"><h3>Langsame Oxidation</h3><p>Der Vorgang läuft über lange Zeit; Rosten ist ein Beispiel. Der Vergleich mit «langsamer Verbrennung» ist eine Eselsbrücke, keine allgemeine Definition jeder Korrosion.</p></div>
+    </div>
+
+    <h2>7 · Säuren &amp; Basen <span class="chip extra">Zusatz</span></h2>
+    <div class="extra-box">
+      <p><strong>Nicht als geprüfter Unterrichtsstoff bestätigt.</strong> Du wolltest das Thema trotzdem im Paket haben — hier ist die sichere Basis, ohne es als Stoff von Wäfler auszugeben.</p>
+      <div class="grid two">
+        <div><h3>Säure</h3><p>Nach Brønsted kann eine Säure ein Proton (H⁺) abgeben.</p></div>
+        <div><h3>Base</h3><p>Nach Brønsted kann eine Base ein Proton (H⁺) aufnehmen.</p></div>
+      </div>
+      <p>In wässrigen Lösungen gilt als Schulorientierung: <strong>pH &lt; 7 sauer</strong>, <strong>pH = 7 neutral</strong>, <strong>pH &gt; 7 basisch</strong>. Bei einer Neutralisation reagieren Säure und Base miteinander; das konkrete Reaktionsschema hängt von den Stoffen ab.</p>
+      <p><strong>Sicher arbeiten:</strong> Nie unbekannte Chemikalien mischen. Beim Verdünnen gilt im Unterricht: erst Wasser, dann Säure; Schutzbrille und die Lehrperson gehören dazu.</p>
+    </div>
+
+    <div class="source-box">
+      <strong>Quellen und Prüfstatus</strong>
+      <ul>
+        <li>Unterrichtsstoff: Werkstoffkunde-Notizen vom 21.08., 28.08. und 04.09.2026.</li>
+        <li><a href="https://worldsteel.org/about-steel/what-is-steel/" target="_blank" rel="noopener">worldsteel: What is steel?</a> — allgemeine Branchenformulierung zu Stahl als Eisen-Kohlenstoff-Legierung.</li>
+        <li><a href="https://www.empa.ch/en/web/s604/metallkorrosion-an-gebaeuden-erkennen-und-vorhersagen" target="_blank" rel="noopener">Empa: Metallkorrosion</a> sowie <a href="https://goldbook.iupac.org/terms/view/O04362" target="_blank" rel="noopener">IUPAC: Oxidation</a> — Vertiefung zu Redox und Korrosion.</li>
+        <li><a href="https://goldbook.iupac.org/terms/view/B00744" target="_blank" rel="noopener">IUPAC: Brønsted-Säure</a>, <a href="https://goldbook.iupac.org/terms/view/B00745" target="_blank" rel="noopener">Brønsted-Base</a> und <a href="https://goldbook.iupac.org/terms/view/P04524" target="_blank" rel="noopener">pH</a> — Zusatzteil Säuren/Basen.</li>
+        <li><a href="https://www.bag.admin.ch/dam/chem/de/dokumente/download-listen/infomaterialien/oberstufe/modul-nt.pdf.download.pdf/modul-nt.pdf" target="_blank" rel="noopener">BAG-Unterrichtsmodul</a> — Sicherheitsregel beim Verdünnen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="tab-pane" id="visuals">
+    <div class="intro"><h2>Eine Sache nach der anderen.</h2><p>Dieser Reiter ist für Wiederholung ohne langen Lesetext. Schau auf eine Karte, sag sie laut, dann geh weiter.</p></div>
+    <div class="visual-board">
+      <h2>Deine 3-Wochen-Karte</h2><p class="meta">Nicht drei getrennte Kapitel — ein zusammenhängender Weg.</p>
+      <div class="week-map">
+        <div class="week"><strong>21.08 · Sortieren</strong><p>Werkstoffgruppen, Reinstoff/Gemisch, Aggregatszustände, erste Eigenschaften.</p></div>
+        <div class="week"><strong>28.08 · Verhalten</strong><p>Wärmeformeln und die vier Eigenschaftskategorien. Elektrische und chemische Beispiele: <em>Vertiefung</em>.</p></div>
+        <div class="week"><strong>04.09 · Verstehen</strong><p>Guss/Stahl, spröd/zäh und Oxide (CO/CO₂). Redox und Korrosion: <em>Vertiefung</em>.</p></div>
+      </div>
+    </div>
+
+    <h2>Der Vier-Linsen-Check</h2>
+    <p>Wenn eine Aufgabe einen Werkstoff nennt, «drehst» du ihn gedanklich durch diese vier Linsen.</p>
+    <div class="lens-grid">
+      <div class="lens"><b>Mechanisch</b><p>Hält er Zug, Druck, Biegung oder Torsion aus? Ist er hart, zäh oder spröd?</p></div>
+      <div class="lens"><b>Elektrisch</b><p>Leitet oder isoliert er? Ist Magnetismus oder Durchschlagsfestigkeit wichtig?</p></div>
+      <div class="lens"><b>Thermisch</b><p>Was passiert bei Wärme: leiten, speichern, schmelzen, sich ausdehnen?</p></div>
+      <div class="lens"><b>Chemisch</b><p>Was macht Feuchtigkeit, Sauerstoff, UV oder eine aggressive Umgebung?</p></div>
+    </div>
+
+    <h2>Korrosion als Bilderfolge <span class="chip extra">Vertiefung</span></h2>
+    <div class="flow">
+      <div class="flow-step"><strong>Feuchtigkeit</strong><p>Wasser ermöglicht elektrische/chemische Teilvorgänge auf der Oberfläche.</p></div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-step"><strong>Sauerstoff</strong><p>Er nimmt im Redoxvorgang Elektronen auf.</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><strong>Rost</strong><p>Bei normalem Stahl ist die Schicht porös: Sie stoppt den Prozess nicht zuverlässig.</p></div>
+    </div>
+    <div class="note"><strong>Eselsbrücke:</strong> <em>Fe + Wasser + Luft = prüfen, ob Schutz nötig ist.</em> Schutz kann über Beschichtung, passende Legierung oder Opferanode erfolgen. Nicht jede Korrosion sieht gleich aus.</div>
+
+    <h2>pH-Skala zum Anfassen <span class="chip extra">Zusatz</span></h2>
+    <div class="ph-wrap">
+      <div class="ph-scale" aria-hidden="true"></div><div class="ph-labels"><span>0</span><span>7 neutral</span><span>14</span></div>
+      <label for="phRange"><strong>Wert verschieben</strong></label>
+      <input id="phRange" type="range" min="0" max="14" value="7" aria-describedby="phReadout">
+      <div class="ph-readout" id="phReadout">pH 7: neutral. Das ist die Mitte der Schulskala.</div>
+    </div>
+
+    <div class="warning"><strong>Mini-Korrektur aus der Rohnotiz:</strong> Messing ist eine Legierung, also ein homogenes Metallgemisch — keine chemische Verbindung. Milch ist eine Emulsion und damit kein sicheres Beispiel für ein homogenes Gemisch. Diese beiden Punkte standen in der Notiz als unsichere/ungeordnete Mitschrift; hier sind sie absichtlich sauber getrennt.</div>
+  </section>
+
+  <section class="tab-pane" id="begriffe">
+    <div class="intro"><h2>Begriffe statt Textwand.</h2><p>Tippe ein Wort ein oder wähle eine Kategorie. Jede Karte enthält nur das Nötigste.</p></div>
+    <label class="small-label" for="termSearch">Begriff suchen</label>
+    <input class="term-search" id="termSearch" type="search" placeholder="z. B. Redox, spröd, Dielektrizität …">
+    <div class="filters" id="termFilters"></div>
+    <div class="terms" id="termList"></div>
+  </section>
+
+  <section class="tab-pane" id="karten">
+    <div class="intro"><h2>Denken, dann umdrehen.</h2><p>Die Karte zeigt nur die Frage. Erst eine eigene Antwort bilden, dann antippen. «Gewusst» und «noch üben» werden auf diesem Gerät gespeichert.</p></div>
+    <div class="filters" id="cardFilters"></div>
+    <div class="flash" id="flashCard">
+      <div class="flash-body" id="flashBody" role="button" tabindex="0" aria-label="Karte umdrehen"></div>
+      <div class="flash-foot"><button class="plain-btn" id="prevCard">← Zurück</button><button class="plain-btn primary" id="flipCard">Umdrehen</button><button class="plain-btn good" id="knowCard">Gewusst</button><button class="plain-btn bad" id="missCard">Noch üben</button><span class="counter" id="cardCounter"></span></div>
+    </div>
+  </section>
+
+  <section class="tab-pane" id="quiz">
+    <div class="intro"><h2>Quiz ohne Zeitdruck.</h2><p>Jede Lösung bleibt versteckt, bis du sie bewusst öffnest. Wenn du unsicher bist: zur passenden Karte zurück, nicht raten.</p></div>
+    <div id="quizList"></div>
+  </section>
+
+  <section class="tab-pane" id="lernplan">
+    <div class="intro"><h2>Eine Lernrunde, nicht alles auf einmal.</h2><p>Es ist noch kein Werkstoffkunde-Prüfungsdatum bekannt. Darum rechnet dieser Plan nicht künstlich bis zu einem Termin, sondern mit drei überschaubaren 25-Minuten-Hauptblöcken und kurzen Abschlussrunden.</p></div>
+    <ol class="plan" id="planList"></ol>
+    <div class="progress"><span id="progressFill"></span></div><p class="meta" id="progressText"></p>
+    <div class="note"><strong>Wenn du nur 10 Minuten hast:</strong> 1) Vier-Linsen-Check laut aufsagen. 2) Fest → flüssig → gasförmig und die Übergänge nennen. 3) Optional: den Korrosionsfluss als <em>Vertiefung</em> ohne Hilfe erklären. Das deckt die grosse Landkarte ab.</div>
+  </section>
+</main>
+
+<script>
+  // Reiter
+  document.querySelectorAll('.tab-btn').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    button.classList.add('active'); document.getElementById(button.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+
+  // Zusatz: pH-Visualisierung. Keine Stoffwerte werden behauptet.
+  const phRange = document.getElementById('phRange'), phReadout = document.getElementById('phReadout');
+  function pHText(value) {
+    if (value < 7) return `pH ${value}: sauer. Je tiefer der Wert, desto weiter links auf der Schulskala.`;
+    if (value > 7) return `pH ${value}: basisch. Je höher der Wert, desto weiter rechts auf der Schulskala.`;
+    return 'pH 7: neutral. Das ist die Mitte der Schulskala.';
+  }
+  phRange.addEventListener('input', () => { phReadout.textContent = pHText(Number(phRange.value)); });
+
+  const TERMS = [
+    ['grundlagen','Werkstoff','Material mit gezielt nutzbaren Eigenschaften.'],
+    ['grundlagen','Legierung','Metallisches Gemisch aus mindestens zwei Elementen; Messing ist Kupfer + Zink.'],
+    ['grundlagen','Dichte ρ','Masse pro Volumen: ρ = m / V.'],
+    ['grundlagen','Leichtmetall','In deinen Notizen steht einmal ρ < 5 und einmal ρ ≤ 5 kg/dm³. Den Grenzfall bei genau 5 kg/dm³ mit Wäfler klären.'],
+    ['grundlagen','Schwermetall','In deinen Notizen: ρ ≥ 5 kg/dm³. Zusammen mit der abweichenden Leichtmetall-Notiz bleibt der Grenzfall bei genau 5 offen.'],
+    ['grundlagen','Halbleiter / Supraleiter · offen','Steht als Stichwort in der 21.08.-Notiz, aber ohne Erklärung. Bei Wäfler nachfragen, statt eine Definition zu erraten.'],
+    ['grundlagen','Homogenes Gemisch','Bestandteile sind gleichmässig verteilt; Messing ist ein Beispiel für ein Metallgemisch.'],
+    ['grundlagen','Heterogenes Gemisch','Bestandteile sind nicht gleichmässig verteilt und können als verschiedene Phasen erkennbar sein.'],
+    ['grundlagen','CO und CO₂','Beides sind Oxide: CO hat ein, CO₂ zwei Sauerstoff-Atome.'],
+    ['grundlagen','Ammoniumnitrat','Die Notiz nennt es als Düngerbestandteil. Mit Brennstoff kann es sehr gefährlich reagieren: nie mischen oder experimentieren.'],
+    ['mechanisch','Zugfestigkeit','Widerstand gegen Auseinanderziehen.'],
+    ['mechanisch','Biegefestigkeit','Widerstand gegen Biegung, z. B. bei Brücken oder Regalbrettern.'],
+    ['mechanisch','Torsionsfestigkeit','Widerstand gegen Verdrehung.'],
+    ['mechanisch','Druckfestigkeit','Widerstand gegen Zusammendrücken, z. B. bei Säulen oder Fundamenten.'],
+    ['mechanisch','Scherbelastung','Kräfte verschieben Flächen gegeneinander, z. B. bei Nieten oder einer Blechschere.'],
+    ['mechanisch','Härte','Widerstand gegen das Eindringen eines anderen Körpers.'],
+    ['mechanisch','Brinell / Rockwell / Vickers','Merkschema aus der Notiz: Kugel / Kegel / Pyramide.'],
+    ['mechanisch','Elastizität','Nach der Belastung Rückkehr in die ursprüngliche Form.'],
+    ['mechanisch','Plastizität','Bleibende Verformbarkeit.'],
+    ['mechanisch','Spröd','Bricht mit wenig vorheriger Verformung.'],
+    ['thermisch','Schmelzen','fest → flüssig'], ['thermisch','Erstarren','flüssig → fest'],
+    ['thermisch','Verdampfen','flüssig → gasförmig'], ['thermisch','Kondensieren','gasförmig → flüssig'],
+    ['thermisch','Sublimieren','fest → gasförmig'], ['thermisch','Resublimieren','gasförmig → fest'],
+    ['thermisch','Wärmekapazität','Energie, die zum Erwärmen eines Stoffes nötig ist.'],
+    ['thermisch','Wärmeausdehnung','Längen- oder Volumenänderung bei Temperaturänderung.'],
+    ['thermisch','Vertiefung — Brennbarkeit','Fähigkeit eines Stoffes, sich zu entzünden und weiterzubrennen. Nicht dasselbe wie Hitzebeständigkeit.'],
+    ['thermisch','Vertiefung — Hitzebeständigkeit','Wie gut ein Werkstoff hohe Temperaturen aushält, ohne wichtige Eigenschaften zu verlieren.'],
+    ['thermisch','Vertiefung — Wärmeleitfähigkeit','Wie gut ein Stoff Wärme durch sich hindurch leitet.'],
+    ['elektrisch','Durchschlagsfestigkeit','Feldstärke, die ein Isolierstoff vor dem Durchschlag aushält.'],
+    ['elektrisch','Dielektrikum','Nichtleiter, der sich in einem elektrischen Feld polarisiert.'],
+    ['elektrisch','Ferromagnetisch','Stark magnetisierbar, z. B. Eisen.'],
+    ['chemie','Oxidation','Abgabe von Elektronen.'], ['chemie','Reduktion','Aufnahme von Elektronen.'],
+    ['chemie','Redoxreaktion','Oxidation und Reduktion laufen gekoppelt ab.'],
+    ['chemie','Korrosion','Chemischer/elektrochemischer Angriff auf einen Werkstoff.'],
+    ['chemie','Korrosionsbeständigkeit','Widerstand eines Werkstoffs gegen Korrosion.'],
+    ['chemie','Opferanode','Unedleres Metall oxidiert bevorzugt und schützt so ein edleres Metall.'],
+    ['chemie','Langsame Oxidation','Eine Oxidation über lange Zeit, z. B. Rosten. Der Vergleich mit langsamer Verbrennung ist nur eine Eselsbrücke.'],
+    ['chemie','Vertiefung — LD50','Statistisches Mass aus Toxizitätstests; ein kleinerer Wert bedeutet grundsätzlich höhere Giftigkeit. Keine persönliche Sicherheitsgrenze.'],
+    ['chemie','Vertiefung — Abbaubarkeit','Beschreibt, wie gut ein Stoff durch natürliche oder biologische Prozesse zerlegt wird.'],
+    ['chemie','Vertiefung — Spannungsreihe','Ordnet Metalle danach, wie leicht sie Elektronen abgeben; wichtig für den Gedanken hinter der Opferanode.'],
+    ['extra','Brønsted-Säure','Teilchen, das ein Proton (H⁺) abgeben kann. Zusatzstoff.'],
+    ['extra','Brønsted-Base','Teilchen, das ein Proton (H⁺) aufnehmen kann. Zusatzstoff.'],
+    ['extra','pH','Mass für die Säure-/Baseneigenschaft einer wässrigen Lösung. Zusatzstoff.']
+  ];
+  const CATEGORY_NAMES = { all: 'Alle', grundlagen: 'Grundlagen', mechanisch: 'Mechanisch', thermisch: 'Thermisch', elektrisch: 'Elektrisch · Vertiefung', chemie: 'Chemie · Vertiefung', extra: 'Zusatz' };
+  let termCategory = 'all'; const termList = document.getElementById('termList'), termSearch = document.getElementById('termSearch'), termFilters = document.getElementById('termFilters');
+  function categoryButtons(host, selected, onSelect) {
+    host.innerHTML = Object.entries(CATEGORY_NAMES).map(([id, name]) => `<button class="filter${id === selected ? ' active' : ''}" data-category="${id}">${name}</button>`).join('');
+    host.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => onSelect(b.dataset.category)));
+  }
+  function renderTerms() {
+    const needle = termSearch.value.trim().toLocaleLowerCase('de-CH');
+    const visible = TERMS.filter(([cat, term, definition]) => (termCategory === 'all' || cat === termCategory) && `${term} ${definition}`.toLocaleLowerCase('de-CH').includes(needle));
+    termList.innerHTML = visible.length ? visible.map(([cat, term, definition]) => `<article class="term"><span class="small-label">${CATEGORY_NAMES[cat]}</span><b>${term}</b><span>${definition}</span></article>`).join('') : '<p class="muted">Kein Begriff passt dazu.</p>';
+  }
+  function refreshTermFilters() { categoryButtons(termFilters, termCategory, id => { termCategory = id; refreshTermFilters(); renderTerms(); }); }
+  refreshTermFilters(); termSearch.addEventListener('input', renderTerms); renderTerms();
+
+  const CARDS = [
+    ['grundlagen','Nenne die vier Eigenschaftskategorien.','Mechanisch · elektrisch · thermisch · chemisch/ökologisch.'],
+    ['grundlagen','Halbleiter / Supraleiter: Was weisst du sicher?','Nur, dass es als offenes Stichwort in der 21.08.-Notiz steht. Die Erklärung bei Wäfler nachfragen, nicht erfinden.'],
+    ['grundlagen','Was ist Messing: Verbindung oder Gemisch?','Eine Legierung, also ein homogenes Metallgemisch aus Kupfer und Zink.'],
+    ['grundlagen','Wie lautet die Dichteformel?','ρ = m / V — Masse durch Volumen.'],
+    ['grundlagen','Was unterscheidet CO von CO₂?','CO enthält ein Sauerstoff-Atom, CO₂ zwei. Beide sind Oxide.'],
+    ['grundlagen','Was ist der sichere Merksatz zu Ammoniumnitrat?','Die Notiz nennt es als Düngerbestandteil. Mit Brennstoff kann es gefährlich reagieren: niemals selbst mischen oder damit experimentieren.'],
+    ['mechanisch','Feder und Schraube: Welche Belastung?','Feder: Torsion. Schraube: Zug.'],
+    ['mechanisch','Nenne die fünf Belastungsarten.','Zug · Biegung · Druck · Scherung · Torsion.'],
+    ['mechanisch','Welche Formen gehören zu Brinell, Rockwell und Vickers?','Brinell: Kugel · Rockwell: Kegel · Vickers: Pyramide.'],
+    ['mechanisch','Elastisch oder plastisch: Was bleibt nach dem Biegen?','Elastisch: nichts, der Stoff geht zurück. Plastisch: die Verformung bleibt.'],
+    ['mechanisch','Was bedeutet spröd?','Der Werkstoff bricht mit wenig vorheriger Verformung.'],
+    ['thermisch','Nenne die sechs Zustandsübergänge.','Schmelzen · Erstarren · Verdampfen · Kondensieren · Sublimieren · Resublimieren.'],
+    ['thermisch','Was ist der Unterschied zwischen Schmelzen und Verdampfen?','Schmelzen: fest → flüssig. Verdampfen: flüssig → gasförmig.'],
+    ['thermisch','Was bedeutet Wärmeausdehnung?','Ein Stoff ändert bei Temperaturänderung seine Länge oder sein Volumen.'],
+    ['thermisch','Vertiefung — Brennbarkeit oder Hitzebeständigkeit?','Brennbarkeit: kann sich entzünden und weiterbrennen. Hitzebeständigkeit: hält hohe Temperaturen aus, ohne wichtige Eigenschaften zu verlieren.'],
+    ['elektrisch','Vertiefung — Was beschreibt die Durchschlagsfestigkeit?','Welche elektrische Feldstärke ein Isolierstoff aushält, bevor er durchschlägt.'],
+    ['elektrisch','Vertiefung — Welche Stoffe sind ferromagnetisch?','Zum Beispiel Eisen, Nickel und Kobalt; sie können stark magnetisiert werden.'],
+    ['chemie','Vertiefung — Was passiert bei einer Oxidation?','Elektronen werden abgegeben.'],
+    ['chemie','Vertiefung — Was passiert bei einer Reduktion?','Elektronen werden aufgenommen.'],
+    ['chemie','Vertiefung — Warum gehören Oxidation und Reduktion zusammen?','Abgegebene Elektronen müssen von einem anderen Reaktionspartner aufgenommen werden.'],
+    ['chemie','Vertiefung — Welche drei Dinge stehen im Korrosionsbild?','Metall, Wasser/Feuchtigkeit und Sauerstoff.'],
+    ['chemie','Vertiefung — Wie schützt eine Opferanode?','Ein unedleres Metall oxidiert bevorzugt und schützt dadurch das Eisen.'],
+    ['chemie','Vertiefung — Schnelle oder langsame Oxidation?','Schnell: Energie in kurzer Zeit, z. B. Verbrennung. Langsam: über lange Zeit, z. B. Rosten.'],
+    ['extra','Was kann eine Brønsted-Säure?','Ein Proton (H⁺) abgeben.'],
+    ['extra','Was kann eine Brønsted-Base?','Ein Proton (H⁺) aufnehmen.'],
+    ['extra','Wie ordnest du pH 3, 7 und 11 ein?','3 sauer · 7 neutral · 11 basisch.']
+  ];
+  let cardCategory = 'all', cardIndex = 0, flipped = false; let known = new Set(), missed = new Set(); const cardFilters = document.getElementById('cardFilters');
+  try { const saved = JSON.parse(localStorage.getItem('werkstoff-karten-v1') || '{}'); known = new Set(saved.known || []); missed = new Set(saved.missed || []); } catch (_) {}
+  function currentCards() { return CARDS.map((card, id) => ({ card, id })).filter(({ card }) => cardCategory === 'all' || card[0] === cardCategory); }
+  function saveCards() { localStorage.setItem('werkstoff-karten-v1', JSON.stringify({ known: [...known], missed: [...missed] })); }
+  function renderCard() {
+    const cards = currentCards(); if (cardIndex >= cards.length) cardIndex = 0; const body = document.getElementById('flashBody');
+    if (!cards.length) { body.textContent = 'Keine Karten in dieser Kategorie.'; return; }
+    const { card, id } = cards[cardIndex]; body.className = `flash-body${flipped ? ' back' : ''}`; body.innerHTML = flipped ? card[2] : card[1];
+    document.getElementById('cardCounter').textContent = `${cardIndex + 1} / ${cards.length} · ${known.size} gewusst · ${missed.size} üben`;
+    body.dataset.id = id;
+  }
+  function nextCard() { const cards = currentCards(); cardIndex = cards.length ? (cardIndex + 1) % cards.length : 0; flipped = false; renderCard(); }
+  function rateCard(ok) { const id = Number(document.getElementById('flashBody').dataset.id); if (ok) { known.add(id); missed.delete(id); } else { missed.add(id); known.delete(id); } saveCards(); nextCard(); }
+  function refreshCardFilters() { categoryButtons(cardFilters, cardCategory, id => { cardCategory = id; cardIndex = 0; flipped = false; refreshCardFilters(); renderCard(); }); }
+  refreshCardFilters(); document.getElementById('flashCard').addEventListener('click', e => { if (!e.target.closest('button')) { flipped = !flipped; renderCard(); } });
+  document.getElementById('flashBody').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipped = !flipped; renderCard(); } });
+  document.getElementById('flipCard').addEventListener('click', () => { flipped = !flipped; renderCard(); }); document.getElementById('prevCard').addEventListener('click', () => { const cards = currentCards(); cardIndex = cards.length ? (cardIndex - 1 + cards.length) % cards.length : 0; flipped = false; renderCard(); });
+  document.getElementById('knowCard').addEventListener('click', () => rateCard(true)); document.getElementById('missCard').addEventListener('click', () => rateCard(false)); renderCard();
+
+  const QUIZ = [
+    ['Welche vier Kategorien nutzt du, um Werkstoffeigenschaften zu ordnen?','<strong>Mechanisch, elektrisch, thermisch und chemisch/ökologisch.</strong>'],
+    ['Ordne zu: Schraube und Feder.','<strong>Schraube → Zug.</strong> <strong>Feder → Torsion.</strong>'],
+    ['Was unterscheidet elastisch von plastisch?','Elastisch kehrt nach der Belastung zurück; bei plastischer Verformung bleibt die neue Form.'],
+    ['Nenne den direkten Übergang fest → gasförmig und zurück.','<strong>Sublimieren</strong> (fest → gasförmig) und <strong>Resublimieren</strong> (gasförmig → fest).'],
+    ['Warum ist Messing kein Reinstoff?','Messing ist eine <strong>Legierung</strong> aus mindestens Kupfer und Zink, also ein Gemisch.'],
+    ['Was ist die Unterrichtsgrenze zwischen Stahl und Guss?','In deiner Notiz: <strong>Stahl unter 2,06 % C</strong>, <strong>Guss über 2,06 % C</strong>.'],
+    ['Nenne die fünf Belastungsarten.','<strong>Zug, Biegung, Druck, Scherung und Torsion.</strong>'],
+    ['Welche Formen gehören zu Brinell, Rockwell und Vickers?','<strong>Kugel, Kegel, Pyramide.</strong>'],
+    ['Was unterscheidet CO von CO₂?','CO hat <strong>ein</strong>, CO₂ hat <strong>zwei</strong> Sauerstoff-Atome.'],
+    ['Wie gehst du mit dem offenen Stichwort «Halbleiter / Supraleiter» um?','Nicht raten: Es steht ohne Erklärung in der Mitschrift. <strong>Bei Wäfler nachfragen.</strong>'],
+    ['Vertiefung — Was bedeutet Oxidation?','<strong>Elektronenabgabe.</strong>'],
+    ['Vertiefung — Was bedeutet Reduktion?','<strong>Elektronenaufnahme.</strong>'],
+    ['Vertiefung — Warum ist Rost ein Redox-Thema?','Bei der Korrosion laufen Elektronenabgabe und -aufnahme gekoppelt ab; Wasser und Sauerstoff sind im Modell beteiligt.'],
+    ['Vertiefung — Wie funktioniert das Opferanoden-Prinzip?','Ein <strong>unedleres</strong> Metall oxidiert lieber als Eisen und wird dabei geopfert.'],
+    ['Vertiefung — Was beschreibt die Durchschlagsfestigkeit?','Die Feldstärke, die ein Isolierstoff vor einem elektrischen Durchschlag aushält.'],
+    ['Was kann eine Brønsted-Säure und was eine Brønsted-Base?','Säure: <strong>H⁺ abgeben</strong>. Base: <strong>H⁺ aufnehmen</strong>. <em>Zusatzstoff.</em>'],
+    ['Ordne pH 2, 7 und 12 ein.','<strong>2 sauer, 7 neutral, 12 basisch.</strong> <em>Zusatzstoff.</em>']
+  ];
+  document.getElementById('quizList').innerHTML = QUIZ.map(([question, answer], index) => `<details class="quiz-item"><summary><span class="q-topic">${String(index + 1).padStart(2, '0')}</span> ${question}</summary><div class="quiz-answer">${answer}</div></details>`).join('');
+
+  const PLAN = [
+    '25 min · Theorie: Vier-Linsen-Check und Werkstoffgruppen lesen; danach die vier Kategorien ohne Hilfe nennen.',
+    '25 min · Visuals: Zustandsübergänge und den Korrosionsfluss (Vertiefung) laut erklären; je eine Karte dazu bearbeiten.',
+    '25 min · Karteikarten: zuerst «noch üben», dann alle Karten einer Kategorie.',
+    '15 min · Quiz: Antworten zuerst denken, erst dann die Lösung öffnen.',
+    '5 min · Zusatz Säuren/Basen: nur die drei pH-Zonen und H⁺ abgeben/aufnehmen wiederholen.',
+    '2 min · Schlusscheck: Was gehört zum Unterrichtsstoff, was ist nur Zusatz?'
+  ];
+  const planList = document.getElementById('planList'); planList.innerHTML = PLAN.map((item, index) => `<li><input type="checkbox" id="plan${index}"><label for="plan${index}">${item}</label></li>`).join('');
+  function updatePlan() { const boxes = [...planList.querySelectorAll('input')], done = boxes.filter(x => x.checked).length; document.getElementById('progressFill').style.width = `${done / boxes.length * 100}%`; document.getElementById('progressText').textContent = done === boxes.length ? 'Lernrunde fertig. Morgen nur noch die Karten mit «noch üben».' : `${done} von ${boxes.length} Schritten erledigt`; localStorage.setItem('werkstoff-plan-v1', JSON.stringify(boxes.map(x => x.checked))); }
+  try { const stored = JSON.parse(localStorage.getItem('werkstoff-plan-v1') || '[]'); [...planList.querySelectorAll('input')].forEach((box, index) => { box.checked = Boolean(stored[index]); }); } catch (_) {}
+  planList.querySelectorAll('input').forEach(box => box.addEventListener('change', updatePlan)); updatePlan();
+</script>
+</body>
+</html>
