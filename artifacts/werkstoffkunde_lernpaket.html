@@ -130,12 +130,86 @@
     .source-box ul { margin: 8px 0 0; padding-left: 20px; }
     a { color: #155c8c; } a:hover { color: #0c3f63; }
     .muted { color: var(--ink-soft); } .hidden { display: none; }
+    .master-map { margin: 20px 0 34px; border: 2px solid var(--ink); border-radius: 16px; background: var(--surface); overflow: hidden; }
+    .master-map > header { padding: 22px; background: var(--ink); color: #f7f7f2; }
+    .master-map > header h2 { color: #fff; margin: 0 0 8px; }
+    .master-map > header p { margin: 0; color: #dce3dd; max-width: 800px; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 7px; padding: 14px 18px; background: var(--surface-alt); border-bottom: 1px solid var(--line); }
+    .map-status { display: inline-flex; align-items: center; min-height: 25px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: var(--surface); color: var(--ink-soft); font: .72rem var(--font-mono); line-height: 1.2; }
+    .map-status.core { border-color: #7eb7a7; background: #e5f1ec; color: #164e3d; }
+    .map-status.research { border-color: #d5b56b; background: #fff5d9; color: #725405; }
+    .map-status.open { border-color: #c88c8c; background: #fce8e8; color: #7d2a2a; }
+    .map-status.extra { border-color: #dfb89f; background: var(--accent-pale); color: #692b0c; }
+    .atlas-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 18px; }
+    .group-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .map-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; font-weight: 700; }
+    [id] { scroll-margin-top: 85px; }
+    .jump-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 8px; }
+    .jump-nav a { display: inline-flex; align-items: center; padding: 7px 12px; min-height: 44px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); font-size: .88rem; }
+    .atlas-panel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+    .atlas-panel > h3 { margin: 0 0 5px; font-size: 1.23rem; }
+    .atlas-panel > p { margin-bottom: 13px; color: var(--ink-soft); }
+    .tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+    .tree > li { position: relative; margin: 11px 0; padding: 10px 0 0 18px; border-top: 1px solid var(--line-soft); }
+    .tree > li:first-child { border-top: 0; padding-top: 0; }
+    .tree > li::before { content: ''; position: absolute; left: 0; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .tree > li:first-child::before { top: 6px; }
+    .tree strong { display: inline; }
+    .tree ul { margin: 7px 0 0 7px; padding-left: 13px; border-left: 1px solid var(--line); }
+    .tree ul li { margin: 6px 0; color: var(--ink-soft); font-size: .93rem; }
+    .tree .map-status { margin: 3px 0 0; vertical-align: middle; }
+    .property-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .property-branch { --branch: var(--accent); --branch-pale: var(--accent-pale); min-width: 0; border: 1px solid var(--line); border-left: 6px solid var(--branch); border-radius: 10px; background: var(--surface); overflow: hidden; }
+    .property-branch.mechanical { --branch: #a94b18; --branch-pale: #f8e5d8; }
+    .property-branch.electrical { --branch: #315d93; --branch-pale: #e1eafa; }
+    .property-branch.thermal { --branch: #9a6a05; --branch-pale: #fbefcd; }
+    .property-branch.chemical { --branch: #17676a; --branch-pale: #dceded; }
+    .property-branch summary { cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 9px; align-items: center; min-height: 58px; padding: 12px; list-style: none; background: var(--branch-pale); }
+    .property-branch summary::-webkit-details-marker { display: none; }
+    .property-branch summary:focus-visible { outline: 3px solid var(--teal); outline-offset: -3px; }
+    .branch-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--branch); color: #fff; font: 700 .78rem var(--font-mono); }
+    .property-branch summary b { display: block; font-size: 1.02rem; }
+    .property-branch summary small { display: block; color: var(--ink-soft); margin-top: 1px; }
+    .branch-body { padding: 12px 14px 14px; }
+    .branch-body > p { color: var(--ink-soft); margin-bottom: 9px; font-size: .91rem; }
+    .leaf-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+    .leaf-list li { padding: 8px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line-soft); color: var(--ink-soft); font-size: .9rem; }
+    .leaf-list b { color: var(--ink); }
+    .composition-atlas, .extra-branch { margin: 0 18px 18px; padding: 16px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface-alt); }
+    .composition-atlas h3, .extra-branch h3 { margin: 0 0 6px; }
+    .composition-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .composition-grid > div { padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .composition-grid p { margin: 5px 0 0; color: var(--ink-soft); font-size: .92rem; }
+    .extra-branch { border-style: dashed; border-color: #d8a184; background: #fff6f0; }
+    .note-atlas { margin: 24px 0 34px; }
+    .note-atlas > p { color: var(--ink-soft); max-width: 800px; }
+    .atlas-detail { margin: 11px 0; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); overflow: hidden; }
+    .atlas-detail > summary { cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 52px; padding: 13px 15px; font-weight: 700; list-style: none; }
+    .atlas-detail > summary::-webkit-details-marker { display: none; }
+    .atlas-detail > summary::before { content: '+'; color: var(--accent); font: 700 1.2rem var(--font-mono); }
+    .atlas-detail[open] > summary::before { content: '–'; }
+    .atlas-detail > summary:focus-visible { outline: 3px solid var(--teal); outline-offset: -3px; }
+    .atlas-body { border-top: 1px solid var(--line-soft); padding: 16px; }
+    .atlas-body h3 { margin: 17px 0 7px; }
+    .atlas-body h3:first-child { margin-top: 0; }
+    .atlas-body p, .atlas-body li { color: var(--ink-soft); }
+    .atlas-body ul { padding-left: 20px; }
+    .atlas-body .table-wrap { margin: 10px 0 18px; }
+    .atlas-body .warning, .atlas-body .note { margin: 12px 0; }
     @media (max-width: 700px) {
       .container { padding: 18px 14px 60px; }
       .grid.two, .grid.four, .terms, .week-map { grid-template-columns: 1fr; }
       .map { grid-template-columns: 1fr; } .map .arrow { transform: rotate(90deg); min-height: 22px; }
       .state-wrap, .flow { grid-template-columns: 1fr; } .state-arrow, .flow-arrow { transform: rotate(90deg); min-height: 24px; }
       .lens-grid { grid-template-columns: 1fr; }
+      .atlas-grid, .property-grid, .composition-grid, .group-grid { grid-template-columns: 1fr; }
+      .atlas-panel { padding: 12px; }
+      .state-arrow { transform: none; padding: 8px; }
+      .state-arrow::first-letter { writing-mode: vertical-lr; }
+      .master-map > header { padding: 18px; }
+      .atlas-grid { padding: 12px; gap: 12px; }
+      .composition-atlas, .extra-branch { margin: 0 12px 12px; }
+      .tree ul { margin-left: 2px; }
       .tab-btn { padding: 9px 11px; font-size: .82rem; }
       .counter { width: 100%; margin-left: 0; }
     }
@@ -146,7 +220,7 @@
   <header>
     <div class="eyebrow"><span class="chip">ABT · Werkstoffkunde</span><span class="chip">21.08.–04.09.2026</span><span class="chip extra">Säuren &amp; Basen = Zusatz</span></div>
     <h1>Werkstoffe<br>lesen lernen.</h1>
-    <p class="lead">Ein ruhiges, visuelles Lernpaket aus deinen drei Freitagsnotizen. Erst die Landkarte, dann ein Thema nach dem anderen. Säuren und Basen sind drin, aber deutlich als <strong>Zusatzstoff</strong> markiert.</p>
+    <p class="lead">Deine drei Freitagsnotizen: Werkstoffgruppen, die vier Eigenschaftskategorien und alle Details zum Nachschlagen. Starte mit der Karte und folge einem Ast.</p>
   </header>
 
   <nav class="tab-nav" aria-label="Lernpaket-Reiter">
@@ -159,124 +233,657 @@
   </nav>
 
   <section class="tab-pane active" id="theorie">
-    <div class="intro">
-      <h2>Erst das Raster.</h2>
-      <p>Bei jeder Prüfungsfrage gehst du in derselben Reihenfolge vor: <strong>Welcher Werkstoff?</strong> → <strong>Welche Eigenschaft?</strong> → <strong>Welche Veränderung oder Umgebung?</strong> Das verhindert, dass die vielen Begriffe durcheinanderfallen.</p>
-    </div>
-
-    <div class="note"><strong>Was ist prüfungsnah?</strong> Werkstoffgruppen, Reinstoff/Gemisch, die vier Eigenschaftskategorien, Aggregatszustände, Zustandsänderungen, Belastungen, Sprödigkeit und die Wärmeformeln stammen aus deinen Mitschriften. Säuren/Basen sind auf deinen Wunsch als <strong>Zusatz</strong> ergänzt. Die ausführlichen Abschnitte zu elektrischen Eigenschaften, Redox und Korrosion tragen in den Notizen selbst den Vermerk «recherchiert, nicht mitdiktiert» — sie sind hier sichtbar als Vertiefung markiert, nicht als bestätigter Prüfungsstoff.</div>
-
-    <h2>1 · Die Landkarte</h2>
-    <div class="map" aria-label="Werkstoff-Landkarte">
-      <div class="map-node"><strong>Werkstoff</strong><span>Metall · Naturstoff · Kunststoff · Verbundwerkstoff</span></div>
-      <div class="arrow">→</div>
-      <div class="map-node hot"><strong>Eigenschaft</strong><span>mechanisch · elektrisch · thermisch · chemisch/ökologisch</span></div>
-      <div class="arrow">→</div>
-      <div class="map-node cool"><strong>Entscheid</strong><span>Passt der Stoff zur Belastung und Umgebung?</span></div>
-    </div>
-
-    <div class="grid four">
-      <article class="card"><span class="icon">01</span><h3>Mechanisch</h3><p>Festigkeit, Härte, Elastizität, Plastizität, Sprödigkeit, Dichte.</p></article>
-      <article class="card"><span class="icon">02</span><h3>Elektrisch</h3><p>Leitfähigkeit. <span class="small-label">Vertiefung:</span> Durchschlagsfestigkeit, Dielektrizität, Magnetismus.</p></article>
-      <article class="card"><span class="icon">03</span><h3>Thermisch</h3><p>Schmelzpunkt, Wärmekapazität, Wärmeleitung, Ausdehnung.</p></article>
-      <article class="card"><span class="icon">04</span><h3>Chemisch</h3><p>Oxide. <span class="small-label">Vertiefung:</span> Korrosion, Giftigkeit, UV-Beständigkeit, Abbaubarkeit.</p></article>
-    </div>
-
-    <h2>2 · Werkstoffgruppen ohne Nebel</h2>
+    <nav class="jump-nav" aria-label="Themen direkt öffnen"><a href="#eigenschaften">4 Eigenschaftskategorien</a><a href="#werkstoffgruppen">Werkstoffgruppen</a><a href="#stoffaufbau">Reinstoff / Gemisch</a><a href="#notizdetails">Alle Tabellen &amp; Details</a><a href="#saeuren-basen">Säuren / Basen</a></nav>
+    <section class="master-map" id="werkstoffkarte" aria-labelledby="map-title">
+      <header><p class="eyebrow">DEINE LANDKARTE · 21.08. / 28.08. / 04.09.</p><h2 id="map-title">Werkstoff → Gruppe → Eigenschaften</h2><p>Die Gruppe sagt, was ein Werkstoff ist. Die vier Eigenschaftskategorien sagen, wie er sich verhält. Jeder Werkstoff wird durch alle vier Kategorien betrachtet.</p></header>
+      <div class="map-legend"><span class="map-status core">Mitschrift</span><span class="map-status research">Vertiefung aus deinen Notizen</span><span class="map-status open">Offene oder korrigierte Angabe</span><span class="map-status extra">Säuren/Basen: Zusatz</span></div>
+      <div class="atlas-grid">
+        <section class="atlas-panel" id="eigenschaften">
+          <h3>Die 4 Eigenschaftskategorien</h3><p>Alle Äste sind geöffnet. Tippe eine Überschrift zum Einklappen oder «Details», um die Beispiele und Tabellen zu lesen.</p>
+          <div class="property-grid">
+            <details class="property-branch mechanical" open><summary><span class="branch-number">01</span><span><b>Mechanisch</b><small>Kraft · Form · Masse</small></span></summary><div class="branch-body"><p>Wie reagiert der Werkstoff auf eine Belastung?</p><ul class="leaf-list">
+              <li><b>Festigkeit</b><br>↳ Zugfestigkeit<br>↳ Biegefestigkeit<br>↳ Torsionsfestigkeit<br>↳ Druckfestigkeit<br>↳ Scherbelastung</li>
+              <li><b>Härte</b><br>↳ Brinell · Rockwell · Vickers</li>
+              <li><b>Elastizität</b> → elastische Grenze</li>
+              <li><b>Plastizität</b> → bleibende Verformung<br><b>Elastoplastisch</b> → beide Anteile</li>
+              <li><b>Sprödigkeit ↔ Zähigkeit</b></li>
+              <li><b>Dichte</b> · ρ = m / V<br>↳ Leicht-/Schwermetall · Dichtetabelle</li>
+            </ul><a class="map-link" href="#details-mechanisch">Alle mechanischen Details →</a></div></details>
+            <details class="property-branch electrical" open><summary><span class="branch-number">02</span><span><b>Elektrisch</b><small>Strom · elektrisches Feld · Magnet</small></span></summary><div class="branch-body"><p>Wie reagiert der Werkstoff auf Strom und Felder?</p><ul class="leaf-list">
+              <li><b>Elektrische Leitfähigkeit</b> → Leiter / Isolierstoff</li>
+              <li><b>Durchschlagsfestigkeit</b><br>↳ Luft: ca. 3 kV/mm in der Mitschrift<br>↳ Vergleich der Isolierstoffe</li>
+              <li><b>Dielektrizität</b><br>↳ Polarisation · relative Permittivität εr<br>↳ Kondensator · Materialwerte</li>
+              <li><b>Magnetismus</b><br>↳ ferromagnetisch<br>↳ paramagnetisch<br>↳ diamagnetisch</li>
+            </ul><p class="source">Stichworte: 21.08.; ausführliche Erklärungen/Tabellen am 28.08. als recherchiert markiert.</p><a class="map-link" href="#electric-complete">Alle elektrischen Details →</a></div></details>
+            <details class="property-branch thermal" open><summary><span class="branch-number">03</span><span><b>Thermisch</b><small>Wärme · Temperatur · Zustand</small></span></summary><div class="branch-body"><p>Was verändert sich beim Erwärmen und Abkühlen?</p><ul class="leaf-list">
+              <li><b>Aggregatszustände</b><br>↳ fest · flüssig · gasförmig<br>↳ Form · Volumen · Komprimierbarkeit</li>
+              <li><b>Schmelzpunkt &amp; Siedepunkt</b><br>↳ Schmelzen ↔ Erstarren<br>↳ Verdampfen ↔ Kondensieren<br>↳ Sublimieren ↔ Resublimieren</li>
+              <li><b>Brennbarkeit</b> → Baustoffklassen</li>
+              <li><b>Hitzebeständigkeit</b></li>
+              <li><b>Wärmekapazität</b> · Q = m · c · ΔT</li>
+              <li><b>Wärmeleitfähigkeit</b> · λ</li>
+              <li><b>Wärmeausdehnung</b> · ΔL = L₀ · α · ΔT<br>↳ Dehnungsfuge · Stahlbeton · Bimetall</li>
+            </ul><a class="map-link" href="#details-thermisch">Alle thermischen Details →</a></div></details>
+            <details class="property-branch chemical" open><summary><span class="branch-number">04</span><span><b>Chemisch / ökologisch</b><small>Reaktion · Umgebung · Entsorgung</small></span></summary><div class="branch-body"><p>Am 04.09. heisst dieser Ast «chemisch/elektrochemisch».</p><ul class="leaf-list">
+              <li><b>Korrosionsbeständigkeit</b><br>↳ Rost · Passivierung<br>↳ Kontaktkorrosion · Opferanode</li>
+              <li><b>Elektrochemische Spannungsreihe</b><br>↳ edel / unedel · Standardpotentiale</li>
+              <li><b>Giftigkeit</b> → LD50 · Aufnahmewege</li>
+              <li><b>UV-Beständigkeit</b> → Versprödung<br>↳ Verbindung zur mechanischen Sprödigkeit</li>
+              <li><b>Abbaubarkeit</b> → Material und Umgebung</li>
+              <li><b>Chemische Vorgänge</b><br>↳ Oxide CO / CO₂ · Ammoniumnitrat<br>↳ Oxidation + Reduktion = Redox<br>↳ Oxidationsmittel / Reduktionsmittel<br>↳ schnelle / langsame Oxidation</li>
+            </ul><p class="source">Die recherchierten Erklärungen bleiben vollständig enthalten; der jeweilige Prüfstatus steht bei den Details.</p><a class="map-link" href="#details-chemisch">Alle chemischen Details →</a></div></details>
+          </div>
+        </section>
+        <section class="atlas-panel" id="werkstoffgruppen"><h3>Werkstoffgruppen und Untergruppen</h3><p>Die Einteilung aus den Mitschriften mit allen Beispielen.</p>
+          <div class="group-grid">
+            <ul class="tree"><li><strong>Metalle</strong><ul><li><b>Eisenwerkstoffe</b><ul><li>Stahl: unter 2,06 % Kohlenstoff</li><li>Guss: über 2,06 % Kohlenstoff</li><li><span class="map-status open">Unterrichtsgrenze; Quellenvergleich unten</span></li></ul></li><li><b>Nichteisenmetalle</b><ul><li>Leichtmetall: ρ &lt; 5 kg/dm³ → Aluminium, Magnesium, Titan</li><li>Schwermetall: hier ρ ≥ 5 kg/dm³ → Kupfer, Zink, Blei</li><li><a href="#mech-density">Genau 5: hier schwer — Konvention erklärt →</a></li></ul></li></ul></li><li><strong>Naturstoffe</strong><ul><li>Organisch → Holz</li><li>Anorganisch (Notiz: «unorganisch») → Mineralien</li></ul></li><li><strong>Betriebs-/Hilfsstoffe · nach Verwendung</strong><ul><li>Notiz: Öl, Fett, Kraftstoffe</li><li>Ergänzt: Hydrauliköl, Kühlwasser, Reiniger, Trennmittel</li><li>Keine Kunststoffart! <a href="#betriebsstoffe">Aufgaben und weitere Beispiele →</a></li></ul></li></ul>
+            <ul class="tree"><li><strong>Kunststoffe</strong><ul><li><b>Thermoplast</b> → durch Wärme umformbar. Notiz: Plastiksack im Coop, Lego, Spritzguss (Verarbeitungsverfahren).</li><li><b>Duroplast</b> → ausgehärtetes Netzwerk, nicht wieder aufschmelzbar. Beispiel: ausgehärtetes Epoxidharz. «Witterungsbeständig» aus der Notiz ist keine Definition.</li><li><b>Elastomere</b> → gummielastisch, gehen nach Entlastung zurück. Beispiele: Gummiband, Elastomer-Dichtung.</li></ul></li><li><strong>Verbundwerkstoffe</strong><ul><li>Notiz: Polyester, Carbon</li><li>Faserverbund = Harz + Fasern, z. B. glasfaserverstärktes Polyester oder carbonfaserverstärkter Kunststoff (CFK).</li><li>Polyester allein ist noch kein Verbund. <a href="#kunststoffdetails">Kunststoffarten erklärt →</a></li></ul></li><li><strong>Besondere elektrische Eigenschaften</strong><ul><li><b>Halbleiter</b> → Leitfähigkeit gezielt beeinflussbar; Silizium, Germanium, SiC, GaN</li><li><b>Supraleiter</b> → unter bestimmten Bedingungen widerstandslos; Niob-Titan, supraleitende Keramik</li><li><a href="#halbleiter-supraleiter">Unterschied, Funktion und Anwendungen →</a></li></ul></li></ul>
+          </div>
+          <p class="source">Die Unterrichtsgrenze 2,06 % steht in der Mitschrift. <a href="https://worldsteel.org/about-steel/what-is-steel/" target="_blank" rel="noopener">worldsteel</a> beschreibt Stahl allgemein mit weniger als 2 % C. Die Zahl 2,06 % ist keine universelle Normgrenze; bei Schulaufgaben die vorgegebene Einteilung verwenden. Der genaue Gleichheitsfall ist in der Mitschrift nicht definiert.</p>
+          <details class="atlas-detail" id="kunststoffdetails"><summary>Kunststoffarten — Aufbau, Eigenschaften und Beispiele</summary><div class="atlas-body"><div class="table-wrap"><table><thead><tr><th>Art</th><th>Aufbau → Verhalten</th><th>Beispiele / Anwendung</th></tr></thead><tbody><tr><td>Thermoplast</td><td>Unvernetzte Polymerketten: bei passender Erwärmung weich bzw. schmelzbar, beim Abkühlen wieder fest.</td><td>PE-Folie, PP-Gehäuse, klassische ABS-Legosteine. Spritzguss formt erwärmten Kunststoff in einer Form.</td></tr><tr><td>Duroplast</td><td>Nach dem Aushärten dauerhaft chemisch vernetzt. Erneutes Erwärmen schmilzt ihn nicht einfach auf; zu grosse Hitze zersetzt ihn.</td><td>Ausgehärtetes Epoxidharz, Phenolharz; starre Isolier- und Formteile.</td></tr><tr><td>Elastomer</td><td>Gummielastisch im Einsatzbereich. Klassische vulkanisierte Elastomere sind weitmaschig vernetzt und nicht wieder schmelzbar.</td><td>Gummiband, Dichtungsring, elastische Schwingungsdämpfer.</td></tr></tbody></table></div><p class="note">Ergänzung: Thermoplastische Elastomere (TPE) verbinden gummiartiges Verhalten mit thermoplastischer Verarbeitung. Deshalb nicht pauschal «jedes gummielastische Material ist unschmelzbar» lernen. UV- und Witterungsbeständigkeit hängen auch von Rezeptur und Schutz ab.</p><p class="source"><a href="https://www.twi-global.com/technical-knowledge/faqs/thermoset-vs-thermoplastic" target="_blank" rel="noopener">TWI: Thermoplast / Duroplast</a> · <a href="https://www.celanese.com/products/thermoplastic-elastomers-forflex-laprene-sofprene-santoprene-hytrel" target="_blank" rel="noopener">Celanese: TPE und Elastizität</a></p></div></details>
+          <details class="atlas-detail" id="betriebsstoffe"><summary>Betriebs-/Hilfsstoffe — wozu braucht man sie?</summary><div class="atlas-body"><p>Diese Einteilung beschreibt die <strong>Aufgabe im Arbeitsprozess</strong>, nicht die chemische Stoffart. Sie gehört deshalb neben die Werkstoffgruppen, nicht unter «Kunststoffe». In der technischen Sammelgruppe unterstützen solche Stoffe Betrieb und Verarbeitung.</p><div class="table-wrap"><table><thead><tr><th>Beispiel</th><th>Aufgabe</th><th>Merken</th></tr></thead><tbody><tr><td>Schmieröl / Schmierfett</td><td>Reibung und Verschleiss an bewegten Teilen vermindern.</td><td>Notizbeispiele Öl und Fett; z. B. Getriebeöl oder Lagerfett.</td></tr><tr><td>Kraftstoff / Brennstoff</td><td>Energie bereitstellen.</td><td>Notizbeispiel Kraftstoffe; z. B. Dieselkraftstoff für eine Maschine.</td></tr><tr><td>Kühlwasser / Kühlschmierstoff</td><td>Wärme abführen; Kühlschmierstoffe unterstützen zusätzlich die Bearbeitung.</td><td>Zum Beispiel beim Bohren oder Fräsen.</td></tr><tr><td>Hydrauliköl</td><td>Druck und damit Kraft übertragen.</td><td>Zum Beispiel in einer Hydraulikanlage.</td></tr><tr><td>Technischer Reiniger / Entfetter</td><td>Rückstände und Fett entfernen.</td><td>Reinigung vor Wartung oder Weiterverarbeitung.</td></tr><tr><td>Trennmittel</td><td>Das Ablösen von Teilen aus Formen erleichtern.</td><td>Zum Beispiel bei Formprozessen.</td></tr><tr><td>Korrosionsschutzmittel</td><td>Oberflächen zeitweise gegen korrosive Umgebung schützen.</td><td>Zum Beispiel Lager- oder Transportschutz.</td></tr></tbody></table></div><p class="note">Begriffe sind kontextabhängig: Die Schweizer üK-Unterlage fasst Hilfs- und Betriebsstoffe als nicht ins Endprodukt eingehende Prozessstoffe zusammen. In der <strong>Kostenrechnung</strong> meint «Hilfsstoff» dagegen einen untergeordneten Produktbestandteil, etwa Schrauben oder Lack. Nicht unbemerkt zwischen diesen Einteilungen wechseln.</p><p class="source"><a href="https://www.aglpl.ch/dokumente/ueberbetriebliche-kurse/uek2-script.pdf#page=7" target="_blank" rel="noopener">AGLPL / ETH / Oerlikon: technische Einteilung, S. 7</a> · <a href="https://lubrication.blaser.com/de/schmiertechnik-produkte/" target="_blank" rel="noopener">Blaser Swisslube: Schmier-, Hydraulik-, Reinigungs- und Trennprodukte</a> · <a href="https://www.haufe-akademie.de/blog/glossar/vorratsvermoegen/" target="_blank" rel="noopener">Haufe Akademie: Einteilung in der Kostenrechnung</a></p><p class="warning">Ein Betriebsstoff ist nicht automatisch harmlos. Datenblatt und Betriebsanweisung beachten; Hautkontakt, Nebel, Brand- und Umweltgefahren berücksichtigen. <a href="https://www.suva.ch/67056.d" target="_blank" rel="noopener">Suva: Schmierstoffe</a>.</p></div></details>
+          <details class="atlas-detail" id="halbleiter-supraleiter"><summary>Halbleiter ≠ Supraleiter — Erklärung, Werkstoffe und Anwendungen</summary><div class="atlas-body"><p class="note"><strong>Online ergänzte Erklärung zum Stichwort vom 21.08.</strong> Beide Begriffe beschreiben elektrisches Verhalten. Sie sind keine «halben» beziehungsweise «besonders schweren» Metalle.</p><div class="composition-grid"><div><h4>Halbleiter · gezielt beeinflussen</h4><p>Die Zahl beweglicher Ladungsträger lässt sich durch <strong>Dotierung, Licht oder Temperatur</strong> verändern. Dotierung bedeutet, gezielt kleine Mengen anderer Atome einzubauen. Elektronen und «Löcher» (fehlende Elektronen) tragen den Strom.</p><p>n-dotiert: vor allem Elektronen als bewegliche Ladungsträger. p-dotiert: vor allem Löcher. Beide Materialien bleiben insgesamt elektrisch neutral. Ein p-n-Übergang bildet die Grundlage einer Diode.</p><p><strong>Nutzen:</strong> Strom steuern, gleichrichten oder Licht in elektrische Signale umwandeln — statt ihn wie ein Kupferdraht nur weiterzuleiten.</p></div><div><h4>Supraleiter · besonderer Zustand</h4><p>Unterhalb einer materialabhängigen <strong>kritischen Temperatur</strong> kann ein geeigneter Werkstoff seinen elektrischen Gleichstromwiderstand verlieren. Ein ausreichend schwaches Magnetfeld wird aus dem Inneren verdrängt (Meissner-Effekt).</p><p>Temperatur, Magnetfeld und Strom dürfen ihre jeweiligen Grenzen nicht überschreiten. Kühlung bleibt nötig: «kein Widerstand im Leiter» bedeutet nicht «die gesamte Anlage braucht keine Energie».</p><p><strong>Nutzen:</strong> sehr starke Magnetfelder, zum Beispiel in MRT-Geräten und Teilchenbeschleunigern.</p></div></div><div class="table-wrap"><table><thead><tr><th>Werkstoff</th><th>Kategorie</th><th>Anschauliche Anwendung</th></tr></thead><tbody><tr><td>Silizium (Si)</td><td>Elementhalbleiter</td><td>Transistoren, integrierte Schaltungen, Solarzellen.</td></tr><tr><td>Germanium (Ge)</td><td>Elementhalbleiter</td><td>Ein weiteres klassisches Halbleitermaterial; auch in Detektoren.</td></tr><tr><td>Siliziumkarbid (SiC)</td><td>Verbindungshalbleiter</td><td>Leistungselektronik für hohe Spannungen, z. B. Umrichter.</td></tr><tr><td>Galliumnitrid (GaN)</td><td>Verbindungshalbleiter</td><td>Schnell schaltende Leistungselektronik, z. B. kompakte Ladegeräte; optoelektronische Bauteile.</td></tr><tr><td>Niob-Titan (NbTi)</td><td>Metallischer Supraleiter bei tiefer Temperatur</td><td>Magnetspulen in MRT und Beschleunigern.</td></tr><tr><td>Keramische Hochtemperatur-Supraleiter</td><td>Supraleiter</td><td>Auch sie müssen stark gekühlt werden; «Hochtemperatur» bedeutet hier nicht Raumtemperatur.</td></tr></tbody></table></div><p class="source"><a href="https://openstax.org/books/university-physics-volume-3/pages/9-7-semiconductor-devices" target="_blank" rel="noopener">OpenStax: Dotierung, p-n-Übergang und Bauteile</a> · <a href="https://www.infineon.com/our-stories/empowering-green-energy-wide-bandgap-semiconductors" target="_blank" rel="noopener">Infineon: SiC und GaN</a> · <a href="https://www.infineon.com/product-information/what-is-gan" target="_blank" rel="noopener">Infineon: Beispiele und Anwendungen</a> · <a href="https://home.cern/science/physics/superconductivity/" target="_blank" rel="noopener">CERN: Supraleitung</a> · <a href="https://www.bruker.com/en/products-and-solutions/superconductors/superconductors/niobium-titanium-superconductor.html" target="_blank" rel="noopener">Bruker: NbTi-Magnetspulen</a></p></div></details>
+        </section>
+      </div>
+      <section class="composition-atlas" id="stoffaufbau"><h3>Stoffaufbau: Reinstoff oder Gemisch?</h3><div class="composition-grid"><div><b>Reinstoff</b><p>Eine chemische Substanz.</p><ul class="tree"><li>Element → Kupfer, Aluminium</li><li>Verbindung → aus chemisch gebundenen Elementen, z. B. reines Wasser</li></ul></div><div><b>Gemisch</b><p>Mehrere Stoffe gemeinsam.</p><ul class="tree"><li>Homogen → gleichmässig, eine Phase</li><li>Heterogen → mehrere Phasen</li><li>Mischformen → fest–fest · flüssig–flüssig · flüssig–fest</li><li>Legierung → Messing aus Kupfer + Zink</li></ul></div></div>
+      <details class="atlas-detail"><summary>Die ungeordneten Beispiele aus der Rohnotiz einordnen</summary><div class="atlas-body"><div class="table-wrap"><table><thead><tr><th>Rohnotiz</th><th>Einordnung zum Lernen</th></tr></thead><tbody><tr><td>Messing unter «Verbindungsstoffe»</td><td>Messing ist eine Legierung aus Kupfer und Zink; im Schulmodell ein homogenes Metallgemisch.</td></tr><tr><td>Kaffee unter «homogen»</td><td>Die Zubereitung ist entscheidend; ungelöste Partikel und Öltröpfchen können weitere Phasen bilden. Das pauschale Beispiel bleibt ungenau.</td></tr><tr><td>Wasser unter «homogen»</td><td>Reines Wasser ist ein Reinstoff; Wasser mit vollständig gelösten Stoffen kann ein homogenes Gemisch sein.</td></tr><tr><td>Milch unter «homogen»</td><td>Milch ist eine Emulsion; ihre feinen Fetttröpfchen bilden eine zweite Phase.</td></tr><tr><td>Beton unter «heterogen»</td><td>Mehrere erkennbare Bestandteile/Phasen: ein geeignetes Beispiel.</td></tr><tr><td>«Mensch» unter «heterogen»</td><td>So steht es in der Notiz. Ein Organismus besteht aus sehr vielen Stoffen und Strukturen; für die einfache Werkstoffaufgabe ist Beton das eindeutigere Beispiel.</td></tr></tbody></table></div><p>Die ursprüngliche Einrückung war bereits in der Notiz als unsicher markiert. Diese Beispiele sind deshalb hier sichtbar mit ihrer Einordnung aufbewahrt.</p></div></details></section>
+      <aside class="extra-branch"><h3>Säuren &amp; Basen · dein Zusatz</h3><p>Säure: H⁺ abgeben · Base: H⁺ aufnehmen · pH-Skala · Neutralisation · sicherer Umgang. <a href="#saeuren-basen">Zum Zusatzkapitel →</a></p></aside>
+    </section>
+    <section class="note-atlas" id="notizdetails"><h2>Die Notizen im Detail</h2><p>Öffne eine Kategorie: Hier stehen die Erklärungen, Materialbeispiele, Formeln und Zahlentabellen vom 21.08., 28.08. und 04.09. Angaben aus recherchierten Notizteilen sind gekennzeichnet; Korrekturen stehen direkt daneben.</p><div class="filters"><button class="plain-btn" id="expandDetails">Alle Details öffnen</button><button class="plain-btn" id="collapseDetails">Alle Details schliessen</button></div>
+      <div id="details-mechanisch"></div>
+<details class="atlas-detail" id="mech-complete">
+  <summary><strong>01 · Mechanische Eigenschaften</strong><span>Belastung → Verformung → Bruch · alle Beispiele und Dichtewerte</span></summary>
+  <div class="atlas-body">
+    <p class="note"><strong>Aus den Notizen vom 21.08., 28.08. und 04.09.</strong> Zu dieser Kategorie gehören Festigkeit, Härte, Elastizität, Plastizität, Sprödigkeit/Zähigkeit und in eurer Unterrichtsgliederung auch die Dichte.</p>
+    <h3 id="mech-loads">Festigkeit: Welche Belastung muss der Werkstoff aushalten?</h3>
+    <p>Festigkeit beschreibt den Widerstand gegen Versagen unter einer Belastung. Die <strong>Belastungsart</strong> sagt zuerst, wie die Kräfte wirken; die passende Festigkeitsangabe sagt, wie viel der Werkstoff unter definierten Bedingungen aushält.</p>
     <div class="table-wrap"><table>
-      <thead><tr><th>Gruppe</th><th>Unterteilung / Beispiel aus der Notiz</th><th>Merksatz</th></tr></thead>
+      <thead><tr><th>Belastung / Eigenschaft</th><th>Bild im Kopf</th><th>Alle Beispiele aus den Notizen</th></tr></thead>
       <tbody>
-        <tr><td><strong>Metalle</strong></td><td>Eisen / Nichteisen; Leicht- und Schwermetalle</td><td>Metalle wählst du oft wegen Leitfähigkeit, Festigkeit oder Formbarkeit.</td></tr>
-        <tr><td><strong>Naturstoffe</strong></td><td>organisch / unorganisch, z. B. Holz oder Mineralien</td><td>Die Herkunft ist natürlich, die Eigenschaften können trotzdem sehr unterschiedlich sein.</td></tr>
-        <tr><td><strong>Kunststoffe</strong></td><td>Thermoplast, Duroplast, Elastomer</td><td>Die Frage lautet oft: Wird er bei Wärme formbar, bleibt er hart oder elastisch?</td></tr>
-        <tr><td><strong>Verbundwerkstoffe</strong></td><td>z. B. Carbon oder Polyester-Verbund</td><td>Mehrere Werkstoffe werden kombiniert, damit ihre Stärken zusammenwirken.</td></tr>
-        <tr><td><strong>Halbleiter / Supraleiter</strong></td><td><span class="chip">offenes Stichwort</span></td><td>Diese Gruppe steht am 21.08. in deiner Mitschrift, aber ohne Erklärung. Nicht raten: bei Wäfler nachfragen.</td></tr>
+        <tr><td><strong>Zug → Zugfestigkeit</strong></td><td>← auseinanderziehen →</td><td>Kabel ziehen; Seile; Drahtseile; Anhängerkupplung*; <strong>Schraube auf Zug</strong> (Ergänzung 28.08.).</td></tr>
+        <tr><td><strong>Biegung → Biegefestigkeit</strong></td><td>Ein Bauteil krümmt sich.</td><td>Brücken; Sprungbrett; Regalbretter*; Skier*.</td></tr>
+        <tr><td><strong>Torsion → Torsionsfestigkeit</strong></td><td>↻ gegeneinander verdrehen ↺</td><td>Lenkwelle beim Auto; allgemein Wellen; Schraubenzieher*; <strong>Feder auf Torsion</strong> (Ergänzung 28.08.).</td></tr>
+        <tr><td><strong>Druck → Druckfestigkeit</strong></td><td>→ zusammendrücken ←</td><td><strong>Schlauch</strong> (so mitgeschrieben; Belastungssituation noch unklar); Betonfundament*; Hausmauern*; Säulen*.</td></tr>
+        <tr><td><strong>Scherung → Scherfestigkeit</strong></td><td>Benachbarte Querschnitte gegeneinander verschieben / abscheren.</td><td>Schrauben-/Bolzenverbindungen*; Nieten*; Schweissnähte*; Passfeder einer Welle-Nabe-Verbindung*; Blechschere beim Schneiden*.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Beispiele richtig lesen:</strong> Ein Bauteil kann mehrere Belastungen erfahren. Die Tabellenzuordnung benennt die im Unterricht betrachtete Situation. Bei einer Schrauben-Druckfeder wird der Federdraht hauptsächlich verdreht. Eine Schraube kann beim Verspannen auf Zug und in einer anderen Verbindung auf Scherung belastet sein. Ein unter Innendruck stehender Schlauch ist nicht einfach ein reines Beispiel für Druckfestigkeit seines Wandmaterials; das Stichwort bleibt deshalb als <strong>Kontext offen</strong> erhalten. Das Sternchen * kennzeichnet Beispiele, die schon in der Ursprungsnotiz mit * versehen waren. Fachliche Einordnung: <a href="https://blog.federnshop.com/torsionsfedern/" target="_blank" rel="noopener">Gutekunst: Schraubendruck- und Schraubenzugfedern</a>; <a href="https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/082fcd712adffa589a670f9f8dfdd49a_MIT3_11F99_pv.pdf" target="_blank" rel="noopener">MIT: Spannungen in druckbelasteten Hohlkörpern</a>.</p>
+
+    <h3 id="mech-hardness">Härte: Widerstand gegen Eindringen</h3>
+    <p><strong>Härte</strong> ist der Widerstand eines Stoffes gegen das Eindringen eines anderen Körpers. Bei den drei notierten Prüfverfahren werden Prüfkörper, Prüfkraft und Einwirkzeit festgelegt. Die Messmethode entscheidet, welche Härteskala herauskommt.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Verfahren</th><th>So steht es in der Notiz</th><th>Geprüfte Präzisierung</th><th>Was ausgewertet wird</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Brinell</strong></td><td>Kugel, «meist Stahl».</td><td>Beim heutigen <strong>HBW</strong>-Verfahren eine <strong>Wolframcarbid-/Hartmetallkugel</strong>; Stahlkugeln gehören zum älteren HBS-Verfahren.</td><td>Grösse bzw. Durchmesser des bleibenden Eindrucks.</td></tr>
+        <tr><td><strong>Rockwell</strong></td><td>Kegel, «meist Stahl».</td><td>Je nach Rockwell-Skala <strong>Diamantkegel oder Hartmetallkugel</strong>. «Kegel aus Stahl» ist keine verlässliche allgemeine Zuordnung.</td><td>Bleibende Eindringtiefe nach dem festgelegten Lastablauf.</td></tr>
+        <tr><td><strong>Vickers</strong></td><td>Pyramide, «meist Stahl».</td><td><strong>Diamantpyramide</strong> mit quadratischer Grundfläche.</td><td>Die beiden Diagonalen des bleibenden Eindrucks.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Prüfungsabgleich:</strong> Die Formen Kugel / Kegel / Pyramide helfen beim Wiedererkennen. Die Materialangabe «meist Stahl» aus der Notiz muss mit dem Lehrmittel geklärt werden. Herstellerquellen: <a href="https://www.struers.com/en/knowledge/hardness-testing/brinell" target="_blank" rel="noopener">Struers: Brinell</a>, <a href="https://www.struers.com/knowledge/hardness-testing/rockwell" target="_blank" rel="noopener">Rockwell</a>, <a href="https://www.struers.com/en/knowledge/hardness-testing/vickers" target="_blank" rel="noopener">Vickers</a>.</p>
+
+    <h3 id="mech-deformation">Elastisch, plastisch, elastoplastisch, spröd oder zäh?</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Eigenschaft</th><th>Während / nach der Belastung</th><th>Merksatz</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Elastizität</strong></td><td>Der Werkstoff verformt sich und nimmt nach Entlastung wieder seine ursprüngliche Form an.</td><td>Die Form kommt zurück.</td></tr>
+        <tr><td><strong>Plastizität</strong></td><td>Nach der Entlastung bleibt eine Verformung zurück.</td><td>Die neue Form bleibt.</td></tr>
+        <tr><td><strong>Elastoplastisches Verhalten</strong></td><td>Ein Werkstoff zeigt elastische und plastische Anteile. Bei ausreichend grosser Belastung bleibt nach der elastischen Rückfederung ein plastischer Anteil bestehen.</td><td>Ein Teil federt zurück, ein Teil bleibt.</td></tr>
+        <tr><td><strong>Sprödigkeit</strong></td><td>Bruch mit sehr geringer plastischer Verformung davor; dadurch oft wenig sichtbare Vorwarnung.</td><td>Kaum verformt → gebrochen.</td></tr>
+        <tr><td><strong>Zähigkeit</strong></td><td>Ein zäher Werkstoff kann vor dem Bruch viel Energie aufnehmen; im notierten Gegensatz zu sprödem Verhalten verformt er sich merklich.</td><td>Verformung und Energieaufnahme vor dem Bruch.</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Gedankenweg für ein zähes Metall:</strong> kleine Belastung → elastische Verformung → Entlasten: ursprüngliche Form. Grössere Belastung über den elastischen Bereich hinaus → zusätzlich plastische Verformung → Entlasten: bleibende Formänderung. Weiter belasten kann schliesslich zum Bruch führen.</p>
+    <p class="warning"><strong>Wichtige Korrektur zur Elastizitätsgrenze:</strong> In der Notiz steht «kehrt nicht zurück → Bruch». Der Beginn bleibender Verformung bedeutet <strong>nicht automatisch sofortigen Bruch</strong>. Beim Zugversuch beschreibt die Streckgrenze den Übergang zum plastischen Verhalten; bei einem nicht ausgeprägten Übergang wird häufig die 0,2-%-Dehngrenze verwendet. Quelle: <a href="https://www.zwickroell.com/industries/materials-testing/tensile-test/yield-point/" target="_blank" rel="noopener">ZwickRoell: Streckgrenze und Dehngrenze</a>.</p>
+    <p><strong>Beispiel vom 04.09.:</strong> Lange UV-Belastung kann Kunststoffe verspröden. Der vorher zähe Kunststoff wird mit der Zeit rissig und bricht leichter. Hier verbindet sich die mechanische Eigenschaft <em>Sprödigkeit</em> mit der chemisch/ökologischen Eigenschaft <em>UV-Beständigkeit</em>.</p>
+
+    <h3 id="mech-density">Dichte: Masse in einem bestimmten Volumen</h3>
+    <p><strong>ρ = m / V</strong> · ρ: Dichte · m: Masse · V: Volumen.<br><strong>1 kg/dm³ = 1 g/cm³ = 1000 kg/m³.</strong> Zwei gleich grosse Stücke können wegen ihrer unterschiedlichen Dichte sehr verschiedene Massen haben.</p>
+    <div class="table-wrap"><table>
+      <caption>Vollständige Dichtetabelle aus der Notiz vom 21.08. · recherchiert, nicht mitdiktiert · Näherungswerte</caption>
+      <thead><tr><th>Werkstoff</th><th>ρ in kg/dm³ = g/cm³</th><th>Einordnung nach der notierten 5er-Grenze</th></tr></thead>
+      <tbody>
+        <tr><td>Aluminium</td><td>2,70</td><td>Leichtmetall</td></tr>
+        <tr><td>Stahl</td><td>7,85</td><td>Schwermetall</td></tr>
+        <tr><td>Kupfer</td><td>8,96</td><td>Schwermetall</td></tr>
+        <tr><td>Blei</td><td>11,34</td><td>Schwermetall</td></tr>
+        <tr><td>Wolfram</td><td>19,25</td><td>Schwermetall</td></tr>
+        <tr><td>Gold</td><td>19,32</td><td>Schwermetall</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Notizwerte · zu prüfen:</strong> Die Zahlen sind vollständig übernommen. Für Stahl nennt die Notiz je nach Legierung etwa <strong>7,70–8,10 kg/dm³</strong>; 7,85 steht dort für unlegierten Baustahl. Diese Werte sind keine Spezifikation eines bestimmten Produkts.</p>
+    <p class="note"><strong>Dichte-Grenze recherchiert:</strong> Dieses Paket folgt der lückenlosen Notiz vom 21.08.: <strong>ρ &lt; 5 kg/dm³ = leicht; ρ ≥ 5 kg/dm³ = schwer.</strong> Genau 5 gehört damit hier zu schwer. Die Doppelzuordnung durch ≤ und ≥ am 04.09. ist korrigiert. <strong>5 kg/dm³ = 5 g/cm³ = 5000 kg/m³.</strong></p><p>Das ist eine <strong>Einteilungskonvention, keine Naturgrenze</strong>: Die Schweizer <a href="https://www.aglpl.ch/dokumente/ueberbetriebliche-kurse/uek2-script.pdf#page=8" target="_blank" rel="noopener">AGLPL-üK-Unterlage, S. 8</a> verwendet &lt; 5000 für leicht und &gt; 5000 für schwer, ohne Gleichheit zuzuordnen. <a href="https://publications.iupac.org/ci/2001/november/heavymetals_t1.html" target="_blank" rel="noopener">IUPAC dokumentiert verschiedene Definitionen</a>; weltweit ist «Schwermetall» nicht einheitlich abgegrenzt. Keine Zahl aus der Tabelle liegt am Grenzwert. «Schwer» bedeutet auch nicht automatisch giftig.</p><p class="warning">«Spezifisches Gewicht» steht am 04.09. als Notizwort. m/V in kg/dm³ ist die <strong>Dichte</strong>; spezifisches Gewicht wäre Gewichtskraft pro Volumen.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="electric-complete">
+  <summary><strong>02 · Elektrische Eigenschaften</strong><span>Leitfähigkeit · Durchschlag · Polarisation / εr · Magnetismus</span></summary>
+  <div class="atlas-body">
+    <p class="note"><strong>Stoffstatus:</strong> Die vier Stichworte wurden am 21.08. notiert. Die ausführlichen Tabellen und Erklärungen vom 28.08. sind in der Ursprungsnotiz als <strong>«recherchiert, nicht mitdiktiert»</strong> gekennzeichnet. Hier bleibt ihr kompletter Inhalt zugänglich; Zahlen ohne genaue Prüfbedingungen sind als Notizwerte zu lesen.</p>
+    <h3 id="electric-conductivity">Leitfähigkeit: Kann elektrische Ladung durch den Werkstoff fliessen?</h3>
+    <p>Bei einem <strong>elektrischen Leiter</strong> können sich Ladungsträger durch das Material bewegen. Metalle haben bewegliche Elektronen; Kupfer und Aluminium sind vertraute Leiterwerkstoffe. Ein <strong>Isolierstoff</strong> hemmt den Stromfluss stark. Viele Kunststoffe dienen deshalb als Kabelummantelung oder Gehäuse. Gute Isolation, hohe Durchschlagsfestigkeit und hohe Dielektrizitätszahl beschreiben jeweils eine andere Eigenschaft.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Frage</th><th>Gesuchte Eigenschaft</th><th>Woran du sie erkennst</th></tr></thead>
+      <tbody>
+        <tr><td>Fliesst leicht Strom?</td><td><strong>Leitfähigkeit</strong></td><td>Bewegliche Ladungsträger.</td></tr>
+        <tr><td>Welche elektrische Feldstärke hält die Isolation aus?</td><td><strong>Durchschlagsfestigkeit</strong></td><td>Angabe etwa in kV/mm.</td></tr>
+        <tr><td>Wie reagiert das Material im elektrischen Feld?</td><td><strong>Dielektrische Eigenschaften</strong></td><td>Polarisation, relative Permittivität εr.</td></tr>
+        <tr><td>Wie reagiert es auf ein Magnetfeld?</td><td><strong>Magnetische Eigenschaften</strong></td><td>Ferro-, para- oder diamagnetisch.</td></tr>
       </tbody>
     </table></div>
 
-    <h3>Reinstoff oder Gemisch?</h3>
-    <div class="grid two">
-      <div class="card"><h3>Reinstoff</h3><p>Besteht aus einer einzigen chemischen Substanz, z. B. einem Element oder einer Verbindung.</p></div>
-      <div class="card"><h3>Gemisch</h3><p>Besteht aus mehreren Stoffen. Eine Legierung wie Messing ist ein homogenes Metallgemisch.</p></div>
-    </div>
+    <h3 id="electric-breakdown">Durchschlagsfestigkeit: Wenn ein Isolierstoff leitend wird</h3>
+    <p>Wird die elektrische Feldstärke zu gross, kann eine Isolation <strong>durchschlagen</strong>. Dabei entsteht ein leitender Pfad; in Gasen kann sich eine Entladung bzw. ein Lichtbogen bilden. Bei festen Isolierstoffen kann ein bleibender Schaden entstehen. «Kurzzeitig leitend» aus der Notiz bedeutet daher nicht, dass sich jedes Material anschliessend erholt.</p>
+    <p><strong>Einheit: kV/mm</strong> — elektrische Feldstärke, nicht bloss Spannung. Im vereinfachten homogenen Feld gilt <strong>E = U/d</strong>. Das ist ein Lernmodell; daraus allein wird kein zulässiger Sicherheitsabstand oder Isolationsaufbau bestimmt.</p>
+    <div class="table-wrap"><table>
+      <caption>Alle sechs Werte aus der Notiz vom 28.08.</caption>
+      <thead><tr><th>Stoff</th><th>Notierter Wert</th><th>Einordnung / offene Bedingung</th></tr></thead>
+      <tbody>
+        <tr><td>Luft</td><td>≈ 3 kV/mm</td><td>Auch als Näherungswert in OpenStax angegeben; abhängig von den Bedingungen.</td></tr>
+        <tr><td>Transformatorenöl, neu</td><td>≈ 28–30 kV/mm</td><td><strong>Notizwert · zu prüfen:</strong> Öltyp, Zustand und Prüfverfahren fehlen.</td></tr>
+        <tr><td>PTFE / Teflon</td><td>≈ 60 kV/mm</td><td>Auch in der OpenStax-Vergleichstabelle enthalten; kein allgemeiner Produktgarantiewert.</td></tr>
+        <tr><td>Keramik</td><td>&gt; 100 kV/mm</td><td><strong>Notizwert · zu prüfen:</strong> «Keramik» umfasst sehr verschiedene Werkstoffe; nicht pauschal übertragbar.</td></tr>
+        <tr><td>Glimmer / Mica</td><td>100–200 kV/mm</td><td><strong>Notizwert · zu prüfen:</strong> Sorte, Dicke und Prüfbedingungen fehlen.</td></tr>
+        <tr><td>Polyimid / PI</td><td>&gt; 200 kV/mm</td><td><strong>Notizwert · zu prüfen:</strong> für einzelne dünne Folien plausibel, aber nicht für jede PI-Folie und Dicke gültig.</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Wovon hängt der Durchschlag ab?</strong> In den Notizen: <strong>Feuchtigkeit, Luftdruck und Elektrodenform</strong>. Zusätzlich beeinflussen Werkstoffsorte, Dicke, Temperatur und Prüfverfahren den gemessenen Wert. Ein konkretes Herstellerbeispiel zeigt den Unterschied: DuPont nennt für Kapton-HN-Folie typische Werte von <strong>303 kV/mm bei 25 μm</strong>, aber <strong>154 kV/mm bei 125 μm</strong>, jeweils unter angegebenen Prüfbedingungen.</p>
+    <p><strong>Praxisbezug aus der Notiz:</strong> Keramik und Glas werden für Hochspannungsisolatoren verwendet. Ihre Eignung hängt vom konkreten Isolator und seiner Form sowie von elektrischen, mechanischen und Umgebungsbedingungen ab; die pauschale Zeile «Keramik &gt; 100» erklärt die Auswahl nicht allein.</p>
+    <p class="note">Geprüfte Quellen: <a href="https://openstax.org/books/college-physics-2e/pages/19-5-capacitors-and-dielectrics" target="_blank" rel="noopener">OpenStax / Rice University: Durchschlag, Luft und PTFE</a>; <a href="https://www.dupont.com/content/dam/electronics/amer/us/en/electronics/public/documents/en/EI-10142-Kapton-Summary-of-Properties.pdf" target="_blank" rel="noopener">DuPont: Kapton-Werkstoffdaten, Tabelle 7</a>.</p>
 
-    <div class="warning"><strong>Saubere Formulierung für die Prüfung:</strong> Deine Notiz nennt als Unterrichtsgrenze <strong>Stahl unter 2,06&nbsp;% C</strong> und <strong>Guss über 2,06&nbsp;% C</strong>. Verwende für die Prüfung diese Lehrmittelgrenze. Die Branchenquelle worldsteel fasst Stahl breiter als Eisen-Kohlenstoff-Legierung mit weniger als 2&nbsp;% Kohlenstoff zusammen — das ist keine Aufforderung, den Unterrichtswert umzuschreiben.</div>
-    <div class="warning"><strong>Offene Grenzfrage:</strong> Am 21.08. steht <strong>Leichtmetall &lt; 5 kg/dm³</strong> und <strong>Schwermetall ≥ 5 kg/dm³</strong>; am 04.09. steht bei Leichtmetall <strong>≤ 5 kg/dm³</strong>. Das widerspricht sich genau bei 5 kg/dm³. Diese Seite entscheidet den Grenzfall nicht — bitte bei Wäfler klären.</div>
+    <h3 id="electric-dielectric">Dielektrische Eigenschaften: Ladungen verschieben oder ausrichten</h3>
+    <p>Ein <strong>Dielektrikum</strong> ist ein elektrisch isolierendes Material, das im elektrischen Feld <strong>polarisiert</strong> wird. Gebundene positive und negative Ladungen verschieben sich geringfügig gegeneinander; vorhandene elektrische Dipole können sich bevorzugt ausrichten. Das Material muss dazu nicht wie ein Leiter Strom durchlassen.</p>
+    <p><strong>Feld anlegen → Ladungsverschiebung / Dipolausrichtung → Polarisation → Einfluss auf das elektrische Feld und die Kapazität.</strong></p>
+    <p>Die <strong>relative Permittivität εr</strong>, auch Dielektrizitätszahl genannt, ist dimensionslos. Im betrachteten einfachen Dielektrikum-Modell ist sie das Verhältnis zur Permittivität des Vakuums. Vakuum hat <strong>genau εr = 1</strong>; Luft liegt sehr nahe daran. Der Notizsatz «immer &gt; 1» ist deshalb bereits für das Vakuum zu korrigieren. Materialwerte hängen unter anderem von Temperatur und Frequenz ab.</p>
+    <div class="table-wrap"><table>
+      <caption>Vollständige εr-Tabelle aus der Notiz vom 28.08. · Näherungswerte</caption>
+      <thead><tr><th>Stoff</th><th>Notierter Wert εr</th><th>Lesart</th></tr></thead>
+      <tbody>
+        <tr><td>Vakuum / Luft</td><td>≈ 1</td><td>Vakuum genau 1; Luft annähernd 1.</td></tr>
+        <tr><td>PTFE / Teflon</td><td>≈ 2,1</td><td>Als typischer Vergleichswert auch bei OpenStax.</td></tr>
+        <tr><td>Polyethylen / PE</td><td>≈ 2,25</td><td>Notizwert · Sorte und Messbedingungen prüfen.</td></tr>
+        <tr><td>PVC</td><td>≈ 3–3,5</td><td>Notizwert · Zusammensetzung und Messbedingungen prüfen.</td></tr>
+        <tr><td>Glas</td><td>≈ 4,7; je nach Sorte 3,7–10</td><td>Notizwert · die Glassorte ist wesentlich.</td></tr>
+        <tr><td>Porzellan</td><td>≈ 7</td><td>Notizwert · Sorte und Messbedingungen prüfen.</td></tr>
+        <tr><td>Wasser</td><td>80,2 bei 20 °C</td><td>Notizwert; OpenStax nennt gerundet 80 bei 20 °C. Hohe εr bedeutet nicht automatisch sichere elektrische Isolation.</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Kondensator-Zusammenhang:</strong> Für gleiche Plattenfläche <em>A</em>, gleichen Abstand <em>d</em> und vollständige Füllung im idealen Plattenmodell gilt <strong>C = ε0 · εr · A / d</strong>. Gegenüber Vakuum erhöht das Dielektrikum die Kapazität um den Faktor εr: <strong>C = εr · C0</strong>. Kunststoffe werden deshalb sowohl als Isolatoren an Kabeln und Gehäusen als auch als Dielektrika in Kondensatoren genutzt.</p>
+    <p class="note">Geprüfte Grundlagen: <a href="https://openstax.org/books/university-physics-volume-2/pages/8-5-molecular-model-of-a-dielectric" target="_blank" rel="noopener">OpenStax: Polarisation</a> und <a href="https://openstax.org/books/college-physics-2e/pages/19-5-capacitors-and-dielectrics" target="_blank" rel="noopener">Kapazität und Vergleichstabelle</a>.</p>
 
-    <h2>3 · Fest, flüssig, gasförmig</h2>
-    <div class="state-wrap">
-      <div class="state solid"><strong>fest</strong><small>eigene Form · eigenes Volumen</small></div>
-      <div class="state-arrow">⇄<small>schmelzen<br>erstarren</small></div>
-      <div class="state liquid"><strong>flüssig</strong><small>Gefässform · eigenes Volumen</small></div>
-      <div class="state-arrow">⇄<small>verdampfen<br>kondensieren</small></div>
-      <div class="state gas"><strong>gasförmig</strong><small>keine eigene Form · füllt Raum</small></div>
-    </div>
-    <p class="muted"><strong>Direkter Weg:</strong> fest → gasförmig = <strong>Sublimieren</strong>; gasförmig → fest = <strong>Resublimieren</strong>. Denk an eine Abkürzung, die den flüssigen Zustand überspringt.</p>
-    <div class="grid two">
-      <div class="fact"><strong>Wärmekapazität:</strong><br><em>Q = m · c · ΔT</em><br><small>Wärmemenge = Masse · spezifische Wärmekapazität · Temperaturänderung</small></div>
-      <div class="fact"><strong>Wärmeausdehnung:</strong><br><em>ΔL = L₀ · α · ΔT</em><br><small>Längenänderung = Ausgangslänge · Ausdehnungskoeffizient · Temperaturänderung</small></div>
-    </div>
-    <div class="note"><strong>Weitere Begriffe aus der 28.08.-Mitschrift:</strong> Brennbarkeit, Hitzebeständigkeit, Wärmeleitfähigkeit, Giftigkeit/LD50, Abbaubarkeit und Spannungsreihe. Die Notiz markiert diese Erklärungen als <em>recherchiert, nicht mitdiktiert</em>; deshalb findest du sie in <strong>Begriffe</strong> als sichtbare Vertiefung statt als bestätigten Prüfungsstoff.</div>
+    <h3 id="electric-magnetism">Magnetische Eigenschaften: drei Reaktionen auf ein Magnetfeld</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Kategorie</th><th>Reaktion im Magnetfeld</th><th>Nach Entfernen des Feldes</th><th>Alle notierten Beispiele</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ferromagnetisch</strong></td><td>Starke Anziehung; magnetische Bereiche können sich ausrichten.</td><td>Eine Magnetisierung <strong>kann bleiben</strong>, abhängig vom Werkstoff und seiner Vorgeschichte.</td><td><strong>Eisen, Nickel, Kobalt.</strong></td></tr>
+        <tr><td><strong>Paramagnetisch</strong></td><td>Schwache Anziehung; das angelegte Feld wird geringfügig verstärkt.</td><td>Keine bleibende Magnetisierung durch diesen Effekt.</td><td><strong>Aluminium, Platin.</strong></td></tr>
+        <tr><td><strong>Diamagnetisch</strong></td><td>Schwache Abstossung; die induzierte Reaktion wirkt dem angelegten Feld entgegen.</td><td>Keine bleibende Magnetisierung durch diesen Effekt.</td><td><strong>Kupfer, Gold, Wasser.</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Beispiel aus den Notizen:</strong> Ein Nagel kann nach Kontakt mit einem Dauermagneten selbst magnetisiert bleiben. Bei den drei hier betrachteten Kategorien ist bleibende Magnetisierung dem ferromagnetischen Verhalten zugeordnet; ein ferromagnetischer Gegenstand muss aber nicht ständig ein starker Dauermagnet sein. Para- und diamagnetische Effekte sind so schwach, dass man sie im Alltag meist kaum bemerkt.</p>
+    <p class="note">Die drei Verhaltensweisen sind nach <a href="https://openstax.org/books/university-physics-volume-2/pages/12-7-magnetism-in-matter" target="_blank" rel="noopener">OpenStax / Rice University: Magnetism in Matter</a> präzisiert. Die vollständige Beispielauswahl stammt aus der Notiz vom 28.08.</p>
+  </div>
+</details>
+      <div id="details-thermisch"></div>
+<details class="atlas-detail" id="thermal-phases">
+  <summary>Thermisch · Aggregatszustände und alle sechs Übergänge</summary>
+  <div class="atlas-body">
+    <p><strong>Aus den Notizen vom 21. und 28.08.:</strong> fest, flüssig und gasförmig beschreiben den Zustand eines Stoffes. Entscheidend sind die Bewegung, Anordnung und gegenseitige Anziehung der Teilchen sowie Temperatur und Druck.</p>
+    <div class="warning"><strong>Notiz präzisiert:</strong> «Die Geschwindigkeit, mit der sich Atome bewegen» beschreibt den Aggregatszustand allein noch nicht. Teilchen können Atome oder Moleküle sein; auch ihre Bindungen und Abstände spielen mit. «Fest = nicht komprimierbar» ist eine praktische Näherung: Feststoffe lassen sich meist nur sehr wenig zusammendrücken.</div>
+    <div class="table-wrap"><table>
+      <caption>Form und Volumen — beide Mitschriften zusammengeführt</caption>
+      <thead><tr><th>Zustand</th><th>Form</th><th>Volumen / Komprimierbarkeit</th><th>Teilchenbild</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fest</strong></td><td>Eigene, feste Form</td><td>Nahezu festes Volumen; sehr wenig komprimierbar</td><td>Teilchen bleiben an ihren Plätzen und schwingen.</td></tr>
+        <tr><td><strong>Flüssig</strong></td><td>Passt sich der Gefässform an</td><td>Nahezu festes Volumen; kaum komprimierbar</td><td>Teilchen bleiben nahe beieinander, können sich aber gegeneinander bewegen.</td></tr>
+        <tr><td><strong>Gasförmig</strong></td><td>Keine eigene Form; füllt den verfügbaren Raum</td><td>Kein eigenes festes Volumen; gut komprimierbar</td><td>Teilchen sind weit voneinander entfernt und bewegen sich frei.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <caption>Die sechs Übergänge — Richtung, Name und Wiedererkennung</caption>
+      <thead><tr><th>Richtung</th><th>Name</th><th>Wärmeaustausch</th><th>Beispiel</th></tr></thead>
+      <tbody>
+        <tr><td>Fest → flüssig</td><td><strong>Schmelzen</strong></td><td>Wärme aufnehmen</td><td>Eis wird zu Wasser; Aluminium wird für den Guss geschmolzen.</td></tr>
+        <tr><td>Flüssig → fest</td><td><strong>Erstarren / Gefrieren</strong></td><td>Wärme abgeben</td><td>Wasser gefriert; flüssiges Wachs wird fest.</td></tr>
+        <tr><td>Flüssig → gasförmig</td><td><strong>Verdampfen</strong></td><td>Wärme aufnehmen</td><td>Wasser siedet oder verdunstet an der Oberfläche.</td></tr>
+        <tr><td>Gasförmig → flüssig</td><td><strong>Kondensieren</strong></td><td>Wärme abgeben</td><td>Beschlag am Spiegel; Tau; Nebeltröpfchen.</td></tr>
+        <tr><td>Fest → gasförmig</td><td><strong>Sublimieren</strong></td><td>Wärme aufnehmen</td><td>Trockeneis; Eis in gefrorener Wäsche.</td></tr>
+        <tr><td>Gasförmig → fest</td><td><strong>Resublimieren</strong></td><td>Wärme abgeben</td><td>Wasserdampf bildet Reif; Ioddampf bildet Kristalle.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><strong>Schmelzpunkt / Siedepunkt:</strong> Ein reiner Stoff hat bei festgelegtem Druck charakteristische Übergangstemperaturen. Bei Gemischen sind häufig Temperaturbereiche relevant. <strong>Verdampfen</strong> umfasst Sieden und Verdunsten; Verdunsten ist bereits unterhalb des Siedepunkts möglich. Die Notiz «Wasser: 100 °C» gilt gerundet bei normalem Luftdruck, etwa 1013 hPa. Bei anderem Druck ändert sich die Siedetemperatur.</div>
+    <p><a href="https://openstax.org/books/physics/pages/11-3-phase-change-and-latent-heat" target="_blank" rel="noopener">OpenStax: Zustandsänderungen und Wärme</a> · <a href="https://openstax.org/books/chemistry-atoms-first-2e/pages/10-4-phase-diagrams" target="_blank" rel="noopener">OpenStax: Druck und Phasendiagramme</a></p>
+  </div>
+</details>
 
-    <h2>4 · Verformung und Belastung</h2>
-    <div class="grid two">
-      <div class="card"><h3>Elastisch</h3><p>Nach der Belastung wieder zurück in die ursprüngliche Form. Beispiel: eine Feder im normalen Arbeitsbereich.</p></div>
-      <div class="card"><h3>Plastisch</h3><p>Die Verformung bleibt. Ein gebogener Draht bleibt nach dem Biegen in der neuen Form.</p></div>
-      <div class="card"><h3>Spröd</h3><p>Bricht mit wenig bleibender Verformung. <span class="small-label">Vertiefung:</span> UV kann Kunststoffe mit der Zeit spröde und rissig machen.</p></div>
-      <div class="card"><h3>Zäh</h3><p>Verformt sich vor dem Bruch deutlich. Das Gegenteil von spröd ist nicht «weich», sondern zäh.</p></div>
-    </div>
-    <div class="fact"><strong>Belastung merken:</strong> Feder → Torsion · Schraube → Zug. Bei der Dichte gilt <em>ρ = m / V</em>: Masse durch Volumen.</div>
+<details class="atlas-detail" id="thermal-temperatures">
+  <summary>Thermisch · Alle Temperaturtabellen und Materialbeispiele</summary>
+  <div class="atlas-body">
+    <p><strong>Vollständige Beispiele aus dem 28.08.</strong> Die recherchierten Zahlen sind als Notizwerte erhalten. Sie sind keine garantierten Werkstoffkennwerte: Reinheit, Legierung, Druck und Messbedingungen müssen passen. Für konkrete Berechnungen gilt die in der Aufgabe oder im Datenblatt angegebene Zahl.</p>
+    <h3>1 · Schmelzen: fest → flüssig</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle zehn Schmelztemperaturen — Notizwerte · zu prüfen</caption>
+      <thead><tr><th>Werkstoff</th><th>Schmelztemperatur aus der Notiz</th><th>Einordnung</th></tr></thead>
+      <tbody>
+        <tr><td>Zinn</td><td>232 °C</td><td>Gerundeter Wert für das reine Element</td></tr>
+        <tr><td>Blei</td><td>327 °C</td><td>Gerundeter Wert für das reine Element</td></tr>
+        <tr><td>Zink</td><td>419 °C</td><td>Gerundeter Wert für das reine Element</td></tr>
+        <tr><td>Aluminium</td><td>660 °C</td><td>Legierungen können davon abweichen.</td></tr>
+        <tr><td>Silber</td><td>962 °C</td><td>Gerundeter Wert für das reine Element</td></tr>
+        <tr><td>Gold</td><td>1064 °C</td><td>Goldlegierungen haben andere Werte.</td></tr>
+        <tr><td>Kupfer</td><td>1085 °C</td><td>Gerundeter Wert für das reine Element</td></tr>
+        <tr><td>Stahl</td><td>etwa 1450–1520 °C</td><td>Bereich hängt von der Legierung ab.</td></tr>
+        <tr><td>Eisen</td><td>1538 °C</td><td>Reines Eisen, nicht jede Stahlsorte</td></tr>
+        <tr><td>Wolfram</td><td>3414 °C</td><td>Sehr hoher Schmelzpunkt</td></tr>
+      </tbody>
+    </table></div>
+    <h3>2 · Erstarren: flüssig → fest</h3>
+    <p>Bei einem reinen Stoff liegen Schmelzen und Erstarren im Gleichgewicht bei gleichem Druck am selben Temperaturpunkt. Gemische und Unterkühlung können das beobachtete Verhalten verändern.</p>
+    <div class="table-wrap"><table>
+      <caption>Alle Erstarrungsbeispiele — Notizwerte · zu prüfen</caption>
+      <thead><tr><th>Stoff</th><th>Notizwert</th><th>Beispiel / Bedingung</th></tr></thead>
+      <tbody>
+        <tr><td>Wasser → Eis</td><td>0 °C</td><td>Gerundet für reines Wasser bei normalem Druck</td></tr>
+        <tr><td>Paraffin / Kerzenwachs</td><td>etwa 55 °C</td><td>Wird beim Abkühlen fest; Wachs ist ein Gemisch mit sortenabhängigem Bereich.</td></tr>
+        <tr><td>Kakaobutter / Schokolade</td><td>32–35 °C</td><td>Notizbeispiel «schmilzt im Mund». Rezeptur und Kristallform beeinflussen Schmelzen und Erstarren; kein fester Wert für jede Schokolade.</td></tr>
+        <tr><td>Aluminium</td><td>660 °C</td><td>Erstarrt beim Giessen; reine Substanz als Näherung</td></tr>
+        <tr><td>Eisen / Stahl</td><td>etwa 1450–1538 °C</td><td>Erstarrt beim Guss im Stahlwerk; Eisen und verschiedene Stähle haben nicht alle denselben Punkt.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>3 · Verdampfen: flüssig → gasförmig</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle Siedepunkte — gerundete Notizwerte bei ungefähr normalem Luftdruck · zu prüfen</caption>
+      <thead><tr><th>Stoff</th><th>Siedepunkt</th></tr></thead>
+      <tbody>
+        <tr><td>Flüssiger Stickstoff</td><td>−196 °C</td></tr>
+        <tr><td>Aceton</td><td>56 °C</td></tr>
+        <tr><td>Ethanol / Alkohol</td><td>78 °C</td></tr>
+        <tr><td>Wasser</td><td>100 °C</td></tr>
+        <tr><td>Quecksilber</td><td>357 °C</td></tr>
+      </tbody>
+    </table></div>
+    <h3>4 · Kondensieren: gasförmig → flüssig</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle Kondensationsbeispiele aus der Notiz</caption>
+      <thead><tr><th>Beispiel</th><th>Was passiert?</th></tr></thead>
+      <tbody>
+        <tr><td>Beschlagene Fensterscheibe / Spiegel</td><td>Wasserdampf wird an einer genügend kühlen Oberfläche zu flüssigen Tröpfchen.</td></tr>
+        <tr><td>Morgentau</td><td>Wasserdampf kondensiert nachts an kühlen Blättern oder Grashalmen.</td></tr>
+        <tr><td>Nebelbildung</td><td>Wasserdampf kondensiert in der Luft zu kleinen Wassertröpfchen.</td></tr>
+        <tr><td>Schnapsbrennen / Destillation</td><td>Alkoholhaltiger Dampf wird im Kühler verflüssigt. <strong>Notiz: «bei etwa 78 °C».</strong> Präzisierung: Das ist ungefähr der normale Siedepunkt von reinem Ethanol; Temperatur und Zusammensetzung des Alkohol-Wasser-Gemischs sind nicht konstant 78 °C.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><strong>Zur Notiz «gleicher Punkt wie beim Verdampfen»:</strong> Das gilt für die Gleichgewichtsbedingungen eines reinen Stoffes bei festgelegtem Druck. Luft enthält Wasserdampf nur als Anteil: Fensterbeschlag hängt deshalb vom Taupunkt ab und braucht keine 100 °C. <a href="https://openstax.org/books/chemistry-atoms-first-2e/pages/10-3-phase-transitions" target="_blank" rel="noopener">OpenStax: Verdampfung und Kondensation</a></div>
+    <h3>5 · Sublimieren: fest → gasförmig</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle Sublimationsbeispiele; unklare Temperaturangaben neben der Korrektur</caption>
+      <thead><tr><th>Stoff</th><th>Temperatur in der Notiz</th><th>Beispiel / Präzisierung</th></tr></thead>
+      <tbody>
+        <tr><td>Trockeneis / CO₂</td><td>−78,5 °C</td><td>Geht bei atmosphärischem Druck direkt in Gas über. <a href="https://www.linde-gas.com/processes/freezing-and-cooling" target="_blank" rel="noopener">Linde: Sublimationstemperatur</a></td></tr>
+        <tr><td>Schnee / Eis bei Frost</td><td>Auch unter 0 °C</td><td>Gefrorene Wäsche kann im Winter trocknen: Eis geht direkt in Wasserdampf über.</td></tr>
+        <tr><td>Naphthalin / Mottenkugeln</td><td>«Etwa 20 °C, spürbar ab etwa 80 °C»</td><td>Die Notiz beschreibt langsames Verschwinden und Verteilung in der Luft. <strong>Zu prüfen:</strong> Das sind keine festen Sublimationspunkte; die Angabe «über Jahre» hängt von den Bedingungen ab. Etwa 80 °C ist bereits die Schmelztemperatur. <a href="https://poisoncentres.echa.europa.eu/documents/10162/35144386/074_naphthalene_oel_en.pdf/535909de-0378-c2ca-c290-6d781811aceb?t=1691407237870" target="_blank" rel="noopener">EU-SCOEL / ECHA: Stoffdaten</a></td></tr>
+        <tr><td>Iod</td><td>«Etwa 114 °C»</td><td>Beim Erwärmen kann violetter Dampf sichtbar werden. <strong>Korrektur:</strong> 113,7 °C ist der Schmelzpunkt; 114 °C ist kein allgemeiner Sublimationspunkt. <a href="https://periodic-table.rsc.org/element/53/Iodine" target="_blank" rel="noopener">Royal Society of Chemistry: Iod</a></td></tr>
+      </tbody>
+    </table></div>
+    <h3>6 · Resublimieren: gasförmig → fest</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle Resublimationsbeispiele mit Einordnung des technischen CO₂-Beispiels</caption>
+      <thead><tr><th>Beispiel</th><th>Temperatur / Bedingung aus der Notiz</th><th>Was genau ist gemeint?</th></tr></thead>
+      <tbody>
+        <tr><td>Wasserdampf → Reif / Frost</td><td>≤ 0 °C</td><td>Direkte Eisbildung auf Gras oder Autoscheiben an entsprechend kalter Oberfläche; gefrierendes flüssiges Wasser wäre dagegen Erstarren.</td></tr>
+        <tr><td>Wasserdampf → Schneeflocken</td><td>«Sehr tiefe Temperaturen»</td><td>Eiskristalle wachsen direkt aus Wasserdampf in der Atmosphäre. Dafür braucht es passende Frostbedingungen; keinen einzigen festen Temperaturwert.</td></tr>
+        <tr><td>Ioddampf → Iodkristalle</td><td>An einer kalten Oberfläche</td><td>Kristalle setzen sich aus dem Dampf ab. Schulversuch zur Kombination aus Sublimation und Resublimation.</td></tr>
+        <tr><td>«CO₂-Gas → Trockeneis»</td><td>«Bei starker Expansion / Abkühlung»</td><td><strong>Notizkorrektur zur technischen Herstellung:</strong> Üblicherweise wird <em>flüssiges</em> CO₂ entspannt. Ein Teil verdampft, der übrige Teil bildet festen CO₂-Schnee. Das ist kein sauberes Alltagsbeispiel für einen ausschliesslich direkten Gas→Fest-Übergang. <a href="https://www.linde-gas.com/products-and-services/chilling-and-cooling-solutions/co2-snow" target="_blank" rel="noopener">Linde: Herstellung von CO₂-Schnee</a></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
 
-    <h3>Fünf Belastungsarten</h3>
-    <div class="grid two">
-      <div class="card"><h3>Zug</h3><p>Der Werkstoff wird auseinandergezogen: Kabel, Seil oder Schraube.</p></div>
-      <div class="card"><h3>Biegung</h3><p>Er wird gekrümmt: Brücke, Regalbrett oder Ski.</p></div>
-      <div class="card"><h3>Druck</h3><p>Er wird zusammengedrückt: Fundament, Mauer oder Säule.</p></div>
-      <div class="card"><h3>Scherung</h3><p>Kräfte verschieben zwei Flächen gegeneinander: Niet, Schraubenverbindung oder Blechschere.</p></div>
-      <div class="card"><h3>Torsion</h3><p>Er wird verdreht: Feder, Welle oder Schraubenzieher.</p></div>
-    </div>
-    <div class="warning"><strong>Kleine Korrektur zur Rohnotiz:</strong> Jenseits der Elastizitätsgrenze beginnt eine bleibende (plastische) Verformung. Das bedeutet <em>nicht automatisch</em> Bruch; wann ein Werkstoff bricht, hängt vom Material und der Belastung ab.</div>
+<details class="atlas-detail" id="thermal-fire">
+  <summary>Thermisch · Brennbarkeit, Baustoffklassen und Hitzebeständigkeit</summary>
+  <div class="atlas-body">
+    <p><strong>Brennbarkeit:</strong> Kann ein Stoff unter geeigneten Bedingungen entzündet werden und die Verbrennung weiterführen? Die Notiz nennt dafür Sauerstoff und ausreichend Wärme. <strong>Hitzebeständigkeit:</strong> Behält er bei hoher Temperatur seine Form, Festigkeit und benötigten Eigenschaften? Ein Stoff kann unbrennbar sein und trotzdem durch Hitze seine Tragfähigkeit verlieren.</p>
+    <div class="note"><strong>Vertiefung aus der Notiz vom 28.08.:</strong> Die folgenden Erklärungen und Tabellen sind dort «recherchiert, nicht mitdiktiert». Die Zuordnung eines Bauprodukts zu einer Brandklasse muss aus dessen Klassifizierung hervorgehen; Materialname allein genügt nicht.</div>
+    <h3>Brandverhalten nach EN 13501-1</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle Klassen und Beispiele aus der Notiz — ursprüngliche Kurzfassung neben der Präzisierung</caption>
+      <thead><tr><th>Klasse</th><th>Notiz / Beispiele</th><th>So einordnen</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A1</strong></td><td>«Nicht brennbar, keine brennbaren Bestandteile»; Stahl, Beton, Glas, Stein</td><td>Höchste Anforderung an das Brandverhalten. Die Beispiele beziehen sich auf passende Produkte ohne relevante brennbare Zusätze oder Beschichtungen.</td></tr>
+        <tr><td><strong>A2</strong></td><td>«Nicht brennbar, geringe brennbare Anteile»; Gipskartonplatten</td><td>Sehr begrenzter Beitrag zum Brand. Exakte Klasse einer Gipsplatte im Produktnachweis prüfen.</td></tr>
+        <tr><td><strong>B–D</strong></td><td>«Brennbar, unterschiedlich stark»; Holz (D–E je nach Behandlung)</td><td>Abgestufte Prüfanforderungen. Holzart, Aufbau, Dicke und Behandlung beeinflussen die Einstufung.</td></tr>
+        <tr><td><strong>E</strong></td><td>«Leicht entflammbar, aber verzögert»; manche Kunststoffe</td><td>Erfüllt die festgelegten Anforderungen der Kleinflammenprüfung. «Verzögert» ist keine genaue Klassendefinition.</td></tr>
+        <tr><td><strong>F</strong></td><td>«Leicht entflammbar, keine Prüfung bestanden»; sehr dünnes unbehandeltes Material</td><td>Leistung liegt unter Klasse E. «Nicht geprüft» und Klasse F sind nicht gleichbedeutend; ein dünnes Material ist nicht automatisch F.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Die offizielle Klassifizierung unterscheidet die Prüfleistung und bei relevanten Klassen auch Rauchentwicklung beziehungsweise brennendes Abtropfen. Diese Klassen beschreiben das <strong>Brandverhalten</strong>; die Feuerwiderstandsdauer eines Bauteils ist eine andere Eigenschaft. <a href="https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0364" target="_blank" rel="noopener">EU-Verordnung 2016/364: offizielle Brandklassen</a></p>
+    <p><strong>Metallbeispiel aus der Notiz:</strong> Massiver Stahl wird als nicht brennbarer Baustoff eingesetzt. Fein verteilte Metalle wie Aluminium- oder Magnesiumpulver können dennoch brennen; viel Oberfläche begünstigt die Reaktion. Die Form eines Stoffes spielt mit.</p>
+    <h3>Hitzebeständigkeit: Form und Funktion unter Wärme</h3>
+    <div class="table-wrap"><table>
+      <caption>Alle vier Materialbeispiele — pauschale Notizwerte · zu prüfen</caption>
+      <thead><tr><th>Werkstoff</th><th>Angabe aus der Notiz</th><th>Wichtige Grenze der Aussage</th></tr></thead>
+      <tbody>
+        <tr><td>Kunststoffe</td><td>Meist gering; Erweichen oft bei etwa 60–150 °C</td><td>Das ist kein Bereich für alle Kunststoffe. Thermoplast, Duroplast und Elastomer verhalten sich unterschiedlich; Datenblatt und Einsatzdauer beachten.</td></tr>
+        <tr><td>Stahl</td><td>Ab etwa 500 °C deutlicher Verlust an Tragfähigkeit</td><td>Keine allgemeine Grenztemperatur für jedes Bauteil. Stahlart, Last und Temperaturverlauf sind relevant; Brandschutznachweis erforderlich.</td></tr>
+        <tr><td>Wolfram</td><td>Sehr hoher Schmelzpunkt: 3414 °C; Glühlampen und Schweisselektroden</td><td>Schmelzpunkt ist nicht dasselbe wie zulässige Einsatztemperatur. Auch die umgebende Atmosphäre beeinflusst die Beständigkeit.</td></tr>
+        <tr><td>Technische Keramik</td><td>Oft über 1000 °C</td><td>Stark sortenabhängig; Temperaturwechsel, Last und Anwendung spielen mit.</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Prüffrage:</strong> Ein Stahlträger brennt nicht. Weshalb braucht er trotzdem möglicherweise Brandschutz? — Weil starke Erwärmung seine mechanischen Eigenschaften und damit seine Tragfähigkeit verändert.</p>
+  </div>
+</details>
 
-    <h3>Härte prüfen</h3>
-    <div class="grid two">
-      <div class="card"><h3>Brinell</h3><p>Merkkarte aus der Notiz: <strong>Kugel</strong>.</p></div>
-      <div class="card"><h3>Rockwell</h3><p>Merkkarte aus der Notiz: <strong>Kegel</strong>.</p></div>
-      <div class="card"><h3>Vickers</h3><p>Merkkarte aus der Notiz: <strong>Pyramide</strong>.</p></div>
-    </div>
-    <p class="muted">Bei allen drei Verfahren wird ein definierter Prüfkörper mit definierter Kraft und Zeit in den Werkstoff gedrückt. Härte bedeutet: Widerstand gegen das Eindringen eines anderen Körpers.</p>
+<details class="atlas-detail" id="thermal-capacity">
+  <summary>Thermisch · Wärmekapazität c, Formel und alle vier Stoffwerte</summary>
+  <div class="atlas-body">
+    <p><strong>Wie viel Energie braucht das Erwärmen?</strong> Die <strong>spezifische Wärmekapazität c</strong> beschreibt die Energie, um 1 kg eines Stoffes um 1 K zu erwärmen. Ein Temperaturunterschied von 1 K entspricht einem Unterschied von 1 °C.</p>
+    <div class="warning"><strong>Begriff aus der Notiz präzisiert:</strong> Unter «Wärmekapazität» stand die Definition für <em>spezifische</em> Wärmekapazität. <strong>c</strong> ist die Stoffeigenschaft in J/(kg·K); die Wärmekapazität <strong>C = m · c</strong> gehört zu einem bestimmten Körper und hat die Einheit J/K. <a href="https://openstax.org/books/physics/pages/11-2-heat-specific-heat-and-heat-transfer" target="_blank" rel="noopener">OpenStax: c und C</a></div>
+    <p class="formula"><strong>Q = m · c · ΔT</strong></p>
+    <div class="table-wrap"><table>
+      <caption>Formelzeichen und Einheiten</caption>
+      <thead><tr><th>Zeichen</th><th>Bedeutung</th><th>Einheit</th></tr></thead>
+      <tbody>
+        <tr><td>Q</td><td>Übertragene Wärmemenge</td><td>J; 1000 J = 1 kJ</td></tr>
+        <tr><td>m</td><td>Masse des erwärmten Stoffes</td><td>kg</td></tr>
+        <tr><td>c</td><td>Spezifische Wärmekapazität</td><td>J/(kg·K)</td></tr>
+        <tr><td>ΔT = T₂ − T₁</td><td>Temperaturänderung</td><td>K; zahlenmässig gleich dem Unterschied in °C</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <caption>Alle c-Werte aus der Notiz — Näherungswerte · Temperaturbedingungen zu prüfen</caption>
+      <thead><tr><th>Stoff</th><th>c in J/(kg·K)</th><th>Merksatz</th></tr></thead>
+      <tbody>
+        <tr><td>Wasser</td><td>4183</td><td>Benötigt bei gleicher Masse und Temperaturänderung besonders viel Energie.</td></tr>
+        <tr><td>Aluminium</td><td>897</td><td>Für 1 kg und +1 K etwa 897 J.</td></tr>
+        <tr><td>Eisen</td><td>450</td><td>Für 1 kg und +1 K etwa 450 J.</td></tr>
+        <tr><td>Kupfer</td><td>385</td><td>Für 1 kg und +1 K etwa 385 J.</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Rechenbeispiel mit dem Notizwert:</strong> 2 kg Wasser von 20 °C auf 50 °C erwärmen → ΔT = 30 K → Q = 2 · 4183 · 30 = <strong>250 980 J ≈ 251 kJ</strong>. Dabei sind Verluste und die Erwärmung des Gefässes nicht mitgerechnet.</p>
+    <p><strong>Anwendungen aus der Notiz:</strong> Wasser als Kühlmittel und Wärmespeicher, etwa Heizungswasser. Es nimmt beim Erwärmen viel Energie auf und gibt beim Abkühlen entsprechend viel ab. Die genannten Metalle brauchen pro kg und K weniger Energie.</p>
+    <div class="note"><strong>Genau hinschauen:</strong> «Metalle erwärmen und kühlen sich schnell» gilt nur bei vergleichbaren Bedingungen. Die Geschwindigkeit hängt auch von Masse, Oberfläche, Wärmeleitung und zu- oder abgeführter Leistung ab. Q = m · c · ΔT beschreibt eine Temperaturänderung ohne Phasenwechsel; Schmelzen oder Verdampfen benötigt zusätzliche Umwandlungswärme.</div>
+  </div>
+</details>
 
-    <h2>5 · Oxide &amp; Ammoniumnitrat</h2>
-    <div class="grid two">
-      <div class="card"><h3>CO₂ oder CO?</h3><p>Beide sind Oxide, also Verbindungen mit Sauerstoff. <strong>CO₂</strong> enthält zwei Sauerstoff-Atome, <strong>CO</strong> eines.</p></div>
-      <div class="card"><h3>Ammoniumnitrat</h3><p>Deine Notiz nennt es als Grundbestandteil von Dünger. Mit einem Brennstoff kann es explosionsfähig werden. Das ist nur der Unterrichtskontext: nie Stoffe mischen oder damit experimentieren.</p></div>
-    </div>
+<details class="atlas-detail" id="thermal-conduction">
+  <summary>Thermisch · Wärmeleitfähigkeit λ und alle sechs Vergleichswerte</summary>
+  <div class="atlas-body">
+    <p><strong>Wie gut gelangt Wärme durch einen Stoff?</strong> Die Wärmeleitfähigkeit <strong>λ</strong> hat die Einheit <strong>W/(m·K)</strong>. Ein hoher Wert bedeutet gute Wärmeleitung bei gleicher Geometrie und gleichem Temperaturunterschied. Wärmeleitung heisst auch <em>Konduktion</em>.</p>
+    <div class="table-wrap"><table>
+      <caption>Alle λ-Werte aus dem 28.08. — Notizwerte · Werkstoff- und Temperaturbedingungen zu prüfen</caption>
+      <thead><tr><th>Stoff</th><th>λ in W/(m·K)</th><th>Einordnung aus der Notiz</th></tr></thead>
+      <tbody>
+        <tr><td>Silber</td><td>429</td><td>Sehr guter Wärmeleiter; die Notiz nennt es den besten metallischen Wärmeleiter.</td></tr>
+        <tr><td>Kupfer</td><td>etwa 400</td><td>Sehr guter Wärmeleiter</td></tr>
+        <tr><td>Aluminium</td><td>etwa 220–237</td><td>Guter Wärmeleiter</td></tr>
+        <tr><td>Stahl</td><td>etwa 45</td><td>Deutlich schlechter als Kupfer; Stahlsorte ist entscheidend.</td></tr>
+        <tr><td>Holz</td><td>etwa 0,1–0,15</td><td>Schlechter Wärmeleiter; Richtung, Holzart und Feuchte beeinflussen den Wert.</td></tr>
+        <tr><td>Luft</td><td>etwa 0,02</td><td>Sehr schlechte Wärmeleitung; bewegte Luft kann trotzdem viel Wärme transportieren.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Die drei Wärmeübertragungsarten</h3>
+    <ul>
+      <li><strong>Konduktion / Wärmeleitung:</strong> Wärme wird im Material übertragen; zum Beispiel durch eine Metallwand.</li>
+      <li><strong>Konvektion / Wärmeströmung:</strong> Bewegte Flüssigkeit oder bewegtes Gas transportiert Wärme, beispielsweise Heizungswasser oder Warmluft.</li>
+      <li><strong>Wärmestrahlung:</strong> Energie wird als elektromagnetische Strahlung übertragen, etwa von der Sonne oder einer heissen Oberfläche.</li>
+    </ul>
+    <p><strong>Verknüpfung mit elektrischen Eigenschaften:</strong> Gute elektrische Leiter unter den Metallen sind oft auch gute Wärmeleiter. Freie Elektronen tragen zu beiden Transportarten bei; daraus folgt keine allgemeine Regel für sämtliche Werkstoffe.</p>
+    <p><strong>λ und c auseinanderhalten:</strong> λ fragt «Wie gut wird Wärme weitergeleitet?», c fragt «Wie viel Energie braucht die Temperaturänderung?». Ein Werkstoff kann Wärme gut leiten und trotzdem eine ganz andere Wärmespeicherfähigkeit besitzen. <a href="https://openstax.org/books/physics/pages/11-2-heat-specific-heat-and-heat-transfer" target="_blank" rel="noopener">OpenStax: Wärmeübertragung</a></p>
+  </div>
+</details>
 
-    <h2>6 · Oxidation, Redox und Korrosion <span class="chip extra">Vertiefung · nicht mitdiktiert</span></h2>
-    <div class="warning"><strong>Prüfstatus:</strong> In der 04.09.-Notiz sind Oxide (CO und CO₂) behandelt. Die Erklärungen zu Elektronenübertragung, Redox, Opferanode und Korrosion sind dort ausdrücklich als recherchiert markiert. Nutze diesen Abschnitt zum Verstehen; frag bei Wäfler nach, falls er ihn prüft.</div>
-    <p>Fachlich sauber: <strong>Oxidation</strong> ist Elektronenabgabe, <strong>Reduktion</strong> Elektronenaufnahme. Beide gehören zusammen: Deshalb heisst der Vorgang <strong>Redoxreaktion</strong>.</p>
-    <div class="flow" aria-label="Vereinfachter Ablauf von Eisenkorrosion">
-      <div class="flow-step"><strong>1 · Umgebung</strong><p>Eisen/Stahl kommt mit Wasser und Sauerstoff in Kontakt.</p></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><strong>2 · Redox</strong><p>Eisen gibt Elektronen ab; an anderer Stelle werden Elektronen aufgenommen.</p></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><strong>3 · Korrosion</strong><p>Korrosionsprodukte entstehen. Bei unlegiertem Stahl schützt die Rostschicht nicht dauerhaft.</p></div>
-    </div>
-    <p class="muted">Empa beschreibt Metallkorrosion als natürliche Redoxreaktion von Metall, Wasser und Sauerstoff. Zink kann Eisen als Opferanode schützen, weil Zink leichter oxidiert. Die vollständigen Teilreaktionen lernst du nur, wenn sie Wäfler verlangt.</p>
+<details class="atlas-detail" id="thermal-expansion">
+  <summary>Thermisch · Wärmeausdehnung α, Rechnung und Anwendungen</summary>
+  <div class="atlas-body">
+    <p><strong>Wie stark ändert sich die Länge beim Erwärmen?</strong> Die meisten Stoffe dehnen sich bei steigender Temperatur aus. Im Teilchenmodell schwingen Teilchen stärker und ihr mittlerer Abstand nimmt meist zu. Die Atome selbst werden dabei nicht einfach grösser.</p>
+    <p class="formula"><strong>ΔL = L₀ · α · ΔT</strong></p>
+    <div class="table-wrap"><table>
+      <caption>Formelzeichen und Einheiten</caption>
+      <thead><tr><th>Zeichen</th><th>Bedeutung</th><th>Einheit</th></tr></thead>
+      <tbody>
+        <tr><td>ΔL</td><td>Längenänderung</td><td>m; meist in mm umrechnen</td></tr>
+        <tr><td>L₀</td><td>Ausgangslänge</td><td>m</td></tr>
+        <tr><td>α</td><td>Linearer Ausdehnungskoeffizient</td><td>1/K</td></tr>
+        <tr><td>ΔT</td><td>Temperaturänderung</td><td>K</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <caption>Alle α-Werte aus der Notiz — Näherungswerte · Werkstoffsorte und Temperatur zu prüfen</caption>
+      <thead><tr><th>Werkstoff</th><th>α in 10⁻⁶/K</th><th>Einordnung</th></tr></thead>
+      <tbody>
+        <tr><td>Glas</td><td>etwa 9</td><td>Gewöhnliches Glas als Beispiel; nicht jede Glassorte</td></tr>
+        <tr><td>Beton</td><td>etwa 12</td><td>Näherung; Zusammensetzung spielt mit.</td></tr>
+        <tr><td>Edelstahl</td><td>etwa 16</td><td>Sortenabhängig; nicht mit jedem Stahl gleichsetzen.</td></tr>
+        <tr><td>Kupfer</td><td>etwa 17</td><td>Im Beispiel 17 · 10⁻⁶/K einsetzen.</td></tr>
+        <tr><td>Messing</td><td>etwa 19</td><td>Legierungsabhängig</td></tr>
+        <tr><td>Aluminium</td><td>etwa 23</td><td>Notizwert; andere Referenztabellen nennen andere Näherungen.</td></tr>
+        <tr><td>Stahl (Rechenbeispiel)</td><td>12</td><td>Wert aus der notierten Rechnung, nicht aus der Edelstahlzeile</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Die vollständige 10-m-Rechnung aus der Notiz</h3>
+    <p><strong>Gegeben:</strong> L₀ = 10 m, Erwärmung um 30 K.</p>
+    <ul>
+      <li><strong>Stahl:</strong> ΔL = 10 m · 12 · 10⁻⁶/K · 30 K = 0,0036 m = <strong>3,6 mm</strong>.</li>
+      <li><strong>Aluminium:</strong> ΔL = 10 m · 23 · 10⁻⁶/K · 30 K = 0,0069 m = <strong>6,9 mm</strong>.</li>
+    </ul>
+    <p>Mit diesen Tabellenwerten dehnt sich Aluminium also fast doppelt so stark aus wie Stahl. Bei Abkühlung wird ΔT negativ: Die Rechnung ergibt eine Verkürzung.</p>
+    <div class="note"><strong>Quellenvergleich:</strong> Die Notiz verwendet für Aluminium α ≈ 23 · 10⁻⁶/K. Die verlinkte OpenStax-Tabelle nennt 25 · 10⁻⁶/K; Werkstoff- und Temperaturbedingungen sind deshalb mit anzugeben. In einer Schulaufgabe den vorgegebenen Tabellenwert verwenden und verschiedene Tabellen nicht innerhalb einer Rechnung mischen. Die Formel ist eine Näherung mit passendem beziehungsweise mittlerem α. <a href="https://openstax.org/books/college-physics-2e/pages/13-2-thermal-expansion-of-solids-and-liquids" target="_blank" rel="noopener">OpenStax: Formel und Vergleichstabelle</a></div>
+    <h3>Anwendungen aus der Notiz</h3>
+    <ul>
+      <li><strong>Stahlbeton:</strong> Ähnliche Ausdehnungskoeffizienten von Bewehrungsstahl und Beton begrenzen zusätzliche Spannungen bei Temperaturwechseln. Die Notiz «funktioniert nur deshalb» ist zu absolut: Der Verbund und das Zusammenspiel von Zug- und Druckfestigkeit sind ebenfalls wesentlich.</li>
+      <li><strong>Dehnungsfugen:</strong> Bewegungen durch Temperaturänderungen müssen bei Bauwerken wie Brücken berücksichtigt werden. Auch bei Schienen entstehen temperaturbedingte Längenänderungen oder Kräfte, wenn die Ausdehnung behindert wird.</li>
+      <li><strong>Bimetallstreifen:</strong> Zwei verbundene Metalle dehnen sich unterschiedlich stark aus. Der Streifen krümmt sich beim Erwärmen; dies wird beispielsweise in Thermostaten genutzt.</li>
+    </ul>
+    <p><a href="https://openstax.org/books/university-physics-volume-2/pages/1-3-thermal-expansion" target="_blank" rel="noopener">OpenStax: Stahlbeton, Bimetall und thermische Spannungen</a></p>
+  </div>
+</details>
+      <div id="details-chemisch"></div>
+<details class="atlas-detail" id="chemical-overview">
+  <summary>Chemisch / elektrochemisch / ökologisch — die vollständige Übersicht</summary>
+  <div class="atlas-body">
+    <p>Diese Kategorie fragt: <strong>Wie reagiert der Werkstoff mit seiner Umgebung — und was bedeutet das für Menschen und Umwelt?</strong> Die Stichworte stehen am 21.08.; die Tabellen und Erklärungen vom 28.08. sowie die Redox-Vertiefungen vom 04.09. sind in den Notizen als <em>recherchiert, nicht mitdiktiert</em> markiert. Hier bleiben sie vollständig sichtbar und werden an kritischen Stellen berichtigt.</p>
+    <div class="table-wrap"><table><thead><tr><th>Eigenschaft / Thema</th><th>Leitfrage</th><th>Beispiele aus den Notizen</th></tr></thead><tbody>
+      <tr><td><a href="#chemical-corrosion">Korrosionsbeständigkeit</a></td><td>Wie gut widersteht der Stoff chemischem Angriff?</td><td>Stahl rostet; Aluminium und nichtrostender Stahl bilden Schutzschichten.</td></tr>
+      <tr><td><a href="#chemical-redox">Oxidation / Reduktion</a></td><td>Wer gibt Elektronen ab, wer nimmt sie auf?</td><td>Eisen und Sauerstoff; schnell oder langsam ablaufende Reaktionen.</td></tr>
+      <tr><td><a href="#chemical-potentials">Elektrochemische Spannungsreihe</a></td><td>Welcher Reaktionspartner wird bevorzugt oxidiert?</td><td>Kontaktkorrosion; Zink als Opferanode.</td></tr>
+      <tr><td><a href="#chemical-toxicity">Giftigkeit</a></td><td>Welche gesundheitlichen Schäden sind möglich?</td><td>Quecksilber, Asbest, Blei, Cadmium, Chromverbindungen; LD50.</td></tr>
+      <tr><td><a href="#chemical-degradation">Abbaubarkeit</a></td><td>Wird der Stoff biologisch umgesetzt oder nur zerkleinert?</td><td>Holz/Papier, PLA, PET, Nylon.</td></tr>
+      <tr><td><a href="#chemical-uv">UV-Beständigkeit</a></td><td>Wie verändert Sonnenlicht den Werkstoff?</td><td>PP, PE/HDPE, PVC, PC, PMMA, Glas.</td></tr>
+      <tr><td>Sprödigkeit als Folge</td><td>Ändert chemische Alterung das mechanische Verhalten?</td><td>UV-geschädigter Kunststoff wird spröde und rissig.</td></tr>
+    </tbody></table></div>
+    <p class="note">Die Notiz vom 21.08. nennt Sprödigkeit auch in dieser Liste. Die <strong>Eigenschaft selbst ist mechanisch</strong>; UV-Strahlung oder chemische Alterung können sie verändern. Damit hängen die Kategorien zusammen.</p>
+  </div>
+</details>
 
-    <h3>Schnell oder langsam? <span class="chip extra">Vertiefung</span></h3>
-    <div class="grid two">
-      <div class="card"><h3>Schnelle Oxidation</h3><p>Viel Energie wird in kurzer Zeit frei, z. B. bei einer Verbrennung. Wärme oder Licht können sichtbar sein.</p></div>
-      <div class="card"><h3>Langsame Oxidation</h3><p>Der Vorgang läuft über lange Zeit; Rosten ist ein Beispiel. Der Vergleich mit «langsamer Verbrennung» ist eine Eselsbrücke, keine allgemeine Definition jeder Korrosion.</p></div>
-    </div>
+<details class="atlas-detail" id="chemical-corrosion">
+  <summary>Korrosion &amp; Passivierung — Werkstoffvergleich und Rostablauf</summary>
+  <div class="atlas-body">
+    <p><strong>Korrosion</strong> ist eine Reaktion eines Werkstoffs mit seiner Umgebung, die ihn verbraucht oder verändert. Bei Metallen ist sie häufig elektrochemisch. <strong>Korrosionsbeständigkeit</strong> beschreibt den Widerstand dagegen. Rost ist eine bestimmte Korrosionserscheinung von Eisen; nicht jede Korrosion ist Rost. Rein mechanischer Abrieb oder Schmelzen zählt nicht dazu. <a href="https://goldbook.iupac.org/terms/view/C01351" target="_blank" rel="noopener">Definition: IUPAC</a>.</p>
+    <div class="table-wrap"><table><thead><tr><th>Werkstoff</th><th>Verhalten</th><th>Warum / Grenze</th></tr></thead><tbody>
+      <tr><td>Unlegierter Stahl</td><td>Rostet in feuchter, sauerstoffhaltiger Umgebung.</td><td>Die Rostschicht ist gewöhnlich porös und schützt nicht zuverlässig; der Angriff kann weitergehen.</td></tr>
+      <tr><td>Nichtrostender Stahl</td><td>Dünne, chromreiche Passivschicht schützt die Oberfläche.</td><td>Bei ausreichendem Sauerstoff kann sie sich nach einer Beschädigung neu bilden. Legierung und Umgebung bestimmen die Beständigkeit; z. B. Chloride können die Schicht angreifen.</td></tr>
+      <tr><td>Aluminium</td><td>Bildet an Luft eine dünne, schützende Oxidschicht.</td><td>Unedles Metall, das durch Passivierung im Alltag beständig wirken kann. Die Schicht schützt nicht gegen jede Umgebung.</td></tr>
+      <tr><td>Gold und Platin</td><td>Sehr beständig gegenüber vielen üblichen Umwelteinflüssen.</td><td>Edelmetalle; «praktisch keine Korrosion» ist eine Alltagseinordnung, keine absolute chemische Unangreifbarkeit.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>Notizwert · ungeprüft:</strong> «Edelstahl ≥12 % Chrom». Fachlich präziser ist <strong>nichtrostender Stahl</strong>: mindestens 10.5 Massen-% Chrom und höchstens 1.2 Massen-% Kohlenstoff nach der hier erläuterten EN-Definition. «Edelstahl» allein garantiert keine Rostfreiheit. <a href="https://bssa.org.uk/bssa_articles/when-is-stainless-steel-passive-or-active-formation-of-the-passive-layer/" target="_blank" rel="noopener">BSSA: Definition und Passivschicht</a>; <a href="https://worldstainless.org/about-stainless/process-and-production/alloying-elements-and-scrap/" target="_blank" rel="noopener">worldstainless: Chrom als Legierungselement</a>.</p>
+    <h4>Rost als Abfolge verstehen</h4>
+    <ol>
+      <li><strong>Wasser / Feuchtigkeit</strong> ermöglicht den Ionentransport auf der Eisenoberfläche.</li>
+      <li>An einer Stelle wird Eisen oxidiert: <strong>Fe → Fe²⁺ + 2 e⁻</strong>.</li>
+      <li>Elektronen fliessen im Metall zu einer Stelle, an der Sauerstoff reduziert wird.</li>
+      <li>Weitere Reaktionen mit Wasser und Sauerstoff bilden Eisenoxide/-oxidhydroxide: <strong>Rost</strong>.</li>
+      <li>Die durchlässige Rostschicht lässt weiteren Angriff zu.</li>
+    </ol>
+    <p>Schutz kann den Kontakt mit der Umgebung unterbrechen (z. B. eine intakte Beschichtung), auf geeigneten Legierungen und Passivierung beruhen oder elektrochemisch erfolgen. <a href="https://openstax.org/books/chemistry-2e/pages/17-6-corrosion" target="_blank" rel="noopener">OpenStax: Rostbildung und Korrosionsschutz</a>.</p>
+    <p class="note"><strong>Passivierung merken:</strong> Oberfläche reagiert zuerst → dichte, haftende Schicht entsteht → weiterer Angriff wird stark gebremst. Eine poröse Rostschicht erfüllt diesen Zweck nicht zuverlässig.</p>
+  </div>
+</details>
 
-    <h2>7 · Säuren &amp; Basen <span class="chip extra">Zusatz</span></h2>
+<details class="atlas-detail" id="chemical-redox">
+  <summary>Oxide &amp; Redox — Elektronenspender, Empfänger und richtige Gleichungen</summary>
+  <div class="atlas-body">
+    <h4>Oxide: die Beispiele von Seite 2.13</h4>
+    <p>Ein Oxid ist eine Verbindung des Sauerstoffs mit einem weiteren Element. Bei den einfachen Oxiden hier hat Sauerstoff die Oxidationszahl −II. Die tiefgestellte Zahl gehört zur Formel und zählt die Atome pro Molekül.</p>
+    <div class="table-wrap"><table><thead><tr><th>Formel</th><th>Name</th><th>Sauerstoffatome</th><th>Einordnung</th></tr></thead><tbody>
+      <tr><td>CO</td><td>Kohlenstoffmonoxid</td><td>1</td><td>Andere Verbindung als CO₂; Kohlenstoff hat hier Oxidationszahl +II.</td></tr>
+      <tr><td>CO₂</td><td>Kohlenstoffdioxid</td><td>2</td><td>Kohlenstoff hat hier Oxidationszahl +IV.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>Notizaussage:</strong> «Oxidation = Stoff verbindet sich mit O² / Sauerstoff». Das beschreibt einen häufigen Spezialfall. Die allgemeine Regel lautet <strong>Elektronenabgabe bzw. Erhöhung der Oxidationszahl</strong>. Sauerstoffgas schreibt man <strong>O₂</strong>; <strong>O²⁻</strong> bezeichnet ein Oxidion. <a href="https://goldbook.iupac.org/terms/view/O04362/pdf" target="_blank" rel="noopener">IUPAC: Oxidation</a>.</p>
+    <h4>Wer macht was?</h4>
+    <div class="table-wrap"><table><thead><tr><th>Rolle</th><th>Elektronen</th><th>Was mit ihm selbst geschieht</th><th>Was er beim Partner bewirkt</th><th>Rostbeispiel</th></tr></thead><tbody>
+      <tr><td><strong>Reduktionsmittel = Donator</strong></td><td>Gibt e⁻ ab.</td><td>Wird oxidiert.</td><td>Reduziert den anderen Stoff.</td><td>Eisen</td></tr>
+      <tr><td><strong>Oxidationsmittel = Akzeptor</strong></td><td>Nimmt e⁻ auf.</td><td>Wird reduziert.</td><td>Oxidiert den anderen Stoff.</td><td>Sauerstoff</td></tr>
+    </tbody></table></div>
+    <p>Oxidation und Reduktion sind gekoppelt: Die abgegebenen Elektronen werden aufgenommen. Die Bezeichnung des <em>Mittels</em> sagt, was es beim Partner auslöst. In einer elektrochemischen Zelle können die Teilreaktionen an räumlich getrennten Stellen stattfinden; die Elektronen werden über das Metall übertragen.</p>
+    <h4>Rosten in neutralem / alkalischem Wasser: ausgeglichene Teilreaktionen</h4>
+    <div class="table-wrap"><table><thead><tr><th>Schritt</th><th>Gleichung</th><th>Kontrolle</th></tr></thead><tbody>
+      <tr><td>Oxidation, verdoppelt</td><td>2 Fe → 2 Fe²⁺ + 4 e⁻</td><td>Vier Elektronen werden frei.</td></tr>
+      <tr><td>Sauerstoffreduktion</td><td>O₂ + 2 H₂O + 4 e⁻ → 4 OH⁻</td><td>Vier Elektronen werden aufgenommen; Atome und Ladung sind ausgeglichen.</td></tr>
+      <tr><td>Summe dieser Teilreaktionen</td><td>2 Fe + O₂ + 2 H₂O → 2 Fe²⁺ + 4 OH⁻</td><td>Elektronen fallen beim Addieren weg; weitere Reaktionen folgen.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>Notizgleichung:</strong> O₂ + 4 e⁻ → 2 O²⁻ ist eine formale Darstellung der Oxidionenbildung, aber <strong>keine geeignete Halbreaktion für Rost in Wasser</strong>. Freie Oxidionen bleiben in Wasser nicht so bestehen. In saurer Lösung lautet die passende Sauerstoffreduktion O₂ + 4 H⁺ + 4 e⁻ → 2 H₂O. Das Medium muss zur Gleichung passen. <a href="https://openstax.org/books/chemistry-2e/pages/l-standard-electrode-half-cell-potentials" target="_blank" rel="noopener">OpenStax: Sauerstoff-Halbreaktionen</a>.</p>
+    <p class="note">Die Notizformel <strong>4 Fe + 3 O₂ → 2 Fe₂O₃</strong> ist als Bildung von Eisen(III)-oxid ausgeglichen. Echter Rost ist jedoch kein einheitliches, wasserfreies Fe₂O₃: Wasser und mehrere Zwischen-/Rostprodukte gehören dazu. Auch brennendes Eisen muss nicht ausschliesslich Fe₂O₃ bilden.</p>
+    <h4>Thermitverfahren — das Rollenbeispiel aus der Notiz</h4>
+    <p>Beim industriellen aluminothermischen Schienenschweissen reduziert Aluminium Eisenoxid zu Eisen. <strong>Aluminium ist das Reduktionsmittel</strong> und wird oxidiert; das Eisenoxid wirkt als Oxidationsmittel und wird reduziert. Dieses Beispiel dient hier zur Zuordnung der Elektronenrollen und der industriellen Anwendung.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="chemical-potentials">
+  <summary>Spannungsreihe — warum Eisen anders reagiert als Gold</summary>
+  <div class="atlas-body">
+    <p>Ein Standardpotential gehört zu einem <strong>genau bezeichneten Redoxpaar</strong>, nicht nur zu einem Metallnamen. Die Tabelle zeigt <strong>Reduktionspotentiale</strong> gegen die Standard-Wasserstoffelektrode (0 V), bei Standardbedingungen und 25 °C. Hier wird jeweils ein gelöstes Metallion zum festen Metall reduziert.</p>
+    <div class="table-wrap"><table><thead><tr><th>Metall / Redoxpaar</th><th>Reduktions-Halbreaktion</th><th>E° aus Primärtabelle</th><th>Notizwert vom 28.08.</th></tr></thead><tbody>
+      <tr><td>Magnesium · Mg²⁺/Mg</td><td>Mg²⁺ + 2 e⁻ → Mg</td><td>−2.372 V</td><td>−2.37 V</td></tr>
+      <tr><td>Aluminium · Al³⁺/Al</td><td>Al³⁺ + 3 e⁻ → Al</td><td>−1.662 V</td><td>−1.66 V</td></tr>
+      <tr><td>Zink · Zn²⁺/Zn</td><td>Zn²⁺ + 2 e⁻ → Zn</td><td>−0.7618 V</td><td>−0.76 V</td></tr>
+      <tr><td>Eisen · Fe²⁺/Fe</td><td>Fe²⁺ + 2 e⁻ → Fe</td><td>−0.447 V</td><td>−0.44 V</td></tr>
+      <tr><td>Blei · Pb²⁺/Pb</td><td>Pb²⁺ + 2 e⁻ → Pb</td><td>−0.1262 V</td><td>−0.14 V · abweichend</td></tr>
+      <tr><td>Kupfer · Cu²⁺/Cu</td><td>Cu²⁺ + 2 e⁻ → Cu</td><td>+0.337 V</td><td>+0.35 V · abweichend</td></tr>
+      <tr><td>Silber · Ag⁺/Ag</td><td>Ag⁺ + e⁻ → Ag</td><td>+0.7996 V</td><td>+0.80 V</td></tr>
+      <tr><td>Gold · Au³⁺/Au</td><td>Au³⁺ + 3 e⁻ → Au</td><td>+1.498 V</td><td>+1.50 V</td></tr>
+    </tbody></table></div>
+    <p><a href="https://openstax.org/books/chemistry-2e/pages/l-standard-electrode-half-cell-potentials" target="_blank" rel="noopener">Quelle der Redoxpaare und Zahlen: OpenStax, Standard Electrode Potentials</a>. Notizwerte bleiben zum Vergleich sichtbar; für eine Aufgabe den dort vorgegebenen Tabellenwert verwenden.</p>
+    <p><strong>Leserichtung:</strong> Je positiver das Reduktionspotential, desto stärker ist unter diesen Bedingungen die Tendenz der oxidierten Form, Elektronen aufzunehmen. Umgekehrt wirkt das Metall des negativeren Paars als stärkeres Reduktionsmittel. Welche Reaktion tatsächlich abläuft, hängt immer von <strong>beiden Partnern und der Umgebung</strong> ab. Ein Potential gibt keine Reaktionsgeschwindigkeit an.</p>
+    <p><strong>Eisen versus Gold:</strong> Eisen kann in feuchter Luft oxidiert werden, während Sauerstoff reduziert wird. Gold ist unter gewöhnlichen Luft-/Wasserbedingungen viel beständiger. Aluminium zeigt, warum «unedel» allein nicht genügt: Es hat ein sehr negatives Potential, wird im Alltag aber durch seine Passivschicht geschützt.</p>
+    <p class="warning"><strong>Korrektur zur Notiz vom 04.09.:</strong> Die Reaktivität lässt sich nicht direkt mit «unedel = niedrige Ionisierungsenergie» erklären. Ionisierungsenergie betrifft isolierte gasförmige Atome; ein Elektrodenpotential umfasst das konkrete Redoxsystem mit Lösung, Bindungen und weiteren Energiebeiträgen. <a href="https://openstax.org/books/chemistry-2e/pages/17-3-electrode-and-cell-potentials" target="_blank" rel="noopener">OpenStax: Bedeutung der Potentiale</a>.</p>
+    <h4>Kontaktkorrosion und Opferanode</h4>
+    <ol>
+      <li>Zwei unterschiedliche Metalle sind <strong>elektrisch leitend verbunden</strong>.</li>
+      <li>Ein <strong>Elektrolyt</strong> wie feuchtes, salzhaltiges Wasser verbindet ihre Oberflächen.</li>
+      <li>Das unter diesen Bedingungen anodische, meist unedlere Metall wird bevorzugt oxidiert.</li>
+      <li>Bei der <strong>Opferanode</strong> nutzt man diesen Effekt bewusst: Das Anodenmaterial wird verbraucht und schützt das angeschlossene Bauteil.</li>
+    </ol>
+    <p>Notizbeispiele: <strong>Zinkanode am Stahlschiffsrumpf</strong> und Korrosionsschutz eines <strong>Warmwasserboilers</strong>. Beim Boiler ist häufig Magnesium das Anodenmaterial; die geeignete Anode richtet sich nach Anlage und Wasser. Eine Standardpotentialtabelle ist keine vollständige Korrosionsprognose: Passivierung, Elektrolyt und Flächenverhältnis beeinflussen das Ergebnis. <a href="https://openstax.org/books/chemistry-2e/pages/17-6-corrosion" target="_blank" rel="noopener">OpenStax: kathodischer Schutz</a>.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="chemical-speed">
+  <summary>Schnelle / langsame Oxidation — alle Beispiele und die Wasser-Frage</summary>
+  <div class="atlas-body">
+    <div class="table-wrap"><table><thead><tr><th>Vergleich</th><th>Schnell</th><th>Langsam</th></tr></thead><tbody>
+      <tr><td>Beobachtung</td><td>Energie kann in kurzer Zeit als starke Wärme und Licht frei werden.</td><td>Energie wird über längere Zeit verteilt umgesetzt; keine sichtbare Flamme nötig.</td></tr>
+      <tr><td>Notizbeispiele</td><td>Holz/Papier verbrennen; Magnesiumband; Benzinverbrennung im Motor; Eisenwolle.</td><td>Eisen rostet; Apfelbräunung; Zellatmung; Vergilben/Alterung von Papier und Kunststoffen.</td></tr>
+      <tr><td>Zeitangaben der Notiz</td><td>«Sekunden» als Anschauung.</td><td>«Wochen bis Jahre» beim Rosten als Anschauung.</td></tr>
+      <tr><td>Was zu beachten ist</td><td>Flamme und Geschwindigkeit hängen von Stoff, Oberfläche, Bedingungen und Reaktionsweg ab.</td><td>Es gibt keine allgemeine Zeitgrenze für «langsam»; biologische Beispiele sind mehrstufige Prozesse.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>Notizbild «Korrosion = langsame Verbrennung»:</strong> Zum Vergleich von Rosten und schnellem Oxidieren von Eisen ist die gemeinsame Redoxidee nützlich. Als allgemeine Definition ist es falsch: Korrosion umfasst andere Reaktionspartner und Mechanismen; Geschwindigkeit ist nicht der einzige Unterschied. Auch nicht jede schnelle Reaktion und nicht jede Explosion ist eine Verbrennung mit Luftsauerstoff. <a href="https://goldbook.iupac.org/terms/view/C01351" target="_blank" rel="noopener">IUPAC: Korrosion</a>.</p>
+    <div class="table-wrap"><table><thead><tr><th>Weiteres Notizbeispiel</th><th>Präzise Einordnung</th></tr></thead><tbody>
+      <tr><td>Schimmeln / Verderben von Lebensmitteln</td><td>Viele biochemische Vorgänge; nicht pauschal eine einzige langsame Oxidation.</td></tr>
+      <tr><td>Brauner Apfel nach dem Anschneiden</td><td>Enzymatische Oxidation von Inhaltsstoffen; in der Notiz zusätzlich ergänzt.</td></tr>
+      <tr><td>Zellatmung</td><td>Kontrollierte, mehrstufige Redoxprozesse des Stoffwechsels; in der Notiz zusätzlich ergänzt.</td></tr>
+      <tr><td>Vergilben von Papier / Kunststoff</td><td>Alterung kann oxidative und lichtchemische Vorgänge enthalten; das sichtbare Gelb allein beweist keinen bestimmten Reaktionsweg.</td></tr>
+      <tr><td>Ammoniumnitrat / ANFO</td><td>Notierter Industrie- und Gefahrenkontext: Ammoniumnitrat wird in Düngern und bestimmten gewerblichen Sprengstoffen eingesetzt. ANFO ist ein industrielles Sprengmittel. Hier geht es nur um Stoffeinordnung und schnelle Energiefreisetzung. <a href="https://www.epa.gov/rmp/chemical-advisory-solid-ammonium-nitrate-storage-handling-and-management" target="_blank" rel="noopener">EPA: Ammoniumnitrat</a>.</td></tr>
+    </tbody></table></div>
+    <h4>«Wasser ist verbrannter Wasserstoff» — was daran stimmt</h4>
+    <p><strong>2 H₂ + O₂ → 2 H₂O</strong>: Bei der Reaktion von Wasserstoff mit Sauerstoff entsteht Wasser und Energie wird frei. Als Merksatz bedeutet «verbrannt»: Wasser ist schon ein energieärmeres Reaktionsprodukt dieses Systems und brennt unter üblichen Bedingungen nicht weiter mit Luftsauerstoff. Die Bildung von Wasser aus den Elementen ist exotherm. <a href="https://cccbdb.nist.gov/exp2x.asp?casno=7732185" target="_blank" rel="noopener">NIST: thermochemische Daten von Wasser</a>.</p>
+    <p class="note"><strong>Die Grenze des Merksatzes:</strong> Wasser hat weiterhin Energie und kann mit anderen Stoffen reagieren. Seine Löschwirkung beruht wesentlich auf Wärmeaufnahme beim Erwärmen und Verdampfen; «nicht brennbar» macht es nicht für jeden Brand geeignet. Auch Rost kann chemisch weiter umgewandelt oder reduziert werden — die Notizformulierung «vollständig oxidiert, kann nichts mehr tun» ist zu absolut.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="chemical-toxicity">
+  <summary>Giftigkeit — gefährliche Werkstoffe, LD50 und Quellenkritik</summary>
+  <div class="atlas-body">
+    <p><strong>Giftigkeit</strong> bezeichnet die Fähigkeit, biologische Schäden hervorzurufen. Für die tatsächliche Gefährdung zählen unter anderem Stoffform, Menge, Aufnahmeweg und Expositionsdauer. Akute Toxizität ist nur ein Teil: Krebs, Sensibilisierung und Schäden durch wiederholte Belastung werden nicht durch einen einzigen LD50-Wert abgedeckt.</p>
+    <div class="table-wrap"><table><thead><tr><th>Stoff aus der Notiz</th><th>Was du dir merken sollst</th></tr></thead><tbody>
+      <tr><td>Quecksilber</td><td>Die chemische Form ist wichtig. Dämpfe von elementarem Quecksilber sind gefährlich; unter anderem kann das Nervensystem geschädigt werden. <a href="https://archive.cdc.gov/www_atsdr_cdc_gov/dontmesswithmercury/body.html" target="_blank" rel="noopener">ATSDR</a>.</td></tr>
+      <tr><td>Asbest</td><td>Einatembare Fasern können schwere Lungenkrankheiten und Krebs verursachen. Seit 1990 in der Schweiz verboten; in alten Bauteilen weiterhin vorhanden. <a href="https://www.suva.ch/de-ch/download/videos/erklaervideo---lebensgefahr-durch-asbest/erklaervideo---lebensgefahr-durch-asbest" target="_blank" rel="noopener">Suva</a>.</td></tr>
+      <tr><td>Blei</td><td>Unter anderem Schäden an Nervensystem und Nieren; für Kinder besonders problematisch. Kann langfristig im Körper gespeichert werden. <a href="https://www.cdc.gov/niosh/lead/about/index.html" target="_blank" rel="noopener">NIOSH</a>.</td></tr>
+      <tr><td>Cadmium</td><td>Kann sich im Körper anreichern; vor allem Nieren und Lunge sind betroffen. Bestimmte Expositionen sind krebserzeugend. <a href="https://www.cdc.gov/nchs/data/series/sr_03/sr03-049.pdf" target="_blank" rel="noopener">CDC / Health Canada</a>.</td></tr>
+      <tr><td>Chrom(VI)-Verbindungen</td><td>Im Allgemeinen deutlich toxischer als Chrom(III); können unter anderem Krebs und Hautreaktionen verursachen.</td></tr>
+      <tr><td>Chrom(III)-Verbindungen</td><td><strong>Die Notiz «unbedenklich» ist falsch.</strong> Häufig weniger toxisch als Chrom(VI), aber z. B. Atemwege und Immunsystem können betroffen sein. Stoff, Aufnahmeweg und Exposition bleiben entscheidend. <a href="https://www.atsdr.cdc.gov/toxguides/toxguide-7.pdf" target="_blank" rel="noopener">ATSDR: Chromformen</a>.</td></tr>
+    </tbody></table></div>
+    <h4>LD50 lesen</h4>
+    <p><strong>LD50 = mediane letale Dosis:</strong> statistische Dosis, bei der unter den festgelegten Versuchsbedingungen 50 % der Versuchstiere sterben. Einheit: <strong>mg Stoff pro kg Körpermasse</strong>. Ein kleinerer Wert bedeutet bei vergleichbaren Bedingungen eine höhere <em>akute</em> Toxizität. Ohne Tierart, Aufnahmeweg, Stoffform und Studie ist eine Zahl nicht sinnvoll vergleichbar.</p>
+    <div class="table-wrap"><table><thead><tr><th>Aufnahmeweg</th><th>Kenngrösse</th><th>Wichtige Unterscheidung</th></tr></thead><tbody>
+      <tr><td>Oral · verschluckt</td><td>LD50, mg/kg</td><td>Die Notiz nennt die Verabreichung über eine Schlundsonde.</td></tr>
+      <tr><td>Dermal · über die Haut</td><td>LD50, mg/kg</td><td>Andere Aufnahme und andere Einstufungsgrenzen als oral.</td></tr>
+      <tr><td>Inhalativ · eingeatmet</td><td>Meist LC50, z. B. mg/L oder ppm mit Expositionszeit</td><td><strong>Konzentration statt verabreichter Dosis.</strong> Ein Wert ohne Dauer und Stoffzustand ist unvollständig.</td></tr>
+    </tbody></table></div>
+    <p>Historisch wurden Dosisgruppen von Ratten oder Mäusen ausgewertet. Die Notiz nennt dafür «5–10+ Tiere»; das ist <strong>keine allgemeine heutige Verfahrensregel</strong>. OECD 423 arbeitet stufenweise mit drei Tieren pro Schritt und zielt auf eine Toxizitätsklasse. Bestehende Daten und geeignete Alternativen sollen Tierverbrauch vermindern; In-vitro- und Computermethoden ersetzen nicht automatisch jeden Endpunkt. <a href="https://www.oecd.org/en/publications/test-no-423-acute-oral-toxicity-acute-toxic-class-method_9789264071001-en.html" target="_blank" rel="noopener">OECD 423</a>; <a href="https://www.oecd.org/en/publications/test-no-403-acute-inhalation-toxicity_9789264070608-en.html" target="_blank" rel="noopener">OECD 403: Inhalation und LC50</a>.</p>
+    <h4>Die Notiz-Skala korrigiert: akute orale Toxizität</h4>
+    <div class="table-wrap"><table><thead><tr><th>Notiz vom 28.08. · ungeprüft</th><th>CLP-Kategorie für akute orale Toxizität</th><th>Bereich in mg/kg</th></tr></thead><tbody>
+      <tr><td>«Sehr giftig &lt;5»</td><td>Kategorie 1</td><td>≤5</td></tr>
+      <tr><td>«Giftig 5–50»</td><td>Kategorie 2</td><td>&gt;5 bis ≤50</td></tr>
+      <tr><td>«Gesundheitsschädlich 50–300»</td><td>Kategorie 3</td><td>&gt;50 bis ≤300</td></tr>
+      <tr><td>«Relativ ungiftig &gt;300»</td><td>Kategorie 4</td><td>&gt;300 bis ≤2000</td></tr>
+      <tr><td>Oberhalb 2000 keine weitere Unterscheidung</td><td>Kein automatisches Urteil über die Gesamtgefährlichkeit</td><td>Andere Gesundheitsgefahren bleiben möglich.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>Über 300 mg/kg bedeutet nicht harmlos.</strong> Auch der Bereich bis 2000 mg/kg ist als akut oral toxisch eingestuft. Ein hoher LD50 schliesst chronische Schäden oder Krebs nicht aus. Die groben Wörter der Notiz dürfen nicht als aktuelle Kennzeichnung übernommen werden. <a href="https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX%3A02008R1272-20180301" target="_blank" rel="noopener">CLP, Anhang I, Abschnitt 3.1: Einstufungsgrenzen</a>.</p>
+    <h4>Archiv der Stoffbeispiele — ausdrücklich keine bestätigte Rangliste</h4>
+    <p>Die folgende Tabelle erhält die Zahlen aus deiner Notiz vollständig als <strong>Notizwert · ungeprüft</strong>. Die damalige Überschrift «Ratte, oral» ist nicht für alle Einträge belegt; besonders der Botulinumtoxin-Eintrag ist so nicht als oraler Rattenwert verwendbar. Aus diesen Archivwerten werden keine menschlichen Dosen berechnet.</p>
+    <div class="table-wrap"><table><thead><tr><th>Notierter Stoff</th><th>Notizwert in mg/kg · ungeprüft</th><th>Was an der Einordnung offen / falsch ist</th></tr></thead><tbody>
+      <tr><td>Botulinumtoxin</td><td>~0.000001–0.000003</td><td>Präparat, Serotyp, Tierart und Aufnahmeweg fehlen; nicht als «Ratte oral» bestätigt. «Giftigste überhaupt» ist ohne Vergleichsbedingungen keine belastbare Rangfolge.</td></tr>
+      <tr><td>Quecksilber(II)-chlorid</td><td>&lt;5</td><td>Studienquelle und Bedingungen fehlen; nicht mit elementarem Quecksilber gleichsetzen.</td></tr>
+      <tr><td>Nikotin</td><td>~50</td><td>Studienbezug fehlt. Kein Wert für eine menschliche Gefährdungsgrenze.</td></tr>
+      <tr><td>Koffein</td><td>~250</td><td>Studienbezug fehlt; nicht zur Berechnung sicherer Trinkmengen geeignet.</td></tr>
+      <tr><td>Bleiacetat</td><td>~4670</td><td>«Relativ ungiftig» wäre irreführend: Langzeitschäden durch Blei werden mit LD50 nicht beschrieben.</td></tr>
+      <tr><td>Kochsalz (NaCl)</td><td>~3000</td><td>Eine hohe Zahl ist kein Freibrief für grosse Aufnahmemengen.</td></tr>
+      <tr><td>Ethanol</td><td>~7060–10600</td><td>Verschiedene Versuchswerte nicht zu einem universellen Wert verdichten; akute und chronische Risiken unterscheiden.</td></tr>
+    </tbody></table></div>
+    <p class="note"><strong>Der Nikotin-Mythos aus der Notiz bleibt als Quellenkritik-Thema:</strong> Oft abgeschriebene historische Angaben können jahrzehntelang weiterleben. Die genaue historische Herleitung ist hier nicht unabhängig belegt. Die in der Notiz genannte Schätzung einer menschlichen tödlichen Dosis wird nicht als Lernreferenz übernommen: Tierwerte und historische Schätzungen ergeben keine verlässliche menschliche Grenzdosis. Lernziel ist, <strong>Originalquelle, Stoffform, Aufnahmeweg und Versuchsbedingungen</strong> zu prüfen.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="chemical-degradation">
+  <summary>Abbaubarkeit — alle vier Notizbeispiele und ihre Bedingungen</summary>
+  <div class="atlas-body">
+    <p><strong>Biologischer Abbau</strong> ist die Umwandlung durch Organismen. <strong>Zerfall in kleine Stücke</strong> ist etwas anderes: Mikroplastik kann bleiben, auch wenn der ursprüngliche Gegenstand nicht mehr erkennbar ist. Die Dauer hängt von Material, Dicke, Temperatur, Feuchtigkeit, Licht und biologischer Umgebung ab.</p>
+    <div class="table-wrap"><table><thead><tr><th>Werkstoff</th><th>Notizwert · ungeprüft</th><th>So ist der Wert zu lesen</th></tr></thead><tbody>
+      <tr><td>Holz / Papier</td><td>Monate bis wenige Jahre</td><td>Nur eine grobe Grössenordnung. Trockenheit, Beschichtungen, Holzart und Umgebung ändern den Verlauf stark.</td></tr>
+      <tr><td>PLA · Polylactid</td><td>Tage–Wochen im Industriekompost</td><td>Kein universeller Produktwert. Industrielle Kompostierbarkeit verlangt definierte Bedingungen; sie bedeutet nicht schnellen Abbau im Garten oder in der Natur.</td></tr>
+      <tr><td>PET-Flasche</td><td>~450 Jahre</td><td>Keine gemessene allgemeingültige Lebensdauer jeder Flasche; Umwelt und Material verändern den Zerfall. Vollständiger biologischer Abbau und Fragmentierung unterscheiden.</td></tr>
+      <tr><td>Nylon-Fischernetz</td><td>~600 Jahre</td><td>Eine illustrative Schätzung, keine feste Werkstoffkonstante oder Garantie vollständigen Verschwindens.</td></tr>
+    </tbody></table></div>
+    <p class="warning"><strong>«Bio» ist keine Entsorgungsanweisung.</strong> Biobasiert beschreibt die Rohstoffherkunft; biologisch abbaubar beschreibt ein Verhalten unter festgelegten Bedingungen. Ein industriell kompostierbares Produkt ist nicht automatisch heimkompostierbar. <a href="https://www.umweltbundesamt.de/biobasierte-biologisch-abbaubare-kunststoffe" target="_blank" rel="noopener">Umweltbundesamt: Begriffe und Kompostierbedingungen</a>.</p>
+    <p>Für Kunststoffe lässt sich eine allgemeine Abbauzeit in der Umwelt nicht seriös auf eine einzelne Jahreszahl reduzieren. Die Notizwerte bleiben sichtbar, werden aber nicht als exakte Zeitachse gelernt. <a href="https://oceanservice.noaa.gov/education/tutorial-coastal/marine-debris/md03.html" target="_blank" rel="noopener">NOAA: Warum Abbauzeiten von Bedingungen abhängen</a>.</p>
+  </div>
+</details>
+
+<details class="atlas-detail" id="chemical-uv">
+  <summary>UV-Beständigkeit — PP, PE, PVC, PC, PMMA und Glas</summary>
+  <div class="atlas-body">
+    <p><strong>UV-Beständigkeit</strong> beschreibt, wie gut ein Werkstoff seine Eigenschaften unter UV-Belastung behält. Bei vielen Kunststoffen führt Licht zusammen mit Sauerstoff zu Veränderungen der Polymerstruktur: <strong>Vergilbung → Oberflächenrisse → geringere Zähigkeit / Versprödung</strong> ist ein mögliches Schadensbild, keine zwingende feste Reihenfolge.</p>
+    <div class="table-wrap"><table><thead><tr><th>Werkstoff</th><th>Notizaussage</th><th>Einordnung für die Materialwahl</th></tr></thead><tbody>
+      <tr><td>PP · Polypropylen, unbehandelt</td><td>Schlecht; wird ohne Stabilisator spröde.</td><td>Als allgemeine Tendenz notiert. Für ein konkretes Produkt UV-Stabilisierung und Freigabe des Herstellers prüfen.</td></tr>
+      <tr><td>PE / HDPE, unbehandelt</td><td>Begrenzt; mit Russ / UV-Stabilisator für aussen geeignet.</td><td>Die Rezeptur entscheidet. Eine Farbe allein beweist keine geprüfte Aussenbeständigkeit.</td></tr>
+      <tr><td>PVC</td><td>Gut / witterungsbeständig.</td><td>Nur für passend formulierte und stabilisierte Produkte verallgemeinerbar; «PVC» allein ist keine Aussenfreigabe.</td></tr>
+      <tr><td>PC · Polycarbonat</td><td>Gemeinsam mit PVC als «gut» eingetragen.</td><td><strong>Zu pauschal:</strong> Ungeschütztes PC kann unter UV vergilben und mechanische Eigenschaften verlieren. Für intensive UV-Belastung braucht es geeignete Stabilisierung bzw. Beschichtung.</td></tr>
+      <tr><td>PMMA · Acrylglas</td><td>Sehr gut / von Natur aus UV-beständig.</td><td>Gute Witterungs- und UV-Beständigkeit ist eine typische Stärke. Herstellerzusagen beziehen sich trotzdem auf bestimmte Produkte.</td></tr>
+      <tr><td>Glas</td><td>Sehr gut / praktisch unempfindlich.</td><td>Gewöhnliches Glas ist gegenüber Sonnenlicht sehr beständig. Das sagt nicht, wie viel UV-Strahlung eine konkrete Glassorte durchlässt.</td></tr>
+    </tbody></table></div>
+    <p><a href="https://solutions.covestro.com/-/media/covestro/solution-center/brochures/pdf/optical-portfolio_brochure_en_v9.pdf?hash=26A7B4D5FD6E728776B9124F9677EF5F&amp;rev=2640738cbb914e4685f5926cd4d09a56" target="_blank" rel="noopener">Covestro: UV-bedingte Veränderungen von Polycarbonat</a>; <a href="https://www.plexiglas.de/de/service/produktinfo/uv-bestaendigkeit" target="_blank" rel="noopener">PLEXIGLAS / Hersteller: UV-Beständigkeit von PMMA-Produkten</a>.</p>
+    <p class="note"><strong>Verbindung zur mechanischen Kategorie:</strong> «Zäh» heisst, ein Werkstoff kann vor dem Bruch merklich Energie durch Verformung aufnehmen. «Spröd» heisst geringe plastische Verformung vor dem Bruch. UV-Alterung kann aus einem zunächst zähen Kunststoff einen deutlich spröderen machen — genau das Beispiel vom 04.09.</p>
+  </div>
+</details>
+    </section>
+
+    <h2 id="saeuren-basen">Säuren &amp; Basen <span class="chip extra">Zusatz</span></h2>
     <div class="extra-box">
       <p><strong>Nicht als geprüfter Unterrichtsstoff bestätigt.</strong> Du wolltest das Thema trotzdem im Paket haben — hier ist die sichere Basis, ohne es als Stoff von Wäfler auszugeben.</p>
       <div class="grid two">
         <div><h3>Säure</h3><p>Nach Brønsted kann eine Säure ein Proton (H⁺) abgeben.</p></div>
         <div><h3>Base</h3><p>Nach Brønsted kann eine Base ein Proton (H⁺) aufnehmen.</p></div>
       </div>
-      <p>In wässrigen Lösungen gilt als Schulorientierung: <strong>pH &lt; 7 sauer</strong>, <strong>pH = 7 neutral</strong>, <strong>pH &gt; 7 basisch</strong>. Bei einer Neutralisation reagieren Säure und Base miteinander; das konkrete Reaktionsschema hängt von den Stoffen ab.</p>
+      <p>Für wässrige Lösungen bei ungefähr 25 °C gilt als Schulorientierung: <strong>pH &lt; 7 sauer</strong>, <strong>pH = 7 neutral</strong>, <strong>pH &gt; 7 basisch</strong>. Der neutrale pH hängt von der Temperatur ab; die Skala 0–14 ist eine übliche Schulskala. Bei einer Neutralisation reagieren Säure und Base miteinander; das konkrete Reaktionsschema hängt von den Stoffen ab.</p>
       <p><strong>Sicher arbeiten:</strong> Nie unbekannte Chemikalien mischen. Beim Verdünnen gilt im Unterricht: erst Wasser, dann Säure; Schutzbrille und die Lehrperson gehören dazu.</p>
     </div>
 
@@ -284,6 +891,7 @@
       <strong>Quellen und Prüfstatus</strong>
       <ul>
         <li>Unterrichtsstoff: Werkstoffkunde-Notizen vom 21.08., 28.08. und 04.09.2026.</li>
+        <li>Gruppen/Einordnung: <a href="https://www.twi-global.com/technical-knowledge/faqs/thermoset-vs-thermoplastic" target="_blank" rel="noopener">TWI: Thermoplaste und Duroplaste</a>, <a href="https://archive.copper.org/publications/newsletters/innovations/2000/01/brasses.html" target="_blank" rel="noopener">Copper Development Association: Messing</a>, <a href="https://goldbook.iupac.org/terms/view/E02065" target="_blank" rel="noopener">IUPAC: Emulsion</a>. Weitere Belege stehen direkt bei den Tabellen und Korrekturen.</li>
         <li><a href="https://worldsteel.org/about-steel/what-is-steel/" target="_blank" rel="noopener">worldsteel: What is steel?</a> — allgemeine Branchenformulierung zu Stahl als Eisen-Kohlenstoff-Legierung.</li>
         <li><a href="https://www.empa.ch/en/web/s604/metallkorrosion-an-gebaeuden-erkennen-und-vorhersagen" target="_blank" rel="noopener">Empa: Metallkorrosion</a> sowie <a href="https://goldbook.iupac.org/terms/view/O04362" target="_blank" rel="noopener">IUPAC: Oxidation</a> — Vertiefung zu Redox und Korrosion.</li>
         <li><a href="https://goldbook.iupac.org/terms/view/B00744" target="_blank" rel="noopener">IUPAC: Brønsted-Säure</a>, <a href="https://goldbook.iupac.org/terms/view/B00745" target="_blank" rel="noopener">Brønsted-Base</a> und <a href="https://goldbook.iupac.org/terms/view/P04524" target="_blank" rel="noopener">pH</a> — Zusatzteil Säuren/Basen.</li>
@@ -293,6 +901,7 @@
   </section>
 
   <section class="tab-pane" id="visuals">
+    <div class="note"><strong>Kategorien und Eigenschaften:</strong> Die vollständige Karte steht am Anfang von Theorie. <a href="#eigenschaften">Zur Eigenschaftskarte →</a></div>
     <div class="intro"><h2>Eine Sache nach der anderen.</h2><p>Dieser Reiter ist für Wiederholung ohne langen Lesetext. Schau auf eine Karte, sag sie laut, dann geh weiter.</p></div>
     <div class="visual-board">
       <h2>Deine 3-Wochen-Karte</h2><p class="meta">Nicht drei getrennte Kapitel — ein zusammenhängender Weg.</p>
@@ -303,6 +912,8 @@
       </div>
     </div>
 
+    <h2>Die sechs Zustandsübergänge</h2>
+    <div class="state-wrap"><div class="state solid"><strong>Fest</strong><small>Eigene Form · eigenes Volumen</small></div><div class="state-arrow">⇄<small>schmelzen<br>erstarren</small></div><div class="state liquid"><strong>Flüssig</strong><small>Gefässform · eigenes Volumen</small></div><div class="state-arrow">⇄<small>verdampfen<br>kondensieren</small></div><div class="state gas"><strong>Gasförmig</strong><small>Füllt den Raum · komprimierbar</small></div></div><div class="note"><strong>Direkter Weg:</strong> Fest → Gas = Sublimieren · Gas → Fest = Resublimieren.</div>
     <h2>Der Vier-Linsen-Check</h2>
     <p>Wenn eine Aufgabe einen Werkstoff nennt, «drehst» du ihn gedanklich durch diese vier Linsen.</p>
     <div class="lens-grid">
@@ -344,6 +955,7 @@
   <section class="tab-pane" id="karten">
     <div class="intro"><h2>Denken, dann umdrehen.</h2><p>Die Karte zeigt nur die Frage. Erst eine eigene Antwort bilden, dann antippen. «Gewusst» und «noch üben» werden auf diesem Gerät gespeichert.</p></div>
     <div class="filters" id="cardFilters"></div>
+    <button class="plain-btn" id="reviewCards" aria-pressed="false">Nur «noch üben» anzeigen</button>
     <div class="flash" id="flashCard">
       <div class="flash-body" id="flashBody" role="button" tabindex="0" aria-label="Karte umdrehen"></div>
       <div class="flash-foot"><button class="plain-btn" id="prevCard">← Zurück</button><button class="plain-btn primary" id="flipCard">Umdrehen</button><button class="plain-btn good" id="knowCard">Gewusst</button><button class="plain-btn bad" id="missCard">Noch üben</button><span class="counter" id="cardCounter"></span></div>
@@ -364,13 +976,25 @@
 </main>
 
 <script>
-  // Reiter
-  document.querySelectorAll('.tab-btn').forEach(button => button.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    button.classList.add('active'); document.getElementById(button.dataset.tab).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }));
+  // Reiter und direkte Wege von der Karte zu den vollständigen Notizdetails.
+  function showTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.toggle('active', b.dataset.tab === id); b.setAttribute('aria-pressed', String(b.dataset.tab === id)); });
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === id));
+  }
+  document.querySelectorAll('.tab-btn').forEach(button => button.addEventListener('click', () => { showTab(button.dataset.tab); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+  function revealHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = document.getElementById(id); if (!target) return;
+    const pane = target.closest('.tab-pane'); if (pane) showTab(pane.id);
+    let ancestor = target; while (ancestor) { if (ancestor.tagName === 'DETAILS') ancestor.open = true; ancestor = ancestor.parentElement; }
+    if (target.id.startsWith('details-') && target.nextElementSibling?.tagName === 'DETAILS') target.nextElementSibling.open = true;
+    requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: 'instant' }));
+  }
+  document.addEventListener('click', e => { const link = e.target.closest('a[href^="#"]'); if (link && link.hash === location.hash) { e.preventDefault(); revealHash(); } });
+  window.addEventListener('hashchange', revealHash);
+  document.getElementById('expandDetails').addEventListener('click', () => document.querySelectorAll('#notizdetails details').forEach(d => d.open = true));
+  document.getElementById('collapseDetails').addEventListener('click', () => document.querySelectorAll('#notizdetails details').forEach(d => d.open = false));
+  showTab('theorie'); revealHash();
 
   // Zusatz: pH-Visualisierung. Keine Stoffwerte werden behauptet.
   const phRange = document.getElementById('phRange'), phReadout = document.getElementById('phReadout');
@@ -385,9 +1009,9 @@
     ['grundlagen','Werkstoff','Material mit gezielt nutzbaren Eigenschaften.'],
     ['grundlagen','Legierung','Metallisches Gemisch aus mindestens zwei Elementen; Messing ist Kupfer + Zink.'],
     ['grundlagen','Dichte ρ','Masse pro Volumen: ρ = m / V.'],
-    ['grundlagen','Leichtmetall','In deinen Notizen steht einmal ρ < 5 und einmal ρ ≤ 5 kg/dm³. Den Grenzfall bei genau 5 kg/dm³ mit Wäfler klären.'],
-    ['grundlagen','Schwermetall','In deinen Notizen: ρ ≥ 5 kg/dm³. Zusammen mit der abweichenden Leichtmetall-Notiz bleibt der Grenzfall bei genau 5 offen.'],
-    ['grundlagen','Halbleiter / Supraleiter · offen','Steht als Stichwort in der 21.08.-Notiz, aber ohne Erklärung. Bei Wäfler nachfragen, statt eine Definition zu erraten.'],
+    ['grundlagen','Leichtmetall','Hier nach der 21.08.-Notiz: Dichte ρ < 5 kg/dm³. Beispiele Aluminium, Magnesium, Titan. Die Abgrenzung ist eine Konvention, keine Naturgrenze.'],
+    ['grundlagen','Schwermetall','Hier: Dichte ρ ≥ 5 kg/dm³; exakt 5 zählt damit zu schwer. Beispiele Kupfer, Zink, Blei. Quellen verwenden unterschiedliche Grenzen; schwer bedeutet nicht automatisch giftig.'],
+    ['elektrisch','Halbleiter','Leitfähigkeit lässt sich durch Dotierung, Licht und Temperatur beeinflussen. Beispiele Si, Ge, SiC, GaN; Anwendungen Dioden, Transistoren, Solarzellen.'],
     ['grundlagen','Homogenes Gemisch','Bestandteile sind gleichmässig verteilt; Messing ist ein Beispiel für ein Metallgemisch.'],
     ['grundlagen','Heterogenes Gemisch','Bestandteile sind nicht gleichmässig verteilt und können als verschiedene Phasen erkennbar sein.'],
     ['grundlagen','CO und CO₂','Beides sind Oxide: CO hat ein, CO₂ zwei Sauerstoff-Atome.'],
@@ -398,14 +1022,14 @@
     ['mechanisch','Druckfestigkeit','Widerstand gegen Zusammendrücken, z. B. bei Säulen oder Fundamenten.'],
     ['mechanisch','Scherbelastung','Kräfte verschieben Flächen gegeneinander, z. B. bei Nieten oder einer Blechschere.'],
     ['mechanisch','Härte','Widerstand gegen das Eindringen eines anderen Körpers.'],
-    ['mechanisch','Brinell / Rockwell / Vickers','Merkschema aus der Notiz: Kugel / Kegel / Pyramide.'],
+    ['mechanisch','Brinell / Rockwell / Vickers','Brinell: Hartmetallkugel. Rockwell: je Skala Diamantkegel oder Kugel. Vickers: Diamantpyramide. Die Rohnotiz ist vereinfacht.'],
     ['mechanisch','Elastizität','Nach der Belastung Rückkehr in die ursprüngliche Form.'],
     ['mechanisch','Plastizität','Bleibende Verformbarkeit.'],
     ['mechanisch','Spröd','Bricht mit wenig vorheriger Verformung.'],
     ['thermisch','Schmelzen','fest → flüssig'], ['thermisch','Erstarren','flüssig → fest'],
     ['thermisch','Verdampfen','flüssig → gasförmig'], ['thermisch','Kondensieren','gasförmig → flüssig'],
     ['thermisch','Sublimieren','fest → gasförmig'], ['thermisch','Resublimieren','gasförmig → fest'],
-    ['thermisch','Wärmekapazität','Energie, die zum Erwärmen eines Stoffes nötig ist.'],
+    ['thermisch','Wärmekapazität','Wärmekapazität C = Q/ΔT in J/K; spezifische Wärmekapazität c = Q/(m·ΔT) in J/(kg·K).'],
     ['thermisch','Wärmeausdehnung','Längen- oder Volumenänderung bei Temperaturänderung.'],
     ['thermisch','Vertiefung — Brennbarkeit','Fähigkeit eines Stoffes, sich zu entzünden und weiterzubrennen. Nicht dasselbe wie Hitzebeständigkeit.'],
     ['thermisch','Vertiefung — Hitzebeständigkeit','Wie gut ein Werkstoff hohe Temperaturen aushält, ohne wichtige Eigenschaften zu verlieren.'],
@@ -424,7 +1048,25 @@
     ['chemie','Vertiefung — Spannungsreihe','Ordnet Metalle danach, wie leicht sie Elektronen abgeben; wichtig für den Gedanken hinter der Opferanode.'],
     ['extra','Brønsted-Säure','Teilchen, das ein Proton (H⁺) abgeben kann. Zusatzstoff.'],
     ['extra','Brønsted-Base','Teilchen, das ein Proton (H⁺) aufnehmen kann. Zusatzstoff.'],
-    ['extra','pH','Mass für die Säure-/Baseneigenschaft einer wässrigen Lösung. Zusatzstoff.']
+    ['extra','pH','Mass für die Säure-/Baseneigenschaft einer wässrigen Lösung. Zusatzstoff.'],
+    ['grundlagen','Thermoplast','Wird beim Erwärmen weich bzw. schmelzbar und lässt sich erneut formen.'],
+    ['grundlagen','Duroplast','Vernetzter Kunststoff; nach dem Aushärten nicht erneut aufschmelzbar.'],
+    ['grundlagen','Elastomer','Gummielastischer Werkstoff; das konkrete Unterrichtsbeispiel fehlt noch.'],
+    ['mechanisch','Elastoplastisch','Eine Verformung hat einen elastischen und einen bleibenden plastischen Anteil.'],
+    ['mechanisch','Zähigkeit','Fähigkeit, bis zum Bruch Energie aufzunehmen; zähe Werkstoffe können sich dabei deutlich verformen.'],
+    ['elektrisch','Leitfähigkeit','Wie gut ein Stoff elektrischen Strom leitet; hohe Leitfähigkeit bedeutet kleinen spezifischen Widerstand.'],
+    ['elektrisch','Relative Permittivität εr','Beschreibt die elektrische Polarisation relativ zum Vakuum; im einfachen Plattenkondensator erhöht sie die Kapazität.'],
+    ['elektrisch','Supraleiter','Unter kritischen Temperatur-, Feld- und Strombedingungen verschwindet der elektrische Gleichstromwiderstand; Meissner-Effekt. Beispiel Niob-Titan für tiefgekühlte Magnetspulen.'],
+    ['grundlagen','Betriebs-/Hilfsstoffe','Technische Prozessstoffe, z. B. Schmieröl, Fett, Kraftstoff, Kühlwasser, Hydrauliköl, Reiniger oder Trennmittel. Die Bezeichnung beschreibt die Verwendung, keine Kunststoffart.'],
+    ['elektrisch','Paramagnetisch','Wird schwach in ein stärkeres Magnetfeld gezogen, z. B. Aluminium und Platin.'],
+    ['elektrisch','Diamagnetisch','Wird schwach aus einem stärkeren Magnetfeld verdrängt, z. B. Kupfer, Gold und Wasser.'],
+    ['thermisch','Schmelzpunkt / Siedepunkt','Temperaturen eines Phasenwechsels; insbesondere der Siedepunkt hängt vom Druck ab.'],
+    ['thermisch','Bimetall','Zwei verbundene Metalle mit unterschiedlicher Wärmeausdehnung biegen sich bei Temperaturänderung.'],
+    ['chemie','Passivierung','Eine schützende Oberflächenschicht bremst weiteren chemischen Angriff.'],
+    ['chemie','Kontaktkorrosion','Unterschiedliche Metalle sind elektrisch verbunden und von einem Elektrolyten benetzt; das unedlere kann stärker korrodieren.'],
+    ['chemie','Oxidationsmittel','Nimmt Elektronen auf, wird selbst reduziert und oxidiert seinen Partner.'],
+    ['chemie','Reduktionsmittel','Gibt Elektronen ab, wird selbst oxidiert und reduziert seinen Partner.'],
+    ['chemie','UV-Beständigkeit','Widerstand gegen Veränderung durch ultraviolette Strahlung; abhängig von Werkstoff und Stabilisierung.']
   ];
   const CATEGORY_NAMES = { all: 'Alle', grundlagen: 'Grundlagen', mechanisch: 'Mechanisch', thermisch: 'Thermisch', elektrisch: 'Elektrisch · Vertiefung', chemie: 'Chemie · Vertiefung', extra: 'Zusatz' };
   let termCategory = 'all'; const termList = document.getElementById('termList'), termSearch = document.getElementById('termSearch'), termFilters = document.getElementById('termFilters');
@@ -442,14 +1084,14 @@
 
   const CARDS = [
     ['grundlagen','Nenne die vier Eigenschaftskategorien.','Mechanisch · elektrisch · thermisch · chemisch/ökologisch.'],
-    ['grundlagen','Halbleiter / Supraleiter: Was weisst du sicher?','Nur, dass es als offenes Stichwort in der 21.08.-Notiz steht. Die Erklärung bei Wäfler nachfragen, nicht erfinden.'],
+    ['elektrisch','Halbleiter und Supraleiter: Was ist der Unterschied?','Halbleiter: Leitfähigkeit gezielt beeinflussbar, z. B. Silizium. Supraleiter: unter kritischen Bedingungen kein elektrischer Gleichstromwiderstand, z. B. tiefgekühltes Niob-Titan.'],
     ['grundlagen','Was ist Messing: Verbindung oder Gemisch?','Eine Legierung, also ein homogenes Metallgemisch aus Kupfer und Zink.'],
     ['grundlagen','Wie lautet die Dichteformel?','ρ = m / V — Masse durch Volumen.'],
     ['grundlagen','Was unterscheidet CO von CO₂?','CO enthält ein Sauerstoff-Atom, CO₂ zwei. Beide sind Oxide.'],
     ['grundlagen','Was ist der sichere Merksatz zu Ammoniumnitrat?','Die Notiz nennt es als Düngerbestandteil. Mit Brennstoff kann es gefährlich reagieren: niemals selbst mischen oder damit experimentieren.'],
-    ['mechanisch','Feder und Schraube: Welche Belastung?','Feder: Torsion. Schraube: Zug.'],
+    ['mechanisch','Schraubenfeder-Draht und vorgespannte Schraube: Welche Belastung?','Draht einer axial belasteten Schraubenfeder: vor allem Torsion. Vorgespannte Schraube: Zug. Andere Federarten und Einbausituationen können anders belastet sein.'],
     ['mechanisch','Nenne die fünf Belastungsarten.','Zug · Biegung · Druck · Scherung · Torsion.'],
-    ['mechanisch','Welche Formen gehören zu Brinell, Rockwell und Vickers?','Brinell: Kugel · Rockwell: Kegel · Vickers: Pyramide.'],
+    ['mechanisch','Welche Eindringkörper gehören zu Brinell, Rockwell und Vickers?','Brinell: Hartmetallkugel · Rockwell: je nach Skala Diamantkegel oder Kugel · Vickers: Diamantpyramide.'],
     ['mechanisch','Elastisch oder plastisch: Was bleibt nach dem Biegen?','Elastisch: nichts, der Stoff geht zurück. Plastisch: die Verformung bleibt.'],
     ['mechanisch','Was bedeutet spröd?','Der Werkstoff bricht mit wenig vorheriger Verformung.'],
     ['thermisch','Nenne die sechs Zustandsübergänge.','Schmelzen · Erstarren · Verdampfen · Kondensieren · Sublimieren · Resublimieren.'],
@@ -466,21 +1108,34 @@
     ['chemie','Vertiefung — Schnelle oder langsame Oxidation?','Schnell: Energie in kurzer Zeit, z. B. Verbrennung. Langsam: über lange Zeit, z. B. Rosten.'],
     ['extra','Was kann eine Brønsted-Säure?','Ein Proton (H⁺) abgeben.'],
     ['extra','Was kann eine Brønsted-Base?','Ein Proton (H⁺) aufnehmen.'],
-    ['extra','Wie ordnest du pH 3, 7 und 11 ein?','3 sauer · 7 neutral · 11 basisch.']
+    ['extra','Wie ordnest du pH 3, 7 und 11 ein?','Bei etwa 25 °C: 3 sauer · 7 neutral · 11 basisch.'],
+    ['mechanisch','Welche Eigenschaften gehören in den mechanischen Ast?','Festigkeit mit fünf Belastungsarten · Härte · Verformbarkeit (elastisch, plastisch, elastoplastisch) · Sprödigkeit/Zähigkeit · Dichte.'],
+    ['elektrisch','Welche Eigenschaften gehören in den elektrischen Ast?','Elektrische Leitfähigkeit · Durchschlagsfestigkeit · Polarisation/Dielektrizitätszahl · Magnetismus (ferro-, para-, diamagnetisch).'],
+    ['thermisch','Welche Eigenschaften gehören in den thermischen Ast?','Aggregatszustände und Übergänge · Schmelz-/Siedepunkt · Brennbarkeit · Hitzebeständigkeit · spezifische Wärmekapazität c · Wärmeleitfähigkeit λ · Wärmeausdehnung α.'],
+    ['chemie','Welche Eigenschaften gehören in den chemisch/ökologischen Ast?','Korrosionsbeständigkeit · Reaktionsverhalten/Redox · Giftigkeit · UV-Beständigkeit · Abbaubarkeit. Elektrochemie erklärt z. B. Kontaktkorrosion.'],
+    ['grundlagen','Werkstoffgruppe oder Eigenschaft: Kupfer ist elektrisch leitfähig?','Kupfer ist ein Metall (Gruppe); elektrische Leitfähigkeit ist eine Eigenschaft. Derselbe Werkstoff hat Eigenschaften aus allen vier Kategorien.'],
+    ['grundlagen','Thermoplast, Duroplast, Elastomer — der Kernunterschied?','Thermoplast: durch Wärme wieder formbar. Duroplast: nach Aushärtung nicht erneut schmelzbar. Elastomer: gummielastisch; kehrt nach Entlastung zurück.'],
+    ['grundlagen','Nenne sechs Betriebs-/Hilfsstoffe und ihren Zweck.','Schmieröl: Reibung senken · Fett: schmieren · Kraftstoff: Energie · Kühlwasser: Wärme abführen · Hydrauliköl: Kraft übertragen · Reiniger: Rückstände entfernen.'],
+    ['grundlagen','Dichte genau 5 kg/dm³: leicht oder schwer?','Nach der hier verwendeten Konvention vom 21.08.: schwer (≥5). Leicht ist <5. Andere Quellen grenzen anders ab; das ist keine Naturgrenze.'],
+    ['elektrisch','Warum sind Supraleiter nicht einfach bessere Halbleiter?','Supraleitung ist ein eigener Zustand mit verschwindendem Gleichstromwiderstand und Meissner-Effekt unter kritischen Bedingungen. Halbleiter ermöglichen durch steuerbare Ladungsträger elektronische Bauteile.'],
+    ['thermisch','c, λ und α — drei verschiedene Fragen?','c: Energie zum Erwärmen pro kg und K. λ: Wärme weiterleiten. α: Längenänderung pro Temperaturänderung.'],
+    ['chemie','UV macht Kunststoff spröde: Welche Kategorien verbinden sich?','UV-Beständigkeit: chemisch/ökologisch. Sprödigkeit: mechanisch. Alterung verändert also eine mechanische Eigenschaft.']
   ];
-  let cardCategory = 'all', cardIndex = 0, flipped = false; let known = new Set(), missed = new Set(); const cardFilters = document.getElementById('cardFilters');
+  let cardCategory = 'all', cardIndex = 0, flipped = false, reviewOnly = false; let known = new Set(), missed = new Set(); const cardFilters = document.getElementById('cardFilters');
   try { const saved = JSON.parse(localStorage.getItem('werkstoff-karten-v1') || '{}'); known = new Set(saved.known || []); missed = new Set(saved.missed || []); } catch (_) {}
-  function currentCards() { return CARDS.map((card, id) => ({ card, id })).filter(({ card }) => cardCategory === 'all' || card[0] === cardCategory); }
-  function saveCards() { localStorage.setItem('werkstoff-karten-v1', JSON.stringify({ known: [...known], missed: [...missed] })); }
+  function currentCards() { return CARDS.map((card, id) => ({ card, id })).filter(({ card, id }) => (cardCategory === 'all' || card[0] === cardCategory) && (!reviewOnly || missed.has(id))); }
+  function saveCards() { try { localStorage.setItem('werkstoff-karten-v1', JSON.stringify({ known: [...known], missed: [...missed] })); } catch (_) {} }
   function renderCard() {
     const cards = currentCards(); if (cardIndex >= cards.length) cardIndex = 0; const body = document.getElementById('flashBody');
-    if (!cards.length) { body.textContent = 'Keine Karten in dieser Kategorie.'; return; }
+    document.getElementById('knowCard').disabled = document.getElementById('missCard').disabled = !cards.length;
+    if (!cards.length) { body.textContent = 'Keine Karten zum Üben in dieser Auswahl. Schalte den Üben-Filter aus oder wähle eine andere Kategorie.'; body.setAttribute('aria-label', body.textContent); document.getElementById('cardCounter').textContent = `0 / 0 · ${known.size} gewusst · ${missed.size} üben`; return; }
     const { card, id } = cards[cardIndex]; body.className = `flash-body${flipped ? ' back' : ''}`; body.innerHTML = flipped ? card[2] : card[1];
     document.getElementById('cardCounter').textContent = `${cardIndex + 1} / ${cards.length} · ${known.size} gewusst · ${missed.size} üben`;
-    body.dataset.id = id;
+    body.dataset.id = id; body.setAttribute('aria-label', `${body.textContent} — Karte umdrehen`);
   }
   function nextCard() { const cards = currentCards(); cardIndex = cards.length ? (cardIndex + 1) % cards.length : 0; flipped = false; renderCard(); }
-  function rateCard(ok) { const id = Number(document.getElementById('flashBody').dataset.id); if (ok) { known.add(id); missed.delete(id); } else { missed.add(id); known.delete(id); } saveCards(); nextCard(); }
+  function rateCard(ok) { if (!currentCards().length) return; const id = Number(document.getElementById('flashBody').dataset.id); if (ok) { known.add(id); missed.delete(id); } else { missed.add(id); known.delete(id); } saveCards(); if (reviewOnly && ok) { flipped = false; renderCard(); } else nextCard(); }
+  document.getElementById('reviewCards').addEventListener('click', e => { reviewOnly = !reviewOnly; cardIndex = 0; flipped = false; e.currentTarget.setAttribute('aria-pressed', String(reviewOnly)); e.currentTarget.textContent = reviewOnly ? 'Alle Karten wieder anzeigen' : 'Nur «noch üben» anzeigen'; renderCard(); });
   function refreshCardFilters() { categoryButtons(cardFilters, cardCategory, id => { cardCategory = id; cardIndex = 0; flipped = false; refreshCardFilters(); renderCard(); }); }
   refreshCardFilters(); document.getElementById('flashCard').addEventListener('click', e => { if (!e.target.closest('button')) { flipped = !flipped; renderCard(); } });
   document.getElementById('flashBody').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipped = !flipped; renderCard(); } });
@@ -489,27 +1144,33 @@
 
   const QUIZ = [
     ['Welche vier Kategorien nutzt du, um Werkstoffeigenschaften zu ordnen?','<strong>Mechanisch, elektrisch, thermisch und chemisch/ökologisch.</strong>'],
-    ['Ordne zu: Schraube und Feder.','<strong>Schraube → Zug.</strong> <strong>Feder → Torsion.</strong>'],
+    ['Ordne zu: vorgespannte Schraube und Draht einer axial belasteten Schraubenfeder.','<strong>Schraube → Zug.</strong> <strong>Schraubenfeder-Draht → vor allem Torsion.</strong> Die Bauform und Belastungssituation zählen.'],
     ['Was unterscheidet elastisch von plastisch?','Elastisch kehrt nach der Belastung zurück; bei plastischer Verformung bleibt die neue Form.'],
     ['Nenne den direkten Übergang fest → gasförmig und zurück.','<strong>Sublimieren</strong> (fest → gasförmig) und <strong>Resublimieren</strong> (gasförmig → fest).'],
     ['Warum ist Messing kein Reinstoff?','Messing ist eine <strong>Legierung</strong> aus mindestens Kupfer und Zink, also ein Gemisch.'],
     ['Was ist die Unterrichtsgrenze zwischen Stahl und Guss?','In deiner Notiz: <strong>Stahl unter 2,06 % C</strong>, <strong>Guss über 2,06 % C</strong>.'],
     ['Nenne die fünf Belastungsarten.','<strong>Zug, Biegung, Druck, Scherung und Torsion.</strong>'],
-    ['Welche Formen gehören zu Brinell, Rockwell und Vickers?','<strong>Kugel, Kegel, Pyramide.</strong>'],
+    ['Welche Eindringkörper gehören zu Brinell, Rockwell und Vickers?','Brinell: <strong>Hartmetallkugel</strong>. Rockwell: <strong>je nach Skala Diamantkegel oder Kugel</strong>. Vickers: <strong>Diamantpyramide</strong>.'],
     ['Was unterscheidet CO von CO₂?','CO hat <strong>ein</strong>, CO₂ hat <strong>zwei</strong> Sauerstoff-Atome.'],
-    ['Wie gehst du mit dem offenen Stichwort «Halbleiter / Supraleiter» um?','Nicht raten: Es steht ohne Erklärung in der Mitschrift. <strong>Bei Wäfler nachfragen.</strong>'],
+    ['Erkläre Halbleiter und Supraleiter mit je einem Beispiel.','<strong>Halbleiter:</strong> Leitfähigkeit gezielt beeinflussbar, z. B. Silizium in Transistoren. <strong>Supraleiter:</strong> unter kritischen Bedingungen kein elektrischer Gleichstromwiderstand, z. B. Niob-Titan in tiefgekühlten Magnetspulen. Die Erklärung zum offenen Notizwort wurde mit Quellen ergänzt.'],
     ['Vertiefung — Was bedeutet Oxidation?','<strong>Elektronenabgabe.</strong>'],
     ['Vertiefung — Was bedeutet Reduktion?','<strong>Elektronenaufnahme.</strong>'],
     ['Vertiefung — Warum ist Rost ein Redox-Thema?','Bei der Korrosion laufen Elektronenabgabe und -aufnahme gekoppelt ab; Wasser und Sauerstoff sind im Modell beteiligt.'],
     ['Vertiefung — Wie funktioniert das Opferanoden-Prinzip?','Ein <strong>unedleres</strong> Metall oxidiert lieber als Eisen und wird dabei geopfert.'],
     ['Vertiefung — Was beschreibt die Durchschlagsfestigkeit?','Die Feldstärke, die ein Isolierstoff vor einem elektrischen Durchschlag aushält.'],
     ['Was kann eine Brønsted-Säure und was eine Brønsted-Base?','Säure: <strong>H⁺ abgeben</strong>. Base: <strong>H⁺ aufnehmen</strong>. <em>Zusatzstoff.</em>'],
-    ['Ordne pH 2, 7 und 12 ein.','<strong>2 sauer, 7 neutral, 12 basisch.</strong> <em>Zusatzstoff.</em>']
+    ['Ordne pH 2, 7 und 12 ein.','Bei etwa 25 °C: <strong>2 sauer, 7 neutral, 12 basisch.</strong> <em>Zusatzstoff.</em>'],
+    ['Zeichne die vier Kategorien mit allen Haupt-Eigenschaften aus dem Kopf.','<strong>Mechanisch:</strong> Festigkeit, Härte, Verformbarkeit, spröd/zäh, Dichte. <strong>Elektrisch:</strong> Leitfähigkeit, Durchschlag, Polarisation/εr, Magnetismus. <strong>Thermisch:</strong> Zustände/Übergänge, Schmelz-/Siedepunkt, Brennbarkeit, Hitzebeständigkeit, c, λ, α. <strong>Chemisch/ökologisch:</strong> Korrosion/Redox, Giftigkeit, UV-Beständigkeit, Abbaubarkeit. <a href="#eigenschaften">Mit der Karte vergleichen →</a>'],
+    ['Weshalb sind Werkstoffgruppen und Eigenschaftskategorien zwei verschiedene Karten?','Die Gruppe sagt, <strong>was für ein Werkstoff</strong> es ist. Die Eigenschaft sagt, <strong>wie er sich verhält</strong>. Kupfer ist ein Metall und hat zugleich mechanische, elektrische, thermische und chemische Eigenschaften.'],
+    ['Ordne Härte, εr, Wärmeleitung und UV-Beständigkeit den Kategorien zu.','Härte → mechanisch; εr → elektrisch; Wärmeleitung → thermisch; UV-Beständigkeit → chemisch/ökologisch.'],
+    ['Nenne vier zusätzliche Betriebsstoffe und ihre Funktion.','Kühlwasser → Wärme abführen; Hydrauliköl → Kraft übertragen; Reiniger → Rückstände entfernen; Trennmittel → Entformen erleichtern. Keine eigenen Kunststoffarten.'],
+    ['Ein Metall hat ρ = 5 kg/dm³. Wohin gehört es hier?','Nach der verwendeten 21.08.-Konvention <strong>Schwermetall (≥5)</strong>. Leichtmetall ist &lt;5. Der Gleichheitsfall ist eine Einteilungsfrage; Quellen sind nicht einheitlich.'],
+    ['Eine hohe LD50: Bedeutet das «harmlos»?','<strong>Nein.</strong> LD50 betrifft akute Toxizität unter bestimmten Versuchsbedingungen. Chronische Schäden und Krebs werden dadurch nicht ausgeschlossen.']
   ];
   document.getElementById('quizList').innerHTML = QUIZ.map(([question, answer], index) => `<details class="quiz-item"><summary><span class="q-topic">${String(index + 1).padStart(2, '0')}</span> ${question}</summary><div class="quiz-answer">${answer}</div></details>`).join('');
 
   const PLAN = [
-    '25 min · Theorie: Vier-Linsen-Check und Werkstoffgruppen lesen; danach die vier Kategorien ohne Hilfe nennen.',
+    '25 min · Theorie: Kategorienkarte lesen; vier Äste mit ihren Eigenschaften selbst zeichnen. Danach Werkstoffgruppen und Zusatz-Erklärungen abgleichen.',
     '25 min · Visuals: Zustandsübergänge und den Korrosionsfluss (Vertiefung) laut erklären; je eine Karte dazu bearbeiten.',
     '25 min · Karteikarten: zuerst «noch üben», dann alle Karten einer Kategorie.',
     '15 min · Quiz: Antworten zuerst denken, erst dann die Lösung öffnen.',
@@ -517,7 +1178,7 @@
     '2 min · Schlusscheck: Was gehört zum Unterrichtsstoff, was ist nur Zusatz?'
   ];
   const planList = document.getElementById('planList'); planList.innerHTML = PLAN.map((item, index) => `<li><input type="checkbox" id="plan${index}"><label for="plan${index}">${item}</label></li>`).join('');
-  function updatePlan() { const boxes = [...planList.querySelectorAll('input')], done = boxes.filter(x => x.checked).length; document.getElementById('progressFill').style.width = `${done / boxes.length * 100}%`; document.getElementById('progressText').textContent = done === boxes.length ? 'Lernrunde fertig. Morgen nur noch die Karten mit «noch üben».' : `${done} von ${boxes.length} Schritten erledigt`; localStorage.setItem('werkstoff-plan-v1', JSON.stringify(boxes.map(x => x.checked))); }
+  function updatePlan() { const boxes = [...planList.querySelectorAll('input')], done = boxes.filter(x => x.checked).length; document.getElementById('progressFill').style.width = `${done / boxes.length * 100}%`; document.getElementById('progressText').textContent = done === boxes.length ? 'Lernrunde fertig. Morgen nur noch die Karten mit «noch üben».' : `${done} von ${boxes.length} Schritten erledigt`; try { localStorage.setItem('werkstoff-plan-v1', JSON.stringify(boxes.map(x => x.checked))); } catch (_) {} }
   try { const stored = JSON.parse(localStorage.getItem('werkstoff-plan-v1') || '[]'); [...planList.querySelectorAll('input')].forEach((box, index) => { box.checked = Boolean(stored[index]); }); } catch (_) {}
   planList.querySelectorAll('input').forEach(box => box.addEventListener('change', updatePlan)); updatePlan();
 </script>
