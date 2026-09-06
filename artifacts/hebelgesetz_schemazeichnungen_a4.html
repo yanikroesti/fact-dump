@@ -3,25 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Schraubenschlüssel und Schubkarre: zwei beschriftete Schemazeichnungen zum Hebelgesetz, gemeinsam auf einem A4-Blatt druckbar. Mit Musterwerten.">
-<title>Hebelgesetz — zwei Schemazeichnungen auf A4</title>
+<meta name="description" content="Sieben Schemazeichnungen zum Hebelgesetz: zwei Beispiele für ein A4-Blatt auswählen oder alle sieben auf vier Seiten drucken. Mit Musterwerten.">
+<title>Hebelgesetz — Schemazeichnungen auswählen und drucken</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#eceeea;color:#171d1e;font:15px/1.5 'Archivo',system-ui,sans-serif}
-nav{max-width:210mm;margin:18px auto;padding:14px;background:white;border-left:4px solid #0e6b72}nav p{margin:8px 0 0}nav .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}nav a{color:#0e6b72;padding:8px 0}button{font:inherit;font-weight:600;font-size:14px;padding:10px 16px;min-height:44px;background:#0e6b72;color:white;border:1px solid #0e6b72;cursor:pointer}a:focus-visible,button:focus-visible{outline:3px solid #0e6b72;outline-offset:3px}
-main{width:210mm;max-width:100%;margin:18px auto;background:white;padding:10mm}
-h1{font-size:16px;margin:0 0 4mm}figure{margin:0 0 4mm}img{display:block;width:100%;height:auto}footer{font-size:11px;color:#424949}
-@media screen and (max-width:600px){nav{margin:8px}main{padding:12px;margin:8px 0}h1{font-size:15px}}
+nav{max-width:210mm;margin:18px auto;padding:18px;background:white;border-left:4px solid #0e6b72}nav p{margin:8px 0 0}nav .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}nav a{color:#0e6b72;padding:8px 0}button{font:inherit;font-weight:600;font-size:14px;padding:10px 16px;min-height:44px;background:#0e6b72;color:white;border:1px solid #0e6b72;cursor:pointer}button.secondary{background:white;color:#0e6b72}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #0e6b72;outline-offset:3px}
+.eyebrow{font:600 11px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#0e6b72}nav h1{font-size:26px;line-height:1.1;margin:8px 0 12px;letter-spacing:-.03em}.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}label{font-size:12px;font-weight:600}select{display:block;width:100%;min-height:44px;margin-top:5px;border:1px solid #899594;padding:8px;background:white;color:#171d1e;font:14px system-ui,sans-serif}#status{font-size:13px;min-height:1.5em}button:disabled{opacity:.55;cursor:wait}
+main{width:210mm;max-width:100%;margin:18px auto}.print-page{background:white;padding:10mm;margin:0 0 18px}
+h2{font-size:16px;margin:0 0 4mm}figure{margin:0 0 4mm}img{display:block;width:100%;height:auto}footer{font-size:11px;color:#424949}
+@media screen and (max-width:600px){nav{margin:8px}.choices{grid-template-columns:1fr}main{margin:8px 0}.print-page{padding:12px}h2{font-size:15px}}
 @page{size:A4 portrait;margin:10mm}
-@media print{nav{display:none}body{background:white}main{width:auto;max-width:none;margin:0;padding:0}h1{font-size:10pt;margin-bottom:3mm}figure{break-inside:avoid;page-break-inside:avoid;margin-bottom:3mm}footer{font-size:7pt}}
+@media print{nav,noscript{display:none}body{background:white}main{width:auto;max-width:none;margin:0;padding:0}.print-page{padding:0;margin:0;break-after:page;page-break-after:always}.print-page:last-child{break-after:auto;page-break-after:auto}h2{font-size:10pt;margin-bottom:3mm}figure{break-inside:avoid;page-break-inside:avoid;margin-bottom:3mm}figure img{height:120mm;object-fit:contain}footer{font-size:7pt}}
 </style>
 </head>
 <body>
-<nav><div class="actions"><button type="button" onclick="window.print()">Beide Schemas auf A4 drucken</button><a href="hebelgesetz_a4.html#schemazeichnungen">← Zurück zum Arbeitsauftrag</a></div><p>Zwei Vorlagen zum Abzeichnen. Musterwerte durch eigene Masse ersetzen. Beim Drucken: A4 hoch, 100 %, Browser-Kopf-/Fusszeilen aus.</p></nav>
+<nav aria-label="Druckauswahl">
+<span class="eyebrow">Hebelgesetz · 7 Zeichenhilfen</span><h1>Deine zwei Beispiele.<br>Dein A4-Blatt.</h1>
+<p>Wähle zwei Vorlagen zum Abzeichnen. Oder stelle alle sieben als Sammlung zusammen.</p>
+<div class="choices"><label for="first">Beispiel 1<select id="first"></select></label><label for="second">Beispiel 2<select id="second"></select></label></div>
+<div class="actions"><button id="print" type="button">Auswahl drucken</button><button id="all" class="secondary" type="button">Alle 7 anzeigen</button><button id="pair" class="secondary" type="button" hidden>Zur Zweierauswahl</button></div>
+<p id="status" role="status" aria-live="polite"></p>
+<p>Musterwerte durch eigene Masse ersetzen. Druck: A4 hoch, 100 %, Browser-Kopf-/Fusszeilen aus.</p>
+<a href="hebelgesetz_a4.html#schemazeichnungen">← Zurück zum Arbeitsauftrag</a>
+</nav>
+<noscript>Für die Auswahl bitte JavaScript aktivieren. Ohne JavaScript werden die ersten beiden Beispiele gedruckt.</noscript>
 <main>
-<h1>Hebelgesetz · Schema-Vorlagen für Montag, 07.09.2026</h1>
+<section class="print-page"><h2>Hebelgesetz · Schema-Vorlagen für Montag, 07.09.2026</h2>
 <figure><img src="assets/hebelgesetz/schraubenschluessel-schema.png" width="1536" height="1024" alt="Zwei Schraubenschlüssel mit Kraft nach unten: bei 0,20 m 200 N, bei 0,30 m rund 133,3 N; beide erzeugen 40 Nm im Uhrzeigersinn."></figure>
 <figure><img src="assets/hebelgesetz/schubkarre-schema.png" width="1536" height="1024" alt="Schubkarre: Drehpunkt an der Radachse, Ladungskraft 588,6 N nach unten bei 0,50 m; Handkraft insgesamt 210,2 N nach oben bei 1,40 m. Eigengewicht der Karre vernachlässigt."></figure>
-<footer>Zeichenvorlagen mit Musterwerten, keine protokollierten eigenen Messungen. 40 Nm sind keine allgemeine Montagevorgabe. Schema nicht massstäblich.</footer>
+<footer>Zeichenvorlagen mit Musterwerten, keine eigenen Messungen. Schemas nicht massstäblich. Werte und Annahmen vor der Abgabe anpassen.</footer></section>
 </main>
+<script>
+'use strict';
+const examples = [
+  ['schraubenschluessel','Schraubenschlüssel','Kraft nach unten: 200 N bei 0,20 m oder 133,3 N bei 0,30 m; jeweils 40 Nm.'],
+  ['schubkarre','Schubkarre','Last 588,6 N nach unten bei 0,50 m, beide Hände zusammen 210,2 N nach oben bei 1,40 m; Eigengewicht vernachlässigt.'],
+  ['nussknacker','Nussknacker','O links; Nussreaktion 300 N nach oben bei 0,04 m, Handkraft 75 N nach unten bei 0,16 m; 12 Nm.'],
+  ['flaschenoeffner','Flaschenöffner','O links; Deckelreaktion 250 N nach unten bei 0,03 m, Handkraft 62,5 N nach oben bei 0,12 m; 7,5 Nm.'],
+  ['grillzange','Grill- / Salatzange','Ein Schenkel: Handkraft 26,5 N nach unten bei 0,08 m, Reaktion 8,82 N nach oben bei 0,24 m; ca. 2,12 Nm, ohne Federwirkung.'],
+  ['haushaltsschere','Haushaltsschere','Ein Scherenschenkel: Handkraft 40 N links und Reaktion 120 N rechts zeigen beide nach oben; Arme 0,09 m und 0,03 m, 3,6 Nm.'],
+  ['tuerklinke','Türklinke','Zwei Fälle mit 2,42 Nm: 22 N bei 0,11 m oder 48,4 N bei 0,05 m; Kräfte senkrecht nach unten.']
+];
+const first = document.querySelector('#first'), second = document.querySelector('#second');
+const all = document.querySelector('#all'), pair = document.querySelector('#pair'), print = document.querySelector('#print');
+let showAll = false;
+for (const select of [first, second]) for (const [id, name] of examples) select.add(new Option(name, id));
+first.value = examples[0][0]; second.value = examples[1][0];
+function render(changed) {
+  if (first.value === second.value) {
+    const other = changed === second ? first : second;
+    other.value = examples.find(([id]) => id !== changed.value)[0];
+  }
+  const chosen = showAll ? examples : [examples.find(e => e[0] === first.value), examples.find(e => e[0] === second.value)];
+  const main = document.querySelector('main'); main.replaceChildren();
+  for (let i = 0; i < chosen.length; i += 2) {
+    const section = document.createElement('section'); section.className = 'print-page';
+    const heading = document.createElement('h2'); heading.textContent = 'Hebelgesetz · Schema-Vorlagen · ' + (i / 2 + 1) + '/' + Math.ceil(chosen.length / 2); section.append(heading);
+    for (const [id, name, alt] of chosen.slice(i, i + 2)) {
+      const figure = document.createElement('figure'), img = document.createElement('img');
+      img.src = 'assets/hebelgesetz/' + id + '-schema.png'; img.alt = name + ': ' + alt; img.width = 1536; img.height = 1024;
+      figure.append(img); section.append(figure);
+    }
+    const footer = document.createElement('footer'); footer.textContent = 'Musterwerte, keine eigenen Messungen · nicht massstäblich · Werte und Modellannahmen vor der Abgabe anpassen. 40 Nm sind keine allgemeine Montagevorgabe.'; section.append(footer); main.append(section);
+  }
+  document.querySelector('#status').textContent = showAll ? '7 Beispiele auf 4 A4-Seiten · je höchstens zwei Zeichnungen.' : '2 Beispiele auf 1 A4-Seite · Vorschau unten.';
+  print.textContent = showAll ? 'Alle 7 drucken' : 'Auswahl drucken'; all.hidden = showAll; pair.hidden = !showAll;
+}
+for (const select of [first, second]) select.addEventListener('change', () => { showAll = false; render(select); });
+all.addEventListener('click', () => { showAll = true; render(); });
+pair.addEventListener('click', () => { showAll = false; render(); });
+print.addEventListener('click', async () => {
+  print.disabled = true;
+  try {
+    await Promise.all([...document.querySelectorAll('main img')].map(img => img.decode()));
+    window.print();
+  } catch {
+    document.querySelector('#status').textContent = 'Ein Bild konnte nicht geladen werden. Bitte die Seite neu laden und erneut drucken.';
+  } finally { print.disabled = false; }
+});
+render();
+</script>
 </body>
 </html>

@@ -73,6 +73,9 @@ body{
 .schema-gallery figcaption{padding:10px 12px;border-top:1px solid var(--rule-soft);font-size:12px;line-height:1.5;}
 .schema-gallery figcaption a{color:var(--accent);text-underline-offset:3px;}
 .schema-gallery .schema-note{margin:0;padding:10px 12px;background:var(--accent-light);}
+.schema-jumps{display:flex;flex-wrap:wrap;gap:5px 14px;margin:0 0 18px;}
+.schema-jumps a{color:var(--accent);padding:6px 0;text-underline-offset:3px;}
+.schema-gallery figure{scroll-margin-top:16px;}
 #schemazeichnungen,#rechenblatt{scroll-margin-top:16px;}
 
 /* ══ IDEEN AUS DEM HAUSHALT (wird nicht gedruckt) ══ */
@@ -321,47 +324,69 @@ body{
   <span class="np-title">Nicht drucken &middot; nur für dich</span>
   <b>Zeichenvorlagen und Rechenentwurf für deinen A4-Auftrag.</b> Die Zahlen sind Musterwerte, keine protokollierten eigenen Messungen.
   <ul>
-    <li><b>Neu: zwei fertige Schemazeichnungen direkt unten.</b> Du kannst sie gross öffnen oder gemeinsam auf A4 drucken. Das bisherige Rechenblatt behält seine leeren Rahmen zum Selbstzeichnen.</li>
+    <li><b>Neu: Schemazeichnungen für alle sieben Beispiele direkt unten.</b> Du kannst sie gross öffnen, zwei beliebige auf A4 drucken oder alle sieben als Sammlung. Das bisherige Rechenblatt behält seine leeren Rahmen zum Selbstzeichnen.</li>
     <li><b>Miss die Zahlen zuhause an deinem eigenen Gegenstand nach.</b> Schlüssellänge, Radabstand, Griffabstand: Meter anlegen, eintragen, neu rechnen. Die Werte hier sind ein Muster, damit du den Rechenweg vor dir hast.</li>
     <li>Ist eine Kraft unklar, darfst du sie laut Auftrag <b>schätzen</b> &mdash; schreib dann kurz dazu, wie du geschätzt hast.</li>
-    <li><b>Zum Drucken wählen:</b> «Beide Schemas auf A4» öffnet das Zeichnungsblatt. Ctrl+P auf dieser Seite druckt weiterhin das Rechenblatt mit leeren Skizzenfeldern.</li>
+    <li><b>Zum Drucken wählen:</b> «Schemas auswählen &amp; drucken» öffnet die Auswahl für das Zeichnungsblatt. Ctrl+P auf dieser Seite druckt weiterhin das Rechenblatt mit leeren Skizzenfeldern.</li>
   </ul>
 </div>
 
 <section class="noprint schema-gallery" id="schemazeichnungen" aria-labelledby="schema-title">
-  <span class="np-title">Neu · 06.09.2026 · zwei Zeichenhilfen</span>
+  <span class="np-title">Neu · 06.09.2026 · alle sieben Beispiele</span>
   <h2 id="schema-title">Drehpunkt. Hebelarm. Kraft.</h2>
-  <p>Schraubenschlüssel und Schubkarre aus deinem A4-Entwurf — mit Kraftpfeilen, Masslinien und Musterrechnungen. Tippe auf ein Bild für die volle Auflösung.</p>
+  <p>Für jedes Beispiel eine Zeichenhilfe — mit Drehpunkt, Kraftpfeilen, Hebelarmen und Musterrechnungen. Tippe auf ein Bild für die volle Auflösung.</p>
   <nav class="schema-actions" aria-label="Zeichnungen und Druckansichten">
-    <a class="primary" href="hebelgesetz_schemazeichnungen_a4.html">Beide Schemas auf A4 →</a>
+    <a class="primary" href="hebelgesetz_schemazeichnungen_a4.html">Schemas auswählen &amp; drucken →</a>
     <a href="#rechenblatt">Zum Rechenblatt mit Skizzenfeldern</a>
     <button type="button" onclick="window.print()">Rechenblatt drucken</button>
   </nav>
-  <figure>
+  <nav class="schema-jumps" aria-label="Direkt zum Beispiel"><a href="#schema-schraubenschluessel">1 · Schraubenschlüssel</a><a href="#schema-schubkarre">2 · Schubkarre</a><a href="#schema-nussknacker">3 · Nussknacker</a><a href="#schema-flaschenoeffner">4 · Flaschenöffner</a><a href="#schema-grillzange">5 · Grill-/Salatzange</a><a href="#schema-haushaltsschere">6 · Schere</a><a href="#schema-tuerklinke">7 · Türklinke</a></nav>
+  <figure id="schema-schraubenschluessel">
     <a class="schema-image" href="assets/hebelgesetz/schraubenschluessel-schema.png" target="_blank" rel="noopener" aria-label="Schraubenschlüssel-Schema in voller Auflösung öffnen">
       <img src="assets/hebelgesetz/schraubenschluessel-schema.png" width="1536" height="1024" alt="Zwei getrennte Fälle: Kraft senkrecht nach unten am Schraubenschlüssel. Bei 0,20 m Hebelarm sind 200 N nötig, bei 0,30 m rund 133,3 N; beide ergeben 40 Nm im Uhrzeigersinn.">
     </a>
     <figcaption><b>1 · Schraubenschlüssel.</b> Längerer Hebelarm, weniger Handkraft für dasselbe Drehmoment. <a href="assets/hebelgesetz/schraubenschluessel-schema.png" download>PNG herunterladen</a></figcaption>
   </figure>
-  <figure>
+  <figure id="schema-schubkarre">
     <a class="schema-image" href="assets/hebelgesetz/schubkarre-schema.png" target="_blank" rel="noopener" aria-label="Schubkarren-Schema in voller Auflösung öffnen">
       <img src="assets/hebelgesetz/schubkarre-schema.png" width="1536" height="1024" loading="lazy" alt="Schubkarre mit Drehpunkt an der Radachse: Lastkraft 588,6 N nach unten im horizontalen Abstand 0,50 m; Handkraft insgesamt rund 210,2 N nach oben im Abstand 1,40 m. Eigengewicht der Karre vernachlässigt.">
     </a>
     <figcaption><b>2 · Schubkarre.</b> Die 210,2 N gelten für <b>beide Hände zusammen</b>. Die Hebelarme werden waagrecht zur jeweiligen Kraftlinie gemessen. <a href="assets/hebelgesetz/schubkarre-schema.png" download>PNG herunterladen</a></figcaption>
   </figure>
-  <p class="schema-note"><b>Muster, keine eigenen Messungen:</b> Werte an deine Gegenstände anpassen. 40 Nm sind keine allgemeine Montagevorgabe. Bei der Schubkarre gilt ruhendes Halten mit angehobenen Stützfüssen und vernachlässigtem Eigengewicht. Grundlagen: <a href="https://openstax.org/books/university-physics-volume-1/pages/10-6-torque">OpenStax · Drehmoment</a> und <a href="https://openstax.org/books/college-physics-2e/pages/9-5-simple-machines">Hebel</a>.</p>
+  <figure id="schema-nussknacker">
+    <a class="schema-image" href="assets/hebelgesetz/nussknacker-schema.png" target="_blank" rel="noopener" aria-label="Nussknacker-Schema in voller Auflösung öffnen"><img src="assets/hebelgesetz/nussknacker-schema.png" width="1536" height="1024" loading="lazy" alt="O links: Nussreaktion 300 N nach oben bei 0,04 m und Handkraft 75 N nach unten bei 0,16 m. Kräfte auf den oberen Hebel; 12 Nm."></a>
+    <figcaption><b>3 · Nussknacker.</b> Der lange Kraftarm vervierfacht die Kraft. Die orange Kraft wirkt <b>von der Nuss auf den oberen Hebel</b>; der Hebel drückt umgekehrt nach unten auf die Nuss. <a href="assets/hebelgesetz/nussknacker-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <figure id="schema-flaschenoeffner">
+    <a class="schema-image" href="assets/hebelgesetz/flaschenoeffner-schema.png" target="_blank" rel="noopener" aria-label="Flaschenöffner-Schema in voller Auflösung öffnen"><img src="assets/hebelgesetz/flaschenoeffner-schema.png" width="1536" height="1024" loading="lazy" alt="O links: Deckelreaktion 250 N nach unten bei 0,03 m, Handkraft 62,5 N nach oben bei 0,12 m; 7,5 Nm."></a>
+    <figcaption><b>4 · Flaschenöffner.</b> Die Hand zieht hoch; der Deckel wirkt auf den Öffner nach unten. Der Öffner selbst zieht den Deckel hoch — Kraft und Gegenkraft wirken auf <b>verschiedene Körper</b>. <a href="assets/hebelgesetz/flaschenoeffner-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <figure id="schema-grillzange">
+    <a class="schema-image" href="assets/hebelgesetz/grillzange-schema.png" target="_blank" rel="noopener" aria-label="Grillzangen-Schema in voller Auflösung öffnen"><img src="assets/hebelgesetz/grillzange-schema.png" width="1536" height="1024" loading="lazy" alt="Ein Schenkel: Handkraft 26,5 N nach unten bei 0,08 m, Gegenkraft 8,82 N nach oben bei 0,24 m. Moment etwa 2,12 Nm."></a>
+    <figcaption><b>5 · Grill-/Salatzange.</b> Kurzer Kraftarm: etwa dreifache Handkraft für die angenommene Klemmkraft. Modell <b>eines Schenkels ohne Federwirkung</b>; die nötige Klemmkraft hängt unter anderem von der Reibung ab. <a href="assets/hebelgesetz/grillzange-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <figure id="schema-haushaltsschere">
+    <a class="schema-image" href="assets/hebelgesetz/haushaltsschere-schema.png" target="_blank" rel="noopener" aria-label="Scheren-Schema in voller Auflösung öffnen"><img src="assets/hebelgesetz/haushaltsschere-schema.png" width="1536" height="1024" loading="lazy" alt="Ein Scherenschenkel: Handkraft 40 N links und Materialreaktion 120 N rechts zeigen beide nach oben. Hebelarme 0,09 m und 0,03 m; 3,6 Nm."></a>
+    <figcaption><b>6 · Haushaltsschere.</b> Drehpunkt zwischen den Kräften: Die beiden Pfeile zeigen auf diesem Schenkel gleichgerichtet, erzeugen aber <b>entgegengesetzte Momente</b>. Die Schneide drückt umgekehrt nach unten aufs Material. Weiter vorne bei 0,08 m bleiben 45 N. <a href="assets/hebelgesetz/haushaltsschere-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <figure id="schema-tuerklinke">
+    <a class="schema-image" href="assets/hebelgesetz/tuerklinke-schema.png" target="_blank" rel="noopener" aria-label="Türklinken-Schema in voller Auflösung öffnen"><img src="assets/hebelgesetz/tuerklinke-schema.png" width="1536" height="1024" loading="lazy" alt="Zwei getrennte Fälle: 22 N bei 0,11 m oder 48,4 N bei 0,05 m, jeweils nach unten. Gleiches Drehmoment von 2,42 Nm."></a>
+    <figcaption><b>7 · Türklinke.</b> Zwei getrennte Griffpositionen, gleiches Drehmoment. Näher an der Achse brauchst du mehr Kraft. 0,05 m sind <b>weniger als die Hälfte</b> von 0,11 m. <a href="assets/hebelgesetz/tuerklinke-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <p class="schema-note"><b>Muster, keine eigenen Messungen:</b> Werte an deine Gegenstände anpassen. 40 Nm sind keine allgemeine Montagevorgabe. Bei der Schubkarre gilt ruhendes Halten mit angehobenen Stützfüssen und vernachlässigtem Eigengewicht. Bei Zangen, Schere und Öffner zeigen die Pfeile Kräfte <b>auf den betrachteten Hebel</b>; die Gelenk-/Auflagekraft ist im Momentenmodell nicht eingezeichnet, da ihr Hebelarm um O null ist. Grundlagen: <a href="https://openstax.org/books/university-physics-volume-1/pages/10-6-torque">OpenStax · Drehmoment</a>, <a href="https://openstax.org/books/college-physics-2e/pages/9-5-simple-machines">Hebel</a> und <a href="https://spark.iop.org/forces-acting-levers">Institute of Physics · Kräfte am Hebel</a>.</p>
 </section>
 
 <!-- ══════════ IDEEN — wird nicht gedruckt ══════════ -->
 <div class="noprint ideen-box">
   <span class="np-title">Nicht drucken &middot; Auswahlliste</span>
   <b>F&uuml;nf Ideen aus dem Haushalt &mdash; such dir zwei aus.</b>
-  <div class="np-lead">Diese vier Beispiele werden <b>nicht mitgedruckt</b>; sie stehen nur hier zum Aussuchen. Die zwei, die du nimmst, tr&auml;gst du oben ins Blatt ein &mdash; mit deiner eigenen Skizze von Hand und mit den Massen, die du zuhause an deinem eigenen Gegenstand nachgemessen hast. Die Zahlen unten sind Muster, damit du den Rechenweg vor dir hast.</div>
+  <div class="np-lead">Diese fünf zusätzlichen Rechenbeispiele werden auf dieser Seite <b>nicht mitgedruckt</b>. Ihre Zeichnungen findest du oben und in der <a href="hebelgesetz_schemazeichnungen_a4.html">separaten Druckauswahl</a>. Die zwei, die du nimmst, überträgst du auf dein A4-Blatt — mit eigener Skizze und den Massen deiner Gegenstände. Die Zahlen unten sind Muster für den Rechenweg.</div>
 
   <div class="ideen">
 
     <div class="idee">
       <h4>Nussknacker (Zangen-Nussknacker) <span class="art">einseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p><a href="#schema-nussknacker">↑ Zur Schemazeichnung</a> · Betrachtet wird ein Schenkel; 75 N ist die Kraft am betrachteten Griff.</p>
       <p class="was">Der metallene Zangen-Nussknacker aus der Besteckschublade, der um die Weihnachtszeit bei den Baumn&uuml;ssen liegt. Der <strong>Drehpunkt</strong> ist das Gelenk (der Niet) ganz hinten am geschlossenen Ende. Die <strong>Last</strong> ist die Nuss, die dicht beim Gelenk in der geriffelten Mulde sitzt. Die <strong>Kraft</strong> ist die Hand ganz aussen an den Griffenden. Weil Last und Kraft auf derselben Seite des Drehpunkts liegen und die Last dazwischen sitzt, ist es ein einseitiger Hebel. Der Kraftarm ist viermal so lang wie der Lastarm &ndash; darum reicht eine bescheidene Handkraft f&uuml;r eine sehr grosse Kraft an der Nuss.</p>
       <div class="rechnung">
         <p><strong>Gegeben:</strong><br>
@@ -382,6 +407,7 @@ body{
 
     <div class="idee">
       <h4>Kronkorken-Flaschen&ouml;ffner <span class="art">einseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p><a href="#schema-flaschenoeffner">↑ Zur Schemazeichnung</a> · Pfeile zeigen Kräfte auf den Öffner, nicht seine Kraft auf den Deckel.</p>
       <p class="was">Der einfache Blech&ouml;ffner aus der K&uuml;chenschublade, mit dem eine Rivella- oder Bierflasche ge&ouml;ffnet wird. Der <strong>Drehpunkt</strong> ist die Nase des &Ouml;ffners, die <em>oben auf</em> dem Kronkorken aufliegt &ndash; und zwar auf der Seite, die von der Hand <em>weg</em> zeigt. Die <strong>Last</strong> ist der Haken, der auf der Handseite <em>unter</em> den Kronkorkenrand greift und den Deckelrand nach oben reisst. Die <strong>Kraft</strong> ist die Hand am hinteren Ende des &Ouml;ffners &ndash; sie zieht nach oben. Die Last liegt damit <em>zwischen</em> Drehpunkt und Kraft, beide auf derselben Seite des Drehpunkts: das ist das Erkennungszeichen des einseitigen Hebels. Merkregel: einseitiger Hebel = Last und Kraft auf derselben Seite, ihre Kr&auml;fte zeigen in entgegengesetzte Richtungen; zweiseitiger Hebel = Drehpunkt liegt dazwischen, beide Kr&auml;fte zeigen in dieselbe Richtung (wie bei der Wippe).</p>
       <div class="rechnung">
         <p><strong>Gegeben:</strong><br>
@@ -402,6 +428,7 @@ body{
 
     <div class="idee">
       <h4>Grill- bzw. Salatzange <span class="art">einseitiger Hebel &middot; Kraftarm k&uuml;rzer als Lastarm</span></h4>
+      <p><a href="#schema-grillzange">↑ Zur Schemazeichnung</a> · Ideales Modell eines Schenkels; die zusätzliche Federwirkung wird hier nicht berechnet.</p>
       <p class="was">Die federnde Edelstahlzange, mit der man R&ouml;sti wendet oder Salat sch&ouml;pft. Der <strong>Drehpunkt</strong> ist der gebogene Federb&uuml;gel am hinteren Ende, wo die beiden Schenkel zusammenh&auml;ngen. Die <strong>Kraft</strong> ist die Hand, die etwa im vorderen Drittel zupackt. Die <strong>Last</strong> ist die Klemmkraft ganz vorne an den Zangenspitzen. Auch hier liegen Kraft und Last auf derselben Seite, also einseitiger Hebel &ndash; aber hier liegt die <em>Kraft</em> zwischen Drehpunkt und Last. Der Kraftarm ist damit k&uuml;rzer als der Lastarm, und die Zange verkleinert meine Kraft, statt sie zu verst&auml;rken. Der Gewinn liegt daf&uuml;r im Weg: eine kleine Handbewegung &ouml;ffnet die Spitzen weit.</p>
       <div class="rechnung">
         <p><strong>Gegeben:</strong><br>
@@ -410,7 +437,7 @@ body{
         Masse des R&ouml;stist&uuml;cks m = 0,30 kg, g = 9,81 m/s&sup2;<br>
         <strong>Gesucht:</strong> n&ouml;tige Handkraft F<sub>1</sub></p>
         <p><strong>Schritt 1 &ndash; Gewichtskraft:</strong> F<sub>G</sub> = m &middot; g = 0,30 kg &middot; 9,81 m/s&sup2; = 2,94 N</p>
-        <p><strong>Schritt 2 &ndash; Klemmkraft:</strong> Damit das St&uuml;ck durch Reibung nicht herausrutscht, muss ich es rund dreimal so stark klemmen, wie es wiegt (<em>gesch&auml;tzt</em>):<br>
+        <p><strong>Schritt 2 &ndash; Klemmkraft:</strong> Als reinen Musterwert nehmen wir pro Schenkel das Dreifache der gerundeten Gewichtskraft an. Das ist <em>keine allgemeine Reibungsregel</em>; die tatsächlich nötige Klemmkraft hängt von Reibwert, Kontakt und Geometrie ab:<br>
         F<sub>2</sub> = 3 &middot; 2,94 N = 8,82 N</p>
         <p><strong>Formel (Hebelgesetz):</strong> F<sub>1</sub> &middot; r<sub>1</sub> = F<sub>2</sub> &middot; r<sub>2</sub></p>
         <p><strong>Umstellung:</strong> F<sub>1</sub> = (F<sub>2</sub> &middot; r<sub>2</sub>) / r<sub>1</sub></p>
@@ -425,6 +452,7 @@ body{
 
     <div class="idee">
       <h4>Haushaltsschere <span class="art">zweiseitiger Hebel &middot; Kraft wird verst&auml;rkt</span></h4>
+      <p><a href="#schema-haushaltsschere">↑ Zur Schemazeichnung</a> · Rechnung und Kraftpfeile beziehen sich auf einen Scherenschenkel.</p>
       <p class="was">Die normale Schere aus der K&uuml;chenschublade. Der <strong>Drehpunkt</strong> ist die Schraube in der Mitte. Die <strong>Kraft</strong> ist die Hand am Griff, die <strong>Last</strong> ist das Material zwischen den Schneiden. Anders als bei den drei Beispielen oben liegt der Drehpunkt hier <strong>zwischen</strong> Kraft und Last &ndash; das ist der <strong>zweiseitige</strong> Hebel. Dieselbe Bauart haben Kombizange, Wippe und Nagelschere.</p>
       <div class="rechnung">
         <p><strong>Gegeben:</strong><br>
@@ -446,12 +474,13 @@ body{
     </div>
     <div class="idee">
       <h4>T&uuml;rklinke (Zimmert&uuml;re) <span class="art">reines Drehmoment &ndash; nur eine Kraft</span></h4>
+      <p><a href="#schema-tuerklinke">↑ Zur Schemazeichnung</a> · Zwei getrennte Griffpositionen mit gleichem Hand-Drehmoment. Lagerkräfte und das entgegenwirkende Schlossmoment sind nicht eingezeichnet.</p>
       <p class="was">Die T&uuml;rklinke jedes Zimmers. Die <strong>Drehachse</strong> ist der Vierkantstift, der im Schloss steckt &ndash; die Klinke dreht sich genau um diesen Punkt. Die <strong>Kraft</strong> ist die Hand, die am &auml;usseren Ende des Griffs nach unten dr&uuml;ckt. Hier gibt es keine zweite Kraft an einem zweiten Hebelarm, die man ausrechnen k&ouml;nnte: Ich erzeuge einfach ein Drehmoment, das die Schlossnuss verdrehen und die Fallenfeder zusammendr&uuml;cken muss. Es gilt darum nur M = F &middot; r &ndash; das ist der reine Drehmoment-Fall ohne Hebelgesetz.</p>
       <div class="rechnung">
         <p><strong>Gegeben:</strong><br>
         Hebelarm (Drehachse bis Handmitte am Griffende) r = 0,11 m<br>
         Handkraft F = 22 N (<em>gesch&auml;tzt</em> &ndash; etwa das Gewicht von 2,2 kg, das man beim Runterdr&uuml;cken sp&uuml;rt. Zum Vergleich: f&uuml;r barrierefreie T&uuml;ren d&uuml;rfen nach DIN 18040 bzw. DIN EN 12217 Klasse 3 h&ouml;chstens 25 N und 2,5 Nm n&ouml;tig sein &ndash; die Sch&auml;tzung liegt also knapp unter dem zul&auml;ssigen Maximum, ist damit ein realistischer oberer Wert)<br>
-        <strong>Gesucht:</strong> Drehmoment M, und die Kraft F<sub>2</sub> bei halbem Hebelarm</p>
+        <strong>Gesucht:</strong> Drehmoment M, und die Kraft F<sub>2</sub> beim kürzeren Hebelarm von 0,05 m (nicht exakt halb so lang)</p>
         <p><strong>Formel:</strong> M = F &middot; r</p>
         <p><strong>Einsetzen:</strong> M = 22 N &middot; 0,11 m</p>
         <p><strong>Ergebnis:</strong> M = <strong>2,42 Nm</strong></p>
