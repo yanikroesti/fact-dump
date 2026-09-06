@@ -11,7 +11,7 @@
 :root{
   --ink:#171D1E;
   --ink-soft:#52585A;
-  --ink-mute:#85898A;
+  --ink-mute:#62686A;
   --accent:#0E6B72;
   --accent-light:#E4F1F1;
   --rule:#C9CBC5;
@@ -58,6 +58,22 @@ body{
 }
 .noprint ul{margin:6px 0 0 16px;}
 .noprint li{margin-bottom:3px;}
+
+/* Zeichnungen: gross am Bildschirm, separate gemeinsame A4-Druckansicht. */
+.schema-gallery{padding:18px;border-left:5px solid var(--accent);}
+.schema-gallery h2{color:var(--ink);font-size:23px;line-height:1.15;margin:4px 0 8px;letter-spacing:-.02em;}
+.schema-gallery p{margin:0 0 12px;}
+.schema-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px;}
+.schema-actions a,.schema-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 12px;border:1px solid var(--accent);background:white;color:var(--accent);font:600 12px var(--font-body);text-decoration:none;cursor:pointer;}
+.schema-actions .primary{background:var(--accent);color:white;}
+.schema-actions a:focus-visible,.schema-actions button:focus-visible,.schema-image:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+.schema-gallery figure{margin:0 0 18px;border:1px solid var(--rule);background:white;}
+.schema-image{display:block;}
+.schema-image img{display:block;width:100%;height:auto;}
+.schema-gallery figcaption{padding:10px 12px;border-top:1px solid var(--rule-soft);font-size:12px;line-height:1.5;}
+.schema-gallery figcaption a{color:var(--accent);text-underline-offset:3px;}
+.schema-gallery .schema-note{margin:0;padding:10px 12px;background:var(--accent-light);}
+#schemazeichnungen,#rechenblatt{scroll-margin-top:16px;}
 
 /* ══ IDEEN AUS DEM HAUSHALT (wird nicht gedruckt) ══ */
 .ideen-box .np-lead{margin-top:4px;}
@@ -303,14 +319,38 @@ body{
 <!-- ══════════ HINWEIS — wird nicht gedruckt ══════════ -->
 <div class="noprint">
   <span class="np-title">Nicht drucken &middot; nur für dich</span>
-  <b>Das hier ist ein Entwurf, keine fertige Abgabe.</b> Beni Moser will deine Arbeit sehen, nicht meine.
+  <b>Zeichenvorlagen und Rechenentwurf für deinen A4-Auftrag.</b> Die Zahlen sind Musterwerte, keine protokollierten eigenen Messungen.
   <ul>
-    <li><b>Die Skizzen zeichnest du von Hand</b> in die leeren Rahmen. Eine gedruckte Skizze fällt sofort auf &mdash; und Skizzieren ist Punkt 2 des Auftrags.</li>
+    <li><b>Neu: zwei fertige Schemazeichnungen direkt unten.</b> Du kannst sie gross öffnen oder gemeinsam auf A4 drucken. Das bisherige Rechenblatt behält seine leeren Rahmen zum Selbstzeichnen.</li>
     <li><b>Miss die Zahlen zuhause an deinem eigenen Gegenstand nach.</b> Schlüssellänge, Radabstand, Griffabstand: Meter anlegen, eintragen, neu rechnen. Die Werte hier sind ein Muster, damit du den Rechenweg vor dir hast.</li>
     <li>Ist eine Kraft unklar, darfst du sie laut Auftrag <b>schätzen</b> &mdash; schreib dann kurz dazu, wie du geschätzt hast.</li>
-    <li>Drucken: Ctrl+P, A4 hochformat, Skalierung 100 %, Hintergrundgrafiken einschalten. Das Blatt ist auf <b>eine</b> Seite ausgelegt.</li>
+    <li><b>Zum Drucken wählen:</b> «Beide Schemas auf A4» öffnet das Zeichnungsblatt. Ctrl+P auf dieser Seite druckt weiterhin das Rechenblatt mit leeren Skizzenfeldern.</li>
   </ul>
 </div>
+
+<section class="noprint schema-gallery" id="schemazeichnungen" aria-labelledby="schema-title">
+  <span class="np-title">Neu · 06.09.2026 · zwei Zeichenhilfen</span>
+  <h2 id="schema-title">Drehpunkt. Hebelarm. Kraft.</h2>
+  <p>Schraubenschlüssel und Schubkarre aus deinem A4-Entwurf — mit Kraftpfeilen, Masslinien und Musterrechnungen. Tippe auf ein Bild für die volle Auflösung.</p>
+  <nav class="schema-actions" aria-label="Zeichnungen und Druckansichten">
+    <a class="primary" href="hebelgesetz_schemazeichnungen_a4.html">Beide Schemas auf A4 →</a>
+    <a href="#rechenblatt">Zum Rechenblatt mit Skizzenfeldern</a>
+    <button type="button" onclick="window.print()">Rechenblatt drucken</button>
+  </nav>
+  <figure>
+    <a class="schema-image" href="assets/hebelgesetz/schraubenschluessel-schema.png" target="_blank" rel="noopener" aria-label="Schraubenschlüssel-Schema in voller Auflösung öffnen">
+      <img src="assets/hebelgesetz/schraubenschluessel-schema.png" width="1536" height="1024" alt="Zwei getrennte Fälle: Kraft senkrecht nach unten am Schraubenschlüssel. Bei 0,20 m Hebelarm sind 200 N nötig, bei 0,30 m rund 133,3 N; beide ergeben 40 Nm im Uhrzeigersinn.">
+    </a>
+    <figcaption><b>1 · Schraubenschlüssel.</b> Längerer Hebelarm, weniger Handkraft für dasselbe Drehmoment. <a href="assets/hebelgesetz/schraubenschluessel-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <figure>
+    <a class="schema-image" href="assets/hebelgesetz/schubkarre-schema.png" target="_blank" rel="noopener" aria-label="Schubkarren-Schema in voller Auflösung öffnen">
+      <img src="assets/hebelgesetz/schubkarre-schema.png" width="1536" height="1024" loading="lazy" alt="Schubkarre mit Drehpunkt an der Radachse: Lastkraft 588,6 N nach unten im horizontalen Abstand 0,50 m; Handkraft insgesamt rund 210,2 N nach oben im Abstand 1,40 m. Eigengewicht der Karre vernachlässigt.">
+    </a>
+    <figcaption><b>2 · Schubkarre.</b> Die 210,2 N gelten für <b>beide Hände zusammen</b>. Die Hebelarme werden waagrecht zur jeweiligen Kraftlinie gemessen. <a href="assets/hebelgesetz/schubkarre-schema.png" download>PNG herunterladen</a></figcaption>
+  </figure>
+  <p class="schema-note"><b>Muster, keine eigenen Messungen:</b> Werte an deine Gegenstände anpassen. 40 Nm sind keine allgemeine Montagevorgabe. Bei der Schubkarre gilt ruhendes Halten mit angehobenen Stützfüssen und vernachlässigtem Eigengewicht. Grundlagen: <a href="https://openstax.org/books/university-physics-volume-1/pages/10-6-torque">OpenStax · Drehmoment</a> und <a href="https://openstax.org/books/college-physics-2e/pages/9-5-simple-machines">Hebel</a>.</p>
+</section>
 
 <!-- ══════════ IDEEN — wird nicht gedruckt ══════════ -->
 <div class="noprint ideen-box">
@@ -469,7 +509,7 @@ Komma als Dezimaltrennzeichen.
 </div>
 
 <!-- ══════════ A4-BLATT ══════════ -->
-<div class="sheet">
+<div class="sheet" id="rechenblatt">
 
   <!-- ── Kopf ── -->
   <div class="kopf">
@@ -512,9 +552,9 @@ Komma als Dezimaltrennzeichen.
     <div class="bbody">
 
       <div class="anwendung">
-        <span class="inl">Anwendung</span>M10-Schraube der Kabeltrasse, angezogen mit dem Gabelschlüssel. <b>Einseitiger Hebel</b>: Drehpunkt ist
-        die Schraubenachse, die Handkraft greift am Schlüsselende an. Verlangt sind <b>40 Nm</b>. Gesucht ist die
-        Handkraft &mdash; bei kurzem und bei langem Schlüssel.
+        <span class="inl">Anwendung</span>Rechenmuster: Eine Schraube wird mit dem Gabelschlüssel angezogen. Drehpunkt ist
+        die Schraubenachse; die Handkraft wirkt senkrecht am Schlüsselende. Angenommenes Drehmoment: <b>40 Nm</b>, keine Montagevorgabe.
+        Gesucht ist die Handkraft bei kurzem und langem Schlüssel.
       </div>
 
       <div class="zeile-label">Skizze &mdash; von Hand zeichnen: Drehpunkt, Hebelarm r, Kraftpfeil F</div>
@@ -557,14 +597,14 @@ Komma als Dezimaltrennzeichen.
   <div class="block">
     <div class="bkopf">
       <span class="nr">Anwendung 2</span>
-      <span class="btitel">Schubkarre mit Kabelrollen &mdash; eigener Versuch</span>
+      <span class="btitel">Schubkarre mit Kabelrollen &mdash; Rechenmuster</span>
     </div>
     <div class="bbody">
 
       <div class="anwendung">
-        <span class="inl">Anwendung</span>Schubkarre mit 60 kg Kabelrollen, Abstände mit dem Meter nachgemessen. Auch sie ist ein
-        <b>einseitiger Hebel</b>: Drehpunkt ist die Radachse, die Last zieht dazwischen nach unten, die Handkraft
-        hebt am Griffende. Gesucht ist die Kraft an den Griffen.
+        <span class="inl">Anwendung</span>Musterwerte: 60 kg Kabelrollen, waagrechte Hebelarme 0,50 m und 1,40 m.
+        <b>Einseitiger Hebel</b>: Radachse als Drehpunkt, Last nach unten, Handkraft am Griff nach oben.
+        Ruhendes Halten, Stützfüsse angehoben, Eigengewicht der Karre vernachlässigt. Gesucht: Kraft beider Hände zusammen.
       </div>
 
       <div class="zeile-label">Skizze &mdash; von Hand zeichnen: Rad als Drehpunkt, r<sub>1</sub>, r<sub>2</sub>, beide Kraftpfeile</div>
