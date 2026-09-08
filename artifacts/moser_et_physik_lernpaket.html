@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elektrotechnik und Physik — Lernpaket | BZI ATD</title>
-<meta name="description" content="Lernpaket Elektrotechnik und Physik bei Beni Moser: Messbereichserweiterung mit Vorwiderstand und Shunt, Spannungsfehler- und Stromfehlerschaltung, Brückenschaltung, Wärmeenergie, Längenausdehnung, Drehmoment und Hebelgesetz. Mit vier Rechnern, Musterlösungen, Begriffen, Karteikarten, Quiz und Lernplan bis zum Test vom 14.09.2026.">
+<meta name="description" content="Lernpaket Elektrotechnik und Physik bei Beni Moser: Messbereichserweiterung mit Vorwiderstand und Shunt, Spannungsfehler- und Stromfehlerschaltung, Brückenschaltung, Wärmeenergie, Längenausdehnung, Drehmoment und Hebelgesetz. Mit vier Rechnern, zwei vollständigen Paralleltests à zwölf Aufgaben, Lösungen und aktuellem Lernplan bis zum 14.09.2026.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -557,6 +557,17 @@ div.fact p { margin-bottom: 7px; }
 div.fact p:last-child { margin-bottom: 0; }
 div.fact ol, div.fact ul { margin-bottom: 0; }
 @media (max-width: 620px) { div.fact { padding: 12px 13px; } }
+
+/* Übungstest-Erweiterung 07.09.2026: gleiche Gestaltung, klarer Arbeitsmodus. */
+:root{--ink-mute:#62686a}
+.container{overflow-x:hidden}.fact em,.fact i,.fact .meta,.fact .law-ref,.fact small{color:rgba(246,246,243,.9)}
+.tip .meta,.tip .law-ref,.info-box .meta,.info-box .law-ref{color:var(--ink-soft)}
+.exam-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0}.exam-toolbar label{font-weight:600}.exam-toolbar select{font:inherit;padding:10px;border:1px solid var(--accent);background:white;min-height:44px}.exam-toolbar .btn{min-height:44px}
+.exam-question{padding:24px;margin:24px 0;border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:var(--radius);background:var(--surface);scroll-margin-top:70px}.exam-question h3{font-size:1.1rem}.exam-points{font:600 .8rem var(--font-mono);color:var(--accent);margin-left:auto;white-space:nowrap}.exam-answer-label{display:block;font-weight:600;font-size:.85rem;margin-top:18px}.exam-answer{display:block;width:100%;margin:8px 0 14px;min-height:110px;padding:12px;resize:vertical;border:1px solid #83918e;border-radius:5px;background:#fff;font:14px/1.6 var(--font-mono);color:var(--ink)}.exam-self{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:.85rem}.exam-self label{display:flex;align-items:center;gap:8px;min-height:36px}.exam-self select{min-height:36px;padding:6px;font:inherit}.exam-self input{width:20px;height:20px}.exam-solution{margin-top:18px;border-top:1px solid var(--border);padding-top:8px}.exam-solution summary{cursor:pointer;min-height:44px;padding:8px 0;color:var(--accent);font-weight:600}.exam-solution>div{padding:12px 0;overflow-wrap:anywhere}.exam-solution li{margin-bottom:10px}.exam-diagram{display:block;width:100%;max-width:620px;height:auto;margin:12px auto}.exam-print-title,.exam-writing-space{display:none}.coverage caption{text-align:left;font-weight:600;padding:8px 0}.exam-jumps{display:flex;gap:8px;flex-wrap:wrap}.exam-jumps a{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;border:1px solid var(--border);border-radius:4px;text-decoration:none}#examStatus{font-weight:600}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:600px){.exam-question{padding:16px 12px}.exam-question .card-title{gap:8px}.exam-points{margin-left:0}.exam-toolbar{align-items:stretch}.exam-toolbar .btn{flex:1 1 auto}}
+@media print{body.exam-print{background:white;color:black}body.exam-print .container{max-width:none;margin:0;padding:0;overflow:visible}body.exam-print header,body.exam-print .tab-nav,body.exam-print .tab-pane:not(#probetest),body.exam-print footer,body.exam-print .exam-toolbar,body.exam-print .exam-intro,body.exam-print .exam-self,body.exam-print .exam-solution,body.exam-print .exam-answer,body.exam-print .exam-answer-label,body.exam-print .exam-jumps,body.exam-print #examStatus,body.exam-print #examStorage{display:none!important}body.exam-print #probetest{display:block!important}body.exam-print .exam-print-title{display:block;font-size:11pt;margin-bottom:5mm}body.exam-print .exam-question{break-inside:avoid;padding:4mm;margin:0 0 5mm;border:1px solid #777;border-radius:0;font-size:9pt;box-shadow:none}body.exam-print .exam-question h3{font-size:11pt}body.exam-print .exam-diagram{max-height:43mm;width:auto;max-width:100%}body.exam-print .exam-writing-space{display:block;height:23mm;background:repeating-linear-gradient(white,white 7mm,#bbb 7mm,#bbb 7.2mm);print-color-adjust:exact}body.exam-print .exam-question p{margin-bottom:2mm}body.exam-print .exam-question li{margin-bottom:1mm}}
+
 </style>
 </head>
 <body>
@@ -576,11 +587,69 @@ div.fact ol, div.fact ul { margin-bottom: 0; }
   <button class="tab-btn" data-tab="begriffe">Begriffe</button>
   <button class="tab-btn" data-tab="karten">Karteikarten</button>
   <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest · 12 Aufgaben</button>
   <button class="tab-btn" data-tab="lernplan">Lernplan</button>
 </nav>
 
 <!-- ════════════════════════ THEORIE ════════════════════════ -->
 <section class="tab-pane active" id="theorie">
+<div class="info-box success" id="testabgleich">
+  <h3>Stand 07.09.2026 · mit deinem vollständigen Übungstest abgeglichen</h3>
+  <p>Alle <b>zwölf Aufgabentypen</b> aus der DOCX sind berücksichtigt. Im neuen Reiter <button class="btn sm" type="button" data-open-tab="probetest">Probetest öffnen →</button> findest du <b>Variante A und B mit je zwölf Aufgaben</b>, neuen Zahlen, Schaltskizzen und vollständigen Lösungen. Die Umstellaufgaben behalten dieselbe Formel und Zielvariable; neue Zahlenproben vertiefen den Rechenweg.</p>
+  <p><b>Originalblatt hat widersprüchliche Punkte:</b> Im Kopf steht «/20», die zwölf Einzelaufgaben ergeben zusammen <b>25 Punkte</b>. Zur Selbstkontrolle verwenden wir die Einzelpunkte, ohne daraus eine offizielle Note zu berechnen. Der separat angekündigte Hebelgesetz-Auftrag mit vier Punkten ist <b>nicht</b> in diesen 25 Übungspunkten enthalten; die tatsächliche Prüfungsbewertung klärt Moser.</p>
+  <p><b>Quellenstand:</b> Dein am 07.09. zugesandter Übungstest ist die neue Grundlage für den Aufgabenabgleich. Er trägt «1. Lehrjahr» im Kopf, wird von dir aber ausdrücklich als Übung für den 14.09. bezeichnet. Das alte Material und seine gekennzeichneten offenen Angaben bleiben erhalten.</p>
+  <div class="table-wrap"><table class="coverage"><caption>Vollständigkeitskontrolle — gleiche Reihenfolge wie die DOCX</caption><thead><tr><th>Nr.</th><th>Aufgabentyp</th><th>Abgleich / Ergänzung</th></tr></thead><tbody>
+  <tr><td>1</td><td>Stromfehler mit RV</td><td>Theorie vorhanden · neue vollständige Varianten</td></tr>
+  <tr><td>2</td><td>Spannungsfehler mit RA</td><td>Theorie vorhanden · neue vollständige Varianten</td></tr>
+  <tr><td>3</td><td>Stromfehler mit bekanntem IV</td><td>Direkte Korrektur separat geübt</td></tr>
+  <tr><td>4</td><td>Abgeglichene Wheatstone-Brücke</td><td>Theorie vorhanden · eindeutig beschriftete Schaltskizze</td></tr>
+  <tr><td>5 a+b</td><td>Beide U-/I-Anzeigen vorhersagen</td><td>Ergänzt: gleiche Quellenspannung, RA in beiden Schaltungen</td></tr>
+  <tr><td>6</td><td>Vorwiderstand aus RM, IM und U</td><td>Mit UM = RM · IM und Reihen-Schaltskizze</td></tr>
+  <tr><td>7</td><td>Shunt aus RM, IM und I</td><td>Mit Zweigstrom und Umrechnung Ω → mΩ</td></tr>
+  <tr><td>8</td><td>Längenausdehnung in cm</td><td>Vorgegebenen Koeffizienten und Einheiten verwenden</td></tr>
+  <tr><td>9 a+b+c</td><td>Boiler: Q, Wel und t</td><td>Alle drei Teile · c = 4187 J/(kg·K) wie im Test</td></tr>
+  <tr><td>10</td><td>Warmen Widerstand nach α umstellen</td><td>Neu: Herleitung, Grenzen und Zahlenprobe</td></tr>
+  <tr><td>11</td><td>FA = F(l₁ − l₂)/l₁ nach l₁</td><td>Neu: Zielgrösse sammeln und ausklammern</td></tr>
+  <tr><td>12</td><td>Lineares Zahlenrätsel</td><td>Neu: Text → Gleichung → Lösung → Probe</td></tr>
+  </tbody></table></div>
+</div>
+
+<h2 class="section-label" id="pruefung-ergaenzungen">Was der neue Test zusätzlich verlangt</h2>
+<h3>Geräteanzeigen: Quellenspannung ist nicht immer die Voltmeteranzeige</h3>
+<p>Aufgabe 5 hält die <b>Quellenspannung Uq</b> fest. Die bisherigen Vergleichsbeispiele weiter unten halten dagegen die Spannung bzw. den Strom am Verbraucher fest und passen die Quelle an. Das sind zwei verschiedene Fragestellungen.</p>
+<div class="table-wrap"><table><thead><tr><th>Gleiche ideale Quelle Uq</th><th>Spannungsfehlerschaltung</th><th>Stromfehlerschaltung</th></tr></thead><tbody>
+<tr><td>Voltmeter</td><td>UV = Uq</td><td>UV = IA · Rp</td></tr><tr><td>Amperemeter</td><td>IA = Uq / (Rx + RA)</td><td>IA = Uq / (RA + Rp)</td></tr><tr><td>Hilfsgrösse</td><td>Ux = Uq − IA · RA</td><td>Rp = Rx · RV / (Rx + RV)</td></tr>
+</tbody></table></div>
+<p>Beide Geräte besitzen Innenwiderstände. In der Stromfehlerschaltung liegt <b>RA vor der Parallelschaltung</b> aus Rx und RV. Deshalb ist UV kleiner als Uq. Bezeichnungen und Anordnung: <a href="https://www.leifiphysik.de/elektronik/halbleiterdiode/grundwissen/stromrichtige-und-spannungsrichtige-messung">LEIFIphysik · strom- und spannungsrichtige Messung</a>; Formeln aus Reihen-/Parallelschaltung hergeleitet.</p>
+
+<h3>Aufgabe 10 · Temperaturabhängiger Widerstand</h3>
+<div class="formel"><p>Rθ = R₂₀ · (1 + αR · ΔT)</p><p><b>αR = (Rθ − R₂₀) / (R₂₀ · ΔT)</b></p></div>
+<ol><li>Durch R₂₀ teilen: Rθ/R₂₀ = 1 + αR · ΔT.</li><li>1 subtrahieren: Rθ/R₂₀ − 1 = αR · ΔT.</li><li>Durch ΔT teilen; gemeinsamen Nenner bilden.</li></ol>
+<p>R₂₀ ist der Widerstand bei 20 °C, ΔT = θ − 20 °C. <b>R₂₀ ≠ 0 und ΔT ≠ 0</b> sind für diese Umstellung nötig. Die lineare Beziehung ist ein Modell für einen geeigneten Temperaturbereich. <b>αR beschreibt den Widerstand, αL die Länge:</b> Beide haben die Einheit K⁻¹, sind aber verschiedene Materialgrössen. Quelle: <a href="https://openstax.org/books/university-physics-volume-2/pages/9-3-resistivity-and-resistance">OpenStax · Temperaturabhängigkeit des Widerstands, Gleichung 9.10</a>.</p>
+
+<h3>Aufgabe 11 · Die gesuchte Länge kommt zweimal vor</h3>
+<div class="formel"><p>FA = F · (l₁ − l₂) / l₁</p><p><b>l₁ = F · l₂ / (F − FA)</b></p></div>
+<ol><li>Mit l₁ multiplizieren: FA · l₁ = F · (l₁ − l₂).</li><li>Ausmultiplizieren: FA · l₁ = F · l₁ − F · l₂.</li><li>Alle l₁-Terme sammeln: F · l₂ = F · l₁ − FA · l₁.</li><li>Ausklammern: F · l₂ = l₁ · (F − FA).</li><li>Durch F − FA teilen.</li></ol>
+<p><b>Nicht aus einer Differenz kürzen.</b> Ursprünglich muss l₁ ≠ 0 gelten; für die aufgelöste Formel zusätzlich F ≠ FA. Bei F = FA muss man die ursprüngliche Gleichung getrennt untersuchen. Herleitung: algebraische Umformung der Formel aus deinem Übungstest.</p>
+
+<h3>Aufgabe 12 · Aus Sprache wird eine Gleichung</h3>
+<p>Definiere zuerst die kleinste Zahl als x. «Doppelt» wird 2x, «sechsmal» wird 6x. Bei einer vorgegebenen Summe S lautet die Gleichung im Originaltyp <b>x + 2x + 6x = S</b>. Zusammenfassen, dividieren und danach <b>alle drei Zahlen in die Summe zurückeinsetzen</b>. In den neuen Varianten sind Summe und Faktoren verändert.</p>
+
+<h3>Aufgaben 8 und 9 · Genau die Konstanten des Blatts verwenden</h3>
+<div class="info-box"><p>Deine DOCX gibt für Aufgabe 8 <b>αL = 12 · 10⁻⁶ K⁻¹</b> und für Aufgabe 9 <b>c = 4187 J/(kg·K) = 4,187 kJ/(kg·K)</b> vor. Damit sind diese Werte für den Übungstest festgelegt. Die ältere Wärmelehre im Paket rechnet teilweise mit dem gerundeten Wert 4,19; ihre Beispiele bleiben als solche bestehen. Im Wärmerechner gibt es jetzt zusätzlich die genaue Test-Voreinstellung.</p><p>Wärme: Q = m · c · ΔT. Energiebezug: Wel = Q/η. Zeit: t = Wel/Pel. <b>1 MJ = 10⁶ J</b>, <b>1 kWh = 3,6 MJ</b>. Aus ungerundeten Zwischenwerten weiterrechnen; c und η sind hier Aufgabenvorgaben, keine neu recherchierten Materialmessungen.</p></div>
+
+<h2 class="section-label" id="unterricht-0709">Arbeitsplan vom 07.09.: Relais, Schrittschaltung und Leistung messen</h2>
+<p><b>Unterrichtsauftrag vom 07.09., kein zusätzlicher Teil des zwölfteiligen Übungstests.</b> Dein Screenshot «3-5 Relais, Schrittschaltung» beschreibt zwei Lampen: E1 mit 6 V und E2 mit 230 V. Bei eingeschaltetem S1 sollen beide leuchten. Er nennt Zeichnung auf A4, Simulation, Messgeräte, Begründung der Messschaltung, kontrollierten Aufbau, Spulenleistung und die Spannung am Schalter. Die leere Nummer 3 und die Simulator-Alternative unter 4 werden nicht als erfundene Aufgaben ergänzt.</p>
+<div class="info-box warn"><p>Die 6-V-Lampe gehört nicht direkt an 230 V. Für ein konkretes Schema fehlen hier Spulennennspannung, AC/DC-Art, Gerätedaten und die Seiten 46/106. Das Blatt verlangt ausdrücklich eine Kontrolle durch die Lehrperson <b>vor dem Einschalten</b>. Die folgenden Punkte sind Theorie, keine Freigabe zum Aufbau.</p></div>
+<h3>Indirekte Leistungsmessung — passend zum Auftrag</h3>
+<p>Für einen Gleichstromverbraucher im stationären Zustand gilt <b>Px = Ux · Ix</b>. Aus den Messgeräteanzeigen lässt sich deren Eigenverbrauch herausrechnen:</p>
+<div class="table-wrap"><table><thead><tr><th>Messschaltung</th><th>Verbraucherleistung bei Gleichstrom</th></tr></thead><tbody><tr><td>Spannungsfehler (stromrichtig)</td><td>Px = (U − I · RA) · I = U · I − I² · RA</td></tr><tr><td>Stromfehler (spannungsrichtig)</td><td>Px = U · (I − U/RV) = U · I − U²/RV</td></tr></tbody></table></div>
+<p><b>Rechenbeispiel, keine Messung aus dem Unterricht:</b> U = 12 V, I = 0,12 A, RA = 2 Ω in der Spannungsfehlerschaltung: Ux = 12 − 0,12 · 2 = 11,76 V; Px = 11,76 · 0,12 = <b>1,4112 W</b>. Die unkorrigierten 1,44 W enthalten 0,0288 W Amperemeterverlust.</p>
+<p><b>Bei einer Wechselstromspule aufpassen:</b> Aus Ueff · Ieff erhält man die Scheinleistung S in VA. Bei sinusförmigen Grössen gilt P = Ueff · Ieff · cos φ. Ohne Leistungsfaktor bzw. Wirkleistungsmessung folgt die Spulenwirkleistung nicht allein aus zwei Effektivwerten. Quelle: <a href="https://openstax.org/books/university-physics-volume-2/pages/15-4-power-in-an-ac-circuit">OpenStax · Leistung im Wechselstromkreis</a>.</p>
+<h3>Spannung über S1 und der zweite Auftrag</h3>
+<p>Beim <b>idealen, einfachen Reihenschalter</b> gilt: geschlossen ≈ 0 V über dem Schalter; offen liegt die Versorgungsspannung des betroffenen Zweigs an, wenn über den Verbraucher ein Rückweg besteht. Ob das hier 6 V oder eine andere Spannung ist, hängt vom noch zu zeichnenden Schema ab — nicht automatisch 230 V.</p>
+<p>Für die Schrittschaltung mit zwei Tastern verweist das Blatt auf <b>Blatt 46 und Fachbuchseite 106</b>. Diese Seiten und die gemessenen Spulenwerte liegen noch nicht vor. Darum bleiben die konkreten Lösungen dazu offen. Die Materialien werden hier nicht als bereits bearbeitet oder erledigt ausgegeben.</p>
+
 
 <div class="info-box warn">
   <p><strong>Vier Punkte, die du dir vor dem Test holst.</strong> Der Arbeitsauftrag
@@ -588,7 +657,7 @@ div.fact ol, div.fact ul { margin-bottom: 0; }
   Drehmomente und Kräfte berechnen, alles auf einer A4-Seite — <strong>zählt vier Punkte
   beim Test vom Montag, 14.09.2026</strong>. Wer ihn nicht abgibt, startet mit vier Punkten
   Rückstand. Abgabe ist am <strong>Montag, 07.09.2026</strong>.</p>
-  <p>Das fertige Abgabeblatt liegt bereit:
+  <p>Die Zeichen- und Rechenvorlage liegt bereit (Abgabe noch nicht bestätigt):
   <a href="https://dump.yanikroesti.ch/artifacts/hebelgesetz_a4.html">Arbeitsauftrag Hebelgesetz — A4-Blatt</a>.</p>
 </div>
 
@@ -747,7 +816,7 @@ I<sub>ges</sub> = 0,995 A + 0,005 A = 1,000 A ✓</p>
 </div>
 
 <div class="tip">
-<p>Beide Formeln sind dieselbe Formel, nur gespiegelt. Wer eine kann, kann beide: <strong>R<sub>v</sub> mal (n−1), R<sub>p</sub> geteilt durch (n−1)</strong>. Und die Umstellungen der einen Zeile sind die Formeln der anderen.</p>
+<p>Beide Formeln verwenden den Innenwiderstand R<sub>i</sub> und den Erweiterungsfaktor n: <strong>Vorwiderstand R<sub>v</sub> = R<sub>i</sub> · (n−1); Shunt R<sub>p</sub> = R<sub>i</sub> / (n−1)</strong>. Merke: Den Innenwiderstand für den Vorwiderstand multiplizieren, für den Shunt dividieren.</p>
 </div>
 
 <h2 class="section-label">Spannungsfehler- und Stromfehlerschaltung</h2>
@@ -2123,7 +2192,8 @@ Einheiten tragen durchgehend korrekt (N·m/m → N), g = 9,81 an allen drei Stel
     <div class="field">
       <label for="waC">c — Wärmekapazität (kJ/kg·K)</label>
       <select id="waC">
-        <option value="4.19" selected>Wasser — 4,19</option>
+        <option value="4.19" selected>Wasser — 4,19 (ältere Beispiele)</option>
+        <option value="4.187">Wasser — 4,187 (Übungstest 07.09.)</option>
         <option value="0.9">Aluminium — 0,90</option>
         <option value="0.45">Eisen / Stahl — 0,45</option>
         <option value="0.385">Kupfer — 0,385</option>
@@ -2150,6 +2220,7 @@ Einheiten tragen durchgehend korrekt (N·m/m → N), g = 9,81 an allen drei Stel
   <div class="btn-row">
     <button class="btn ghost sm" type="button" id="waPool">Pool-Aufgabe laden</button>
     <button class="btn ghost sm" type="button" id="waBoiler">Boiler-Aufgabe laden</button>
+    <button class="btn ghost sm" type="button" id="waTest">Originaltest · Aufgabe 9 laden</button>
   </div>
 
   <div class="result" id="waOut"></div>
@@ -2324,161 +2395,19 @@ Einheiten tragen durchgehend korrekt (N·m/m → N), g = 9,81 an allen drei Stel
 </section>
 
 <!-- ════════════════════════ LERNPLAN ════════════════════════ -->
-<section class="tab-pane" id="lernplan">
-  <div class="intro">
-    <p><strong>Heute ist Mittwoch, der 02.09.</strong> Bis zum Test sind es zwölf Tage — aber
-    die meisten davon gehören anderen Prüfungen.</p>
-    <p>Dazwischen liegen: <strong>Fr 04.09.</strong> NIN-Kurztest und Telekom-Test ·
-    <strong>Mo 07.09.</strong> ABU-Rechtschreibung <em>und</em> die Abgabe des
-    Hebelgesetz-Auftrags · <strong>Fr 11.09.</strong> NIN-Grosstest. Realistisch gehört der
-    Moser-Stoff deshalb dem <strong>Wochenende vom 12./13.09.</strong> plus ein paar
-    verstreuten Abenden. Der Plan ist genau so gebaut — keine Wunschzeiten.</p>
-  </div>
-
-  <div class="progress"><div class="progress-fill" id="planFill"></div></div>
-  <div class="meta" id="planText"></div>
-
-  <div class="day">
-    <div class="day-num">Mi<br><span class="day-sub">02.09. · ~25 Min</span></div>
-    <div class="day-content">
-      <h4>Überblick verschaffen, mehr nicht — Telekom hat Vorrang</h4>
-      <ul class="check-list" id="planList1"></ul>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Do<br><span class="day-sub">03.09. · ~20 Min</span></div>
-    <div class="day-content">
-      <h4>Kurz antippen, dann zurück zu Telekom</h4>
-      <ul class="check-list" id="planList2"></ul>
-    </div>
-  </div>
-
-  <div class="milestone">
-    <span class="milestone-icon">⚡</span>
-    <div>
-      <strong>Fr 04.09. — NIN-Kurztest und Telekom-Test</strong>
-      <p>Für Moser passiert an diesem Tag nichts. Das ist Absicht: zwei Prüfungen an einem
-      Tag sind genug.</p>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Sa<br><span class="day-sub">05.09. · ~60 Min</span></div>
-    <div class="day-content">
-      <h4>Der Arbeitsauftrag — die vier sichersten Punkte des Tests</h4>
-      <ul class="check-list" id="planList3"></ul>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">So<br><span class="day-sub">06.09. · ~45 Min</span></div>
-    <div class="day-content">
-      <h4>Auftrag fertig machen und die Hebeltheorie dazu</h4>
-      <ul class="check-list" id="planList4"></ul>
-    </div>
-  </div>
-
-  <div class="milestone">
-    <span class="milestone-icon">✎</span>
-    <div>
-      <strong>Mo 07.09. — Abgabe des Arbeitsauftrags</strong>
-      <p>Ausgedruckt oder sauber von Hand, eine A4-Seite, mit Namen. Gleicher Tag:
-      ABU-Rechtschreibung. Der Auftrag muss am Sonntagabend fertig in der Mappe liegen,
-      nicht am Montagmorgen entstehen.</p>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Di<br><span class="day-sub">08.09. · ~45 Min</span></div>
-    <div class="day-content">
-      <h4>Messbereichserweiterung — Vorwiderstand und Shunt</h4>
-      <ul class="check-list" id="planList5"></ul>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Mi<br><span class="day-sub">09.09. · ~45 Min</span></div>
-    <div class="day-content">
-      <h4>Spannungsfehler- und Stromfehlerschaltung</h4>
-      <ul class="check-list" id="planList6"></ul>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Do<br><span class="day-sub">10.09. · ~15 Min</span></div>
-    <div class="day-content">
-      <h4>Nur Karteikarten — NIN hat heute Vorrang</h4>
-      <ul class="check-list" id="planList7"></ul>
-    </div>
-  </div>
-
-  <div class="milestone">
-    <span class="milestone-icon">⚡</span>
-    <div>
-      <strong>Fr 11.09. — NIN-Grosstest</strong>
-      <p>Abends nichts mehr für Moser. Ausruhen — das Wochenende danach ist der grosse Block.</p>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Sa<br><span class="day-sub">12.09. · ~2 Std</span></div>
-    <div class="day-content">
-      <h4>Der grosse Block I — Brückenschaltung und Formeln umstellen</h4>
-      <ul class="check-list" id="planList8"></ul>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">So<br><span class="day-sub">13.09. · ~2 Std</span></div>
-    <div class="day-content">
-      <h4>Der grosse Block II — Wärme, Längenausdehnung, Probeprüfung</h4>
-      <ul class="check-list" id="planList9"></ul>
-    </div>
-  </div>
-
-  <div class="milestone">
-    <span class="milestone-icon">★</span>
-    <div>
-      <strong>Wenn du nur zehn Minuten hast</strong>
-      <ol>
-        <li><b>R<sub>v</sub> = R<sub>i</sub> · (n − 1)</b> in Reihe für Spannung ·
-        <b>R<sub>p</sub> = R<sub>i</sub> / (n − 1)</b> parallel für Strom · n = neuer / alter Bereich.</li>
-        <li><b>Klein → Stromfehlerschaltung, gross → Spannungsfehlerschaltung.</b>
-        Der Name sagt, welche Grösse falsch ist.</li>
-        <li><b>Brücke:</b> R₁·R₄ = R₂·R₃ ist abgeglichen. Sonst zwei Spannungsteiler
-        einzeln rechnen und subtrahieren.</li>
-        <li><b>R<sub>i</sub> der Brücke:</b> im Zweig parallel, die beiden Zweige zueinander
-        in Reihe — <b>addieren</b>.</li>
-        <li><b>Q = m · c · ΔT</b> · kWh = kJ / 3600 · c<sub>Wasser</sub> = 4,19 kJ/(kg·K) ·
-        W<sub>zu</sub> = W<sub>nutz</sub> / η.</li>
-        <li><b>Δl = l₀ · α · ΔT</b> · α<sub>Al</sub> 23 · α<sub>Cu</sub> 16,5 ·
-        α<sub>Stahl</sub> 12, alles in 10⁻⁶ 1/K.</li>
-        <li><b>M = F · r</b> in Nm, r in Meter · <b>F = m · g</b> mit 9,81 N/kg ·
-        <b>F₁·r₁ = F₂·r₂</b>.</li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="day">
-    <div class="day-num">Mo<br><span class="day-sub">14.09. · ~20 Min</span></div>
-    <div class="day-content">
-      <h4>Prüfungsmorgen</h4>
-      <ul class="check-list" id="planList10"></ul>
-    </div>
-  </div>
-
-  <div class="info-box warn">
-    <p><strong>Am Prüfungsmorgen nichts Neues mehr anfangen.</strong> Nur die rot markierten
-    Karteikarten, die zwei Formelzeilen für Vorwiderstand und Shunt, die Abgleichbedingung
-    und die drei Konstanten: c<sub>Wasser</sub> = 4,19 kJ/(kg·K), 1 kWh = 3600 kJ,
-    g = 9,81 N/kg. Und: <strong>Taschenrechner und das Tabellenbuch einpacken</strong> —
-    die α-Werte kommen aus Mosers Tabelle, nicht aus dem Kopf.</p>
-  </div>
+<section class="tab-pane" id="probetest">
+<div class="exam-intro"><div class="section-label">Dein vollständiges Übungsblatt · neue Beispiele</div><h2>Zwölf Aufgaben. Kein ausgelassener Teil.</h2>
+<p>Zwei vollständige Paralleltests zum zugesandten Dokument — jeweils dieselben Aufgabentypen in derselben Reihenfolge. Erst selber lösen, dann den Rechenweg öffnen. Aufgabe 5 hat a/b, Aufgabe 9 a/b/c. Die symbolischen Formeln von 10 und 11 bleiben identisch; Zahlenproben sind zusätzliche Übung.</p>
+<div class="info-box warn"><b>25 Einzelpunkte, nicht 20:</b> Die Punktangaben der zwölf Originalaufgaben addieren sich auf 25, obwohl im Dokumentkopf 20 steht. Hier nur Selbstkontrolle, keine offizielle Note. Keine zusätzliche Testdauer erfunden; bei Bedarf eigene Zeit stoppen. Alle neuen Zahlen sind Übungswerte.</div></div>
+<div class="exam-toolbar"><label for="examVariant">Variante <select id="examVariant"><option value="A">A · erster Durchgang</option><option value="B">B · zweiter Durchgang</option></select></label><button class="btn ghost sm" type="button" data-exam-solutions="show">Alle Lösungen zeigen</button><button class="btn ghost sm" type="button" data-exam-solutions="hide">Lösungen verbergen</button><button class="btn sm" type="button" id="examPrint">Blanko-Test drucken</button></div>
+<p id="examStatus" role="status" aria-live="polite"></p><p class="meta" id="examStorage"></p>
+<nav class="exam-jumps" aria-label="Direkt zur Aufgabe"><a href="#exam-q1">1</a><a href="#exam-q2">2</a><a href="#exam-q3">3</a><a href="#exam-q4">4</a><a href="#exam-q5">5</a><a href="#exam-q6">6</a><a href="#exam-q7">7</a><a href="#exam-q8">8</a><a href="#exam-q9">9</a><a href="#exam-q10">10</a><a href="#exam-q11">11</a><a href="#exam-q12">12</a></nav>
+<h2 class="exam-print-title" id="examPrintTitle"></h2><div id="examQuestions"></div>
 </section>
+<section class="tab-pane" id="lernplan"><div class="intro"><p><b>Aktualisiert am Dienstag, 08.09.2026; Grundlage vom 07.09.2026.</b> Noch sechs Tage bis zum Test am 14.09. Der Gross-/Kleinschreibungstest ist abgeschlossen; ABU ist hier nicht mehr eingeplant. NIN am Freitag bleibt berücksichtigt.</p><p>Der Wochenplan beginnt am 07.09. Falls der Einstieg vom Montag noch offen ist, hole ihn heute vor den Messfehler-Aufgaben nach. Frühere Häkchen werden nicht auf neue Aufgaben übertragen; der alte Speicherstand bleibt unangetastet.</p></div><div class="progress"><div class="progress-fill" id="planFill"></div></div><div class="meta" id="planText"></div><div class="day"><div class="day-num">Mo<br><span class="day-sub">07.09. · 30 Min</span></div><div class="day-content"><h4>Neue Prüfungsgrundlage sichten</h4><ul class="check-list" id="planList1"></ul></div></div><div class="day"><div class="day-num">Di<br><span class="day-sub">08.09. · 45 Min</span></div><div class="day-content"><h4>Messfehler richtig herausrechnen</h4><ul class="check-list" id="planList2"></ul></div></div><div class="day"><div class="day-num">Mi<br><span class="day-sub">09.09. · 45 Min</span></div><div class="day-content"><h4>Messbereich und Wärme</h4><ul class="check-list" id="planList3"></ul></div></div><div class="day"><div class="day-num">Do<br><span class="day-sub">10.09. · 15 Min</span></div><div class="day-content"><h4>Kurz wiederholen, dann NIN</h4><ul class="check-list" id="planList4"></ul></div></div><div class="day"><div class="day-num">Fr<br><span class="day-sub">11.09. · optional 10 Min</span></div><div class="day-content"><h4>NIN-Testtag</h4><ul class="check-list" id="planList5"></ul></div></div><div class="day"><div class="day-num">Sa<br><span class="day-sub">12.09. · 60–90 Min</span></div><div class="day-content"><h4>Vollständiger Probetest B</h4><ul class="check-list" id="planList6"></ul></div></div><div class="day"><div class="day-num">So<br><span class="day-sub">13.09. · 60 Min</span></div><div class="day-content"><h4>Lücken schliessen und breiteren Stoff wiederholen</h4><ul class="check-list" id="planList7"></ul></div></div><div class="day"><div class="day-num">Mo<br><span class="day-sub">14.09. · 10–15 Min</span></div><div class="day-content"><h4>Prüfungsmorgen</h4><ul class="check-list" id="planList8"></ul></div></div></section>
 
 <footer class="meta" style="margin:2.5rem 0 1rem;text-align:center">
-  Erstellt am 02.09.2026 für den Test vom Montag, 14.09.2026 · ATD, Beni Moser ·
+  Erstellt am 02.09.2026 · ergänzt und mit dem vollständigen Übungstest abgeglichen am 07.09.2026 · für den Test vom Montag, 14.09.2026 · ATD, Beni Moser ·
   Quellen: Yaniks Notizen vom 31.08.2026 (ATD und HTOG), Einstieg 10.6.26,
   Spannungsteiler-Zusammenfassung und ein Unterrichtsblatt zur Wärmeenergie,
   das mit «ELI 24a/b» angeschrieben ist
@@ -2756,6 +2685,10 @@ document.getElementById('waPool').addEventListener('click', () => {
   document.getElementById('waTarif').value = '0,32';
   document.getElementById('waEta').value = '1';
   waCalc();
+});
+document.getElementById('waTest').addEventListener('click', () => {
+  for(const [id,value] of Object.entries({waM:'150',waT1:'12',waT2:'75',waC:'4.187',waP:'2',waEta:'0,93'}))document.getElementById(id).value=value;
+  document.getElementById('waCCustomWrap').hidden=true;waCalc();
 });
 document.getElementById('waBoiler').addEventListener('click', () => {
   document.getElementById('waM').value = '200';
@@ -3271,7 +3204,11 @@ const BEGRIFFE = [
 { term: 'Gewichtskraft', cat: 'hebel', ref: 'F = m · g', def: 'Aus Masse wird Kraft. Kilogramm ist eine <b>Masse</b>, Newton eine <b>Kraft</b> — beides gleichzusetzen kostet Punkte.' },
 { term: 'Ortsfaktor g', cat: 'hebel', ref: '9,81 N/kg', def: 'Auch 9,81 m/s² — dieselbe Grösse, andere Schreibweise. Immer mitschreiben, wenn aus einer Masse eine Kraft wird.' },
 { term: 'Kräftegleichgewicht', cat: 'hebel', ref: '', def: 'Die zweite Gleichung neben dem Hebelgesetz: die Summe aller Kräfte ist null. Beim gleicharmigen Hebel liefert erst sie den Zahlenwert, das Hebelgesetz allein sagt nur F₁ = F₂.' },
-{ term: 'Arbeitsauftrag Hebelgesetz', cat: 'hebel', ref: 'Abgabe 07.09.', def: 'Zwei Anwendungen suchen, mit dem Hebel skizzieren, Drehmomente und Kräfte berechnen, alles auf einer A4-Seite. <b>Zählt vier Punkte beim Test vom 14.09.</b>' }
+{ term: 'Arbeitsauftrag Hebelgesetz', cat: 'hebel', ref: 'Abgabe 07.09.', def: 'Zwei Anwendungen suchen, mit dem Hebel skizzieren, Drehmomente und Kräfte berechnen, alles auf einer A4-Seite. <b>Zählt vier Punkte beim Test vom 14.09.</b>' },
+{"term":"Temperaturkoeffizient αR","cat":"mess","ref":"Übungstest 10","def":"Beschreibt im linearen Modell die relative Widerstandsänderung pro Kelvin: αR = (Rθ − R₂₀)/(R₂₀ · ΔT). Nicht derselbe Wert wie der Längenausdehnungskoeffizient αL."},
+{"term":"Zielgrösse ausklammern","cat":"bruecke","ref":"Übungstest 11","def":"Kommt l₁ zweimal vor, alle l₁-Terme sammeln: F·l₁ − FA·l₁ = l₁·(F − FA). Dann dividieren; nicht aus einer Differenz kürzen."},
+{"term":"Textgleichung","cat":"bruecke","ref":"Übungstest 12","def":"Text in Terme übersetzen: erste Zahl x, zweite k₂x, dritte k₃x. Summe S ergibt (1+k₂+k₃)x=S. Rückeinsetzen prüft alle Bedingungen."},
+{"term":"Scheinleistung S","cat":"mess","ref":"Unterricht 07.09.","def":"Bei Wechselstrom S = Ueff · Ieff in VA. Bei einer Spule nicht automatisch gleich der Wirkleistung P in W; für sinusförmige Grössen P = S · cos φ."}
 ];
 
 let bFilter = 'all', bSearch = '';
@@ -3363,7 +3300,12 @@ const CARDS = [
 { term: 'Wie wird aus einer Masse eine Kraft?', cat: 'hebel', def: 'F = m · g mit g = 9,81 N/kg. Kilogramm ist Masse, Newton ist Kraft — nie gleichsetzen.', ref: '' },
 { term: 'Handkraft bei 20 Nm und 250 mm Schlüssel?', cat: 'hebel', def: 'F = M / r = 20 / 0,25 = <b>80 N</b>. Bei halber Länge 160 N.', ref: 'M10-Sammelschiene' },
 { term: 'Warum reicht beim gleicharmigen Hebel das Hebelgesetz nicht?', cat: 'hebel', def: 'Es liefert nur F₁ = F₂, nicht den Zahlenwert. Erst das Kräftegleichgewicht F₁ + F₂ = F<sub>G</sub> gibt die Zahl.', ref: '' },
-{ term: 'Was zählt der Arbeitsauftrag Hebelgesetz?', cat: 'hebel', def: '<b>Vier Punkte beim Test vom 14.09.</b> Abgabe am 07.09.: zwei Anwendungen, skizziert mit Drehpunkt, Kraftpfeilen und Hebelarmen, beide durchgerechnet, auf einer A4-Seite.', ref: 'Pflicht' }
+{ term: 'Was zählt der Arbeitsauftrag Hebelgesetz?', cat: 'hebel', def: '<b>Vier Punkte beim Test vom 14.09.</b> Abgabe am 07.09.: zwei Anwendungen, skizziert mit Drehpunkt, Kraftpfeilen und Hebelarmen, beide durchgerechnet, auf einer A4-Seite.', ref: 'Pflicht' },
+{"term":"Rθ = R₂₀ · (1 + αR · ΔT): nach αR umstellen?","cat":"mess","def":"αR = (Rθ − R₂₀)/(R₂₀ · ΔT). Durch R₂₀ teilen, 1 subtrahieren, durch ΔT teilen. R₂₀ und ΔT dürfen nicht null sein.","ref":"Übungstest 10"},
+{"term":"FA = F · (l₁ − l₂)/l₁: nach l₁ umstellen?","cat":"hebel","def":"l₁ = F · l₂/(F − FA). Nenner entfernen, ausmultiplizieren, l₁-Terme sammeln, ausklammern. F ≠ FA, l₁ ≠ 0.","ref":"Übungstest 11"},
+{"term":"Drei Zahlen: x, 3x und 5x ergeben 63. Wie vorgehen?","cat":"bruecke","def":"x + 3x + 5x = 63 → 9x = 63 → x = 7. Probe: 7 + 21 + 35 = 63.","ref":"Übungstest 12"},
+{"term":"Welche Wasserkonstante steht im neuen Übungstest?","cat":"waerme","def":"c = 4187 J/(kg·K) = 4,187 kJ/(kg·K). Ältere Beispiele verwenden gerundet 4,19. In der Aufgabe den vorgegebenen Wert einsetzen.","ref":"Übungstest 9"},
+{"term":"Reichen Ueff und Ieff für die Wirkleistung einer Wechselstromspule?","cat":"mess","def":"Nein: ihr Produkt ergibt Scheinleistung S in VA. Bei sinusförmigen Grössen benötigt man für P zusätzlich cos φ oder eine passende Wirkleistungsmessung.","ref":"Unterricht 07.09."}
 ];
 
 const KEY_KNOWN = 'moser-karten-gewusst';
@@ -3620,66 +3562,43 @@ document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
   </div>`).join('');
 
 /* ═══ LERNPLAN ═══ */
-const PLAN_KEY = 'moser-plan';
+const PLAN_KEY = 'moser-plan-20260907';
 const PLAN = [
-  [ /* Mi 02.09. */
-    '<b>Reiter Theorie überfliegen</b><br><small>Nur die vier Abschnittstitel und die dunklen Merkkästen lesen — Überblick, kein Detail.</small>',
-    '<b>Prüfungsstoff auf einen Zettel schreiben</b><br><small>Messbereich · Messschaltungen · Wärme und Ausdehnung · zwei Formeln umstellen · eine Brücke. Fünf Zeilen, an die Wand.</small>',
-    '<b>Zurück zu Telekom</b><br><small>Der Test ist übermorgen. Moser hat heute keine Priorität — das ist der ganze Trick an diesem Plan.</small>'
+  [
+    "Vollständigkeitskontrolle lesen: alle zwölf Aufgabentypen kennen.",
+    "Neue Umstellungen 10/11 und Zahlenrätsel 12 durcharbeiten.",
+    "Abgabe des Hebelgesetz-A4-Blatts prüfen; hier noch nicht als erledigt bestätigt."
   ],
-  [ /* Do 03.09. */
-    '<b>Karteikarten, Kategorie «Messtechnik», einmal durch</b><br><small>Nur lesen und bewerten, nicht büffeln. 16 Karten.</small>',
-    '<b>Die zwei Formelzeilen auswendig</b><br><small>R<sub>v</sub> = R<sub>i</sub>·(n−1) in Reihe für Spannung · R<sub>p</sub> = R<sub>i</sub>/(n−1) parallel für Strom.</small>'
+  [
+    "Probetest A: Aufgaben 1–5 ohne Lösungen rechnen.",
+    "Bei Aufgabe 5 beide Geräteanzeigen für a und b bestimmen.",
+    "Fehler notieren; gleiche Typen aus B später ohne Hilfe wiederholen."
   ],
-  [ /* Sa 05.09. */
-    '<b>Zwei Anwendungen auswählen</b><br><small>Am besten aus zwei verschiedenen Kategorien: Drehmomentschlüssel (einseitig) und Seitenschneider (zweiseitig).</small>',
-    '<b>Beide skizzieren</b><br><small>Drehpunkt, Kraftpfeile, Hebelarme mit Massangabe — diese drei Dinge müssen in jeder Skizze stehen.</small>',
-    '<b>Beide durchrechnen</b><br><small>Gegeben, Gesucht, Formel, Umstellung, Einsetzen, Antwortsatz. Geschätzte Kräfte als Schätzwert kennzeichnen.</small>',
-    '<b>Abgabeblatt als Vorlage nehmen</b><br><small>Das fertige A4-Blatt liegt bereit — im Reiter Theorie oben verlinkt.</small>'
+  [
+    "Probetest A: 6–9, einschliesslich 9a/b/c.",
+    "Mit c = 4187 J/(kg·K) und dem vorgegebenen αL rechnen.",
+    "Wärmerechner: Originaltest-Aufgabe 9 laden und Rechenweg vergleichen."
   ],
-  [ /* So 06.09. */
-    '<b>A4-Seite fertig machen und in die Mappe legen</b><br><small>Nicht am Montagmorgen. Mit Namen und Klasse ELI 25a.</small>',
-    '<b>Theorie-Abschnitt «Drehmoment und Hebelgesetz» lesen</b><br><small>Vier Punkte hängen am Auftrag — der Stoff kommt aber auch im Test selbst.</small>',
-    '<b>Rechner 4 mit den drei Beispielen prüfen</b><br><small>80 N · 1000 N · 117,7 N müssen herauskommen.</small>'
+  [
+    "Messbereichsformeln und Umstellungen einmal aus dem Kopf schreiben.",
+    "Danach NIN-Vorbereitung — der Grosstest ist am Freitag."
   ],
-  [ /* Di 08.09. */
-    '<b>Theorie Messbereichserweiterung ganz lesen</b><br><small>Inklusive der Herleitungen — sie machen die Formeln merkbar.</small>',
-    '<b>Beispiele 1 bis 3 selbst rechnen</b><br><small>Erst rechnen, dann aufdecken. Papier und Taschenrechner.</small>',
-    '<b>Quizfragen 1 bis 3</b><br><small>Das sind die drei Rechentypen, die am wahrscheinlichsten drankommen.</small>',
-    '<b>Rechner 1 in beiden Modi durchspielen</b><br><small>Mit eigenen Zahlen — und mit einer Zahl, die keinen Sinn ergibt, damit du den Hinweis kennst.</small>'
+  [
+    "Für Moser höchstens die eigene Fehlerliste kurz ansehen; keine neue grosse Lerneinheit."
   ],
-  [ /* Mi 09.09. */
-    '<b>Theorie Spannungsfehler- und Stromfehlerschaltung</b><br><small>Vor allem die Vergleichstabelle und die Faustregel.</small>',
-    '<b>Beispiele 4 bis 7 rechnen</b><br><small>Fall A, Fall B und die beiden Korrekturen.</small>',
-    '<b>Die Begründung in einem Satz aufschreiben</b><br><small>«Klein → Stromfehler, weil R<sub>A</sub> gefährlich nahe kommt.» Das gibt Punkte, auch wenn die Rechnung wackelt.</small>',
-    '<b>Quizfragen 4 bis 6</b>'
+  [
+    "Alle zwölf Aufgaben von B am Stück ohne Lösungen bearbeiten.",
+    "5a/b und 9a/b/c ausdrücklich abhaken.",
+    "Danach kontrollieren und Teilpunkte selbst zuordnen; die offizielle Maximalpunktzahl ist noch offen."
   ],
-  [ /* Do 10.09. */
-    '<b>Karteikarten «Messtechnik» wiederholen</b><br><small>Nur die, die noch rot sind.</small>',
-    '<b>Danach NIN</b><br><small>Der Grosstest ist morgen. Moser bekommt heute 15 Minuten, mehr nicht.</small>'
+  [
+    "Falsch gelöste Aufgabentypen erneut rechnen und mit einer Probe prüfen.",
+    "Zusätzlich die früher angekündigten Brücken-/Hebelaufgaben wiederholen; der Übungstest ist keine Garantie für identische Prüfungsfragen.",
+    "Rechner, Schreibzeug und gemäss Lehrperson erlaubte Hilfsmittel bereitlegen."
   ],
-  [ /* Sa 12.09. */
-    '<b>Theorie Brückenschaltung ganz lesen</b><br><small>Abgleichbedingung, unabgeglichene Brücke, Ersatzquelle.</small>',
-    '<b>Beispiele 8 bis 12 rechnen</b><br><small>Das ist die vollständige Aufgabe 1.293 vom Blatt — sie kommt sehr wahrscheinlich in ähnlicher Form dran.</small>',
-    '<b>Den einen Satz auswendig</b><br><small>«Innerhalb eines Zweiges parallel — die beiden Zweige zueinander in Reihe.»</small>',
-    '<b>Theorie «Formeln sicher umstellen» und Übungen 1 bis 7</b><br><small>Zwei davon kommen garantiert im Test.</small>',
-    '<b>Beispiele 13 und 14 rechnen</b><br><small>Spannungsteiler und Parallelschaltung — die zwei schwersten Umstellungen.</small>',
-    '<b>Quizfragen 7 bis 12</b>'
-  ],
-  [ /* So 13.09. */
-    '<b>Theorie Wärmeenergie und Längenausdehnung ganz lesen</b>',
-    '<b>Beispiele 15 bis 22 rechnen</b><br><small>Pool, Boiler, Kupferschiene, die drei Ausdehnungsaufgaben, Schrumpfverbindung, 5-Takt-Schalter.</small>',
-    '<b>Rechner 2 und 3 mit eigenen Zahlen prüfen</b><br><small>Die Pool-Voreinstellung muss 139,67 kWh, 44,69 Fr. und 46,56 h liefern.</small>',
-    '<b>Die drei Konstanten aufschreiben</b><br><small>c<sub>Wasser</sub> = 4,19 kJ/(kg·K) · 1 kWh = 3600 kJ · g = 9,81 N/kg.</small>',
-    '<b>Probeprüfung: Quizfragen 13 bis 24 am Stück</b><br><small>Ohne aufzudecken, mit Uhr. Danach erst kontrollieren.</small>',
-    '<b>Alle Karteikarten einmal durch</b><br><small>Was rot bleibt, kommt auf einen Zettel für morgen.</small>',
-    '<b>α-Wert für Eisen bei Moser abklären</b><br><small>11 oder 12 · 10⁻⁶? Deine Notiz widerspricht sich selbst.</small>'
-  ],
-  [ /* Mo 14.09. */
-    '<b>Nur die roten Karteikarten vom Zettel</b><br><small>Nichts Neues mehr anfangen.</small>',
-    '<b>Die zwei Formelzeilen und die Abgleichbedingung nochmals hinschreiben</b>',
-    '<b>Taschenrechner und Tabellenbuch einpacken</b><br><small>Die α-Werte kommen aus Mosers Tabelle, nicht aus dem Kopf.</small>',
-    '<b>Der Arbeitsauftrag ist längst abgegeben</b><br><small>Vier Punkte sind schon auf dem Konto — mit diesem Gefühl gehst du rein.</small>'
+  [
+    "Nur die eigene Fehlerliste und Formeln wiederholen.",
+    "Einheiten, vorgegebene Konstanten und Anzahl der Teilaufgaben auf dem echten Test prüfen."
   ]
 ];
 
@@ -3705,6 +3624,71 @@ try {
 } catch (e) {}
 document.querySelectorAll('#lernplan .check').forEach(b => b.addEventListener('change', planProgress));
 planProgress();
+
+</script>
+<script>
+/* Vollständige Paralleltests zum am 07.09.2026 erhaltenen Übungsblatt. */
+(function () {
+  'use strict';
+  const EXAMS = {"A":[{"id":1,"title":"Stromfehlerschaltung: Voltmeterstrom berücksichtigen","points":2,"question":"<p>Ein unbekannter Messwiderstand wird spannungsrichtig gemessen. Das Voltmeter zeigt <b>3,6 V</b>, das Amperemeter <b>19,8 mA</b>. Der Innenwiderstand des Voltmeters ist <b>6'000 Ω</b>. Berechne den tatsächlichen Widerstand Rx unter Berücksichtigung von IV.</p>","solution":"<ol><li>IV = U / RV = 3,6 / 6'000 = <b>0,6 mA</b>.</li><li>Ix = IA − IV = 19,8 − 0,6 = <b>19,2 mA = 0,0192 A</b>.</li><li>Rx = U / Ix = 3,6 / 0,0192 = <b>187,5 Ω</b>.</li><li>Probe: U/Rx + U/RV = 19,2 + 0,6 = 19,8 mA.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx\" xmlns=\"http://www.w3.org/2000/svg\"><title>Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"200\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M370 40V101 M370 149V220\"/><circle cx=\"370\" cy=\"125\" r=\"24\"/><circle cx=\"370\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"370\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"200\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"200\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"370\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"428\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix + IV  ·  UV = Ux</text></g></svg>","answers":[0.0006000000000000001,0.019200000000000002,187.5]},{"id":2,"title":"Spannungsfehlerschaltung: Spannungsabfall abziehen","points":2,"question":"<p>Bei einer stromrichtigen Widerstandsmessung zeigen die Geräte <b>U = 24,48 V</b> und <b>I = 4 mA</b>. Das Amperemeter hat <b>RA = 120 Ω</b>. Bestimme den tatsächlichen Widerstand Rx unter Berücksichtigung von UA.</p>","solution":"<ol><li>UA = RA · I = 120 · 0,004 = <b>0,48 V</b>.</li><li>Ux = U − UA = 24,48 − 0,48 = <b>24 V</b>.</li><li>Rx = Ux / I = 24 / 0,004 = <b>6'000 Ω</b>.</li><li>Probe: I · (Rx + RA) = 0,004 · (6'000 + 120) = 24,48 V.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig\" xmlns=\"http://www.w3.org/2000/svg\"><title>Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"420\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M240 40V101 M240 149V220\"/><circle cx=\"240\" cy=\"125\" r=\"24\"/><circle cx=\"240\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"240\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"420\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"420\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"240\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"298\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix  ·  UV = Ux + UA</text></g></svg>","answers":[0.48,24,6000]},{"id":3,"title":"Stromfehlerschaltung: direkte Korrektur","points":2,"question":"<p>Für einen Verbraucher werden <b>U = 121,2 V</b> und <b>IA = 420 mA</b> gemessen. Der Voltmeterstrom ist bereits bekannt: <b>IV = 16 mA</b>. Berechne Rx.</p>","solution":"<ol><li>Ix = IA − IV = 420 − 16 = <b>404 mA = 0,404 A</b>.</li><li>Rx = U / Ix = 121,2 / 0,404 = <b>300 Ω</b>.</li><li>Probe: U/Rx + IV = 0,404 + 0,016 = 0,42 A.</li></ol>","diagram":"","answers":[0.404,300]},{"id":4,"title":"Wheatstone-Brücke: unbekannten Widerstand bestimmen","points":2,"question":"<p>Die gezeichnete Messbrücke ist abgeglichen: <b>I₅ = 0 A</b>. Gegeben sind <b>R₁ = 240 Ω</b>, <b>R₂ = 560 Ω</b> und <b>R₃ = 1'800 Ω</b>. Berechne Rx.</p>","solution":"<ol><li>Bei der hier gezeichneten Anordnung: R₁ · Rx = R₂ · R₃.</li><li>Rx = (R₂ · R₃) / R₁ = (560 · 1'800) / 240 = <b>4'200 Ω = 4,2 kΩ</b>.</li><li>Probe: Rx/R₃ = 2,333333 und R₂/R₁ = 2,333333. Die Verhältnisse sind gleich.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Abgeglichene Brücke: R1 über R2 links, R3 über Rx rechts; Messgerät zwischen den Mitten\" xmlns=\"http://www.w3.org/2000/svg\"><title>Abgeglichene Brücke: R1 über R2 links, R3 über Rx rechts; Messgerät zwischen den Mitten</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M65 102V25H490V45 M490 95V165 M490 215V245H65V152 M230 25V45 M230 95V165 M230 215V245 M230 130H337 M383 130H490\"/><circle cx=\"65\" cy=\"127\" r=\"25\"/><circle cx=\"360\" cy=\"130\" r=\"23\"/><rect x=\"218\" y=\"45\" width=\"24\" height=\"50\"/><rect x=\"218\" y=\"165\" width=\"24\" height=\"50\"/><rect x=\"478\" y=\"45\" width=\"24\" height=\"50\"/><rect x=\"478\" y=\"165\" width=\"24\" height=\"50\"/><text x=\"65\" y=\"134\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"185\" y=\"79\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₁</text><text x=\"185\" y=\"197\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₂</text><text x=\"535\" y=\"79\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₃</text><text x=\"535\" y=\"197\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"360\" y=\"137\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">G</text><text x=\"360\" y=\"180\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">I₅ = 0</text></g></svg>","answers":[4200]},{"id":5,"title":"Messgeräteanzeigen bei beiden Fehlerschaltungen","points":2,"question":"<p>Ein ohmscher Heizwiderstand mit <b>Rx = 120 Ω</b> wird an einer idealen <b>24-V-Gleichspannungsquelle</b> ausgemessen. Die Geräte besitzen <b>RA = 2 Ω</b> und <b>RV = 600 Ω</b>. Berechne jeweils <b>beide Geräteanzeigen U und I</b>: a) Spannungsfehlerschaltung; b) Stromfehlerschaltung. RA wird in beiden Aufbauten berücksichtigt.</p>","solution":"<p><b>a) Spannungsfehlerschaltung</b></p><ol><li>UV = Uq = <b>24 V</b>.</li><li>IA = Uq / (Rx + RA) = 24 / (120 + 2) = <b>196,721 mA</b>.</li></ol><p><b>b) Stromfehlerschaltung</b></p><ol><li>Rp = Rx ∥ RV = (120 · 600) / (120 + 600) = <b>100 Ω</b>.</li><li>Rges = RA + Rp = 102 Ω. IA = Uq / Rges = <b>235,294 mA</b>.</li><li>UV = IA · Rp = <b>23,5294 V</b> — nicht 24 V, weil am Amperemeter Spannung abfällt.</li><li>Probe: UV/Rx + UV/RV = 196,078 + 39,216 = 235,294 mA. Aus ungerundeten Werten rechnen.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig\" xmlns=\"http://www.w3.org/2000/svg\"><title>Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"420\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M240 40V101 M240 149V220\"/><circle cx=\"240\" cy=\"125\" r=\"24\"/><circle cx=\"240\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"240\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"420\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"420\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"240\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"298\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix  ·  UV = Ux + UA</text></g></svg><svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx\" xmlns=\"http://www.w3.org/2000/svg\"><title>Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"200\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M370 40V101 M370 149V220\"/><circle cx=\"370\" cy=\"125\" r=\"24\"/><circle cx=\"370\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"370\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"200\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"200\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"370\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"428\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix + IV  ·  UV = Ux</text></g></svg>","answers":[24,0.19672131147540983,100,0.23529411764705882,23.52941176470588]},{"id":6,"title":"Messbereichserweiterung mit Vorwiderstand","points":2,"question":"<p>Ein Zeigermesswerk hat <b>RM = 160 Ω</b> und verträgt höchstens <b>IM = 2,5 mA</b>. Welcher Vorwiderstand Rv muss <b>in Reihe</b> geschaltet werden, damit das Gerät bis <b>U = 12 V</b> misst?</p>","solution":"<ol><li>UM = RM · IM = 160 · 0,0025 = <b>0,4 V</b>.</li><li>Uv = U − UM = 12 − 0,4 = <b>11,6 V</b>.</li><li>Rv = Uv / IM = 11,6 / 0,0025 = <b>4'640 Ω = 4,64 kΩ</b>.</li><li>Probe: IM · (RM + Rv) = 12 V. Alternativ: n = U/UM = 30, Rv = RM · (n − 1).</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Vorwiderstand in Reihe zum Messwerk\" xmlns=\"http://www.w3.org/2000/svg\"><title>Vorwiderstand in Reihe zum Messwerk</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M50 125H165 M255 125H377 M423 125H570\"/><rect x=\"165\" y=\"112\" width=\"90\" height=\"26\"/><circle cx=\"400\" cy=\"125\" r=\"23\"/><text x=\"210\" y=\"90\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rv</text><text x=\"400\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"400\" y=\"90\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RM · UM</text><text x=\"310\" y=\"215\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">U = Uv + UM  ·  gleicher Strom IM</text></g></svg>","answers":[0.4,11.6,4640]},{"id":7,"title":"Messbereichserweiterung mit Shunt","points":2,"question":"<p>Ein Amperemeter mit dem Nennstrombereich <b>IM = 2 A</b> hat <b>RM = 0,15 Ω</b>. Mit einem <b>parallelen</b> Shunt soll der Bereich auf <b>I = 18 A</b> erweitert werden. Berechne RS in <b>mΩ</b>.</p>","solution":"<ol><li>IS = I − IM = 18 − 2 = <b>16 A</b>.</li><li>UM = RM · IM = 0,15 · 2 = <b>0,3 V</b>.</li><li>RS = UM / IS = 0,3 / 16 = <b>0,01875 Ω = 18,75 mΩ</b>.</li><li>Probe: IM · RM = IS · RS = 0,3 V; IM + IS = 18 A. Nicht durch den Gesamtstrom teilen!</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Shunt parallel zum Messwerk\" xmlns=\"http://www.w3.org/2000/svg\"><title>Shunt parallel zum Messwerk</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M50 135H140V60H277 M323 60H480V210H350 M270 210H140V135 M480 135H565\"/><rect x=\"270\" y=\"198\" width=\"80\" height=\"24\"/><circle cx=\"300\" cy=\"60\" r=\"23\"/><text x=\"300\" y=\"67\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"300\" y=\"25\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RM · IM</text><text x=\"310\" y=\"248\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RS · IS</text><text x=\"92\" y=\"115\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">I</text><circle cx=\"140\" cy=\"135\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"480\" cy=\"135\" r=\"4\" fill=\"#171d1e\"/></g></svg>","answers":[16,0.3,0.01875]},{"id":8,"title":"Längenausdehnung in Zentimetern","points":2.5,"question":"<p>Eine gerade Stahlkonstruktion ist bei der Ausgangstemperatur <b>l₀ = 96 m</b> lang. Die Temperatur steigt um <b>ΔT = 45 K</b>. Verwende den vorgegebenen Modellwert <b>αL = 12 · 10⁻⁶ K⁻¹</b>. Um wie viele <b>Zentimeter</b> verlängert sich die Konstruktion?</p>","solution":"<ol><li>Δl = l₀ · αL · ΔT.</li><li>Δl = 96 · 12 · 10⁻⁶ · 45 = <b>0,05184 m</b>.</li><li>Umrechnung: 0,05184 m · 100 = <b>5,184 cm</b>.</li><li>Kontrolle: Die Längenänderung ist positiv; m · K⁻¹ · K ergibt m. Gesucht ist die Änderung, nicht die Gesamtlänge.</li></ol>","diagram":"","answers":[0.05184,5.183999999999999]},{"id":9,"title":"Wassererwärmer: Wärme, Energiebedarf und Zeit","points":3.5,"question":"<p>Ein Speicher enthält <b>180 Liter Wasser</b>; rechne mit <b>m = 180 kg</b>. Er heizt von <b>15 °C auf 65 °C</b>. Der Gesamtwirkungsgrad des Erwärmungsvorgangs beträgt <b>η = 92 %</b>, die elektrische Heizleistung <b>Pel = 2,4 kW</b>. Verwende wie im Originaltest <b>c = 4187 J/(kg·K)</b>.</p><ol><li>a) Berechne die dem Wasser zuzuführende Wärme Q in <b>MJ</b>.</li><li>b) Berechne den elektrischen Energiebedarf Wel in <b>kWh</b>.</li><li>c) Berechne die tatsächliche Aufheizzeit t in <b>Stunden</b>.</li></ol>","solution":"<ol><li>ΔT = 65 − 15 = <b>50 K</b>.</li><li>a) Q = m · c · ΔT = 180 · 4187 · 50 = 37'683'000 J = <b>37,683 MJ</b>.</li><li>b) Wel = Q / η = 37'683'000 / 0,92 = 40'959'782,61 J. Mit 1 kWh = 3 600 000 J ergibt sich <b>11,37772 kWh ≈ 11,38 kWh</b>.</li><li>c) t = Wel / Pel = 11,37772 / 2,4 = <b>4,74072 h ≈ 4,74 h</b>.</li><li>Probe: Pel · t · η · 3 600 000 = Q. Wel ist grösser als Q in kWh. η = 0,92, nicht 92; η nicht zweimal berücksichtigen.</li></ol>","diagram":"","answers":[50,37683000,11.377717391304348,4.7407155797101455]},{"id":10,"title":"Formel umstellen: temperaturabhängiger Widerstand","points":1.5,"question":"<p>Stelle die Formel <b>Rθ = R₂₀ · (1 + αR · ΔT)</b> schrittweise nach dem <b>Temperaturkoeffizienten αR</b> um. Gleiche Umstellaufgabe wie im Original; die folgende Zahlenprobe ist zusätzlich zum Üben:</p><p>Ein Leiter hat R₂₀ = 80 Ω und nach einer Erwärmung um ΔT = 40 K den Widerstand Rθ = 92,8 Ω. Prüfe deine Formel mit diesen Werten.</p>","solution":"<ol><li>Rθ / R₂₀ = 1 + αR · ΔT.</li><li>Rθ / R₂₀ − 1 = αR · ΔT.</li><li><b>αR = (Rθ/R₂₀ − 1) / ΔT = (Rθ − R₂₀) / (R₂₀ · ΔT)</b>.</li><li>Zahlenprobe: (92,8 − 80) / (80 · 40) = <b>0,004 K⁻¹</b>. Rückeinsetzen: 80 · (1 + 0,004 · 40) = 92,8 Ω.</li><li>Voraussetzungen: R₂₀ ≠ 0 und ΔT ≠ 0. αR ist der Widerstandskoeffizient; nicht mit dem Längenausdehnungskoeffizienten αL verwechseln.</li></ol>","diagram":"","answers":[0.003999999999999999]},{"id":11,"title":"Formel umstellen: Hebel / Auflagerkraft","points":2,"question":"<p>Stelle die Formel <b>FA = F · (l₁ − l₂) / l₁</b> nach <b>l₁</b> um. Die gesuchte Grösse kommt im Zähler und im Nenner vor. Wie im Original zuerst symbolisch umstellen; danach die neue Zahlenprobe:</p><p>F = 900 N, FA = 600 N und l₂ = 0,8 m. Wie gross wird l₁?</p>","solution":"<ol><li>FA · l₁ = F · (l₁ − l₂).</li><li>FA · l₁ = F · l₁ − F · l₂.</li><li>F · l₂ = F · l₁ − FA · l₁ = l₁ · (F − FA).</li><li><b>l₁ = F · l₂ / (F − FA)</b>.</li><li>Zahlenprobe: 900 · 0,8 / (900 − 600) = <b>2,4 m</b>. Rückeinsetzen: 900 · (2,4 − 0,8) / 2,4 = 600 N.</li><li>Voraussetzungen: l₁ ≠ 0 und F ≠ FA für diese Umstellung. l₁ nicht aus einer Summe oder Differenz kürzen.</li></ol>","diagram":"","answers":[2.4]},{"id":12,"title":"Lineare Textgleichung: Zahlenrätsel","points":1.5,"question":"<p>Die Summe dreier positiver Zahlen ist <b>63</b>. Die zweite ist <b>3-mal</b> so gross wie die erste, die dritte <b>5-mal</b> so gross. Stelle eine Gleichung auf und bestimme die kleinste, also die erste Zahl.</p>","solution":"<ol><li>Erste Zahl x, zweite Zahl 3x, dritte Zahl 5x.</li><li>x + 3x + 5x = 63.</li><li>(9)x = 63 ⇒ <b>x = 7</b>.</li><li>Probe: 7 + 21 + 35 = 63. Die drei Zahlen sind 7, 21 und 35.</li></ol>","diagram":"","answers":[7,21,35]}],"B":[{"id":1,"title":"Stromfehlerschaltung: Voltmeterstrom berücksichtigen","points":2,"question":"<p>Ein unbekannter Messwiderstand wird spannungsrichtig gemessen. Das Voltmeter zeigt <b>4,8 V</b>, das Amperemeter <b>25,2 mA</b>. Der Innenwiderstand des Voltmeters ist <b>4'000 Ω</b>. Berechne den tatsächlichen Widerstand Rx unter Berücksichtigung von IV.</p>","solution":"<ol><li>IV = U / RV = 4,8 / 4'000 = <b>1,2 mA</b>.</li><li>Ix = IA − IV = 25,2 − 1,2 = <b>24 mA = 0,024 A</b>.</li><li>Rx = U / Ix = 4,8 / 0,024 = <b>200 Ω</b>.</li><li>Probe: U/Rx + U/RV = 24 + 1,2 = 25,2 mA.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx\" xmlns=\"http://www.w3.org/2000/svg\"><title>Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"200\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M370 40V101 M370 149V220\"/><circle cx=\"370\" cy=\"125\" r=\"24\"/><circle cx=\"370\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"370\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"200\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"200\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"370\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"428\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix + IV  ·  UV = Ux</text></g></svg>","answers":[0.0012,0.024,200]},{"id":2,"title":"Spannungsfehlerschaltung: Spannungsabfall abziehen","points":2,"question":"<p>Bei einer stromrichtigen Widerstandsmessung zeigen die Geräte <b>U = 36,6 V</b> und <b>I = 5 mA</b>. Das Amperemeter hat <b>RA = 120 Ω</b>. Bestimme den tatsächlichen Widerstand Rx unter Berücksichtigung von UA.</p>","solution":"<ol><li>UA = RA · I = 120 · 0,005 = <b>0,6 V</b>.</li><li>Ux = U − UA = 36,6 − 0,6 = <b>36 V</b>.</li><li>Rx = Ux / I = 36 / 0,005 = <b>7'200 Ω</b>.</li><li>Probe: I · (Rx + RA) = 0,005 · (7'200 + 120) = 36,6 V.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig\" xmlns=\"http://www.w3.org/2000/svg\"><title>Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"420\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M240 40V101 M240 149V220\"/><circle cx=\"240\" cy=\"125\" r=\"24\"/><circle cx=\"240\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"240\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"420\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"420\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"240\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"298\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix  ·  UV = Ux + UA</text></g></svg>","answers":[0.6,36,7200]},{"id":3,"title":"Stromfehlerschaltung: direkte Korrektur","points":2,"question":"<p>Für einen Verbraucher werden <b>U = 225 V</b> und <b>IA = 925 mA</b> gemessen. Der Voltmeterstrom ist bereits bekannt: <b>IV = 25 mA</b>. Berechne Rx.</p>","solution":"<ol><li>Ix = IA − IV = 925 − 25 = <b>900 mA = 0,9 A</b>.</li><li>Rx = U / Ix = 225 / 0,9 = <b>250 Ω</b>.</li><li>Probe: U/Rx + IV = 0,9 + 0,025 = 0,925 A.</li></ol>","diagram":"","answers":[0.9,250]},{"id":4,"title":"Wheatstone-Brücke: unbekannten Widerstand bestimmen","points":2,"question":"<p>Die gezeichnete Messbrücke ist abgeglichen: <b>I₅ = 0 A</b>. Gegeben sind <b>R₁ = 300 Ω</b>, <b>R₂ = 900 Ω</b> und <b>R₃ = 1'500 Ω</b>. Berechne Rx.</p>","solution":"<ol><li>Bei der hier gezeichneten Anordnung: R₁ · Rx = R₂ · R₃.</li><li>Rx = (R₂ · R₃) / R₁ = (900 · 1'500) / 300 = <b>4'500 Ω = 4,5 kΩ</b>.</li><li>Probe: Rx/R₃ = 3 und R₂/R₁ = 3. Die Verhältnisse sind gleich.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Abgeglichene Brücke: R1 über R2 links, R3 über Rx rechts; Messgerät zwischen den Mitten\" xmlns=\"http://www.w3.org/2000/svg\"><title>Abgeglichene Brücke: R1 über R2 links, R3 über Rx rechts; Messgerät zwischen den Mitten</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M65 102V25H490V45 M490 95V165 M490 215V245H65V152 M230 25V45 M230 95V165 M230 215V245 M230 130H337 M383 130H490\"/><circle cx=\"65\" cy=\"127\" r=\"25\"/><circle cx=\"360\" cy=\"130\" r=\"23\"/><rect x=\"218\" y=\"45\" width=\"24\" height=\"50\"/><rect x=\"218\" y=\"165\" width=\"24\" height=\"50\"/><rect x=\"478\" y=\"45\" width=\"24\" height=\"50\"/><rect x=\"478\" y=\"165\" width=\"24\" height=\"50\"/><text x=\"65\" y=\"134\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"185\" y=\"79\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₁</text><text x=\"185\" y=\"197\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₂</text><text x=\"535\" y=\"79\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">R₃</text><text x=\"535\" y=\"197\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"360\" y=\"137\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">G</text><text x=\"360\" y=\"180\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">I₅ = 0</text></g></svg>","answers":[4500]},{"id":5,"title":"Messgeräteanzeigen bei beiden Fehlerschaltungen","points":2,"question":"<p>Ein ohmscher Heizwiderstand mit <b>Rx = 240 Ω</b> wird an einer idealen <b>48-V-Gleichspannungsquelle</b> ausgemessen. Die Geräte besitzen <b>RA = 3 Ω</b> und <b>RV = 1'200 Ω</b>. Berechne jeweils <b>beide Geräteanzeigen U und I</b>: a) Spannungsfehlerschaltung; b) Stromfehlerschaltung. RA wird in beiden Aufbauten berücksichtigt.</p>","solution":"<p><b>a) Spannungsfehlerschaltung</b></p><ol><li>UV = Uq = <b>48 V</b>.</li><li>IA = Uq / (Rx + RA) = 48 / (240 + 3) = <b>197,531 mA</b>.</li></ol><p><b>b) Stromfehlerschaltung</b></p><ol><li>Rp = Rx ∥ RV = (240 · 1'200) / (240 + 1'200) = <b>200 Ω</b>.</li><li>Rges = RA + Rp = 203 Ω. IA = Uq / Rges = <b>236,453 mA</b>.</li><li>UV = IA · Rp = <b>47,2906 V</b> — nicht 48 V, weil am Amperemeter Spannung abfällt.</li><li>Probe: UV/Rx + UV/RV = 197,044 + 39,409 = 236,453 mA. Aus ungerundeten Werten rechnen.</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig\" xmlns=\"http://www.w3.org/2000/svg\"><title>Spannungsfehlerschaltung: V über A und Rx, A nur im Verbraucherzweig</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"420\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M240 40V101 M240 149V220\"/><circle cx=\"240\" cy=\"125\" r=\"24\"/><circle cx=\"240\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"240\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"420\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"420\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"240\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"298\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix  ·  UV = Ux + UA</text></g></svg><svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx\" xmlns=\"http://www.w3.org/2000/svg\"><title>Stromfehlerschaltung: A vor der Verzweigung, V parallel zu Rx</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M60 100V40H520V90 M520 160V220H60V150\"/><circle cx=\"60\" cy=\"125\" r=\"25\"/><rect x=\"508\" y=\"90\" width=\"24\" height=\"70\"/><circle cx=\"200\" cy=\"40\" r=\"23\" fill=\"white\"/><path d=\"M370 40V101 M370 149V220\"/><circle cx=\"370\" cy=\"125\" r=\"24\"/><circle cx=\"370\" cy=\"40\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"370\" cy=\"220\" r=\"4\" fill=\"#171d1e\"/><text x=\"60\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Uq</text><text x=\"200\" y=\"47\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"200\" y=\"85\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RA</text><text x=\"370\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"428\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RV</text><text x=\"568\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rx</text><text x=\"310\" y=\"255\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">IA = Ix + IV  ·  UV = Ux</text></g></svg>","answers":[48,0.19753086419753085,200,0.23645320197044334,47.29064039408867]},{"id":6,"title":"Messbereichserweiterung mit Vorwiderstand","points":2,"question":"<p>Ein Zeigermesswerk hat <b>RM = 120 Ω</b> und verträgt höchstens <b>IM = 4 mA</b>. Welcher Vorwiderstand Rv muss <b>in Reihe</b> geschaltet werden, damit das Gerät bis <b>U = 24 V</b> misst?</p>","solution":"<ol><li>UM = RM · IM = 120 · 0,004 = <b>0,48 V</b>.</li><li>Uv = U − UM = 24 − 0,48 = <b>23,52 V</b>.</li><li>Rv = Uv / IM = 23,52 / 0,004 = <b>5'880 Ω = 5,88 kΩ</b>.</li><li>Probe: IM · (RM + Rv) = 24 V. Alternativ: n = U/UM = 50, Rv = RM · (n − 1).</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Vorwiderstand in Reihe zum Messwerk\" xmlns=\"http://www.w3.org/2000/svg\"><title>Vorwiderstand in Reihe zum Messwerk</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M50 125H165 M255 125H377 M423 125H570\"/><rect x=\"165\" y=\"112\" width=\"90\" height=\"26\"/><circle cx=\"400\" cy=\"125\" r=\"23\"/><text x=\"210\" y=\"90\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">Rv</text><text x=\"400\" y=\"132\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">V</text><text x=\"400\" y=\"90\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RM · UM</text><text x=\"310\" y=\"215\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">U = Uv + UM  ·  gleicher Strom IM</text></g></svg>","answers":[0.48,23.52,5880]},{"id":7,"title":"Messbereichserweiterung mit Shunt","points":2,"question":"<p>Ein Amperemeter mit dem Nennstrombereich <b>IM = 1 A</b> hat <b>RM = 0,3 Ω</b>. Mit einem <b>parallelen</b> Shunt soll der Bereich auf <b>I = 13 A</b> erweitert werden. Berechne RS in <b>mΩ</b>.</p>","solution":"<ol><li>IS = I − IM = 13 − 1 = <b>12 A</b>.</li><li>UM = RM · IM = 0,3 · 1 = <b>0,3 V</b>.</li><li>RS = UM / IS = 0,3 / 12 = <b>0,025 Ω = 25 mΩ</b>.</li><li>Probe: IM · RM = IS · RS = 0,3 V; IM + IS = 13 A. Nicht durch den Gesamtstrom teilen!</li></ol>","diagram":"<svg class=\"exam-diagram\" viewBox=\"0 0 620 270\" role=\"img\" aria-label=\"Shunt parallel zum Messwerk\" xmlns=\"http://www.w3.org/2000/svg\"><title>Shunt parallel zum Messwerk</title><rect width=\"620\" height=\"270\" fill=\"white\"/><g fill=\"none\" stroke=\"#171d1e\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M50 135H140V60H277 M323 60H480V210H350 M270 210H140V135 M480 135H565\"/><rect x=\"270\" y=\"198\" width=\"80\" height=\"24\"/><circle cx=\"300\" cy=\"60\" r=\"23\"/><text x=\"300\" y=\"67\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">A</text><text x=\"300\" y=\"25\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RM · IM</text><text x=\"310\" y=\"248\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">RS · IS</text><text x=\"92\" y=\"115\" fill=\"#171d1e\" stroke=\"none\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\" font-size=\"19\">I</text><circle cx=\"140\" cy=\"135\" r=\"4\" fill=\"#171d1e\"/><circle cx=\"480\" cy=\"135\" r=\"4\" fill=\"#171d1e\"/></g></svg>","answers":[12,0.3,0.024999999999999998]},{"id":8,"title":"Längenausdehnung in Zentimetern","points":2.5,"question":"<p>Ein gerader Eisensteg ist bei der Ausgangstemperatur <b>l₀ = 125 m</b> lang. Die Temperatur steigt um <b>ΔT = 36 K</b>. Verwende den vorgegebenen Modellwert <b>αL = 12 · 10⁻⁶ K⁻¹</b>. Um wie viele <b>Zentimeter</b> verlängert sich die Konstruktion?</p>","solution":"<ol><li>Δl = l₀ · αL · ΔT.</li><li>Δl = 125 · 12 · 10⁻⁶ · 36 = <b>0,054 m</b>.</li><li>Umrechnung: 0,054 m · 100 = <b>5,4 cm</b>.</li><li>Kontrolle: Die Längenänderung ist positiv; m · K⁻¹ · K ergibt m. Gesucht ist die Änderung, nicht die Gesamtlänge.</li></ol>","diagram":"","answers":[0.054,5.4]},{"id":9,"title":"Wassererwärmer: Wärme, Energiebedarf und Zeit","points":3.5,"question":"<p>Ein Speicher enthält <b>120 Liter Wasser</b>; rechne mit <b>m = 120 kg</b>. Er heizt von <b>10 °C auf 70 °C</b>. Der Gesamtwirkungsgrad des Erwärmungsvorgangs beträgt <b>η = 90 %</b>, die elektrische Heizleistung <b>Pel = 3 kW</b>. Verwende wie im Originaltest <b>c = 4187 J/(kg·K)</b>.</p><ol><li>a) Berechne die dem Wasser zuzuführende Wärme Q in <b>MJ</b>.</li><li>b) Berechne den elektrischen Energiebedarf Wel in <b>kWh</b>.</li><li>c) Berechne die tatsächliche Aufheizzeit t in <b>Stunden</b>.</li></ol>","solution":"<ol><li>ΔT = 70 − 10 = <b>60 K</b>.</li><li>a) Q = m · c · ΔT = 120 · 4187 · 60 = 30'146'400 J = <b>30,1464 MJ</b>.</li><li>b) Wel = Q / η = 30'146'400 / 0,9 = 33'496'000 J. Mit 1 kWh = 3 600 000 J ergibt sich <b>9,30444 kWh ≈ 9,3 kWh</b>.</li><li>c) t = Wel / Pel = 9,30444 / 3 = <b>3,10148 h ≈ 3,1 h</b>.</li><li>Probe: Pel · t · η · 3 600 000 = Q. Wel ist grösser als Q in kWh. η = 0,9, nicht 90; η nicht zweimal berücksichtigen.</li></ol>","diagram":"","answers":[60,30146400,9.304444444444444,3.1014814814814815]},{"id":10,"title":"Formel umstellen: temperaturabhängiger Widerstand","points":1.5,"question":"<p>Stelle die Formel <b>Rθ = R₂₀ · (1 + αR · ΔT)</b> schrittweise nach dem <b>Temperaturkoeffizienten αR</b> um. Gleiche Umstellaufgabe wie im Original; die folgende Zahlenprobe ist zusätzlich zum Üben:</p><p>Ein Leiter hat R₂₀ = 50 Ω und nach einer Erwärmung um ΔT = 50 K den Widerstand Rθ = 59,5 Ω. Prüfe deine Formel mit diesen Werten.</p>","solution":"<ol><li>Rθ / R₂₀ = 1 + αR · ΔT.</li><li>Rθ / R₂₀ − 1 = αR · ΔT.</li><li><b>αR = (Rθ/R₂₀ − 1) / ΔT = (Rθ − R₂₀) / (R₂₀ · ΔT)</b>.</li><li>Zahlenprobe: (59,5 − 50) / (50 · 50) = <b>0,0038 K⁻¹</b>. Rückeinsetzen: 50 · (1 + 0,0038 · 50) = 59,5 Ω.</li><li>Voraussetzungen: R₂₀ ≠ 0 und ΔT ≠ 0. αR ist der Widerstandskoeffizient; nicht mit dem Längenausdehnungskoeffizienten αL verwechseln.</li></ol>","diagram":"","answers":[0.0038]},{"id":11,"title":"Formel umstellen: Hebel / Auflagerkraft","points":2,"question":"<p>Stelle die Formel <b>FA = F · (l₁ − l₂) / l₁</b> nach <b>l₁</b> um. Die gesuchte Grösse kommt im Zähler und im Nenner vor. Wie im Original zuerst symbolisch umstellen; danach die neue Zahlenprobe:</p><p>F = 1'200 N, FA = 800 N und l₂ = 0,9 m. Wie gross wird l₁?</p>","solution":"<ol><li>FA · l₁ = F · (l₁ − l₂).</li><li>FA · l₁ = F · l₁ − F · l₂.</li><li>F · l₂ = F · l₁ − FA · l₁ = l₁ · (F − FA).</li><li><b>l₁ = F · l₂ / (F − FA)</b>.</li><li>Zahlenprobe: 1'200 · 0,9 / (1'200 − 800) = <b>2,7 m</b>. Rückeinsetzen: 1'200 · (2,7 − 0,9) / 2,7 = 800 N.</li><li>Voraussetzungen: l₁ ≠ 0 und F ≠ FA für diese Umstellung. l₁ nicht aus einer Summe oder Differenz kürzen.</li></ol>","diagram":"","answers":[2.7]},{"id":12,"title":"Lineare Textgleichung: Zahlenrätsel","points":1.5,"question":"<p>Die Summe dreier positiver Zahlen ist <b>96</b>. Die zweite ist <b>2-mal</b> so gross wie die erste, die dritte <b>5-mal</b> so gross. Stelle eine Gleichung auf und bestimme die kleinste, also die erste Zahl.</p>","solution":"<ol><li>Erste Zahl x, zweite Zahl 2x, dritte Zahl 5x.</li><li>x + 2x + 5x = 96.</li><li>(8)x = 96 ⇒ <b>x = 12</b>.</li><li>Probe: 12 + 24 + 60 = 96. Die drei Zahlen sind 12, 24 und 60.</li></ol>","diagram":"","answers":[12,24,60]}]};
+  const selector = document.getElementById('examVariant');
+  const list = document.getElementById('examQuestions');
+  let variant = 'A';
+  const stateKey = () => 'moser-probetest-20260907-' + variant;
+  let state = {};
+  let storageAvailable = true;
+  function escapeText(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmt(n) { return String(n).replace('.', ','); }
+  function status() {
+    const done = EXAMS[variant].filter(q=>state[q.id]?.done).length;
+    const score = EXAMS[variant].reduce((sum,q)=>sum+(Number(state[q.id]?.score)||0),0);
+    document.getElementById('examStatus').textContent = 'Variante '+variant+' · '+done+'/12 bearbeitet · '+fmt(score)+'/25 Punkte nach eigener Kontrolle.';
+    document.getElementById('examStorage').textContent = storageAvailable ? 'Antworten und Selbstkontrolle bleiben nur in diesem Browser gespeichert; A und B getrennt.' : 'Browserspeicher ist nicht verfügbar. Deine Eingaben bleiben nur bis zum Schliessen dieser Seite erhalten.';
+  }
+  function save() { try { localStorage.setItem(stateKey(),JSON.stringify(state)); } catch(e) { storageAvailable=false; } status(); }
+  function render() {
+    try { state=JSON.parse(localStorage.getItem(stateKey())||'{}')||{}; if(typeof state!=='object'||Array.isArray(state))state={}; } catch(e) { state={}; storageAvailable=false; }
+    list.innerHTML = EXAMS[variant].map(q=>`<article class="exam-question" id="exam-q${q.id}" data-question="${q.id}">
+      <div class="card-title"><span class="num">${q.id} / 12</span><h3>${escapeText(q.title)}</h3><span class="exam-points">${fmt(q.points)} Punkte</span></div>
+      <div class="exam-prompt">${q.question}</div>${q.diagram}
+      <label class="exam-answer-label" for="exam-answer-${q.id}">Dein Lösungsweg / Ergebnis</label><textarea class="exam-answer" id="exam-answer-${q.id}" data-answer="${q.id}" rows="4" spellcheck="false"></textarea>
+      <div class="exam-writing-space" aria-hidden="true"></div><div class="exam-self"><label><input type="checkbox" data-done="${q.id}"> Bearbeitet</label><label for="exam-score-${q.id}">Selbstkontrolle <select id="exam-score-${q.id}" data-score="${q.id}"><option value="">Punkte wählen</option>${Array.from({length:q.points*2+1},(_,i)=>'<option value="'+i/2+'">'+fmt(i/2)+' / '+fmt(q.points)+'</option>').join('')}</select></label></div>
+      <details class="exam-solution"><summary>Lösungsweg und Probe anzeigen</summary><div>${q.solution}</div><p class="meta">Gleicher Aufgabentyp und gleiche Teilaufgaben wie Nr. ${q.id} der DOCX; neue Übungswerte. ${fmt(q.points)} Einzelpunkte wie auf dem Blatt, keine offizielle Notenskala.</p></details>
+      </article>`).join('');
+    for(const q of EXAMS[variant]){
+      const saved=state[q.id]||{};
+      list.querySelector(`[data-answer="${q.id}"]`).value=typeof saved.answer==='string'?saved.answer:'';
+      list.querySelector(`[data-done="${q.id}"]`).checked=saved.done===true;
+      const score=Number(saved.score);
+      list.querySelector(`[data-score="${q.id}"]`).value=saved.score!=='' && saved.score!=null && Number.isFinite(score) && score>=0 && score<=q.points && score*2%1===0 ? String(score) : '';
+      state[q.id]={answer:list.querySelector(`[data-answer="${q.id}"]`).value,done:saved.done===true,score:list.querySelector(`[data-score="${q.id}"]`).value};
+    }
+    document.getElementById('examPrintTitle').textContent='Probetest '+variant+' · Elektrotechnik & Mathematik · 12 Aufgaben / 25 Einzelpunkte';
+    status();
+  }
+  list.addEventListener('input',e=>{
+    const id=e.target.dataset.answer||e.target.dataset.score||e.target.dataset.done;
+    if(!id)return;
+    state[id] ||= {};
+    if(e.target.dataset.answer)state[id].answer=e.target.value;
+    if(e.target.dataset.score)state[id].score=e.target.value;
+    if(e.target.dataset.done)state[id].done=e.target.checked;
+    save();
+  });
+  selector.addEventListener('change',()=>{variant=selector.value;render();});
+  for(const button of document.querySelectorAll('[data-exam-solutions]'))button.addEventListener('click',()=>{
+    list.querySelectorAll('.exam-solution').forEach(d=>d.open=button.dataset.examSolutions==='show');
+  });
+  document.getElementById('examPrint').addEventListener('click',()=>{
+    document.body.classList.add('exam-print');window.print();
+  });
+  window.addEventListener('afterprint',()=>document.body.classList.remove('exam-print'));
+  function selectTab(id){const btn=document.querySelector('.tab-btn[data-tab="'+id+'"]');if(btn)btn.click();}
+  document.querySelectorAll('[data-open-tab]').forEach(btn=>btn.addEventListener('click',()=>selectTab(btn.dataset.openTab)));
+  function hashTab(){const id=location.hash.slice(1);if(['probetest','theorie','lernplan','rechner','beispiele','begriffe','karten','quiz'].includes(id))selectTab(id);}
+  window.addEventListener('hashchange',hashTab);hashTab();
+  render();
+})();
 
 </script>
 </body>
