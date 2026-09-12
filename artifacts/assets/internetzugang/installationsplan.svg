@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" width="900" height="640" font-family="'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif">
+  <rect x="0" y="0" width="900" height="640" fill="#FFFFFF"/>
+
+  <text x="40" y="26" font-family="'Chivo','Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="17" fill="#161C24">Installationsplan — Aufgabe 11</text>
+  <text x="40" y="44" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#77838F">Kapitel 4 Internetzugang · Telekommunikation · 11.09.2026</text>
+
+  <g transform="translate(0,58)">
+
+    <!-- Provider feed -->
+    <line x1="345" y1="8" x2="345" y2="69" stroke="#17784A" stroke-width="3.5"/>
+    <text x="357" y="22" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#17784A" font-weight="500">Anschluss Provider</text>
+    <text x="357" y="35" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#17784A" opacity=".85">Glasfaser oder Kupfer</text>
+
+    <!-- Outer wall -->
+    <rect x="40" y="40" width="820" height="460" fill="none" stroke="#161C24" stroke-width="2.6"/>
+
+    <!-- Inner walls with door gaps -->
+    <line x1="40"  y1="250" x2="150" y2="250" stroke="#161C24" stroke-width="2"/>
+    <line x1="190" y1="250" x2="340" y2="250" stroke="#161C24" stroke-width="2"/>
+    <line x1="380" y1="250" x2="620" y2="250" stroke="#161C24" stroke-width="2"/>
+    <line x1="660" y1="250" x2="860" y2="250" stroke="#161C24" stroke-width="2"/>
+
+    <line x1="260" y1="40"  x2="260" y2="150" stroke="#161C24" stroke-width="2"/>
+    <line x1="260" y1="190" x2="260" y2="250" stroke="#161C24" stroke-width="2"/>
+    <line x1="430" y1="40"  x2="430" y2="150" stroke="#161C24" stroke-width="2"/>
+    <line x1="430" y1="190" x2="430" y2="250" stroke="#161C24" stroke-width="2"/>
+
+    <line x1="330" y1="250" x2="330" y2="380" stroke="#161C24" stroke-width="2"/>
+    <line x1="330" y1="420" x2="330" y2="500" stroke="#161C24" stroke-width="2"/>
+    <line x1="560" y1="250" x2="560" y2="380" stroke="#161C24" stroke-width="2"/>
+    <line x1="560" y1="420" x2="560" y2="500" stroke="#161C24" stroke-width="2"/>
+
+    <!-- Front door -->
+    <line x1="415" y1="500" x2="475" y2="500" stroke="#FFFFFF" stroke-width="5"/>
+    <path d="M415 500 A 60 60 0 0 1 475 500" fill="none" stroke="#161C24" stroke-width="1.2" opacity=".55"/>
+    <text x="445" y="521" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#161C24" opacity=".6">Eingang</text>
+
+    <!-- Room labels -->
+    <text x="54"  y="64"  font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Garage</text>
+    <text x="274" y="64"  font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Raum «Install.»</text>
+    <text x="444" y="64"  font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Elternzimmer</text>
+    <text x="54"  y="274" font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Wohnzimmer</text>
+    <text x="344" y="274" font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Eingangshalle</text>
+    <text x="574" y="274" font-family="'Chivo',sans-serif" font-weight="700" font-size="14" fill="#161C24" opacity=".75">Esszimmer</text>
+
+    <!-- ===== CABLES ===== -->
+    <polyline points="410,193 410,155 395,155" fill="none" stroke="#C0392B" stroke-width="2.2" stroke-dasharray="9 4 2 4"/>
+
+    <line x1="345" y1="101" x2="345" y2="139" stroke="#0B63C5" stroke-width="2.4"/>
+    <text x="355" y="126" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#0B63C5">WAN</text>
+
+    <polyline points="320,171 320,265 270,265 270,284" fill="none" stroke="#0B63C5" stroke-width="2.4"/>
+    <polyline points="295,163 110,163 110,284" fill="none" stroke="#A8601F" stroke-width="2.2"/>
+    <polyline points="240,284 240,230 150,230 150,216" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+    <polyline points="315,290 470,290 470,130 492,130" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+    <polyline points="315,300 620,300 620,130 655,130" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+    <polyline points="315,310 790,310 790,414" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+    <polyline points="290,316 290,400 390,400" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+    <polyline points="250,316 250,420 148,420" fill="none" stroke="#0B63C5" stroke-width="2.2"/>
+
+    <!-- WLAN radiation -->
+    <path d="M445 378 A 34 34 0 0 1 495 378" fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".8"/>
+    <path d="M432 368 A 52 52 0 0 1 508 368" fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".55"/>
+    <path d="M419 358 A 70 70 0 0 1 521 358" fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".35"/>
+
+    <!-- ===== COMPONENTS ===== -->
+    <rect x="290" y="69" width="110" height="32" fill="#FFFFFF" stroke="#17784A" stroke-width="2"/>
+    <text x="345" y="90" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">NTS / HÜP</text>
+
+    <rect x="295" y="139" width="100" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="345" y="160" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">Router</text>
+
+    <circle cx="410" cy="205" r="12" fill="#FFFFFF" stroke="#C0392B" stroke-width="2"/>
+    <line x1="398" y1="205" x2="422" y2="205" stroke="#C0392B" stroke-width="2"/>
+    <text x="410" y="235" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#C0392B" font-weight="500">230 V</text>
+
+    <rect x="225" y="284" width="90" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="270" y="305" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">Switch</text>
+
+    <rect x="57" y="284" width="106" height="32" fill="#FFFFFF" stroke="#A8601F" stroke-width="2"/>
+    <text x="110" y="299" text-anchor="middle" font-size="11.5" font-weight="600" fill="#161C24">Telefon</text>
+    <text x="110" y="311" text-anchor="middle" font-size="10" fill="#161C24" opacity=".7">analog</text>
+
+    <rect x="72" y="404" width="76" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="110" y="425" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">PC</text>
+
+    <rect x="112" y="184" width="76" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="150" y="205" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">PC</text>
+
+    <rect x="492" y="114" width="76" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="530" y="135" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">PC</text>
+
+    <rect x="655" y="114" width="90" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="700" y="135" text-anchor="middle" font-size="12.5" font-weight="600" fill="#161C24">Drucker</text>
+
+    <rect x="390" y="384" width="110" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="445" y="405" text-anchor="middle" font-size="12" font-weight="600" fill="#161C24">WLAN-Sender</text>
+
+    <rect x="680" y="414" width="110" height="32" fill="#FFFFFF" stroke="#0B63C5" stroke-width="2"/>
+    <text x="735" y="429" text-anchor="middle" font-size="11.5" font-weight="600" fill="#161C24">VoIP-Telefon</text>
+
+    <text x="860" y="521" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#161C24" opacity=".5">Schema, nicht massstäblich · Kreuzungen ohne Punkt = keine Verbindung</text>
+
+    <text x="40" y="552" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#A8601F" font-weight="500">Achtung: Das analoge Telefon geht an den a/b-Port des ROUTERS — nicht an den Switch.</text>
+    <text x="40" y="568" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#0B63C5" font-weight="500">Das VoIP-Telefon dagegen ist ein Netzwerkgerät und hängt am Switch.</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40,634)" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#161C24">
+    <line x1="0"   y1="-4" x2="24"  y2="-4" stroke="#17784A" stroke-width="3"/>
+    <text x="30"  y="0">Provider bis NTS/HÜP</text>
+    <line x1="172" y1="-4" x2="196" y2="-4" stroke="#0B63C5" stroke-width="3"/>
+    <text x="202" y="0">U/UTP Cat 6, RJ45</text>
+    <line x1="340" y1="-4" x2="364" y2="-4" stroke="#A8601F" stroke-width="3"/>
+    <text x="370" y="0">Telefon a/b</text>
+    <line x1="452" y1="-4" x2="476" y2="-4" stroke="#C0392B" stroke-width="3" stroke-dasharray="6 3"/>
+    <text x="482" y="0">230 V</text>
+    <line x1="540" y1="-4" x2="564" y2="-4" stroke="#0B63C5" stroke-width="3" stroke-dasharray="2 3"/>
+    <text x="570" y="0">WLAN (Funk)</text>
+  </g>
+</svg>

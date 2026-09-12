@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Arbeitsauftrag Internetzugang — Kapitel 4, Telekommunikation, ELI 25a BZI Interlaken. Elf Fragen mit Installationsplan, druckfertig auf A4.">
+<meta name="theme-color" content="#f5f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1319" media="(prefers-color-scheme: dark)">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Arbeitsauftrag Internetzugang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper:      #F5F7F9;
+    --sheet:      #FFFFFF;
+    --ink:        #161C24;
+    --ink-soft:   #4A5764;
+    --ink-faint:  #77838F;
+    --rule:       #C8D2DC;
+    --rule-soft:  #E2E8EE;
+    --lan:        #0B63C5;
+    --copper:     #A8601F;
+    --mains:      #C0392B;
+    --fiber:      #17784A;
+    --tint-lan:   #E7F0FB;
+    --tint-warn:  #FDF3E3;
+    --warn-edge:  #D9A441;
+
+    --f-display: "Chivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body:    "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "Consolas", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:     #0E1319;
+      --sheet:     #151B22;
+      --ink:       #DCE3EA;
+      --ink-soft:  #9AA7B4;
+      --ink-faint: #71808E;
+      --rule:      #2B3642;
+      --rule-soft: #212B35;
+      --lan:       #5AA9F5;
+      --copper:    #D99552;
+      --mains:     #E8705F;
+      --fiber:     #4FBA86;
+      --tint-lan:  #16232F;
+      --tint-warn: #241E12;
+      --warn-edge: #8A6A26;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:     #0E1319;
+    --sheet:     #151B22;
+    --ink:       #DCE3EA;
+    --ink-soft:  #9AA7B4;
+    --ink-faint: #71808E;
+    --rule:      #2B3642;
+    --rule-soft: #212B35;
+    --lan:       #5AA9F5;
+    --copper:    #D99552;
+    --mains:     #E8705F;
+    --fiber:     #4FBA86;
+    --tint-lan:  #16232F;
+    --tint-warn: #241E12;
+    --warn-edge: #8A6A26;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 28px 18px 64px;
+  }
+
+  .sheet {
+    max-width: 940px;
+    margin: 0 auto;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    padding: 34px 40px 48px;
+  }
+
+  /* ---------- Title block: a drawing-sheet header ---------- */
+
+  .titleblock { border-bottom: 3px solid var(--ink); padding-bottom: 16px; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 6px;
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+
+  .subtitle { color: var(--ink-soft); margin: 0 0 20px; max-width: 62ch; }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .meta div { background: var(--sheet); padding: 8px 11px; }
+  .meta dt {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 2px;
+  }
+  .meta dd { margin: 0; font-weight: 600; font-size: 14px; }
+
+  .namefield {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border: 1px dashed var(--rule);
+  }
+  .namefield span {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  input.fill {
+    font-family: var(--f-mono);
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 2px 4px;
+    min-width: 92px;
+    flex: 1 1 140px;
+  }
+  input.fill:focus { outline: 2px solid var(--lan); outline-offset: 2px; border-bottom-color: transparent; }
+  input.fill::placeholder { color: var(--ink-faint); opacity: .8; }
+
+  /* ---------- Questions ---------- */
+
+  .q {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 0 20px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    break-inside: avoid;
+  }
+
+  .rail { padding-top: 3px; }
+
+  .qnum {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -.03em;
+    display: block;
+  }
+
+  .pts {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+    display: block;
+    margin-top: 5px;
+    border-top: 1px solid var(--rule);
+    padding-top: 4px;
+  }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+
+  /* Ohne min-width:0 nimmt die 1fr-Spur die min-content-Breite ihres
+     breitesten Kindes an — das sind die Tabellen mit min-width:460px.
+     Die Spalte wuchs dadurch ueber den Schirm hinaus und die ganze
+     Seite liess sich waagrecht schieben, statt dass die Tabelle in
+     ihrem eigenen .tw-Container scrollt. */
+  .q > div:last-child { min-width: 0; }
+  .q > div:last-child > *:first-child { margin-top: 0; }
+  .q p { margin: 0 0 10px; max-width: 66ch; }
+  .q ul { margin: 0 0 10px; padding-left: 18px; max-width: 66ch; }
+  .q li { margin-bottom: 4px; }
+
+  strong { font-weight: 600; }
+  .mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Tables ---------- */
+
+  .tw { overflow-x: auto; margin: 0 0 12px; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 460px;
+    font-size: 13.5px;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-bottom: 6px;
+  }
+  th, td { text-align: left; padding: 6px 10px 6px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-bottom: 1.5px solid var(--rule);
+    font-weight: 500;
+  }
+  td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  /* ---------- Figures ---------- */
+
+  figure { margin: 16px 0; break-inside: avoid; }
+  figure svg { display: block; width: 100%; height: auto; max-width: 100%; color: var(--ink); }
+  .figwrap { overflow-x: auto; border: 1px solid var(--rule); padding: 14px; background: var(--sheet); }
+  figcaption {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    max-width: 70ch;
+    line-height: 1.5;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--f-mono);
+    font-size: 11px;
+  }
+  .legend b { display: inline-flex; align-items: center; gap: 7px; font-weight: 400; }
+  .swatch { width: 26px; height: 0; border-top-width: 3px; border-top-style: solid; flex: none; }
+
+  /* ---------- Callouts ---------- */
+
+  .note {
+    border-left: 3px solid var(--lan);
+    background: var(--tint-lan);
+    padding: 11px 14px;
+    margin: 12px 0;
+    font-size: 13.5px;
+  }
+  .note p { margin: 0 0 6px; }
+  .note p:last-child { margin-bottom: 0; }
+  .note .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .selbst { border-left-color: var(--warn-edge); background: var(--tint-warn); }
+
+  .measure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 12px 0;
+  }
+  .measure label { background: var(--sheet); padding: 9px 12px; display: block; }
+  .measure .cap {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .measure input.fill { width: 100%; min-width: 0; }
+
+  /* ---------- Footer / grading ---------- */
+
+  .footer { margin-top: 30px; padding-top: 18px; border-top: 3px solid var(--ink); break-inside: avoid; }
+  .footer h2 { margin-bottom: 10px; }
+  .footer p { font-size: 13.5px; color: var(--ink-soft); max-width: 70ch; }
+
+  a { color: var(--lan); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--lan); outline-offset: 2px; }
+
+  .noprint {
+    max-width: 940px;
+    margin: 0 auto 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  button {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    border: 0;
+    padding: 9px 15px;
+    cursor: pointer;
+  }
+  button:focus-visible { outline: 2px solid var(--lan); outline-offset: 2px; }
+  .hint { font-size: 12px; color: var(--ink-faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 11mm; }
+    body { background: #fff; color: #000; padding: 0; font-size: 10.5pt; }
+    .sheet { border: 0; padding: 0; max-width: none; background: #fff; }
+    .noprint { display: none; }
+    .figwrap { border-color: #999; }
+    input.fill { border-bottom-color: #999; }
+    .q { padding: 14px 0; }
+    h1 { font-size: 26pt; }
+  }
+
+  @media (max-width: 620px) {
+    body { padding: 14px 8px 40px; }
+    .sheet { padding: 20px 16px 30px; }
+    .q { grid-template-columns: 1fr; gap: 8px; }
+    .rail { display: flex; align-items: baseline; gap: 10px; }
+    .pts { margin-top: 0; border-top: 0; padding-top: 0; }
+    .qnum { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noprint">
+  <button type="button" id="printBtn">Drucken / als PDF sichern</button>
+  <span class="hint">A4, Aufgaben 5 und 6 zuerst selbst messen und eintragen.</span>
+</div>
+
+<div class="sheet">
+
+  <header class="titleblock">
+    <p class="eyebrow">Kapitel 4 · Internetzugang</p>
+    <h1>Arbeitsauftrag Internetzugang</h1>
+    <p class="subtitle">Lösungen zu den Fragen 1–11. Die Messwerte in den Aufgaben 5 und 6 müssen selbst erhoben werden — die Felder sind zum Ausfüllen da.</p>
+
+    <dl class="meta">
+      <div><dt>Fach</dt><dd>Telekommunikation</dd></div>
+      <div><dt>Klasse</dt><dd>ELI 2025 a/b · Sem. 3</dd></div>
+      <div><dt>Lehrperson</dt><dd>Simon Aeschlimann</dd></div>
+      <div><dt>Datum</dt><dd>11.09.2026</dd></div>
+      <div><dt>Sozialform</dt><dd>2er-Gruppe</dd></div>
+      <div><dt>Punkte</dt><dd>max. 25</dd></div>
+    </dl>
+
+    <p class="namefield">
+      <span>Teammitglied 1</span>
+      <input class="fill" id="n1" type="text" placeholder="Yanik Rösti">
+      <span>Teammitglied 2</span>
+      <input class="fill" id="n2" type="text" placeholder="Name eintragen">
+    </p>
+  </header>
+
+  <!-- 1 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">1</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Welche Downloadgeschwindigkeiten kennen wir?</h2>
+      <p>Gemessen wird in <strong>Bit pro Sekunde</strong>, gestuft in Tausenderschritten: <span class="mono">kbit/s → Mbit/s → Gbit/s</span>. Achtung auf die Einheit — der Anbieter wirbt mit <span class="mono">bit</span>, der Download-Balken zeigt <span class="mono">Byte</span>:</p>
+
+      <div class="note">
+        <span class="lbl">Umrechnung</span>
+        <p><span class="mono">8 bit = 1 Byte</span> → eine <span class="mono">100 Mbit/s</span>-Leitung lädt mit höchstens <span class="mono">100 ÷ 8 = 12,5 MB/s</span>. Eine 5-GB-Datei braucht damit rund 7 Minuten.</p>
+      </div>
+
+      <div class="tw">
+        <table>
+          <caption>Gängige Zugangstechniken und ihre Richtwerte</caption>
+          <thead><tr><th>Technik</th><th class="num">Download</th><th class="num">Upload</th></tr></thead>
+          <tbody>
+            <tr><td>Analoges Modem (V.90)</td><td class="num">56 kbit/s</td><td class="num">33,6 kbit/s</td></tr>
+            <tr><td>ISDN (2 Kanäle gebündelt)</td><td class="num">128 kbit/s</td><td class="num">128 kbit/s</td></tr>
+            <tr><td>ADSL / ADSL2+</td><td class="num">8 / 24 Mbit/s</td><td class="num">1 / 3,5 Mbit/s</td></tr>
+            <tr><td>VDSL2 (Profil 17a)</td><td class="num">bis 100 Mbit/s</td><td class="num">bis 40 Mbit/s</td></tr>
+            <tr><td>VDSL2 mit Vectoring</td><td class="num">bis 200–300 Mbit/s</td><td class="num">bis 50 Mbit/s</td></tr>
+            <tr><td>G.fast</td><td class="num">bis 500 Mbit/s</td><td class="num">frei aufteilbar</td></tr>
+            <tr><td>TV-Kabel (DOCSIS 3.1)</td><td class="num">bis 1 Gbit/s</td><td class="num">bis 50 Mbit/s</td></tr>
+            <tr><td>Glasfaser FTTH</td><td class="num">1–10 Gbit/s</td><td class="num">1–10 Gbit/s</td></tr>
+            <tr><td>Mobil 4G / LTE</td><td class="num">50–300 Mbit/s</td><td class="num">20–50 Mbit/s</td></tr>
+            <tr><td>Mobil 5G</td><td class="num">0,5–2 Gbit/s</td><td class="num">50–200 Mbit/s</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Die Werte sind <strong>Maximalwerte «bis zu»</strong>. Was wirklich ankommt, hängt bei Kupfer von der Leitungslänge ab, bei Mobilfunk vom Empfang und bei geteilten Netzen von der Auslastung.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">2</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Welche Geschwindigkeiten sind für welche Anwendungen nötig? Fünf Beispiele</h2>
+      <div class="tw">
+        <table>
+          <caption>Bedarf pro gleichzeitig laufender Anwendung</caption>
+          <thead><tr><th class="num">Nr.</th><th>Anwendung</th><th class="num">Download</th><th>Worauf es ankommt</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>E-Mail und Websurfen</td><td class="num">1–5 Mbit/s</td><td>genügsam; wichtig ist ein tiefer Ping, sonst wirken Seiten träge</td></tr>
+            <tr><td class="num">2</td><td>Musikstreaming (320 kbit/s)</td><td class="num">0,3–0,4 Mbit/s</td><td>praktisch jede Leitung reicht</td></tr>
+            <tr><td class="num">3</td><td>Videokonferenz HD (Teams)</td><td class="num">1,5–4 Mbit/s</td><td>braucht gleich viel <strong>Upload</strong> — hier scheitert ADSL zuerst</td></tr>
+            <tr><td class="num">4</td><td>Videostreaming SD / HD / 4K</td><td class="num">3 / 8 / 25 Mbit/s</td><td>reine Download-Last, Ping egal (wird gepuffert)</td></tr>
+            <tr><td class="num">5</td><td>Online-Gaming</td><td class="num">3–6 Mbit/s</td><td>Tempo unkritisch — entscheidend ist <strong>Ping &lt; 30 ms</strong></td></tr>
+            <tr><td class="num">6</td><td>Cloud-Backup, grosse Uploads</td><td class="num">so viel wie möglich</td><td>rein <strong>Upload</strong>-begrenzt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="lbl">Merksatz</span>
+        <p>Der Bedarf eines Haushalts <strong>addiert sich</strong>. Vier Personen — 4K-Film, Gaming, Teams-Call und Backup gleichzeitig — kommen schnell auf rund <span class="mono">40 Mbit/s</span>. Und: <strong>Mehr Mbit/s machen ein Spiel nicht flüssiger</strong>, dafür braucht es einen tiefen Ping.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">3</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Was bedeuten Upload und Download?</h2>
+      <p>Beide Begriffe werden <strong>immer aus Sicht des Kunden</strong> beschrieben — also von deinem Gerät aus gesehen:</p>
+      <ul>
+        <li><strong>Download</strong> (herunterladen) — Daten kommen <em>aus dem Internet zu dir</em>. Beispiele: Netflix schauen, Webseite laden, App installieren.</li>
+        <li><strong>Upload</strong> (hochladen) — Daten gehen <em>von dir ins Internet</em>. Beispiele: Foto in die Cloud sichern, dein Kamerabild im Videocall, E-Mail mit Anhang senden.</li>
+      </ul>
+
+      <figure>
+        <div class="figwrap">
+          <svg viewBox="0 0 760 250" role="img" aria-label="Download bringt Daten vom Server zum Gerät, Upload schickt Daten vom Gerät zum Server.">
+            <defs>
+              <marker id="ar-lan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#0B63C5"></path>
+              </marker>
+              <marker id="ar-cop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#A8601F"></path>
+              </marker>
+            </defs>
+
+            <!-- Download lane -->
+            <text x="380" y="26" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#0B63C5" letter-spacing="1">DOWNLOAD — DATEN KOMMEN ZU DIR</text>
+            <line x1="690" y1="48" x2="70" y2="48" stroke="#0B63C5" stroke-width="2.5" marker-end="url(#ar-lan)"></line>
+
+            <!-- Nodes -->
+            <rect x="30" y="86" width="140" height="64" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+            <text x="100" y="113" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Dein Gerät</text>
+            <text x="100" y="132" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65" font-family="IBM Plex Sans, sans-serif">PC · Handy · TV</text>
+
+            <line x1="170" y1="118" x2="250" y2="118" stroke="currentColor" stroke-width="1.6"></line>
+
+            <rect x="250" y="86" width="130" height="64" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+            <text x="315" y="113" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Router</text>
+            <text x="315" y="132" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65" font-family="IBM Plex Sans, sans-serif">bei dir zu Hause</text>
+
+            <line x1="380" y1="118" x2="440" y2="118" stroke="currentColor" stroke-width="1.6"></line>
+
+            <path d="M462 132 a20 20 0 0 1 2 -39 a26 26 0 0 1 49 -8 a22 22 0 0 1 29 21 a17 17 0 0 1 -4 26 z" fill="none" stroke="currentColor" stroke-width="1.6"></path>
+            <text x="505" y="121" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Internet</text>
+
+            <line x1="548" y1="118" x2="600" y2="118" stroke="currentColor" stroke-width="1.6"></line>
+
+            <rect x="600" y="86" width="130" height="64" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+            <text x="665" y="113" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Server</text>
+            <text x="665" y="132" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65" font-family="IBM Plex Sans, sans-serif">Netflix · Cloud</text>
+
+            <!-- Upload lane -->
+            <line x1="70" y1="190" x2="690" y2="190" stroke="#A8601F" stroke-width="2.5" marker-end="url(#ar-cop)"></line>
+            <text x="380" y="220" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#A8601F" letter-spacing="1">UPLOAD — DATEN GEHEN VON DIR WEG</text>
+          </svg>
+        </div>
+        <figcaption>Die Richtung entscheidet, nicht die Datenmenge. Dasselbe Foto ist für dich ein Upload und für deine Kollegin, die es anschaut, ein Download.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">4</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Was bedeutet Ping?</h2>
+      <p>Der <strong>Ping</strong> ist die <strong>Laufzeit eines kleinen Testpakets zum Server und zurück</strong> — die sogenannte <span class="mono">RTT</span> (Round Trip Time), gemessen in <strong>Millisekunden</strong>. Er sagt nichts über das Tempo aus, sondern nur darüber, <em>wie schnell die Leitung reagiert</em>.</p>
+
+      <figure>
+        <div class="figwrap">
+          <svg viewBox="0 0 760 210" role="img" aria-label="Ping ist die Zeit zwischen gesendetem Testpaket und zurückkommender Antwort.">
+            <defs>
+              <marker id="ar-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="#0B63C5"></path>
+              </marker>
+            </defs>
+
+            <text x="130" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Dein Gerät</text>
+            <text x="620" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Server</text>
+
+            <line x1="130" y1="38" x2="130" y2="185" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 4" opacity=".55"></line>
+            <line x1="620" y1="38" x2="620" y2="185" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 4" opacity=".55"></line>
+
+            <line x1="130" y1="66" x2="620" y2="96" stroke="#0B63C5" stroke-width="2.2" marker-end="url(#ar-p)"></line>
+            <text x="375" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#0B63C5">Echo Request — «bist du da?»</text>
+
+            <line x1="620" y1="122" x2="130" y2="152" stroke="#0B63C5" stroke-width="2.2" marker-end="url(#ar-p)"></line>
+            <text x="375" y="146" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#0B63C5">Echo Reply — «ja, hier»</text>
+
+            <line x1="66" y1="66" x2="66" y2="152" stroke="#A8601F" stroke-width="2"></line>
+            <line x1="59" y1="66" x2="73" y2="66" stroke="#A8601F" stroke-width="2"></line>
+            <line x1="59" y1="152" x2="73" y2="152" stroke="#A8601F" stroke-width="2"></line>
+            <text x="48" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="500" fill="#A8601F" transform="rotate(-90 48 104)">PING = RTT</text>
+
+            <circle cx="130" cy="66" r="3.4" fill="#0B63C5"></circle>
+            <circle cx="130" cy="152" r="3.4" fill="#0B63C5"></circle>
+            <text x="145" y="182" font-size="11.5" fill="currentColor" opacity=".7" font-family="IBM Plex Sans, sans-serif">Zeit läuft nach unten — der Ping ist der Abstand zwischen Senden und Empfangen.</text>
+          </svg>
+        </div>
+        <figcaption>Gemessen wird mit einem ICMP-Echo-Paket: winzig, ohne Nutzdaten. Deshalb misst der Ping die Reaktionszeit, nicht die Bandbreite.</figcaption>
+      </figure>
+
+      <div class="tw">
+        <table>
+          <caption>Einordnung typischer Ping-Werte</caption>
+          <thead><tr><th class="num">Ping</th><th>Typisch für</th><th>Beurteilung</th></tr></thead>
+          <tbody>
+            <tr><td class="num">&lt; 10 ms</td><td>Glasfaser, Server in der Nähe</td><td>sehr gut</td></tr>
+            <tr><td class="num">10–30 ms</td><td>VDSL, G.fast, 5G</td><td>gut — Gaming problemlos</td></tr>
+            <tr><td class="num">30–60 ms</td><td>ADSL, 4G</td><td>brauchbar</td></tr>
+            <tr><td class="num">60–150 ms</td><td>schlechter Mobilempfang</td><td>spürbar träge</td></tr>
+            <tr><td class="num">500–700 ms</td><td>Satellit (geostationär)</td><td>für Gaming und Telefonie unbrauchbar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Wichtig für:</strong> Gaming, VoIP-Telefonie, Videokonferenzen, Fernsteuerung. <strong>Unwichtig für:</strong> Downloads und Streaming — die werden gepuffert. Die <strong>Schwankung</strong> des Pings heisst <strong>Jitter</strong> und stört VoIP noch stärker als ein konstant hoher Ping.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">5</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Messung mit dem Mobiltelefon</h2>
+      <div class="note selbst">
+        <span class="lbl">Selbst messen</span>
+        <p>Dieser Wert lässt sich nicht nachschlagen — er muss am Gerät gemessen werden. Messung mit dem <a href="https://www.speedtest.net/de">Speedtest von Ookla</a> durchführen und hier eintragen.</p>
+      </div>
+
+      <p><strong>So messen, damit der Wert etwas aussagt:</strong></p>
+      <ul>
+        <li>Andere Apps schliessen, nichts darf im Hintergrund laden.</li>
+        <li><strong>WLAN oder Mobilfunk</strong> notieren — das sind zwei völlig verschiedene Messungen.</li>
+        <li>Zwei- bis dreimal messen und den mittleren Wert nehmen.</li>
+        <li>Für den Vergleich in Aufgabe 6 <strong>denselben Server</strong> stehen lassen.</li>
+      </ul>
+
+      <div class="measure">
+        <label><span class="cap">Ort / Standort</span><input class="fill" id="m1a" type="text" placeholder="z. B. Schulzimmer BZI"></label>
+        <label><span class="cap">Verbindung</span><input class="fill" id="m1b" type="text" placeholder="WLAN oder 5G"></label>
+        <label><span class="cap">Download</span><input class="fill" id="m1c" type="text" placeholder="Mbit/s"></label>
+        <label><span class="cap">Upload</span><input class="fill" id="m1d" type="text" placeholder="Mbit/s"></label>
+        <label><span class="cap">Ping</span><input class="fill" id="m1e" type="text" placeholder="ms"></label>
+        <label><span class="cap">Jitter</span><input class="fill" id="m1f" type="text" placeholder="ms"></label>
+      </div>
+      <p style="font-size:13px;color:var(--ink-soft)">Zur Einordnung: im Schulhaus-WLAN sind <span class="mono">50–300 Mbit/s</span> üblich, über 5G mit gutem Empfang <span class="mono">100–800 Mbit/s</span>, über 4G eher <span class="mono">20–80 Mbit/s</span>.</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">6</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Zweite Messung an einem Ort mit schlechtem Empfang</h2>
+      <div class="note selbst">
+        <span class="lbl">Selbst messen</span>
+        <p>Geeignete Orte: Untergeschoss, Lift, Treppenhaus aus Beton, Tiefgarage, Werkstatt mit Metallschrank.</p>
+      </div>
+
+      <div class="measure">
+        <label><span class="cap">Ort / Standort</span><input class="fill" id="m2a" type="text" placeholder="z. B. Untergeschoss"></label>
+        <label><span class="cap">Verbindung</span><input class="fill" id="m2b" type="text" placeholder="4G / 5G"></label>
+        <label><span class="cap">Download</span><input class="fill" id="m2c" type="text" placeholder="Mbit/s"></label>
+        <label><span class="cap">Upload</span><input class="fill" id="m2d" type="text" placeholder="Mbit/s"></label>
+        <label><span class="cap">Ping</span><input class="fill" id="m2e" type="text" placeholder="ms"></label>
+        <label><span class="cap">Jitter</span><input class="fill" id="m2f" type="text" placeholder="ms"></label>
+      </div>
+
+      <p><strong>Was sich verändert — und warum:</strong></p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Messwert</th><th>Veränderung</th><th>Technische Ursache</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Download</strong></td><td>sinkt stark, oft um den Faktor 10 und mehr</td><td>Bei schwachem Signal schaltet das Modem auf eine <strong>robustere, langsamere Modulation</strong> um — statt 256-QAM nur noch QPSK. Pro Symbol werden weniger Bits übertragen.</td></tr>
+            <tr><td><strong>Ping</strong></td><td>steigt deutlich an</td><td>Gestörte Pakete müssen <strong>wiederholt</strong> werden, dazu kommt mehr Fehlerkorrektur. Jede Wiederholung kostet Zeit.</td></tr>
+            <tr><td><strong>Jitter</strong></td><td>steigt</td><td>Mal klappt die Übertragung beim ersten Versuch, mal erst beim dritten — die Laufzeit wird unregelmässig.</td></tr>
+            <tr><td><strong>Paketverlust</strong></td><td>tritt neu auf</td><td>Einzelne Pakete gehen ganz verloren. Bei VoIP hörbar als Aussetzer oder Roboterstimme.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="lbl">Kernaussage</span>
+        <p>Entscheidend ist nicht die Distanz allein, sondern das <strong>Signal-Rausch-Verhältnis</strong>. Beton, Metall und Erdreich dämpfen das Funksignal; je schlechter das Verhältnis, desto vorsichtiger — und damit langsamer — muss übertragen werden.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">7</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Gibt es immer einen Unterschied zwischen Upload und Download?</h2>
+      <p><strong>Nein.</strong> Es gibt <strong>asymmetrische</strong> und <strong>symmetrische</strong> Anschlüsse.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Asymmetrisch (Download &gt; Upload)</th><th>Symmetrisch (Download = Upload)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>ADSL — das «A» steht genau dafür<br>VDSL2<br>TV-Kabel / DOCSIS<br>Mobilfunk 4G / 5G</td>
+              <td>SDSL — das «S» steht für symmetrisch<br>Glasfaser FTTH (Punkt-zu-Punkt)<br>Ethernet / LAN im Haus<br>Standleitungen für Firmen<br>G.fast — Verhältnis ist einstellbar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Warum wurde überhaupt asymmetrisch gebaut?</strong> Auf der Kupfer-Doppelader gibt es nur ein begrenztes Frequenzband. Man muss es zwischen Hin- und Rückrichtung aufteilen — und hat dem Download den weitaus grösseren Anteil gegeben, weil Privatkunden früher fast nur konsumiert haben.</p>
+
+      <figure>
+        <div class="figwrap">
+          <svg viewBox="0 0 760 175" role="img" aria-label="Bei ADSL bekommt der Download ein viel breiteres Frequenzband als der Upload.">
+            <text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity=".7" letter-spacing="1">FREQUENZBAND EINER ADSL2+-LEITUNG (SCHEMATISCH)</text>
+
+            <rect x="0" y="40" width="52" height="42" fill="currentColor" opacity=".2"></rect>
+            <rect x="52" y="40" width="118" height="42" fill="#A8601F"></rect>
+            <rect x="170" y="40" width="590" height="42" fill="#0B63C5"></rect>
+
+            <text x="26" y="66" text-anchor="middle" font-size="11" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Tel.</text>
+            <text x="111" y="66" text-anchor="middle" font-size="12" font-weight="600" fill="#FFFFFF" font-family="IBM Plex Sans, sans-serif">Upload</text>
+            <text x="465" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="#FFFFFF" font-family="IBM Plex Sans, sans-serif">Download</text>
+
+            <line x1="0" y1="92" x2="760" y2="92" stroke="currentColor" stroke-width="1.2" opacity=".5"></line>
+            <line x1="52" y1="92" x2="52" y2="99" stroke="currentColor" stroke-width="1.2" opacity=".5"></line>
+            <line x1="170" y1="92" x2="170" y2="99" stroke="currentColor" stroke-width="1.2" opacity=".5"></line>
+            <line x1="758" y1="92" x2="758" y2="99" stroke="currentColor" stroke-width="1.2" opacity=".5"></line>
+
+            <text x="52" y="114" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity=".75">25 kHz</text>
+            <text x="170" y="114" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity=".75">138 kHz</text>
+            <text x="746" y="114" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity=".75">2,2 MHz</text>
+            <text x="26" y="114" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity=".75">0–4 kHz</text>
+
+            <text x="0" y="146" font-size="12.5" fill="currentColor" opacity=".85" font-family="IBM Plex Sans, sans-serif">Der Download erhält rund das Zwanzigfache an Frequenzraum — daher «Asymmetric» DSL.</text>
+            <text x="0" y="166" font-size="11.5" fill="currentColor" opacity=".6" font-family="IBM Plex Sans, sans-serif">Nicht massstäblich gezeichnet; die Frequenzgrenzen sind die realen Werte.</text>
+          </svg>
+        </div>
+        <figcaption>Unten am Band bleiben die 0–4 kHz für das klassische analoge Telefon frei — deshalb funktionierte früher Telefonieren und Surfen gleichzeitig auf derselben Leitung.</figcaption>
+      </figure>
+
+      <p>Dazu kommt ein physikalischer Grund: Im Kabelbündel liegen viele Adern nebeneinander. Sendende Signale aus dem Haus stören die empfindlichen Empfangssignale der Nachbarn stärker (<strong>Übersprechen</strong>), deshalb wird der Upstream bewusst klein gehalten.</p>
+      <p><strong>Heute ist das ein Problem:</strong> Homeoffice, Cloud-Backup, Videokonferenzen und Livestreaming brauchen Upload. Ein Anschluss mit <span class="mono">100/10 Mbit/s</span> wirkt beim Teams-Call langsam, obwohl der Download üppig ist.</p>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">8</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Was bedeuten ADSL, VDSL und G.fast?</h2>
+      <p>Alle drei gehören zur <strong>DSL</strong>-Familie — <strong>D</strong>igital <strong>S</strong>ubscriber <strong>L</strong>ine, also «digitaler Teilnehmeranschluss». Gemeinsam ist ihnen: Sie übertragen Daten über die <strong>bereits verlegte Kupfer-Doppelader der Telefonleitung</strong>. Es muss also kein neues Kabel ins Haus.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Kürzel</th><th>Ausgeschrieben</th><th>Bedeutung</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ADSL</strong></td><td class="mono">Asymmetric Digital Subscriber Line</td><td>Asymmetrisch: Download deutlich schneller als Upload</td></tr>
+            <tr><td><strong>VDSL</strong></td><td class="mono">Very High Speed Digital Subscriber Line</td><td>Sehr schneller DSL-Anschluss; heute praktisch immer VDSL2</td></tr>
+            <tr><td><strong>G.fast</strong></td><td class="mono">ITU-T G.9700 / G.9701</td><td>«Gigabit fast access» — Norm für sehr kurze Kupferstrecken</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">9</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Was ist der Unterschied zwischen ADSL, VDSL und G.fast?</h2>
+      <p>Der Unterschied ist im Kern <strong>einer</strong>: <strong>Wie weit reicht die Glasfaser ans Haus heran — und wie viel Kupfer bleibt übrig?</strong> Denn auf Kupfer gilt: höhere Frequenz bringt mehr Daten, wird aber mit jedem Meter stärker gedämpft.</p>
+
+      <figure>
+        <div class="figwrap">
+          <svg viewBox="0 0 780 350" role="img" aria-label="Von ADSL über VDSL zu G.fast rückt die Glasfaser immer näher ans Haus und die verbleibende Kupferstrecke wird immer kürzer.">
+            <defs>
+              <marker id="ar-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+              </marker>
+            </defs>
+
+            <text x="60" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".65" letter-spacing=".8">ZENTRALE</text>
+            <text x="700" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".65" letter-spacing=".8">HAUS</text>
+
+            <!-- ADSL -->
+            <text x="0" y="56" font-family="Chivo, sans-serif" font-weight="700" font-size="15" fill="currentColor">ADSL2+</text>
+            <text x="0" y="74" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".6">bis 2,2 MHz</text>
+            <rect x="108" y="52" width="20" height="30" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <line x1="128" y1="67" x2="648" y2="67" stroke="#A8601F" stroke-width="3.5"></line>
+            <rect x="648" y="52" width="24" height="30" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <path d="M676 82 L676 62 L700 46 L724 62 L724 82 Z" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+            <text x="388" y="58" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A8601F" font-weight="500">Kupfer bis ca. 5 km</text>
+            <text x="388" y="98" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor" opacity=".8">bis 24 Mbit/s ↓ · 3,5 Mbit/s ↑</text>
+
+            <!-- VDSL -->
+            <text x="0" y="166" font-family="Chivo, sans-serif" font-weight="700" font-size="15" fill="currentColor">VDSL2</text>
+            <text x="0" y="184" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".6">bis 17–30 MHz</text>
+            <rect x="108" y="162" width="20" height="30" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <line x1="128" y1="177" x2="470" y2="177" stroke="#17784A" stroke-width="3.5"></line>
+            <rect x="470" y="160" width="26" height="34" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="483" y="212" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".7">Quartier-</text>
+            <text x="483" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".7">verteiler</text>
+            <line x1="496" y1="177" x2="648" y2="177" stroke="#A8601F" stroke-width="3.5"></line>
+            <rect x="648" y="162" width="24" height="30" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <path d="M676 192 L676 172 L700 156 L724 172 L724 192 Z" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+            <text x="299" y="168" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17784A" font-weight="500">Glasfaser</text>
+            <text x="572" y="168" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A8601F" font-weight="500">ca. 1 km Kupfer</text>
+            <text x="299" y="208" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor" opacity=".8">bis 300 Mbit/s ↓ · 50 Mbit/s ↑</text>
+
+            <!-- G.fast -->
+            <text x="0" y="278" font-family="Chivo, sans-serif" font-weight="700" font-size="15" fill="currentColor">G.fast</text>
+            <text x="0" y="296" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".6">bis 106–212 MHz</text>
+            <rect x="108" y="274" width="20" height="30" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <line x1="128" y1="289" x2="606" y2="289" stroke="#17784A" stroke-width="3.5"></line>
+            <rect x="606" y="272" width="26" height="34" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="619" y="324" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".7">Gebäude-</text>
+            <text x="619" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".7">verteiler</text>
+            <line x1="632" y1="289" x2="676" y2="289" stroke="#A8601F" stroke-width="3.5"></line>
+            <path d="M676 304 L676 284 L700 268 L724 284 L724 304 Z" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+            <text x="367" y="280" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17784A" font-weight="500">Glasfaser bis fast ins Haus</text>
+            <text x="654" y="264" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#A8601F" font-weight="500">&lt; 250 m</text>
+            <text x="367" y="320" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor" opacity=".8">bis 500 Mbit/s ↓ · Verhältnis einstellbar</text>
+          </svg>
+          <div class="legend">
+            <b><i class="swatch" style="border-top-color:#17784A"></i>Glasfaser</b>
+            <b><i class="swatch" style="border-top-color:#A8601F"></i>Kupfer-Doppelader</b>
+          </div>
+        </div>
+        <figcaption>Jede Generation schiebt den Übergang Glasfaser → Kupfer näher ans Haus. Weniger Kupfer heisst weniger Dämpfung, also darf man höhere Frequenzen nutzen — und höhere Frequenzen tragen mehr Daten.</figcaption>
+      </figure>
+
+      <div class="tw">
+        <table>
+          <caption>Die Unterschiede im Detail</caption>
+          <thead><tr><th>Merkmal</th><th>ADSL / ADSL2+</th><th>VDSL2</th><th>G.fast</th></tr></thead>
+          <tbody>
+            <tr><td>Genutzte Frequenz</td><td class="num">bis 1,1 / 2,2 MHz</td><td class="num">bis 17 / 30 MHz</td><td class="num">bis 106 / 212 MHz</td></tr>
+            <tr><td>Download</td><td class="num">8 / 24 Mbit/s</td><td class="num">bis 300 Mbit/s</td><td class="num">bis 500 Mbit/s</td></tr>
+            <tr><td>Upload</td><td class="num">1 / 3,5 Mbit/s</td><td class="num">bis 50 Mbit/s</td><td class="num">einstellbar</td></tr>
+            <tr><td>Max. Kupferstrecke</td><td class="num">ca. 5 km</td><td class="num">ca. 1–1,5 km</td><td class="num">100–250 m</td></tr>
+            <tr><td>Glasfaser reicht bis</td><td>Telefonzentrale</td><td>Quartierverteiler</td><td>Gebäude / Keller</td></tr>
+            <tr><td>Trennung Up / Down</td><td>nach Frequenz (FDD)</td><td>nach Frequenz (FDD)</td><td>nach Zeit (TDD)</td></tr>
+            <tr><td>Besonderheit</td><td>Telefon läuft parallel mit</td><td>Vectoring rechnet das Übersprechen heraus</td><td>TDD erlaubt symmetrischen Betrieb</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <span class="lbl">Merksatz</span>
+        <p><strong>Je höher die Frequenz, desto mehr Daten — aber desto kürzer die Reichweite.</strong> Wer schneller werden will, muss deshalb die Glasfaser näher ans Haus bringen. G.fast im Keller wäre über 5 km Kupfer völlig nutzlos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">10</span><span class="pts">1 P.</span></div>
+    <div>
+      <h2>Gibt es bei heutigen Glasfasernetzen noch Unterschiede zwischen Upload und Download?</h2>
+      <p><strong>Technisch gibt es keinen Grund mehr dafür.</strong> Licht im Lichtwellenleiter kennt weder Übersprechen zwischen Nachbaradern noch eine stark frequenzabhängige Dämpfung. Man muss das Band nicht mehr aufteilen — <strong>FTTH-Anschlüsse sind in der Regel symmetrisch</strong>, also <span class="mono">1/1 Gbit/s</span> oder <span class="mono">10/10 Gbit/s</span>.</p>
+      <p><strong>Unterschiede können trotzdem auftreten — aus zwei anderen Gründen:</strong></p>
+      <ul>
+        <li><strong>Das Abo, nicht die Technik.</strong> Anbieter verkaufen bewusst abgestufte Produkte. Die Faser könnte mehr, die Drosselung sitzt im Vertrag.</li>
+        <li><strong>Die PON-Generation.</strong> Bei <strong>GPON</strong> teilen sich bis zu 32 oder 64 Haushalte einen Strang mit physikalisch <span class="mono">2,5 Gbit/s</span> Downstream und nur <span class="mono">1,25 Gbit/s</span> Upstream — dort ist die Asymmetrie noch eingebaut. <strong>XGS-PON</strong> ist mit <span class="mono">10/10 Gbit/s</span> symmetrisch.</li>
+      </ul>
+      <div class="note">
+        <span class="lbl">Schweizer Besonderheit</span>
+        <p>Viele Schweizer FTTH-Gebiete sind im <strong>Vierfasermodell</strong> als Punkt-zu-Punkt-Verbindung gebaut: Jede Wohnung bekommt vier eigene Fasern bis zur <strong>OTO-Dose</strong>. Diese Leitung ist nicht geteilt und damit von Natur aus voll symmetrisch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="q">
+    <div class="rail"><span class="qnum">11</span><span class="pts">5 P.</span></div>
+    <div>
+      <h2>Installationsplan mit eingezeichneten Komponenten</h2>
+      <p>Alle geforderten Komponenten sind eingezeichnet und verkabelt. Die Leitungsart ist über die Farbe codiert — die Legende steht unter dem Plan.</p>
+
+      <figure>
+        <div class="figwrap">
+          <svg viewBox="0 0 900 575" role="img" aria-label="Installationsplan einer Wohnung mit Router und NTS im Installationsraum, Switch im Wohnzimmer und den daran angeschlossenen Geräten in Garage, Elternzimmer, Eingangshalle und Esszimmer.">
+
+            <!-- Provider feed -->
+            <line x1="345" y1="8" x2="345" y2="69" stroke="#17784A" stroke-width="3.5"></line>
+            <text x="357" y="22" font-family="IBM Plex Mono, monospace" font-size="11" fill="#17784A" font-weight="500">Anschluss Provider</text>
+            <text x="357" y="35" font-family="IBM Plex Mono, monospace" font-size="10" fill="#17784A" opacity=".85">Glasfaser oder Kupfer</text>
+
+            <!-- Outer wall -->
+            <rect x="40" y="40" width="820" height="460" fill="none" stroke="currentColor" stroke-width="2.6"></rect>
+
+            <!-- Inner walls with door gaps -->
+            <line x1="40"  y1="250" x2="150" y2="250" stroke="currentColor" stroke-width="2"></line>
+            <line x1="190" y1="250" x2="340" y2="250" stroke="currentColor" stroke-width="2"></line>
+            <line x1="380" y1="250" x2="620" y2="250" stroke="currentColor" stroke-width="2"></line>
+            <line x1="660" y1="250" x2="860" y2="250" stroke="currentColor" stroke-width="2"></line>
+
+            <line x1="260" y1="40"  x2="260" y2="150" stroke="currentColor" stroke-width="2"></line>
+            <line x1="260" y1="190" x2="260" y2="250" stroke="currentColor" stroke-width="2"></line>
+            <line x1="430" y1="40"  x2="430" y2="150" stroke="currentColor" stroke-width="2"></line>
+            <line x1="430" y1="190" x2="430" y2="250" stroke="currentColor" stroke-width="2"></line>
+
+            <line x1="330" y1="250" x2="330" y2="380" stroke="currentColor" stroke-width="2"></line>
+            <line x1="330" y1="420" x2="330" y2="500" stroke="currentColor" stroke-width="2"></line>
+            <line x1="560" y1="250" x2="560" y2="380" stroke="currentColor" stroke-width="2"></line>
+            <line x1="560" y1="420" x2="560" y2="500" stroke="currentColor" stroke-width="2"></line>
+
+            <!-- Front door gap in bottom wall -->
+            <line x1="415" y1="500" x2="475" y2="500" stroke="var(--sheet)" stroke-width="5"></line>
+            <path d="M415 500 A 60 60 0 0 1 475 500" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"></path>
+            <text x="445" y="521" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".6">Eingang</text>
+
+            <!-- Room labels -->
+            <text x="54"  y="64"  font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Garage</text>
+            <text x="274" y="64"  font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Raum «Install.»</text>
+            <text x="444" y="64"  font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Elternzimmer</text>
+            <text x="54"  y="274" font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Wohnzimmer</text>
+            <text x="344" y="274" font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Eingangshalle</text>
+            <text x="574" y="274" font-family="Chivo, sans-serif" font-weight="700" font-size="14" fill="currentColor" opacity=".75">Esszimmer</text>
+
+            <!-- ===== CABLES (drawn under the component boxes) ===== -->
+
+            <!-- 230 V: socket to router -->
+            <polyline points="410,193 410,155 395,155" fill="none" stroke="#C0392B" stroke-width="2.2" stroke-dasharray="9 4 2 4"></polyline>
+
+            <!-- NTS to router (WAN) -->
+            <line x1="345" y1="101" x2="345" y2="139" stroke="#0B63C5" stroke-width="2.4"></line>
+            <text x="355" y="126" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#0B63C5">WAN</text>
+
+            <!-- Router to switch -->
+            <polyline points="320,171 320,265 270,265 270,284" fill="none" stroke="#0B63C5" stroke-width="2.4"></polyline>
+
+            <!-- Router to analogue phone (copper a/b) -->
+            <polyline points="295,163 110,163 110,284" fill="none" stroke="#A8601F" stroke-width="2.2"></polyline>
+
+            <!-- Switch to PC Garage -->
+            <polyline points="240,284 240,230 150,230 150,216" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- Switch to PC Elternzimmer -->
+            <polyline points="315,290 470,290 470,130 492,130" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- Switch to Drucker -->
+            <polyline points="315,300 620,300 620,130 655,130" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- Switch to VoIP phone -->
+            <polyline points="315,310 790,310 790,414" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- Switch to WLAN sender -->
+            <polyline points="290,316 290,400 390,400" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- Switch to PC Wohnzimmer -->
+            <polyline points="250,316 250,420 148,420" fill="none" stroke="#0B63C5" stroke-width="2.2"></polyline>
+
+            <!-- WLAN radiation -->
+            <path d="M445 378 A 34 34 0 0 1 495 378"  fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".8"></path>
+            <path d="M432 368 A 52 52 0 0 1 508 368"  fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".55"></path>
+            <path d="M419 358 A 70 70 0 0 1 521 358"  fill="none" stroke="#0B63C5" stroke-width="1.7" stroke-dasharray="3 4" opacity=".35"></path>
+
+            <!-- ===== COMPONENTS ===== -->
+
+            <!-- NTS / HÜP -->
+            <rect x="290" y="69" width="110" height="32" fill="var(--sheet)" stroke="#17784A" stroke-width="2"></rect>
+            <text x="345" y="90" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">NTS / HÜP</text>
+
+            <!-- Router -->
+            <rect x="295" y="139" width="100" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="345" y="160" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Router</text>
+
+            <!-- Steckdose 230 V -->
+            <circle cx="410" cy="205" r="12" fill="var(--sheet)" stroke="#C0392B" stroke-width="2"></circle>
+            <line x1="398" y1="205" x2="422" y2="205" stroke="#C0392B" stroke-width="2"></line>
+            <text x="410" y="235" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#C0392B" font-weight="500">230 V</text>
+
+            <!-- Switch -->
+            <rect x="225" y="284" width="90" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="270" y="305" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Switch</text>
+
+            <!-- analoges Telefon -->
+            <rect x="57" y="284" width="106" height="32" fill="var(--sheet)" stroke="#A8601F" stroke-width="2"></rect>
+            <text x="110" y="299" text-anchor="middle" font-size="11.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Telefon</text>
+            <text x="110" y="311" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7" font-family="IBM Plex Sans, sans-serif">analog</text>
+
+            <!-- PC Wohnzimmer -->
+            <rect x="72" y="404" width="76" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="110" y="425" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">PC</text>
+
+            <!-- PC Garage -->
+            <rect x="112" y="184" width="76" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="150" y="205" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">PC</text>
+
+            <!-- PC Elternzimmer -->
+            <rect x="492" y="114" width="76" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="530" y="135" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">PC</text>
+
+            <!-- Drucker -->
+            <rect x="655" y="114" width="90" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="700" y="135" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">Drucker</text>
+
+            <!-- WLAN sender -->
+            <rect x="390" y="384" width="110" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="445" y="405" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">WLAN-Sender</text>
+
+            <!-- VoIP phone -->
+            <rect x="680" y="414" width="110" height="32" fill="var(--sheet)" stroke="#0B63C5" stroke-width="2"></rect>
+            <text x="735" y="429" text-anchor="middle" font-size="11.5" font-weight="600" fill="currentColor" font-family="IBM Plex Sans, sans-serif">VoIP-Telefon</text>
+
+            <!-- Scale-ish note -->
+            <text x="860" y="521" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity=".5">Schema, nicht massstäblich · Kreuzungen ohne Punkt = keine Verbindung</text>
+
+            <!-- Callout: the trap -->
+            <text x="40" y="552" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#A8601F" font-weight="500">Achtung: Das analoge Telefon geht an den a/b-Port des ROUTERS — nicht an den Switch.</text>
+            <text x="40" y="568" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#0B63C5" font-weight="500">Das VoIP-Telefon dagegen ist ein Netzwerkgerät und hängt am Switch.</text>
+          </svg>
+
+          <div class="legend">
+            <b><i class="swatch" style="border-top-color:#17784A"></i>Anschluss Provider bis NTS/HÜP</b>
+            <b><i class="swatch" style="border-top-color:#0B63C5"></i>Netzwerkkabel U/UTP Cat 6, RJ45</b>
+            <b><i class="swatch" style="border-top-color:#A8601F"></i>analoge Telefonleitung a/b</b>
+            <b><i class="swatch" style="border-top-color:#C0392B;border-top-style:dashed"></i>230 V Speisung</b>
+            <b><i class="swatch" style="border-top-color:#0B63C5;border-top-style:dotted"></i>WLAN (Funk)</b>
+          </div>
+        </div>
+        <figcaption>Sterntopologie: Vom Switch geht zu jedem Gerät genau ein eigenes Kabel. Fällt eine Leitung aus, sind die übrigen Geräte nicht betroffen.</figcaption>
+      </figure>
+
+      <p><strong>Begründung der Anordnung — das gibt die Punkte:</strong></p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Verbindung</th><th>Leitung</th><th>Warum so</th></tr></thead>
+          <tbody>
+            <tr><td>Provider → NTS/HÜP</td><td>Glasfaser bzw. Kupfer</td><td>Die <strong>NTS</strong> (Netzterminierungsstelle) ist die Übergabestelle. Davor gehört alles dem Anbieter, dahinter dem Kunden.</td></tr>
+            <tr><td>NTS → Router</td><td>Patchkabel (WAN)</td><td>Kurzer Weg im selben Raum — deshalb stehen beide im Raum «Install.».</td></tr>
+            <tr><td>Steckdose 230 V → Router</td><td class="mono">230 V</td><td>Der Router braucht Speisung. Ohne Steckdose im Installationsraum funktioniert nichts.</td></tr>
+            <tr><td>Router → Switch</td><td class="mono">U/UTP Cat 6</td><td>Eine einzige Leitung ins Wohnzimmer. Der Switch verteilt dort weiter — das spart sechs lange Einzelkabel vom Router aus.</td></tr>
+            <tr><td>Router → analoges Telefon</td><td class="mono">a/b, RJ11 / TT83</td><td><strong>Nicht an den Switch!</strong> Das analoge Telefon versteht kein Ethernet. Der Router wandelt im a/b-Port (FXS) intern nach VoIP um.</td></tr>
+            <tr><td>Switch → PC ×3, Drucker</td><td class="mono">U/UTP Cat 6</td><td>Je ein eigenes Kabel pro Gerät — Sterntopologie.</td></tr>
+            <tr><td>Switch → WLAN-Sender</td><td class="mono">U/UTP Cat 6</td><td>Der Sender steht zentral in der Eingangshalle, damit die Funkabdeckung in alle Räume reicht. Speisung idealerweise über <strong>PoE</strong> — dann braucht es dort keine Steckdose.</td></tr>
+            <tr><td>Switch → VoIP-Telefon</td><td class="mono">U/UTP Cat 6</td><td>Ein VoIP-Telefon ist ein Netzwerkgerät mit eigener IP-Adresse und gehört deshalb ans LAN.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <span class="lbl">Beim Abzeichnen aufs Zusatzblatt beachten</span>
+        <p>Dieser Plan ist eine <strong>eigene Raumanordnung</strong> — das Original-Zusatzblatt lag nicht vor. Die Räume auf dem Schulblatt können anders liegen. <strong>Die Verkabelungslogik bleibt aber in jedem Fall dieselbe</strong> und ist das, was bewertet wird: NTS → Router → Switch → Geräte, analoges Telefon direkt an den Router.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <h2>Vor der Abgabe prüfen</h2>
+    <p>Beide Namen im Kopf eingetragen · Messwerte der Aufgaben 5 und 6 selbst erhoben und eingefüllt · Plan aus Aufgabe 11 auf das Zusatzblatt des Schulhauses übertragen · Abgabe auf Papier am Lehrerpult und digital per Teams bis Ende der Doppellektion. Zahlenwerte gegen das Lehrmittel gegenprüfen — ohne Abgabe gilt die Note 1.</p>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById("printBtn");
+    if (btn) btn.addEventListener("click", function () { window.print(); });
+
+    var fields = document.querySelectorAll("input.fill");
+    var KEY = "internetzugang-11092026";
+    var saved = {};
+
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) saved = JSON.parse(raw) || {};
+    } catch (e) { saved = {}; }
+
+    fields.forEach(function (el) {
+      if (saved[el.id]) el.value = saved[el.id];
+      el.addEventListener("input", function () {
+        var out = {};
+        fields.forEach(function (f) { if (f.value) out[f.id] = f.value; });
+        try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
+      });
+    });
+  })();
+</script>
+</body>
+</html>
