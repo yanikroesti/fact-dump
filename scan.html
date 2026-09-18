@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>dump/ · QR</title>
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d0d0d'/%3E%3Cpath d='M5 5h9v9H5zM7 7v5h5V7zM18 5h9v9h-9zm2 2v5h5V7zM5 18h9v9H5zm2 2v5h5v-5zM18 18h3v3h-3zM23 18h4v4h-4zM18 23h4v4h-4zM24 24h3v3h-3z' fill='%23e8ff00' fill-rule='evenodd'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/artifacts/qr-studio/page.css">
+<style>
+  html, body { margin: 0; min-height: 100%; background: #0d0d0d; }
+  body { color: #f0f0f0; font-family: 'Share Tech Mono', ui-monospace, Menlo, monospace; }
+  #page { min-height: 100vh; }
+  .state {
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+  .state-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #9a9a93; }
+  .state h1 {
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    font-weight: 900;
+    font-size: clamp(40px, 12vw, 64px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin: 0;
+    border-left: 5px solid #e8ff00;
+    padding-left: 14px;
+  }
+  .state h1.warn { border-left-color: #ff4d00; }
+  .state p { margin: 0; color: #c9c9c2; line-height: 1.55; max-width: 44ch; }
+  .state form { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .state input {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    color: #f0f0f0;
+    font: inherit;
+    font-size: 16px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .state input:focus { outline: none; border-color: #e8ff00; }
+  .state button {
+    background: #e8ff00;
+    color: #000;
+    border: 0;
+    padding: 15px 22px;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .state button:disabled { opacity: 0.5; }
+  .state .err { color: #ff5a36; font-size: 13px; min-height: 1.2em; }
+  .state a { color: #f0f0f0; text-decoration-color: #e8ff00; text-underline-offset: 3px; }
+  .foot { position: fixed; bottom: 12px; left: 0; right: 0; text-align: center; font-size: 10px; letter-spacing: 0.2em; color: #555; text-transform: uppercase; pointer-events: none; }
+  .foot.page { position: static; padding: 10px 0 18px; }
+  .spinner { width: 28px; height: 28px; border: 3px solid #2a2a2a; border-top-color: #e8ff00; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div id="page"><div class="state"><div class="spinner" aria-label="Loading"></div></div></div>
+
+<script src="/artifacts/qr-studio/util.js"></script>
+<script src="/artifacts/qr-studio/icons.js"></script>
+<script src="/artifacts/qr-studio/page-render.js"></script>
+<script>
+(function () {
+  'use strict';
+  const SB_URL = 'https://ljkdibnkifzwydhqkzxt.supabase.co';
+  const SB_KEY = 'sb_publishable_1vEjb3RhVFo54KZM948PCA_A_9SpAgQ';
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('s') || '';
+  const status = params.get('e');
+  const title = params.get('t') || '';
+  const at = params.get('at');
+  const de = /^de/i.test(navigator.language || '');
+  const root = document.getElementById('page');
+
+  const TEXT = {
+    notfound: de ? ['Nicht gefunden', 'Diesen Code gibt es nicht (mehr).'] : ['Not found', 'This code does not exist (any more).'],
+    paused: de ? ['Pausiert', 'Dieser Code ist gerade pausiert. Versuch es später nochmals.'] : ['Paused', 'This code is paused right now. Try again later.'],
+    notyet: de ? ['Noch nicht aktiv', 'Dieser Code startet am {at}.'] : ['Not live yet', 'This code goes live on {at}.'],
+    expired: de ? ['Abgelaufen', 'Dieser Code ist seit {at} abgelaufen.'] : ['Expired', 'This code expired on {at}.'],
+    used: de ? ['Schon benutzt', 'Dies ist ein Einmal-Code und wurde bereits eingelöst.'] : ['Already used', 'This is a one-time code and it has already been used.'],
+    limit: de ? ['Limit erreicht', 'Dieser Code hat seine maximale Anzahl Scans erreicht.'] : ['Limit reached', 'This code has reached its maximum number of scans.'],
+    throttled: de ? ['Kurz warten', 'Zu viele falsche Passwörter. Versuch es in 15 Minuten nochmals.'] : ['Hold on', 'Too many wrong passwords. Try again in 15 minutes.'],
+    stale: de ? ['Link abgelaufen', 'Diese Ansicht ist nicht mehr gültig — scanne den Code nochmals.'] : ['Link timed out', 'This view is no longer valid — scan the code again.'],
+    invalid: de ? ['Ungültig', 'Dieser Link ist nicht gültig — scanne den Code nochmals.'] : ['Invalid link', 'This link is not valid — scan the code again.'],
+    error: de ? ['Fehler', 'Gerade klappt etwas nicht. Versuch es in einem Moment nochmals.'] : ['Something broke', 'Something went wrong. Try again in a moment.']
+  };
+  const when = iso => {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return isNaN(d) ? '—' : d.toLocaleString(de ? 'de-CH' : undefined, { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  };
+  const foot = cls => '<div class="foot ' + (cls || '') + '">dump.yanikroesti.ch</div>';
+
+  function showState(key, extra) {
+    const [head, body] = TEXT[key] || TEXT.error;
+    const warn = ['used', 'expired', 'limit', 'throttled', 'error', 'notfound', 'invalid'].includes(key);
+    root.innerHTML =
+      '<div class="state">' +
+      (title ? '<div class="state-label"></div>' : '') +
+      '<h1 class="' + (warn ? 'warn' : '') + '"></h1><p></p>' + (extra || '') +
+      '</div>' + foot();
+    if (title) root.querySelector('.state-label').textContent = title;
+    root.querySelector('h1').textContent = head;
+    root.querySelector('p').textContent = body.replace('{at}', when(at));
+    document.title = head + ' · dump/';
+  }
+
+  function showPassword(message) {
+    root.innerHTML =
+      '<div class="state">' +
+      (title ? '<div class="state-label"></div>' : '') +
+      '<h1></h1><p></p>' +
+      '<form autocomplete="off"><input type="password" name="password" required autofocus>' +
+      '<div class="err"></div><button type="submit"></button></form>' +
+      '</div>' + foot();
+    if (title) root.querySelector('.state-label').textContent = title;
+    root.querySelector('h1').textContent = de ? 'Geschützt' : 'Protected';
+    root.querySelector('p').textContent = de ? 'Für diesen Code brauchst du ein Passwort.' : 'This code needs a password.';
+    const input = root.querySelector('input');
+    input.placeholder = de ? 'Passwort' : 'Password';
+    const btn = root.querySelector('button');
+    btn.textContent = de ? 'Öffnen' : 'Open';
+    const err = root.querySelector('.err');
+    if (message) err.textContent = message;
+    root.querySelector('form').addEventListener('submit', async ev => {
+      ev.preventDefault();
+      btn.disabled = true;
+      err.textContent = '';
+      try {
+        const res = await fetch('/api/q', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, password: input.value })
+        }).then(r => r.json());
+        if (res.status === 'badpass') {
+          err.textContent = de ? 'Falsches Passwort.' : 'Wrong password.';
+          btn.disabled = false;
+          input.select();
+          return;
+        }
+        if (res.status === 'throttled') { showState('throttled'); return; }
+        if (res.next) location.replace(res.next);
+        else showState('error');
+      } catch (e) {
+        err.textContent = de ? 'Keine Verbindung.' : 'No connection.';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  async function rpc(fn, body) {
+    const res = await fetch(SB_URL + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: { apikey: SB_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error(fn + ' ' + res.status);
+    return res.json();
+  }
+
+  async function showPage(token) {
+    let data;
+    try {
+      data = await rpc('qr_view', { p_slug: slug, p_token: token });
+    } catch (e) {
+      showState('error');
+      return;
+    }
+    if (!data || data.status !== 'ok') {
+      showState(data && TEXT[data.status] ? data.status : 'invalid');
+      return;
+    }
+    document.title = (data.title || 'dump/') + ' · dump/';
+    const page = data.page || {};
+    const host = document.createElement('div');
+    root.innerHTML = '';
+    root.appendChild(host);
+    QS.pageRender.render(host, page, {
+      submitFeedback: fb => rpc('qr_feedback_submit', {
+        p_slug: slug, p_token: token, p_rating: fb.rating || null,
+        p_answers: {}, p_comment: fb.comment || '', p_contact: fb.contact || ''
+      })
+    });
+    document.body.style.background = getComputedStyle(host).getPropertyValue('--qp-bg') || '#0d0d0d';
+    const f = document.createElement('div');
+    f.className = 'foot page';
+    f.textContent = 'dump.yanikroesti.ch';
+    host.appendChild(f);
+    if (data.max_scans === 1) {
+      const note = document.createElement('p');
+      note.className = 'qp-note';
+      note.style.cssText = 'text-align:center;padding:0 16px';
+      note.textContent = de ? 'Einmal-Code — diese Seite bleibt zwei Stunden offen, danach ist der Code verbraucht.'
+        : 'One-time code — this page stays open for two hours; after that the code is spent.';
+      host.querySelector('.qp-page').appendChild(note);
+    }
+  }
+
+  /* the view token arrives in the #fragment (never sent to any server) and is
+     kept per tab so a reload doesn't need a fresh scan */
+  let token = location.hash.replace(/^#/, '');
+  const KEY = 'qrview:' + slug;
+  try {
+    if (/^[0-9a-f]{64}$/.test(token)) sessionStorage.setItem(KEY, token);
+    else token = sessionStorage.getItem(KEY) || '';
+  } catch (e) { /* storage off — the fragment alone still works */ }
+
+  if (status === 'locked') showPassword();
+  else if (status === 'badpass') showPassword(de ? 'Falsches Passwort.' : 'Wrong password.');
+  else if (status) showState(TEXT[status] ? status : 'error');
+  else if (slug && /^[0-9a-f]{64}$/.test(token)) showPage(token);
+  else showState('invalid');
+})();
+</script>
+</body>
+</html>

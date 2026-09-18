@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/q/:slug", "destination": "/api/q?slug=:slug" }
+  ],
+  "headers": [
+    {
+      "source": "/scan.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "X-Robots-Tag", "value": "noindex" },
+        { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    }
+  ],
+  "crons": [
+    { "path": "/api/ping", "schedule": "23 4 * * *" }
+  ],
+  "regions": ["dub1"]
+}
