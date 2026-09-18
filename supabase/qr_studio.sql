@@ -5,7 +5,7 @@
 -- scan.html, api/q.js). It lives in the "Headquarter school" Supabase project
 -- (ref ljkdibnkifzwydhqkzxt) and is applied there as three migrations:
 --   qr_studio_1_schema_helpers · qr_studio_2_email_login_rpcs_storage ·
---   qr_studio_3_limited_code_handshake
+--   qr_studio_3_limited_code_handshake · qr_studio_4_feedback_any_page
 -- This file is the resulting end state, taken from the live database.
 --
 -- Isolation: every table and helper sits in schema qr_private, which the Data
@@ -490,7 +490,9 @@ begin
     return jsonb_build_object('status', 'invalid');
   end if;
   select * into c from qr_private.codes where id = s.code_id;
-  if c.id is null or c.slug <> p_slug or coalesce(c.page->>'type', '') <> 'feedback' then
+  if c.id is null or c.slug <> p_slug
+     or not (coalesce(c.page->>'type', '') = 'feedback'
+             or coalesce(c.page->'blocks', '[]'::jsonb) @> '[{"t":"feedback"}]'::jsonb) then
     return jsonb_build_object('status', 'invalid');
   end if;
   if exists (select 1 from qr_private.feedback where scan_id = s.id) then
