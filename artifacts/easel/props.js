@@ -269,7 +269,7 @@ EZ.showShortcuts = () => EZ.modal((m, close) => {
     ['Forward / backward', 'Ctrl+] · Ctrl+['], ['Nudge (10 px with Shift)', 'Arrow keys'], ['Edit selected text', 'Enter'], ['Copy / paste style', 'Ctrl+Alt+C · V'],
     ['Zoom in / out / fit', 'Ctrl+ + · − · 0'], ['Zoom with mouse', 'Ctrl + wheel'], ['Pan', 'Space + drag · wheel'], ['Previous / next page', 'PgUp · PgDn'],
     ['Snap off while dragging', 'hold Alt'], ['Save now', 'Ctrl+S'], ['Deselect / stop drawing', 'Esc']];
-  m.append(h('h3', {}, 'Keyboard shortcuts'), h('p', {}, 'Cmd instead of Ctrl on a Mac.'),
+  m.append(h('h3', {}, 'Keyboard shortcuts'), h('p', {}, 'Cmd instead of Ctrl on a Mac. ', h('a', { href: 'easel-guide.html', target: '_blank', style: { color: 'var(--accent-ink)' } }, 'Open the full guide →')),
     h('div', { class: 'keys' }, ...rows.flatMap(([a, b]) => [h('span', {}, a), h('span', {}, h('kbd', {}, b))])),
     h('div', { class: 'actions' }, h('button', { class: 'btn pri', onclick: () => close() }, 'Got it')));
 }, { width: 520 });
@@ -329,6 +329,7 @@ EZ.fileMenu = anchor => EZ.menu(anchor, [
   '-',
   { label: 'Resize design…', icon: 'scaling', run: () => EZ.showResize() },
   { label: 'Keyboard shortcuts', icon: 'keyboard', kbd: '?', run: () => EZ.showShortcuts() },
+  { label: 'Guide', icon: 'book-open', run: () => window.open('easel-guide.html', '_blank', 'noopener') },
   EZ.cloud.state.owner
     ? { label: 'Sign out', icon: 'log-out', run: async () => { await EZ.cloud.signOut(); EZ.toast('Signed out — designs stay on this device'); } }
     : { label: 'Owner sign-in (sync)', icon: 'user', run: () => EZ.showLogin() },

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easel Guide</title>
+<meta name="description" content="How to use Easel, the free in-browser design editor: templates, elements, text, photos, pages, downloads, sync, share links and version history.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f5f9; --card: #ffffff; --text: #1b1a24; --mute: #6c6a7d; --line: #e3e2ea;
+  --accent: #ff5c35; --accent2: #ff8a3d; --accent-bg: rgba(255,92,53,.10); --ink: #15141c;
+  --code: #eeedf3; --tip: #eef7f1; --tip-line: #1f9d63; --warn: #fff6e5; --warn-line: #e39b12;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #121119; --card: #1b1a24; --text: #e9e8f1; --mute: #9896a8; --line: #2e2d3a; --accent-bg: rgba(255,92,53,.16); --code: #2a2936; --tip: #15271e; --warn: #2b2312; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15.5px/1.65 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+h1, h2, h3 { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; letter-spacing: -.02em; line-height: 1.15; }
+header.top {
+  position: sticky; top: 0; z-index: 10; height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 20px;
+  background: var(--ink); color: #e9e8f1;
+}
+.brand { display: flex; align-items: center; gap: 9px; color: inherit; text-decoration: none; font: 800 17px 'Bricolage Grotesque', sans-serif; }
+.mark { width: 26px; height: 26px; border-radius: 8px; background: conic-gradient(from 200deg, var(--accent), var(--accent2), #ffd166, var(--accent)); display: grid; place-items: center; }
+.mark svg { width: 15px; height: 15px; stroke: #fff; }
+header.top .sp { flex: 1; }
+.open-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 8px 16px; border-radius: 9px; }
+.hero { background: radial-gradient(800px 260px at 15% 0%, rgba(255,138,61,.32), transparent 60%), var(--ink); color: #fff; padding: 44px 20px 54px; text-align: center; }
+.hero h1 { margin: 0 0 10px; font-size: clamp(30px, 5vw, 46px); }
+.hero p { margin: 0 auto; max-width: 620px; color: #c9c7d6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 70px; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 36px; }
+nav.toc { position: sticky; top: 80px; align-self: start; font-size: 14px; }
+nav.toc b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--mute); margin-bottom: 8px; }
+nav.toc a { display: block; padding: 5px 10px; border-radius: 7px; color: var(--mute); text-decoration: none; border-left: 2px solid transparent; }
+nav.toc a:hover { color: var(--text); background: var(--card); }
+nav.toc a.on { color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
+main section { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; margin-bottom: 18px; }
+main h2 { margin: 0 0 12px; font-size: 26px; display: flex; align-items: center; gap: 10px; }
+main h2 .n { font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 700; color: var(--accent); background: var(--accent-bg); border-radius: 99px; padding: 2px 10px; letter-spacing: 0; }
+main h3 { margin: 20px 0 6px; font-size: 17px; }
+main p { margin: 0 0 10px; }
+main ul, main ol { margin: 0 0 10px; padding-left: 22px; }
+main li { margin-bottom: 5px; }
+kbd { font: 600 12px 'Inter', sans-serif; background: var(--code); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; white-space: nowrap; }
+.ui { font-weight: 700; background: var(--code); border-radius: 5px; padding: 0 6px; white-space: nowrap; }
+.tip, .warn { border-left: 4px solid var(--tip-line); background: var(--tip); border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 12px 0; font-size: 14.5px; }
+.warn { border-left-color: var(--warn-line); background: var(--warn); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0; }
+.box { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.box b { display: block; margin-bottom: 3px; }
+.box p { margin: 0; font-size: 14px; color: var(--mute); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 8px 0 4px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); }
+td:last-child { white-space: nowrap; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps li { counter-increment: s; position: relative; padding-left: 38px; margin-bottom: 12px; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; display: grid; place-items: center; }
+footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20px 40px; }
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: 1fr; gap: 0; }
+  nav.toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  nav.toc b { width: 100%; }
+  nav.toc a { border: 1px solid var(--line); border-radius: 99px; padding: 4px 11px; background: var(--card); }
+  main section { padding: 20px 18px; }
+  .grid2 { grid-template-columns: 1fr; }
+  td:last-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="easel.html"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg></span>Easel Guide</a>
+  <span class="sp"></span>
+  <a class="open-btn" href="easel.html">Open Easel</a>
+</header>
+
+<div class="hero">
+  <h1>How to use Easel</h1>
+  <p>Everything you need to design posts, slides, posters and worksheets. Read it top to bottom in ten minutes, or jump to what you need.</p>
+</div>
+
+<div class="wrap">
+  <nav class="toc" id="toc">
+    <b>Contents</b>
+    <a href="#start">Start a design</a>
+    <a href="#editor">The editor</a>
+    <a href="#elements">Adding things</a>
+    <a href="#text">Text</a>
+    <a href="#photos">Photos</a>
+    <a href="#arrange">Arrange &amp; layers</a>
+    <a href="#pages">Pages &amp; resize</a>
+    <a href="#download">Download</a>
+    <a href="#saving">Saving &amp; sync</a>
+    <a href="#share">Sharing</a>
+    <a href="#versions">Version history</a>
+    <a href="#phone">On your phone</a>
+    <a href="#keys">Shortcuts</a>
+    <a href="#faq">Problems &amp; FAQ</a>
+  </nav>
+
+  <main>
+    <section id="start">
+      <h2><span class="n">1</span>Start a design</h2>
+      <p>The home screen has four ways in:</p>
+      <div class="grid2">
+        <div class="box"><b>Pick a size</b><p>Instagram post, story, YouTube thumbnail, presentation, A4/A5/A3, business card, worksheet, infographic, logo.</p></div>
+        <div class="box"><b>Custom size</b><p>Type width and height in px, mm, cm or inches. Print sizes in mm export at the right physical size in PDF.</p></div>
+        <div class="box"><b>Start from a template</b><p>14 ready-made designs (social, slides, print, school). Everything in them is editable.</p></div>
+        <div class="box"><b>Drop a file</b><p>Drop an image on the home screen to start a design at its exact size, or a <code>.easel</code> file to open a project.</p></div>
+      </div>
+      <p>Your designs are listed under <span class="ui">Your designs</span>. Use <span class="ui">⋯</span> on a card to rename, copy or delete one.</p>
+    </section>
+
+    <section id="editor">
+      <h2><span class="n">2</span>The editor</h2>
+      <ul>
+        <li><b>Left bar</b>: Design (templates), Elements, Text, Uploads, Photos, Draw, Background, Layers. Click an item again to hide its panel.</li>
+        <li><b>Toolbar above the page</b>: changes to fit whatever you selected: font and colour for text, filters and crop for photos, fill and border for shapes. With nothing selected it shows the page background.</li>
+        <li><b>Top bar</b>: File menu, Resize, undo/redo, save status, the design name (click to rename), version history, Share and Download.</li>
+        <li><b>Bottom</b>: page thumbnails and zoom.</li>
+      </ul>
+      <h3>Moving around</h3>
+      <ul>
+        <li>Zoom with <kbd>Ctrl</kbd> + mouse wheel (or pinch on a touchpad), the zoom slider, or <kbd>Ctrl</kbd> <kbd>0</kbd> to fit the page.</li>
+        <li>Pan with the mouse wheel, or hold <kbd>Space</kbd> and drag.</li>
+      </ul>
+      <h3>Selecting and editing</h3>
+      <ul>
+        <li>Click to select, <kbd>Shift</kbd>-click or drag a box to select several.</li>
+        <li>Drag the corner handles to resize. Side handles stretch shapes and change the width of text boxes. The round handle below rotates (it snaps at 45°).</li>
+        <li>Pink and orange lines appear while dragging: things snap to the page centre, the edges and other elements. Hold <kbd>Alt</kbd> to switch snapping off.</li>
+        <li>Right-click anything for copy, paste, layer order, lock and more.</li>
+      </ul>
+    </section>
+
+    <section id="elements">
+      <h2><span class="n">3</span>Adding things</h2>
+      <p>Click an item in a panel to add it to the middle of the view, or drag it to exactly where you want it.</p>
+      <table>
+        <tr><th>What</th><th>Where</th></tr>
+        <tr><td>Shapes, lines, arrows</td><td>Elements → Shapes / Lines &amp; arrows</td></tr>
+        <tr><td>Photo frames (circle, heart, arch …)</td><td>Elements → Frames</td></tr>
+        <tr><td>Stickers, emoji, icons, brand logos</td><td>Elements → search box (Graphics / Icons / Logos)</td></tr>
+        <tr><td>Bar, line, pie and donut charts</td><td>Elements → Charts</td></tr>
+        <tr><td>QR codes</td><td>Elements → Add a QR code</td></tr>
+        <tr><td>Your own images</td><td>Uploads, or drag files onto the page, or paste with <kbd>Ctrl</kbd> <kbd>V</kbd></td></tr>
+        <tr><td>Free photos</td><td>Photos (search Wikimedia Commons)</td></tr>
+        <tr><td>Freehand drawing</td><td>Draw (pen, marker, highlighter)</td></tr>
+      </table>
+      <div class="tip"><b>Icons</b> can be recoloured with the colour button. <b>Stickers</b> keep their own colours. <b>Charts</b> and <b>QR codes</b> stay editable: select one and use <span class="ui">Edit chart</span> / <span class="ui">Edit QR code</span>.</div>
+      <p>Shapes: the toolbar has <span class="ui">Fill</span> (including gradients) and <span class="ui">Border</span> (colour, weight, dashed/dotted, corner rounding). Lines: pick the style and the start/end heads (arrow, triangle, circle, bar).</p>
+    </section>
+
+    <section id="text">
+      <h2><span class="n">4</span>Text</h2>
+      <ul>
+        <li><span class="ui">Text</span> panel → heading, subheading or body text, or one of the font pairings. Shortcut: <kbd>T</kbd>.</li>
+        <li><b>Double-click</b> a text box (or press <kbd>Enter</kbd>) to type. Press <kbd>Esc</kbd> when done.</li>
+        <li>Toolbar: font (42 to choose from), size, colour, bold, italic, underline, strikethrough, alignment, letter case (UPPERCASE, Title Case …) and spacing (letters and lines).</li>
+        <li>Select just a few words while typing and change their colour or size, and only those words change.</li>
+        <li>Dragging a corner scales the font size. Dragging a side changes the box width.</li>
+        <li><span class="ui">Effects</span>: shadow, lift, hollow, outline, echo, neon, highlight, glitch. Each has intensity and colour settings.</li>
+      </ul>
+    </section>
+
+    <section id="photos">
+      <h2><span class="n">5</span>Photos</h2>
+      <h3>Frames</h3>
+      <p>Add a frame from Elements, then <b>drop a photo on it</b> (from Photos, Uploads or your computer), or select the frame and click a photo. The photo fills the shape. Drop a different one to replace it.</p>
+      <h3>Editing a photo</h3>
+      <ul>
+        <li><span class="ui">Crop</span> or double-click the photo: drag the box or its corners, with presets for 1:1, 4:5, 16:9 and more.</li>
+        <li><span class="ui">Edit photo</span>: 12 filters (B&amp;W, vintage, warm …) plus sliders for brightness, contrast, saturation, vibrance, hue, blur and pixelate. Double-click a slider to reset it.</li>
+        <li><span class="ui">Shape</span>: turn any photo into a circle, heart, star, arch … or round its corners.</li>
+        <li><span class="ui">Flip</span> horizontally or vertically. <span class="ui">⋯ → Set as background</span> fills the whole page with it.</li>
+      </ul>
+      <h3>Background remover</h3>
+      <p>Select a photo → <span class="ui">BG remover</span>. It runs on your own device: the model (about 44 MB) downloads once, then it usually takes a few seconds. Nothing is uploaded. Undo with <kbd>Ctrl</kbd> <kbd>Z</kbd> if you don't like the result.</p>
+      <div class="warn"><b>Licences:</b> hover a photo in the Photos panel to see its author and licence. Wikimedia photos are mostly Creative Commons, which usually means you have to credit the author when you publish.</div>
+    </section>
+
+    <section id="arrange">
+      <h2><span class="n">6</span>Arrange &amp; layers</h2>
+      <ul>
+        <li>The <span class="ui">Layers</span> panel (or the layers button in the toolbar) lists everything on the page. Drag rows to change what's in front, and use the eye to hide or the lock to lock.</li>
+        <li>It also has <b>Arrange</b> (forward, backward, to front, to back), <b>Align to page</b>, and exact <b>size, position and rotation</b>.</li>
+        <li>Several things selected: <span class="ui">Align</span> lines them up and spaces them evenly. <span class="ui">Group</span> (<kbd>Ctrl</kbd> <kbd>G</kbd>) keeps them together.</li>
+        <li><b>Lock</b> (<kbd>Ctrl</kbd> <kbd>L</kbd>) stops something from being moved by accident, which is handy for backgrounds.</li>
+        <li><b>Transparency</b> button: fade anything from 0 to 100%.</li>
+        <li><b>Copy style</b> / <b>Paste style</b> (right-click): copy colours, fonts and effects from one element to others.</li>
+      </ul>
+    </section>
+
+    <section id="pages">
+      <h2><span class="n">7</span>Pages &amp; resize</h2>
+      <ul>
+        <li>Add a page with <span class="ui">+</span> at the bottom. Hover a thumbnail to duplicate or delete it, and drag thumbnails to reorder. Switch pages with <kbd>PgUp</kbd> / <kbd>PgDn</kbd>.</li>
+        <li><span class="ui">Resize</span> (top bar): choose a new format. <b>Scale the content</b> keeps everything proportional and centred.</li>
+        <li><span class="ui">Copy &amp; resize</span> leaves the original alone and makes a copy in the new size, e.g. an Instagram post into a story.</li>
+        <li>Clicking a template of a different size asks whether to fit it into the current design or open it as a new one.</li>
+      </ul>
+    </section>
+
+    <section id="download">
+      <h2><span class="n">8</span>Download</h2>
+      <p>Click <span class="ui">Download</span> and choose:</p>
+      <table>
+        <tr><th>Format</th><th>Best for</th></tr>
+        <tr><td><b>PNG</b></td><td>Graphics and text, transparent background possible</td></tr>
+        <tr><td><b>JPG</b></td><td>Photos, smallest files</td></tr>
+        <tr><td><b>PDF standard</b></td><td>Slides, handouts, worksheets (all pages in one file)</td></tr>
+        <tr><td><b>PDF print</b></td><td>Print shops: 150/300 dpi, 3 mm bleed, crop marks</td></tr>
+        <tr><td><b>SVG</b></td><td>Further editing in Figma, Illustrator or Inkscape (fonts embedded)</td></tr>
+        <tr><td><b>Easel project</b></td><td>The editable design incl. images, to open elsewhere</td></tr>
+      </table>
+      <p>The size slider multiplies the resolution (2× is good for social media). Several pages as PNG/JPG/SVG arrive as one ZIP. You can also export a single page or a range like <code>1-3, 5</code>.</p>
+      <div class="tip">PDFs are made of images, so the text in them can't be selected. Everything is rendered in your browser, and nothing is uploaded for downloading.</div>
+    </section>
+
+    <section id="saving">
+      <h2><span class="n">9</span>Saving &amp; sync</h2>
+      <p>Easel <b>saves automatically</b> a moment after every change. You can see the status next to undo/redo. <kbd>Ctrl</kbd> <kbd>S</kbd> saves right away.</p>
+      <div class="grid2">
+        <div class="box"><b>Everyone</b><p>Designs and uploads are stored in <i>this browser</i> on <i>this device</i>. Clearing site data deletes them, so keep important work as a project file (File → Download project file).</p></div>
+        <div class="box"><b>Owner (signed in)</b><p>Designs also sync to the Easel cloud. They show up on every device you sign in on, and the status says <span class="ui">Synced</span>.</p></div>
+      </div>
+      <h3>Signing in (owner only)</h3>
+      <ol class="steps">
+        <li>Click <span class="ui">Sign in</span> on the home screen, or the person icon in the editor.</li>
+        <li>Enter the owner e-mail and click <span class="ui">Send code</span>.</li>
+        <li>Type the code from the e-mail. It can take a minute, and codes are limited to a few per hour.</li>
+        <li>Your designs on this device upload automatically. Designs from other devices appear on the home screen with a cloud icon and download when you open them.</li>
+      </ol>
+      <p>If two devices edit the same design, the most recently saved version wins, and older states are still in <a href="#versions">version history</a>.</p>
+    </section>
+
+    <section id="share">
+      <h2><span class="n">10</span>Sharing</h2>
+      <p>Click <span class="ui">Share</span> (owner, signed in) and create a link. Nobody needs an account to open it.</p>
+      <div class="grid2">
+        <div class="box"><b>View-only link</b><p>People scroll through all pages but can't change anything.</p></div>
+        <div class="box"><b>Template link</b><p>People click <span class="ui">Use this template</span> and get their own editable copy. Yours stays untouched.</p></div>
+      </div>
+      <p>Links always show the <b>latest saved</b> state. The Share window lists every link with its view count, and deleting a link makes it stop working immediately.</p>
+      <p>Not signed in? Send the design as a <b>project file</b> or as a PDF/PNG instead.</p>
+    </section>
+
+    <section id="versions">
+      <h2><span class="n">11</span>Version history</h2>
+      <ul>
+        <li>Open it with the clock icon in the top bar, or File → Version history.</li>
+        <li>Easel keeps a version <b>automatically every 10 minutes</b> while you edit. Save a <b>named version</b> any time, for example “sent to print”.</li>
+        <li><span class="ui">Restore</span> brings an old version back and saves the current state as a version first, so you can always go back again.</li>
+        <li><span class="ui">Copy</span> opens an old version as a separate design.</li>
+        <li>Owner: versions are in the cloud and available on every device. Everyone else: versions are stored in the browser.</li>
+      </ul>
+    </section>
+
+    <section id="phone">
+      <h2><span class="n">12</span>On your phone</h2>
+      <ul>
+        <li>The tools are in the bar at the bottom. A panel opens as a sheet. Close it with <b>×</b>, by tapping the page, or by tapping the tool again.</li>
+        <li>Adding something closes the sheet automatically so you can see it.</li>
+        <li>Drag with one finger. For fine work the laptop is more comfortable. Easel is built for bigger screens first.</li>
+        <li>Sign in on the phone too, and designs sync both ways.</li>
+      </ul>
+    </section>
+
+    <section id="keys">
+      <h2><span class="n">13</span>Keyboard shortcuts</h2>
+      <p>On a Mac use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>. In the editor, press <kbd>?</kbd> to see this list.</p>
+      <table>
+        <tr><th>Action</th><th>Keys</th></tr>
+        <tr><td>Add text / rectangle / circle / line</td><td><kbd>T</kbd> <kbd>R</kbd> <kbd>C</kbd> <kbd>L</kbd></td></tr>
+        <tr><td>Undo / redo</td><td><kbd>Ctrl</kbd> <kbd>Z</kbd> · <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Z</kbd></td></tr>
+        <tr><td>Copy / paste / cut / duplicate</td><td><kbd>Ctrl</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>X</kbd> <kbd>D</kbd></td></tr>
+        <tr><td>Delete</td><td><kbd>Del</kbd></td></tr>
+        <tr><td>Select all / deselect</td><td><kbd>Ctrl</kbd> <kbd>A</kbd> · <kbd>Esc</kbd></td></tr>
+        <tr><td>Group / ungroup</td><td><kbd>Ctrl</kbd> <kbd>G</kbd> · <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>G</kbd></td></tr>
+        <tr><td>Lock / unlock</td><td><kbd>Ctrl</kbd> <kbd>L</kbd></td></tr>
+        <tr><td>Forward / backward (to front/back with Alt)</td><td><kbd>Ctrl</kbd> <kbd>]</kbd> · <kbd>Ctrl</kbd> <kbd>[</kbd></td></tr>
+        <tr><td>Bold / italic / underline</td><td><kbd>Ctrl</kbd> <kbd>B</kbd> <kbd>I</kbd> <kbd>U</kbd></td></tr>
+        <tr><td>Nudge (10 px with Shift)</td><td>Arrow keys</td></tr>
+        <tr><td>Copy / paste style</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd> · <kbd>V</kbd></td></tr>
+        <tr><td>Zoom in / out / fit</td><td><kbd>Ctrl</kbd> <kbd>+</kbd> <kbd>−</kbd> <kbd>0</kbd></td></tr>
+        <tr><td>Pan</td><td><kbd>Space</kbd> + drag</td></tr>
+        <tr><td>Previous / next page</td><td><kbd>PgUp</kbd> · <kbd>PgDn</kbd></td></tr>
+        <tr><td>Save now</td><td><kbd>Ctrl</kbd> <kbd>S</kbd></td></tr>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2><span class="n">14</span>Problems &amp; FAQ</h2>
+      <h3>My designs are gone.</h3>
+      <p>Designs live in the browser you made them in. A different browser, a private window or cleared site data won't have them. The owner can sign in to get them from the cloud. Everyone else: keep a project file as backup.</p>
+      <h3>The login code doesn't arrive.</h3>
+      <p>Wait a minute and check spam. Codes are limited to a few per hour, so don't request more than one. Only the owner address can sign in.</p>
+      <h3>“Saved on this device only” in the top bar.</h3>
+      <p>The cloud couldn't be reached (offline or session expired). Your work is safe locally and syncs automatically when the connection is back. If it stays, sign in again.</p>
+      <h3>Icons or photos don't load.</h3>
+      <p>They come from free online services (Iconify, Wikimedia, Picsum). Check your connection and try again in a minute.</p>
+      <h3>Background removal is slow or fails.</h3>
+      <p>The first run downloads the model. Browsers with WebGPU (recent Chrome/Edge) are much faster. Very large photos take longer.</p>
+      <h3>Fonts look different in the SVG.</h3>
+      <p>SVGs embed the fonts, but some programs ignore embedded fonts. Install the font (all are free on Google Fonts) or use PDF/PNG.</p>
+    </section>
+  </main>
+</div>
+
+<footer>Easel · part of <a href="../index.html">dump.yanikroesti.ch</a> · <a href="easel.html">Open Easel</a></footer>
+
+<script>
+// highlight the current section in the table of contents
+const links = [...document.querySelectorAll('#toc a')];
+const io = new IntersectionObserver(entries => {
+  for (const e of entries) if (e.isIntersecting) {
+    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }
+}, { rootMargin: '-20% 0px -70% 0px' });
+document.querySelectorAll('main section').forEach(s => io.observe(s));
+</script>
+</body>
+</html>
