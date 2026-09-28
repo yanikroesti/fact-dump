@@ -66,6 +66,7 @@ input[type=range] { accent-color: var(--accent); }
   grid-template-columns: 72px auto minmax(0, 1fr);
   grid-template-rows: 52px minmax(0, 1fr);
   height: 100vh;
+  height: 100dvh; /* phones: stay above the browser's own toolbar */
 }
 #app.hidden { display: none; }
 #rail { grid-column: 1; grid-row: 2; }
@@ -167,6 +168,22 @@ input[type=range] { accent-color: var(--accent); }
   color: var(--mute); display: grid; place-items: center;
 }
 .panel-close:hover { color: var(--text); }
+.panel-x { display: none; }
+#acctBtn.on { color: var(--accent2); }
+#saveState.err { color: #ff8a80; }
+
+/* ── share viewer ── */
+#viewer { position: fixed; inset: 0; overflow-y: auto; background: #0f0e15; z-index: 60; }
+#viewer .home-top { position: sticky; top: 0; z-index: 2; gap: 14px; }
+.viewer-title { display: flex; flex-direction: column; min-width: 0; }
+.viewer-title b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.viewer-title small { color: var(--ink-mute); font-size: 11.5px; }
+.viewer-main { display: flex; flex-direction: column; align-items: center; padding: 28px 16px 40px; gap: 8px; }
+.viewer-page { max-width: 100%; background: #1f1e29; display: grid; place-items: center; box-shadow: 0 12px 40px rgba(0,0,0,.45); }
+.viewer-page img { width: 100%; height: 100%; display: block; }
+.viewer-num { color: var(--ink-mute); font-size: 12px; margin-bottom: 18px; }
+.viewer-foot { color: var(--ink-mute); font-size: 12px; }
+.viewer-foot a { color: var(--accent2); }
 .panel-close .ic { width: 12px; height: 12px; }
 
 .search {
@@ -563,6 +580,10 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
   .rail-btn { flex: 0 0 64px; padding: 6px 2px; }
   #panel { position: fixed; left: 0; right: 0; bottom: 60px; width: auto; height: 52vh; border-radius: 16px 16px 0 0; box-shadow: var(--shadow); border: 0; }
   .panel-close { display: none; }
+  .panel-x { display: inline-flex; }
+  #panel { height: 52dvh; }
+  #shareBtn { padding: 0 10px; }
+  #shareBtn .dl-txt { display: none; }
   #work { grid-row: 2; grid-column: 1; }
   #foot { height: 92px; }
   .pg .pth { height: 48px; }
@@ -579,6 +600,7 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
   <div class="home-top">
     <a class="brand" href="../index.html" title="Back to dump/"><span class="mark"><i class="ic" data-ic="brush"></i></span>Easel</a>
     <span class="top-spacer"></span>
+    <button class="btn-ghost-dark" id="homeAcct" title="Owner sign-in"><i class="ic sm" data-ic="user"></i><span class="dl-txt">Sign in</span></button>
     <button class="btn-ghost-dark" id="homeImport"><i class="ic sm" data-ic="folder-open"></i>Open file</button>
   </div>
   <div class="hero">
@@ -622,12 +644,15 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
     <span class="top-spacer"></span>
     <input id="docTitle" spellcheck="false" aria-label="Design name">
     <button class="tb-btn hide-md" id="helpBtn" title="Keyboard shortcuts (?)"><i class="ic" data-ic="keyboard"></i></button>
+    <button class="tb-btn hide-sm" id="versionsBtn" title="Version history"><i class="ic" data-ic="history"></i></button>
+    <button class="tb-btn" id="acctBtn" title="Owner sign-in"><i class="ic" data-ic="user"></i></button>
+    <button class="btn-ghost-dark" id="shareBtn"><i class="ic sm" data-ic="share-2"></i><span class="dl-txt">Share</span></button>
     <button class="btn-primary" id="dlBtn"><i class="ic sm" data-ic="download"></i><span class="dl-txt">Download</span></button>
   </header>
 
   <nav id="rail"></nav>
   <aside id="panel">
-    <div class="panel-head"><h2 id="panelTitle"></h2></div>
+    <div class="panel-head"><h2 id="panelTitle"></h2><button class="cb panel-x" id="panelX" title="Close"><i class="ic" data-ic="x"></i></button></div>
     <div class="panel-body" id="panelBody"></div>
     <button class="panel-close" id="panelClose" title="Hide panel"><i class="ic" data-ic="chevron-left"></i></button>
   </aside>
@@ -663,12 +688,14 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
 <script src="easel/ui-icons.js"></script>
 <script src="easel/util.js"></script>
 <script src="easel/store.js"></script>
+<script src="easel/cloud.js"></script>
 <script src="easel/editor.js"></script>
 <script src="easel/elements.js"></script>
 <script src="easel/templates.js"></script>
 <script src="easel/panels.js"></script>
 <script src="easel/props.js"></script>
 <script src="easel/export.js"></script>
+<script src="easel/sharing.js"></script>
 <script src="easel/app.js"></script>
 </body>
 </html>

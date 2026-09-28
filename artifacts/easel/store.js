@@ -5,16 +5,17 @@
 const EZ = window.EZ;
 
 let dbp = null;
-const mem = { designs: new Map(), assets: new Map() };
+const mem = { designs: new Map(), assets: new Map(), versions: new Map() };
 function open() {
   if (dbp) return dbp;
   dbp = new Promise(resolve => {
     try {
-      const req = indexedDB.open('easel', 1);
+      const req = indexedDB.open('easel', 2);
       req.onupgradeneeded = () => {
         const db = req.result;
         if (!db.objectStoreNames.contains('designs')) db.createObjectStore('designs', { keyPath: 'id' });
         if (!db.objectStoreNames.contains('assets')) db.createObjectStore('assets', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('versions')) db.createObjectStore('versions', { keyPath: 'id' }).createIndex('design', 'designId');
       };
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => { console.warn('IndexedDB unavailable', req.error); resolve(null); };
@@ -68,9 +69,21 @@ EZ.addAsset = async (blob, meta = {}) => {
   return { id, url };
 };
 EZ.assetIdsIn = str => [...new Set([...String(str).matchAll(/asset:(a[a-z0-9]+)/g)].map(m => m[1]))];
+// Local first; images this device has never seen come from the public cloud bucket
+// (synced designs from another device, share links) and are cached locally.
 EZ.ensureAssets = async ids => {
   await Promise.all(ids.filter(id => !EZ.assets.has(id)).map(async id => {
-    const rec = await EZ.db.get('assets', id).catch(() => null);
+    let rec = await EZ.db.get('assets', id).catch(() => null);
+    if (!rec?.blob && EZ.ASSET_BASE) {
+      try {
+        const r = await fetch(EZ.ASSET_BASE + id);
+        if (r.ok) {
+          const blob = await r.blob();
+          rec = { id, blob, type: blob.type, upload: false, cloud: true, created: Date.now() };
+          await EZ.db.put('assets', rec).catch(() => {});
+        }
+      } catch (e) { console.warn('asset fetch failed', id, e); }
+    }
     if (rec?.blob) register(id, rec.blob, rec);
   }));
 };
@@ -119,4 +132,21 @@ EZ.listDesigns = async () => (await EZ.db.all('designs').catch(() => [])).sort((
 EZ.getDesign = id => EZ.db.get('designs', id);
 EZ.putDesign = d => EZ.db.put('designs', d);
 EZ.deleteDesign = id => EZ.db.del('designs', id);
+
+/* ── local version history (visitors; the owner's versions live in the cloud) ── */
+EZ.localVersions = {
+  async list(designId) {
+    return (await EZ.db.all('versions').catch(() => [])).filter(v => v.designId === designId).sort((a, b) => b.at - a.at)
+      .map(({ pages, ...meta }) => meta);
+  },
+  get: id => EZ.db.get('versions', id),
+  async save(d, label = null, auto = true) {
+    await EZ.db.put('versions', { id: 'v' + EZ.uid(), designId: d.id, at: Date.now(), label, auto, name: d.name, w: d.w, h: d.h, mm: d.mm || null,
+      pages: d.pages.map(p => ({ id: p.id, json: p.json })), thumb: d.thumb || null });
+    // keep the newest 30 automatic versions per design
+    const autos = (await this.list(d.id)).filter(v => v.auto);
+    for (const v of autos.slice(30)) await EZ.db.del('versions', v.id);
+  },
+  async removeAll(designId) { for (const v of await this.list(designId)) await EZ.db.del('versions', v.id); },
+};
 })();

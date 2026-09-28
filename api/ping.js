@@ -1,26 +1,31 @@
 /* Daily keep-alive (see "crons" in vercel.json). Supabase pauses free projects
-   after a week without traffic, and a paused project would break every printed
-   QR code — one tiny query a day keeps it awake. */
+   after a week without traffic. A paused school project would break every printed
+   QR code, a paused easel project would break Easel sync and share links — one tiny
+   query a day each keeps them awake. */
 
-const SB_URL = 'https://ljkdibnkifzwydhqkzxt.supabase.co';
-const SB_KEY = 'sb_publishable_1vEjb3RhVFo54KZM948PCA_A_9SpAgQ';
+const TARGETS = [
+  { name: 'qr-studio', url: 'https://ljkdibnkifzwydhqkzxt.supabase.co', key: 'sb_publishable_1vEjb3RhVFo54KZM948PCA_A_9SpAgQ', rpc: 'qr_ping' },
+  { name: 'easel', url: 'https://vcglqoqtcsiqfjutizib.supabase.co', key: 'sb_publishable_fbTatnQ1Dpu9uhTWI0hMEA_1FizA6MU', rpc: 'easel_ping' },
+];
 
-export async function GET() {
+async function ping(t) {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/rpc/qr_ping`, {
+    const res = await fetch(`${t.url}/rest/v1/rpc/${t.rpc}`, {
       method: 'POST',
-      headers: { apikey: SB_KEY, 'Content-Type': 'application/json' },
+      headers: { apikey: t.key, 'Content-Type': 'application/json' },
       body: '{}'
     });
-    const db = await res.json().catch(() => null);
-    return new Response(JSON.stringify({ ok: res.ok, db }), {
-      status: res.ok ? 200 : 502,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
-    });
+    return { name: t.name, ok: res.ok, db: await res.json().catch(() => null) };
   } catch (e) {
-    return new Response(JSON.stringify({ ok: false }), {
-      status: 502,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
-    });
+    return { name: t.name, ok: false };
   }
+}
+
+export async function GET() {
+  const results = await Promise.all(TARGETS.map(ping));
+  const ok = results.every(r => r.ok);
+  return new Response(JSON.stringify({ ok, results }), {
+    status: ok ? 200 : 502,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+  });
 }

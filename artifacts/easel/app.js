@@ -15,6 +15,8 @@ EZ.createDesign = async ({ name = 'Untitled design', w, h: hh, mm = null, pages 
   await EZ.openDesign(doc);
 };
 EZ.openDesign = async doc => {
+  document.getElementById('viewer')?.remove();
+  if (EZ.cloud.state.owner) doc = await EZ.cloud.freshen(doc); // newer copy from another device?
   EZ.doc = doc;
   $('#home').classList.add('hidden');
   $('#app').classList.remove('hidden');
@@ -45,7 +47,12 @@ EZ.saveNow = async (announce = false) => {
     await EZ.putDesign(JSON.parse(JSON.stringify(d)));
     EZ.dirty = false;
     setSave('saved');
-    if (announce) EZ.toast((await EZ.db.persistent()) ? 'Saved in this browser' : 'Saved for this session only — your browser blocks storage', { icon: 'check' });
+    EZ.cloud.queuePush(d.id);
+    EZ.versionTick?.(d);
+    if (announce) {
+      const where = EZ.cloud.state.owner ? 'Saved — syncing to your cloud' : (await EZ.db.persistent()) ? 'Saved in this browser' : 'Saved for this session only — your browser blocks storage';
+      EZ.toast(where, { icon: 'check' });
+    }
   } catch (e) {
     console.error(e);
     setSave('error');
@@ -53,12 +60,23 @@ EZ.saveNow = async (announce = false) => {
   }
 };
 EZ.autosave = EZ.debounce(() => EZ.saveNow(false), 1500);
-function setSave(s) {
+// Save indicator: local save state first, then (for the owner) the cloud sync state.
+let localSave = 'saved';
+function setSave(s) { localSave = s; drawSave(); }
+function drawSave() {
   const el = $('#saveState');
   el.innerHTML = '';
-  if (s === 'saving') el.append(h('span', { class: 'spin', style: { width: '12px', height: '12px', borderWidth: '2px' } }), 'Saving…');
-  else if (s === 'saved') el.append(icon('cloud', 'sm'), 'Saved');
-  else if (s === 'error') el.append(icon('x', 'sm'), 'Not saved');
+  el.classList.remove('err');
+  el.title = '';
+  const spin = () => h('span', { class: 'spin', style: { width: '12px', height: '12px', borderWidth: '2px' } });
+  const c = EZ.cloud.state;
+  if (localSave === 'saving') return el.append(spin(), 'Saving…');
+  if (localSave === 'error') { el.classList.add('err'); return el.append(icon('x', 'sm'), 'Not saved'); }
+  if (!c.owner) { el.title = 'Saved in this browser'; return el.append(icon('check', 'sm'), 'Saved'); }
+  if (c.sync === 'pending' || c.sync === 'syncing') return el.append(spin(), 'Syncing…');
+  if (c.sync === 'error') { el.classList.add('err'); el.title = c.syncError || ''; return el.append(icon('cloud-off', 'sm'), 'Saved on this device only'); }
+  el.title = 'Saved and synced to your Easel cloud';
+  el.append(icon('cloud', 'sm'), 'Synced');
 }
 const origChanged = EZ.changed;
 EZ.changed = () => { origChanged(); setSave('saving'); };
@@ -72,11 +90,18 @@ EZ.copyDesign = async () => {
   EZ.toast('Copy created');
 };
 EZ.deleteCurrentDesign = async () => {
-  if (!(await EZ.confirm('Delete this design?', `“${EZ.doc.name}” will be removed from this browser. This can’t be undone.`, 'Delete', true))) return;
-  await EZ.deleteDesign(EZ.doc.id);
+  const cloud = EZ.cloud.state.owner;
+  if (!(await EZ.confirm('Delete this design?', `“${EZ.doc.name}” will be removed from ${cloud ? 'this browser and your Easel cloud (share links stop working)' : 'this browser'}. This can’t be undone.`, 'Delete', true))) return;
+  await removeDesign(EZ.doc.id);
   EZ.doc = null;
+  EZ.dirty = false;
   EZ.showHome();
 };
+async function removeDesign(id) {
+  await EZ.deleteDesign(id);
+  await EZ.localVersions.removeAll(id).catch(() => {});
+  if (EZ.cloud.state.owner) { try { await EZ.cloud.remove(id); } catch (e) { EZ.toast('Removed here, but the cloud copy could not be deleted: ' + e.message, { err: true }); } }
+}
 
 /* ── home ── */
 EZ.showHome = async () => {
@@ -103,29 +128,68 @@ async function renderHome() {
     try { const pages = await EZ.buildTemplate(t); busy.close(); await EZ.createDesign({ name: t.name, w: t.w, h: t.h, mm: t.mm, pages }); }
     catch (e) { busy.close(); EZ.toast('Template failed to load', { err: true }); }
   })));
-  const list = await EZ.listDesigns();
   const box = $('#homeDesigns');
+  const owner = EZ.cloud.state.owner;
+  let list = (await EZ.listDesigns()).map(d => ({ ...d, where: 'local' }));
+  let cloudErr = '';
+  if (owner) {
+    try {
+      const rows = await EZ.cloud.list();
+      const local = new Map(list.map(d => [d.id, d]));
+      for (const r of rows) {
+        const l = local.get(r.id);
+        if (l) { l.where = 'both'; if (+r.updated > (l.updated || 0) + 500) Object.assign(l, { name: r.name, thumb: r.thumb, updated: +r.updated, newer: true }); }
+        else list.push({ id: r.id, name: r.name, w: r.w, h: r.h, mm: r.mm, thumb: r.thumb, updated: +r.updated, created: +r.created, pageCount: r.page_count, where: 'cloud' });
+      }
+      list.sort((a, b) => (b.updated || 0) - (a.updated || 0));
+    } catch (e) { cloudErr = e.message; }
+  }
   box.innerHTML = '';
-  $('#homeCount').textContent = list.length ? `${list.length} in this browser` : '';
+  $('#homeCount').textContent = list.length ? (owner ? `${list.length} · synced to your Easel cloud` : `${list.length} in this browser`) : '';
+  if (cloudErr) box.append(h('div', { class: 'empty', style: { gridColumn: '1/-1', padding: '8px' } }, 'Cloud unavailable: ' + cloudErr));
   if (!list.length) { box.append(h('div', { class: 'empty', style: { gridColumn: '1/-1' } }, icon('layout-template'), 'Nothing yet — pick a size or a template above.')); return; }
+  const open = async d => {
+    if (d.where === 'cloud' || d.newer) {
+      const busy = EZ.busy('Downloading design…');
+      try { const full = await EZ.cloud.pull(d.id); if (!full) throw new Error('not found'); await EZ.putDesign(full); busy.close(); return EZ.openDesign(full); }
+      catch (e) { busy.close(); EZ.toast('Could not load it: ' + e.message, { err: true }); return; }
+    }
+    EZ.openDesign(await EZ.getDesign(d.id));
+  };
   for (const d of list) {
     const more = h('button', { class: 'dmore', title: 'More' }, icon('ellipsis', 'sm'));
     more.onclick = e => {
       e.stopPropagation();
       EZ.menu(more, [
-        { label: 'Open', icon: 'folder-open', run: () => EZ.openDesign(d) },
-        { label: 'Rename', icon: 'type', run: async () => { const n = await EZ.prompt('Rename design', d.name); if (n?.trim()) { d.name = n.trim(); await EZ.putDesign(d); renderHome(); } } },
-        { label: 'Make a copy', icon: 'copy', run: async () => { await EZ.putDesign({ ...JSON.parse(JSON.stringify(d)), id: 'd' + EZ.uid(), name: d.name + ' (copy)', created: Date.now(), updated: Date.now() }); renderHome(); } },
+        { label: 'Open', icon: 'folder-open', run: () => open(d) },
+        { label: 'Rename', icon: 'type', disabled: d.where === 'cloud', run: async () => {
+          const n = await EZ.prompt('Rename design', d.name);
+          if (!n?.trim()) return;
+          const full = await EZ.getDesign(d.id);
+          full.name = n.trim(); full.updated = Date.now();
+          await EZ.putDesign(full); EZ.cloud.queuePush(full.id); renderHome();
+        } },
+        { label: 'Make a copy', icon: 'copy', disabled: d.where === 'cloud', run: async () => {
+          const full = await EZ.getDesign(d.id);
+          const copy = { ...JSON.parse(JSON.stringify(full)), id: 'd' + EZ.uid(), name: full.name + ' (copy)', created: Date.now(), updated: Date.now() };
+          await EZ.putDesign(copy); EZ.cloud.queuePush(copy.id); renderHome();
+        } },
         '-',
-        { label: 'Delete', icon: 'trash-2', run: async () => { if (await EZ.confirm('Delete this design?', `“${d.name}” will be removed from this browser.`, 'Delete', true)) { await EZ.deleteDesign(d.id); renderHome(); } } },
+        { label: 'Delete', icon: 'trash-2', run: async () => {
+          if (!(await EZ.confirm('Delete this design?', `“${d.name}” will be removed from ${owner ? 'this browser and your Easel cloud' : 'this browser'}.`, 'Delete', true))) return;
+          await removeDesign(d.id); renderHome();
+        } },
       ], { align: 'right' });
     };
+    const pages = d.pages ? d.pages.length : d.pageCount || 1;
+    const badge = owner ? h('span', { title: d.where === 'cloud' ? 'Only in the cloud — opens after downloading' : d.where === 'both' ? 'Synced' : 'Not synced yet', style: { color: d.where === 'local' ? 'var(--mute)' : 'var(--good)', marginRight: '4px', verticalAlign: '-2px' } }, icon(d.where === 'local' ? 'cloud-off' : 'cloud', 'sm')) : null;
     box.append(h('div', { class: 'dcard' },
-      h('div', { class: 'dth', style: { backgroundImage: d.thumb ? `url(${d.thumb})` : '' }, onclick: () => EZ.openDesign(d) }),
-      h('div', { class: 'dnm' }, h('b', {}, d.name), h('small', {}, `${d.pages.length} page${d.pages.length > 1 ? 's' : ''} · ${d.mm ? d.mm.join(' × ') + ' mm' : d.w + ' × ' + d.h} · ${EZ.timeAgo(d.updated)}`)),
+      h('div', { class: 'dth', style: { backgroundImage: d.thumb ? `url(${d.thumb})` : '' }, onclick: () => open(d) }),
+      h('div', { class: 'dnm' }, h('b', {}, badge, d.name), h('small', {}, `${pages} page${pages > 1 ? 's' : ''} · ${d.mm ? d.mm.join(' × ') + ' mm' : d.w + ' × ' + d.h} · ${EZ.timeAgo(d.updated)}`)),
       more));
   }
 }
+EZ.renderHome = renderHome;
 
 /* ── page strip ── */
 let dragPage = null;
@@ -209,6 +273,31 @@ async function boot() {
     await EZ.addImage(a.url, { fit: 1 });
   });
 
+  // stage 2: cloud account, sharing, versions
+  $('#shareBtn').onclick = () => EZ.showShare();
+  $('#versionsBtn').onclick = () => EZ.showVersions();
+  $('#acctBtn').onclick = e => EZ.accountMenu(e.currentTarget);
+  $('#homeAcct').onclick = e => EZ.accountMenu(e.currentTarget);
+  $('#panelX').onclick = () => EZ.closePanel();
+  // phones: tapping the page closes the bottom sheet
+  $('#stage').addEventListener('pointerdown', () => { if (innerWidth <= 700 && EZ.currentPanel() && EZ.currentPanel() !== 'draw') EZ.closePanel(); });
+  let wasOwner = false;
+  EZ.cloud.on(st => {
+    drawSave();
+    $('#acctBtn').classList.toggle('on', st.owner);
+    $('#acctBtn').title = st.owner ? `Signed in as ${st.email}` : 'Owner sign-in';
+    $('#homeAcct').lastChild.textContent = st.owner ? 'Synced' : 'Sign in';
+    $('#homeAcct').firstChild.replaceWith(icon(st.owner ? 'cloud' : 'user', 'sm'));
+    if (st.owner !== wasOwner) {
+      wasOwner = st.owner;
+      if (!$('#home').classList.contains('hidden')) renderHome();
+      if (st.owner) EZ.cloud.syncAll();
+    }
+  });
+
+  const share = location.hash.match(/s=([\w-]+)/);
+  if (share) return EZ.showViewer(share[1]);
+  if (EZ.cloud.hasSession()) EZ.cloud.init().catch(e => console.warn('cloud init failed', e));
   const m = location.hash.match(/d=([\w]+)/);
   const doc = m ? await EZ.getDesign(m[1]).catch(() => null) : null;
   if (doc) await EZ.openDesign(doc);

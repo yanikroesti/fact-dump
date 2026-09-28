@@ -321,12 +321,17 @@ EZ.fileMenu = anchor => EZ.menu(anchor, [
   { label: 'Create new design', icon: 'plus', run: () => EZ.showHome() },
   { label: 'Make a copy', icon: 'copy', run: () => EZ.copyDesign() },
   { label: 'Save now', icon: 'save', kbd: 'Ctrl+S', run: () => EZ.saveNow(true) },
+  { label: 'Version history…', icon: 'history', run: () => EZ.showVersions() },
+  { label: 'Share…', icon: 'share-2', run: () => EZ.showShare() },
   '-',
   { label: 'Download project file (.easel)', icon: 'file-down', run: () => EZ.exportProject() },
   { label: 'Open project file…', icon: 'folder-open', run: () => $('#projIn').click() },
   '-',
   { label: 'Resize design…', icon: 'scaling', run: () => EZ.showResize() },
   { label: 'Keyboard shortcuts', icon: 'keyboard', kbd: '?', run: () => EZ.showShortcuts() },
+  EZ.cloud.state.owner
+    ? { label: 'Sign out', icon: 'log-out', run: async () => { await EZ.cloud.signOut(); EZ.toast('Signed out — designs stay on this device'); } }
+    : { label: 'Owner sign-in (sync)', icon: 'user', run: () => EZ.showLogin() },
   '-',
   { label: 'Delete this design', icon: 'trash-2', run: () => EZ.deleteCurrentDesign() },
 ]);
