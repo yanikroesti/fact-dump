@@ -86,6 +86,8 @@ const tile = (inner, item, onclick, cls = '') => {
 
 /* ═════ panels ═════ */
 const PANELS = {};
+// later modules (motion.js) add their own contextual panels
+EZ.registerPanel = (id, title, fn) => { PANELS[id] = fn; TITLES[id] = title; };
 
 /* ── templates ── */
 PANELS.templates = body => {

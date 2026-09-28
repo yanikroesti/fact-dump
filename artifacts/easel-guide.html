@@ -96,6 +96,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     <a href="#photos">Photos</a>
     <a href="#arrange">Arrange &amp; layers</a>
     <a href="#pages">Pages &amp; resize</a>
+    <a href="#motion">Animate &amp; present</a>
     <a href="#download">Download</a>
     <a href="#saving">Saving &amp; sync</a>
     <a href="#share">Sharing</a>
@@ -208,8 +209,27 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
       </ul>
     </section>
 
+    <section id="motion">
+      <h2><span class="n">8</span>Animate &amp; present</h2>
+      <h3>Animations</h3>
+      <ul>
+        <li>Select an element and click <span class="ui">Animate</span> in the toolbar. Pick an entrance: fade, rise, drop, slide, pop, zoom, spin, wipe or typewriter (text only).</li>
+        <li>Set <b>Duration</b> and <b>Starts after</b>. Giving elements increasing start times makes them appear one after another.</li>
+        <li>With nothing selected, <span class="ui">Animate</span> offers <b>Animate the whole page</b>: one style for every element, from top to bottom, with a live preview.</li>
+        <li>In the same panel set the <b>page duration</b> (automatic = animations plus a short pause) and the <b>transition</b> to the next page (fade or cut).</li>
+        <li><span class="ui">Preview page</span> plays the current page right in the editor.</li>
+      </ul>
+      <h3>Present</h3>
+      <p>Click <span class="ui">Present</span> in the top bar for a full-screen slideshow that starts at the current page.</p>
+      <ul>
+        <li>Next page: <kbd>→</kbd>, <kbd>Space</kbd>, <kbd>Enter</kbd> or click. Previous: <kbd>←</kbd>. First/last: <kbd>Home</kbd> / <kbd>End</kbd>. Exit: <kbd>Esc</kbd>.</li>
+        <li><span class="ui">Autoplay</span> moves on by itself after each page's duration, which is handy for a screen at an event.</li>
+        <li>The controls fade away when you stop moving the mouse.</li>
+      </ul>
+    </section>
+
     <section id="download">
-      <h2><span class="n">8</span>Download</h2>
+      <h2><span class="n">9</span>Download</h2>
       <p>Click <span class="ui">Download</span> and choose:</p>
       <table>
         <tr><th>Format</th><th>Best for</th></tr>
@@ -218,6 +238,8 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
         <tr><td><b>PDF standard</b></td><td>Slides, handouts, worksheets (all pages in one file)</td></tr>
         <tr><td><b>PDF print</b></td><td>Print shops: 150/300 dpi, 3 mm bleed, crop marks</td></tr>
         <tr><td><b>SVG</b></td><td>Further editing in Figma, Illustrator or Inkscape (fonts embedded)</td></tr>
+        <tr><td><b>MP4 video</b></td><td>Reels, TikTok, slides as video: plays animations and transitions (720p/1080p, 30/60 fps)</td></tr>
+        <tr><td><b>GIF</b></td><td>Short looping animations for chats and websites (keep them under ~10 s)</td></tr>
         <tr><td><b>Easel project</b></td><td>The editable design incl. images, to open elsewhere</td></tr>
       </table>
       <p>The size slider multiplies the resolution (2× is good for social media). Several pages as PNG/JPG/SVG arrive as one ZIP. You can also export a single page or a range like <code>1-3, 5</code>.</p>
@@ -225,7 +247,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     </section>
 
     <section id="saving">
-      <h2><span class="n">9</span>Saving &amp; sync</h2>
+      <h2><span class="n">10</span>Saving &amp; sync</h2>
       <p>Easel <b>saves automatically</b> a moment after every change. You can see the status next to undo/redo. <kbd>Ctrl</kbd> <kbd>S</kbd> saves right away.</p>
       <div class="grid2">
         <div class="box"><b>Everyone</b><p>Designs and uploads are stored in <i>this browser</i> on <i>this device</i>. Clearing site data deletes them, so keep important work as a project file (File → Download project file).</p></div>
@@ -234,15 +256,15 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
       <h3>Signing in (owner only)</h3>
       <ol class="steps">
         <li>Click <span class="ui">Sign in</span> on the home screen, or the person icon in the editor.</li>
-        <li>Enter the owner e-mail and click <span class="ui">Send code</span>.</li>
-        <li>Type the code from the e-mail. It can take a minute, and codes are limited to a few per hour.</li>
+        <li>Enter the owner e-mail and your password, then click <span class="ui">Sign in</span>. Let the browser save the password.</li>
+        <li><b>First time, or forgot the password?</b> Click <span class="ui">Set a password</span>, enter the one-time setup code and choose a password (at least 10 characters). Setup codes are single-use and expire.</li>
         <li>Your designs on this device upload automatically. Designs from other devices appear on the home screen with a cloud icon and download when you open them.</li>
       </ol>
       <p>If two devices edit the same design, the most recently saved version wins, and older states are still in <a href="#versions">version history</a>.</p>
     </section>
 
     <section id="share">
-      <h2><span class="n">10</span>Sharing</h2>
+      <h2><span class="n">11</span>Sharing</h2>
       <p>Click <span class="ui">Share</span> (owner, signed in) and create a link. Nobody needs an account to open it.</p>
       <div class="grid2">
         <div class="box"><b>View-only link</b><p>People scroll through all pages but can't change anything.</p></div>
@@ -253,7 +275,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     </section>
 
     <section id="versions">
-      <h2><span class="n">11</span>Version history</h2>
+      <h2><span class="n">12</span>Version history</h2>
       <ul>
         <li>Open it with the clock icon in the top bar, or File → Version history.</li>
         <li>Easel keeps a version <b>automatically every 10 minutes</b> while you edit. Save a <b>named version</b> any time, for example “sent to print”.</li>
@@ -264,7 +286,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     </section>
 
     <section id="phone">
-      <h2><span class="n">12</span>On your phone</h2>
+      <h2><span class="n">13</span>On your phone</h2>
       <ul>
         <li>The tools are in the bar at the bottom. A panel opens as a sheet. Close it with <b>×</b>, by tapping the page, or by tapping the tool again.</li>
         <li>Adding something closes the sheet automatically so you can see it.</li>
@@ -274,8 +296,8 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     </section>
 
     <section id="keys">
-      <h2><span class="n">13</span>Keyboard shortcuts</h2>
-      <p>On a Mac use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>. In the editor, press <kbd>?</kbd> to see this list.</p>
+      <h2><span class="n">14</span>Keyboard shortcuts</h2>
+      <p>On a Mac use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>. In the editor, press <kbd>?</kbd> to see this list. In Present mode: arrows, <kbd>Space</kbd> and <kbd>Esc</kbd>.</p>
       <table>
         <tr><th>Action</th><th>Keys</th></tr>
         <tr><td>Add text / rectangle / circle / line</td><td><kbd>T</kbd> <kbd>R</kbd> <kbd>C</kbd> <kbd>L</kbd></td></tr>
@@ -297,11 +319,11 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
     </section>
 
     <section id="faq">
-      <h2><span class="n">14</span>Problems &amp; FAQ</h2>
+      <h2><span class="n">15</span>Problems &amp; FAQ</h2>
       <h3>My designs are gone.</h3>
       <p>Designs live in the browser you made them in. A different browser, a private window or cleared site data won't have them. The owner can sign in to get them from the cloud. Everyone else: keep a project file as backup.</p>
-      <h3>The login code doesn't arrive.</h3>
-      <p>Wait a minute and check spam. Codes are limited to a few per hour, so don't request more than one. Only the owner address can sign in.</p>
+      <h3>I can't sign in.</h3>
+      <p>Use the password sign-in, which doesn't depend on e-mail. If the password is lost, a new one-time setup code can be issued from the Easel database, and <span class="ui">Set a password</span> takes it from there. The login e-mail option exists too, but Supabase's free mailer sends only a few e-mails per hour.</p>
       <h3>“Saved on this device only” in the top bar.</h3>
       <p>The cloud couldn't be reached (offline or session expired). Your work is safe locally and syncs automatically when the connection is back. If it stays, sign in again.</p>
       <h3>Icons or photos don't load.</h3>

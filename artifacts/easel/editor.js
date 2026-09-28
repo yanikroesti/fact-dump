@@ -754,7 +754,7 @@ EZ.hasClip = () => !!clip;
 // copy / paste style
 let styleClip = null;
 const STYLE_KEYS = ['fill', 'stroke', 'strokeWidth', 'strokeDashArray', 'opacity', 'shadow', 'fontFamily', 'fontSize', 'fontWeight',
-  'fontStyle', 'underline', 'linethrough', 'textAlign', 'charSpacing', 'lineHeight', 'textBackgroundColor', 'effect', 'rx', 'ry', 'paintFirst'];
+  'fontStyle', 'underline', 'linethrough', 'textAlign', 'charSpacing', 'lineHeight', 'textBackgroundColor', 'effect', 'rx', 'ry', 'paintFirst', 'anim'];
 EZ.copyStyle = () => {
   const a = cv.getActiveObject(); if (!a || a.type === 'activeSelection') return;
   styleClip = {};

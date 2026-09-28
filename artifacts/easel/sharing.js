@@ -13,6 +13,51 @@ EZ.showLogin = () => EZ.modal((m, close) => {
   const err = h('p', { style: { color: '#b3261e', margin: '8px 0 0', display: 'none' } });
   const fail = msg => { err.textContent = msg; err.style.display = ''; };
   const body = h('div');
+  const pwInput = (ph, auto) => h('input', { class: 'inp', type: 'password', placeholder: ph, autocomplete: auto });
+  const linkBtn = (label, fn) => h('button', { style: { color: 'var(--accent-ink)', fontWeight: 600, fontSize: '12.5px', padding: '4px 0' }, onclick: fn }, label);
+  // Default: e-mail + password (no e-mail sending involved).
+  const pwStep = () => {
+    body.innerHTML = ''; err.style.display = 'none';
+    const em = h('input', { class: 'inp', type: 'email', placeholder: 'you@example.ch', value: email, autocomplete: 'username' });
+    const pw = pwInput('Password', 'current-password');
+    const go = h('button', { class: 'btn pri', onclick: async () => {
+      go.disabled = true; err.style.display = 'none';
+      const r = await EZ.cloud.signInPassword(em.value, pw.value);
+      go.disabled = false;
+      if (!r.ok) return fail(r.error);
+      close(true);
+    } }, 'Sign in');
+    [em, pw].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') go.click(); }));
+    body.append(h('div', { class: 'lbl' }, 'Owner e-mail'), em, h('div', { class: 'lbl', style: { marginTop: '10px' } }, 'Password'), pw, err,
+      h('div', { class: 'row', style: { justifyContent: 'space-between', marginTop: '8px', flexWrap: 'wrap' } },
+        linkBtn('First time or forgot it? Set a password', () => { email = em.value.trim(); setupStep(); }),
+        linkBtn('Use a login e-mail instead', () => { email = em.value.trim(); step1(); })),
+      h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: () => close() }, 'Cancel'), go));
+    setTimeout(() => (email ? pw : em).focus(), 0);
+  };
+  // One-time setup code (issued from the database) → choose your own password.
+  const setupStep = () => {
+    body.innerHTML = ''; err.style.display = 'none';
+    const em = h('input', { class: 'inp', type: 'email', placeholder: 'you@example.ch', value: email, autocomplete: 'username' });
+    const code = h('input', { class: 'inp', placeholder: 'Setup code', autocomplete: 'off', style: { fontFamily: 'monospace' } });
+    const pw = pwInput('New password (at least 10 characters)', 'new-password');
+    const pw2 = pwInput('Repeat the password', 'new-password');
+    const go = h('button', { class: 'btn pri', onclick: async () => {
+      err.style.display = 'none';
+      if (pw.value !== pw2.value) return fail('The two passwords are different.');
+      go.disabled = true;
+      const r = await EZ.cloud.setupPassword(em.value, code.value, pw.value);
+      go.disabled = false;
+      if (!r.ok) return fail(r.error);
+      close(true);
+    } }, 'Set password & sign in');
+    body.append(h('p', {}, 'Enter the one-time setup code you were given, then choose your password. Your browser can save it for next time.'),
+      h('div', { class: 'lbl' }, 'Owner e-mail'), em,
+      h('div', { class: 'lbl', style: { marginTop: '10px' } }, 'Setup code'), code,
+      h('div', { class: 'lbl', style: { marginTop: '10px' } }, 'New password'), pw, h('div', { style: { height: '8px' } }), pw2, err,
+      h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: pwStep }, 'Back'), go));
+    setTimeout(() => code.focus(), 0);
+  };
   const step1 = () => {
     body.innerHTML = '';
     const inp = h('input', { class: 'inp', type: 'email', placeholder: 'you@example.ch', value: email, autocomplete: 'email' });
@@ -24,7 +69,7 @@ EZ.showLogin = () => EZ.modal((m, close) => {
       email = inp.value.trim(); step2();
     } }, 'Send login e-mail');
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') go.click(); });
-    body.append(h('div', { class: 'lbl' }, 'Owner e-mail'), inp, err, h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: () => close() }, 'Cancel'), go));
+    body.append(h('div', { class: 'lbl' }, 'Owner e-mail'), inp, err, h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: pwStep }, 'Back'), go));
     setTimeout(() => inp.focus(), 0);
   };
   const step2 = () => {
@@ -48,7 +93,7 @@ EZ.showLogin = () => EZ.modal((m, close) => {
     setTimeout(() => inp.focus(), 0);
   };
   m.append(h('h3', {}, 'Owner sign-in'), h('p', {}, 'Signing in syncs your designs across devices and unlocks share links and cloud version history. Everyone else can use Easel without an account — their work stays in their browser.'), body);
-  step1();
+  pwStep();
 }).then(ok => { if (ok) EZ.toast('Signed in — syncing your designs', { icon: 'cloud' }); });
 
 EZ.accountMenu = anchor => {

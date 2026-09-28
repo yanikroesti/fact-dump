@@ -172,6 +172,45 @@ input[type=range] { accent-color: var(--accent); }
 #acctBtn.on { color: var(--accent2); }
 #saveState.err { color: #ff8a80; }
 
+/* ── present mode ── */
+#present { position: fixed; inset: 0; z-index: 400; background: #000; display: flex; flex-direction: column; }
+#present.preview { background: rgba(10,9,16,.92); }
+#present .pr-stage { flex: 1; position: relative; display: grid; place-items: center; overflow: hidden; cursor: pointer; }
+#present.preview .pr-stage { cursor: default; }
+#present .pr-canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: opacity .3s; box-shadow: 0 10px 50px rgba(0,0,0,.5); }
+#present .pr-canvas.out { opacity: 0; }
+#present .pr-bar { height: 56px; flex: none; display: flex; align-items: center; gap: 6px; padding: 0 14px; color: #e9e8f1; transition: opacity .3s; }
+#present.idle:not(.preview) .pr-bar { opacity: 0; }
+#present.idle:not(.preview) { cursor: none; }
+.pr-count { font-weight: 700; font-size: 13px; color: #c9c7d6; }
+.pr-btn { height: 36px; min-width: 36px; padding: 0 10px; border-radius: 9px; background: rgba(255,255,255,.1); color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; }
+.pr-btn:hover { background: rgba(255,255,255,.2); }
+.pr-btn.on { background: var(--accent); }
+
+/* animation demo tiles */
+.ez-demo { width: 34px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: grid; place-items: center; color: #fff; font-size: 11px; font-weight: 800; overflow: hidden; white-space: nowrap; }
+.ez-demo.run.ez-a-fade { animation: ezFade .7s ease-out; }
+.ez-demo.run.ez-a-rise { animation: ezRise .7s cubic-bezier(.2,.8,.2,1); }
+.ez-demo.run.ez-a-drop { animation: ezDrop .7s cubic-bezier(.2,.8,.2,1); }
+.ez-demo.run.ez-a-slideL { animation: ezSlideL .7s cubic-bezier(.2,.8,.2,1); }
+.ez-demo.run.ez-a-slideR { animation: ezSlideR .7s cubic-bezier(.2,.8,.2,1); }
+.ez-demo.run.ez-a-pop { animation: ezPop .6s cubic-bezier(.34,1.56,.64,1); }
+.ez-demo.run.ez-a-zoom { animation: ezZoom .7s ease-out; }
+.ez-demo.run.ez-a-spin { animation: ezSpin .7s ease-out; }
+.ez-demo.run.ez-a-wipe { animation: ezWipe .7s ease-out; }
+.ez-demo.run.ez-a-type { animation: ezType .8s steps(3); }
+.ez-a-type { background: none; color: var(--text); width: auto; font-size: 13px; }
+@keyframes ezFade { from { opacity: 0; } }
+@keyframes ezRise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes ezDrop { from { opacity: 0; transform: translateY(-12px); } }
+@keyframes ezSlideL { from { opacity: 0; transform: translateX(22px); } }
+@keyframes ezSlideR { from { opacity: 0; transform: translateX(-22px); } }
+@keyframes ezPop { from { opacity: 0; transform: scale(.3); } }
+@keyframes ezZoom { from { opacity: 0; transform: scale(1.6); } }
+@keyframes ezSpin { from { opacity: 0; transform: rotate(-150deg) scale(.5); } }
+@keyframes ezWipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes ezType { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
 /* ── share viewer ── */
 #viewer { position: fixed; inset: 0; overflow-y: auto; background: #0f0e15; z-index: 60; }
 #viewer .home-top { position: sticky; top: 0; z-index: 2; gap: 14px; }
@@ -645,6 +684,7 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
     <span class="top-spacer"></span>
     <input id="docTitle" spellcheck="false" aria-label="Design name">
     <button class="tb-btn hide-md" id="helpBtn" title="Keyboard shortcuts (?)"><i class="ic" data-ic="keyboard"></i></button>
+    <button class="tb-btn" id="presentBtn" title="Present (full screen)"><i class="ic" data-ic="monitor-play"></i><span class="hide-md">Present</span></button>
     <button class="tb-btn hide-sm" id="versionsBtn" title="Version history"><i class="ic" data-ic="history"></i></button>
     <button class="tb-btn" id="acctBtn" title="Owner sign-in"><i class="ic" data-ic="user"></i></button>
     <button class="btn-ghost-dark" id="shareBtn"><i class="ic sm" data-ic="share-2"></i><span class="dl-txt">Share</span></button>
@@ -697,6 +737,7 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
 <script src="easel/props.js"></script>
 <script src="easel/export.js"></script>
 <script src="easel/sharing.js"></script>
+<script src="easel/motion.js"></script>
 <script src="easel/app.js"></script>
 </body>
 </html>

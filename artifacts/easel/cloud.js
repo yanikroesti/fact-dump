@@ -105,6 +105,23 @@ async function verifyCode(email, input) {
   if (error) return { ok: false, error: authMessage(error) };
   return finishSignIn();
 }
+// Password sign-in — no e-mail involved (Supabase's built-in mailer is too rate-limited to rely on).
+async function signInPassword(email, password) {
+  await init();
+  const clean = String(email || '').trim();
+  const { error } = await client.auth.signInWithPassword({ email: clean, password: String(password || '') });
+  if (error) return { ok: false, error: /invalid login|credentials/i.test(error.message || '') ? 'E-mail or password is wrong. First time here? Use “Set a password”.' : authMessage(error) };
+  try { localStorage.setItem('easel.email', clean); } catch {}
+  return finishSignIn();
+}
+// First-time (or forgotten) password: a one-time setup code from the project owner's database.
+async function setupPassword(email, code, password) {
+  await init();
+  const { data, error } = await client.rpc('easel_set_owner_password', { p_code: String(code || '').trim(), p_password: String(password || '') });
+  if (error) return { ok: false, error: authMessage(error) };
+  if (!data?.ok) return { ok: false, error: data?.error || 'Could not set the password.' };
+  return signInPassword(email || data.email, password);
+}
 // Called at boot when the login link brought us back here with #access_token=… in the address.
 async function consumeRedirect() {
   const hash = location.hash;
@@ -257,7 +274,7 @@ const shareUrl = t => `${location.origin}${location.pathname}#s=${t}`;
 
 EZ.cloud = {
   state, on: fn => { listeners.add(fn); return () => listeners.delete(fn); },
-  init, hasSession, sendCode, verifyCode, consumeRedirect, signOut,
+  init, hasSession, sendCode, verifyCode, consumeRedirect, signOut, signInPassword, setupPassword,
   queuePush, flush: () => flush.flush(), syncAll, list, pull, freshen, remove,
   versions, saveVersion, getVersion,
   shares, createShare, deleteShare, getShare, shareUrl,

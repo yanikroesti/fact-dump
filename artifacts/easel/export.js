@@ -10,9 +10,11 @@ const TYPES = [
   { id: 'pdf', label: 'PDF standard', sub: 'All pages in one document — slides, handouts, worksheets.', ic: 'file-text' },
   { id: 'pdfprint', label: 'PDF print', sub: 'High resolution with 3 mm bleed and crop marks, for a print shop.', ic: 'printer' },
   { id: 'svg', label: 'SVG', sub: 'Vector file of the page(s), for further editing.', ic: 'file-code' },
+  { id: 'mp4', label: 'MP4 video', sub: 'Plays your animations and page transitions — for Reels, TikTok, slides.', ic: 'film' },
+  { id: 'gif', label: 'GIF', sub: 'Short looping animation that works everywhere (256 colours).', ic: 'image-play' },
   { id: 'easel', label: 'Easel project', sub: 'The editable design incl. images — open it again in Easel on any device.', ic: 'save' },
 ];
-let last = { type: 'png', mult: 2, quality: 90, transparent: false, pages: 'all', range: '', dpi: 300 };
+let last = { type: 'png', mult: 2, quality: 90, transparent: false, pages: 'all', range: '', dpi: 300, res: 1920, fps: 30, gifSize: 640, gifFps: 15 };
 try { last = { ...last, ...JSON.parse(localStorage.getItem('easel.export') || '{}') }; } catch {}
 
 EZ.showExport = () => EZ.modal((m, close) => {
@@ -46,6 +48,19 @@ EZ.showExport = () => EZ.modal((m, close) => {
       [[150, '150 dpi'], [300, '300 dpi']].forEach(([d, l]) => seg.append(h('button', { class: st.dpi === d ? 'on' : '', onclick: () => { st.dpi = d; draw(); } }, l)));
       body.append(h('div', { class: 'lbl' }, 'Resolution'), seg);
       if (!EZ.doc.mm) body.append(h('p', { class: 'hint' }, `This design is in pixels; it will be printed at ${EZ.round(EZ.W() / EZ.UNIT_PX.mm, 1)} × ${EZ.round(EZ.H() / EZ.UNIT_PX.mm, 1)} mm (96 px per inch).`));
+    }
+    if (st.type === 'mp4' || st.type === 'gif') {
+      const gif = st.type === 'gif';
+      const segRow = (label, key, opts) => {
+        const seg = h('div', { class: 'seg', style: { marginBottom: '12px' } });
+        opts.forEach(([v, l]) => seg.append(h('button', { class: st[key] === v ? 'on' : '', onclick: () => { st[key] = v; draw(); } }, l)));
+        return [h('div', { class: 'lbl' }, label), seg];
+      };
+      const long = gif ? st.gifSize : st.res, k = long / Math.max(EZ.W(), EZ.H());
+      body.append(...segRow('Size', gif ? 'gifSize' : 'res', gif ? [[480, 'Small'], [640, 'Medium'], [800, 'Large']] : [[1280, '720p'], [1920, '1080p']]),
+        ...segRow('Frames per second', gif ? 'gifFps' : 'fps', gif ? [[10, '10'], [15, '15'], [20, '20']] : [[30, '30'], [60, '60']]));
+      const len = EZ.motionLength(pageList(st));
+      body.append(h('p', { class: 'hint' }, `${Math.round(EZ.W() * k / 2) * 2} × ${Math.round(EZ.H() * k / 2) * 2} px · ${(len / 1000).toFixed(1)} s. Set page durations, transitions and animations in `, h('b', {}, 'Animate'), '.' + (gif ? ' Long GIFs get big — keep them under ~10 s.' : '')));
     }
     if (st.type === 'png') {
       const c = h('input', { type: 'checkbox', checked: st.transparent });
@@ -116,6 +131,8 @@ async function runExport(st) {
       await deliver(files, name, busy);
     } else if (st.type === 'pdf' || st.type === 'pdfprint') {
       await pdf(st, pages, name, busy);
+    } else if (st.type === 'mp4' || st.type === 'gif') {
+      await EZ.exportMotion(st, pages, name, busy);
     }
   } catch (e) {
     console.error(e);

@@ -276,6 +276,8 @@ async function boot() {
   // stage 2: cloud account, sharing, versions
   $('#shareBtn').onclick = () => EZ.showShare();
   $('#versionsBtn').onclick = () => EZ.showVersions();
+  // stage 3: present mode
+  $('#presentBtn').onclick = () => EZ.present(EZ.pageIndex);
   $('#acctBtn').onclick = e => EZ.accountMenu(e.currentTarget);
   $('#homeAcct').onclick = e => EZ.accountMenu(e.currentTarget);
   $('#panelX').onclick = () => EZ.closePanel();

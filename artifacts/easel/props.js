@@ -83,6 +83,7 @@ EZ.renderProps = () => {
       h('span', { class: 'ctx-label' }, 'Background'), sep(),
       cb('scaling', 'Resize design', () => EZ.showResize(), { label: 'Resize' }),
       cb('layout-template', 'Templates', () => EZ.openPanel('templates'), { label: 'Templates' }),
+      cb('clapperboard', 'Animate the page', () => EZ.openPanel('animate'), { label: 'Animate' }),
       h('span', { class: 'grow' }),
       h('span', { class: 'ctx-label' }, `Page ${EZ.pageIndex + 1} of ${EZ.doc.pages.length} · ${EZ.doc.mm ? EZ.doc.mm.join(' × ') + ' mm' : EZ.W() + ' × ' + EZ.H() + ' px'}`));
     return;
@@ -218,6 +219,7 @@ EZ.renderProps = () => {
 
   // common, right side
   add(h('span', { class: 'grow' }));
+  add(cb('clapperboard', 'Animate', () => EZ.openPanel('animate'), { label: 'Animate', on: objs.some(o => o.anim) }));
   add(cb('layers', 'Position & layers', () => EZ.openPanel('layers')));
   const opBtn = cb('blend', 'Transparency', () => sliderPop(opBtn, 'Transparency', Math.round((a.opacity ?? 1) * 100), 0, 100, v => { objs.forEach(o => o.set('opacity', v / 100)); cv.requestRenderAll(); }, v => v + '%'));
   add(opBtn);
