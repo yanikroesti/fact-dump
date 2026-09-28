@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Easel Guide</title>
 <meta name="description" content="How to use Easel, the free in-browser design editor: templates, elements, text, photos, pages, downloads, sync, share links and version history.">
+<link rel="icon" type="image/png" sizes="32x32" href="easel/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="easel/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
@@ -27,8 +29,7 @@ header.top {
   background: var(--ink); color: #e9e8f1;
 }
 .brand { display: flex; align-items: center; gap: 9px; color: inherit; text-decoration: none; font: 800 17px 'Bricolage Grotesque', sans-serif; }
-.mark { width: 26px; height: 26px; border-radius: 8px; background: conic-gradient(from 200deg, var(--accent), var(--accent2), #ffd166, var(--accent)); display: grid; place-items: center; }
-.mark svg { width: 15px; height: 15px; stroke: #fff; }
+.mark { width: 28px; height: 28px; display: block; }
 header.top .sp { flex: 1; }
 .open-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 8px 16px; border-radius: 9px; }
 .hero { background: radial-gradient(800px 260px at 15% 0%, rgba(255,138,61,.32), transparent 60%), var(--ink); color: #fff; padding: 44px 20px 54px; text-align: center; }
@@ -76,7 +77,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="easel.html"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg></span>Easel Guide</a>
+  <a class="brand" href="easel.html"><img class="mark" src="easel/brand/logo-64.png" alt="">Easel Guide</a>
   <span class="sp"></span>
   <a class="open-btn" href="easel.html">Open Easel</a>
 </header>

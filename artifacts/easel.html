@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Easel — Design Studio</title>
 <meta name="description" content="A free in-browser design editor: social posts, slides, posters, worksheets. Templates, icons, photos, text effects, background removal, PNG/JPG/PDF/SVG export.">
+<link rel="icon" type="image/png" sizes="32x32" href="easel/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="easel/brand/logo-192.png">
+<link rel="apple-touch-icon" href="easel/brand/apple-touch-icon.png">
+<link rel="manifest" href="easel/brand/manifest.webmanifest">
+<meta name="theme-color" content="#15141c">
+<meta property="og:title" content="Easel — Design Studio">
+<meta property="og:description" content="A free in-browser design editor for posts, slides, posters and worksheets.">
+<meta property="og:image" content="https://dump.yanikroesti.ch/artifacts/easel/brand/logo-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.iconify.design">
@@ -90,12 +98,7 @@ input[type=range] { accent-color: var(--accent); }
   color: inherit; text-decoration: none;
 }
 .brand:hover { background: var(--ink3); }
-.brand .mark {
-  width: 26px; height: 26px; border-radius: 8px;
-  background: conic-gradient(from 200deg, var(--accent), var(--accent2), #ffd166, var(--accent));
-  display: grid; place-items: center; color: #fff;
-}
-.brand .mark .ic { width: 15px; height: 15px; }
+.brand .mark { width: 28px; height: 28px; display: block; flex: none; }
 .tb-btn {
   height: 34px; min-width: 34px; padding: 0 9px;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
@@ -637,7 +640,7 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
 <!-- ═════════ HOME ═════════ -->
 <div id="home" class="hidden">
   <div class="home-top">
-    <a class="brand" href="../index.html" title="Back to dump/"><span class="mark"><i class="ic" data-ic="brush"></i></span>Easel</a>
+    <a class="brand" href="../index.html" title="Back to dump/"><img class="mark" src="easel/brand/logo-64.png" alt="">Easel</a>
     <span class="top-spacer"></span>
     <a class="btn-ghost-dark" href="easel-guide.html" style="text-decoration:none"><i class="ic sm" data-ic="book-open"></i><span class="dl-txt">Guide</span></a>
     <button class="btn-ghost-dark" id="homeAcct" title="Owner sign-in"><i class="ic sm" data-ic="user"></i><span class="dl-txt">Sign in</span></button>
@@ -674,7 +677,7 @@ kbd { font: 600 11px var(--font); background: var(--paper3); border: 1px solid v
 <!-- ═════════ EDITOR ═════════ -->
 <div id="app" class="hidden">
   <header id="top">
-    <button class="brand" id="goHome" title="Home — all designs"><span class="mark"><i class="ic" data-ic="brush"></i></span><span class="hide-sm">Easel</span></button>
+    <button class="brand" id="goHome" title="Home — all designs"><img class="mark" src="easel/brand/logo-64.png" alt=""><span class="hide-sm">Easel</span></button>
     <button class="tb-btn hide-sm" id="fileBtn">File</button>
     <button class="tb-btn hide-sm" id="resizeBtn"><i class="ic sm" data-ic="scaling"></i>Resize</button>
     <span class="tb-sep"></span>

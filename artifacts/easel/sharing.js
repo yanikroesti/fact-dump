@@ -248,7 +248,7 @@ EZ.showViewer = async token => {
   const v = h('div', { id: 'viewer' });
   document.body.append(v);
   const top = h('div', { class: 'home-top' },
-    h('a', { class: 'brand', href: location.pathname }, h('span', { class: 'mark' }, icon('brush')), 'Easel'));
+    h('a', { class: 'brand', href: location.pathname }, h('img', { class: 'mark', src: 'easel/brand/logo-64.png', alt: '' }), 'Easel'));
   const main = h('div', { class: 'viewer-main' }, h('div', { class: 'empty', style: { color: '#c9c7d6' } }, h('span', { class: 'spin' }), h('div', { style: { marginTop: '10px' } }, 'Opening shared design…')));
   v.append(top, main);
   let s;
