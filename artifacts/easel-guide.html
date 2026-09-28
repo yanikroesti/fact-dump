@@ -35,6 +35,9 @@ header.top .sp { flex: 1; }
 .hero { background: radial-gradient(800px 260px at 15% 0%, rgba(255,138,61,.32), transparent 60%), var(--ink); color: #fff; padding: 44px 20px 54px; text-align: center; }
 .hero h1 { margin: 0 0 10px; font-size: clamp(30px, 5vw, 46px); }
 .hero p { margin: 0 auto; max-width: 620px; color: #c9c7d6; }
+.hero-logo { width: 88px; height: 88px; display: block; margin: 0 auto 16px; filter: drop-shadow(0 10px 28px rgba(255,92,53,.35)); }
+.sign { display: flex; gap: 14px; align-items: center; margin: 4px 0 14px; }
+.sign img { width: 44px; height: 44px; flex: none; }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 70px; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 36px; }
 nav.toc { position: sticky; top: 80px; align-self: start; font-size: 14px; }
 nav.toc b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--mute); margin-bottom: 8px; }
@@ -83,6 +86,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
 </header>
 
 <div class="hero">
+  <img class="hero-logo" src="easel/brand/logo-192.png" alt="Easel logo">
   <h1>How to use Easel</h1>
   <p>Everything you need to design posts, slides, posters and worksheets. Read it top to bottom in ten minutes, or jump to what you need.</p>
 </div>
@@ -255,13 +259,27 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
         <div class="box"><b>Owner (signed in)</b><p>Designs also sync to the Easel cloud. They show up on every device you sign in on, and the status says <span class="ui">Synced</span>.</p></div>
       </div>
       <h3>Signing in (owner only)</h3>
+      <p>Only the owner account can sign in. Everyone else uses Easel without an account.</p>
       <ol class="steps">
-        <li>Click <span class="ui">Sign in</span> on the home screen, or the person icon in the editor.</li>
-        <li>Enter the owner e-mail and your password, then click <span class="ui">Sign in</span>. Let the browser save the password.</li>
-        <li><b>First time, or forgot the password?</b> Click <span class="ui">Set a password</span>, enter the one-time setup code and choose a password (at least 10 characters). Setup codes are single-use and expire.</li>
-        <li>Your designs on this device upload automatically. Designs from other devices appear on the home screen with a cloud icon and download when you open them.</li>
+        <li>Click <span class="ui">Sign in</span> at the top right of the home screen, or the person icon in the editor's top bar (also File → Owner sign-in).</li>
+        <li>Enter your <b>Owner e-mail</b> and <b>Password</b>, then click <span class="ui">Sign in</span>. Let the browser save the password, and next time it's one click.</li>
+        <li>Your designs on this device upload automatically. Designs from your other devices appear under <span class="ui">Your designs</span> with a green cloud icon and download when you open them.</li>
       </ol>
-      <p>If two devices edit the same design, the most recently saved version wins, and older states are still in <a href="#versions">version history</a>.</p>
+      <p>You stay signed in on that device until you sign out. Sign in once on each device you use (laptop, phone …).</p>
+      <h3>First time on a device, or forgot the password?</h3>
+      <ol class="steps">
+        <li>In the sign-in window, click <span class="ui">First time or forgot it? Set a password</span>.</li>
+        <li>Enter your e-mail, the <b>one-time setup code</b> (ask for a new one if you don't have it) and your new password twice (at least 10 characters).</li>
+        <li>Click <span class="ui">Set password &amp; sign in</span>. The code works once and expires after a few hours.</li>
+      </ol>
+      <div class="tip">There is also <span class="ui">Use a login e-mail instead</span>, but Supabase's free mailer sends only a few e-mails per hour and often refuses. The password is the reliable way in.</div>
+      <h3>While you're signed in</h3>
+      <ul>
+        <li>The status next to undo/redo shows <span class="ui">Synced</span> once a change has reached the cloud (a few seconds after you stop editing).</li>
+        <li><span class="ui">Saved on this device only</span> means the cloud wasn't reachable. Your work is safe locally and syncs by itself when the connection is back.</li>
+        <li>Click the person icon (or <span class="ui">Synced</span> on the home screen) for <span class="ui">Sync now</span> and <span class="ui">Sign out</span>. Signing out keeps the designs on the device.</li>
+        <li>If two devices edit the same design, the most recently saved version wins, and older states are still in <a href="#versions">version history</a>.</li>
+      </ul>
     </section>
 
     <section id="share">
@@ -294,6 +312,13 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
         <li>Drag with one finger. For fine work the laptop is more comfortable. Easel is built for bigger screens first.</li>
         <li>Sign in on the phone too, and designs sync both ways.</li>
       </ul>
+      <h3>Put Easel on your home screen</h3>
+      <div class="sign"><img src="easel/brand/logo-192.png" alt=""><p style="margin:0">Easel then opens full screen like an app, with its own icon.</p></div>
+      <ul>
+        <li><b>iPhone (Safari):</b> open Easel, tap the share button → <span class="ui">Add to Home Screen</span> → <span class="ui">Add</span>.</li>
+        <li><b>Android (Chrome, Brave):</b> open Easel, tap <span class="ui">⋮</span> → <span class="ui">Add to Home screen</span> (or <span class="ui">Install app</span>).</li>
+        <li>On a laptop, Chrome and Edge offer <span class="ui">Install</span> in the address bar, which gives Easel its own window.</li>
+      </ul>
     </section>
 
     <section id="keys">
@@ -324,7 +349,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
       <h3>My designs are gone.</h3>
       <p>Designs live in the browser you made them in. A different browser, a private window or cleared site data won't have them. The owner can sign in to get them from the cloud. Everyone else: keep a project file as backup.</p>
       <h3>I can't sign in.</h3>
-      <p>Use the password sign-in, which doesn't depend on e-mail. If the password is lost, a new one-time setup code can be issued from the Easel database, and <span class="ui">Set a password</span> takes it from there. The login e-mail option exists too, but Supabase's free mailer sends only a few e-mails per hour.</p>
+      <p>Check the e-mail address. “E-mail or password is wrong” usually means a typo or a password that was never set on this account. Forgot the password? Get a new one-time setup code and use <span class="ui">Set a password</span>. “No valid setup code” means the code was already used or has expired, so ask for a new one.</p>
       <h3>“Saved on this device only” in the top bar.</h3>
       <p>The cloud couldn't be reached (offline or session expired). Your work is safe locally and syncs automatically when the connection is back. If it stays, sign in again.</p>
       <h3>Icons or photos don't load.</h3>
@@ -337,7 +362,7 @@ footer { text-align: center; color: var(--mute); font-size: 13px; padding: 0 20p
   </main>
 </div>
 
-<footer>Easel · part of <a href="../index.html">dump.yanikroesti.ch</a> · <a href="easel.html">Open Easel</a></footer>
+<footer><img src="easel/brand/logo-64.png" alt="" style="width:22px;height:22px;vertical-align:-6px;margin-right:6px">Easel · part of <a href="../index.html">dump.yanikroesti.ch</a> · <a href="easel.html">Open Easel</a></footer>
 
 <script>
 // highlight the current section in the table of contents
