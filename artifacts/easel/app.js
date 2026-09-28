@@ -295,6 +295,12 @@ async function boot() {
     }
   });
 
+  // back from the e-mail login link (#access_token=… or #error_description=…)
+  if (/access_token=|error_description=/.test(location.hash)) {
+    const r = await EZ.cloud.consumeRedirect().catch(e => ({ ok: false, error: e.message }));
+    if (r?.ok) EZ.toast('Signed in — syncing your designs', { icon: 'cloud', ms: 3500 });
+    else if (r) EZ.toast(r.error, { err: true, ms: 6000 });
+  }
   const share = location.hash.match(/s=([\w-]+)/);
   if (share) return EZ.showViewer(share[1]);
   if (EZ.cloud.hasSession()) EZ.cloud.init().catch(e => console.warn('cloud init failed', e));

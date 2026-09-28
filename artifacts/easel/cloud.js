@@ -28,7 +28,8 @@ function init() {
   if (!clientP) {
     clientP = loadScript(LIB).then(async () => {
       client = window.supabase.createClient(URL_, KEY, {
-        auth: { storageKey: AUTH_KEY, persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+        // implicit flow: the login link works even when opened in another browser than the one that asked for it
+        auth: { storageKey: AUTH_KEY, persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, flowType: 'implicit' },
       });
       client.auth.onAuthStateChange((_evt, session) => {
         state.email = session?.user?.email || '';
@@ -57,7 +58,8 @@ function authMessage(error) {
   const msg = String(error?.message || error || '');
   if (/not authorized/i.test(msg)) return 'Supabase only mails login codes to addresses on your Supabase team.';
   if (/Signups not allowed|user not found/i.test(msg)) return 'That address is not the owner address for Easel.';
-  if (/rate limit|only request this after|too many/i.test(msg)) return 'Too many code requests — wait a minute and try again.';
+  if (/rate limit|only request this after|too many/i.test(msg)) return 'Too many login e-mails requested — wait a few minutes and try again.';
+  if (error?.code === 'email_address_invalid' || /email address .* is invalid/i.test(msg)) return 'Supabase rejected that e-mail address.';
   if (/expired|invalid/i.test(msg)) return 'That code is wrong or has expired. Ask for a new one.';
   if (/fetch|network/i.test(msg)) return 'No connection to the server.';
   return msg || 'Login failed.';
@@ -66,20 +68,57 @@ async function sendCode(email) {
   await init();
   const clean = String(email || '').trim();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean)) return { ok: false, error: 'Enter a valid e-mail address.' };
-  const { error } = await client.auth.signInWithOtp({ email: clean, options: { shouldCreateUser: false } });
+  // The e-mail's "Log In" link comes back to this page (if the URL is allowed in Supabase) with the session in the hash.
+  const { error } = await client.auth.signInWithOtp({ email: clean, options: { shouldCreateUser: false, emailRedirectTo: location.origin + location.pathname } });
   if (error) return { ok: false, error: authMessage(error) };
   try { localStorage.setItem('easel.email', clean); } catch {}
   return { ok: true };
 }
-async function verifyCode(email, token) {
-  await init();
-  const code = String(token || '').replace(/\D/g, '');
-  if (code.length < 6) return { ok: false, error: 'Enter the code from the e-mail.' };
-  const { error } = await client.auth.verifyOtp({ email: String(email || '').trim(), token: code, type: 'email' });
-  if (error) return { ok: false, error: authMessage(error) };
+async function finishSignIn() {
   if (!(await refreshOwner())) { await client.auth.signOut(); return { ok: false, error: 'Signed in, but this account is not the Easel owner.' }; }
   syncAll();
   return { ok: true };
+}
+// Accepts what the user pastes: the link from the e-mail, the address of the page the link
+// opened (…#access_token=…), or a numeric code if the e-mail template ever contains one.
+async function verifyCode(email, input) {
+  await init();
+  const raw = String(input || '').trim();
+  const tokens = raw.match(/access_token=([^&\s]+)/) && raw.match(/refresh_token=([^&\s]+)/);
+  if (tokens) {
+    const access = decodeURIComponent(raw.match(/access_token=([^&\s]+)/)[1]);
+    const refresh = decodeURIComponent(raw.match(/refresh_token=([^&\s]+)/)[1]);
+    const { error } = await client.auth.setSession({ access_token: access, refresh_token: refresh });
+    if (error) return { ok: false, error: authMessage(error) };
+    return finishSignIn();
+  }
+  const link = raw.match(/[?&]token=([^&\s]+)/);
+  if (link) {
+    const type = (raw.match(/[?&]type=([a-z_]+)/) || [])[1] || 'magiclink';
+    const { error } = await client.auth.verifyOtp({ token_hash: decodeURIComponent(link[1]), type });
+    if (error) return { ok: false, error: /expired|invalid/i.test(error.message || '') ? 'That link was already used or has expired — ask for a new one.' : authMessage(error) };
+    return finishSignIn();
+  }
+  const code = raw.replace(/\D/g, '');
+  if (code.length < 6) return { ok: false, error: 'Paste the link from the e-mail (long-press “Log In” → copy link).' };
+  const { error } = await client.auth.verifyOtp({ email: String(email || '').trim(), token: code, type: 'email' });
+  if (error) return { ok: false, error: authMessage(error) };
+  return finishSignIn();
+}
+// Called at boot when the login link brought us back here with #access_token=… in the address.
+async function consumeRedirect() {
+  const hash = location.hash;
+  const clean = () => history.replaceState(null, '', location.pathname + location.search);
+  if (/error_description=/.test(hash)) {
+    const msg = decodeURIComponent((hash.match(/error_description=([^&]+)/) || [])[1] || '').replace(/\+/g, ' ');
+    clean();
+    return { ok: false, error: /expired|invalid/i.test(msg) ? 'That login link was already used or has expired — ask for a new one.' : msg || 'Login failed.' };
+  }
+  if (!/access_token=/.test(hash)) return null;
+  await init();
+  const r = await verifyCode('', hash);
+  clean();
+  return r;
 }
 async function signOut() {
   await init();
@@ -218,7 +257,7 @@ const shareUrl = t => `${location.origin}${location.pathname}#s=${t}`;
 
 EZ.cloud = {
   state, on: fn => { listeners.add(fn); return () => listeners.delete(fn); },
-  init, hasSession, sendCode, verifyCode, signOut,
+  init, hasSession, sendCode, verifyCode, consumeRedirect, signOut,
   queuePush, flush: () => flush.flush(), syncAll, list, pull, freshen, remove,
   versions, saveVersion, getVersion,
   shares, createShare, deleteShare, getShare, shareUrl,

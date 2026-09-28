@@ -22,14 +22,14 @@ EZ.showLogin = () => EZ.modal((m, close) => {
       go.disabled = false;
       if (!r.ok) return fail(r.error);
       email = inp.value.trim(); step2();
-    } }, 'Send code');
+    } }, 'Send login e-mail');
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') go.click(); });
     body.append(h('div', { class: 'lbl' }, 'Owner e-mail'), inp, err, h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: () => close() }, 'Cancel'), go));
     setTimeout(() => inp.focus(), 0);
   };
   const step2 = () => {
     body.innerHTML = '';
-    const inp = h('input', { class: 'inp', inputmode: 'numeric', autocomplete: 'one-time-code', placeholder: '123456', style: { fontSize: '20px', letterSpacing: '.2em', height: '46px', textAlign: 'center' } });
+    const inp = h('input', { class: 'inp', placeholder: 'Paste the link here', autocomplete: 'off', style: { height: '42px' } });
     const go = h('button', { class: 'btn pri', onclick: async () => {
       go.disabled = true; err.style.display = 'none';
       const r = await EZ.cloud.verifyCode(email, inp.value);
@@ -38,7 +38,12 @@ EZ.showLogin = () => EZ.modal((m, close) => {
       close(true);
     } }, 'Sign in');
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') go.click(); });
-    body.append(h('p', {}, `We sent a code to ${email}. It can take a minute to arrive.`), inp, err,
+    inp.addEventListener('paste', () => setTimeout(() => { if (inp.value.trim()) go.click(); }, 0));
+    body.append(
+      h('p', {}, `We sent a login e-mail to ${email} — it can take a minute.`),
+      h('p', { style: { color: 'var(--text)' } }, h('b', {}, 'Easiest: '), 'tap “Log In” in the e-mail on this device. It brings you back here, signed in.'),
+      h('p', {}, h('b', { style: { color: 'var(--text)' } }, 'Other device or it opened an error page? '), 'Copy the link (long-press “Log In” → copy link) — or copy the address of the page it opened — and paste it here:'),
+      inp, err,
       h('div', { class: 'actions' }, h('button', { class: 'btn', onclick: step1 }, 'Back'), go));
     setTimeout(() => inp.focus(), 0);
   };
