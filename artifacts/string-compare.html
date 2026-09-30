@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>String Compare</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #f3f2ee;
+  --paper:   #ffffff;
+  --ink:     #141417;
+  --soft:    #4a4b52;
+  --rule:    #d4d2c9;
+  --rule2:   #b9b7ad;
+  --field:   #fbfbf9;
+  --focus:   #141417;
+
+  --ok:      #0a6b35;
+  --ok-ink:  #ffffff;
+  --bad:     #b3261e;
+  --bad-ink: #ffffff;
+  --idle:    #e4e2da;
+
+  --mark-a:  #ffd9d4;
+  --mark-b:  #ffe7a3;
+  --mark-ink:#141417;
+  --ws:      #8a8b93;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #0f1012;
+    --paper:   #18191c;
+    --ink:     #f1f1f3;
+    --soft:    #b6b8c0;
+    --rule:    #33353b;
+    --rule2:   #4a4d55;
+    --field:   #121315;
+    --focus:   #f1f1f3;
+
+    --ok:      #1f8a4c;
+    --bad:     #c9362c;
+    --idle:    #25272c;
+
+    --mark-a:  #6e2019;
+    --mark-b:  #6b5310;
+    --mark-ink:#ffffff;
+    --ws:      #80838c;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 'IBM Plex Sans', system-ui, sans-serif;
+  padding: 40px 24px 64px;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+header { margin-bottom: 24px; }
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.15;
+}
+header p { color: var(--soft); margin-top: 8px; max-width: 60ch; }
+
+/* ── inputs ── */
+.fields {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+.field { display: flex; flex-direction: column; min-width: 0; }
+.field-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.field-top label {
+  font-weight: 600;
+  font-size: 15px;
+}
+.field-top .stats {
+  font: 12px/1.4 'IBM Plex Mono', monospace;
+  color: var(--soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+textarea {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+  padding: 12px;
+  background: var(--field);
+  color: var(--ink);
+  border: 1px solid var(--rule2);
+  border-radius: 4px;
+  font: 13px/1.55 'IBM Plex Mono', monospace;
+  word-break: break-all;
+  outline: none;
+}
+textarea:focus { border-color: var(--focus); box-shadow: 0 0 0 1px var(--focus); }
+.field-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.mid { display: flex; align-items: center; }
+
+button {
+  font: 500 13px/1 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule2);
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+button:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ── verdict ── */
+.verdict {
+  margin-top: 24px;
+  padding: 16px 24px;
+  border-radius: 4px;
+  background: var(--idle);
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.verdict strong { font-size: 24px; font-weight: 700; }
+.verdict span { font-size: 15px; }
+.verdict.ok  { background: var(--ok);  color: var(--ok-ink); }
+.verdict.bad { background: var(--bad); color: var(--bad-ink); }
+
+/* ── details ── */
+.details { margin-top: 24px; display: none; }
+.details.show { display: block; }
+
+section { padding: 24px 0; border-top: 1px solid var(--rule); }
+section:first-child { border-top: 0; padding-top: 0; }
+h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+section > p { color: var(--soft); margin-bottom: 16px; max-width: 70ch; }
+
+.ctx {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font: 13px/1.7 'IBM Plex Mono', monospace;
+  overflow-x: auto;
+}
+.ctx .row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  border-top: 1px solid var(--rule);
+}
+.ctx .row:first-child { border-top: 0; }
+.ctx .tag {
+  padding: 8px 0;
+  text-align: center;
+  font-weight: 600;
+  border-right: 1px solid var(--rule);
+  color: var(--soft);
+}
+.ctx .txt { padding: 8px 12px; white-space: pre; }
+.ctx .ell { color: var(--ws); }
+mark { color: var(--mark-ink); border-radius: 2px; padding: 1px 0; }
+.row.a mark { background: var(--mark-a); }
+.row.b mark { background: var(--mark-b); }
+.w { color: var(--ws); }
+.inv {
+  font-size: 10px;
+  padding: 0 3px;
+  margin: 0 1px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  vertical-align: 1px;
+}
+.gap {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  margin: 0 2px;
+  vertical-align: -3px;
+  background: var(--bad);
+  padding: 0;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 500; color: var(--soft); width: 30%; }
+td { font-family: 'IBM Plex Mono', monospace; font-size: 13px; word-break: break-all; }
+thead th { color: var(--ink); font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; }
+td.diff { color: var(--bad); font-weight: 600; }
+
+ul.hints { list-style: none; }
+ul.hints li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+}
+ul.hints li:last-child { border-bottom: 0; }
+ul.hints .k { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+ul.hints .yes { color: var(--ok); }
+ul.hints .no  { color: var(--soft); }
+ul.hints small { display: block; color: var(--soft); font-size: 13px; }
+
+footer { margin-top: 40px; color: var(--soft); font-size: 13px; }
+
+@media (max-width: 760px) {
+  body { padding: 24px 16px 48px; }
+  h1 { font-size: 26px; }
+  .fields { grid-template-columns: 1fr; }
+  .mid { justify-content: center; }
+  textarea { min-height: 140px; }
+  th { width: 38%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>String Compare</h1>
+  <p>Paste two strings, or open two files, to check they match exactly, down to the byte. Everything runs in this tab; nothing is sent anywhere.</p>
+</header>
+
+<div class="fields">
+  <div class="field">
+    <div class="field-top"><label for="a">String A</label><span class="stats" id="statsA"></span></div>
+    <textarea id="a" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Paste the first string"></textarea>
+    <div class="field-actions"><button data-paste="a">Paste</button><button data-file="a">Open file</button><button data-clear="a">Clear</button></div>
+  </div>
+  <div class="mid"><button id="swap" title="Swap A and B" aria-label="Swap A and B">A ⇄ B</button></div>
+  <div class="field">
+    <div class="field-top"><label for="b">String B</label><span class="stats" id="statsB"></span></div>
+    <textarea id="b" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Paste the second string"></textarea>
+    <div class="field-actions"><button data-paste="b">Paste</button><button data-file="b">Open file</button><button data-clear="b">Clear</button></div>
+  </div>
+</div>
+
+<div class="verdict" id="verdict" role="status" aria-live="polite">
+  <strong id="vHead">Waiting</strong>
+  <span id="vSub">Put something in both fields.</span>
+</div>
+
+<div class="details" id="details">
+  <section id="whereSec">
+    <h2>Where they split</h2>
+    <p id="whereText"></p>
+    <div class="ctx" id="ctx"></div>
+  </section>
+
+  <section id="hintSec">
+    <h2>Would they match after a cleanup?</h2>
+    <p>Each row applies one common cleanup to both strings and checks again.</p>
+    <ul class="hints" id="hints"></ul>
+  </section>
+
+  <section id="hiddenSec">
+    <h2>Hidden characters</h2>
+    <p id="hiddenText"></p>
+    <table id="hiddenTable"></table>
+  </section>
+
+  <section>
+    <h2>Side by side</h2>
+    <table>
+      <thead><tr><th></th><th>A</th><th>B</th></tr></thead>
+      <tbody id="facts"></tbody>
+    </table>
+  </section>
+</div>
+
+<footer>Positions count characters (code points) from 1. Symbols in the preview: <span class="w">·</span> space, <span class="w">→</span> tab, <span class="w">↵</span> line feed, <span class="w">␍</span> carriage return. Line endings are compared exactly as pasted or loaded, even though the text box shows them all the same way.</footer>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const A = $('a'), B = $('b');
+
+const INVISIBLE = {
+  0x200B: 'zero-width space', 0x200C: 'zero-width non-joiner', 0x200D: 'zero-width joiner',
+  0x2060: 'word joiner', 0xFEFF: 'byte order mark', 0x00AD: 'soft hyphen', 0x180E: 'Mongolian vowel separator',
+  0x202A: 'LTR embedding', 0x202B: 'RTL embedding', 0x202C: 'pop directional', 0x202D: 'LTR override',
+  0x202E: 'RTL override', 0x2066: 'LTR isolate', 0x2067: 'RTL isolate', 0x2068: 'first-strong isolate',
+  0x2069: 'pop isolate',
+};
+const ODD_SPACES = {
+  0x00A0: 'no-break space', 0x202F: 'narrow no-break space', 0x2007: 'figure space', 0x2009: 'thin space',
+  0x200A: 'hair space', 0x2002: 'en space', 0x2003: 'em space', 0x3000: 'ideographic space',
+};
+const INVIS_RE = /[​-‍⁠﻿­᠎‪-‮⁦-⁩]/g;
+const SPACE_RE = /[       　]/g;
+
+const CLEANUPS = [
+  ['Trim surrounding whitespace', 'Spaces or newlines at the very start or end.', s => s.trim()],
+  ['Same line endings', 'Windows (CRLF) vs Unix (LF) newlines.', s => s.replace(/\r\n?/g, '\n')],
+  ['Unicode normalisation (NFC)', 'Same-looking letters stored differently, e.g. é as one or two code points.', s => s.normalize('NFC')],
+  ['Remove invisible characters', 'Zero-width spaces, byte order marks, soft hyphens, direction marks.', s => s.replace(INVIS_RE, '')],
+  ['Plain spaces only', 'No-break and other special spaces turned into normal spaces.', s => s.replace(SPACE_RE, ' ')],
+  ['Straight quotes', 'Curly quotes and apostrophes turned into straight ones.', s => s.replace(/[‘’‚′]/g, "'").replace(/[“”„″]/g, '"')],
+  ['Ignore letter case', 'Upper and lower case treated the same.', s => s.toLowerCase()],
+  ['Ignore all whitespace', 'Every space, tab and newline removed.', s => s.replace(/\s+/g, '')],
+];
+
+const enc = new TextEncoder();
+const fmt = n => n.toLocaleString('en-US').replace(/,/g, ' ');
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const hex = cp => 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
+const plural = (n, w) => `${fmt(n)} ${w}${n === 1 ? '' : 's'}`;
+
+// Render code points with whitespace and invisible characters made visible.
+function show(cps) {
+  let out = '';
+  for (const ch of cps) {
+    const cp = ch.codePointAt(0);
+    if (ch === ' ') out += '<span class="w">·</span>';
+    else if (ch === '\t') out += '<span class="w">→</span>';
+    else if (ch === '\n') out += '<span class="w">↵</span>';
+    else if (ch === '\r') out += '<span class="w">␍</span>';
+    else if (INVISIBLE[cp] || ODD_SPACES[cp]) out += `<span class="inv" title="${INVISIBLE[cp] || ODD_SPACES[cp]}">${hex(cp)}</span>`;
+    else if (cp < 0x20 || cp === 0x7F) out += `<span class="inv" title="control character">${hex(cp)}</span>`;
+    else out += esc(ch);
+  }
+  return out;
+}
+
+function lineCol(cps, idx) {
+  let line = 1, col = 1;
+  for (let i = 0; i < idx; i++) {
+    if (cps[i] === '\n') { line++; col = 1; } else col++;
+  }
+  return { line, col };
+}
+
+function stats(s, cps) {
+  if (!s) return '';
+  const lines = s.split('\n').length;
+  return `${plural(cps.length, 'char')} · ${plural(enc.encode(s).length, 'byte')} · ${plural(lines, 'line')}`;
+}
+
+async function sha256(s) {
+  if (!crypto.subtle) return 'unavailable';
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(s));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function findOdd(cps) {
+  const found = new Map();
+  cps.forEach((ch, i) => {
+    const cp = ch.codePointAt(0);
+    let name = INVISIBLE[cp] || ODD_SPACES[cp];
+    if (!name && ch === '\r') name = 'carriage return';
+    if (!name && ((cp < 0x20 && ch !== '\n' && ch !== '\t') || cp === 0x7F)) name = 'control character';
+    if (!name) return;
+    const k = hex(cp) + ' ' + name;
+    if (!found.has(k)) found.set(k, { count: 0, first: i + 1 });
+    found.get(k).count++;
+  });
+  return found;
+}
+
+/* Text boxes turn \r\n into \n, which would hide line-ending differences.
+   So each field keeps its exact text in `raw` and every edit is replayed onto it. */
+const raw = { a: '', b: '' };
+const pending = { a: null, b: null };
+const shown = s => s.replace(/\r\n?/g, '\n');
+
+// Index in the text box's value -> index in the exact string.
+function toRaw(s, idx) {
+  let i = 0;
+  for (let j = 0; j < idx && i < s.length; j++) i += s[i] === '\r' && s[i + 1] === '\n' ? 2 : 1;
+  return i;
+}
+
+function onEdit(k) {
+  const ta = $(k), before = shown(raw[k]), after = ta.value;
+  const pd = pending[k];
+  pending[k] = null;
+  // A paste replaces exactly the selection it was made over.
+  if (pd && after === before.slice(0, pd.start) + shown(pd.text) + before.slice(pd.end)) {
+    raw[k] = raw[k].slice(0, toRaw(raw[k], pd.start)) + pd.text + raw[k].slice(toRaw(raw[k], pd.end));
+    schedule();
+    return;
+  }
+  let p = 0;
+  while (p < before.length && p < after.length && before[p] === after[p]) p++;
+  let s = 0;
+  while (s < before.length - p && s < after.length - p && before[before.length - 1 - s] === after[after.length - 1 - s]) s++;
+  const ins = after.slice(p, after.length - s);
+  raw[k] = raw[k].slice(0, toRaw(raw[k], p)) + ins + raw[k].slice(toRaw(raw[k], before.length - s));
+  schedule();
+}
+
+function setField(k, text) {
+  raw[k] = text;
+  $(k).value = text;
+  run();
+}
+
+let runId = 0;
+async function run() {
+  const id = ++runId;
+  const a = raw.a, b = raw.b;
+  const ca = Array.from(a), cb = Array.from(b);
+  $('statsA').textContent = stats(a, ca);
+  $('statsB').textContent = stats(b, cb);
+
+  const v = $('verdict');
+  v.className = 'verdict';
+  if (!a || !b) {
+    $('vHead').textContent = 'Waiting';
+    $('vSub').textContent = !a && !b ? 'Put something in both fields.' : `Now paste string ${a ? 'B' : 'A'}.`;
+    $('details').classList.remove('show');
+    return;
+  }
+
+  if (a === b) {
+    v.classList.add('ok');
+    $('vHead').textContent = 'Identical';
+    $('vSub').textContent = `Byte for byte: ${plural(ca.length, 'character')}, ${plural(enc.encode(a).length, 'byte')}.`;
+  } else {
+    v.classList.add('bad');
+    $('vHead').textContent = 'Different';
+  }
+
+  const same = a === b;
+  $('whereSec').style.display = same ? 'none' : '';
+  $('hintSec').style.display = same ? 'none' : '';
+
+  let pre = 0;
+  if (!same) {
+    const min = Math.min(ca.length, cb.length);
+    while (pre < min && ca[pre] === cb[pre]) pre++;
+    let suf = 0;
+    while (suf < min - pre && ca[ca.length - 1 - suf] === cb[cb.length - 1 - suf]) suf++;
+
+    const lc = lineCol(ca, pre);
+    const where = `character ${fmt(pre + 1)} (line ${fmt(lc.line)}, column ${fmt(lc.col)})`;
+    $('vSub').textContent = pre === min
+      ? `${ca.length < cb.length ? 'A' : 'B'} stops early. The first ${plural(min, 'character')} match, then only ${ca.length < cb.length ? 'B' : 'A'} continues.`
+      : `First difference at ${where}.`;
+
+    let desc = `The first ${plural(pre, 'character')} match`;
+    desc += suf ? ` and so do the last ${fmt(suf)}. ` : '. ';
+    const midA = ca.length - pre - suf, midB = cb.length - pre - suf;
+    desc += !midA ? `At that point B has ${plural(midB, 'extra character')} that A does not.`
+      : !midB ? `At that point A has ${plural(midA, 'extra character')} that B does not.`
+      : `In between, A has ${plural(midA, 'character')} where B has ${fmt(midB)}.`;
+    if (ca.length === cb.length) {
+      let mism = 0;
+      for (let i = 0; i < ca.length; i++) if (ca[i] !== cb[i]) mism++;
+      desc += ` Same length, ${plural(mism, 'position')} differ${mism === 1 ? 's' : ''}.`;
+    }
+    $('whereText').textContent = desc;
+
+    const CTX = 28, MAXMID = 80;
+    const row = (cps, cls, tag) => {
+      const midEnd = cps.length - suf;
+      const start = Math.max(0, pre - CTX);
+      const mid = cps.slice(pre, midEnd);
+      const clipped = mid.length > MAXMID;
+      const after = cps.slice(midEnd, midEnd + CTX);
+      let h = start > 0 ? '<span class="ell">…</span>' : '';
+      h += show(cps.slice(start, pre));
+      h += mid.length
+        ? `<mark>${show(clipped ? mid.slice(0, MAXMID) : mid)}</mark>${clipped ? `<span class="ell">… +${fmt(mid.length - MAXMID)}</span>` : ''}`
+        : `<mark class="gap" title="${tag} has nothing here"></mark>`;
+      h += show(after);
+      if (midEnd + CTX < cps.length) h += '<span class="ell">…</span>';
+      return `<div class="row ${cls}"><div class="tag">${tag}</div><div class="txt">${h}</div></div>`;
+    };
+    $('ctx').innerHTML = row(ca, 'a', 'A') + row(cb, 'b', 'B');
+
+    const results = CLEANUPS.map(([name, why, f]) => [name, why, f(a) === f(b)]).sort((x, y) => y[2] - x[2]);
+    const all = CLEANUPS.reduce((s, [, , f]) => f(s), a) === CLEANUPS.reduce((s, [, , f]) => f(s), b);
+    let hh = results.map(([name, why, ok]) =>
+      `<li><span class="k ${ok ? 'yes' : 'no'}">${ok ? '✓' : '×'}</span><div>${esc(name)}${ok ? ': <strong>match</strong>' : ''}<small>${esc(why)}</small></div></li>`).join('');
+    if (!results.some(r => r[2])) {
+      hh += `<li><span class="k ${all ? 'yes' : 'no'}">${all ? '✓' : '×'}</span><div>All of the above together${all ? ': <strong>match</strong>' : ''}<small>${all ? 'Several small differences add up; no single cleanup is enough.' : 'The content itself differs, not just formatting.'}</small></div></li>`;
+    }
+    $('hints').innerHTML = hh;
+  }
+
+  const oa = findOdd(ca), ob = findOdd(cb);
+  const keys = [...new Set([...oa.keys(), ...ob.keys()])].sort();
+  if (keys.length) {
+    $('hiddenText').textContent = 'These are easy to miss when you look at the text. Count and first position in each string:';
+    const cell = m => m ? `${fmt(m.count)} × <span style="color:var(--soft)">first at ${fmt(m.first)}</span>` : '<span style="color:var(--soft)">none</span>';
+    $('hiddenTable').innerHTML = `<thead><tr><th>Character</th><th>A</th><th>B</th></tr></thead><tbody>${
+      keys.map(k => `<tr><th>${esc(k)}</th><td>${cell(oa.get(k))}</td><td>${cell(ob.get(k))}</td></tr>`).join('')}</tbody>`;
+  } else {
+    $('hiddenText').textContent = 'None found in either string: no zero-width characters, special spaces, carriage returns or control characters.';
+    $('hiddenTable').innerHTML = '';
+  }
+
+  const la = a.split('\n').length, lb = b.split('\n').length;
+  const ba = enc.encode(a).length, bb = enc.encode(b).length;
+  const factRow = (label, x, y) => `<tr><th>${label}</th><td${x !== y ? ' class="diff"' : ''}>${x}</td><td${x !== y ? ' class="diff"' : ''}>${y}</td></tr>`;
+  const base = factRow('Characters', fmt(ca.length), fmt(cb.length))
+    + factRow('Bytes (UTF-8)', fmt(ba), fmt(bb))
+    + factRow('Lines', fmt(la), fmt(lb))
+    + factRow('Ends with newline', /\n$/.test(a) ? 'yes' : 'no', /\n$/.test(b) ? 'yes' : 'no');
+  $('facts').innerHTML = base + factRow('SHA-256', '…', '…');
+  $('details').classList.add('show');
+
+  const [ha, hb] = await Promise.all([sha256(a), sha256(b)]);
+  if (id !== runId) return;
+  $('facts').innerHTML = base + factRow('SHA-256', ha, hb);
+}
+
+let t;
+const schedule = () => { clearTimeout(t); t = setTimeout(run, 120); };
+for (const k of ['a', 'b']) {
+  const ta = $(k);
+  ta.addEventListener('input', () => onEdit(k));
+  // Insert pasted text ourselves so the exact clipboard text (with any \r) is kept.
+  ta.addEventListener('paste', e => {
+    const text = e.clipboardData?.getData('text/plain');
+    if (text == null) return;
+    e.preventDefault();
+    ta.focus();
+    pending[k] = { text, start: ta.selectionStart, end: ta.selectionEnd };
+    if (!document.execCommand('insertText', false, text)) {
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.setRangeText(text, s, en, 'end');
+      onEdit(k);
+    }
+  });
+  ta.addEventListener('drop', e => {
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+    e.preventDefault();
+    readFile(k, file);
+  });
+}
+
+async function readFile(k, file) {
+  const buf = await file.arrayBuffer();
+  setField(k, new TextDecoder('utf-8', { ignoreBOM: true }).decode(buf));
+}
+
+$('swap').addEventListener('click', () => { const a = raw.a; setField('a', raw.b); setField('b', a); });
+document.querySelectorAll('[data-clear]').forEach(btn => btn.addEventListener('click', () => {
+  setField(btn.dataset.clear, ''); $(btn.dataset.clear).focus();
+}));
+document.querySelectorAll('[data-paste]').forEach(btn => btn.addEventListener('click', async () => {
+  try { setField(btn.dataset.paste, await navigator.clipboard.readText()); }
+  catch { $(btn.dataset.paste).focus(); btn.textContent = 'Use Ctrl+V'; setTimeout(() => btn.textContent = 'Paste', 1600); }
+}));
+document.querySelectorAll('[data-file]').forEach(btn => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.addEventListener('change', () => { if (input.files[0]) readFile(btn.dataset.file, input.files[0]); input.value = ''; });
+  btn.addEventListener('click', () => input.click());
+});
+
+run();
+</script>
+</body>
+</html>
