@@ -75,7 +75,7 @@ async function sendCode(email) {
   return { ok: true };
 }
 async function finishSignIn() {
-  if (!(await refreshOwner())) { await client.auth.signOut(); return { ok: false, error: 'Signed in, but this account is not the Easel owner.' }; }
+  if (!(await refreshOwner())) { await client.auth.signOut({ scope: 'local' }); return { ok: false, error: 'Signed in, but this account is not the Easel owner.' }; }
   syncAll();
   return { ok: true };
 }
@@ -139,7 +139,8 @@ async function consumeRedirect() {
 }
 async function signOut() {
   await init();
-  await client.auth.signOut();
+  // local on purpose: the owner account is shared with the systemzzz dashboard; a global sign-out would end its sessions too
+  await client.auth.signOut({ scope: 'local' });
   state.owner = false; state.email = ''; state.sync = 'idle';
   emit();
 }
