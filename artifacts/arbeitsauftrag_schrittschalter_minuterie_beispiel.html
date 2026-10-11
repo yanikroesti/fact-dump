@@ -1,0 +1,1272 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Muster-Exemplar für den Arbeitsauftrag Schrittschalter und Minuterie (ATD, Beni Moser, Abgabe 19.10.2026): Deckblatt, sechs Schema-Vorlagen zum Abzeichnen, Datenblatt-Analyse mit geprüften Werten, Zeitablaufdiagramme, Bewertungsraster und Abgabe-Checkliste. Druckfertig auf A4.">
+<title>Arbeitsauftrag Schrittschalter &amp; Minuterie — Muster-Exemplar</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eceeea;color:#171d1e;font:15px/1.55 'Archivo',system-ui,-apple-system,sans-serif}
+
+/* ---------- Bildschirm-Kopf ---------- */
+nav{max-width:210mm;margin:18px auto;padding:20px;background:#fff;border-left:4px solid #0e6b72}
+.eyebrow{font:600 11px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#0e6b72}
+nav h1{font-size:27px;line-height:1.1;margin:8px 0 14px;letter-spacing:-.03em}
+nav h2{font-size:15px;margin:22px 0 6px}
+nav p{margin:8px 0}
+nav ul{margin:8px 0;padding-left:22px}
+nav li{margin:4px 0}
+nav a{color:#0e6b72}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 6px}
+button{font:inherit;font-weight:600;font-size:14px;padding:11px 17px;min-height:44px;background:#0e6b72;color:#fff;border:1px solid #0e6b72;cursor:pointer}
+button.secondary{background:#fff;color:#0e6b72}
+a:focus-visible,button:focus-visible{outline:3px solid #0e6b72;outline-offset:3px}
+.warn{border-left:4px solid #b4531a;background:#fdf4ee;padding:12px 14px;margin:16px 0}
+.warn strong{color:#8f400f}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+.meta div{border:1px solid #d5dbd6;padding:8px 10px}
+.meta dt{font:600 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5c6665;margin:0}
+.meta dd{margin:3px 0 0;font-weight:600;font-size:14px}
+
+/* ---------- A4-Seiten ---------- */
+main{width:210mm;max-width:100%;margin:18px auto}
+.page{background:#fff;padding:12mm;margin:0 0 18px;position:relative}
+.ph{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.5px solid #171d1e;padding-bottom:4px;margin:0 0 6mm}
+.ph b{font-size:13px;letter-spacing:-.01em}
+.ph span{font:600 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5c6665}
+h2.t{font-size:19px;margin:0 0 3mm;letter-spacing:-.02em}
+h3{font-size:13.5px;margin:5mm 0 2mm}
+h4{font-size:12px;margin:4mm 0 1.5mm}
+.page p,.page li{font-size:12px;line-height:1.5}
+.page ul,.page ol{padding-left:19px;margin:2mm 0}
+.lead{font-size:12.5px;color:#2d3634}
+figure{margin:0 0 4mm}
+figcaption{font-size:10.5px;color:#424949;margin-top:1.5mm;line-height:1.45}
+table{width:100%;border-collapse:collapse;font-size:11px;margin:2mm 0 3mm}
+th,td{border:.8px solid #9aa5a2;padding:3.5px 5px;text-align:left;vertical-align:top}
+th{background:#eef1ee;font-weight:600}
+td.n{font-variant-numeric:tabular-nums}
+.fill{display:inline-block;min-width:60px;border-bottom:1px solid #8d9794}
+.fillbox{border:1px dashed #9aa5a2;background:#fafbfa;height:11mm}
+.note{border-left:3px solid #0e6b72;background:#f1f6f6;padding:7px 10px;margin:3mm 0;font-size:11px}
+.check{border:1px solid #171d1e;padding:8px 10px;margin:3mm 0}
+.check label{display:flex;gap:7px;align-items:flex-start;font-size:11.5px;padding:2.5px 0}
+.box{border:1px solid #9aa5a2;padding:8px 10px;margin:3mm 0}
+.sq{flex:0 0 auto;width:11px;height:11px;border:1.2px solid #171d1e;margin-top:2px}
+.photo{border:1.2px dashed #8d9794;background:#f7f8f7;min-height:38mm;padding:7px 9px}
+.photo b{display:block;font-size:11.5px;margin-bottom:2px}
+.photo span{font-size:10.5px;color:#424949;line-height:1.4}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.rule{border:0;border-top:.8px solid #c3cdc6;margin:4mm 0}
+.lines p{border-bottom:1px solid #b9c2bf;height:7mm;margin:0 0 3mm}
+.pf{position:absolute;bottom:6mm;left:12mm;right:12mm;border-top:.8px solid #c3cdc6;padding-top:2.5px;font-size:9px;color:#5c6665;display:flex;justify-content:space-between}
+.tag{display:inline-block;font:600 9.5px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;background:#0e6b72;color:#fff;padding:2px 6px}
+.tag.mu{background:#b4531a}
+
+/* ---------- Schemas ---------- */
+.sch{width:100%;height:auto;display:block;background:#fff}
+.sch text{font:11px 'Archivo',system-ui,sans-serif;fill:#171d1e}
+.sch .lb{font-weight:700}
+.sch .sm{font-size:9.5px;fill:#3d4746}
+.sch .ti{font:700 11.5px 'Archivo',system-ui,sans-serif;fill:#0e6b72;letter-spacing:.04em}
+.sch .wL{stroke:#8a4a22;stroke-width:2;fill:none;stroke-linecap:round}
+.sch .wN{stroke:#2b5ea8;stroke-width:2;fill:none;stroke-dasharray:8 4;stroke-linecap:round}
+.sch .wP{stroke:#3f7a2e;stroke-width:2;fill:none;stroke-dasharray:1.5 3.5;stroke-linecap:round}
+.sch .wS{stroke:#171d1e;stroke-width:1.4;fill:none;stroke-linecap:round}
+.sch .dev{fill:#fff;stroke:#171d1e;stroke-width:1.6}
+.sch .devf{fill:#f3f6f3;stroke:#171d1e;stroke-width:1.6}
+.sch .mech{stroke:#171d1e;stroke-width:1.1;stroke-dasharray:4 3;fill:none}
+.sch .thin{stroke:#171d1e;stroke-width:1;fill:none}
+.sch .leg{fill:#f7f8f7;stroke:#c3cdc6;stroke-width:1}
+.sch .dot{fill:#171d1e}
+.sch .wall{stroke:#5c6665;stroke-width:3;fill:none}
+
+@media screen and (max-width:620px){
+  nav{margin:8px;padding:14px}
+  nav h1{font-size:22px}
+  main{margin:8px 0}
+  .page{padding:14px}
+  .grid2{grid-template-columns:1fr}
+  table{font-size:10px}
+}
+
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  nav,.noprint{display:none}
+  body{background:#fff;font-size:11pt}
+  main{width:auto;max-width:none;margin:0}
+  .page{padding:0 0 0 0;margin:0;break-after:page;page-break-after:always;min-height:0}
+  .page:last-child{break-after:auto;page-break-after:auto}
+  figure,table,.check,.box,.note,.photo{break-inside:avoid;page-break-inside:avoid}
+  .pf{position:static;margin-top:6mm}
+  h2.t{font-size:15pt}
+}
+</style>
+</head>
+<body>
+
+<nav aria-label="Einleitung und Druck">
+  <span class="eyebrow">ATD · Beni Moser · Abgabe Montag 19.10.2026</span>
+  <h1>So könnte deine fertige<br>Arbeit aussehen.</h1>
+  <p class="lead">Ein <strong>Muster-Exemplar</strong> des Arbeitsauftrags «Schrittschalter &amp; Minuterie»: Deckblatt, Reihenfolge, sechs Schema-Vorlagen zum Abzeichnen, Datenblatt-Analyse mit geprüften Werten, zwei Zeitablaufdiagramme, das Bewertungsraster aus dem Auftragsblatt und eine Abgabe-Checkliste. Druckfertig auf A4.</p>
+
+  <div class="warn">
+    <p style="margin-top:0"><strong>Das ist eine Vorlage, keine Abgabe.</strong> Der Auftrag verlangt ausdrücklich eigene Fotos vor Ort und Schemata <em>sauber von Hand</em> gezeichnet. Wer diese Seite ausdruckt und abgibt, erfüllt den Auftrag nicht.</p>
+    <p style="margin-bottom:0">Du musst selbst machen: <strong>Teampartner abmachen · die Schaltungen vor Ort suchen und fotografieren · alle sechs Schemata von Hand zeichnen · die Datenblätter der tatsächlich eingebauten Geräte analysieren</strong>. Das Muster zeigt dir, wie das Resultat aussieht und wie du vorgehst.</p>
+  </div>
+
+  <h2>Was du damit machst</h2>
+  <ul>
+    <li><strong>Einmal ganz durchlesen</strong> — dann weisst du, wie viel Arbeit das ist und in welcher Reihenfolge sie geht.</li>
+    <li><strong>Ausdrucken und daneben legen</strong>, während du von Hand zeichnest. Die Schemas hier sind Referenz für Aufbau, Beschriftung und Klemmen — abzeichnen, nicht abgeben.</li>
+    <li><strong>Deckblatt und Checkliste</strong> auf der letzten Seite kannst du als Struktur für deine eigene Doku übernehmen.</li>
+  </ul>
+
+  <h2>Zeitbedarf, realistisch</h2>
+  <p>Für beide Schaltungen zusammen etwa <strong>6 bis 9 Stunden</strong>: rund 1–2 h vor Ort für Suchen, Fotografieren und Betriebsmittel notieren · 3–4 h für die sechs Handzeichnungen · ca. 1 h Datenblätter · 30 min Zeitablaufdiagramme · 1 h Reinschrift, Deckblatt und Kontrolle. Im 2er-Team aufgeteilt sind das 3–5 h pro Person. <strong>Nimm dir zwei Termine</strong>, einen vor Ort und einen am Tisch — und lass mindestens zwei Tage Luft vor dem 19.10.</p>
+
+  <dl class="meta">
+    <div><dt>Abgabe</dt><dd>Mo 19.10.2026</dd></div>
+    <div><dt>Form</dt><dd>Papier, mit Deckblatt</dd></div>
+    <div><dt>Team</dt><dd>2 Personen</dd></div>
+    <div><dt>Punkte</dt><dd>5 × 4 = 20</dd></div>
+  </dl>
+
+  <div class="actions">
+    <button id="print" type="button">Alles drucken (16 Seiten A4)</button>
+    <button class="secondary" id="schemas" type="button">Nur die 6 Schemas drucken</button>
+  </div>
+  <p style="font-size:13px;color:#424949">Druck: A4 hoch, 100 %, Browser-Kopf- und Fusszeilen aus. Für die Schemas Farbdruck wählen, wenn möglich — die Leiterfarben sind codiert, es gibt aber zusätzlich unterschiedliche Stricharten.</p>
+  <p style="font-size:13px"><a href="lerndoku_stromstossschaltung.html">Lerndoku Stromstossschaltung</a> · <a href="lerndoku_treppenhausautomat.html">Lerndoku Treppenhausautomat</a> · <a href="../index.html">zurück zum Dump</a></p>
+</nav>
+
+<main>
+
+<!-- ============================ SEITE 1 — DECKBLATT ============================ -->
+<section class="page">
+  <div class="ph"><b>Muster-Deckblatt</b><span>Seite 1 von 16</span></div>
+  <p style="text-align:center;font:600 11px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5c6665;margin:14mm 0 0">Berufsfachschule BZI Interlaken · ATD</p>
+  <h2 class="t" style="text-align:center;font-size:27px;margin:4mm 0 2mm;letter-spacing:-.03em">Schrittschalter &amp; Minuterie</h2>
+  <p style="text-align:center;font-size:13px;margin:0 0 14mm">Praxis-Analyse und Dokumentation zweier Schaltungen<br>in der realen Installation</p>
+
+  <table style="margin:0 auto;width:85%">
+    <tr><th style="width:38%">Lernender 1</th><td style="height:9mm"></td></tr>
+    <tr><th>Lehrbetrieb 1</th><td style="height:9mm"></td></tr>
+    <tr><th>Lernender 2</th><td style="height:9mm"></td></tr>
+    <tr><th>Lehrbetrieb 2</th><td style="height:9mm"></td></tr>
+    <tr><th>Klasse</th><td>ELI 25a · 2. Lehrjahr · Semester 3</td></tr>
+    <tr><th>Fach / Lehrperson</th><td>ATD · Beni Moser</td></tr>
+    <tr><th>Untersuchte Objekte</th><td style="height:9mm"></td></tr>
+    <tr><th>Datum der Abgabe</th><td>19.10.2026</td></tr>
+  </table>
+
+  <div class="note" style="width:85%;margin:8mm auto 0">
+    <strong>Pflichtangaben laut Auftragsblatt, Punkt 3:</strong> Projekttitel, Namen <em>beider</em> Lernenden, Lehrbetrieb(e), Datum. Alles andere ist freiwillig — aber ein Deckblatt ohne diese vier Angaben kostet dich Punkte beim Kriterium «Form, Struktur &amp; Termintreue».
+  </div>
+  <div class="box" style="width:85%;margin:4mm auto 0">
+    <strong style="font-size:11.5px">Wenn ihr die Schaltungen aufgeteilt habt</strong><br>
+    <span style="font-size:11px">Das Auftragsblatt erlaubt ausdrücklich, dass eine Person die Schrittschaltung und die andere die Minuterie untersucht. Dann schreibt auf das Deckblatt dazu, wer welchen Teil bearbeitet hat — abgegeben wird trotzdem <strong>eine gemeinsame Dokumentation</strong> mit allen sechs Schemata.</span>
+  </div>
+  <div class="pf"><span>Arbeitsauftrag Schrittschalter &amp; Minuterie · Muster-Exemplar</span><span>dump.yanikroesti.ch</span></div>
+</section>
+
+<!-- ============================ SEITE 2 — VORGEHEN ============================ -->
+<section class="page">
+  <div class="ph"><b>Aufbau der Dokumentation und Vorgehen</b><span>Seite 2 von 16</span></div>
+  <h2 class="t">Was abgegeben wird — und in welcher Reihenfolge du es machst</h2>
+  <p class="lead">Der Auftrag verlangt für <em>jede</em> der beiden Schaltungen vier Teile: Praxis-Analyse mit Fotos, drei Schemata von Hand, Datenblatt-Analyse und ein Zeitablaufdiagramm. Das ergibt die Gliederung unten.</p>
+
+  <table>
+    <tr><th style="width:12%">Teil</th><th style="width:44%">Inhalt</th><th>Worauf der Lehrer schaut</th></tr>
+    <tr><td>Deckblatt</td><td>Titel, beide Namen, Lehrbetrieb(e), Datum</td><td>vollständig, sauber</td></tr>
+    <tr><td><b>A 1</b></td><td>Schrittschaltung — Fotos und Betriebsmittel-Liste</td><td>alle beteiligten Betriebsmittel erkennbar</td></tr>
+    <tr><td><b>A 2</b></td><td>Schrittschaltung — Installationsplan (Hand)</td><td>Normsymbole, Leitungsführung, <b>Aderzahlen</b></td></tr>
+    <tr><td><b>A 3</b></td><td>Schrittschaltung — Stromlaufschema (Hand)</td><td>Logik, Beschriftung, <b>alle Klemmen nummeriert</b></td></tr>
+    <tr><td><b>A 4</b></td><td>Schrittschaltung — Wirkschaltschema (Hand)</td><td>zusammenhängende Verdrahtung, Klemmenbezeichnungen</td></tr>
+    <tr><td><b>B 1–4</b></td><td>Minuterie — dieselben vier Teile</td><td>dasselbe</td></tr>
+    <tr><td><b>C</b></td><td>Datenblatt-Analyse beider Geräte</td><td>Spannung, Strom, Kontakte, Zeit — vollständig</td></tr>
+    <tr><td><b>D</b></td><td>Zeitablaufdiagramme + Unterschiede beschrieben</td><td>beide Diagramme, Unterschied in Worten</td></tr>
+  </table>
+
+  <h3>Die Reihenfolge, die am wenigsten Zeit kostet</h3>
+  <ol>
+    <li><strong>Teampartner und Objekt abmachen.</strong> Eine Schrittschaltung findest du oft im Korridor, in der Küche oder bei einer Garagenbeleuchtung; eine Minuterie praktisch immer im Treppenhaus eines Mehrfamilienhauses. Zwei verschiedene Objekte sind erlaubt.</li>
+    <li><strong>Vor Ort alles aufnehmen</strong> — und zwar mehr, als du glaubst zu brauchen: Taster offen und geschlossen, das Gerät im Verteiler mit <em>lesbarem Typenschild</em>, Leuchten, Abzweigdosen. Das Typenschild entscheidet später über die ganze Datenblatt-Analyse.</li>
+    <li><strong>Vor Ort skizzieren</strong>, wo was hängt und welche Leitungen wohin gehen. Diese Schmierskizze ist die Grundlage für den Installationsplan — zu Hause rekonstruieren geht schief.</li>
+    <li><strong>Datenblätter suchen</strong> mit Hersteller und Typ vom Typenschild. Beim Hersteller selbst, nicht im Shop.</li>
+    <li><strong>Reinzeichnen:</strong> pro Schaltung Installationsplan → Stromlaufschema → Wirkschaltschema. In dieser Reihenfolge, weil jedes Schema das vorherige braucht.</li>
+    <li><strong>Zeitablaufdiagramme</strong> und der Vergleichstext zum Schluss — der geht schnell, wenn die Schemas stimmen.</li>
+  </ol>
+
+  <div class="note">
+    <strong>Die drei Schemaarten nicht verwechseln — darauf zielt der Auftrag.</strong><br>
+    <b>Installationsplan:</b> <em>wo</em> hängt was im Gebäude, mit Normsymbolen und Aderzahlen pro Leitung. Grundriss-artig.<br>
+    <b>Stromlaufschema:</b> <em>wie</em> funktioniert es elektrisch. Aufgelöst in Steuerkreis und Lastkreis, zwischen L und N gezeichnet, Logik muss stimmen.<br>
+    <b>Wirkschaltschema:</b> <em>welche Klemme</em> an welche. Zusammenhängende Darstellung aller Apparate mit ihren echten Klemmenbezeichnungen — das ist der Plan, mit dem man verdrahten könnte.
+  </div>
+  <div class="pf"><span>Arbeitsauftrag Schrittschalter &amp; Minuterie · Muster-Exemplar</span><span>Seite 2</span></div>
+</section>
+
+<!-- ============================ SEITE 3 — A1 FOTOS ============================ -->
+<section class="page">
+  <div class="ph"><b>Teil A · Schrittschaltung — Praxis-Analyse</b><span>Seite 3 von 16</span></div>
+  <h2 class="t">A 1 · Fotos und Betriebsmittel</h2>
+  <p class="lead">Vier Fotos genügen, wenn sie das Richtige zeigen. Unten steht, was auf jedem erkennbar sein muss — klebe sie ein und schreibe die Bildlegende dazu.</p>
+
+  <div class="grid2">
+    <div class="photo"><b>Foto 1 — Taster</b><span>Der Taster an der Wand, dazu einer offen mit abgenommener Abdeckung. Erkennbar: dass es ein <em>Taster</em> und kein Schalter ist, und ob er eine Glimmlampe hat.</span></div>
+    <div class="photo"><b>Foto 2 — Stromstossschalter im Verteiler</b><span>Das Gerät auf der Hutschiene, <strong>Typenschild lesbar</strong> (Hersteller, Typ, Spannung, Strom). Ohne dieses Foto keine Datenblatt-Analyse.</span></div>
+    <div class="photo"><b>Foto 3 — Leuchte(n)</b><span>Alle Leuchten, die über diese Schaltung laufen. Leuchtmittel notieren — LED oder Glühlampe ist für die Last entscheidend.</span></div>
+    <div class="photo"><b>Foto 4 — Abzweigdose</b><span>Eine geöffnete Abzweigdose mit den Klemmstellen. Zeigt, wie viele Adern tatsächlich wohin gehen — Grundlage für die Aderzahlen im Installationsplan.</span></div>
+  </div>
+
+  <h3>Betriebsmittel-Liste</h3>
+  <p style="margin-top:0">Jedes Betriebsmittel bekommt ein Kennzeichen, das in allen drei Schemata gleich heisst. Beispielwerte unten durch die eigenen ersetzen.</p>
+  <table>
+    <tr><th style="width:11%">Kennz.</th><th style="width:26%">Betriebsmittel</th><th style="width:27%">Typ / Angabe vom Typenschild</th><th>Ort im Objekt</th></tr>
+    <tr><td><b>F1</b></td><td>Leitungsschutzschalter</td><td>z. B. B10, 1-polig</td><td>Verteiler, Feld <span class="fill">&nbsp;</span></td></tr>
+    <tr><td><b>K1</b></td><td>Stromstossschalter (Impulsrelais)</td><td>Hersteller/Typ ab Typenschild</td><td>Verteiler, Hutschiene</td></tr>
+    <tr><td><b>S1</b></td><td>Taster (Schliesser)</td><td>mit / ohne Glimmlampe</td><td>z. B. Korridor</td></tr>
+    <tr><td><b>S2</b></td><td>Taster (Schliesser), parallel</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td><b>E1</b></td><td>Leuchte</td><td>LED, Leistung in W</td><td>&nbsp;</td></tr>
+    <tr><td><b>E2</b></td><td>Leuchte, parallel</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td><b>X1</b></td><td>Klemmenleiste</td><td>Anzahl Klemmen</td><td>Verteiler</td></tr>
+    <tr><td>&nbsp;</td><td>Abzweigdose(n)</td><td>Anzahl</td><td>&nbsp;</td></tr>
+  </table>
+
+  <div class="note"><strong>Hinweis zur Schaltung:</strong> Die Schrittschaltung heisst auch Stromstossschaltung. Das Gerät ist ein <strong>bistabiles</strong> Impulsrelais: jeder kurze Tastendruck kippt es in die andere Stellung, und es bleibt dort — ohne dass Strom durch die Spule fliessen muss. Deshalb braucht es <em>Taster</em> und keine Schalter, und deshalb sind alle Taster parallel.</div>
+  <div class="pf"><span>Teil A · Schrittschaltung</span><span>Seite 3</span></div>
+</section>
+
+<!-- ============================ SEITE 4 — A2 INSTALLATIONSPLAN ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil A · Schrittschaltung — Installationsplan</b><span>Seite 4 von 16</span></div>
+  <h2 class="t">A 2 · Installationsplan <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 400" role="img" aria-label="Installationsplan einer Schrittschaltung: Verteiler mit Leitungsschutzschalter F1 und Stromstossschalter K1, fünfadrige Leitung zur Abzweigdose, von dort dreiadrig zu zwei Tastern und zu zwei parallelen Leuchten.">
+    <text class="ti" x="8" y="14">INSTALLATIONSPLAN · SCHRITTSCHALTUNG · M 1:50 (nicht maßstäblich)</text>
+
+    <!-- Wände -->
+    <path class="wall" d="M30 40 H730 V330 H30 Z"/>
+    <path class="wall" d="M300 40 V150 M300 230 V330"/>
+    <text class="sm" x="150" y="60">Raum 1 · Korridor</text>
+    <text class="sm" x="430" y="60">Raum 2 · Wohnraum</text>
+
+    <!-- Verteiler -->
+    <rect class="devf" x="48" y="250" width="120" height="62"/>
+    <text class="lb" x="56" y="268">Verteiler</text>
+    <text class="sm" x="56" y="282">F1  B10  1-pol.</text>
+    <text class="sm" x="56" y="295">K1  Stromstoss-</text>
+    <text class="sm" x="56" y="306">schalter, 1 TE</text>
+
+    <!-- Abzweigdose D1 -->
+    <circle class="dev" cx="300" cy="190" r="15"/>
+    <text class="lb" x="282" y="222">D1</text>
+    <text class="sm" x="268" y="235">Abzweigdose</text>
+
+    <!-- Leitung Verteiler -> D1 : 5 Adern -->
+    <path class="wS" d="M168 272 H230 V190 H285"/>
+    <g>
+      <path class="thin" d="M194 264 L204 280 M200 264 L210 280 M206 264 L216 280 M212 264 L222 280 M218 264 L228 280"/>
+      <text class="sm" x="176" y="258">5 × 1,5 mm²</text>
+    </g>
+
+    <!-- Taster S1 im Korridor -->
+    <g transform="translate(150,150)">
+      <circle class="dev" cx="0" cy="0" r="12"/>
+      <path class="wS" d="M0 -12 V-26 M-7 -26 H7"/>
+      <circle class="dot" cx="0" cy="0" r="2.6"/>
+      <text class="lb" x="-26" y="30">S1</text>
+      <text class="sm" x="-36" y="43">Taster</text>
+    </g>
+    <path class="wS" d="M285 186 H162"/>
+    <path class="thin" d="M214 178 L222 194 M220 178 L228 194 M226 178 L234 194"/>
+    <text class="sm" x="206" y="172">3 × 1,5 mm²</text>
+
+    <!-- Taster S2 im Wohnraum -->
+    <g transform="translate(420,120)">
+      <circle class="dev" cx="0" cy="0" r="12"/>
+      <path class="wS" d="M0 -12 V-26 M-7 -26 H7"/>
+      <circle class="dot" cx="0" cy="0" r="2.6"/>
+      <text class="lb" x="16" y="-2">S2</text>
+      <text class="sm" x="16" y="12">Taster, parallel</text>
+    </g>
+    <path class="wS" d="M300 175 V150 H420 V132"/>
+    <path class="thin" d="M352 142 L360 158 M358 142 L366 158 M364 142 L372 158"/>
+    <text class="sm" x="330" y="136">3 × 1,5 mm²</text>
+
+    <!-- Leuchte E1 -->
+    <g transform="translate(560,190)">
+      <circle class="dev" cx="0" cy="0" r="16"/>
+      <path class="wS" d="M-11 -11 L11 11 M-11 11 L11 -11"/>
+      <text class="lb" x="-7" y="36">E1</text>
+      <text class="sm" x="-26" y="49">LED 230 V</text>
+    </g>
+    <path class="wS" d="M315 192 H544"/>
+    <path class="thin" d="M470 184 L478 200 M476 184 L484 200 M482 184 L490 200"/>
+    <text class="sm" x="462" y="178">3 × 1,5 mm²</text>
+
+    <!-- Leuchte E2 -->
+    <g transform="translate(660,270)">
+      <circle class="dev" cx="0" cy="0" r="16"/>
+      <path class="wS" d="M-11 -11 L11 11 M-11 11 L11 -11"/>
+      <text class="lb" x="-7" y="36">E2</text>
+      <text class="sm" x="-30" y="49">LED, parallel</text>
+    </g>
+    <path class="wS" d="M572 200 L648 258"/>
+    <path class="thin" d="M598 212 L606 228 M604 208 L612 224 M610 204 L618 220"/>
+    <text class="sm" x="590" y="250">3 × 1,5 mm²</text>
+
+    <!-- Legende -->
+    <g transform="translate(30,345)">
+      <rect class="leg" x="0" y="0" width="700" height="46"/>
+      <text class="lb" x="10" y="16">Legende</text>
+      <g transform="translate(70,11)">
+        <circle class="dev" cx="8" cy="0" r="8"/><path class="wS" d="M8 -8 V-14 M3 -14 H13"/><circle class="dot" cx="8" cy="0" r="2"/>
+        <text class="sm" x="22" y="4">Taster</text>
+      </g>
+      <g transform="translate(150,11)">
+        <circle class="dev" cx="8" cy="0" r="9"/><path class="wS" d="M2 -6 L14 6 M2 6 L14 -6"/>
+        <text class="sm" x="24" y="4">Leuchte</text>
+      </g>
+      <g transform="translate(240,11)">
+        <circle class="dev" cx="8" cy="0" r="8"/>
+        <text class="sm" x="22" y="4">Abzweigdose</text>
+      </g>
+      <g transform="translate(360,11)">
+        <rect class="devf" x="0" y="-8" width="22" height="16"/>
+        <text class="sm" x="28" y="4">Verteiler</text>
+      </g>
+      <g transform="translate(470,11)">
+        <path class="wS" d="M0 0 H40"/><path class="thin" d="M12 -8 L20 8 M18 -8 L26 8 M24 -8 L32 8"/>
+        <text class="sm" x="46" y="4">Leitung mit Aderzahl (hier 3)</text>
+      </g>
+      <text class="sm" x="10" y="38">Symbole vor dem Reinzeichnen mit dem Symbolblatt aus dem Unterricht vergleichen — das Raster verlangt «exakt der Norm entsprechend».</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. A 2</strong> — Installationsplan Schrittschaltung: zwei parallele Taster, zwei parallele Leuchten, Stromstossschalter K1 im Verteiler. Die Aderzahl-Striche quer zur Leitung sind der Punkt, an dem die meisten Punkte verloren gehen: <strong>jede</strong> Leitung braucht ihre Zahl.</figcaption>
+  </figure>
+
+  <h4>Warum fünf Adern vom Verteiler zur Abzweigdose</h4>
+  <table>
+    <tr><th style="width:22%">Ader</th><th>Funktion</th></tr>
+    <tr><td>L (braun)</td><td>Speisung für die Taster — der Taster wird mit L getastet</td></tr>
+    <tr><td>Steuerleiter (schwarz)</td><td>vom Taster zurück zum Impulseingang der Relaisspule</td></tr>
+    <tr><td>Lampenleiter (braun)</td><td>vom Kontakt des Impulsrelais zu den Leuchten</td></tr>
+    <tr><td>N (blau)</td><td>Neutralleiter der Leuchten</td></tr>
+    <tr><td>PE (grün-gelb)</td><td>Schutzleiter</td></tr>
+  </table>
+  <p style="font-size:11px;margin-top:0">Zählt bei dir anders? Dann ist deine Installation anders aufgebaut — zeichne, <em>was du vorgefunden hast</em>, und schreib in einem Satz dazu, warum. Das ist richtiger als ein Lehrbuchplan, der nicht zum Objekt passt.</p>
+  <div class="pf"><span>Teil A · Installationsplan</span><span>Seite 4</span></div>
+</section>
+
+<!-- ============================ SEITE 5 — A3 STROMLAUFSCHEMA ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil A · Schrittschaltung — Stromlaufschema</b><span>Seite 5 von 16</span></div>
+  <h2 class="t">A 3 · Stromlaufschema <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 430" role="img" aria-label="Stromlaufschema der Schrittschaltung: Steuerkreis mit drei parallelen Tastern auf die Spule A1/A2 des bistabilen Impulsrelais K1, Lastkreis mit dem Schliesser 1/2 und zwei parallelen Leuchten.">
+    <text class="ti" x="8" y="14">STROMLAUFSCHEMA · SCHRITTSCHALTUNG · aufgelöste Darstellung</text>
+
+    <!-- Speisung + F1 -->
+    <text class="lb" x="10" y="54">L1</text>
+    <text class="lb" x="10" y="366">N</text>
+    <text class="lb" x="10" y="400">PE</text>
+    <path class="wL" d="M34 50 H740"/>
+    <path class="wN" d="M34 362 H740"/>
+    <path class="wP" d="M34 396 H740"/>
+
+    <!-- F1 oberhalb der L-Schiene -->
+    <g transform="translate(90,0)">
+      <path class="wL" d="M0 20 V34"/>
+      <path class="thin" d="M0 34 L12 46"/>
+      <path class="thin" d="M-6 46 H6"/>
+      <path class="wL" d="M0 46 V50"/>
+      <text class="lb" x="16" y="30">F1</text>
+      <text class="sm" x="16" y="42">B10, 1-polig</text>
+      <text class="sm" x="-54" y="24">ab Verteiler</text>
+    </g>
+
+    <!-- ===== Steuerkreis ===== -->
+    <text class="ti" x="150" y="76">STEUERKREIS</text>
+    <g>
+      <!-- drei Taster parallel -->
+      <g transform="translate(170,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 124 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="124" r="2.4"/>
+        <text class="lb" x="-26" y="112">S1</text>
+        <text class="sm" x="-40" y="140">Taster</text>
+        <text class="sm" x="-2" y="64">X1:1</text>
+      </g>
+      <g transform="translate(250,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 124 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="124" r="2.4"/>
+        <text class="lb" x="-26" y="112">S2</text>
+      </g>
+      <g transform="translate(330,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 124 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="124" r="2.4"/>
+        <text class="lb" x="-26" y="112">S3</text>
+      </g>
+      <!-- Sammelleitung Steuerleiter -->
+      <path class="wS" d="M170 124 H330 M250 124 V124"/>
+      <path class="wS" d="M250 124 V176"/>
+      <text class="sm" x="256" y="148">Steuerleiter · X1:4</text>
+
+      <!-- Spule K1 -->
+      <rect class="dev" x="212" y="176" width="76" height="60"/>
+      <text class="lb" x="222" y="200">K1</text>
+      <path class="thin" d="M228 210 H272 M234 204 L228 210 L234 216 M266 204 L272 210 L266 216"/>
+      <text class="sm" x="222" y="230">bistabil</text>
+      <text class="sm" x="292" y="182">A1</text>
+      <text class="sm" x="292" y="246">A2</text>
+      <path class="wN" d="M250 236 V362"/>
+      <text class="sm" x="258" y="300">N · X1:2</text>
+    </g>
+
+    <!-- ===== Lastkreis ===== -->
+    <text class="ti" x="520" y="76">LASTKREIS</text>
+    <g>
+      <!-- Kontakt K1 1/2 -->
+      <g transform="translate(540,0)">
+        <path class="wL" d="M0 50 V100"/>
+        <path class="thin" d="M0 100 L16 74"/>
+        <path class="wL" d="M0 130 V100"/>
+        <circle class="dot" cx="0" cy="130" r="2.4"/>
+        <text class="sm" x="-26" y="70">1</text>
+        <text class="sm" x="-26" y="134">2</text>
+        <text class="lb" x="22" y="100">K1</text>
+        <text class="sm" x="22" y="114">Schliesser</text>
+      </g>
+      <!-- mechanische Kopplung zur Spule -->
+      <path class="mech" d="M540 104 H460 V206 H288"/>
+      <text class="sm" x="300" y="200">mechanische Kopplung · speichernd</text>
+
+      <!-- Lampenleiter -->
+      <path class="wL" d="M540 130 V186 H660 M540 186 V186"/>
+      <text class="sm" x="548" y="180">Lampenleiter · X1:7</text>
+
+      <!-- Leuchten -->
+      <g transform="translate(540,0)">
+        <path class="wL" d="M0 186 V248"/>
+        <circle class="dev" cx="0" cy="268" r="20"/>
+        <path class="thin" d="M-14 254 L14 282 M-14 282 L14 254"/>
+        <path class="wN" d="M0 288 V362"/>
+        <text class="lb" x="-34" y="268">E1</text>
+        <path class="wP" d="M20 268 H44 V396"/>
+      </g>
+      <g transform="translate(660,0)">
+        <path class="wL" d="M0 186 V248"/>
+        <circle class="dev" cx="0" cy="268" r="20"/>
+        <path class="thin" d="M-14 254 L14 282 M-14 282 L14 254"/>
+        <path class="wN" d="M0 288 V362"/>
+        <text class="lb" x="26" y="268">E2</text>
+        <path class="wP" d="M-20 268 H-40 V396"/>
+      </g>
+      <text class="sm" x="606" y="346">N · X1:8</text>
+      <text class="sm" x="600" y="390">PE · X1:3</text>
+    </g>
+
+    <!-- Legende -->
+    <g transform="translate(30,406)">
+      <text class="sm" x="0" y="10">Leiter:</text>
+      <path class="wL" d="M44 6 H84"/><text class="sm" x="90" y="10">L braun</text>
+      <path class="wN" d="M150 6 H190"/><text class="sm" x="196" y="10">N blau</text>
+      <path class="wP" d="M250 6 H290"/><text class="sm" x="296" y="10">PE grün-gelb</text>
+      <path class="wS" d="M376 6 H416"/><text class="sm" x="422" y="10">Steuerleiter</text>
+      <path class="mech" d="M500 6 H540"/><text class="sm" x="546" y="10">mechanische Kopplung</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. A 3</strong> — Stromlaufschema der Schrittschaltung. Oben der Steuerkreis: alle Taster <strong>parallel</strong> auf den Spuleneingang A1, A2 liegt auf N. Unten der Lastkreis: der Schliesser 1/2 schaltet die beiden parallelen Leuchten. Die gestrichelte Linie ist die mechanische Kopplung zwischen Spule und Kontakt — das Zeichen dafür, dass das Relais speichert.</figcaption>
+  </figure>
+
+  <div class="note">
+    <strong>Die zwei häufigsten Fehler hier.</strong> Erstens: Taster in Serie statt parallel — dann müsste man zwei Taster gleichzeitig drücken. Zweitens: Spule und Kontakt als ein einziges Bauteil zeichnen. Im Stromlaufschema sind sie <em>getrennt</em> und nur über die gestrichelte Kopplung verbunden, mit demselben Kennzeichen K1. Beschrifte beide.
+  </div>
+  <div class="box" style="font-size:11px">
+    <strong>Klemmenbezeichnungen:</strong> <b>A1 / A2</b> für die Spule und <b>1 / 2</b> für den Schliesser sind die üblichen Bezeichnungen nach IEC. <strong>Lies sie am eingebauten Gerät ab</strong> und übernimm, was dort steht — Hersteller weichen ab, und das Raster verlangt die Klemmenbezeichnungen <em>der Apparate</em>.
+  </div>
+  <div class="pf"><span>Teil A · Stromlaufschema</span><span>Seite 5</span></div>
+</section>
+
+<!-- ============================ SEITE 6 — A4 WIRKSCHALTSCHEMA ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil A · Schrittschaltung — Wirkschaltschema</b><span>Seite 6 von 16</span></div>
+  <h2 class="t">A 4 · Wirkschaltschema <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 470" role="img" aria-label="Wirkschaltschema der Schrittschaltung: im Verteiler Leitungsschutzschalter F1, Stromstossschalter K1 mit den Klemmen 1, 2, A1 und A2 und die Klemmenleiste X1; davon Verdrahtung zu zwei Tastern und zwei Leuchten.">
+    <text class="ti" x="8" y="14">WIRKSCHALTSCHEMA · SCHRITTSCHALTUNG · zusammenhängende Darstellung</text>
+
+    <rect x="14" y="26" width="386" height="410" fill="none" stroke="#5c6665" stroke-width="1.2" stroke-dasharray="6 4"/>
+    <text class="sm" x="24" y="428">Verteiler</text>
+
+    <!-- Speisung -->
+    <text class="sm" x="22" y="54">L1</text>
+    <text class="sm" x="24" y="74">N</text>
+    <text class="sm" x="20" y="94">PE</text>
+    <path class="wL" d="M40 50 H46"/>
+    <rect class="devf" x="46" y="36" width="56" height="28"/>
+    <text class="sm" x="52" y="54">F1 B10</text>
+    <path class="wL" d="M102 50 H300 V96 H330"/>
+    <path class="wL" d="M120 50 V132"/>
+    <circle class="dot" cx="120" cy="50" r="2.4"/>
+    <path class="wN" d="M40 70 H60 V340 H310 V270"/>
+    <circle class="dot" cx="310" cy="270" r="2.4"/>
+    <path class="wP" d="M40 90 V360 H320 V320 H330"/>
+
+    <!-- K1 -->
+    <rect class="dev" x="90" y="140" width="170" height="160"/>
+    <text class="lb" x="100" y="164">K1</text>
+    <text class="sm" x="100" y="180">Stromstossschalter</text>
+    <path class="thin" d="M100 208 H156 M108 201 L100 208 L108 215 M148 201 L156 208 L148 215"/>
+    <text class="sm" x="100" y="238">bistabil · 1 Schliesser</text>
+    <text class="sm" x="100" y="254">16 A · 1 TE</text>
+    <rect class="devf" x="110" y="132" width="20" height="14"/>
+    <text class="sm" x="136" y="130">Klemme 1 — Speisung von F1</text>
+    <rect class="devf" x="260" y="173" width="14" height="14"/><text class="sm" x="280" y="174">A1</text>
+    <rect class="devf" x="260" y="223" width="14" height="14"/><text class="sm" x="280" y="224">2</text>
+    <rect class="devf" x="260" y="263" width="14" height="14"/><text class="sm" x="280" y="264">A2</text>
+    <path class="wS" d="M274 180 H330"/>
+    <path class="wL" d="M274 230 H330"/>
+    <path class="wN" d="M274 270 H330"/>
+
+    <!-- Klemmenleiste X1 -->
+    <text class="lb" x="330" y="78">X1</text>
+    <rect class="devf" x="330" y="87" width="60" height="18"/><text class="sm" x="354" y="100">1</text>
+    <rect class="devf" x="330" y="171" width="60" height="18"/><text class="sm" x="354" y="184">4</text>
+    <rect class="devf" x="330" y="221" width="60" height="18"/><text class="sm" x="354" y="234">7</text>
+    <rect class="devf" x="330" y="261" width="60" height="18"/><text class="sm" x="354" y="274">2</text>
+    <rect class="devf" x="330" y="311" width="60" height="18"/><text class="sm" x="354" y="324">3</text>
+    <text class="sm" x="404" y="88">L für die Taster</text>
+    <text class="sm" x="404" y="172">Steuerleiter</text>
+    <text class="sm" x="404" y="222">Lampenleiter</text>
+    <text class="sm" x="404" y="262">N</text>
+    <text class="sm" x="404" y="312">PE</text>
+
+    <!-- Taster -->
+    <rect class="dev" x="480" y="46" width="130" height="38"/>
+    <text class="lb" x="490" y="62">S1</text><text class="sm" x="490" y="76">Taster, Korridor</text>
+    <rect class="devf" x="466" y="58" width="14" height="12"/>
+    <rect class="devf" x="610" y="58" width="14" height="12"/>
+    <rect class="dev" x="480" y="100" width="130" height="38"/>
+    <text class="lb" x="490" y="116">S2</text><text class="sm" x="490" y="130">Taster, Wohnraum</text>
+    <rect class="devf" x="466" y="112" width="14" height="12"/>
+    <rect class="devf" x="610" y="112" width="14" height="12"/>
+
+    <path class="wL" d="M390 96 H446 M446 64 V118 M446 64 H466 M446 118 H466"/>
+    <circle class="dot" cx="446" cy="96" r="2.4"/>
+    <path class="wS" d="M624 64 H668 V180 H390 M624 118 H668"/>
+    <circle class="dot" cx="668" cy="118" r="2.4"/>
+
+    <!-- Leuchten -->
+    <text class="lb" x="438" y="298">E1 · LED 230 V</text>
+    <circle class="dev" cx="480" cy="330" r="24"/>
+    <path class="thin" d="M463 313 L497 347 M463 347 L497 313"/>
+    <text class="lb" x="582" y="298">E2 · parallel</text>
+    <circle class="dev" cx="620" cy="330" r="24"/>
+    <path class="thin" d="M603 313 L637 347 M603 347 L637 313"/>
+
+    <path class="wL" d="M390 230 H576 M436 230 V330 H456 M576 230 V330 H596"/>
+    <circle class="dot" cx="436" cy="230" r="2.4"/>
+    <path class="wN" d="M390 270 H414 V400 H660 M480 400 V354 M620 400 V354"/>
+    <path class="wP" d="M390 320 H404 V430 H640 M504 430 V330 M644 430 V330"/>
+    <text class="sm" x="424" y="394">N</text>
+    <text class="sm" x="416" y="424">PE</text>
+
+    <g transform="translate(20,452)">
+      <text class="sm" x="0" y="10">Leiter:</text>
+      <path class="wL" d="M44 6 H84"/><text class="sm" x="90" y="10">L braun</text>
+      <path class="wN" d="M150 6 H190"/><text class="sm" x="196" y="10">N blau</text>
+      <path class="wP" d="M250 6 H290"/><text class="sm" x="296" y="10">PE grün-gelb</text>
+      <path class="wS" d="M376 6 H416"/><text class="sm" x="422" y="10">Steuerleiter schwarz</text>
+      <text class="sm" x="560" y="10">Kreuzung ohne Punkt = keine Verbindung</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. A 4</strong> — Wirkschaltschema: alle Apparate mit ihren Klemmen, dazwischen die wirkliche Verdrahtung. Hier zählt, dass jede Ader an der richtigen Klemme endet und dass N und PE nicht verwechselt sind. Die Klemmenleiste X1 ist die Schnittstelle zwischen Verteiler und Installation.</figcaption>
+  </figure>
+
+  <table>
+    <tr><th style="width:14%">Klemme</th><th style="width:30%">von</th><th style="width:30%">nach</th><th>Leiter</th></tr>
+    <tr><td>X1:1</td><td>F1, Abgang</td><td>S1 / S2, Eingang</td><td>braun, 1,5 mm²</td></tr>
+    <tr><td>X1:4</td><td>S1 / S2, Ausgang</td><td>K1 Klemme A1</td><td>schwarz, 1,5 mm²</td></tr>
+    <tr><td>X1:7</td><td>K1 Klemme 2</td><td>E1 / E2, Aussenleiter</td><td>braun, 1,5 mm²</td></tr>
+    <tr><td>X1:2</td><td>N-Schiene</td><td>K1 Klemme A2 und E1 / E2</td><td>blau, 1,5 mm²</td></tr>
+    <tr><td>X1:3</td><td>PE-Schiene</td><td>E1 / E2, Gehäuse</td><td>grün-gelb, 1,5 mm²</td></tr>
+  </table>
+  <p style="font-size:11px;margin:0">Diese Tabelle als Klemmenplan dazuzulegen ist freiwillig — sie macht aber beim Kriterium «Wirkschaltschema» den Unterschied zwischen «Klemmennummern fehlen teilweise» (2 Punkte) und «alle Klemmenbezeichnungen korrekt» (4 Punkte).</p>
+  <div class="pf"><span>Teil A · Wirkschaltschema</span><span>Seite 6</span></div>
+</section>
+
+<!-- ============================ SEITE 7 — B1 FOTOS ============================ -->
+<section class="page">
+  <div class="ph"><b>Teil B · Minuterie — Praxis-Analyse</b><span>Seite 7 von 16</span></div>
+  <h2 class="t">B 1 · Fotos und Betriebsmittel</h2>
+  <p class="lead">Dieselbe Logik wie bei Teil A. Bei der Minuterie kommt ein Punkt dazu, den man leicht übersieht: die <strong>eingestellte Zeit am Gerät</strong>. Fotografiere die Skala, so wie sie vorgefunden wurde.</p>
+
+  <div class="grid2">
+    <div class="photo"><b>Foto 1 — Taster im Treppenhaus</b><span>Mit Orientierungslicht? Die Glimmlampe im Taster ist für die Datenblatt-Analyse wichtig (Glimmlampenlast).</span></div>
+    <div class="photo"><b>Foto 2 — Treppenhaus-Zeitschalter</b><span>Gerät auf der Hutschiene, <strong>Typenschild und Zeitskala lesbar</strong>. Notiere die eingestellte Zeit.</span></div>
+    <div class="photo"><b>Foto 3 — Leuchten pro Geschoss</b><span>Welche Leuchten laufen über die Minuterie, wie viele Geschosse, welches Leuchtmittel.</span></div>
+    <div class="photo"><b>Foto 4 — Verteiler / Abzweigdose</b><span>Absicherung und Klemmstellen. Zeigt, ob 3- oder 4-Leiter-Anschluss ausgeführt ist.</span></div>
+  </div>
+
+  <h3>Betriebsmittel-Liste</h3>
+  <table>
+    <tr><th style="width:11%">Kennz.</th><th style="width:26%">Betriebsmittel</th><th style="width:27%">Typ / Angabe vom Typenschild</th><th>Ort im Objekt</th></tr>
+    <tr><td><b>F1</b></td><td>Leitungsschutzschalter</td><td>z. B. B10, 1-polig</td><td>Verteiler</td></tr>
+    <tr><td><b>K1</b></td><td>Treppenlicht-Zeitschalter</td><td>Hersteller/Typ, <b>eingestellte Zeit</b></td><td>Verteiler, Hutschiene</td></tr>
+    <tr><td><b>S1–S3</b></td><td>Taster, parallel, je Geschoss</td><td>mit Glimmlampe?</td><td>EG / 1. OG / 2. OG</td></tr>
+    <tr><td><b>E1–E3</b></td><td>Leuchten, je Geschoss</td><td>LED, Leistung in W</td><td>EG / 1. OG / 2. OG</td></tr>
+    <tr><td><b>X1</b></td><td>Klemmenleiste</td><td>Anzahl Klemmen</td><td>Verteiler</td></tr>
+  </table>
+
+  <h3>Vor Ort prüfen und notieren</h3>
+  <div class="check">
+    <label><span class="sq"></span><span>Eingestellte Zeit an der Skala: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> min</span></label>
+    <label><span class="sq"></span><span>3-Leiter- oder 4-Leiter-Anschluss? Beim 4-Leiter hat das Gerät eine Klemme für die Bodenbeleuchtung.</span></label>
+    <label><span class="sq"></span><span>Haben die Taster eine Glimmlampe — und bleibt sie dauernd an?</span></label>
+    <label><span class="sq"></span><span>Gibt es einen Dauerlicht-Schalter am Gerät, und in welcher Stellung steht er?</span></label>
+    <label><span class="sq"></span><span>Wie viele Leuchten hängen am Ausgang, und mit welcher Gesamtleistung?</span></label>
+  </div>
+
+  <div class="note"><strong>Hinweis zur Schaltung:</strong> Die Minuterie — Treppenlicht-Zeitschalter, oft TLZ — schaltet nach einem kurzen Tastendruck die Beleuchtung für eine <strong>eingestellte Zeit</strong> ein und danach selbständig aus. Die Taster sind wie bei der Schrittschaltung parallel, aber das Gerät speichert nicht: es läuft eine Zeit ab. Genau dieser Unterschied muss im Zeitablaufdiagramm auf Seite 12 sichtbar werden.</div>
+  <div class="pf"><span>Teil B · Minuterie</span><span>Seite 7</span></div>
+</section>
+
+<!-- ============================ SEITE 8 — B2 INSTALLATIONSPLAN ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil B · Minuterie — Installationsplan</b><span>Seite 8 von 16</span></div>
+  <h2 class="t">B 2 · Installationsplan <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 420" role="img" aria-label="Installationsplan einer Minuterie in einem dreigeschossigen Treppenhaus: Verteiler im Erdgeschoss, Steigleitung mit vier Adern, pro Geschoss eine Abzweigdose, ein Taster und eine Leuchte.">
+    <text class="ti" x="8" y="14">INSTALLATIONSPLAN · MINUTERIE · Treppenhaus, 3 Geschosse</text>
+
+    <!-- Geschossdecken -->
+    <path class="wall" d="M40 300 H700 M40 190 H700 M40 80 H700"/>
+    <text class="sm" x="48" y="318">Erdgeschoss</text>
+    <text class="sm" x="48" y="208">1. Obergeschoss</text>
+    <text class="sm" x="48" y="98">2. Obergeschoss</text>
+
+    <!-- Verteiler EG -->
+    <rect class="devf" x="60" y="330" width="130" height="62"/>
+    <text class="lb" x="68" y="348">Verteiler EG</text>
+    <text class="sm" x="68" y="362">F1  B10  1-pol.</text>
+    <text class="sm" x="68" y="374">K1  Treppenlicht-</text>
+    <text class="sm" x="68" y="385">Zeitschalter, 1 TE</text>
+
+    <!-- Steigleitung -->
+    <path class="wS" d="M190 360 H250 V110"/>
+    <path class="thin" d="M242 300 L258 292 M242 288 L258 280 M242 276 L258 268 M242 264 L258 256"/>
+    <text class="sm" x="262" y="286">Steigleitung</text>
+    <text class="sm" x="262" y="299">4 × 1,5 mm²</text>
+
+    <!-- Geschoss-Gruppen: Abzweigdose, Taster, Leuchte -->
+    <!-- EG -->
+    <g transform="translate(0,0)">
+      <circle class="dev" cx="250" cy="330" r="13"/>
+      <text class="sm" x="236" y="358">D1</text>
+      <path class="wS" d="M263 330 H340"/>
+      <g transform="translate(360,330)">
+        <circle class="dev" cx="0" cy="0" r="11"/>
+        <path class="wS" d="M0 -11 V-23 M-6 -23 H6"/>
+        <circle class="dot" cx="0" cy="0" r="2.4"/>
+        <text class="lb" x="-8" y="26">S1</text>
+      </g>
+      <path class="wS" d="M371 326 H470"/>
+      <g transform="translate(500,322)">
+        <circle class="dev" cx="0" cy="0" r="15"/>
+        <path class="thin" d="M-10 -10 L10 10 M-10 10 L10 -10"/>
+        <text class="lb" x="22" y="4">E1</text>
+      </g>
+      <text class="sm" x="392" y="316">3 × 1,5</text>
+    </g>
+    <!-- 1. OG -->
+    <g transform="translate(0,-110)">
+      <circle class="dev" cx="250" cy="330" r="13"/>
+      <text class="sm" x="236" y="358">D2</text>
+      <path class="wS" d="M263 330 H340"/>
+      <g transform="translate(360,330)">
+        <circle class="dev" cx="0" cy="0" r="11"/>
+        <path class="wS" d="M0 -11 V-23 M-6 -23 H6"/>
+        <circle class="dot" cx="0" cy="0" r="2.4"/>
+        <text class="lb" x="-8" y="26">S2</text>
+      </g>
+      <path class="wS" d="M371 326 H470"/>
+      <g transform="translate(500,322)">
+        <circle class="dev" cx="0" cy="0" r="15"/>
+        <path class="thin" d="M-10 -10 L10 10 M-10 10 L10 -10"/>
+        <text class="lb" x="22" y="4">E2</text>
+      </g>
+      <text class="sm" x="392" y="316">3 × 1,5</text>
+    </g>
+    <!-- 2. OG -->
+    <g transform="translate(0,-220)">
+      <circle class="dev" cx="250" cy="330" r="13"/>
+      <text class="sm" x="236" y="358">D3</text>
+      <path class="wS" d="M263 330 H340"/>
+      <g transform="translate(360,330)">
+        <circle class="dev" cx="0" cy="0" r="11"/>
+        <path class="wS" d="M0 -11 V-23 M-6 -23 H6"/>
+        <circle class="dot" cx="0" cy="0" r="2.4"/>
+        <text class="lb" x="-8" y="26">S3</text>
+      </g>
+      <path class="wS" d="M371 326 H470"/>
+      <g transform="translate(500,322)">
+        <circle class="dev" cx="0" cy="0" r="15"/>
+        <path class="thin" d="M-10 -10 L10 10 M-10 10 L10 -10"/>
+        <text class="lb" x="22" y="4">E3</text>
+      </g>
+      <text class="sm" x="392" y="316">3 × 1,5</text>
+    </g>
+
+    <!-- Aderzahl-Tabelle als Beschriftung -->
+    <g transform="translate(560,120)">
+      <rect class="leg" x="0" y="0" width="190" height="104"/>
+      <text class="lb" x="8" y="16">Steigleitung, 4 Adern</text>
+      <text class="sm" x="8" y="34">L  — Speisung der Taster</text>
+      <text class="sm" x="8" y="50">Steuerleiter — Taster → K1</text>
+      <text class="sm" x="8" y="66">Lampenleiter — K1 → Leuchten</text>
+      <text class="sm" x="8" y="82">N  — Neutralleiter</text>
+      <text class="sm" x="8" y="98">PE zusätzlich, wo gefordert</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. B 2</strong> — Installationsplan Minuterie, dreigeschossiges Treppenhaus. Pro Geschoss ein Taster und eine Leuchte, alle Taster parallel an derselben Steuerader. Die Steigleitung ist die Stelle, an der die Aderzahl eingezeichnet werden muss.</figcaption>
+  </figure>
+
+  <div class="note"><strong>3-Leiter oder 4-Leiter — am Objekt entscheiden.</strong> Beim 4-Leiter-Anschluss wird mit <strong>L getastet</strong>; das Gerät hat zusätzlich eine Klemme für eine Bodenbeleuchtung. Beim 3-Leiter-Anschluss wird der Neutralleiter getastet — das ist bei <strong>Neuanlagen nicht mehr erlaubt</strong> (so steht es im Datenblatt des hier als Beispiel verwendeten Geräts). Wenn du eine ältere 3-Leiter-Installation vorfindest: zeichne sie, wie sie ist, und schreibe diesen Satz dazu. Das ist genau die Art Beobachtung, die eine Praxis-Analyse von einer Abschreibübung unterscheidet.</div>
+  <div class="pf"><span>Teil B · Installationsplan</span><span>Seite 8</span></div>
+</section>
+
+<!-- ============================ SEITE 9 — B3 STROMLAUFSCHEMA ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil B · Minuterie — Stromlaufschema</b><span>Seite 9 von 16</span></div>
+  <h2 class="t">B 3 · Stromlaufschema <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 430" role="img" aria-label="Stromlaufschema der Minuterie: drei parallele Taster mit Glimmlampen auf den Steuereingang des Treppenlicht-Zeitschalters, dessen zeitverzögert öffnender Schliesser drei Leuchten schaltet.">
+    <text class="ti" x="8" y="14">STROMLAUFSCHEMA · MINUTERIE · 4-Leiter, L-getastet</text>
+
+    <text class="lb" x="10" y="54">L1</text>
+    <text class="lb" x="10" y="366">N</text>
+    <text class="lb" x="10" y="400">PE</text>
+    <path class="wL" d="M34 50 H740"/>
+    <path class="wN" d="M34 362 H740"/>
+    <path class="wP" d="M34 396 H740"/>
+
+    <!-- F1 -->
+    <g transform="translate(86,0)">
+      <path class="wL" d="M0 20 V34"/>
+      <path class="thin" d="M0 34 L12 46 M-6 46 H6"/>
+      <path class="wL" d="M0 46 V50"/>
+      <text class="lb" x="16" y="30">F1</text>
+      <text class="sm" x="16" y="42">B10, 1-polig</text>
+    </g>
+
+    <!-- Steuerkreis mit Glimmlampen -->
+    <text class="ti" x="150" y="76">STEUERKREIS</text>
+    <g>
+      <g transform="translate(170,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 128 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="128" r="2.4"/>
+        <text class="lb" x="-26" y="116">S1</text>
+        <text class="sm" x="-40" y="146">EG</text>
+        <!-- Glimmlampe parallel -->
+        <path class="wS" d="M-30 60 V116"/>
+        <path class="wS" d="M-30 60 H0 M-30 116 H0"/>
+        <circle class="dev" cx="-30" cy="88" r="8"/>
+        <circle class="dot" cx="-30" cy="88" r="2.2"/>
+        <text class="sm" x="-96" y="92">Glimm-</text>
+        <text class="sm" x="-96" y="103">lampe</text>
+      </g>
+      <g transform="translate(290,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 128 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="128" r="2.4"/>
+        <text class="lb" x="-26" y="116">S2</text>
+        <text class="sm" x="-30" y="146">1. OG</text>
+        <path class="wS" d="M-30 60 V116"/>
+        <path class="wS" d="M-30 60 H0 M-30 116 H0"/>
+        <circle class="dev" cx="-30" cy="88" r="8"/>
+        <circle class="dot" cx="-30" cy="88" r="2.2"/>
+      </g>
+      <g transform="translate(400,0)">
+        <path class="wL" d="M0 50 V96"/>
+        <path class="thin" d="M0 96 L15 72"/>
+        <path class="wS" d="M0 128 V96"/>
+        <path class="thin" d="M7 84 H24 M24 80 V88"/>
+        <circle class="dot" cx="0" cy="128" r="2.4"/>
+        <text class="lb" x="-26" y="116">S3</text>
+        <text class="sm" x="-30" y="146">2. OG</text>
+        <path class="wS" d="M-30 60 V116"/>
+        <path class="wS" d="M-30 60 H0 M-30 116 H0"/>
+        <circle class="dev" cx="-30" cy="88" r="8"/>
+        <circle class="dot" cx="-30" cy="88" r="2.2"/>
+      </g>
+      <path class="wS" d="M170 128 H400"/>
+      <path class="wS" d="M290 128 V168"/>
+      <text class="sm" x="298" y="152">Steuerleiter · X1:4</text>
+    </g>
+
+    <!-- Gerät K1 als Block mit Zeitfunktion -->
+    <rect class="dev" x="196" y="168" width="188" height="92"/>
+    <text class="lb" x="206" y="188">K1</text>
+    <text class="sm" x="206" y="202">Treppenlicht-Zeitschalter</text>
+    <text class="sm" x="206" y="216">Einstellbereich 1–7 min</text>
+    <!-- Zeitglied-Symbol -->
+    <g transform="translate(300,230)">
+      <path class="thin" d="M-22 0 H22"/>
+      <path class="thin" d="M-22 -12 A 12 12 0 0 1 2 -12"/>
+      <text class="sm" x="30" y="4">Zeitglied</text>
+    </g>
+    <text class="sm" x="388" y="176">A1 / Steuereingang</text>
+    <path class="wN" d="M230 260 V362"/>
+    <text class="sm" x="236" y="320">N · X1:2</text>
+    <text class="sm" x="236" y="306">Gerät braucht N</text>
+
+    <!-- Lastkreis -->
+    <text class="ti" x="520" y="76">LASTKREIS</text>
+    <g transform="translate(540,0)">
+      <path class="wL" d="M0 50 V100"/>
+      <path class="thin" d="M0 100 L16 74"/>
+      <!-- Zeitverzögerungs-Marke am Kontakt -->
+      <path class="thin" d="M4 88 A 10 10 0 0 1 20 92"/>
+      <path class="wL" d="M0 130 V186"/>
+      <circle class="dot" cx="0" cy="130" r="2.4"/>
+      <text class="lb" x="24" y="98">K1</text>
+      <text class="sm" x="24" y="112">Schliesser,</text>
+      <text class="sm" x="24" y="124">zeitabhängig</text>
+    </g>
+    <path class="mech" d="M540 104 H470 V214 H384"/>
+    <text class="sm" x="394" y="208">Wirkung des Zeitglieds</text>
+    <path class="wL" d="M540 186 H700"/>
+    <text class="sm" x="548" y="180">Lampenleiter · X1:7</text>
+
+    <g transform="translate(540,0)">
+      <path class="wL" d="M0 186 V240"/>
+      <circle class="dev" cx="0" cy="258" r="17"/>
+      <path class="thin" d="M-12 246 L12 270 M-12 270 L12 246"/>
+      <path class="wN" d="M0 275 V362"/>
+      <text class="lb" x="-30" y="258">E1</text>
+      <path class="wP" d="M17 258 H34 V396"/>
+    </g>
+    <g transform="translate(620,0)">
+      <path class="wL" d="M0 186 V240"/>
+      <circle class="dev" cx="0" cy="258" r="17"/>
+      <path class="thin" d="M-12 246 L12 270 M-12 270 L12 246"/>
+      <path class="wN" d="M0 275 V362"/>
+      <path class="wP" d="M17 258 H34 V396"/>
+      <text class="lb" x="-8" y="296">E2</text>
+    </g>
+    <g transform="translate(700,0)">
+      <path class="wL" d="M0 186 V240"/>
+      <circle class="dev" cx="0" cy="258" r="17"/>
+      <path class="thin" d="M-12 246 L12 270 M-12 270 L12 246"/>
+      <path class="wN" d="M0 275 V362"/>
+      <path class="wP" d="M-17 258 H-34 V396"/>
+      <text class="lb" x="22" y="258">E3</text>
+    </g>
+    <text class="sm" x="600" y="352">N · X1:8</text>
+
+    <g transform="translate(30,408)">
+      <text class="sm" x="0" y="10">Leiter:</text>
+      <path class="wL" d="M44 6 H84"/><text class="sm" x="90" y="10">L braun</text>
+      <path class="wN" d="M150 6 H190"/><text class="sm" x="196" y="10">N blau</text>
+      <path class="wP" d="M250 6 H290"/><text class="sm" x="296" y="10">PE grün-gelb</text>
+      <path class="wS" d="M376 6 H416"/><text class="sm" x="422" y="10">Steuerleiter</text>
+      <path class="mech" d="M500 6 H540"/><text class="sm" x="546" y="10">Wirkverbindung im Gerät</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. B 3</strong> — Stromlaufschema der Minuterie. Die Taster liegen parallel und werden mit L gespeist; parallel zum Tasterkontakt liegt je eine Glimmlampe, deshalb fliesst dauernd ein kleiner Strom über den Steuereingang. Das Gerät braucht einen Neutralleiter für sein eigenes Werk. Der Schliesser ist zeitabhängig — die Bogenmarke am Kontakt ist das Zeichen dafür.</figcaption>
+  </figure>
+
+  <div class="note"><strong>Darum steht im Datenblatt eine Glimmlampenlast.</strong> Jede Glimmlampe in einem Taster schickt dauernd einen kleinen Strom über den Steuereingang. Das Gerät muss das aushalten, ohne von selbst zu schalten — beim Beispielgerät auf Seite 11 sind <strong>50 mA</strong> zulässig. Zu viele Glimmlampen an einem Zeitschalter sind ein realer Installationsfehler: dann bleibt das Licht an oder schaltet von allein ein. Wenn deine Taster leuchten, gehört diese Zahl in deine Analyse.</div>
+  <div class="pf"><span>Teil B · Stromlaufschema</span><span>Seite 9</span></div>
+</section>
+
+<!-- ============================ SEITE 10 — B4 WIRKSCHALTSCHEMA ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil B · Minuterie — Wirkschaltschema</b><span>Seite 10 von 16</span></div>
+  <h2 class="t">B 4 · Wirkschaltschema <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 480" role="img" aria-label="Wirkschaltschema der Minuterie: im Verteiler Leitungsschutzschalter F1, Treppenlicht-Zeitschalter K1 mit vier Klemmen und die Klemmenleiste X1; davon Verdrahtung zu drei parallelen Tastern und drei Leuchten.">
+    <text class="ti" x="8" y="14">WIRKSCHALTSCHEMA · MINUTERIE · zusammenhängende Darstellung</text>
+
+    <rect x="14" y="26" width="386" height="430" fill="none" stroke="#5c6665" stroke-width="1.2" stroke-dasharray="6 4"/>
+    <text class="sm" x="24" y="448">Verteiler</text>
+
+    <!-- Speisung -->
+    <text class="sm" x="22" y="54">L1</text>
+    <text class="sm" x="24" y="74">N</text>
+    <text class="sm" x="20" y="94">PE</text>
+    <path class="wL" d="M40 50 H46"/>
+    <rect class="devf" x="46" y="36" width="56" height="28"/>
+    <text class="sm" x="52" y="54">F1 B10</text>
+    <path class="wL" d="M102 50 H316 V96 H330"/>
+    <path class="wL" d="M300 50 V180 H274"/>
+    <circle class="dot" cx="300" cy="50" r="2.4"/>
+    <path class="wN" d="M40 70 H72 V227 H76"/>
+    <path class="wN" d="M72 227 V380 H318 V350 H330"/>
+    <circle class="dot" cx="72" cy="227" r="2.4"/>
+    <path class="wP" d="M40 90 H46 V430 H324 V400 H330"/>
+
+    <!-- K1 -->
+    <rect class="dev" x="90" y="140" width="170" height="180"/>
+    <text class="lb" x="100" y="164">K1</text>
+    <text class="sm" x="100" y="180">Treppenlicht-</text>
+    <text class="sm" x="100" y="194">Zeitschalter</text>
+    <text class="sm" x="100" y="208">1 TE · 230 V AC</text>
+    <path class="thin" d="M104 248 H156 M104 235 A 13 13 0 0 1 130 235"/>
+    <text class="sm" x="164" y="252">Zeitglied</text>
+    <text class="sm" x="100" y="286">Zeit eingestellt:</text>
+    <text class="lb" x="100" y="302">______ min</text>
+
+    <rect class="devf" x="76" y="220" width="14" height="14"/><text class="sm" x="58" y="216">N</text>
+    <rect class="devf" x="260" y="173" width="14" height="14"/><text class="sm" x="280" y="174">L</text>
+    <rect class="devf" x="260" y="243" width="14" height="14"/><text class="sm" x="280" y="244">Taster</text>
+    <rect class="devf" x="260" y="283" width="14" height="14"/><text class="sm" x="280" y="284">Lampe</text>
+    <path class="wS" d="M274 250 H330"/>
+    <path class="wL" d="M274 290 H330"/>
+
+    <!-- Klemmenleiste X1 -->
+    <text class="lb" x="330" y="78">X1</text>
+    <rect class="devf" x="330" y="87" width="60" height="18"/><text class="sm" x="354" y="100">1</text>
+    <rect class="devf" x="330" y="241" width="60" height="18"/><text class="sm" x="354" y="254">4</text>
+    <rect class="devf" x="330" y="281" width="60" height="18"/><text class="sm" x="354" y="294">7</text>
+    <rect class="devf" x="330" y="341" width="60" height="18"/><text class="sm" x="354" y="354">2</text>
+    <rect class="devf" x="330" y="391" width="60" height="18"/><text class="sm" x="354" y="404">3</text>
+    <text class="sm" x="404" y="88">L für die Taster</text>
+    <text class="sm" x="404" y="242">Steuerleiter</text>
+    <text class="sm" x="404" y="282">Lampenleiter</text>
+    <text class="sm" x="404" y="342">N</text>
+    <text class="sm" x="404" y="392">PE</text>
+
+    <!-- Taster -->
+    <rect class="dev" x="480" y="46" width="130" height="34"/>
+    <text class="lb" x="490" y="60">S1</text><text class="sm" x="512" y="60">Taster EG</text>
+    <rect class="devf" x="466" y="57" width="14" height="12"/>
+    <rect class="devf" x="610" y="57" width="14" height="12"/>
+    <rect class="dev" x="480" y="96" width="130" height="34"/>
+    <text class="lb" x="490" y="110">S2</text><text class="sm" x="512" y="110">Taster 1. OG</text>
+    <rect class="devf" x="466" y="107" width="14" height="12"/>
+    <rect class="devf" x="610" y="107" width="14" height="12"/>
+    <rect class="dev" x="480" y="146" width="130" height="34"/>
+    <text class="lb" x="490" y="160">S3</text><text class="sm" x="512" y="160">Taster 2. OG</text>
+    <rect class="devf" x="466" y="157" width="14" height="12"/>
+    <rect class="devf" x="610" y="157" width="14" height="12"/>
+
+    <path class="wL" d="M390 96 H446 M446 63 V163 M446 63 H466 M446 113 H466 M446 163 H466"/>
+    <circle class="dot" cx="446" cy="96" r="2.4"/>
+    <circle class="dot" cx="446" cy="113" r="2.4"/>
+    <path class="wS" d="M624 63 H672 V250 H390 M624 113 H672 M624 163 H672"/>
+    <circle class="dot" cx="672" cy="113" r="2.4"/>
+    <circle class="dot" cx="672" cy="163" r="2.4"/>
+
+    <!-- Leuchten -->
+    <text class="lb" x="448" y="318">E1 EG</text>
+    <circle class="dev" cx="470" cy="350" r="22"/>
+    <path class="thin" d="M454 334 L486 366 M454 366 L486 334"/>
+    <text class="lb" x="552" y="318">E2 1. OG</text>
+    <circle class="dev" cx="580" cy="350" r="22"/>
+    <path class="thin" d="M564 334 L596 366 M564 366 L596 334"/>
+    <text class="lb" x="662" y="318">E3 2. OG</text>
+    <circle class="dev" cx="690" cy="350" r="22"/>
+    <path class="thin" d="M674 334 L706 366 M674 366 L706 334"/>
+
+    <path class="wL" d="M390 290 H648 M428 290 V350 H448 M538 290 V350 H558 M648 290 V350 H668"/>
+    <circle class="dot" cx="428" cy="290" r="2.4"/>
+    <circle class="dot" cx="538" cy="290" r="2.4"/>
+    <path class="wN" d="M390 350 H404 V420 H700 M470 420 V372 M580 420 V372 M690 420 V372"/>
+    <path class="wP" d="M390 400 H412 V448 H712 M492 448 V350 M602 448 V350 M712 448 V350"/>
+    <text class="sm" x="414" y="414">N</text>
+    <text class="sm" x="422" y="442">PE</text>
+
+    <g transform="translate(20,466)">
+      <text class="sm" x="0" y="10">Leiter:</text>
+      <path class="wL" d="M44 6 H84"/><text class="sm" x="90" y="10">L braun</text>
+      <path class="wN" d="M150 6 H190"/><text class="sm" x="196" y="10">N blau</text>
+      <path class="wP" d="M250 6 H290"/><text class="sm" x="296" y="10">PE grün-gelb</text>
+      <path class="wS" d="M376 6 H416"/><text class="sm" x="422" y="10">Steuerleiter schwarz</text>
+      <text class="sm" x="560" y="10">Kreuzung ohne Punkt = keine Verbindung</text>
+    </g>
+  </svg>
+  <figcaption><strong>Abb. B 4</strong> — Wirkschaltschema der Minuterie. Vier Klemmen am Gerät: L, N, Taster-Eingang, Lampen-Ausgang, dazu beim 4-Leiter-Anschluss die Klemme für die Bodenbeleuchtung. <strong>Die Klemmennamen im Bild sind Funktionsnamen</strong> — trage die Bezeichnungen ein, die auf deinem Gerät wirklich stehen.</figcaption>
+  </figure>
+
+  <div class="box" style="font-size:11px"><strong>Klemmenbezeichnungen beim Zeitschalter:</strong> Hersteller beschriften unterschiedlich, und beim Beispielgerät auf Seite 11 ist das Anschlussbild im Datenblatt nur als Zeichnung enthalten — als Text nicht auslesbar. Darum steht hier keine erfundene Nummer. <strong>Lies die Klemmen am Gerät oder im Anschlussbild des Datenblatts ab</strong> und trage sie in dein Schema und in die Tabelle auf Seite 11 ein. Vier Funktionen musst du zuordnen können: Aussenleiter, Neutralleiter, Taster-Eingang, Lampen-Ausgang.</div>
+  <div class="pf"><span>Teil B · Wirkschaltschema</span><span>Seite 10</span></div>
+</section>
+
+<!-- ============================ SEITE 11 — DATENBLATT-ANALYSE ============================ -->
+<section class="page">
+  <div class="ph"><b>Teil C · Datenblatt-Analyse</b><span>Seite 11 von 16</span></div>
+  <h2 class="t">C · Technische Kennwerte beider Geräte</h2>
+  <p class="lead">Der Auftrag verlangt Gerätetyp und Hersteller, Anschluss- und Steuerspannung, maximale Stromstärke und Schaltvermögen, Klemmenbelegung und — bei der Minuterie — den Einstellbereich der Zeit. Unten zwei <strong>Beispielgeräte</strong> mit Werten aus den Herstellerunterlagen. <strong>Deine Analyse muss das Gerät beschreiben, das bei dir eingebaut ist.</strong></p>
+
+  <h3>C 1 · Stromstossschalter — Beispiel Hager EPN510</h3>
+  <table>
+    <tr><th style="width:34%">Kennwert</th><th style="width:38%">Wert</th><th>Bemerkung</th></tr>
+    <tr><td>Hersteller / Typ</td><td>Hager, EPN510 (Fernschalter)</td><td>Reiheneinbaugerät</td></tr>
+    <tr><td>Steuerspannung Spule</td><td class="n">230 V AC, 50–60 Hz</td><td>zusätzlich 110 V DC</td></tr>
+    <tr><td>Bemessungsspannung Ue / Ui</td><td class="n">250 V</td><td>&nbsp;</td></tr>
+    <tr><td>Bemessungsstrom</td><td class="n">16 A</td><td>AC1: 16 A</td></tr>
+    <tr><td>Kontaktbestückung</td><td>1 Schliesser (1S)</td><td>kein Öffner</td></tr>
+    <tr><td>Leuchtstofflampenlast</td><td class="n">max. 800 VA</td><td>parallelkompensiert 900 VA</td></tr>
+    <tr><td>Anzugsverbrauch</td><td class="n">25 VA</td><td>beim Umschalten</td></tr>
+    <tr><td>Ruhestrom</td><td class="n">6 mA</td><td>&nbsp;</td></tr>
+    <tr><td>Verlustleistung</td><td class="n">1,2 W bei Bemessungsstrom</td><td>&nbsp;</td></tr>
+    <tr><td>Breite / Masse</td><td class="n">1 TE (17,5 mm) · H 83 · T 63 mm</td><td>Hutschiene</td></tr>
+    <tr><td>Anschluss</td><td>Schraubklemmen</td><td>flexibel 1–6 mm², starr 1,5–10 mm²</td></tr>
+    <tr><td>Umgebungstemperatur</td><td class="n">−5 … +40 °C</td><td>&nbsp;</td></tr>
+    <tr><td><b>Klemmenbelegung</b></td><td>am Gerät ablesen: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>Spule und Kontakt getrennt zuordnen; üblich A1/A2 und 1/2</td></tr>
+  </table>
+  <p style="font-size:10.5px;color:#424949;margin:0 0 3mm">Quelle: Hager Katalog Schweiz, Produktseite EPN510 (abgerufen 11.10.2026). Die Klemmenbezeichnungen stehen dort nicht — deshalb hier leer gelassen statt geraten.</p>
+
+  <div class="pf"><span>Teil C · Datenblatt-Analyse</span><span>Seite 11</span></div>
+</section>
+
+<!-- ============================ SEITE 12 — DATENBLATT MINUTERIE ============================ -->
+<section class="page">
+  <div class="ph"><b>Teil C · Datenblatt-Analyse</b><span>Seite 12 von 16</span></div>
+  <h2 class="t">C 2 · Treppenlicht-Zeitschalter</h2>
+  <p class="lead">Beispielgerät <strong>Theben ELPA 8</strong>. Beim Zeitschalter kommen zwei Angaben dazu, die es beim Stromstossschalter nicht gibt: der <strong>Einstellbereich der Zeit</strong> — den verlangt das Auftragsblatt ausdrücklich — und die <strong>Glimmlampenlast</strong>.</p>
+  <table>
+    <tr><th style="width:34%">Kennwert</th><th style="width:38%">Wert</th><th>Bemerkung</th></tr>
+    <tr><td>Hersteller / Typ</td><td>Theben, ELPA 8 (Art. 0080002)</td><td>elektromechanisch, Synchronmotor</td></tr>
+    <tr><td>Betriebsspannung</td><td class="n">230 V AC, 50 Hz</td><td>&nbsp;</td></tr>
+    <tr><td><b>Einstellbereich Zeit</b></td><td class="n">1 – 7 min</td><td>Absolutskala, direkt ablesbar</td></tr>
+    <tr><td>Nachschaltbar</td><td class="n">nach 30 s</td><td>neuer Tastendruck startet die Zeit neu</td></tr>
+    <tr><td>Anschlussart</td><td>3- oder 4-Leiter</td><td>4-Leiter mit Bodenbeleuchtung; 3-Leiter (N-getastet) bei Neuanlagen nicht mehr erlaubt</td></tr>
+    <tr><td>Kontaktart</td><td>Schliesser, Öffnungsweite &gt; 3 mm</td><td>Schaltausgang nicht potenzialfrei (230 V)</td></tr>
+    <tr><td>Schaltleistung</td><td class="n">6 AX bei cos φ 0,3 · 16 A bei cos φ 1</td><td>induktiv deutlich weniger als ohmsch</td></tr>
+    <tr><td>Glüh- / Halogenlampenlast</td><td class="n">2300 W</td><td>&nbsp;</td></tr>
+    <tr><td>LED-Lampenlast</td><td class="n">&lt; 2 W: 30 W · 2–8 W: 300 W · &gt; 8 W: 300 W</td><td>LED begrenzt die Last stark</td></tr>
+    <tr><td>Leuchtstofflampen</td><td class="n">EVG 600 W · VVG Duo 2300 VA · parallelkomp. 1300 VA / 70 µF</td><td>Kompaktleuchtstoff 150 W</td></tr>
+    <tr><td>Glimmlampenlast</td><td class="n">50 mA</td><td>Grenze für die Taster-Orientierungslichter</td></tr>
+    <tr><td>Verlustleistung / Stand-by</td><td class="n">max. 0,7 W · Stand-by ≈ 0 W</td><td>kein Ruhestromverbrauch</td></tr>
+    <tr><td>Dauerlicht</td><td>Kippschalter am Gerät</td><td>&nbsp;</td></tr>
+    <tr><td>Breite</td><td class="n">1 TE</td><td>Hutschiene</td></tr>
+    <tr><td>Schutzklasse / Schutzart</td><td class="n">II · IP 20</td><td>Umgebung −10 … +50 °C, Prüfzeichen VDE</td></tr>
+    <tr><td><b>Klemmenbelegung</b></td><td>am Gerät ablesen: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>L · N · Taster · Lampe · ggf. Bodenbeleuchtung</td></tr>
+  </table>
+  <p style="font-size:10.5px;color:#424949;margin:0 0 3mm">Quelle: Theben Datenblatt ELPA 8, Artikel-Nr. 0080002, Stand 10.02.2017 (abgerufen 11.10.2026). Die Anschlussbilder sind im Datenblatt nur als Zeichnung enthalten, deshalb keine Klemmennummern hier.</p>
+
+  <div class="note"><strong>Was dieser Vergleich zeigt — schreib das in deine Analyse.</strong> Beide Geräte sind 1 TE breit und machen 230 V. Der entscheidende Unterschied steht bei der Last: beim Zeitschalter <strong>16 A ohmsch, aber nur 6 AX bei cos φ 0,3</strong>, und bei LED unter 2 W bricht die zulässige Last auf 30 W ein. Wer ein Treppenhaus auf LED umrüstet, muss das rechnen. Genau solche Sätze sind beim Kriterium «Datenblatt-Analyse» die 4 Punkte wert — eine abgeschriebene Tabelle ohne Aussage ist es nicht.</div>
+
+<div class="pf"><span>Teil C · Datenblatt-Analyse</span><span>Seite 12</span></div>
+</section>
+
+<!-- ============================ SEITE 13 — EIGENE GERÄTE ============================ -->
+<section class="page">
+  <div class="ph"><b>Teil C · Datenblatt-Analyse</b><span>Seite 13 von 16</span></div>
+  <h2 class="t">C 3 · Deine Geräte</h2>
+  <p class="lead">Diese Tabelle ist der Teil, den niemand für dich ausfüllen kann. Die Werte stehen im Datenblatt des Geräts, das bei <em>dir</em> eingebaut ist.</p>
+  <h4>Deine Geräte</h4>
+  <table>
+    <tr><th style="width:22%">&nbsp;</th><th style="width:39%">Schrittschaltung</th><th>Minuterie</th></tr>
+    <tr><td>Hersteller / Typ</td><td style="height:7mm"></td><td></td></tr>
+    <tr><td>Steuerspannung</td><td style="height:7mm"></td><td></td></tr>
+    <tr><td>Bemessungsstrom</td><td style="height:7mm"></td><td></td></tr>
+    <tr><td>Kontakte</td><td style="height:7mm"></td><td></td></tr>
+    <tr><td>Zeit / Einstellung</td><td>entfällt</td><td style="height:7mm"></td></tr>
+    <tr><td>Klemmen</td><td style="height:7mm"></td><td></td></tr>
+    <tr><td>Quelle (URL / PDF)</td><td style="height:7mm"></td><td></td></tr>
+  </table>
+    <h3>So findest du das richtige Datenblatt</h3>
+  <ol>
+    <li><strong>Typenschild abschreiben</strong>, nicht aus dem Gedächtnis: Hersteller, Typenbezeichnung und, falls vorhanden, die Artikelnummer. Ein Foto davon ist Teil deiner Praxis-Analyse.</li>
+    <li><strong>Beim Hersteller suchen</strong>, nicht im Shop: hager.com, theben.de, eltako.com, findernet.com, schneider-electric.ch. Händlerseiten schreiben Werte ab und machen dabei Fehler — bei den LED-Lasten weichen sie regelmässig vom Original ab.</li>
+    <li><strong>Datum und Quelle notieren.</strong> Ein Datenblatt hat einen Stand; schreib die Adresse und das Abrufdatum unter deine Tabelle. Das kostet eine Zeile und sieht nach sauberer Arbeit aus.</li>
+    <li><strong>Wenn ein Wert nicht im Datenblatt steht</strong> — zum Beispiel die Klemmenbelegung, die oft nur als Zeichnung drin ist — dann lies ihn am Gerät ab und schreib dazu, woher du ihn hast. Eine ehrliche Lücke ist besser als eine erfundene Zahl; das Raster bestraft «falsch abgeschrieben» härter als «ungenau recherchiert».</li>
+  </ol>
+  <div class="note">Falls bei dir dasselbe Gerät verbaut ist wie im Beispiel: trotzdem selbst nachsehen. Hersteller ändern Typen, und die Zahlen auf den Seiten 11 und 12 sind der Stand vom 11.10.2026.</div>
+  <div class="pf"><span>Teil C · Deine Geräte</span><span>Seite 13</span></div>
+</section>
+
+<!-- ============================ SEITE 14 — ZEITABLAUFDIAGRAMM ============================ -->
+<section class="page schema">
+  <div class="ph"><b>Teil D · Zeitablaufdiagramme und Vergleich</b><span>Seite 14 von 16</span></div>
+  <h2 class="t">D · Zeitablaufdiagramm <span class="tag mu">Vorlage zum Abzeichnen</span></h2>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 760 330" role="img" aria-label="Zwei Zeitablaufdiagramme: oben die Schrittschaltung, bei der jeder Tastendruck den Lampenzustand umschaltet; unten die Minuterie, bei der ein Tastendruck die Lampe für die eingestellte Zeit einschaltet und ein zweiter Druck die Zeit neu startet.">
+    <text class="ti" x="8" y="14">ZEITABLAUFDIAGRAMM · SCHRITTSCHALTUNG</text>
+
+    <!-- Achsen oben -->
+    <path class="thin" d="M70 60 H740 M70 118 H740"/>
+    <text class="sm" x="12" y="46">S1 Taster</text>
+    <text class="sm" x="12" y="104">E1 Lampe</text>
+    <path class="thin" d="M70 36 V130"/>
+    <!-- Taster-Impulse -->
+    <g class="wS">
+      <path d="M70 60 H150 V34 H168 V60 H330 V34 H348 V60 H520 V34 H538 V60 H740"/>
+    </g>
+    <!-- Lampe toggelt -->
+    <g class="wL">
+      <path d="M70 118 H158 V92 H338 V118 H528 V92 H740"/>
+    </g>
+    <!-- Marken -->
+    <path class="mech" d="M159 34 V92 M339 60 V118 M529 60 V92"/>
+    <text class="sm" x="148" y="146">1. Druck</text>
+    <text class="sm" x="152" y="158">ein</text>
+    <text class="sm" x="328" y="146">2. Druck</text>
+    <text class="sm" x="332" y="158">aus</text>
+    <text class="sm" x="518" y="146">3. Druck</text>
+    <text class="sm" x="522" y="158">ein</text>
+    <text class="sm" x="196" y="86">Zustand bleibt — auch ohne Strom in der Spule</text>
+    <text class="sm" x="660" y="146">Zeit →</text>
+
+    <!-- Achsen unten -->
+    <text class="ti" x="8" y="196">ZEITABLAUFDIAGRAMM · MINUTERIE</text>
+    <path class="thin" d="M70 242 H740 M70 300 H740"/>
+    <text class="sm" x="12" y="228">S1 Taster</text>
+    <text class="sm" x="12" y="286">E1 Lampe</text>
+    <path class="thin" d="M70 218 V312"/>
+    <g class="wS">
+      <path d="M70 242 H130 V216 H148 V242 H360 V216 H378 V242 H740"/>
+    </g>
+    <g class="wL">
+      <path d="M70 300 H138 V274 H560 V300 H740"/>
+    </g>
+    <path class="mech" d="M139 216 V274 M369 216 V274 M560 274 V312"/>
+    <!-- Zeitpfeile -->
+    <path class="thin" d="M139 262 H369 M139 258 V266 M369 258 V266"/>
+    <text class="sm" x="196" y="256">eingestellte Zeit läuft</text>
+    <path class="thin" d="M369 262 H560 M560 258 V266"/>
+    <text class="sm" x="404" y="256">Zeit startet neu (nachschaltbar)</text>
+    <text class="sm" x="124" y="328">1. Druck</text>
+    <text class="sm" x="352" y="328">2. Druck</text>
+    <text class="sm" x="512" y="296">selbständig aus</text>
+    <text class="sm" x="660" y="328">Zeit →</text>
+  </svg>
+  <figcaption><strong>Abb. D</strong> — Oben die Schrittschaltung: jeder Impuls kippt den Zustand, und der Zustand bleibt beliebig lange. Unten die Minuterie: ein Impuls startet die eingestellte Zeit, danach schaltet das Gerät <em>selbständig</em> aus; ein zweiter Druck während der Laufzeit startet die Zeit neu. Bei deinem Gerät die reale eingestellte Zeit und die Nachschaltsperre eintragen (beim Beispielgerät: nachschaltbar nach 30 s).</figcaption>
+  </figure>
+
+  <h3>Die Unterschiede in Worten — das verlangt der Auftrag ausdrücklich</h3>
+  <table>
+    <tr><th style="width:24%">&nbsp;</th><th style="width:38%">Schrittschaltung</th><th>Minuterie</th></tr>
+    <tr><td>Gerät</td><td>bistabiler Stromstossschalter</td><td>Treppenlicht-Zeitschalter mit Zeitglied</td></tr>
+    <tr><td>Reaktion auf einen Impuls</td><td>Zustand kippt: ein → aus → ein</td><td>schaltet ein, Zeit beginnt zu laufen</td></tr>
+    <tr><td>Ausschalten</td><td>nur durch erneuten Tastendruck</td><td>selbständig nach Ablauf der Zeit</td></tr>
+    <tr><td>Zeit einstellbar</td><td>nein</td><td>ja, Einstellbereich am Gerät</td></tr>
+    <tr><td>Energie im Ruhezustand</td><td>keine Dauererregung der Spule nötig</td><td>Gerät braucht dauernd N für sein Werk</td></tr>
+    <tr><td>Typische Anwendung</td><td>Korridor, Raumbeleuchtung, grosse Räume mit mehreren Tastern</td><td>Treppenhaus, Kellergang, Eingangsbereich</td></tr>
+    <tr><td>Risiko bei Fehlbedienung</td><td>Licht bleibt an, wenn niemand ausschaltet</td><td>Licht geht aus, während man noch im Treppenhaus ist</td></tr>
+  </table>
+  <p style="font-size:11px">Ein Satz, der beide Schaltungen auf den Punkt bringt und in deiner Doku stehen darf: <em>Die Schrittschaltung merkt sich einen Zustand, die Minuterie merkt sich eine Zeit.</em></p>
+  <div class="box" style="font-size:11px"><strong>Beim eigenen Gerät prüfen, nicht abschreiben:</strong> wie sich das Impulsrelais nach einem Spannungsunterbruch verhält, steht je nach Bauart unterschiedlich im Datenblatt. Mechanisch bistabile Typen behalten ihre Stellung. Schreib nur hin, was dein Datenblatt belegt.</div>
+  <div class="pf"><span>Teil D · Zeitablauf und Vergleich</span><span>Seite 14</span></div>
+</section>
+
+<!-- ============================ SEITE 15 — BEWERTUNGSRASTER ============================ -->
+<section class="page">
+  <div class="ph"><b>Bewertungsraster</b><span>Seite 15 von 16</span></div>
+  <h2 class="t">Woran der Lehrer die 20 Punkte verteilt</h2>
+  <p class="lead">Fünf Kriterien zu je 4 Punkten, aus dem Auftragsblatt übernommen. Die mittlere Spalte ist die Falle: «funktioniert theoretisch, aber unübersichtlich» kostet die Hälfte.</p>
+
+  <table>
+    <tr><th style="width:21%">Kriterium</th><th style="width:28%">4 Punkte — vollständig</th><th style="width:28%">2 Punkte — Nachbesserung nötig</th><th>0 Punkte</th></tr>
+    <tr>
+      <td><b>Installationspläne</b><br>Schritt &amp; Minuterie</td>
+      <td>Alle Symbole entsprechen exakt der Norm. Leitungsführung und <b>Aderzahlen</b> fehlerfrei eingezeichnet.</td>
+      <td>Symbole weitgehend korrekt, vereinzelt fehlen Aderzahlen oder die Zuordnung ist unklar.</td>
+      <td>Unvollständig, unleserlich oder falsche Symbolik.</td>
+    </tr>
+    <tr>
+      <td><b>Stromlaufschemata</b><br>Schritt &amp; Minuterie</td>
+      <td>Logisch einwandfrei, normgerecht, Betriebsmittel eindeutig beschriftet, <b>alle Klemmen nummeriert</b>.</td>
+      <td>Schaltung funktioniert theoretisch, Darstellung unübersichtlich oder Kennzeichnungen fehlen.</td>
+      <td>Schwere Logikfehler oder falsch dargestellt.</td>
+    </tr>
+    <tr>
+      <td><b>Wirkschaltschemata</b><br>Schritt &amp; Minuterie</td>
+      <td>Zusammenhängende Verdrahtung fehlerfrei, alle <b>Klemmenbezeichnungen der Apparate</b> korrekt eingetragen.</td>
+      <td>Kleine Fehler, z. B. N-Leiter verwechselt, oder Klemmennummern teilweise fehlend.</td>
+      <td>Fehlerhafte oder fehlende Verdrahtung, Schema nicht nachvollziehbar.</td>
+    </tr>
+    <tr>
+      <td><b>Datenblatt-Analyse</b> und <b>Zeitablaufdiagramm</b></td>
+      <td>Alle geforderten Kennwerte — Spannung, Strom, Kontakte, Zeit — für <b>beide</b> Geräte vollständig und korrekt.</td>
+      <td>Wichtige Kennwerte fehlen, z. B. LED-Lasten oder Schaltvermögen, oder ungenau recherchiert.</td>
+      <td>Analyse fehlt fast vollständig oder Werte falsch abgeschrieben.</td>
+    </tr>
+    <tr>
+      <td><b>Form, Struktur &amp; Termintreue</b></td>
+      <td>Sauber strukturiert, fachlich korrekt formuliert, pünktlich am <b>19.10.2026</b> abgegeben.</td>
+      <td>Mängel bei Struktur oder Fachsprache, oder verspätete Abgabe.</td>
+      <td>Unordentlich, gravierende Mängel im Aufbau, unvollständige Abgabe.</td>
+    </tr>
+  </table>
+
+  <div class="pf"><span>Bewertungsraster</span><span>Seite 15</span></div>
+</section>
+
+<!-- ============================ SEITE 16 — CHECKLISTE ============================ -->
+<section class="page">
+  <div class="ph"><b>Abgabe-Checkliste</b><span>Seite 16 von 16</span></div>
+  <h2 class="t">Vor der Abgabe durchgehen</h2>
+  <p class="lead">Vierzehn Haken. Wenn alle sitzen, ist die Arbeit vollständig im Sinne des Auftragsblatts.</p>
+  <div class="check">
+    <label><span class="sq"></span><span><b>Deckblatt</b> mit Projekttitel, <b>beiden</b> Namen, Lehrbetrieb(en) und Datum</span></label>
+    <label><span class="sq"></span><span><b>Schrittschaltung:</b> Fotos der Betriebsmittel — Taster, Gerät mit lesbarem Typenschild, Leuchten, Abzweigdose</span></label>
+    <label><span class="sq"></span><span><b>Schrittschaltung:</b> Installationsplan von Hand, mit Aderzahlen an <b>jeder</b> Leitung</span></label>
+    <label><span class="sq"></span><span><b>Schrittschaltung:</b> Stromlaufschema von Hand, Steuer- und Lastkreis, alle Klemmen nummeriert</span></label>
+    <label><span class="sq"></span><span><b>Schrittschaltung:</b> Wirkschaltschema von Hand, mit den Klemmenbezeichnungen der Apparate</span></label>
+    <label><span class="sq"></span><span><b>Minuterie:</b> Fotos — inklusive Zeitskala am Gerät</span></label>
+    <label><span class="sq"></span><span><b>Minuterie:</b> Installationsplan von Hand, Steigleitung mit Aderzahl</span></label>
+    <label><span class="sq"></span><span><b>Minuterie:</b> Stromlaufschema von Hand, Taster parallel, Zeitglied erkennbar</span></label>
+    <label><span class="sq"></span><span><b>Minuterie:</b> Wirkschaltschema von Hand, vier Klemmen zugeordnet</span></label>
+    <label><span class="sq"></span><span><b>Datenblatt-Analyse</b> beider Geräte, mit Quellenangabe, Klemmenbelegung eingetragen</span></label>
+    <label><span class="sq"></span><span><b>Zeitablaufdiagramm</b> für beide Schaltungen, mit der real eingestellten Zeit</span></label>
+    <label><span class="sq"></span><span><b>Unterschiede</b> der beiden Schaltungen schriftlich beschrieben</span></label>
+    <label><span class="sq"></span><span>Alle Blätter in der richtigen Reihenfolge, Seitenzahlen, nichts loses</span></label>
+    <label><span class="sq"></span><span>Beide Namen auf dem Deckblatt — und abgegeben <b>am Montag 19.10.2026</b></span></label>
+  </div>
+
+  <hr class="rule">
+  <p style="font-size:10.5px;color:#424949;margin:0">
+    <strong>Muster-Exemplar, erstellt am 11.10.2026</strong> als Vorlage zum Arbeitsauftrag «Schrittschalter &amp; Minuterie» (Blatt vom 14.09.2026, ATD, Beni Moser). Grundlage für Aufbau und Bewertung ist ausschliesslich das Auftragsblatt. Fachliche Basis: die Lerndokumentationen Stromstossschaltung und Treppenhausautomat. Gerätewerte aus dem Hager-Katalog Schweiz (EPN510) und dem Theben-Datenblatt 0080002 (ELPA 8), abgerufen am 11.10.2026 — Klemmenbezeichnungen sind dort nicht als Text belegt und daher offen gelassen.
+    Die Schemas sind <strong>Zeichenvorlagen, nicht massstäblich</strong> und kein Ersatz für die von Hand gezeichneten Schemata, die der Auftrag verlangt. Symbole vor dem Reinzeichnen mit dem Symbolblatt aus dem Unterricht vergleichen.
+  </p>
+  <div class="pf"><span>Abgabe-Checkliste</span><span>Seite 16</span></div>
+</section>
+
+</main>
+
+<script>
+'use strict';
+document.querySelector('#print').addEventListener('click', function () {
+  document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('noprint'); });
+  window.print();
+});
+document.querySelector('#schemas').addEventListener('click', function () {
+  document.querySelectorAll('.page').forEach(function (p) {
+    if (!p.classList.contains('schema')) { p.classList.add('noprint'); }
+  });
+  window.print();
+  setTimeout(function () {
+    document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('noprint'); });
+  }, 500);
+});
+</script>
+</body>
+</html>
