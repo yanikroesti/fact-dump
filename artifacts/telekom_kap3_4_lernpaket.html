@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telekommunikation Kapitel 3 und 4 — Lernpaket | BZI ATD</title>
+<meta name="description" content="Lernpaket für den Telekommunikations-Test vom Freitag 16.10.2026 bei Simon Aeschlimann: Kapitel 3 Internettelefonie VoIP und Kapitel 4 Internetzugang. Alle 28 Übungen der Blätter A3.1 und A4.1 mit Lösungen, Frequenzachse, Reichweiten-Grafik, Karteikarten, Quiz, Probetest mit 20 Aufgaben und Lernplan über die fünf Tage bis zur Prüfung. ISDN wird nicht geprüft.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #7A7F80;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #9A6410;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #B0352A;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111516;
+    --surface: #1A1F20;
+    --surface-alt: #232829;
+    --ink: #ECEEED;
+    --ink-soft: #B3B9B9;
+    --ink-mute: #8C9393;
+    --accent: #5FC8CE;
+    --accent-light: #163335;
+    --accent-dark: #9FE3E7;
+    --success: #6FCB97;
+    --success-light: #16301F;
+    --warn: #E0B057;
+    --warn-light: #332714;
+    --info: #86B6E8;
+    --info-light: #152636;
+    --danger: #EE8C80;
+    --danger-light: #351A17;
+    --border: #353B3C;
+    --border-soft: #2A3031;
+    --shadow: 0 2px 14px rgba(0,0,0,0.45);
+    --shadow-sm: 0 1px 5px rgba(0,0,0,0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111516;
+  --surface: #1A1F20;
+  --surface-alt: #232829;
+  --ink: #ECEEED;
+  --ink-soft: #B3B9B9;
+  --ink-mute: #8C9393;
+  --accent: #5FC8CE;
+  --accent-light: #163335;
+  --accent-dark: #9FE3E7;
+  --success: #6FCB97;
+  --success-light: #16301F;
+  --warn: #E0B057;
+  --warn-light: #332714;
+  --info: #86B6E8;
+  --info-light: #152636;
+  --danger: #EE8C80;
+  --danger-light: #351A17;
+  --border: #353B3C;
+  --border-soft: #2A3031;
+  --shadow: 0 2px 14px rgba(0,0,0,0.45);
+  --shadow-sm: 0 1px 5px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px 16px 80px; }
+
+header { text-align: center; padding: 34px 0 24px; border-bottom: 3px solid var(--ink); margin-bottom: 24px; }
+header h1 { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.8rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+.countdown { display: inline-block; margin-top: 14px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+  background: var(--accent-light); color: var(--accent); padding: 6px 14px; border-radius: 999px; letter-spacing: 0.04em; }
+
+.theme-toggle { position: absolute; top: 14px; right: 14px; background: var(--surface); border: 1px solid var(--border);
+  color: var(--ink-soft); width: 38px; height: 38px; border-radius: 999px; cursor: pointer; font-size: 1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+.theme-toggle:hover { color: var(--ink); }
+
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 28px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+h2 { font-family: var(--font-display); font-size: 1.8rem; margin: 38px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.1rem; font-weight: 700; margin: 22px 0 10px; }
+h4 { font-size: 0.95rem; font-weight: 700; margin: 14px 0 6px; }
+p { margin-bottom: 12px; }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 5px; }
+a { color: var(--accent); }
+em { font-style: italic; color: var(--ink-soft); }
+code { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-alt); padding: 1px 5px; border-radius: 4px; }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+.section-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 40px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light); }
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 14px 16px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.card-title h3 { margin: 0; }
+
+.badge { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.k3 { background: var(--info-light); color: var(--info); }
+.badge.k4 { background: var(--warn-light); color: var(--warn); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.off { background: var(--danger-light); color: var(--danger); }
+
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 14px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child, .info-box ul:last-child { margin-bottom: 0; }
+.info-box h4 { margin-top: 0; }
+
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th { background: var(--surface-alt); text-align: left; padding: 9px 12px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); border-bottom: 1px solid var(--border); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+
+.btn { font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; background: var(--ink); color: var(--bg);
+  border: none; padding: 9px 16px; border-radius: var(--radius-sm); cursor: pointer; transition: opacity 0.15s; }
+.btn:hover { opacity: 0.85; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+.btn.sm { font-size: 0.8rem; padding: 5px 11px; }
+
+details { border: 1px solid var(--border-soft); border-radius: var(--radius-sm); background: var(--surface); margin: 8px 0; }
+details summary { cursor: pointer; padding: 10px 14px; font-weight: 600; font-size: 0.92rem; list-style: none; display: flex; align-items: center; gap: 8px; }
+details summary::-webkit-details-marker { display: none; }
+details summary::before { content: "▸"; color: var(--accent); font-size: 0.9em; transition: transform 0.15s; }
+details[open] summary::before { transform: rotate(90deg); }
+details .body { padding: 0 14px 14px; font-size: 0.93rem; border-top: 1px solid var(--border-soft); padding-top: 12px; }
+details .body p:last-child, details .body ul:last-child { margin-bottom: 0; }
+
+.ue { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); margin-bottom: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+.ue-head { padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; }
+.ue-head .nr { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+.ue-head .q { font-weight: 600; }
+.ue-body { padding: 0 18px 16px 18px; }
+.ue-sol { border-top: 1px dashed var(--border); padding-top: 12px; font-size: 0.94rem; }
+.ue-sol .lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--success); font-weight: 600; display: block; margin-bottom: 6px; }
+.ue.off { opacity: 0.78; border-style: dashed; }
+
+figure { margin: 18px 0; }
+figure svg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px; }
+figcaption { font-size: 0.82rem; color: var(--ink-mute); margin-top: 8px; text-align: center; }
+.svg-ink { fill: var(--ink); }
+.svg-soft { fill: var(--ink-soft); }
+.svg-mute { fill: var(--ink-mute); }
+.s-line { stroke: var(--ink-soft); fill: none; stroke-width: 1.4; }
+.s-axis { stroke: var(--ink-mute); fill: none; stroke-width: 1.2; }
+.s-acc { stroke: var(--accent); fill: none; stroke-width: 2.2; }
+.s-box { fill: var(--surface-alt); stroke: var(--border); stroke-width: 1.2; }
+.s-box-acc { fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.4; }
+text { font-family: var(--font-body); }
+
+.card-deck { position: relative; }
+.flash { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 22px; min-height: 190px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; box-shadow: var(--shadow); }
+.flash .side-label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 12px; }
+.flash .text { font-size: 1.1rem; font-weight: 600; line-height: 1.45; }
+.flash .text.answer { font-weight: 400; font-size: 1rem; text-align: left; }
+.flash-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.flash-count { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-mute); }
+
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+.quiz-q .qtext { font-weight: 600; margin-bottom: 10px; }
+.opt { display: block; width: 100%; text-align: left; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 9px 13px; margin-bottom: 6px; cursor: pointer; font-family: var(--font-body); font-size: 0.92rem; color: var(--ink); transition: all 0.14s; }
+.opt:hover { border-color: var(--accent); }
+.opt.right { background: var(--success-light); border-color: var(--success); color: var(--ink); font-weight: 600; }
+.opt.wrong { background: var(--danger-light); border-color: var(--danger); color: var(--ink); }
+.opt:disabled { cursor: default; }
+.quiz-fb { font-size: 0.89rem; color: var(--ink-soft); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); display: none; }
+.quiz-fb.show { display: block; }
+.score { font-family: var(--font-mono); font-size: 0.9rem; background: var(--surface-alt); padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; }
+
+.plan-day { display: flex; gap: 14px; margin-bottom: 4px; }
+.plan-rail { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+.plan-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex: 0 0 auto; }
+.plan-dot.test { background: var(--danger); }
+.plan-stem { width: 2px; flex: 1; background: var(--border); min-height: 14px; }
+.plan-body { flex: 1; padding-bottom: 18px; }
+.plan-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.plan-head .d { font-weight: 700; }
+.plan-head .t { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-mute); }
+.plan-body ul { margin: 6px 0 0; }
+
+footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--ink-mute); }
+footer a { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .container { padding: 16px 16px 64px; }
+  header { padding: 46px 0 20px; }
+  header h1 { font-size: 1.85rem; }
+  h2 { font-size: 1.5rem; }
+  .card { padding: 16px 16px; }
+  .ue-head { padding: 12px 14px; }
+  .ue-body { padding: 0 14px 14px; }
+  .tab-btn { font-size: 0.84rem; padding: 10px 11px; }
+  .btn.sm { padding: 9px 13px; }
+  table { font-size: 0.84rem; }
+  th, td { padding: 7px 9px; }
+}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Hell oder dunkel umschalten">◐</button>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ATD · Telekommunikation bei Simon Aeschlimann</div>
+  <h1>Internettelefonie und Internetzugang</h1>
+  <div class="meta">Kapitel 3 und 4 — Test am Freitag 16.10.2026, 12:45 im Zimmer 2.12</div>
+  <div class="countdown" id="countdown">Test am Freitag 16.10.2026</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="visuals">Visuals</button>
+  <button class="tab-btn" data-tab="uebungen">Übungen A3.1 + A4.1</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest · 20 Aufgaben</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════ THEORIE ════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<div class="info-box success">
+  <h4>Was geprüft wird — und was nicht</h4>
+  <p><b>Geprüft:</b> Kapitel 3 «Internettelefonie VoIP» und Kapitel 4 «Internetzugang», zusammen 28 Lernziele.</p>
+  <p><b>Nicht geprüft: ISDN.</b> Das hast du am 19.09.2026 ausdrücklich bestätigt. Damit fallen die zwei ISDN-Lernziele aus Kapitel 3 weg und die Übungen 12 und 13 auf dem Blatt A3.1. <b>Achtung, eine Ausnahme:</b> «ADSL over ISDN» aus Kapitel 4 ist ein eigenes Lernziel und <b>bleibt im Stoff</b> — dort geht es um die Frequenzaufteilung auf der Kupferleitung, nicht um ISDN-Telefonie.</p>
+  <p style="margin-bottom:0">Auf der Unterrichtsplanung vom 18.09. sind alle Lernziele abgehakt, auch die zwei zu ISDN. Das sind die Häkchen der Lehrperson im Sinn von «Stoff dieses Kapitels», nicht die Prüfungsauswahl.</p>
+</div>
+
+<div class="section-label">Kapitel 3</div>
+<h2>Internettelefonie — VoIP</h2>
+
+<p class="intro">Beim klassischen Telefon wird für dein Gespräch eine Leitung durchgeschaltet und bleibt dir reserviert, bis du auflegst. Bei VoIP gibt es keine reservierte Leitung mehr: Deine Stimme wird digitalisiert, in kleine IP-Pakete verpackt und über dasselbe Datennetz geschickt wie Mails, Videos und Spiele. Alles, was in Kapitel 3 schwierig ist, folgt aus diesem einen Unterschied.</p>
+
+<h3>Der Begriff</h3>
+<p><b>VoIP</b> heisst ausgeschrieben <b>Voice over Internet Protocol</b> — Sprache über das Internetprotokoll.</p>
+
+<h3>Der Weg der Sprache, in sechs Schritten</h3>
+<div class="table-wrap">
+<table>
+<tr><th>Schritt</th><th>Was passiert</th></tr>
+<tr><td><b>1 · Aufnehmen</b></td><td>Das Mikrofon wandelt den Schalldruck in ein analoges elektrisches Signal um.</td></tr>
+<tr><td><b>2 · Digitalisieren</b></td><td>Das analoge Signal wird abgetastet und codiert — aus der Schwingung werden Zahlenwerte.</td></tr>
+<tr><td><b>3 · Komprimieren</b></td><td>Ein Codec reduziert die Datenmenge, zum Beispiel G.711, G.729 oder Opus.</td></tr>
+<tr><td><b>4 · Paketieren</b></td><td>Die Sprachdaten werden in kleine IP-Pakete verpackt (RTP beziehungsweise SRTP).</td></tr>
+<tr><td><b>5 · Übertragen</b></td><td>Die Pakete laufen über LAN, WAN und Internet zum Ziel — nicht zwingend alle auf demselben Weg.</td></tr>
+<tr><td><b>6 · Wiedergeben</b></td><td>Der Empfänger sortiert, puffert, decodiert und gibt die Sprache über den Lautsprecher aus.</td></tr>
+</table>
+</div>
+<p><button class="btn ghost sm" type="button" data-open-tab="visuals">Die Kette als Skizze ansehen →</button></p>
+
+<h3>SIP und RTP — zwei verschiedene Jobs</h3>
+<p>Das ist die Unterscheidung, die am Test am ehesten kommt, weil sie gern verwechselt wird.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Protokoll</th><th>Aufgabe</th><th>Merksatz</th></tr>
+<tr><td><b>SIP</b><br><em>Session Initiation Protocol</em></td><td>Teilnehmer finden und adressieren, Gespräch aufbauen, ändern (halten, weiterleiten), beenden, und aushandeln, welche Codecs verwendet werden.</td><td>Das Klingeln, Abnehmen und Auflegen.</td></tr>
+<tr><td><b>RTP</b><br><em>Real-time Transport Protocol</em></td><td>Transportiert die eigentlichen Sprachdaten in Echtzeit und sorgt dafür, dass sie beim Empfänger zeitlich korrekt abgespielt werden können.</td><td>Die Stimme selbst.</td></tr>
+<tr><td><b>SRTP</b><br><em>Secure RTP</em></td><td>Dasselbe wie RTP, zusätzlich verschlüsselt und gegen Manipulation geschützt.</td><td>Die Stimme, abhörsicher.</td></tr>
+</table>
+</div>
+<p>Der Ablauf vereinfacht:</p>
+<p><code>Anrufer → SIP INVITE → Gegenstelle</code><br>
+<code>Anrufer ← 180 Ringing / 200 OK ← Gegenstelle</code><br>
+<code>Anrufer → ACK → Gegenstelle</code><br>
+<code>danach: Sprachdaten über RTP/SRTP</code></p>
+
+<h3>Die drei Hauptprobleme</h3>
+<p>Weil die Sprache sich das Netz mit allen anderen Daten teilt, kann die Qualität auf drei Arten leiden. Diese drei solltest du auswendig können.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Problem</th><th>Was es ist</th><th>Wie es sich anhört</th></tr>
+<tr><td><b>Latenz</b></td><td>Verzögerung zwischen Sprechen und Hören beim Gegenüber.</td><td>Man fällt sich ins Wort, Gespräch wirkt unnatürlich.</td></tr>
+<tr><td><b>Jitter</b></td><td>Schwankung der Ankunftszeiten der Pakete. Wird mit einem Jitterbuffer ausgeglichen.</td><td>Stottern, abgehackte Sprache.</td></tr>
+<tr><td><b>Paketverlust</b></td><td>Einzelne Pakete kommen gar nicht an.</td><td>Aussetzer, Roboterstimme.</td></tr>
+</table>
+</div>
+<div class="info-box">
+<p style="margin-bottom:0"><b>Richtwerte zur Einweg-Latenz:</b> bis etwa <b>150 ms</b> gut · <b>150–400 ms</b> noch möglich, Qualität nimmt ab · über <b>400 ms</b> für normale Gespräche nicht mehr brauchbar. Grundlage: ITU-T G.114.</p>
+</div>
+<p><b>Merksatz:</b> VoIP muss nicht perfekt verlustfrei sein — es muss <b>schnell und gleichmässig</b> sein. Ein Sprachpaket, das zu spät kommt, ist wertlos; nachliefern bringt nichts, das Gespräch ist weitergelaufen.</p>
+
+<h3>QoS — Quality of Service</h3>
+<p><b>QoS</b> heisst <b>Quality of Service</b>, auf Deutsch Dienstgüte. Gemeint ist, dass der Router bestimmte Daten <b>bevorzugt</b> behandelt, statt alles gleich zu behandeln.</p>
+<p>Wichtig ist das, weil Sprache echtzeitkritisch ist und Downloads nicht. Lädt jemand im selben Haushalt ein grosses Update herunter, während du telefonierst, würden die Sprachpakete ohne QoS in derselben Warteschlange stehen wie die Downloadpakete — die Folge sind Latenz, Jitter und Aussetzer. Mit QoS werden die Sprachpakete vorgezogen und kommen pünktlich an.</p>
+<div class="info-box warn">
+<p style="margin-bottom:0"><b>Übung 7 auf dem Blatt A3.1</b> fragt nach den <b>QoS-Anschlüssen am Router</b>. Gemeint sind die Anschlüsse, an denen der Router den Verkehr priorisiert behandelt — dort hängt man das VoIP-Telefon an, damit die Sprache auch bei voll ausgelastetem Anschluss Vorrang hat. <em>Diese Zuordnung ist aus dem Lernziel und der QoS-Logik hergeleitet; eine Lehrmittelseite, die «QoS-Anschluss» wörtlich definiert, liegt nicht im Vault.</em></p>
+</div>
+
+<h3>Wie viel Bandbreite braucht ein Gespräch?</h3>
+<p>Ein digitalisierter Sprachkanal nach dem klassischen Verfahren G.711 braucht <b>64 kbit/s</b> — das sind 8000 Abtastungen pro Sekunde mal 8 bit. Dazu kommt der Overhead für IP, UDP und RTP, sodass in der Praxis rund <b>80 bis 100 kbit/s</b> pro Gespräch und <b>pro Richtung</b> anfallen. Entscheidend ist dabei der <b>Upload</b>: Beim xDSL-Abo ist er der kleinere der beiden Werte, deshalb ist er der Engpass für die Telefonie.</p>
+<div class="info-box warn">
+<p style="margin-bottom:0"><b>Hier fehlt mir der Lehrmittelwert.</b> Übung 4 auf A3.1 fragt nach der minimal nötigen Geschwindigkeit <b>in kBit/s</b> — das Lehrmittel hat dafür vermutlich eine einzelne Zahl. Die 64 kbit/s sind aus dem Normverfahren hergeleitet und die sicherste Antwort, aber nicht aus dem Blatt belegt. <b>Frag das am Montag kurz nach</b> oder schau in deinen Unterlagen zu Kapitel 3 nach, ob dort eine Zahl steht.</p>
+</div>
+
+<h3>Vorteile gegenüber der herkömmlichen Telefonie</h3>
+<p>Die Übung verlangt mindestens vier. Diese sind am einfachsten zu merken:</p>
+<ul>
+<li><b>Nur ein Netz</b> für Sprache und Daten — eine Verkabelung statt zwei, günstiger im Unterhalt.</li>
+<li><b>Tiefere Gesprächskosten</b>, besonders bei Fern- und Auslandsgesprächen; meist Pauschaltarife.</li>
+<li><b>Ortsunabhängig</b> — mit demselben Konto und derselben Nummer von überall telefonieren, wo Internet ist.</li>
+<li><b>Mehr Funktionen</b>: Weiterleitung, Konferenz, Voicemail per Mail, Videoanruf, Anbindung an die IT.</li>
+<li><b>Einfach erweiterbar</b> — ein zusätzlicher Teilnehmer braucht keine neue Leitung, nur ein Konto.</li>
+</ul>
+
+<h3>Warum VoIP-Daten verschlüsselt gehören</h3>
+<p>Die Sprache läuft als ganz normaler Datenverkehr durch das Netz. Unverschlüsseltes RTP kann im selben Netz <b>mitgeschnitten und wieder zu Ton zusammengesetzt</b> werden — es braucht dafür keine Spezialausrüstung. Dazu kommen Manipulation der Pakete und Identitätsmissbrauch, etwa Gespräche auf fremde Kosten. <b>SRTP</b> schützt Vertraulichkeit und Integrität; die Signalisierung sichert man zusätzlich mit SIP over TLS.</p>
+
+<h3>Instant Messenger und der SIP-Standard</h3>
+<p>Instant-Messenger-Programme sind zum Beispiel <b>WhatsApp, Threema, Signal, Telegram, Microsoft Teams, Skype, Facebook Messenger, iMessage</b> und <b>Discord</b>. Sie können ebenfalls telefonieren, aber mit einem entscheidenden Nachteil:</p>
+<div class="info-box danger">
+<p style="margin-bottom:0"><b>Der zentrale Nachteil:</b> Jeder Messenger ist ein <b>geschlossenes System eines einzelnen Anbieters</b>. Du erreichst nur, wer dieselbe App installiert hat, und bist von diesem Anbieter abhängig. <b>SIP ist ein offener Standard</b> — ein SIP-Telefon erreicht jedes andere SIP-Telefon, egal welcher Hersteller und welcher Anbieter dahintersteht, genau wie beim klassischen Telefonnetz.</p>
+</div>
+
+<h3>Die Internet Box 2</h3>
+<p>Der Router ist bei All IP die Zentrale: Internet, Telefonie und TV laufen alle über ihn.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Anschluss</th><th>Wofür</th></tr>
+<tr><td><b>DSL / WAN</b></td><td>Die Leitung vom Provider — die Kupfer-Doppelader beim xDSL-Anschluss.</td></tr>
+<tr><td><b>Glasfaser / optischer Anschluss</b></td><td>Beim FTTH-Anschluss, vom OTO-Dösli in der Wohnung her.</td></tr>
+<tr><td><b>LAN 1–4 (Ethernet)</b></td><td>Fest verkabelte Geräte: PC, Switch, TV-Box, Access Point, VoIP-Telefon.</td></tr>
+<tr><td><b>TEL 1 / TEL 2 (a/b-Port, FXS)</b></td><td>Analoge Telefone und Faxgeräte. Der Router wandelt intern nach VoIP um.</td></tr>
+<tr><td><b>USB</b></td><td>Externe Datenträger oder Drucker im Netzwerk freigeben.</td></tr>
+<tr><td><b>Stromanschluss, Reset, WPS</b></td><td>Speisung, Rücksetzen auf Werkeinstellung, WLAN-Kopplung auf Knopfdruck.</td></tr>
+</table>
+</div>
+<div class="info-box">
+<p><b>Auf den Router zugreifen:</b> im Browser <code>http://internetbox</code> oder <code>192.168.1.1</code> aufrufen und anmelden — so stand es im Tagesplan vom 11.09. Alternativ über die Internet-Box-App.</p>
+<p style="margin-bottom:0"><b>Prüfen, ob alle Geräte korrekt verbunden sind:</b> im Router-Portal die <b>Geräteliste</b> öffnen. Dort stehen alle verbundenen Geräte mit Name, IP-Adresse und Verbindungsart. Fehlt eines in der Liste, ist es nicht verbunden.</p>
+</div>
+
+<div class="info-box warn">
+<h4>Randnotiz ISDN — kommt nicht im Test</h4>
+<p style="margin-bottom:0">Auf dem Blatt A3.1 fragen die Übungen 12 und 13 nach ISDN-Telefonen an der Internet Box 2. <b>Dieser Teil wird nicht geprüft</b>, du kannst ihn beim Üben überspringen. Der Vollständigkeit halber: Die Internet Box 2 hat <b>keinen ISDN-Anschluss</b>, sondern nur analoge a/b-Ports und Ethernet — ein ISDN-Telefon passt dort nicht. Welches Swisscom-Modell noch einen ISDN-Anschluss hat, konnte ich nicht belegen; das steht auf dem Lösungsblatt, das nicht im Vault liegt.</p>
+</div>
+
+<div class="section-label">Kapitel 4</div>
+<h2>Internetzugang</h2>
+
+<p class="intro">Kapitel 4 dreht sich um eine einzige Frage: Wie kommen die Daten vom Provider zu dir nach Hause? Die Antwort hängt an einem physikalischen Zusammenhang — je kürzer die Kupferstrecke, desto höhere Frequenzen sind nutzbar, und je höhere Frequenzen nutzbar sind, desto mehr Daten passen durch. Alle DSL-Varianten sind nur Abstufungen davon.</p>
+
+<h3>Breitband und ISP</h3>
+<p>Ein <b>Breitband-Internetzugang</b> ist ein dauerhaft verfügbarer Anschluss mit hoher Übertragungsrate, bei dem über einen breiten Frequenzbereich mehrere Signale gleichzeitig übertragen werden. Das Gegenstück ist der alte Schmalband-Zugang über Analogmodem oder ISDN, bei dem man sich pro Verbindung einwählte und nach Zeit bezahlte. Breitband ist <b>«always on»</b> und wird pauschal verrechnet.</p>
+<p>Ein <b>ISP</b> ist ein <b>Internet Service Provider</b>, also ein Internetdienstanbieter. In der Schweiz zum Beispiel Swisscom, Sunrise, Salt, Quickline oder Init7.</p>
+
+<h3>Download und Upload — immer aus Kundensicht</h3>
+<div class="table-wrap">
+<table>
+<tr><th>Begriff</th><th>Richtung</th><th>Typisch</th></tr>
+<tr><td><b>Download (downstream)</b></td><td>Vom Internet <b>zu dir</b>.</td><td>Video schauen, Datei herunterladen, Seite laden.</td></tr>
+<tr><td><b>Upload (upstream)</b></td><td>Von dir <b>ins Internet</b>.</td><td>Foto hochladen, Videoanruf senden, Cloud-Backup.</td></tr>
+</table>
+</div>
+<p><b>Asymmetrisch</b> heisst: Download und Upload sind unterschiedlich schnell, der Download ist der schnellere. Der Grund liegt in der Technik — das Frequenzband der Kupfer-Doppelader muss zwischen beiden Richtungen aufgeteilt werden, und man gibt dem Download den grösseren Teil, weil die meisten Leute viel mehr empfangen als senden.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Asymmetrisch</th><th>Symmetrisch</th></tr>
+<tr><td>ADSL, VDSL, Kabel (Koax), Mobilfunk</td><td>SDSL, FTTH (meistens), LAN</td></tr>
+</table>
+</div>
+<div class="info-box">
+<p style="margin-bottom:0"><b>Vorsicht bei der Glasfaser-Frage:</b> Glasfaser ist <b>nicht automatisch</b> symmetrisch. Technisch wäre sie es, aber was du bekommst, bestimmen das <b>Abo</b> und die <b>Netztechnik</b> — bei GPON teilen sich mehrere Haushalte 2,5 Gbit/s Download und 1,25 Gbit/s Upload, bei XGS-PON sind es 10 Gbit/s in beide Richtungen.</p>
+</div>
+
+<h3>Die Zugangsvarianten im Überblick</h3>
+<div class="table-wrap">
+<table>
+<tr><th>Variante</th><th>Medium</th><th>Grössenordnung Download</th></tr>
+<tr><td><b>ADSL / ADSL2+</b></td><td>Kupfer-Doppelader</td><td>bis etwa 24 Mbit/s</td></tr>
+<tr><td><b>VDSL2</b></td><td>Kupfer-Doppelader, kurz</td><td>mehrere hundert Mbit/s</td></tr>
+<tr><td><b>G.fast</b></td><td>Kupfer-Doppelader, sehr kurz</td><td>bis etwa 500 Mbit/s</td></tr>
+<tr><td><b>Koaxialkabel (TV-Kabelnetz)</b></td><td>Koax, DOCSIS</td><td>mehrere hundert Mbit/s bis 1 Gbit/s</td></tr>
+<tr><td><b>Glasfaser FTTH</b></td><td>Lichtwellenleiter</td><td>1 bis 10 Gbit/s</td></tr>
+<tr><td><b>Mobilfunk 4G / 5G</b></td><td>kabellos</td><td>stark standortabhängig</td></tr>
+<tr><td><b>Satellit</b></td><td>kabellos</td><td>rund 100–200 Mbit/s</td></tr>
+</table>
+</div>
+
+<h3>Die xDSL-Familie</h3>
+<p>Alle drei übertragen auf dem letzten Abschnitt über die <b>Kupfer-Doppelader</b>. Der Unterschied ist, <b>wie viel Kupfer übrig bleibt</b>, bis die Glasfaser kommt.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Technik</th><th>Ausgeschrieben</th><th>Reichweite laut Grafik</th></tr>
+<tr><td><b>ADSL over POTS</b></td><td>Asymmetric Digital Subscriber Line</td><td>bis 6000 m</td></tr>
+<tr><td><b>ADSL2+</b></td><td>— Weiterentwicklung mit doppeltem Frequenzband</td><td>bis 3000 m, Voraussetzung für HD-TV</td></tr>
+<tr><td><b>VDSL2</b></td><td>Very High Bitrate Digital Subscriber Line</td><td>bis 1000 m</td></tr>
+<tr><td><b>G.fast</b></td><td>Fast Access to Subscriber Terminals, ITU-T G.9700/G.9701</td><td>bis 500 Mbit/s, bis 250 m</td></tr>
+<tr><td><b>NG.fast</b></td><td>Next Generation Fast Access to Subscriber Terminals</td><td>bis 5 Gbit/s, bis 100 m</td></tr>
+<tr><td><b>FTTH</b></td><td>Fibre to the Home — Glasfaser bis in die Wohnung</td><td>bis 10 Gbit/s, distanzunabhängig</td></tr>
+</table>
+</div>
+<p><b>Die Kurzantwort auf «Warum ist VDSL2 besser als ADSL?»:</b> VDSL2 nutzt ein <b>deutlich breiteres und höheres Frequenzband</b> und erreicht damit viel höhere Datenraten — allerdings nur auf einer kürzeren Kupferstrecke, weil hohe Frequenzen stärker gedämpft werden. <b>Und G.fast gegenüber VDSL2:</b> dasselbe Prinzip, eine Stufe weiter — noch höhere Frequenzen, noch kürzere Strecke, noch mehr Tempo.</p>
+<div class="info-box success">
+<p style="margin-bottom:0"><b>Der Merksatz für die ganze Grafik:</b> Je höher die Frequenz, desto mehr Daten — aber desto kürzer die Reichweite. Wer schneller werden will, muss die Glasfaser näher ans Haus bringen. Die FTTH-Linie ist deshalb als Einzige waagrecht: Licht im Glas interessiert die Distanz nicht.</p>
+</div>
+
+<h3>Die Frequenzbereiche auf der Kupferleitung</h3>
+<p>Die Telefonie braucht nur den untersten Bereich. Alles darüber ist frei für die Daten — deshalb kann man auf <b>einer einzigen</b> Doppelader gleichzeitig telefonieren und surfen.</p>
+<div class="table-wrap">
+<table>
+<tr><th>Dienst</th><th>Frequenzbereich</th></tr>
+<tr><td>Analoge Telefonie (POTS), Sprachband 300–3400 Hz</td><td>0 bis etwa 4 kHz</td></tr>
+<tr><td>ADSL Upstream</td><td>etwa 25 bis 138 kHz</td></tr>
+<tr><td>ADSL Downstream</td><td>138 kHz bis 1,1 MHz</td></tr>
+<tr><td>ADSL2+ Downstream</td><td>bis 2,2 MHz</td></tr>
+<tr><td>VDSL2</td><td>bis 17 MHz, im Profil 35b bis 35 MHz</td></tr>
+<tr><td>G.fast</td><td>bis 106 MHz, in der zweiten Stufe bis 212 MHz</td></tr>
+</table>
+</div>
+<p><button class="btn ghost sm" type="button" data-open-tab="visuals">Frequenzachse als Skizze ansehen →</button> <em>Diese Skizze ist Übung 9 auf dem Blatt A4.1 — die musst du zeichnen können.</em></p>
+
+<h3>All IP</h3>
+<p><b>All IP</b> ist die Swisscom-Bezeichnung dafür, dass <b>alle Dienste über ein einziges IP-Netz</b> laufen: Internet, Telefonie und TV. Das alte, getrennte Telefonnetz mit POTS und ISDN wurde abgeschaltet.</p>
+<p>Das Sichtbarste daran im Haushalt: <b>Das Telefon hängt nicht mehr an der Telefondose, sondern am Router.</b> Die Telefonie ist zu einem Dienst geworden, der über den Internetanschluss läuft — fällt der Router aus, ist auch das Festnetz weg.</p>
+
+<h3>ADSL over POTS und ADSL over ISDN</h3>
+<p>Beides sind Bezeichnungen aus der Zeit, als DSL <b>zusammen mit dem alten Telefon</b> auf derselben Doppelader lief. Der Unterschied liegt allein darin, <b>wie viel vom unteren Frequenzband die Telefonie belegt</b>:</p>
+<ul>
+<li><b>ADSL over POTS</b> — das analoge Telefon braucht nur bis etwa 4 kHz, das DSL kann knapp darüber beginnen.</li>
+<li><b>ADSL over ISDN</b> — ISDN belegt ein deutlich breiteres unteres Band, das DSL muss höher einsteigen. Dadurch bleibt etwas weniger Platz für den Upstream.</li>
+</ul>
+<p><b>Mikrofilter und Splitter</b> waren genau dafür da: Sie <b>trennen die Frequenzbereiche</b> von Telefonie und DSL voneinander. Ohne sie stören sich die beiden gegenseitig — man hört ein Rauschen im Telefon und die DSL-Verbindung wird instabil. Der Splitter sass zentral beim Hausanschluss, Mikrofilter steckte man einzeln vor jedes Telefon. <b>Mit All IP braucht es beides nicht mehr</b>, weil keine analoge Telefonie mehr auf der Leitung liegt.</p>
+
+<h3>Die Umrüstung auf All IP — Anschlussvarianten der Internet Box 2</h3>
+<div class="table-wrap">
+<table>
+<tr><th>Variante</th><th>Wie angeschlossen</th><th>Telefon</th></tr>
+<tr><td><b>xDSL</b></td><td>Von der Anschlussdose in den DSL-Port der Internet Box.</td><td>Analoges Telefon in den TEL-Port (a/b).</td></tr>
+<tr><td><b>Glasfaser FTTH</b></td><td>Vom OTO-Dösli mit Glasfaserkabel in den optischen Anschluss der Box.</td><td>Gleich: analoges Telefon in den TEL-Port.</td></tr>
+<tr><td><b>Mehrere Telefondosen im Haus</b></td><td>Die alte Hausverkabelung wird vom Netz getrennt. Sonst speist man vom Router her rückwärts ein — das ist nur mit Vorsicht zulässig.</td><td>Schnurlos-Basis am Router statt Telefone an den alten Dosen.</td></tr>
+</table>
+</div>
+<div class="info-box warn">
+<p style="margin-bottom:0"><b>Hier bin ich am unsichersten.</b> Die Lehrmittelseite mit der Original-Skizze der Anschlussvarianten liegt nicht im Vault, und die Unterrichtsnotiz vom 18.09. hat nur zwei Zeilen. Diese Tabelle ist aus dem Lernziel und der Gerätelogik rekonstruiert. <b>Wenn du die Buchseite zu diesem Lernziel noch hast, schau sie dir vor dem Test separat an</b> — das Lernziel verlangt ausdrücklich eine praxisnahe Skizze.</p>
+</div>
+
+<h3>Koaxialkabel und Glasfaser</h3>
+<p><b>Über das Koaxialkabel</b> — das ist das Fernsehkabel. Das TV-Kabelnetz überträgt Fernsehen und Internet gemeinsam über denselben Strang; das Modem holt sich einen eigenen Frequenzbereich heraus. Der letzte Abschnitt zum Haus ist Koax, davor Glasfaser. Typisch sind mehrere hundert Mbit/s bis 1 Gbit/s im Download, der Upload ist deutlich kleiner. Ein Strang wird von mehreren Haushalten geteilt — deshalb kann es am Abend langsamer werden.</p>
+<p><b>Über die Glasfaser</b> — die Daten laufen als Licht durch einen Glasfaden statt als Strom durch Kupfer. Dadurch gibt es praktisch keine Dämpfung über die Distanz und keine Störung durch elektrische Felder. <b>FTTH</b> heisst, dass die Faser bis in die Wohnung führt und dort im <b>OTO-Dösli</b> endet. Bei <b>GPON</b> teilen sich mehrere Haushalte eine Faser mit 2,5 Gbit/s im Download und 1,25 Gbit/s im Upload, bei <b>XGS-PON</b> sind es 10 Gbit/s in beide Richtungen.</p>
+
+<h3>Die kabellosen Zugangsvarianten</h3>
+<p>Das Lernziel verlangt <b>drei</b>. Diese drei:</p>
+<div class="table-wrap">
+<table>
+<tr><th>Variante</th><th>Wie</th><th>Wofür typisch</th></tr>
+<tr><td><b>Mobilfunk 4G / 5G</b></td><td>Über das Handynetz, mit Handy als Hotspot oder festem 5G-Router.</td><td>Unterwegs; als Festnetzersatz, wo kein Kabel liegt.</td></tr>
+<tr><td><b>WLAN und Richtfunk</b></td><td>Funk auf kurzer Distanz, Richtfunk gerichtet über mehrere Kilometer.</td><td>Im Gebäude; Anbindung abgelegener Gebäude.</td></tr>
+<tr><td><b>Satellit</b></td><td>Funkstrecke zu Satelliten, Schüssel oder flache Antenne beim Haus.</td><td>Berghütten, Alpgebiete, Baustellen ohne Anschluss.</td></tr>
+</table>
+</div>
+<p><b>Satelliteninternet, konkret:</b> Die Unterrichtsplanung vom 18.09. verlinkt Starlink für den Privathaushalt. Die Technik arbeitet mit Satelliten in niedriger Umlaufbahn, was den entscheidenden Unterschied zum alten Satelliteninternet ausmacht: Die Signallaufzeit ist kurz genug, dass Videotelefonie und Spiele funktionieren. Realistische Grössenordnungen in der Schweiz sind <b>rund 100 bis 200 Mbit/s im Download</b>, <b>etwa 10 bis 20 Mbit/s im Upload</b> und eine <b>Latenz von ungefähr 25 bis 60 ms</b>. Die Antenne braucht freie Sicht zum Himmel, und bei starkem Schneefall oder Gewitter kann die Verbindung einbrechen. Interessant ist das überall dort, wo kein Kabel liegt und der Mobilfunk schlecht ist — in einem erschlossenen Dorf ist Glasfaser billiger und schneller.</p>
+<div class="info-box">
+<p style="margin-bottom:0"><em>Die Satellitenwerte sind veröffentlichte Richtwerte für die Grössenordnung, keine Messung an einem bestimmten Anschluss, und Preise nenne ich bewusst keine — die ändern zu schnell.</em></p>
+</div>
+
+<h3>PWLAN</h3>
+<p><b>PWLAN</b> heisst <b>Public WLAN</b> — ein öffentlich zugängliches drahtloses Netz. Man findet es an Bahnhöfen, in Zügen, in Hotels, Restaurants und Einkaufszentren. Die Anmeldung läuft über ein Portal im Browser, manchmal mit SMS-Code oder Konto beim Anbieter.</p>
+<p><b>Der Haken:</b> Viele öffentliche WLAN sind <b>unverschlüsselt</b> — andere im selben Netz können mitlesen. Deshalb gilt dort: nur HTTPS, für Heikles ein VPN, und die automatische Verbindung zu unbekannten Netzen ausschalten.</p>
+
+<h3>Wovon die effektive Geschwindigkeit abhängt</h3>
+<p>Das ist ein eigenes Lernziel, und die Antwort ist eine Aufzählung:</p>
+<ul>
+<li><b>Abo</b> — die gebuchte Bandbreite ist die Obergrenze, alle Angaben sind «bis zu».</li>
+<li><b>Leitungslänge und Leitungsqualität</b> bei allem, was über Kupfer läuft.</li>
+<li><b>Störungen</b> auf der Leitung und schlechtes Signal-Rausch-Verhältnis — dann wird auf eine robustere, langsamere Modulation umgeschaltet.</li>
+<li><b>Auslastung</b> beim Provider und auf dem geteilten Strang, Abendstunden sind am schlechtesten.</li>
+<li><b>Das eigene Heimnetz</b> — WLAN statt Kabel, alter Router, viele gleichzeitige Geräte.</li>
+<li><b>Der Gegenserver</b> — ein langsamer Server im Internet bremst unabhängig von deinem Anschluss.</li>
+</ul>
+<p><b>Und die Einheitenfalle:</b> Anschlüsse werden in <b>bit pro Sekunde</b> angegeben, Dateigrössen in <b>Byte</b>. <b>8 bit = 1 Byte</b>, also sind 100 Mbit/s theoretisch 12,5 MB/s. Wer die beiden verwechselt, rechnet um den Faktor 8 daneben.</p>
+
+</section>
+<!-- ════════════════════════ VISUALS ════════════════════════ -->
+<section class="tab-pane" id="visuals">
+
+<h2>Die vier Bilder, die du zeichnen können musst</h2>
+<p class="intro">Drei der 28 Lernziele verlangen ausdrücklich eine Skizze: der Weg der Sprache bei VoIP, die Frequenzachse mit Telefonie und Datentransfer, und die Endgeräte an einem IP-Router. Die Reichweiten-Grafik musst du nicht zeichnen, aber erklären können — sie ist Übung 11 auf dem Blatt A4.1.</p>
+
+<div class="section-label">Skizze 1 · Kapitel 3</div>
+<h3>Der Weg der Sprache bei VoIP</h3>
+<figure>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+<svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" style="min-width:520px" role="img" aria-label="Signalkette von der Stimme über Digitalisierung, Codec und RTP-Pakete durch das IP-Netz bis zum Lautsprecher beim Empfänger">
+  <g font-size="11">
+    <rect class="s-box" x="8" y="20" width="96" height="44" rx="6"/>
+    <text class="svg-ink" x="56" y="38" text-anchor="middle" font-weight="600">Stimme</text>
+    <text class="svg-soft" x="56" y="54" text-anchor="middle">Schall, analog</text>
+
+    <rect class="s-box" x="120" y="20" width="96" height="44" rx="6"/>
+    <text class="svg-ink" x="168" y="38" text-anchor="middle" font-weight="600">Mikrofon</text>
+    <text class="svg-soft" x="168" y="54" text-anchor="middle">el. Signal</text>
+
+    <rect class="s-box" x="232" y="20" width="96" height="44" rx="6"/>
+    <text class="svg-ink" x="280" y="38" text-anchor="middle" font-weight="600">A/D-Wandler</text>
+    <text class="svg-soft" x="280" y="54" text-anchor="middle">0 und 1</text>
+
+    <rect class="s-box" x="344" y="20" width="96" height="44" rx="6"/>
+    <text class="svg-ink" x="392" y="38" text-anchor="middle" font-weight="600">Codec</text>
+    <text class="svg-soft" x="392" y="54" text-anchor="middle">komprimiert</text>
+
+    <rect class="s-box-acc" x="456" y="20" width="96" height="44" rx="6"/>
+    <text class="svg-ink" x="504" y="38" text-anchor="middle" font-weight="600">RTP/SRTP</text>
+    <text class="svg-soft" x="504" y="54" text-anchor="middle">Pakete</text>
+
+    <path class="s-line" d="M104 42 H118 M216 42 H230 M328 42 H340 M440 42 H454" marker-end="url(#ar)"/>
+
+    <path class="s-acc" d="M504 68 V92 H280" marker-end="url(#arA)"/>
+    <ellipse cx="208" cy="112" rx="104" ry="22" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.4"/>
+    <text class="svg-ink" x="208" y="110" text-anchor="middle" font-weight="600">IP-Netz / Internet</text>
+    <text class="svg-soft" x="208" y="124" text-anchor="middle" font-size="10">Pakete nehmen verschiedene Wege</text>
+
+    <text class="svg-mute" x="330" y="88" font-size="10">SIP hat den Anruf vorher aufgebaut</text>
+
+    <path class="s-acc" d="M208 134 V154" marker-end="url(#arA)"/>
+
+    <rect class="s-box" x="8" y="160" width="124" height="44" rx="6"/>
+    <text class="svg-ink" x="70" y="178" text-anchor="middle" font-weight="600">Jitterbuffer</text>
+    <text class="svg-soft" x="70" y="194" text-anchor="middle">sortiert, puffert</text>
+
+    <rect class="s-box" x="148" y="160" width="124" height="44" rx="6"/>
+    <text class="svg-ink" x="210" y="178" text-anchor="middle" font-weight="600">Decoder</text>
+    <text class="svg-soft" x="210" y="194" text-anchor="middle">zurück zu Audio</text>
+
+    <rect class="s-box" x="288" y="160" width="124" height="44" rx="6"/>
+    <text class="svg-ink" x="350" y="178" text-anchor="middle" font-weight="600">D/A + Lautspr.</text>
+    <text class="svg-soft" x="350" y="194" text-anchor="middle">wieder Schall</text>
+
+    <rect class="s-box-acc" x="428" y="160" width="124" height="44" rx="6"/>
+    <text class="svg-ink" x="490" y="185" text-anchor="middle" font-weight="600">Gegenüber hört</text>
+
+    <path class="s-line" d="M132 182 H146 M272 182 H286 M412 182 H426" marker-end="url(#ar)"/>
+
+    <rect x="8" y="230" width="544" height="56" rx="6" fill="var(--warn-light)" stroke="var(--warn)" stroke-width="1.2"/>
+    <text class="svg-ink" x="20" y="250" font-weight="700" font-size="11">Hier entstehen die drei Probleme</text>
+    <text class="svg-soft" x="20" y="266" font-size="10.5">Latenz = Verzögerung auf dem Weg · Jitter = ungleiche Ankunftszeiten · Paketverlust = Pakete fehlen</text>
+    <text class="svg-soft" x="20" y="280" font-size="10.5">QoS im Router zieht die Sprachpakete vor, damit genau das nicht passiert.</text>
+  </g>
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="var(--ink-soft)"/></marker>
+    <marker id="arA" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="var(--accent)"/></marker>
+  </defs>
+</svg>
+</div>
+<figcaption>Lernziel «die Internettelefonie mittels Skizze erklären». Für den Test reichen die Kästchen und die Pfeile — wichtig ist, dass Digitalisierung, Codec, Paketierung und das gemeinsam genutzte IP-Netz vorkommen.</figcaption>
+</figure>
+
+<div class="section-label">Skizze 2 · Kapitel 4 · Übung 9</div>
+<h3>Frequenzachse — Telefonie und Datentransfer</h3>
+<figure>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+<svg viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg" style="min-width:520px" role="img" aria-label="Logarithmische Frequenzachse von 1 Kilohertz bis 300 Megahertz mit den Bändern von POTS, ADSL, ADSL2+, VDSL2 und G.fast">
+  <g font-size="10.5">
+    <rect x="60" y="30" width="50" height="16" rx="3" fill="var(--success)" opacity="0.85"/>
+    <text class="svg-ink" x="118" y="42" font-weight="600">POTS — Telefonie, 0 bis 4 kHz</text>
+
+    <rect x="177" y="56" width="63" height="16" rx="3" fill="var(--info)" opacity="0.8"/>
+    <rect x="240" y="56" width="75" height="16" rx="3" fill="var(--accent)" opacity="0.8"/>
+    <text class="svg-ink" x="323" y="68" font-weight="600">ADSL — Upstream, dann Downstream bis 1,1 MHz</text>
+
+    <rect x="240" y="82" width="100" height="16" rx="3" fill="var(--accent)" opacity="0.6"/>
+    <text class="svg-ink" x="348" y="94" font-weight="600">ADSL2+ — bis 2,2 MHz</text>
+
+    <rect x="177" y="108" width="238" height="16" rx="3" fill="var(--warn)" opacity="0.75"/>
+    <text class="svg-ink" x="423" y="120" font-weight="600">VDSL2 — bis 17 MHz</text>
+
+    <rect x="340" y="134" width="142" height="16" rx="3" fill="var(--danger)" opacity="0.7"/>
+    <text class="svg-ink" x="490" y="146" font-weight="600">G.fast</text>
+    <text class="svg-soft" x="490" y="158" font-size="9.5">bis 106 MHz</text>
+
+    <line class="s-axis" x1="60" y1="182" x2="536" y2="182" marker-end="url(#ar2)"/>
+    <g class="s-axis">
+      <line x1="60" y1="178" x2="60" y2="186"/><line x1="110.5" y1="178" x2="110.5" y2="186"/>
+      <line x1="177" y1="178" x2="177" y2="186"/><line x1="240" y1="178" x2="240" y2="186"/>
+      <line x1="315" y1="178" x2="315" y2="186"/><line x1="340" y1="178" x2="340" y2="186"/>
+      <line x1="415" y1="178" x2="415" y2="186"/><line x1="482" y1="178" x2="482" y2="186"/>
+    </g>
+    <g class="svg-mute" font-size="9.5" text-anchor="middle">
+      <text x="60" y="198">1 kHz</text><text x="110.5" y="198">4 k</text><text x="177" y="198">25 k</text>
+      <text x="240" y="198">138 k</text><text x="315" y="212">1,1 M</text><text x="340" y="198">2,2 M</text>
+      <text x="415" y="198">17 M</text><text x="482" y="198">106 M</text>
+    </g>
+    <text class="svg-soft" x="536" y="212" text-anchor="end" font-size="9.5">Frequenz, logarithmisch</text>
+
+    <rect x="60" y="216" width="476" height="26" rx="5" fill="var(--surface-alt)" stroke="var(--border)" stroke-width="1"/>
+    <text class="svg-ink" x="70" y="233" font-size="10.5">Je höher die Frequenz, desto mehr Daten — aber desto kürzer die Reichweite.</text>
+  </g>
+  <defs><marker id="ar2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="var(--ink-mute)"/></marker></defs>
+</svg>
+</div>
+<figcaption>Die Telefonie sitzt ganz unten und braucht fast nichts. Darüber stapeln sich die DSL-Generationen — jede neue greift höher. Deshalb konnte man auf einer Doppelader gleichzeitig telefonieren und surfen, und deshalb brauchte es Mikrofilter und Splitter zum Trennen.</figcaption>
+</figure>
+
+<div class="section-label">Grafik 3 · Kapitel 4 · Übung 11</div>
+<h3>Reichweite gegen Datenrate</h3>
+<figure>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+<svg viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg" style="min-width:520px" role="img" aria-label="Balkendiagramm der Reichweiten: FTTH distanzunabhängig 10 Gigabit, NG.fast 100 Meter, G.fast 250 Meter, VDSL2 1000 Meter, ADSL2+ 3000 Meter, ADSL over POTS 6000 Meter">
+  <g font-size="10.5">
+    <text class="svg-soft" x="8" y="16" font-size="10">Reichweite auf Kupfer — je kürzer die Strecke, desto höher die Datenrate</text>
+
+    <text class="svg-ink" x="8" y="42" font-weight="600">FTTH</text>
+    <rect x="96" y="31" width="396" height="15" rx="3" fill="var(--success)" opacity="0.85"/>
+    <text class="svg-ink" x="500" y="42" font-size="10">10 Gbit/s</text>
+    <text class="svg-soft" x="104" y="42" font-size="9.5" fill="var(--bg)">Glasfaser — distanzunabhängig</text>
+
+    <text class="svg-ink" x="8" y="70" font-weight="600">NG.fast</text>
+    <rect x="96" y="59" width="7" height="15" rx="2" fill="var(--accent)"/>
+    <text class="svg-ink" x="112" y="70" font-size="10">5 Gbit/s · bis 100 m</text>
+
+    <text class="svg-ink" x="8" y="98" font-weight="600">G.fast</text>
+    <rect x="96" y="87" width="17" height="15" rx="2" fill="var(--accent)" opacity="0.85"/>
+    <text class="svg-ink" x="122" y="98" font-size="10">500 Mbit/s · bis 250 m</text>
+
+    <text class="svg-ink" x="8" y="126" font-weight="600">VDSL2</text>
+    <rect x="96" y="115" width="66" height="15" rx="2" fill="var(--warn)" opacity="0.85"/>
+    <text class="svg-ink" x="171" y="126" font-size="10">bis 1000 m</text>
+
+    <text class="svg-ink" x="8" y="154" font-weight="600">ADSL2+</text>
+    <rect x="96" y="143" width="198" height="15" rx="2" fill="var(--info)" opacity="0.8"/>
+    <text class="svg-ink" x="303" y="154" font-size="10">bis 3000 m · Voraussetzung für HD-TV</text>
+
+    <text class="svg-ink" x="8" y="182" font-weight="600">ADSL</text>
+    <text class="svg-soft" x="8" y="193" font-size="9">over POTS</text>
+    <rect x="96" y="171" width="396" height="15" rx="2" fill="var(--danger)" opacity="0.7"/>
+    <text class="svg-ink" x="500" y="182" font-size="10">6000 m</text>
+
+    <line class="s-axis" x1="96" y1="202" x2="520" y2="202"/>
+    <g class="s-axis">
+      <line x1="96" y1="202" x2="96" y2="208"/><line x1="162" y1="202" x2="162" y2="208"/>
+      <line x1="228" y1="202" x2="228" y2="208"/><line x1="294" y1="202" x2="294" y2="208"/>
+      <line x1="360" y1="202" x2="360" y2="208"/><line x1="426" y1="202" x2="426" y2="208"/>
+      <line x1="492" y1="202" x2="492" y2="208"/>
+    </g>
+    <g class="svg-mute" font-size="9.5" text-anchor="middle">
+      <text x="96" y="220">0</text><text x="162" y="220">1</text><text x="228" y="220">2</text>
+      <text x="294" y="220">3</text><text x="360" y="220">4</text><text x="426" y="220">5</text><text x="492" y="220">6 km</text>
+    </g>
+
+    <rect x="8" y="234" width="512" height="28" rx="5" fill="var(--surface-alt)" stroke="var(--border)" stroke-width="1"/>
+    <text class="svg-ink" x="18" y="246" font-size="10">Die Grafik zeigt: mit wachsender Kupferlänge sinkt die mögliche Datenrate.</text>
+    <text class="svg-soft" x="18" y="257" font-size="10">Nur die Glasfaser bleibt über die ganze Strecke gleich schnell.</text>
+  </g>
+</svg>
+</div>
+<figcaption>Nachgezeichnet vom Blatt A4.1, Übung 11. Die Balken geben die Reichweite wieder; die Datenraten stehen so auf dem Blatt. <em>Für VDSL2 nennt das Blatt nur die Distanz, keine Datenrate — die Kurve dort liegt zwischen G.fast und ADSL2+.</em></figcaption>
+</figure>
+
+<div class="section-label">Skizze 4 · Kapitel 3</div>
+<h3>Endgeräte am IP-Router</h3>
+<figure>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+<svg viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg" style="min-width:520px" role="img" aria-label="Anschlussschema: Providernetz über NTS HÜP zum Router, von dort LAN zum Switch mit PC, Drucker, Access Point und VoIP-Telefon, und der TEL-Port zum analogen Telefon">
+  <g font-size="10.5">
+    <rect class="s-box" x="8" y="14" width="92" height="36" rx="6"/>
+    <text class="svg-ink" x="54" y="30" text-anchor="middle" font-weight="600">Providernetz</text>
+    <text class="svg-soft" x="54" y="43" text-anchor="middle" font-size="9.5">ISP</text>
+
+    <rect class="s-box" x="124" y="14" width="92" height="36" rx="6"/>
+    <text class="svg-ink" x="170" y="30" text-anchor="middle" font-weight="600">NTS / HÜP</text>
+    <text class="svg-soft" x="170" y="43" text-anchor="middle" font-size="9.5">Netzabschluss</text>
+
+    <rect class="s-box-acc" x="240" y="8" width="112" height="48" rx="6"/>
+    <text class="svg-ink" x="296" y="28" text-anchor="middle" font-weight="700">Router</text>
+    <text class="svg-soft" x="296" y="44" text-anchor="middle" font-size="9.5">Internet Box 2</text>
+
+    <path class="s-line" d="M100 32 H122 M216 32 H238" marker-end="url(#ar3)"/>
+
+    <rect x="400" y="14" width="100" height="36" rx="6" fill="var(--warn-light)" stroke="var(--warn)" stroke-width="1.3"/>
+    <text class="svg-ink" x="450" y="30" text-anchor="middle" font-weight="600">Analoges Telefon</text>
+    <text class="svg-soft" x="450" y="43" text-anchor="middle" font-size="9.5">a/b-Port (FXS)</text>
+    <path class="s-line" d="M352 32 H398" marker-end="url(#ar3)"/>
+    <text class="svg-mute" x="375" y="24" text-anchor="middle" font-size="9">TEL</text>
+
+    <path class="s-acc" d="M296 56 V84" marker-end="url(#arA3)"/>
+    <text class="svg-mute" x="304" y="74" font-size="9">LAN</text>
+    <rect class="s-box-acc" x="240" y="88" width="112" height="38" rx="6"/>
+    <text class="svg-ink" x="296" y="112" text-anchor="middle" font-weight="700">Switch</text>
+
+    <path class="s-line" d="M296 126 V148 M100 160 H240 M352 160 H490"/>
+    <path class="s-line" d="M100 148 V176 M180 148 V176 M260 148 V176 M340 148 V176 M420 148 V176" />
+    <path class="s-line" d="M100 148 H420" />
+    <path class="s-line" d="M296 126 V148"/>
+
+    <g>
+      <rect class="s-box" x="56" y="176" width="88" height="36" rx="6"/>
+      <text class="svg-ink" x="100" y="198" text-anchor="middle">PC Wohnzimmer</text>
+      <rect class="s-box" x="136" y="176" width="88" height="36" rx="6" opacity="0"/>
+    </g>
+    <rect class="s-box" x="148" y="176" width="64" height="36" rx="6"/>
+    <text class="svg-ink" x="180" y="198" text-anchor="middle">PC Eltern</text>
+    <rect class="s-box" x="224" y="176" width="72" height="36" rx="6"/>
+    <text class="svg-ink" x="260" y="198" text-anchor="middle">Drucker</text>
+    <rect class="s-box" x="308" y="176" width="64" height="36" rx="6"/>
+    <text class="svg-ink" x="340" y="198" text-anchor="middle">PC Garage</text>
+    <rect class="s-box" x="384" y="176" width="72" height="36" rx="6"/>
+    <text class="svg-ink" x="420" y="192" text-anchor="middle">WLAN-</text>
+    <text class="svg-ink" x="420" y="204" text-anchor="middle">Sender</text>
+
+    <rect x="468" y="88" width="84" height="38" rx="6" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.3"/>
+    <text class="svg-ink" x="510" y="104" text-anchor="middle" font-weight="600">VoIP-Telefon</text>
+    <text class="svg-soft" x="510" y="117" text-anchor="middle" font-size="9.5">Ethernet</text>
+    <path class="s-line" d="M352 107 H466" marker-end="url(#ar3)"/>
+
+    <rect x="8" y="228" width="544" height="34" rx="5" fill="var(--danger-light)" stroke="var(--danger)" stroke-width="1.2"/>
+    <text class="svg-ink" x="20" y="244" font-size="10.5" font-weight="700">Der häufigste Fehler: das analoge Telefon an den Switch hängen.</text>
+    <text class="svg-soft" x="20" y="257" font-size="10">Ein analoges Telefon versteht kein Ethernet. Es gehört an den a/b-Port des Routers, der intern nach VoIP wandelt.</text>
+  </g>
+  <defs>
+    <marker id="ar3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="var(--ink-soft)"/></marker>
+    <marker id="arA3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="var(--accent)"/></marker>
+  </defs>
+</svg>
+</div>
+<figcaption>Dieselbe Logik wie beim Arbeitsauftrag vom 11.09.: NTS/HÜP → Router → Switch → Endgeräte, das analoge Telefon direkt am Router. Beim Zeichnen zählt die Verkabelungslogik, nicht die Raumlage.</figcaption>
+</figure>
+
+</section>
+
+<!-- ════════════════════════ ÜBUNGEN ════════════════════════ -->
+<section class="tab-pane" id="uebungen">
+
+<h2>Die Übungsblätter, durchgelöst</h2>
+<p class="intro">Alle 13 Übungen von A3.1 und alle 15 von A4.1. Lies die Frage, antworte laut oder schriftlich, und klapp erst dann die Lösung auf — anders bringt es nichts. Die beiden ISDN-Übungen von A3.1 stehen am Schluss, als Randnotiz und klar markiert.</p>
+
+<div class="section-label">Blatt A3.1</div>
+<h3>Internettelefonie VoIP — 13 Übungen</h3>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 1</span><span class="q">Wofür steht die Abkürzung VoIP?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Voice over Internet Protocol</b> — Sprache über das Internetprotokoll.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 2</span><span class="q">Nennen Sie einen wesentlichen Unterschied bezüglich Leitung beziehungsweise Datenkanal zwischen der herkömmlichen Telefonie und VoIP.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Bei der <b>herkömmlichen Telefonie</b> wird für das Gespräch eine <b>Leitung fest durchgeschaltet</b> und bleibt für die Dauer des Gesprächs reserviert — der Kanal gehört nur diesem Gespräch.</p><p style="margin-bottom:0">Bei <b>VoIP</b> gibt es keine reservierte Leitung. Die Sprache wird in <b>Pakete zerlegt</b>, die sich den Datenkanal mit allem anderen Verkehr teilen und nicht einmal denselben Weg nehmen müssen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 3</span><span class="q">Welche drei Hauptprobleme können die Sprachqualität einer VoIP-Verbindung beeinträchtigen?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Latenz</b> (Verzögerung), <b>Jitter</b> (Schwankung der Ankunftszeiten) und <b>Paketverlust</b>. Alle drei kommen daher, dass die Sprache sich das Netz mit anderen Daten teilt.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 4</span><span class="q">Welche minimale Übertragungsgeschwindigkeit in kBit/s ist für die Internettelefonie beziehungsweise deren Kanal erforderlich?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>64 kbit/s</b> pro Sprachkanal und Richtung. Das ist der digitalisierte Sprachkanal nach G.711: 8000 Abtastungen pro Sekunde mal 8 bit. Mit dem Overhead für IP, UDP und RTP werden in der Praxis rund <b>80 bis 100 kbit/s</b> daraus.</p><p style="margin-bottom:0"><span class="badge off">unbelegt</span> Ob das Lehrmittel genau diese Zahl verlangt, konnte ich nicht prüfen — die Lösungsblätter liegen nicht im Vault. Falls dort eine andere Zahl steht, gilt die.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 5</span><span class="q">Wofür steht die Abkürzung QoS?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Quality of Service</b> — Dienstgüte. Der Router behandelt bestimmte Daten bevorzugt, damit zeitkritische Pakete wie Sprache Vorrang haben.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 6</span><span class="q">Was versteht man unter SIP?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Session Initiation Protocol</b> — das Signalisierungsprotokoll. Es findet und adressiert die Teilnehmer, baut das Gespräch auf, ändert es (halten, weiterleiten), beendet es und handelt aus, welche Codecs verwendet werden. Die Sprache selbst transportiert es <b>nicht</b> — das macht RTP.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 7</span><span class="q">Wofür braucht es QoS-Anschlüsse bei einem Router?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Damit die daran angeschlossenen Geräte — in erster Linie das <b>VoIP-Telefon</b> — <b>bevorzugt behandelt</b> werden. Ihre Pakete werden vorgezogen, auch wenn gleichzeitig jemand ein grosses Update herunterlädt. Ohne diese Priorisierung stünden die Sprachpakete in derselben Warteschlange wie der übrige Verkehr, und das Gespräch würde stottern oder aussetzen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 8</span><span class="q">Nennen Sie mindestens vier Vorteile von VoIP gegenüber der herkömmlichen Telefonie.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><ul style="margin-bottom:0"><li>Sprache und Daten laufen über <b>ein einziges Netz</b> — nur eine Verkabelung nötig.</li><li><b>Tiefere Gesprächskosten</b>, vor allem bei Fern- und Auslandgesprächen.</li><li><b>Ortsunabhängig</b> — dieselbe Nummer überall, wo Internet ist.</li><li><b>Mehr Funktionen</b>: Weiterleitung, Konferenz, Voicemail per Mail, Videoanruf.</li><li><b>Einfach erweiterbar</b> — ein neuer Teilnehmer braucht keine neue Leitung.</li></ul></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 9</span><span class="q">Warum sollten VoIP-Daten im Netzwerk verschlüsselt werden?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Weil die Sprache als ganz normaler Datenverkehr durchs Netz läuft. <b>Unverschlüsseltes RTP kann mitgeschnitten und wieder zu Ton zusammengesetzt werden</b> — das Gespräch ist also mithörbar. Dazu kommen Manipulation der Pakete und Identitätsmissbrauch, etwa telefonieren auf fremde Kosten. <b>SRTP</b> schützt Vertraulichkeit und Integrität.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 10</span><span class="q">Zählen Sie einige bekannte Instant-Messenger-Programme auf.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">WhatsApp, Threema, Signal, Telegram, Microsoft Teams, Skype, Facebook Messenger, iMessage, Discord, Slack.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 11</span><span class="q">Wie kann man überprüfen, ob alle Geräte korrekt mit der Internet Box 2 verbunden sind?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Über das <b>Web-Portal des Routers</b>: im Browser <code>http://internetbox</code> oder <code>192.168.1.1</code> aufrufen, anmelden und die <b>Geräteliste</b> öffnen. Dort stehen alle verbundenen Geräte mit Name, IP-Adresse und Verbindungsart (LAN oder WLAN). Was fehlt, ist nicht verbunden. Dasselbe geht über die Internet-Box-App.</p></div></details></div></div>
+
+<div class="ue off"><div class="ue-head"><span class="nr">Ü 12</span><span class="q">Können ISDN-Telefone an eine Internet Box 2 angeschlossen werden? <span class="badge off">nicht im Test</span></span></div>
+<div class="ue-body"><details><summary>Randnotiz</summary><div class="body"><p style="margin-bottom:0"><b>Nein.</b> Die Internet Box 2 hat nur <b>analoge a/b-Anschlüsse</b> und Ethernet, aber keinen ISDN-Anschluss. Ein ISDN-Telefon passt dort nicht.</p></div></details></div></div>
+
+<div class="ue off"><div class="ue-head"><span class="nr">Ü 13</span><span class="q">Bei welchem Swisscom-Router können ISDN-Telefone noch angeschlossen werden? <span class="badge off">nicht im Test</span></span></div>
+<div class="ue-body"><details><summary>Randnotiz</summary><div class="body"><p style="margin-bottom:0"><span class="badge off">unbelegt</span> Gemeint ist ein Modell mit ISDN-Anschluss aus der Geschäftskundenlinie. Welches genau das Lehrmittel nennt, konnte ich nicht belegen — die Antwort steht auf einem Lösungsblatt, das nicht im Vault liegt. Da ISDN nicht geprüft wird, lohnt sich die Suche nicht.</p></div></details></div></div>
+
+<div class="section-label">Blatt A4.1</div>
+<h3>Internetzugang — 15 Übungen</h3>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 1</span><span class="q">Was ist ein Breitband-Internetzugang?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Ein <b>dauerhaft verfügbarer Anschluss mit hoher Übertragungsrate</b>, bei dem über einen breiten Frequenzbereich mehrere Signale gleichzeitig übertragen werden. Gegenstück ist der Schmalband-Zugang (Analogmodem, ISDN), bei dem man sich einwählte und nach Zeit bezahlte. Breitband ist <b>«always on»</b> und wird pauschal verrechnet.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 2</span><span class="q">Wofür steht die Abkürzung ISP?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Internet Service Provider</b> — Internetdienstanbieter. In der Schweiz zum Beispiel Swisscom, Sunrise, Salt, Quickline oder Init7.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 3</span><span class="q">Nennen Sie vier Breitband-Internetzugangsvarianten (Kabelversionen / Techniken).</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><ul style="margin-bottom:0"><li><b>Kupfer-Doppelader</b> — xDSL: ADSL, VDSL2, G.fast</li><li><b>Koaxialkabel</b> — das TV-Kabelnetz</li><li><b>Glasfaser</b> — FTTH</li><li><b>Mobilfunk</b> — 4G und 5G</li><li>dazu kabellos: <b>Satellit</b> und Richtfunk</li></ul></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 4</span><span class="q">Wofür steht die Abkürzung ADSL?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Asymmetric Digital Subscriber Line</b> — asymmetrischer digitaler Teilnehmeranschluss.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 5</span><span class="q">Was ist bei ADSL asymmetrisch?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p><b>Download und Upload sind unterschiedlich schnell</b> — der Download ist deutlich schneller. Das Frequenzband der Kupfer-Doppelader muss zwischen den beiden Richtungen aufgeteilt werden, und der Download erhält den grösseren Teil, weil die meisten Nutzer viel mehr empfangen als senden.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 6</span><span class="q">Was versteht man unter Download (downstream)?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Daten, die <b>vom Internet zu dir</b> fliessen — immer aus Kundensicht gedacht. Beispiele: Video schauen, Datei herunterladen, Webseite laden.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 7</span><span class="q">Was versteht man unter Upload (upstream)?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Daten, die <b>von dir ins Internet</b> fliessen. Beispiele: Foto hochladen, das eigene Bild beim Videoanruf senden, Cloud-Backup.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 8</span><span class="q">Erklären Sie in einfacher Form, was bei VDSL2 besser sein soll gegenüber ADSL.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>VDSL2 nutzt ein <b>viel breiteres und höheres Frequenzband</b> (bis 17 MHz statt bis rund 1 bis 2 MHz) und erreicht damit <b>deutlich höhere Datenraten</b>. Der Preis dafür: Hohe Frequenzen werden auf dem Kupfer stärker gedämpft, deshalb funktioniert VDSL2 nur auf einer <b>kürzeren Strecke</b> — laut Grafik bis 1000 m, während ADSL over POTS bis 6000 m reicht.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 9</span><span class="q">Skizzieren Sie auf einer Frequenzachse die verschiedenen Frequenzbereiche für die Telefonie und den Datentransfer.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Ganz unten die <b>Telefonie bis etwa 4 kHz</b>, darüber ab rund 25 kHz der <b>ADSL-Upstream</b>, ab 138 kHz der <b>Downstream</b> bis 1,1 MHz, ADSL2+ bis 2,2 MHz, VDSL2 bis 17 MHz, G.fast bis 106 MHz.</p><p style="margin-bottom:0"><button class="btn ghost sm" type="button" data-open-tab="visuals">Fertige Skizze im Reiter Visuals →</button></p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 10</span><span class="q">Was ist bei G.fast besser als bei VDSL2?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Dasselbe Prinzip eine Stufe weiter: G.fast nutzt <b>noch höhere Frequenzen</b> (bis 106 MHz) und erreicht <b>bis 500 Mbit/s</b> — dafür nur auf einer <b>sehr kurzen Kupferstrecke bis 250 m</b>. Es setzt voraus, dass die Glasfaser schon fast bis ins Haus reicht. Ausgeschrieben: <b>Fast Access to Subscriber Terminals</b>, ITU-T G.9700/G.9701.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 11</span><span class="q">Was zeigt die Grafik? Erklären Sie in einfacher Form die Zusammenhänge.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Die Grafik zeigt den <b>Zusammenhang zwischen der Länge der Kupferleitung und der erreichbaren Datenrate</b>: Je länger die Strecke, desto kleiner die Datenrate. Die Kurven fallen deshalb alle nach rechts ab.</p><p>Von schnell und kurz nach langsam und weit: <b>NG.fast</b> 5 Gbit/s bis 100 m · <b>G.fast</b> 500 Mbit/s bis 250 m · <b>VDSL2</b> bis 1000 m · <b>ADSL2+</b> bis 3000 m · <b>ADSL over POTS</b> bis 6000 m.</p><p style="margin-bottom:0">Die <b>Glasfaser FTTH</b> ist als waagrechte Linie bei 10 Gbit/s eingezeichnet — sie ist die Ausnahme, weil Licht im Glas über diese Distanzen praktisch nicht gedämpft wird. <b>Kernaussage:</b> Wer schneller werden will, muss die Glasfaser näher ans Haus bringen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 12</span><span class="q">Erklären Sie die Bezeichnung «All IP».</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Die Swisscom-Bezeichnung dafür, dass <b>alle Dienste über ein einziges IP-Netz</b> laufen: Internet, Telefonie und TV. Das alte, getrennte Telefonnetz mit POTS und ISDN wurde abgeschaltet. Praktische Folge: <b>Das Telefon hängt am Router, nicht mehr an der Telefondose</b> — fällt der Router aus, ist auch das Festnetz weg.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 13</span><span class="q">Wofür standen die Angaben «ADSL over POTS» und «ADSL over ISDN»?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Für die Zeit, als DSL <b>zusammen mit dem alten Telefon auf derselben Doppelader</b> lief. Der Unterschied liegt darin, wie viel vom unteren Frequenzband die Telefonie belegt:</p><ul style="margin-bottom:0"><li><b>over POTS</b> — analoges Telefon bis etwa 4 kHz, das DSL kann knapp darüber beginnen.</li><li><b>over ISDN</b> — ISDN belegt ein breiteres unteres Band, das DSL muss höher einsteigen und hat etwas weniger Platz für den Upstream.</li></ul></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 14</span><span class="q">In welchem Zusammenhang wird das abgebildete Symbol verwendet? <em>(die drei Funkbogen)</em></span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Es ist das <b>WLAN-Symbol</b> und steht für <b>kabellose Netzwerke</b>. Man findet es am Router und am Access Point, als Signalstärkeanzeige auf Geräten, und als Hinweisschild für ein verfügbares öffentliches WLAN — also für <b>PWLAN-Hotspots</b> an Bahnhöfen, in Zügen, Hotels und Restaurants.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">Ü 15</span><span class="q">Was ist ein PWLAN?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Ein <b>Public WLAN</b> — ein öffentlich zugängliches drahtloses Netz, zum Beispiel am Bahnhof, im Zug, im Hotel oder im Restaurant. Die Anmeldung läuft meist über ein Portal im Browser, teils mit SMS-Code.</p><p style="margin-bottom:0"><b>Wichtig:</b> Viele PWLAN sind <b>unverschlüsselt</b>, andere im selben Netz können also mitlesen. Deshalb nur HTTPS nutzen, für Heikles ein VPN, und die automatische Verbindung mit unbekannten Netzen ausschalten.</p></div></details></div></div>
+
+<div class="info-box warn">
+<h4>Die Repetitionsaufgaben fehlen mir</h4>
+<p style="margin-bottom:0">Die Unterrichtsplanung vom 18.09. endet mit «Lösen der Repetitionsaufgaben, Kapitel 3 und 4» — die gehören also zum Prüfungsstoff. Im Vault liegen aber nur die beiden Blätter <b>A3.1</b> und <b>A4.1</b>, kein Blatt mit Repetitionsaufgaben. <b>Wenn du es im Ordner oder auf Teams findest, schick mir ein Foto</b>, dann löse ich sie hier genauso durch.</p>
+</div>
+
+</section>
+<!-- ════════════════════════ BEGRIFFE ════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+
+<h2>Begriffe und Abkürzungen</h2>
+<p class="intro">Von den 28 Lernzielen fangen neun mit «erklären, wofür die Abkürzung … steht» oder «den Begriff umschreiben» an. Das ist der Teil, der sich am schnellsten verdienen lässt — hier steht alles davon auf einem Haufen.</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Abkürzung</th><th>Ausgeschrieben</th><th>Kurz erklärt</th></tr>
+<tr><td><b>VoIP</b></td><td>Voice over Internet Protocol</td><td>Telefonie über das IP-Datennetz statt über eine durchgeschaltete Leitung.</td></tr>
+<tr><td><b>SIP</b></td><td>Session Initiation Protocol</td><td>Baut Gespräche auf, ändert und beendet sie. Transportiert die Sprache nicht.</td></tr>
+<tr><td><b>RTP</b></td><td>Real-time Transport Protocol</td><td>Transportiert die eigentlichen Sprachdaten in Echtzeit.</td></tr>
+<tr><td><b>SRTP</b></td><td>Secure Real-time Transport Protocol</td><td>Verschlüsselte, manipulationsgeschützte Variante von RTP.</td></tr>
+<tr><td><b>QoS</b></td><td>Quality of Service</td><td>Dienstgüte — der Router behandelt zeitkritische Pakete bevorzugt.</td></tr>
+<tr><td><b>Codec</b></td><td>Coder/Decoder</td><td>Verfahren zum Codieren und Komprimieren der Sprache, z. B. G.711, G.729, Opus.</td></tr>
+<tr><td><b>Latenz</b></td><td>—</td><td>Verzögerung zwischen Sprechen und Hören. Gut bis etwa 150 ms.</td></tr>
+<tr><td><b>Jitter</b></td><td>—</td><td>Schwankung der Ankunftszeiten, wird mit dem Jitterbuffer ausgeglichen.</td></tr>
+<tr><td><b>Paketverlust</b></td><td>—</td><td>Pakete kommen nicht an — hörbar als Aussetzer oder Roboterstimme.</td></tr>
+<tr><td><b>ISP</b></td><td>Internet Service Provider</td><td>Internetdienstanbieter, z. B. Swisscom, Sunrise, Salt, Init7.</td></tr>
+<tr><td><b>Breitband</b></td><td>—</td><td>Dauerhafter Anschluss mit hoher Rate über breiten Frequenzbereich, «always on».</td></tr>
+<tr><td><b>ADSL</b></td><td>Asymmetric Digital Subscriber Line</td><td>DSL über Kupfer, Download schneller als Upload, bis 6000 m.</td></tr>
+<tr><td><b>VDSL2</b></td><td>Very High Bitrate Digital Subscriber Line</td><td>Höheres Frequenzband bis 17 MHz, dafür nur bis 1000 m.</td></tr>
+<tr><td><b>G.fast</b></td><td>Fast Access to Subscriber Terminals</td><td>Bis 106 MHz, bis 500 Mbit/s, nur bis 250 m. ITU-T G.9700/G.9701.</td></tr>
+<tr><td><b>NG.fast</b></td><td>Next Generation Fast Access to Subscriber Terminals</td><td>Bis 5 Gbit/s, bis 100 m.</td></tr>
+<tr><td><b>FTTH</b></td><td>Fibre to the Home</td><td>Glasfaser bis in die Wohnung, bis 10 Gbit/s, distanzunabhängig.</td></tr>
+<tr><td><b>GPON</b></td><td>Gigabit Passive Optical Network</td><td>Mehrere Haushalte teilen sich 2,5 Gbit/s Download und 1,25 Gbit/s Upload.</td></tr>
+<tr><td><b>XGS-PON</b></td><td>10 Gigabit Symmetric PON</td><td>10 Gbit/s in beide Richtungen.</td></tr>
+<tr><td><b>POTS</b></td><td>Plain Old Telephone Service</td><td>Die klassische analoge Telefonie, Band 0 bis 4 kHz.</td></tr>
+<tr><td><b>All IP</b></td><td>—</td><td>Swisscom-Bezeichnung: Internet, Telefonie und TV über ein einziges IP-Netz.</td></tr>
+<tr><td><b>PWLAN</b></td><td>Public WLAN</td><td>Öffentliches WLAN, meist unverschlüsselt — HTTPS oder VPN verwenden.</td></tr>
+<tr><td><b>NTS / HÜP</b></td><td>Netzabschluss / Hausübergabepunkt</td><td>Übergang vom Providernetz in die Hausinstallation.</td></tr>
+<tr><td><b>OTO</b></td><td>Optical Telecommunication Outlet</td><td>Die Glasfaserdose in der Wohnung.</td></tr>
+<tr><td><b>a/b-Port (FXS)</b></td><td>—</td><td>Der analoge Telefonanschluss am Router. Dorthin gehört das analoge Telefon.</td></tr>
+<tr><td><b>Splitter / Mikrofilter</b></td><td>—</td><td>Trennten Telefonie und DSL voneinander. Mit All IP nicht mehr nötig.</td></tr>
+<tr><td><b>Downstream</b></td><td>Download</td><td>Vom Internet zu dir. Immer aus Kundensicht.</td></tr>
+<tr><td><b>Upstream</b></td><td>Upload</td><td>Von dir ins Internet.</td></tr>
+<tr><td><b>Ping / RTT</b></td><td>Round Trip Time</td><td>Laufzeit hin und zurück in ms. Misst Reaktionszeit, nicht Tempo.</td></tr>
+<tr><td><b>DOCSIS</b></td><td>Data Over Cable Service Interface Specification</td><td>Die Technik für Internet über das TV-Koaxialkabel.</td></tr>
+</table>
+</div>
+
+<div class="info-box">
+<p style="margin-bottom:0"><b>Die Einheitenfalle:</b> Anschlüsse in <b>bit pro Sekunde</b>, Dateien in <b>Byte</b>. <b>8 bit = 1 Byte</b>, also 100 Mbit/s = 12,5 MB/s theoretisch. <b>1 Gbit/s = 1000 Mbit/s.</b></p>
+</div>
+
+</section>
+
+<!-- ════════════════════════ KARTEIKARTEN ════════════════════════ -->
+<section class="tab-pane" id="karten">
+
+<h2>Karteikarten</h2>
+<p class="intro">30 Karten quer durch beide Kapitel. Karte antippen dreht sie um. Was du konntest, drückst du weg — was nicht, kommt am Schluss nochmals.</p>
+
+<div class="flash-bar" style="margin-bottom:12px">
+  <span class="flash-count" id="flashCount">Karte 1 von 30</span>
+  <span>
+    <button class="btn ghost sm" type="button" id="flashShuffle">Mischen</button>
+    <button class="btn ghost sm" type="button" id="flashReset">Von vorn</button>
+  </span>
+</div>
+
+<div class="card-deck">
+  <div class="flash" id="flashCard" role="button" tabindex="0">
+    <span class="side-label" id="flashSide">Frage</span>
+    <span class="text" id="flashText">Wird geladen …</span>
+  </div>
+</div>
+
+<div class="flash-bar">
+  <button class="btn ghost sm" type="button" id="flashAgain">Nochmals üben</button>
+  <span class="flash-count" id="flashStats"></span>
+  <button class="btn sm" type="button" id="flashKnown">Sitzt</button>
+</div>
+
+<div class="info-box success" id="flashDone" style="display:none">
+  <p style="margin-bottom:0"><b>Durch.</b> <span id="flashDoneText"></span></p>
+</div>
+
+</section>
+
+<!-- ════════════════════════ QUIZ ════════════════════════ -->
+<section class="tab-pane" id="quiz">
+
+<h2>Quiz — 18 Fragen</h2>
+<p class="intro">Eine Antwort pro Frage, sofortige Rückmeldung mit Begründung. Gemischt aus beiden Kapiteln, mit den Verwechslungen, die am Test am meisten kosten.</p>
+
+<div class="score" id="quizScore">Noch keine Frage beantwortet.</div>
+<div id="quizList"></div>
+<p><button class="btn ghost" type="button" id="quizReset">Quiz zurücksetzen</button></p>
+
+</section>
+<!-- ════════════════════════ PROBETEST ════════════════════════ -->
+<section class="tab-pane" id="probetest">
+
+<h2>Probetest — 20 Aufgaben, 30 Punkte</h2>
+<p class="intro">Gedacht für Donnerstag: 35 Minuten, Blatt und Stift, Lösungen zugeklappt lassen. Die Aufgaben sind nach denselben Lernzielen gebaut wie der Test, aber anders formuliert als auf den Übungsblättern — damit du prüfst, ob du es verstanden hast und nicht nur die Blattantwort auswendig kannst.</p>
+
+<div class="info-box">
+<p style="margin-bottom:0"><b>Selbstkontrolle:</b> 27–30 Punkte heisst sitzt · 21–26 heisst die Lücken gezielt nachlesen · unter 21 nochmals durch den Theorie-Reiter. <em>Die Punkteverteilung ist meine eigene, der echte Test wird anders gewichtet.</em></p>
+</div>
+
+<div class="ue"><div class="ue-head"><span class="nr">1 · 1 P</span><span class="q">Schreiben Sie die Abkürzungen aus: VoIP, SIP, QoS.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Voice over Internet Protocol · Session Initiation Protocol · Quality of Service.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">2 · 2 P</span><span class="q">Ein Kollege sagt: «SIP überträgt meine Stimme.» Korrigieren Sie ihn und erklären Sie, wer es tatsächlich tut.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Falsch. <b>SIP baut das Gespräch nur auf</b>, ändert und beendet es und handelt die Codecs aus — es ist das Klingeln und Auflegen. Die Sprachdaten selbst transportiert <b>RTP</b>, verschlüsselt <b>SRTP</b>.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">3 · 2 P</span><span class="q">Nennen Sie die drei Hauptprobleme der Sprachqualität bei VoIP und beschreiben Sie zu einem davon, wie es sich anhört.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0"><b>Latenz, Jitter, Paketverlust.</b> Beispiel Paketverlust: hörbare Aussetzer oder Roboterstimme. Jitter: Stottern. Latenz: man fällt sich ins Wort.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">4 · 2 P</span><span class="q">Erklären Sie mit eigenen Worten den wesentlichen Unterschied zwischen herkömmlicher Telefonie und VoIP bezüglich des Datenkanals.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Klassisch wird eine <b>Leitung durchgeschaltet und reserviert</b>, bis aufgelegt wird. Bei VoIP gibt es keine Reservierung: die Sprache wird in <b>Pakete</b> zerlegt, die sich den Kanal mit allem anderen Verkehr teilen und verschiedene Wege nehmen können.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">5 · 1 P</span><span class="q">Welche Einweg-Latenz gilt für ein gutes Gespräch noch als unproblematisch?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Bis etwa <b>150 ms</b>. Zwischen 150 und 400 ms wird es merklich schlechter, über 400 ms ist es für normale Gespräche nicht mehr brauchbar.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">6 · 2 P</span><span class="q">Im Haushalt lädt jemand ein grosses Spiel herunter, während Sie telefonieren. Warum wird das Gespräch schlecht, und welche Funktion im Router verhindert das?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ohne Priorisierung stehen die Sprachpakete in <b>derselben Warteschlange</b> wie die Downloadpakete — es entstehen Latenz, Jitter und Aussetzer. <b>QoS</b> zieht die Sprachpakete vor; das VoIP-Telefon hängt dafür am priorisierten Anschluss.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">7 · 2 P</span><span class="q">Nennen Sie vier Vorteile von VoIP gegenüber der herkömmlichen Telefonie.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ein Netz für Sprache und Daten · tiefere Gesprächskosten · ortsunabhängig mit derselben Nummer · Zusatzfunktionen wie Weiterleitung, Konferenz, Voicemail per Mail · einfach um Teilnehmer erweiterbar.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">8 · 2 P</span><span class="q">Warum ist WhatsApp für Telefonie kein Ersatz für den SIP-Standard? Nennen Sie den zentralen Nachteil.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">WhatsApp ist ein <b>geschlossenes System eines einzelnen Anbieters</b> — erreichbar ist nur, wer dieselbe App hat. <b>SIP ist ein offener Standard</b>: jedes SIP-Gerät erreicht jedes andere, herstellerunabhängig.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">9 · 1 P</span><span class="q">Warum sollen VoIP-Daten verschlüsselt werden? Ein Satz genügt.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Weil unverschlüsselte Sprachpakete im Netz <b>mitgeschnitten und wieder hörbar gemacht</b> werden können — SRTP schützt Vertraulichkeit und Integrität.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">10 · 2 P</span><span class="q">Sie wollen prüfen, ob der Drucker mit der Internet Box 2 verbunden ist. Beschreiben Sie den Weg.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Browser öffnen, <code>http://internetbox</code> oder <code>192.168.1.1</code> aufrufen, anmelden, <b>Geräteliste</b> öffnen. Steht der Drucker mit Name und IP-Adresse dort, ist er verbunden.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">11 · 1 P</span><span class="q">Was ist ein ISP, und nennen Sie zwei Schweizer Beispiele.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ein <b>Internet Service Provider</b>, also Internetdienstanbieter — zum Beispiel Swisscom und Sunrise.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">12 · 2 P</span><span class="q">Umschreiben Sie «Breitband-Internetzugang» und grenzen Sie ihn vom Schmalband-Zugang ab.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Breitband: <b>dauerhaft verfügbar, hohe Übertragungsrate</b>, mehrere Signale gleichzeitig über einen breiten Frequenzbereich, pauschal verrechnet, «always on». Schmalband: Einwahl pro Verbindung, Abrechnung nach Zeit, sehr kleine Rate (Analogmodem, ISDN).</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">13 · 2 P</span><span class="q">Was ist bei ADSL asymmetrisch, und warum hat man es so gebaut?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Download und Upload sind <b>unterschiedlich schnell</b>, der Download ist schneller. Das Frequenzband der Doppelader muss aufgeteilt werden, und der Download bekommt den grösseren Teil, weil Nutzer deutlich mehr empfangen als senden.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">14 · 2 P</span><span class="q">Ordnen Sie nach Reichweite, von der kürzesten zur längsten: ADSL over POTS, G.fast, VDSL2, ADSL2+, NG.fast. Nennen Sie zu jedem die Distanz.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">NG.fast 100 m → G.fast 250 m → VDSL2 1000 m → ADSL2+ 3000 m → ADSL over POTS 6000 m.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">15 · 2 P</span><span class="q">Skizzieren Sie die Frequenzachse mit Telefonie, ADSL-Upstream und ADSL-Downstream, mit Zahlenwerten.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Telefonie <b>0–4 kHz</b> · ADSL-Upstream <b>ab etwa 25 bis 138 kHz</b> · ADSL-Downstream <b>138 kHz bis 1,1 MHz</b>. Darüber ADSL2+ bis 2,2 MHz, VDSL2 bis 17 MHz, G.fast bis 106 MHz.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">16 · 2 P</span><span class="q">Erklären Sie in zwei Sätzen, warum G.fast schneller ist als VDSL2, obwohl beide über Kupfer laufen.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">G.fast nutzt <b>deutlich höhere Frequenzen</b> (bis 106 MHz statt 17 MHz) und kann dadurch mehr Daten übertragen. Hohe Frequenzen werden auf Kupfer stark gedämpft, deshalb funktioniert das nur auf einer <b>sehr kurzen Strecke bis 250 m</b> — die Glasfaser muss schon fast beim Haus sein.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">17 · 2 P</span><span class="q">Was bedeutet «All IP», und was hat sich dadurch im Haushalt sichtbar verändert?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Alle Dienste — Internet, Telefonie, TV — laufen über <b>ein einziges IP-Netz</b>; das alte Telefonnetz wurde abgeschaltet. Sichtbar: <b>das Telefon hängt am Router statt an der Telefondose</b>, und ohne Router gibt es auch kein Festnetz.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">18 · 2 P</span><span class="q">Wofür wurden Mikrofilter und Splitter eingesetzt, und warum braucht es sie heute nicht mehr?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Sie <b>trennten die Frequenzbereiche</b> von Telefonie und DSL auf derselben Doppelader, sonst störten sich die beiden (Rauschen im Telefon, instabiles DSL). Mit <b>All IP</b> liegt keine analoge Telefonie mehr auf der Leitung — also entfallen sie.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">19 · 2 P</span><span class="q">Nennen Sie drei kabellose Internetzugangsvarianten und je ein typisches Einsatzgebiet.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0"><b>Mobilfunk 4G/5G</b> — unterwegs oder als Festnetzersatz · <b>WLAN und Richtfunk</b> — im Gebäude, Richtfunk zur Anbindung abgelegener Gebäude · <b>Satellit</b> — Berghütten und Baustellen ohne Anschluss.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">20 · 2 P</span><span class="q">Was ist ein PWLAN, und worauf müssen Sie dort achten?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ein <b>Public WLAN</b>, also ein öffentlich zugängliches Funknetz an Bahnhöfen, in Zügen oder Hotels. Es ist oft <b>unverschlüsselt</b>: nur HTTPS nutzen, für Heikles ein VPN, automatische Verbindung mit unbekannten Netzen ausschalten.</p></div></details></div></div>
+
+<div class="info-box success">
+<p style="margin-bottom:0"><b>Bonus, wenn alles sitzt:</b> Zeichne ohne Vorlage die Installation NTS/HÜP → Router → Switch → Endgeräte mit dem analogen Telefon am richtigen Port. Wer das aus dem Kopf kann, hat Kapitel 3 und 4 zusammen verstanden.</p>
+</div>
+
+</section>
+
+<!-- ════════════════════════ LERNPLAN ════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+
+<h2>Fünf Tage bis zum Test</h2>
+<p class="intro">Gerechnet ab heute, Sonntag 11.10.2026. Dazwischen liegt ein Schultag, der Montag — am Montag hast du kein Telekom, also bleibt der Abend. Zusammen sind das knapp drei Stunden, verteilt in Portionen, die man nach der Arbeit noch schafft.</p>
+
+<div class="info-box warn">
+<p style="margin-bottom:0"><b>Im Blick behalten:</b> Am <b>Montag 19.10.</b>, drei Tage nach dem Test, ist die <b>Abgabe des Arbeitsauftrags Schrittschalter &amp; Minuterie</b> bei Moser — im 2er-Team, auf Papier. Dafür brauchst du Fotos an einem echten Objekt. Diese Woche ist das letzte Zeitfenster dafür, plan es neben dem Lernen ein.</p>
+</div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot"></span><span class="plan-stem"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Sonntag 11.10.</span><span class="t">heute · 45 Min.</span></div>
+<ul><li>Theorie-Reiter <b>Kapitel 3 ganz</b> lesen — ruhig laut.</li><li>Blatt <b>A3.1, Übungen 1 bis 11</b> lösen, erst danach die Lösungen aufklappen. Ü12 und Ü13 überspringen, das ist ISDN.</li><li>Zum Abschluss die <b>VoIP-Skizze</b> einmal von Hand zeichnen.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot"></span><span class="plan-stem"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Montag 12.10.</span><span class="t">Schultag · abends 30 Min.</span></div>
+<ul><li>Erster Schultag nach den Ferien — <b>nach den offenen Noten fragen</b> (Moser 14.09., NIN-Grosstest 11.09., ABU-Rechtschreibung).</li><li>Abends: Theorie <b>Kapitel 4 bis und mit «Die xDSL-Familie»</b>.</li><li>Blatt <b>A4.1, Übungen 1 bis 7</b>.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot"></span><span class="plan-stem"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Dienstag 13.10.</span><span class="t">40 Min.</span></div>
+<ul><li>Theorie: <b>Frequenzbereiche</b> und die <b>Reichweiten-Grafik</b>.</li><li>Blatt <b>A4.1, Übungen 8 bis 11</b> — Übung 9 wirklich <b>zeichnen</b>, nicht nur anschauen.</li><li><b>Karteikarten</b> einmal durch, gemischt.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot"></span><span class="plan-stem"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Mittwoch 14.10.</span><span class="t">40 Min.</span></div>
+<ul><li>Theorie: <b>All IP</b>, ADSL over POTS/ISDN, Mikrofilter und Splitter, Koax und Glasfaser, kabellos, PWLAN.</li><li>Blatt <b>A4.1, Übungen 12 bis 15</b>.</li><li><b>Quiz</b> einmal ganz durch — die Fehler notieren.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot"></span><span class="plan-stem"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Donnerstag 15.10.</span><span class="t">45 Min.</span></div>
+<ul><li><b>Probetest</b>, 35 Minuten am Stück, Lösungen zu. Blatt und Stift, kein Handy.</li><li>Danach korrigieren und nur die <b>Lücken</b> nachlesen.</li><li>Die drei Skizzen einmal aus dem Kopf zeichnen.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><span class="plan-dot test"></span></div>
+<div class="plan-body"><div class="plan-head"><span class="d">Freitag 16.10.</span><span class="t">Test, 12:45, Zimmer 2.12</span></div>
+<ul><li>Morgens 15 Minuten: <b>Karteikarten</b> und die <b>Abkürzungstabelle</b>.</li><li>In der Mittagspause nichts Neues mehr lernen — nur die Frequenzachse nochmals kurz aufzeichnen.</li></ul></div></div>
+
+<h3>Woran es am ehesten scheitert</h3>
+<ul>
+<li><b>SIP und RTP verwechseln.</b> SIP = aufbauen, RTP = übertragen.</li>
+<li><b>Download und Upload nicht aus Kundensicht</b> denken. Download ist immer zu dir hin.</li>
+<li><b>Glasfaser automatisch für symmetrisch halten.</b> Abo und Netztechnik entscheiden.</li>
+<li><b>bit und Byte verwechseln.</b> Faktor 8.</li>
+<li><b>Das analoge Telefon an den Switch zeichnen.</b> Es gehört an den a/b-Port des Routers.</li>
+<li><b>ISDN mitlernen.</b> Nur «ADSL over ISDN» als Begriff aus Kapitel 4 bleibt im Stoff.</li>
+</ul>
+
+</section>
+
+<footer>
+<p><b>Quellen aus dem Vault:</b> Übungsblätter A3.1 und A4.1 · Unterrichtsplanung Kommunikation vom 18.09.2026 · die 30 Lernziele aus <code>Fächer/ATD/Telekommunikation.md</code> · Unterrichtsnotiz vom 04.09.2026 (VoIP, SIP, RTP, Latenz) · Arbeitsauftrag Internetzugang vom 11.09.2026 mit der visuellen Lösung · Tagesplan vom 11.09.2026. Normangaben zu Frequenzen, Latenz und PON stammen aus den ITU-T-Empfehlungen.</p>
+<p><b>Was ich nicht belegen konnte:</b> die Lehrmittelzahl zur minimal nötigen Geschwindigkeit (A3.1 Ü4) · das Swisscom-Modell mit ISDN-Anschluss (A3.1 Ü13, nicht geprüft) · die Original-Skizze der Anschlussvarianten der Internet Box 2 · die Repetitionsaufgaben zu Kapitel 3 und 4, die auf der Unterrichtsplanung erwähnt sind, aber nicht im Vault liegen · die Datenrate von VDSL2, für die das Blatt nur die Distanz angibt.</p>
+<p>Lernpaket für den Test vom 16.10.2026 · erstellt am 11.10.2026 · <a href="https://schule.yanikroesti.ch">schule.yanikroesti.ch</a></p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Tabs ── */
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".tab-btn"));
+  var panes = Array.prototype.slice.call(document.querySelectorAll(".tab-pane"));
+  function openTab(name) {
+    btns.forEach(function (b) { b.classList.toggle("active", b.dataset.tab === name); });
+    panes.forEach(function (p) { p.classList.toggle("active", p.id === name); });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  btns.forEach(function (b) { b.addEventListener("click", function () { openTab(b.dataset.tab); }); });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-open-tab]") : null;
+    if (t) { openTab(t.dataset.openTab); }
+  });
+  if (location.hash) {
+    var h = location.hash.slice(1);
+    if (panes.some(function (p) { return p.id === h; })) { openTab(h); }
+  }
+
+  /* ── Hell / dunkel ── */
+  var root = document.documentElement, tt = document.getElementById("themeToggle");
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  var saved = load("tk34-theme");
+  if (saved === "dark" || saved === "light") { root.setAttribute("data-theme", saved); }
+  tt.addEventListener("click", function () {
+    var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var cur = root.getAttribute("data-theme") || (dark ? "dark" : "light");
+    var next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    store("tk34-theme", next);
+  });
+
+  /* ── Countdown ── */
+  var cd = document.getElementById("countdown");
+  var now = new Date();
+  var days = Math.ceil((new Date(2026, 9, 16) - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+  if (days > 1) { cd.textContent = "Noch " + days + " Tage bis zum Test am Freitag 16.10."; }
+  else if (days === 1) { cd.textContent = "Morgen ist der Test — 12:45, Zimmer 2.12"; }
+  else if (days === 0) { cd.textContent = "Heute: Test um 12:45, Zimmer 2.12"; }
+  else { cd.textContent = "Der Test vom 16.10.2026 ist vorbei — Archiv"; }
+
+  /* ── Karteikarten ── */
+  var CARDS = [
+    ["VoIP — ausgeschrieben?", "Voice over Internet Protocol."],
+    ["SIP — Aufgabe?", "Baut Gespräche auf, ändert und beendet sie, handelt die Codecs aus. Überträgt die Sprache nicht."],
+    ["RTP — Aufgabe?", "Transportiert die eigentlichen Sprachdaten in Echtzeit. SRTP ist die verschlüsselte Variante."],
+    ["Die drei Hauptprobleme bei VoIP?", "Latenz, Jitter, Paketverlust."],
+    ["Jitter — was ist das?", "Schwankung der Ankunftszeiten der Pakete. Wird mit dem Jitterbuffer ausgeglichen."],
+    ["Gute Einweg-Latenz für Telefonie?", "Bis etwa 150 ms. 150–400 ms geht noch, über 400 ms nicht mehr brauchbar."],
+    ["QoS — ausgeschrieben und wofür?", "Quality of Service. Der Router behandelt zeitkritische Pakete bevorzugt, damit Sprache Vorrang hat."],
+    ["Bandbreite für einen Sprachkanal?", "64 kbit/s nach G.711, mit Overhead rund 80–100 kbit/s pro Richtung."],
+    ["Vier Vorteile von VoIP?", "Ein Netz für Sprache und Daten · tiefere Gesprächskosten · ortsunabhängig · mehr Funktionen · einfach erweiterbar."],
+    ["Warum VoIP verschlüsseln?", "Unverschlüsseltes RTP kann mitgeschnitten und wieder hörbar gemacht werden. SRTP schützt Vertraulichkeit und Integrität."],
+    ["Nachteil von WhatsApp gegenüber SIP?", "Geschlossenes System eines Anbieters — man erreicht nur, wer dieselbe App hat. SIP ist ein offener Standard."],
+    ["Wohin gehört das analoge Telefon?", "An den a/b-Port (TEL, FXS) des Routers — nicht an den Switch. Der Router wandelt intern nach VoIP."],
+    ["Wie prüft man die Geräte an der Internet Box 2?", "Im Browser http://internetbox oder 192.168.1.1 aufrufen, anmelden, Geräteliste öffnen."],
+    ["ISP — ausgeschrieben?", "Internet Service Provider, der Internetdienstanbieter."],
+    ["Breitband-Internetzugang — was ist das?", "Dauerhaft verfügbarer Anschluss mit hoher Rate über einen breiten Frequenzbereich. «Always on», pauschal verrechnet."],
+    ["ADSL — ausgeschrieben?", "Asymmetric Digital Subscriber Line."],
+    ["Was ist bei ADSL asymmetrisch?", "Download und Upload sind unterschiedlich schnell. Das Frequenzband wird aufgeteilt, der Download bekommt den grösseren Teil."],
+    ["Download — Definition?", "Daten vom Internet zu dir. Immer aus Kundensicht."],
+    ["Upload — Definition?", "Daten von dir ins Internet."],
+    ["VDSL2 — Reichweite und Frequenz?", "Bis 1000 m, Frequenzband bis 17 MHz (Profil 35b bis 35 MHz)."],
+    ["G.fast — ausgeschrieben, Tempo, Reichweite?", "Fast Access to Subscriber Terminals. Bis 500 Mbit/s, bis 250 m, Frequenzen bis 106 MHz."],
+    ["NG.fast — Tempo und Reichweite?", "Bis 5 Gbit/s, bis 100 m."],
+    ["ADSL over POTS — Reichweite?", "Bis 6000 m. ADSL2+ bis 3000 m."],
+    ["Frequenzband der analogen Telefonie?", "0 bis etwa 4 kHz, Sprachband 300–3400 Hz."],
+    ["ADSL-Upstream und -Downstream?", "Upstream etwa 25–138 kHz, Downstream 138 kHz bis 1,1 MHz. ADSL2+ bis 2,2 MHz."],
+    ["All IP — was heisst das?", "Swisscom-Bezeichnung: Internet, Telefonie und TV über ein einziges IP-Netz. Das Telefon hängt am Router."],
+    ["ADSL over POTS gegen over ISDN?", "Unterschied ist, wie viel unteres Frequenzband die Telefonie belegt. ISDN braucht mehr, das DSL muss höher einsteigen."],
+    ["Mikrofilter und Splitter — wofür?", "Trennten Telefonie und DSL auf derselben Doppelader. Mit All IP nicht mehr nötig."],
+    ["Drei kabellose Zugangsvarianten?", "Mobilfunk 4G/5G · WLAN und Richtfunk · Satellit."],
+    ["PWLAN — was und worauf achten?", "Public WLAN, öffentliches Funknetz. Oft unverschlüsselt: HTTPS, VPN, keine automatische Verbindung."]
+  ];
+  var order = [], idx = 0, flipped = false, known = 0, again = [];
+  var elCard = document.getElementById("flashCard"), elText = document.getElementById("flashText"),
+      elSide = document.getElementById("flashSide"), elCount = document.getElementById("flashCount"),
+      elStats = document.getElementById("flashStats"), elDone = document.getElementById("flashDone"),
+      elDoneT = document.getElementById("flashDoneText");
+  function resetDeck(shuffle) {
+    order = CARDS.map(function (_, i) { return i; });
+    if (shuffle) { for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; } }
+    idx = 0; flipped = false; known = 0; again = []; elDone.style.display = "none"; render();
+  }
+  function render() {
+    if (idx >= order.length) {
+      elSide.textContent = "Fertig";
+      elText.textContent = again.length ? "Noch " + again.length + " Karten im Nachbrenner." : "Alle Karten sassen.";
+      elText.classList.remove("answer");
+      elCount.textContent = order.length + " von " + order.length;
+      elStats.textContent = "Gewusst: " + known;
+      elDone.style.display = "block";
+      elDoneT.textContent = again.length
+        ? "Du hast " + known + " von " + order.length + " gewusst. Drück «Nochmals üben», dann kommen nur die offenen Karten."
+        : "Alle " + order.length + " Karten sassen. Jetzt den Probetest.";
+      return;
+    }
+    var c = CARDS[order[idx]];
+    elSide.textContent = flipped ? "Antwort" : "Frage";
+    elText.textContent = flipped ? c[1] : c[0];
+    elText.classList.toggle("answer", flipped);
+    elCount.textContent = "Karte " + (idx + 1) + " von " + order.length;
+    elStats.textContent = "Gewusst: " + known;
+  }
+  function flip() { if (idx < order.length) { flipped = !flipped; render(); } }
+  elCard.addEventListener("click", flip);
+  elCard.addEventListener("keydown", function (e) { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); } });
+  document.getElementById("flashKnown").addEventListener("click", function () { if (idx < order.length) { known++; idx++; flipped = false; render(); } });
+  document.getElementById("flashAgain").addEventListener("click", function () {
+    if (idx < order.length) { again.push(order[idx]); idx++; flipped = false; render(); }
+    else if (again.length) { order = again.slice(); again = []; idx = 0; known = 0; flipped = false; elDone.style.display = "none"; render(); }
+  });
+  document.getElementById("flashShuffle").addEventListener("click", function () { resetDeck(true); });
+  document.getElementById("flashReset").addEventListener("click", function () { resetDeck(false); });
+  resetDeck(false);
+
+  /* ── Quiz ── */
+  var QUIZ = [
+    ["Welches Protokoll transportiert bei VoIP die eigentlichen Sprachdaten?", ["SIP", "RTP", "QoS", "DOCSIS"], 1, "SIP baut das Gespräch nur auf. Die Sprache läuft über RTP, verschlüsselt über SRTP."],
+    ["Was bedeutet Jitter?", ["Die Verzögerung bis zum Gegenüber", "Der Verlust einzelner Pakete", "Die Schwankung der Ankunftszeiten", "Die Komprimierung der Sprache"], 2, "Jitter ist die Schwankung — ausgeglichen wird sie mit dem Jitterbuffer. Verzögerung ist Latenz."],
+    ["Bis zu welcher Einweg-Latenz gilt ein Gespräch als gut?", ["50 ms", "150 ms", "400 ms", "1000 ms"], 1, "Bis etwa 150 ms. Zwischen 150 und 400 ms nimmt die Qualität ab, darüber ist es unbrauchbar."],
+    ["Wofür steht QoS?", ["Quality of Service", "Quantity of Signal", "Quick Optical Switching", "Quality of Sound"], 0, "Quality of Service, die Dienstgüte — der Router priorisiert zeitkritische Pakete."],
+    ["Was ist der zentrale Nachteil von WhatsApp gegenüber SIP?", ["Schlechtere Sprachqualität", "Höhere Latenz", "Geschlossenes System eines Anbieters", "Keine Verschlüsselung"], 2, "Man erreicht nur, wer dieselbe App hat. SIP ist ein offener Standard, herstellerunabhängig."],
+    ["Wohin gehört ein analoges Telefon im Heimnetz?", ["An den Switch", "An den a/b-Port des Routers", "An einen freien LAN-Port", "An das OTO-Dösli"], 1, "Ein analoges Telefon versteht kein Ethernet. Der Router wandelt am a/b-Port intern nach VoIP."],
+    ["Wie viel braucht ein Sprachkanal nach G.711?", ["8 kbit/s", "64 kbit/s", "640 kbit/s", "1 Mbit/s"], 1, "8000 Abtastungen mal 8 bit = 64 kbit/s. Mit Overhead rund 80 bis 100 kbit/s."],
+    ["Wofür steht ADSL?", ["Advanced Digital Subscriber Line", "Asymmetric Digital Subscriber Line", "Analog Data Signal Line", "Automatic DSL"], 1, "Asymmetric Digital Subscriber Line — asymmetrisch, weil Download und Upload unterschiedlich schnell sind."],
+    ["Was ist bei ADSL asymmetrisch?", ["Die Leitungslänge in beide Richtungen", "Download und Upload sind unterschiedlich schnell", "Die Anzahl Adern im Kabel", "Die Frequenz schwankt"], 1, "Das Frequenzband wird zwischen den Richtungen aufgeteilt, der Download bekommt den grösseren Teil."],
+    ["Welche Technik reicht am weitesten über Kupfer?", ["G.fast", "VDSL2", "ADSL2+", "ADSL over POTS"], 3, "ADSL over POTS bis 6000 m. Danach ADSL2+ 3000 m, VDSL2 1000 m, G.fast 250 m."],
+    ["Warum ist G.fast schneller als VDSL2?", ["Es nutzt Glasfaser statt Kupfer", "Es nutzt höhere Frequenzen auf kürzerer Strecke", "Es komprimiert die Daten stärker", "Es nutzt zwei Doppeladern"], 1, "Bis 106 MHz statt 17 MHz — dafür nur bis 250 m, weil hohe Frequenzen stark gedämpft werden."],
+    ["Welchen Frequenzbereich belegt die analoge Telefonie?", ["0 bis 4 kHz", "25 bis 138 kHz", "138 kHz bis 1,1 MHz", "bis 17 MHz"], 0, "0 bis etwa 4 kHz, das Sprachband liegt bei 300 bis 3400 Hz. Darüber beginnt das DSL."],
+    ["Ist Glasfaser immer symmetrisch?", ["Ja, technisch bedingt", "Nein — Abo und Netztechnik entscheiden", "Nur bei FTTH", "Nur bei GPON"], 1, "Technisch wäre sie es. Bei GPON teilen sich mehrere Haushalte 2,5 Gbit/s down und 1,25 Gbit/s up."],
+    ["Was bedeutet All IP?", ["Alle Geräte haben eine feste IP", "Internet, Telefonie und TV über ein IP-Netz", "Nur noch IPv6", "Alle Dienste sind verschlüsselt"], 1, "Das alte Telefonnetz wurde abgeschaltet. Sichtbare Folge: das Telefon hängt am Router."],
+    ["Wofür wurden Mikrofilter und Splitter eingesetzt?", ["Zum Verstärken des Signals", "Zum Trennen von Telefonie und DSL", "Zum Verschlüsseln der Daten", "Zum Verteilen auf mehrere PCs"], 1, "Sie trennten die Frequenzbereiche. Mit All IP liegt keine analoge Telefonie mehr auf der Leitung."],
+    ["Was ist ein PWLAN?", ["Ein privates verschlüsseltes WLAN", "Ein öffentlich zugängliches WLAN", "Ein WLAN mit Powerline", "Ein WLAN im 5-GHz-Band"], 1, "Public WLAN, zum Beispiel am Bahnhof. Oft unverschlüsselt — HTTPS und VPN verwenden."],
+    ["100 Mbit/s entsprechen theoretisch wie vielen MB/s?", ["100 MB/s", "50 MB/s", "12,5 MB/s", "8 MB/s"], 2, "8 bit = 1 Byte, also 100 geteilt durch 8 = 12,5 MB/s. Der häufigste Rechenfehler im Kapitel."],
+    ["Was misst der Ping?", ["Die Downloadrate", "Die Laufzeit hin und zurück", "Die Signalstärke", "Die Anzahl verlorener Pakete"], 1, "Round Trip Time in Millisekunden — Reaktionszeit, nicht Datenmenge pro Sekunde."]
+  ];
+  var answered = 0, correct = 0;
+  var list = document.getElementById("quizList"), scoreEl = document.getElementById("quizScore");
+  function buildQuiz() {
+    list.innerHTML = ""; answered = 0; correct = 0; updateScore();
+    QUIZ.forEach(function (q, qi) {
+      var wrap = document.createElement("div");
+      wrap.className = "quiz-q";
+      var t = document.createElement("div");
+      t.className = "qtext"; t.textContent = (qi + 1) + ". " + q[0];
+      wrap.appendChild(t);
+      var fb = document.createElement("div");
+      fb.className = "quiz-fb"; fb.textContent = q[3];
+      q[1].forEach(function (opt, oi) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "opt"; b.textContent = opt;
+        b.addEventListener("click", function () {
+          var all = wrap.querySelectorAll(".opt");
+          Array.prototype.forEach.call(all, function (x) { x.disabled = true; });
+          all[q[2]].classList.add("right");
+          if (oi !== q[2]) { b.classList.add("wrong"); } else { correct++; }
+          answered++; fb.classList.add("show"); updateScore();
+        });
+        wrap.appendChild(b);
+      });
+      wrap.appendChild(fb);
+      list.appendChild(wrap);
+    });
+  }
+  function updateScore() {
+    if (!answered) { scoreEl.textContent = "Noch keine Frage beantwortet. " + QUIZ.length + " warten."; return; }
+    var txt = correct + " von " + answered + " richtig";
+    if (answered === QUIZ.length) {
+      var p = Math.round(correct / QUIZ.length * 100);
+      txt += " — " + p + " %. " + (p >= 85 ? "Das sitzt." : p >= 65 ? "Solide, die Fehler gezielt nachlesen." : "Nochmals durch den Theorie-Reiter.");
+    }
+    scoreEl.textContent = txt;
+  }
+  document.getElementById("quizReset").addEventListener("click", buildQuiz);
+  buildQuiz();
+})();
+</script>
+</body>
+</html>
