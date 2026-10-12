@@ -267,6 +267,8 @@ main.month { display: grid; gap: 16px; }
 .sheet-head::before { content: ''; position: absolute; top: 7px; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 4px; background: var(--line); }
 @media (min-width: 700px) { .sheet-head::before { display: none; } }
 .sheet-body { overflow: auto; padding: 6px 18px 22px; display: flex; flex-direction: column; gap: 14px; overscroll-behavior: contain; }
+/* the body scrolls; its children must keep their height (the scrollable tab row would otherwise collapse) */
+.sheet-body > * { flex-shrink: 0; }
 .prompt { font-size: 1.05rem; font-weight: 700; margin: 0; }
 .choices { display: flex; flex-direction: column; gap: 10px; }
 .section { font-size: .85rem; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 8px 0 -4px; }
@@ -347,7 +349,8 @@ blockquote.reply { background: var(--accent-soft); }
 .feed > * + * { margin-top: 10px; }
 
 /* admin */
-.tabs { display: flex; gap: 4px; overflow-x: auto; position: sticky; top: -6px; z-index: 2; background: var(--bg); padding: 4px 0 8px; scrollbar-width: none; }
+.tabs { display: flex; gap: 4px; overflow-x: auto; position: sticky; top: -6px; z-index: 2; background: var(--bg); padding: 4px 0 8px; scrollbar-width: none; flex-shrink: 0; }
+.tabs button { flex: none; }
 .tabs button { border: 0; background: var(--surface-2); color: var(--ink-2); font-weight: 800; padding: 9px 14px; border-radius: 10px; white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
 .tabs button.on { background: var(--ink); color: var(--bg); }
 .tabs .count { background: var(--danger); color: #fff; border-radius: 99px; font-size: .72rem; padding: 1px 6px; }
