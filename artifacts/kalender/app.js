@@ -2,15 +2,16 @@
 // depending on each category's rule. Everything that decides who must agree lives in the database
 // (cal_propose / cal_decide); this file only shows it and mirrors the rule to explain it up front.
 
-import { catLabel, getLang, LANGS, setLang, t } from './i18n.js';
+import { catLabel, getLang, LANGS, locale, setLang, t } from './i18n.js';
 import * as api from './api.js';
 import * as D from './dates.js';
 import * as push from './push.js';
 import { choose, closeAll, confirmBox, copyText, h, icon, sheet, toast } from './ui.js';
+import { drawMain, loadPrefs, toolbar } from './views.js';
 
 const S = {
   me: null, settings: null, members: [], categories: [], events: [], changes: [], conns: [],
-  view: 'month', cursor: new Date(new Date().getFullYear(), new Date().getMonth(), 1), selected: D.todayKey(), listDays: 60,
+  view: 'month', hidden: new Set(), selected: D.todayKey(), listDays: 60,
 };
 export const state = S;
 const app = () => document.getElementById('app');
@@ -50,7 +51,7 @@ export function canDecide(c) {
 }
 const pendingOf = (eventId) => S.changes.filter((c) => c.event_id === eventId && c.status === 'pending');
 const toDecide = () => S.changes.filter(canDecide);
-const evColor = (ev) => category(ev.category_id)?.color || member(ev.responsible)?.color || '#3b6ef5';
+export const evColor = (ev) => category(ev.category_id)?.color || member(ev.responsible)?.color || '#3b6ef5';
 
 export function errText(e) {
   const k = String(e?.message || e || '');
@@ -89,6 +90,7 @@ async function enter() {
   }
   S.me = r.member;
   setLang(S.me.lang);
+  loadPrefs();
   try { await reload(); } catch (e) { fail(e); }
   render();
   api.subscribe(async () => { await reload(); refresh(); });
@@ -198,16 +200,7 @@ function render() {
         S.me.role === 'admin' ? h('button.icon-btn', { type: 'button', 'aria-label': t('admin'), onclick: () => import('./admin.js').then((m) => m.openAdmin()) }, icon('shield')) : null,
         h('button.avatar', { type: 'button', 'aria-label': t('settings'), onclick: openSettings, style: { background: S.me.color } }, (S.me.name || '?').slice(0, 1).toUpperCase()))),
     h('div#banner'),
-    h('nav.toolbar',
-      h('div.month-nav',
-        h('button.icon-btn', { type: 'button', 'aria-label': '‹', onclick: () => shift(-1) }, icon('left')),
-        h('h1#title'),
-        h('button.icon-btn', { type: 'button', 'aria-label': '›', onclick: () => shift(1) }, icon('right'))),
-      h('div.tool-right',
-        h('button.btn.small.ghost', { type: 'button', onclick: goToday }, t('today')),
-        h('div.seg',
-          h('button#v-month', { type: 'button', onclick: () => setView('month') }, icon('grid'), h('span', t('month'))),
-          h('button#v-list', { type: 'button', onclick: () => setView('list') }, icon('list'), h('span', t('list')))))),
+    toolbar(refresh),
     h('main#main'),
     S.me.role !== 'viewer' ? h('button.fab', { type: 'button', 'aria-label': t('add_event'), onclick: () => openEditor({ mode: 'new', date: S.selected }) }, icon('plus'), h('span', t('add_event'))) : null,
   );
@@ -223,93 +216,7 @@ function refresh() {
   badge.hidden = !n;
   document.getElementById('banner').replaceChildren(n ? h('button.banner', { type: 'button', onclick: openInbox },
     h('span.pulse'), h('span', n === 1 ? t('inbox_banner_1') : t('inbox_banner_n', { n })), h('strong', t('look'), ' →')) : '');
-  document.getElementById('v-month').classList.toggle('on', S.view === 'month');
-  document.getElementById('v-list').classList.toggle('on', S.view === 'list');
-  document.getElementById('title').textContent = S.view === 'month' ? D.fMonth(S.cursor) : t('list');
-  document.querySelector('.month-nav').classList.toggle('list-mode', S.view === 'list');
-  const main = document.getElementById('main');
-  main.className = S.view;
-  main.replaceChildren(...(S.view === 'month' ? monthView() : listView()));
-}
-
-const shift = (n) => { S.cursor = new Date(S.cursor.getFullYear(), S.cursor.getMonth() + n, 1); refresh(); };
-function goToday() {
-  const now = new Date();
-  S.cursor = new Date(now.getFullYear(), now.getMonth(), 1);
-  S.selected = D.todayKey();
-  refresh();
-  document.querySelector('.day-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-const setView = (v) => { S.view = v; refresh(); };
-
-function occsBetween(from, to) {
-  const byDay = new Map();
-  for (const ev of S.events) {
-    for (const o of D.occurrences(ev, from, to)) {
-      for (const k of D.occDays(o)) {
-        if (!byDay.has(k)) byDay.set(k, []);
-        byDay.get(k).push(o);
-      }
-    }
-  }
-  for (const list of byDay.values()) {
-    list.sort((a, b) => (b.ev.all_day - a.ev.all_day) || (a.start - b.start) || a.ev.title.localeCompare(b.ev.title));
-  }
-  return byDay;
-}
-
-function monthView() {
-  const ws = S.settings.week_start ?? 1;
-  const first = S.cursor;
-  const start = D.addDays(first, -((first.getDay() - ws + 7) % 7));
-  const last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
-  const weeks = Math.ceil(((last - start) / 86400000 + 1) / 7);
-  const end = D.addDays(start, weeks * 7);
-  const byDay = occsBetween(start, end);
-  const today = D.todayKey();
-
-  const head = h('div.wk-head', Array.from({ length: 7 }, (_, i) => h('span', D.fWeekdayShort(D.addDays(start, i)))));
-  const cells = [];
-  for (let i = 0; i < weeks * 7; i++) {
-    const d = D.addDays(start, i);
-    const k = D.dayKey(d);
-    const list = byDay.get(k) || [];
-    const cls = ['day', d.getMonth() !== first.getMonth() && 'out', k === today && 'today', k === S.selected && 'sel'].filter(Boolean).join('.');
-    cells.push(h(`button.${cls}`, {
-      type: 'button',
-      'aria-label': `${D.fDayLong(d)}: ${list.length || t('no_events')}`,
-      onclick: () => { S.selected = k; if (d.getMonth() !== first.getMonth()) S.cursor = new Date(d.getFullYear(), d.getMonth(), 1); refresh(); },
-      ondblclick: () => S.me.role !== 'viewer' && openEditor({ mode: 'new', date: k }),
-    },
-    h('span.num', d.getDate()),
-    h('span.chips', list.slice(0, 3).map((o) => h(`span.chip-ev${o.ev.status === 'pending' ? '.pending' : ''}`, { style: { '--c': evColor(o.ev) } },
-      !o.ev.all_day ? h('b', D.fTime(o.start)) : null, o.ev.title))),
-    list.length > 3 ? h('span.more', t('more', { n: list.length - 3 })) : null,
-    h('span.dots', list.slice(0, 4).map((o) => h(`i${o.ev.status === 'pending' ? '.pending' : ''}`, { style: { '--c': evColor(o.ev) } })))));
-  }
-  const selDate = D.keyToDate(S.selected);
-  const dayList = byDay.get(S.selected) ?? occsBetween(selDate, D.addDays(selDate, 1)).get(S.selected) ?? [];
-  return [
-    h('section.month-grid', head, h('div.cells', { style: { '--weeks': weeks } }, cells)),
-    h('section.day-panel',
-      h('h2', D.fDayLong(selDate)),
-      dayList.length ? h('div.occ-list', dayList.map(occCard))
-        : h('div.empty', h('p', t('no_events')), S.me.role !== 'viewer' ? h('button.btn.ghost', { type: 'button', onclick: () => openEditor({ mode: 'new', date: S.selected }) }, icon('plus'), t('add_event')) : null)),
-  ];
-}
-
-function listView() {
-  const from = D.startOfDay(new Date());
-  const to = D.addDays(from, S.listDays);
-  const byDay = occsBetween(from, to);
-  const keys = [...byDay.keys()].filter((k) => k >= D.dayKey(from)).sort();
-  const out = keys.map((k) => h('section.list-day',
-    h('h3', { class: k === D.todayKey() ? 'is-today' : '' }, D.fDayLong(D.keyToDate(k))),
-    h('div.occ-list', byDay.get(k).map(occCard))));
-  return [
-    h('div.list-wrap', out.length ? out : h('div.empty', h('p', t('nothing_upcoming'))),
-      h('button.btn.ghost.block', { type: 'button', onclick: () => { S.listDays += 60; refresh(); } }, t('load_more'))),
-  ];
+  drawMain();
 }
 
 function statusLine(ev) {
@@ -321,12 +228,12 @@ function statusLine(ev) {
   return h('span.tag.wait', '⏳ ', t('waiting'));
 }
 
-function occCard(o) {
+export function occCard(o) {
   const ev = o.ev;
   const cat = category(ev.category_id);
   const resp = member(ev.responsible);
   return h(`button.occ${ev.status === 'pending' ? '.pending' : ''}`, { type: 'button', style: { '--c': evColor(ev) }, onclick: () => openEvent(ev, o) },
-    h('span.occ-time', ev.all_day ? t('all_day') : [D.fTime(o.start), h('small', D.fTime(o.end))]),
+    h('span.occ-time', occTime(o)),
     h('span.occ-main',
       h('strong', ev.title),
       h('span.occ-meta',
@@ -335,6 +242,16 @@ function occCard(o) {
         ev.location ? h('span', icon('pin'), ev.location) : null,
         ev.rrule ? h('span', icon('repeat')) : null),
       statusLine(ev)));
+}
+
+// left column of an event card: times, or "all day" plus the date range for multi-day items
+function occTime(o) {
+  const ev = o.ev;
+  const days = D.occDays(o);
+  const short = (k) => new Intl.DateTimeFormat(locale(), { day: 'numeric', month: 'numeric' }).format(D.keyToDate(k));
+  if (ev.all_day) return days.length > 1 ? [h('small', t('all_day')), h('span.range', `${short(days[0])}–${short(days[days.length - 1])}`)] : h('small', t('all_day'));
+  if (days.length > 1) return [h('span', D.fTime(o.start)), h('small', `${short(days[days.length - 1])} ${D.fTime(o.end)}`)];
+  return [h('span', D.fTime(o.start)), h('small', D.fTime(o.end))];
 }
 
 // ───────────── event details ─────────────
@@ -514,14 +431,15 @@ async function done(r, oldCat, newCat, isCreate) {
 
 // ───────────── editor ─────────────
 
-export function openEditor({ mode, ev, date, occStart, occEnd, onDone }) {
+export function openEditor({ mode, ev, date, time, occStart, occEnd, onDone }) {
   const isNew = mode === 'new';
   const single = mode === 'single';
   const now = new Date();
   let s0, e0;
   if (isNew) {
     const d = D.keyToDate(date || D.todayKey());
-    s0 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), Math.min(now.getHours() + 1, 20), 0);
+    const [hh, mm] = (time || '').split(':').map(Number);
+    s0 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), time ? hh : Math.min(now.getHours() + 1, 20), time ? mm : 0);
     e0 = new Date(s0.getTime() + 3600000);
   } else if (single) { s0 = occStart; e0 = occEnd; }
   else { s0 = new Date(ev.starts_at); e0 = new Date(ev.ends_at); }

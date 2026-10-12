@@ -3,6 +3,9 @@
 
 const STR = {
   de: {
+    v_day: 'Tag', v_week: 'Woche', v_month: 'Monat', v_year: 'Jahr', v_list: 'Liste',
+    filter: 'Anzeigen', hidden_n: '{n} aus', show_all: 'Alle wieder zeigen',
+    filter_hint: 'Wähle, welche Kategorien du sehen willst. Gilt nur für dich auf diesem Gerät – die anderen sehen weiterhin alles.',
     app_sub: 'Familienkalender', loading: 'Lädt …', save: 'Speichern', cancel: 'Abbrechen', close: 'Schliessen',
     delete: 'Löschen', edit: 'Bearbeiten', back: 'Zurück', ok: 'OK', copy: 'Kopieren', copied: 'Kopiert',
     saved: 'Gespeichert', error: 'Etwas hat nicht geklappt', retry: 'Nochmals versuchen', optional: 'optional',
@@ -91,6 +94,9 @@ const STR = {
     members: 'Mitglieder', you: 'du', edit_member: 'Person bearbeiten',
   },
   en: {
+    v_day: 'Day', v_week: 'Week', v_month: 'Month', v_year: 'Year', v_list: 'List',
+    filter: 'Show', hidden_n: '{n} off', show_all: 'Show everything again',
+    filter_hint: 'Choose which categories you want to see. This only applies to you on this device – the others still see everything.',
     app_sub: 'Family calendar', loading: 'Loading …', save: 'Save', cancel: 'Cancel', close: 'Close',
     delete: 'Delete', edit: 'Edit', back: 'Back', ok: 'OK', copy: 'Copy', copied: 'Copied',
     saved: 'Saved', error: 'Something went wrong', retry: 'Try again', optional: 'optional',
@@ -172,6 +178,9 @@ const STR = {
     members: 'Members', you: 'you', edit_member: 'Edit person',
   },
   vi: {
+    v_day: 'Ngày', v_week: 'Tuần', v_month: 'Tháng', v_year: 'Năm', v_list: 'Danh sách',
+    filter: 'Hiển thị', hidden_n: 'ẩn {n}', show_all: 'Hiện lại tất cả',
+    filter_hint: 'Chọn loại lịch hẹn bạn muốn xem. Chỉ áp dụng cho bạn trên thiết bị này – người khác vẫn thấy tất cả.',
     app_sub: 'Lịch gia đình', loading: 'Đang tải …', save: 'Lưu', cancel: 'Hủy', close: 'Đóng',
     delete: 'Xóa', edit: 'Sửa', back: 'Quay lại', ok: 'OK', copy: 'Sao chép', copied: 'Đã sao chép',
     saved: 'Đã lưu', error: 'Có lỗi xảy ra', retry: 'Thử lại', optional: 'không bắt buộc',
