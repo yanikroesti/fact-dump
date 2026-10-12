@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zäme – Familienkalender</title>
+<meta name="description" content="Gemeinsamer Familienkalender mit Bestätigungen, Google- und Apple-Kalender-Abgleich.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#f7f5f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zäme">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="kalender/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="kalender/icon-192.png">
+<link rel="apple-touch-icon" href="kalender/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&subset=latin,latin-ext,vietnamese&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kalender/style.css">
+</head>
+<body>
+<div id="app"><div class="splash"><div class="logo-mark">Z</div></div></div>
+<div id="sheets"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript>Bitte JavaScript einschalten.</noscript>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/rrule@2.8.1/dist/es5/rrule.min.js" crossorigin="anonymous"></script>
+<script type="module">
+  import { boot } from './kalender/app.js';
+  boot().catch((e) => {
+    console.error(e);
+    document.getElementById('app').innerHTML = '<div class="splash"><p>Fehler beim Laden. Bitte neu laden.</p></div>';
+  });
+</script>
+</body>
+</html>
