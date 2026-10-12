@@ -91,6 +91,46 @@ td.n{font-variant-numeric:tabular-nums}
   table{font-size:10px}
 }
 
+/* ---------- Deckblatt ---------- */
+.dkb-band{display:grid;grid-template-columns:1.62fr 1fr;gap:3mm;margin:6mm 0 0}
+.dkb-band figure{margin:0;position:relative;overflow:hidden;background:#dfe3df}
+.dkb-band img{display:block;width:100%;height:43mm;object-fit:cover}
+.dkb-band figcaption{position:absolute;left:0;bottom:0;background:rgba(255,255,255,.92);color:#2d3634;font:600 8.5px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;margin:0}
+.dkb-titel{margin-top:6mm}
+.dkb-titel .eyebrow{font:700 10px ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#0e6b72;margin:0}
+.dkb-titel h1{font-size:30px;line-height:1.04;letter-spacing:-.035em;margin:3mm 0 0;font-weight:680}
+.dkb-titel h1 em{font-style:normal;color:#0e6b72}
+.dkb-titel .unter{font-size:13.5px;line-height:1.35;color:#2d3634;margin:3mm 0 0;max-width:150mm}
+.dkb-titel .auftrag{margin:5mm 0 0;font-size:12px;color:#424949;border-left:3px solid #0e6b72;padding-left:9px}
+.dkb-titel .auftrag b{color:#171d1e}
+.dkb-zeichnung{margin-top:5mm}
+.dkb-zeichnung svg{display:block;width:100%;height:auto}
+.dkb-daten{margin-top:5mm;display:grid;grid-template-columns:1fr 1fr;gap:0 8mm;border-top:1.4px solid #171d1e;padding-top:4mm}
+.dkb-feld{margin:0 0 4mm}
+.dkb-feld dt{font:700 9px ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;color:#5c6665;margin:0 0 2px}
+.dkb-feld dd{margin:0;font-size:14px;font-weight:600;line-height:1.4}
+.dkb-feld dd span{display:block;font-size:12px;font-weight:400;color:#424949}
+.dkb-leer{display:block;border-bottom:1px solid #8d9794;height:6mm}
+.dkb-fuss{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #c3cdc6;padding-top:3mm}
+.dkb-fuss img{height:9mm;width:auto;filter:brightness(0);opacity:.85}
+.dkb-fuss .rechts{text-align:right;font-size:11px;color:#5c6665;line-height:1.4}
+.dkb-fuss .rechts b{display:block;font-size:13px;color:#171d1e}
+.z text{font:11px 'Archivo',system-ui,sans-serif;fill:#171d1e}
+.z .t{font:700 10px ui-monospace,monospace;letter-spacing:.12em;fill:#0e6b72}
+.z .s{font-size:9.5px;fill:#5c6665}
+.z .l{stroke:#171d1e;stroke-width:1.5;fill:none;stroke-linecap:round}
+.z .th{stroke:#171d1e;stroke-width:1.1;fill:none}
+.z .box{fill:#fff;stroke:#171d1e;stroke-width:1.6}
+.z .sig{stroke:#0e6b72;stroke-width:2;fill:none;stroke-linejoin:round}
+.z .ax{stroke:#c3cdc6;stroke-width:1;fill:none}
+.z .dot{fill:#171d1e}
+@media screen and (max-width:620px){
+  .dkb-band{grid-template-columns:1fr}
+  .dkb-band img{height:44mm}
+  .dkb-titel h1{font-size:26px}
+  .dkb-daten{grid-template-columns:1fr}
+}
+
 @page{size:A4 portrait;margin:10mm}
 @media print{
   nav,.noprint{display:none}
@@ -145,29 +185,113 @@ td.n{font-variant-numeric:tabular-nums}
 
 <!-- ============================ SEITE 1 — DECKBLATT ============================ -->
 <section class="page">
-  <div class="ph"><b>Muster-Deckblatt</b><span>Seite 1 von 16</span></div>
-  <p style="text-align:center;font:600 11px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5c6665;margin:14mm 0 0">Berufsfachschule BZI Interlaken · ATD</p>
-  <h2 class="t" style="text-align:center;font-size:27px;margin:4mm 0 2mm;letter-spacing:-.03em">Schrittschalter &amp; Minuterie</h2>
-  <p style="text-align:center;font-size:13px;margin:0 0 14mm">Praxis-Analyse und Dokumentation zweier Schaltungen<br>in der realen Installation</p>
+  <div class="ph"><b>Deckblatt — Gestaltungsvorlage</b><span>Seite 1 von 16</span></div>
 
-  <table style="margin:0 auto;width:85%">
-    <tr><th style="width:38%">Lernender 1</th><td style="height:9mm"></td></tr>
-    <tr><th>Lehrbetrieb 1</th><td style="height:9mm"></td></tr>
-    <tr><th>Lernender 2</th><td style="height:9mm"></td></tr>
-    <tr><th>Lehrbetrieb 2</th><td style="height:9mm"></td></tr>
-    <tr><th>Klasse</th><td>ELI 25a · 2. Lehrjahr · Semester 3</td></tr>
-    <tr><th>Fach / Lehrperson</th><td>ATD · Beni Moser</td></tr>
-    <tr><th>Untersuchte Objekte</th><td style="height:9mm"></td></tr>
-    <tr><th>Datum der Abgabe</th><td>19.10.2026</td></tr>
-  </table>
+  <div class="dkb-band">
+    <figure>
+      <img src="arbeitsauftrag-bilder/treppenhaus.jpg" width="1800" height="1195" alt="Helles Treppenhaus mit eingeschalteten Deckenleuchten und beleuchteten Tastern neben den Wohnungstüren.">
+      <figcaption>Minuterie im Treppenhaus</figcaption>
+    </figure>
+    <figure>
+      <img src="arbeitsauftrag-bilder/verteiler.jpg" width="1800" height="1195" alt="Offener Verteiler mit Reiheneinbaugeräten auf der Hutschiene.">
+      <figcaption>Verteiler</figcaption>
+    </figure>
+  </div>
 
-  <div class="note" style="width:85%;margin:8mm auto 0">
-    <strong>Pflichtangaben laut Auftragsblatt, Punkt 3:</strong> Projekttitel, Namen <em>beider</em> Lernenden, Lehrbetrieb(e), Datum. Alles andere ist freiwillig — aber ein Deckblatt ohne diese vier Angaben kostet dich Punkte beim Kriterium «Form, Struktur &amp; Termintreue».
+  <div class="dkb-titel">
+    <p class="eyebrow">Arbeitsauftrag · Praxis-Analyse</p>
+    <h1>Ein Tastendruck,<br><em>zwei Wege.</em></h1>
+    <p class="unter">Schrittschaltung und Minuterie in der realen Installation — gesucht, fotografiert, gezeichnet und anhand der Datenblätter analysiert.</p>
+    <p class="auftrag"><b>Arbeitsauftrag Schrittschaltung und Minuterie</b><br>Fach ATD · Lehrperson Beni Moser · Abgabe 19.10.2026</p>
   </div>
-  <div class="box" style="width:85%;margin:4mm auto 0">
-    <strong style="font-size:11.5px">Wenn ihr die Schaltungen aufgeteilt habt</strong><br>
-    <span style="font-size:11px">Das Auftragsblatt erlaubt ausdrücklich, dass eine Person die Schrittschaltung und die andere die Minuterie untersucht. Dann schreibt auf das Deckblatt dazu, wer welchen Teil bearbeitet hat — abgegeben wird trotzdem <strong>eine gemeinsame Dokumentation</strong> mit allen sechs Schemata.</span>
+
+  <div class="dkb-zeichnung">
+    <svg viewBox="0 0 760 196" class="z" role="img" aria-label="Zwei Wege im Vergleich: links die Schrittschaltung, bei der jeder Tastendruck den Zustand kippt, rechts die Minuterie, die nach einem Tastendruck die eingestellte Zeit laufen laesst und selbstaendig ausschaltet.">
+      <path class="ax" d="M380 16 V180"/>
+      <text class="t" x="20" y="22">SCHRITTSCHALTUNG</text>
+      <g transform="translate(34,56)">
+        <circle class="box" cx="0" cy="0" r="13"/>
+        <circle class="dot" cx="0" cy="0" r="2.8"/>
+        <path class="l" d="M0 -13 V-23 M-7 -23 H7"/>
+        <text class="s" x="-14" y="32">Taster</text>
+      </g>
+      <path class="l" d="M54 56 H92"/><path class="th" d="M86 51 L94 56 L86 61"/>
+      <rect class="box" x="96" y="34" width="86" height="44"/>
+      <path class="th" d="M112 56 H166 M120 49 L112 56 L120 63 M158 49 L166 56 L158 63"/>
+      <text class="s" x="96" y="92">Stromstossschalter</text>
+      <text class="s" x="96" y="104">bistabil</text>
+      <path class="l" d="M182 56 H220"/><path class="th" d="M214 51 L222 56 L214 61"/>
+      <g transform="translate(248,56)">
+        <circle class="box" cx="0" cy="0" r="16"/>
+        <path class="th" d="M-11 -11 L11 11 M-11 11 L11 -11"/>
+        <text class="s" x="-18" y="36">Leuchte</text>
+      </g>
+      <path class="ax" d="M20 150 H352"/>
+      <text class="s" x="20" y="134">Lampe</text>
+      <path class="sig" d="M20 150 H70 V124 H170 V150 H250 V124 H352"/>
+      <path class="th" d="M70 160 V168 M170 160 V168 M250 160 V168"/>
+      <text class="s" x="58" y="180">Druck</text>
+      <text class="s" x="158" y="180">Druck</text>
+      <text class="s" x="238" y="180">Druck</text>
+      <text class="s" x="92" y="118">bleibt an, bis wieder gedrückt wird</text>
+      <text class="t" x="400" y="22">MINUTERIE</text>
+      <g transform="translate(414,56)">
+        <circle class="box" cx="0" cy="0" r="13"/>
+        <circle class="dot" cx="0" cy="0" r="2.8"/>
+        <path class="l" d="M0 -13 V-23 M-7 -23 H7"/>
+        <text class="s" x="-14" y="32">Taster</text>
+      </g>
+      <path class="l" d="M434 56 H472"/><path class="th" d="M466 51 L474 56 L466 61"/>
+      <rect class="box" x="476" y="34" width="86" height="44"/>
+      <path class="th" d="M494 62 H544 M494 49 A 13 13 0 0 1 520 49"/>
+      <text class="s" x="476" y="92">Treppenlicht-</text>
+      <text class="s" x="476" y="104">Zeitschalter</text>
+      <path class="l" d="M562 56 H600"/><path class="th" d="M594 51 L602 56 L594 61"/>
+      <g transform="translate(628,56)">
+        <circle class="box" cx="0" cy="0" r="16"/>
+        <path class="th" d="M-11 -11 L11 11 M-11 11 L11 -11"/>
+        <text class="s" x="-18" y="36">Leuchte</text>
+      </g>
+      <path class="ax" d="M400 150 H732"/>
+      <text class="s" x="400" y="134">Lampe</text>
+      <path class="sig" d="M400 150 H450 V124 H620 V150 H732"/>
+      <path class="th" d="M450 160 V168"/>
+      <text class="s" x="438" y="180">Druck</text>
+      <path class="th" d="M450 136 H620 M450 132 V140 M620 132 V140"/>
+      <text class="s" x="472" y="118">eingestellte Zeit läuft</text>
+      <text class="s" x="596" y="180">selbständig aus</text>
+    </svg>
   </div>
+
+  <div class="dkb-daten">
+    <dl class="dkb-feld">
+      <dt>Lernender 1</dt>
+      <dd><span class="dkb-leer"></span><span>Lehrbetrieb <span class="dkb-leer"></span></span></dd>
+    </dl>
+    <dl class="dkb-feld">
+      <dt>Lernender 2</dt>
+      <dd><span class="dkb-leer"></span><span>Lehrbetrieb <span class="dkb-leer"></span></span></dd>
+    </dl>
+    <dl class="dkb-feld">
+      <dt>Klasse</dt>
+      <dd>ELI 25a<span>2. Lehrjahr · Semester 3</span></dd>
+    </dl>
+    <dl class="dkb-feld">
+      <dt>Fach und Lehrperson</dt>
+      <dd>ATD — Beni Moser<span>Berufsfachschule BZI Interlaken</span></dd>
+    </dl>
+  </div>
+
+  <div class="dkb-fuss">
+    <img src="arbeitsauftrag-bilder/bzi.svg" width="283" height="55" alt="Logo Bildungszentrum Interlaken">
+    <div class="rechts">
+      Datum <b>________</b>
+      Abgabe 19.10.2026
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:4mm;font-size:10.5px">Pflicht laut Auftragsblatt: <strong>Projekttitel, beide Namen, Lehrbetrieb(e), Datum</strong> — hier als leere Felder. Die zwei Fotos sind generierte Illustration, kein Ersatz für deine eigenen Aufnahmen vor Ort.</div>
+
   <div class="pf"><span>Arbeitsauftrag Schrittschalter &amp; Minuterie · Muster-Exemplar</span><span>dump.yanikroesti.ch</span></div>
 </section>
 
