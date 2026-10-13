@@ -120,14 +120,12 @@ input[type="checkbox"] { width: auto; min-height: 0; }
 
 /* ---------- splash + login ---------- */
 .splash { min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: 12px; color: var(--muted); }
-.logo-mark {
-  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none;
-  background: linear-gradient(135deg, #3b6ef5, #14a38b); color: #fff; font-weight: 900; font-size: 1.3rem; letter-spacing: -.02em;
-}
+.logo-mark { width: 44px; height: 44px; flex: none; display: block; object-fit: contain; }
 .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .brand strong { display: block; font-size: 1.2rem; font-weight: 900; letter-spacing: -.01em; }
 .brand small { display: block; color: var(--muted); font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.brand.big .logo-mark { width: 54px; height: 54px; font-size: 1.7rem; border-radius: 16px; }
+.brand.big .logo-mark { width: 60px; height: 60px; }
+.splash .logo-mark { width: 72px; height: 72px; }
 .brand.big strong { font-size: 1.6rem; }
 .login { min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; }
 .login-card { width: min(420px, 100%); background: var(--surface); border-radius: 22px; padding: 26px 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 16px; }

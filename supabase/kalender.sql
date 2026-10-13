@@ -145,7 +145,7 @@ create table public.cal_secrets (key text primary key, value text not null);
 insert into public.cal_secrets (key, value) values
   ('hook_key', encode(extensions.gen_random_bytes(24), 'hex')),
   ('enc_key',  encode(extensions.gen_random_bytes(32), 'base64')),
-  ('app_url',  'https://dump.yanikroesti.ch/artifacts/kalender.html');
+  ('app_url',  'https://calendar.swisslock.net/artifacts/kalender.html');
 
 -- ───────────────────────────── seed ─────────────────────────────
 

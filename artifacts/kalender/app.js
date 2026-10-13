@@ -61,6 +61,8 @@ export function errText(e) {
 }
 const fail = (e) => toast(errText(e), 'err');
 
+const logo = () => h('img.logo-mark', { src: 'kalender/logo.svg', alt: 'Zäme', width: 44, height: 44 });
+
 // ───────────── boot ─────────────
 
 export async function boot() {
@@ -80,7 +82,7 @@ function hashParam(k) {
 }
 
 async function enter() {
-  app().replaceChildren(h('div.splash', h('div.logo-mark', 'Z'), h('p', t('loading'))));
+  app().replaceChildren(h('div.splash', logo(), h('p', t('loading'))));
   let r;
   try { r = await api.me(); } catch (e) { r = null; console.warn(e); }
   if (!r?.member) {
@@ -184,7 +186,7 @@ function showLogin(mode = 'login', message = '') {
     }, h('p.hint', t('reset_hint')), field(t('email'), email), field(t('reset_code'), c), field(t('new_password'), pw), btn,
     h('div.login-links', h('button.link', { type: 'button', onclick: () => showLogin('login') }, t('back_to_login'))));
   }
-  box.append(h('div.brand.big', h('div.logo-mark', 'Z'), h('div', h('strong', 'Zäme'), h('small', t('app_sub')))), langBar, msg, form);
+  box.append(h('div.brand.big', logo(), h('div', h('strong', 'Zäme'), h('small', t('app_sub')))), langBar, msg, form);
   app().replaceChildren(h('div.login', box));
   if (message && mode === 'login' && message === t('password_set')) msg.classList.add('ok');
 }
@@ -194,7 +196,7 @@ function showLogin(mode = 'login', message = '') {
 function render() {
   const shell = h('div.shell',
     h('header.top',
-      h('div.brand', h('div.logo-mark', 'Z'), h('div', h('strong', 'Zäme'), h('small', S.settings.calendar_name || t('app_sub')))),
+      h('div.brand', logo(), h('div', h('strong', 'Zäme'), h('small', S.settings.calendar_name || t('app_sub')))),
       h('div.top-actions',
         h('button.icon-btn.bell', { type: 'button', 'aria-label': t('inbox'), onclick: openInbox }, icon('bell'), h('span.badge#badge')),
         S.me.role === 'admin' ? h('button.icon-btn', { type: 'button', 'aria-label': t('admin'), onclick: () => import('./admin.js').then((m) => m.openAdmin()) }, icon('shield')) : null,

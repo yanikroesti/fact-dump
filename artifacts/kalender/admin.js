@@ -125,7 +125,8 @@ function codeDialog(title, text, code) {
 
 async function peopleView(redraw) {
   const [members, codes] = await Promise.all([api.admin.members(), api.admin.codes()]);
-  const appUrl = location.origin + location.pathname;
+  // invites always point at the one address the family uses (logins and notifications are per address)
+  const appUrl = /^(localhost|127\.)/.test(location.hostname) ? location.origin + location.pathname : 'https://calendar.swisslock.net/artifacts/kalender.html';
   const roleOpts = [['parent', t('r_parent')], ['viewer', t('r_viewer')], ['admin', t('r_admin')]];
 
   const cards = members.map((m) => {
