@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sach-, Haftpflicht- &amp; Sozialversicherungen — Lernpaket | BZI ABU</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+/* ── ABU-Farbe (violett, wie auf schule.yanikroesti.ch) ── */
+:root {
+  --accent: #5B3E8A;
+  --accent-light: #EEE8F6;
+  --accent-dark: #3E2A60;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141217; --surface: #1D1A22; --surface-alt: #2A2631; --ink: #EDEAF2; --ink-soft: #B9B3C4; --ink-mute: #8C8597;
+    --accent: #B79BE6; --accent-light: #2F2640; --accent-dark: #D7C6F5;
+    --success: #6FCB97; --success-light: #17301F; --warn: #E2B25A; --warn-light: #33290F;
+    --info: #8DB8E8; --info-light: #172636; --danger: #F08C80; --danger-light: #3A1A17;
+    --border: #3A3542; --border-soft: #2E2A35;
+    --shadow: 0 2px 12px rgba(0,0,0,0.4); --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .milestone { color: #141217; }
+  .milestone strong, .milestone p { color: #141217; }
+}
+
+/* ── VISUALS ── */
+.who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 20px; }
+.who-col { background: var(--surface); border: 1px solid var(--border-soft); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 14px 16px; }
+.who-col.sach { border-top-color: var(--info); }
+.who-col.haft { border-top-color: var(--warn); }
+.who-col.pers { border-top-color: var(--success); }
+.who-col h4 { margin: 0 0 4px; }
+.who-col .q { font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-mute); margin-bottom: 8px; }
+.who-col ul { font-size: 0.88rem; padding-left: 18px; margin: 0; }
+
+.flow { display: flex; align-items: stretch; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+.flow-box { flex: 1 1 150px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.88rem; }
+.flow-box b { display: block; font-size: 0.95rem; margin-bottom: 2px; }
+.flow-arrow { display: flex; align-items: center; justify-content: center; padding: 0 8px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); font-weight: 600; text-align: center; min-width: 90px; }
+
+.temple { margin: 18px 0 8px; }
+.temple-roof { background: var(--accent); color: #fff; text-align: center; padding: 12px; border-radius: 10px 10px 0 0; font-weight: 700; clip-path: polygon(6% 100%, 50% 0, 94% 100%); padding-top: 34px; font-size: 0.9rem; }
+.temple-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 6%; background: var(--surface-alt); }
+.pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-size: 0.86rem; }
+.pillar .pn { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); }
+.pillar h4 { margin: 4px 0 6px; font-size: 0.95rem; }
+.pillar ul { padding-left: 16px; margin: 6px 0 0; }
+.temple-base { background: var(--ink); color: var(--bg); text-align: center; padding: 10px; border-radius: 0 0 10px 10px; font-size: 0.85rem; font-weight: 600; }
+
+.cheat { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin: 12px 0 24px; }
+.cheat div { background: var(--surface); border: 1px solid var(--border-soft); border-left: 4px solid var(--accent); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.88rem; }
+.cheat b { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+
+/* ── WER ZAHLT? ── */
+.wz-case { font-size: 1.05rem; font-weight: 500; min-height: 70px; margin: 8px 0 14px; }
+.wz-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.wz-opt { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 10px 12px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.15s; }
+.wz-opt:hover { border-color: var(--accent); }
+.wz-opt.right { background: var(--success-light); border-color: var(--success); color: var(--success); }
+.wz-opt.wrong { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+.wz-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); }
+
+/* ── PROBETEST ── */
+.pt-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; }
+.pt-q .pts { float: right; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 4px; }
+.pt-q textarea { width: 100%; min-height: 64px; margin: 8px 0; padding: 9px 11px; border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-body); font-size: 0.94rem; background: var(--bg); color: var(--ink); resize: vertical; }
+.pt-score { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 8px; font-size: 0.84rem; color: var(--ink-soft); }
+.pt-score button { background: var(--surface-alt); border: 1px solid var(--border); color: var(--ink); border-radius: 5px; padding: 4px 10px; font-family: var(--font-mono); cursor: pointer; }
+.pt-score button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pt-total { position: sticky; bottom: 10px; background: var(--ink); color: var(--bg); border-radius: var(--radius); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow); margin-top: 16px; }
+.pt-total .big { font-family: var(--font-display); font-size: 1.5rem; }
+.timer { font-family: var(--font-mono); font-size: 1.1rem; }
+
+@media (max-width: 620px) {
+  .who, .temple-cols { grid-template-columns: 1fr; }
+  .temple-roof { clip-path: none; padding-top: 12px; border-radius: 10px 10px 0 0; }
+  .flow { flex-direction: column; }
+  .flow-arrow { padding: 6px 0; min-width: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · Allgemeinbildung · G03 Risiko und Sicherheit</div>
+  <h1>Sach-, Haftpflicht- &amp; Sozialversicherungen</h1>
+  <div class="meta">Lernpaket zu Ordner 05 + 06 · zum ABU-Test vom Mo 19.10.2026 · Theorie, Fälle, Begriffe, Karteikarten, Quiz, Probetest, Lernplan</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="faelle">Fälle</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     THEORIE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<p class="intro">Der Stoff aus <strong>05 Sach- und Haftpflichtversicherungen</strong> und <strong>06 Sozialversicherungen</strong>: Fragenblatt mit Lösungen, Lehrmittel-Aufgaben A4–A17, Rechtsfälle, Fall Baumann, Regress-Checkliste, Übersicht Sozialversicherungen und das Drei-Säulen-Konzept. Was mit <span class="badge exam">Prüfungsstoff</span> markiert ist, steht so in den Lösungsblättern.</p>
+
+<div class="section-label">Zuerst · Spickzettel</div>
+<h2>Die 12 Dinge, die heute sitzen müssen</h2>
+<div class="cheat">
+  <div><b>Sach vs. Haftpflicht</b>Sachversicherung = <strong>mein</strong> Eigentum. Haftpflicht = Schaden, den ich <strong>anderen</strong> zufüge.</div>
+  <div><b>Die meistgenutzten Sachversicherungen</b>Gebäude, Hausrat, Kasko.</div>
+  <div><b>Neuwert − Abschreibung = Zeitwert</b>Hausrat zahlt zum Neuwert, Kasko zum Zeitwert.</div>
+  <div><b>Unterversicherung</b>Versicherungssumme zu tief → Leistung wird im gleichen Verhältnis gekürzt.</div>
+  <div><b>Überversicherung</b>Zu hoch versichert → Prämie zu hoch, aber keine höhere Leistung.</div>
+  <div><b>Obligatorische Haftpflicht</b>Motorfahrzeughaftpflicht (dazu Flugzeuge, Motorboote).</div>
+  <div><b>Bonus-Malus</b>Schadenfrei: −1 Stufe pro Jahr. Schadenfall: +4 Stufen.</div>
+  <div><b>Regress</b>Versicherung zahlt dem Opfer alles, holt bei Grobfahrlässigkeit ca. 10–50 % bei dir zurück.</div>
+  <div><b>Kausalhaftung</b>Haften ohne eigene Schuld: Eltern für Kinder, Tierhalter, Hauseigentümer, Fahrzeughalter.</div>
+  <div><b>3 Säulen</b>1. staatlich (AHV/IV/EL) · 2. beruflich (BVG/PK) · 3. privat (3a gebunden, 3b frei).</div>
+  <div><b>1. + 2. Säule zusammen</b>etwa 60 % des letzten Lohnes. Die 3. Säule schliesst die Lücke.</div>
+  <div><b>Umlage vs. Kapitaldeckung</b>AHV: heutige Erwerbstätige zahlen heutige Renten. PK: jeder spart sein eigenes Kapital.</div>
+</div>
+
+<div class="section-label">Teil A — Versicherungsarten</div>
+
+<h2>1 · Wer ist geschützt? Die drei Arten</h2>
+<div class="who">
+  <div class="who-col pers"><h4>Personenversicherung</h4><div class="q">schützt: mich, meinen Körper, mein Einkommen</div><ul><li>Krankenkasse (KVG)</li><li>Unfallversicherung (UVG)</li><li>AHV, IV, BVG, Lebensversicherung</li></ul></div>
+  <div class="who-col sach"><h4>Sachversicherung</h4><div class="q">schützt: mein eigenes Eigentum</div><ul><li>Gebäudeversicherung</li><li>Hausratversicherung</li><li>Teilkasko / Vollkasko</li></ul></div>
+  <div class="who-col haft"><h4>Haftpflichtversicherung</h4><div class="q">schützt: mein Vermögen vor Forderungen Dritter</div><ul><li>Privathaftpflicht</li><li>Motorfahrzeughaftpflicht</li><li>Betriebshaftpflicht</li></ul></div>
+</div>
+
+<div class="info-box success"><p><span class="badge exam">Prüfungsstoff</span> <strong>Sachversicherungen schützen das eigene Eigentum. Haftpflichtversicherungen schützen vor Schäden, die man Dritten (fremdem Eigentum, fremden Personen) zufügt.</strong> Merksatz: Bei jedem Fall fragen: <em>Wessen</em> Sache oder Körper ist kaputt?</p></div>
+
+<h3>Das Solidaritätsprinzip</h3>
+<p>Viele zahlen eine kleine Prämie in einen gemeinsamen Topf. Nur wer einen versicherten Schaden erleidet, bekommt Geld daraus. <strong>Viele zahlen wenig, damit wenigen viel geholfen werden kann.</strong> Darum funktioniert Versicherung nur mit vielen Mitgliedern (Versicherungsgemeinschaft).</p>
+
+<h3>Obligatorisch oder freiwillig?</h3>
+<div class="table-wrap"><table>
+  <tr><th>Versicherung</th><th>Art</th><th>Pflicht?</th></tr>
+  <tr><td>Krankenkasse (Grundversicherung)</td><td>Person</td><td class="ja">obligatorisch</td></tr>
+  <tr><td>Unfallversicherung</td><td>Person</td><td class="ja">obligatorisch für Arbeitnehmende</td></tr>
+  <tr><td>Motorfahrzeughaftpflicht</td><td>Haftpflicht</td><td class="ja">obligatorisch</td></tr>
+  <tr><td>Gebäudeversicherung</td><td>Sach</td><td class="ja">im Kanton Bern obligatorisch</td></tr>
+  <tr><td>Privathaftpflicht</td><td>Haftpflicht</td><td class="nein">freiwillig</td></tr>
+  <tr><td>Hausrat</td><td>Sach</td><td class="nein">freiwillig (in Bern)</td></tr>
+  <tr><td>Teilkasko / Vollkasko</td><td>Sach</td><td class="nein">freiwillig</td></tr>
+</table></div>
+<div class="info-box warn"><p><strong>Tipp aus der Praxis:</strong> Privathaftpflicht ist zwar freiwillig, aber fast jeder Vermieter verlangt sie im Mietvertrag. Sie kostet wenig und schützt vor Millionenforderungen.</p></div>
+
+<div class="section-label">Teil B — Sachversicherungen</div>
+
+<h2>2 · Gebäude, Hausrat, Kasko</h2>
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Gebäudeversicherung<small>Hauseigentümer</small></div><div class="schema-val">Das Gebäude selbst gegen <strong>Feuer</strong> und <strong>Elementarschäden</strong> (Hagel, Sturm, Hochwasser, Lawinen …). Im Kanton Bern obligatorisch.</div></div>
+  <div class="schema-row"><div class="schema-key">Hausratversicherung<small>alles, was beim Umzug mitkommt</small></div><div class="schema-val">Möbel, Kleider, Elektronik, Velo … gegen Feuer, Elementarschäden, <strong>Wasser</strong> und <strong>Diebstahl</strong>. Zahlt in der Regel zum <strong>Neuwert</strong>.</div></div>
+  <div class="schema-row"><div class="schema-key">Teilkasko<small>Auto · freiwillig</small></div><div class="schema-val">Schäden am <strong>eigenen</strong> Auto, für die du <strong>nichts kannst</strong>: Diebstahl, Feuer, <strong>Hagel</strong> und andere Elementarschäden, Glasbruch, Zusammenstoss mit Tieren, Marderbiss.</div></div>
+  <div class="schema-row"><div class="schema-key">Vollkasko<small>Auto · freiwillig</small></div><div class="schema-val">Alles aus der Teilkasko <strong>plus</strong> Schäden am eigenen Auto, die du <strong>selbst verschuldest</strong> (Parkschaden, Selbstunfall), und Vandalismus. Sinnvoll für neue und geleaste Autos. Zahlt zum <strong>Zeitwert</strong>.</div></div>
+</div>
+
+<h2>3 · Neuwert, Zeitwert, Unter- und Überversicherung</h2>
+<div class="flow">
+  <div class="flow-box"><b>Neuwert</b>Was die Sache heute <strong>neu</strong> kosten würde.</div>
+  <div class="flow-arrow">− Abschreibung<br>(Alter, Abnützung)</div>
+  <div class="flow-box"><b>Zeitwert</b>Was die Sache <strong>heute noch</strong> wert ist.</div>
+</div>
+<div class="info-box"><p><span class="badge exam">Prüfungsstoff</span> Beispiel Neuwert: <strong>Hausratversicherung</strong>. Beispiel Zeitwert: <strong>Kaskoversicherung</strong>.</p></div>
+
+<div class="compare">
+  <div class="compare-col con"><h4>Unterversicherung</h4><ul><li>Versicherungssumme <strong>tiefer</strong> als der effektive Wert</li><li>Prämie zu tief</li><li><strong>Folge:</strong> Die Versicherung kürzt die Leistung <strong>im gleichen Verhältnis</strong>, auch bei kleinen Schäden</li></ul></div>
+  <div class="compare-col pro"><h4>Überversicherung</h4><ul><li>Versicherungssumme <strong>höher</strong> als der effektive Wert</li><li>Prämie zu hoch</li><li><strong>Folge:</strong> kein Vorteil, die Versicherung zahlt nie mehr als den wirklichen Schaden</li></ul></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">3.1</span><h3>Die Kürzungsformel</h3></div>
+  <p style="font-family:var(--font-mono); font-size:0.95rem;">Entschädigung = Schaden × Versicherungssumme ÷ effektiver Wert</p>
+  <p>Beispiel: Hausrat effektiv <span class="fact">60'000</span>, versichert nur <span class="fact">40'000</span> (zwei Drittel). Ein Einbrecher stiehlt Dinge für <span class="fact">9'000</span>. Die Versicherung zahlt <strong>9'000 × 40'000 ÷ 60'000 = 6'000</strong>. Die fehlenden 3'000 zahlst du selbst.</p>
+  <p style="margin:0;">Zum Nachrechnen: <strong>Fälle → Rechner Unterversicherung</strong>.</p>
+</div>
+
+<div class="section-label">Teil C — Haftpflicht</div>
+
+<h2>4 · Haftpflicht: wenn ich anderen schade</h2>
+<p><strong>Haftpflicht</strong> heisst: Wer einem anderen einen Schaden zufügt, muss ihn ersetzen. Die Haftpflichtversicherung zahlt das für dich und wehrt <strong>ungerechtfertigte</strong> Forderungen ab (sie prüft zuerst, ob du überhaupt haftest).</p>
+
+<div class="compare">
+  <div class="compare-col kvg"><h4>Privathaftpflicht</h4><ul><li>Freiwillig</li><li>Schäden im Alltag: Velo-Unfall, Glas beim Kollegen zerbrochen, Hund beisst Passanten, Wasserschaden beim Nachbarn</li><li>Nicht gedeckt: Schäden an <strong>eigenen</strong> Sachen, Schäden an Personen im <strong>eigenen Haushalt</strong>, Absicht</li></ul></div>
+  <div class="compare-col uvg"><h4>Motorfahrzeughaftpflicht</h4><ul><li><strong>Obligatorisch</strong>: ohne sie gibt es keine Nummernschilder</li><li>Zahlt Schäden, die du mit dem Fahrzeug <strong>anderen</strong> zufügst: Personen, Autos, Mauern, Zäune</li><li>Das <strong>eigene</strong> Auto ist nie gedeckt (dafür gibt es Kasko)</li></ul></div>
+</div>
+
+<h3>Verschulden oder nicht? Die zwei Haftungsarten</h3>
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Verschuldenshaftung<small>Art. 41 OR</small></div><div class="schema-val">Du haftest, weil <strong>du schuld bist</strong> (absichtlich oder fahrlässig).</div></div>
+  <div class="schema-row"><div class="schema-key">Kausalhaftung<small>ohne eigene Schuld</small></div><div class="schema-val"><span class="badge exam">Prüfungsstoff</span> Du haftest <strong>auch ohne direkte Schuld</strong>, weil du für jemanden oder etwas verantwortlich bist:
+    <ul style="margin:6px 0 0;"><li><strong>Eltern / Familienhaupt</strong> für ihre Kinder (Art. 333 ZGB)</li><li><strong>Tierhalter</strong> für ihr Tier (Art. 56 OR)</li><li><strong>Werk- und Hauseigentümer</strong>, z. B. für einen Ziegel, der vom Dach fällt (Art. 58 OR)</li><li><strong>Motorfahrzeughalter</strong> für ihr Fahrzeug (Art. 58 SVG)</li><li><strong>Arbeitgeber</strong> für Schäden ihrer Angestellten (Art. 55 OR)</li></ul></div></div>
+</div>
+
+<h2>5 · Bonus-Malus und Prämie</h2>
+<div class="compare">
+  <div class="compare-col pro"><h4>Bonus</h4><ul><li>Belohnung für <strong>unfallfreies Fahren</strong></li><li>Pro schadenfreies Jahr in der Regel <strong>eine Stufe</strong> tiefer → Prämie sinkt</li></ul></div>
+  <div class="compare-col con"><h4>Malus</h4><ul><li>«Strafe», wenn die Versicherung <strong>für dich zahlen musste</strong></li><li>Pro Schadenfall in der Regel <strong>vier Stufen</strong> höher → Prämie steigt für Jahre</li></ul></div>
+</div>
+<p>Kleine Schäden zahlt man deshalb oft selbst, damit man nicht in den Malus rutscht.</p>
+
+<div class="card">
+  <div class="card-title"><span class="num">5.1</span><h3>Wovon hängt die Prämie der Motorfahrzeughaftpflicht ab?</h3></div>
+  <ul>
+    <li><strong>Alter und Fahrpraxis</strong>: Junge Lenker und Neulenkende zahlen am meisten</li>
+    <li><strong>Fahrzeug</strong>: Leistung (PS), Neupreis, Marke und Typ</li>
+    <li><strong>Kilometer pro Jahr</strong></li>
+    <li><strong>Wohnort</strong>: Stadt teurer als Land</li>
+    <li><strong>Nationalität</strong> (Statistik der Versicherer)</li>
+    <li><strong>Bonus-Malus-Stufe</strong> und bisherige Schäden</li>
+    <li><strong>Selbstbehalt</strong>: hoher Selbstbehalt = tiefere Prämie</li>
+    <li><strong>Fahrerkreis</strong>: Fahren auch Personen unter 25?</li>
+    <li>Zusatzdeckungen, z. B. <strong>Grobfahrlässigkeitsschutz</strong></li>
+  </ul>
+  <div class="info-box"><p><strong>Auftrag aus dem Ordner:</strong> Den Familienvater (45, Schweizer, Opel Zafira, 97 PS, 10'000 km) so verändern, dass die Prämie maximal wird. Mögliche Lösung in einem Satz: <em>Ein 19-jähriger Neulenker, der in der Stadt wohnt, fährt einen neuen Sportwagen mit 400 PS rund 30'000 km pro Jahr, ohne Selbstbehalt und mit mehreren Schäden in den letzten Jahren.</em></p></div>
+</div>
+
+<h2>6 · Regress: wenn die Versicherung Geld zurückholt</h2>
+<div class="flow">
+  <div class="flow-box"><b>1 · Unfall</b>Du verursachst grobfahrlässig einen Schaden.</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box"><b>2 · Opfer wird bezahlt</b>Deine Haftpflichtversicherung zahlt dem Geschädigten <strong>100 %</strong>. Er hat ein direktes Forderungsrecht (Art. 65 SVG).</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box"><b>3 · Regress</b>Die Versicherung holt bei <strong>dir</strong> einen Teil zurück, je nach Schwere der Schuld.</div>
+</div>
+<div class="info-box success"><p><span class="badge exam">Prüfungsstoff</span> <strong>Regress = Rückgriff auf den Versicherten.</strong> Die Versicherung zahlt den Schaden, verlangt aber einen prozentualen Anteil (ca. <strong>10–50 %</strong>) zurück. Bei grobfahrlässigem Verhalten <strong>muss</strong> sie Regress nehmen, das ist gesetzlich vorgeschrieben.</p></div>
+
+<h3>Was ist grobfahrlässig?</h3>
+<p>Grobfahrlässig handelt, wer eine Vorsichtsregel missachtet, die <strong>jeder vernünftige Mensch</strong> in der gleichen Lage befolgt hätte. Im Verkehr zum Beispiel:</p>
+<div class="table-wrap"><table>
+  <tr><th>Verhalten</th><th class="num">übliche Regressquote</th></tr>
+  <tr><td>Alkohol 0,5–0,79 ‰</td><td class="num">ca. 10–20 %</td></tr>
+  <tr><td>Alkohol ab 0,8 ‰ (qualifiziert)</td><td class="num">ca. 15–70 %</td></tr>
+  <tr><td>Rotlicht missachtet</td><td class="num">ca. 20–40 %</td></tr>
+  <tr><td>Sicherheitslinie überfahren</td><td class="num">ca. 15–40 %</td></tr>
+  <tr><td>zu schnell gefahren</td><td class="num">ca. 20–30 %</td></tr>
+  <tr><td>übermüdet gefahren</td><td class="num">ca. 20–30 %</td></tr>
+  <tr><td>Handy am Steuer</td><td class="num">ca. 10–20 %</td></tr>
+</table></div>
+<p>Weitere Beispiele: Drogen oder Medikamente, Stoppsignal oder Vortritt missachtet, gefährlich überholt, mit Flip-Flops gefahren.</p>
+<div class="info-box warn"><p><strong>Grobfahrlässigkeitsschutz</strong> (Zusatz zur Auto-Versicherung): Die Versicherung verzichtet bei leichteren Fällen auf den Regress. <strong>Nie gedeckt</strong> sind Fahren unter <strong>Alkohol oder Drogen</strong> und <strong>Raserdelikte</strong>; dort nimmt die Versicherung immer Regress.</p></div>
+<div class="info-box"><p><strong>Promillegrenzen:</strong> Neulenkende (Ausweis auf Probe), Berufschauffeure, Fahrlehrer und Begleitpersonen von Lernfahrten: <strong>0,1 ‰</strong> (faktisch null). Sonst <strong>0,5 ‰</strong> = angetrunken, ab <strong>0,8 ‰</strong> = qualifiziert angetrunken. Bei <strong>Cannabis und anderen Drogen</strong> gilt <strong>Nulltoleranz</strong>.</p></div>
+
+<h3>Ein Unfall hat drei Arten von Folgen</h3>
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Strafrecht<small>Staat ↔ Bürger</small></div><div class="schema-val">Busse, Geldstrafe oder Gefängnis (auch bedingt, mit Probezeit), dazu Verfahrenskosten.</div></div>
+  <div class="schema-row"><div class="schema-key">Administrativmassnahmen<small>Strassenverkehrsamt</small></div><div class="schema-val">Verwarnung, <strong>Führerausweisentzug</strong>, Verkehrsunterricht, Therapie. Ziel: Verkehrssicherheit.</div></div>
+  <div class="schema-row"><div class="schema-key">Zivilrecht<small>Bürger ↔ Bürger</small></div><div class="schema-val">Schadenersatz an das Opfer: Sachschaden, Heilungskosten, Erwerbsausfall, Haushaltsschaden, Genugtuung, Anwaltskosten. Zahlt zuerst die Haftpflichtversicherung, danach kommt der <strong>Regress</strong>.</div></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.1</span><h3>Fall Baumann: Cannabis am Steuer, in Zahlen</h3></div>
+  <p>Ein Lenker fährt unter Cannabis-Einfluss und verletzt eine 30-jährige Mutter von zwei Kleinkindern schwer.</p>
+  <ul>
+    <li><strong>Strafurteil:</strong> schuldig der fahrlässigen Körperverletzung und der groben Verletzung der Verkehrsregeln → <strong>20 Tage Gefängnis bedingt</strong> (2 Jahre Probezeit), <strong>CHF 500 Busse</strong>, <strong>CHF 1'800 Verfahrenskosten</strong>.</li>
+    <li><strong>Haftpflichtversicherung:</strong> zahlt der Verletzten den ganzen Schaden, über die Jahre rund <strong>CHF 1'366'499</strong> (Heilungskosten, Erwerbsausfall, Haushaltsschaden, Genugtuung, Anwalt, Zinsen).</li>
+    <li><strong>Regress 20 %</strong> wegen Grobfahrlässigkeit → <strong>rund CHF 273'300</strong>, die der Lenker selbst zurückzahlen muss. Die erste Rechnung kommt sofort: CHF 15'000.</li>
+    <li>Dazu <strong>kündigt</strong> die Versicherung den Vertrag (Art. 42 VVG). Weiterversichert wird er nur, wenn er auf die Deckung bei künftigen Drogenunfällen verzichtet, sonst lässt sie die <strong>Nummernschilder einziehen</strong>.</li>
+  </ul>
+  <div class="info-box danger"><p><strong>Merksatz aus dem Blatt:</strong> Bekifft fahren ist ungefähr so gefährlich wie mit 0,8 ‰. Die Strafe ist nur der Anfang, teuer wird der Regress.</p></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="num">6.2</span><h3>Regress-Checkliste: Fall «Manuel» (0,85 ‰)</h3></div>
+  <p>Manuel fährt nach einer Party mit 0,85 ‰ und verursacht eine Kollision. Beide Autos haben Totalschaden, sein Beifahrer wird schwer verletzt.</p>
+  <ul>
+    <li>Schaden total <strong>CHF 155'000</strong> (Autos 61'000, Spital 49'000, Erwerbsausfall und Haushalt 32'000, Genugtuung 6'000, Anwalt 7'000)</li>
+    <li>Strafrecht: Geldstrafe. Administrativ: <strong>Ausweis 6 Monate weg</strong></li>
+    <li>Fremdes Auto und Verletzter → seine <strong>Haftpflicht</strong>. Eigenes Auto → seine <strong>Vollkasko</strong></li>
+    <li><strong>Regress 15 % = CHF 23'250</strong> → Raten à CHF 400, rund <strong>5 Jahre</strong> lang. Das erhöht das Risiko einer Überschuldung.</li>
+  </ul>
+</div>
+
+<div class="section-label">Teil D — Sozialversicherungen und Vorsorge</div>
+
+<h2>7 · Das Drei-Säulen-Konzept</h2>
+<div class="temple">
+  <div class="temple-roof">Alters-, Hinterlassenen- und Invalidenvorsorge</div>
+  <div class="temple-cols">
+    <div class="pillar"><div class="pn">1</div><h4>Staatliche Vorsorge</h4><b>AHV · IV · EL</b><ul><li>Zweck: <strong>Existenzsicherung</strong></li><li>obligatorisch</li><li>Umlageverfahren</li></ul></div>
+    <div class="pillar"><div class="pn">2</div><h4>Berufliche Vorsorge</h4><b>BVG · Pensionskasse</b><ul><li>Zweck: <strong>gewohnte Lebenshaltung</strong> fortsetzen</li><li>obligatorisch ab einem Mindestlohn</li><li>Kapitaldeckungsverfahren</li></ul></div>
+    <div class="pillar"><div class="pn">3</div><h4>Private Vorsorge</h4><b>3a gebunden · 3b frei</b><ul><li>Zweck: <strong>Vorsorgelücken schliessen</strong>, persönliche Wünsche</li><li>freiwillig</li><li>Lebensversicherung, Sparen, Eigenheim</li></ul></div>
+  </div>
+  <div class="temple-base">Ziel: 1. und 2. Säule zusammen ≈ 60 % des letzten Lohnes</div>
+</div>
+
+<div class="compare">
+  <div class="compare-col kvg"><h4>Umlageverfahren (AHV)</h4><ul><li>Die heutigen Erwerbstätigen zahlen die <strong>heutigen</strong> Renten</li><li>Es wird kein Geld für dich persönlich angespart</li><li><strong>Risiko:</strong> immer mehr Rentner, immer weniger Erwerbstätige (Demografie)</li></ul></div>
+  <div class="compare-col uvg"><h4>Kapitaldeckungsverfahren (PK)</h4><ul><li>Jede Person spart <strong>ihr eigenes</strong> Alterskapital an</li><li>Das Kapital wird angelegt und verzinst</li><li><strong>Risiko:</strong> tiefe Zinsen, Börsenverluste, längere Lebenserwartung</li></ul></div>
+</div>
+
+<h3>Säule 3a vs. Säule 3b</h3>
+<div class="compare">
+  <div class="compare-col pro"><h4>3a: gebundene Vorsorge</h4><ul><li>Einzahlungen werden vom <strong>steuerbaren Einkommen abgezogen</strong></li><li>Zins steuerfrei, Steuer erst beim Bezug</li><li>Geld ist <strong>gebunden</strong> (Bezug erst bei Pension, Eigenheim, Selbstständigkeit, Auswanderung)</li><li>2026 max. <strong>CHF 7'258</strong> (mit Pensionskasse)</li><li>Nur für Erwerbstätige · bei Bank oder Versicherung</li></ul></div>
+  <div class="compare-col con"><h4>3b: freie Vorsorge</h4><ul><li>Normales Sparen: Sparkonto, Wertschriften, Lebensversicherung, Eigenheim</li><li><strong>Keine</strong> Steuervorteile</li><li>Jederzeit frei verfügbar</li></ul></div>
+</div>
+
+<h2>8 · Die Sozialversicherungen im Überblick</h2>
+<div class="table-wrap"><table>
+  <tr><th>Versicherung</th><th>Zweck</th><th>Wer zahlt?</th><th>Merken</th></tr>
+  <tr><td><strong>AHV</strong><br><small>Alters- und Hinterlassenenversicherung · 1. Säule</small></td><td>Existenzbedarf im Alter oder nach dem Tod sichern: Alters-, Witwen-/Witwer- und Waisenrente</td><td>alle Erwerbstätigen: <strong>4,35 % AN + 4,35 % AG</strong></td><td>seit <strong>1948</strong> · Beitragspflicht ab 1. Januar des Jahres, in dem man <strong>18</strong> wird · Referenzalter <strong>65</strong> · Rente min. 1'260, max. 2'520 pro Monat · Beitragslücken vermeiden · ab Dezember 2026 erstmals eine <strong>13. AHV-Rente</strong></td></tr>
+  <tr><td><strong>IV</strong><br><small>Invalidenversicherung · 1. Säule</small></td><td><strong>Eingliederung vor Rente</strong>: zurück ins Erwerbsleben (Umschulung, Hilfsmittel). Erst wenn das nicht geht: Rente</td><td>zusammen mit der AHV: <strong>0,7 % AN + 0,7 % AG</strong></td><td>bei Geburtsgebrechen, Krankheit oder Unfall</td></tr>
+  <tr><td><strong>EL</strong><br><small>Ergänzungsleistungen · 1. Säule</small></td><td>Wenn AHV- oder IV-Rente nicht zum Leben reicht</td><td>Steuern (Bund und Kantone), keine eigenen Beiträge</td><td>Rechtsanspruch für Bedürftige · Kantone führen sie durch</td></tr>
+  <tr><td><strong>EO</strong><br><small>Erwerbsersatzordnung</small></td><td>Lohnersatz bei <strong>Militär-, Zivil- und Zivilschutzdienst</strong> sowie bei <strong>Mutterschaft</strong> (14 Wochen) und Vaterschaft (2 Wochen)</td><td>alle, die AHV/IV-Beiträge zahlen</td><td>deckt <strong>nicht</strong> lange Krankheit oder Invalidität</td></tr>
+  <tr><td><strong>ALV</strong><br><small>Arbeitslosenversicherung</small></td><td>Taggeld bei Arbeitslosigkeit, Kurzarbeit, Schlechtwetter, Konkurs des Arbeitgebers</td><td><strong>nur Angestellte</strong> (AN + AG je 1,1 %). Selbstständige können sich nicht versichern</td><td>Bedingungen: genug Beitragszeit, <strong>arbeitsfähig</strong>, vermittlungsfähig, <strong>persönlich beim RAV melden</strong></td></tr>
+  <tr><td><strong>BVG</strong><br><small>Berufliche Vorsorge · 2. Säule</small></td><td>Gewohnte Lebenshaltung im Alter, bei Invalidität oder Tod fortsetzen</td><td>Angestellte ab einem Mindestlohn (rund 22'700 pro Jahr); AG zahlt mind. die Hälfte</td><td>andere Namen: <strong>Pensionskasse</strong>, berufliche Vorsorge, 2. Säule · Tod und Invalidität ab 18 versichert, Sparen ab 25</td></tr>
+  <tr><td><strong>UVG</strong><br><small>Unfallversicherung</small></td><td>Folgen von Berufs- und Nichtberufsunfällen</td><td>BU: <strong>Arbeitgeber</strong> · NBU: meist Arbeitnehmer (Lohnabzug)</td><td>NBU nur ab 8 Std. pro Woche beim gleichen AG · grösster Versicherer: Suva</td></tr>
+  <tr><td><strong>KVG</strong><br><small>Krankenversicherung</small></td><td>Schutz bei Krankheit, Unfall (wenn keine UV zahlt) und Mutterschaft</td><td>Kopfprämien jeder Person, Prämienverbilligung</td><td>obligatorisch seit <strong>1.1.1996</strong></td></tr>
+  <tr><td><strong>MV</strong><br><small>Militärversicherung</small></td><td>Unfall und Krankheit während Militär-, Zivilschutz- und Zivildienst</td><td><strong>keine Beiträge</strong>, der Bund zahlt</td><td>wird heute von der Suva geführt</td></tr>
+  <tr><td><strong>FAK / FamZG</strong><br><small>Familienzulagen</small></td><td>Kinderzulage bis 16, Ausbildungszulage 16–25 (in Ausbildung)</td><td>Arbeitgeber (Familienausgleichskasse)</td><td>Bundes-Minimum seit 2025: <strong>215.–</strong> bzw. <strong>268.–</strong> pro Kind und Monat (Blatt: 200.–/250.–) · Kantone dürfen mehr zahlen</td></tr>
+</table></div>
+
+<div class="info-box warn"><p><strong>Typische Fangfragen (A17):</strong> «Privates Sparen gehört zur 2. Säule» → <strong>falsch</strong>, das ist die 3. Säule. «Frauen bekommen ab 62 eine AHV-Rente» → <strong>falsch</strong>. Das Referenzalter der Frauen war 64 und steigt bis 2028 schrittweise auf 65.</p></div>
+
+<h3>Altersvorsorge: was kann schiefgehen?</h3>
+<div class="compare">
+  <div class="compare-col kvg"><h4>AHV (1. Säule)</h4><ul><li>Die Bevölkerung wird älter: Immer weniger Erwerbstätige finanzieren immer mehr Rentner</li><li>Beitragslücken (z. B. Auslandjahr ohne Beiträge) kürzen die Rente lebenslang</li></ul></div>
+  <div class="compare-col uvg"><h4>Pensionskasse (2. Säule)</h4><ul><li>Tiefe Zinsen und Börsenverluste</li><li>Man lebt länger, das Kapital muss länger reichen</li><li>Teilzeit und Lücken: kleiner Lohn = wenig PK-Kapital</li></ul></div>
+</div>
+<p><strong>Ab wann lohnt sich Vorsorgen?</strong> Ab dem ersten Lohn, spätestens bei Heirat oder Kindern, und immer mit Geld, auf das man längere Zeit verzichten kann. Nicht mit Geld, das man bald fürs Auto braucht.</p>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FÄLLE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="faelle">
+
+<p class="intro">Der Prüfungsklassiker: «Welche Versicherung zahlt?» Erst selber entscheiden, dann klicken. Darunter die Rechtsfälle aus dem Ordner und zwei Rechner.</p>
+
+<div class="tool">
+  <h3>Trainer: Wer zahlt?</h3>
+  <p class="tool-desc">Lies den Fall und tippe auf die Versicherung, die den Schaden zahlt. Bei Personenschäden gilt: zuerst <em>Krankheit oder Unfall</em>, dann <em>wessen Körper oder Sache</em>.</p>
+  <div class="wz-meta"><span id="wzCount">Fall 1</span><span id="wzScore">0 richtig</span></div>
+  <div class="wz-case" id="wzCase"></div>
+  <div class="wz-opts" id="wzOpts"></div>
+  <div id="wzExplain"></div>
+  <div class="btn-row" style="margin-top:12px;"><button class="btn" id="wzNext">Nächster Fall ›</button><button class="btn ghost" id="wzRestart">Neu mischen</button></div>
+</div>
+
+<h2>Rechtsfall 1 · Stoppstrasse missachtet</h2>
+<div class="quiz-q">
+  <p class="q-text">Lenker A missachtet an einer Stoppstrasse den Vortritt und kollidiert mit dem Auto von Lenker B. Beide Autos sind erheblich beschädigt.</p>
+  <ol style="font-size:0.95rem;"><li>Wer zahlt den Schaden am Auto von B?</li><li>Wer zahlt den Schaden am Auto von A?</li><li>Welchen Einfluss hat der Unfall auf die Prämie von A?</li><li>Kann die Versicherung auf A Regress nehmen?</li></ol>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li>Die <strong>Motorfahrzeughaftpflicht von A</strong>, denn A hat den Schaden einem Dritten zugefügt.</li><li>Die <strong>Vollkasko von A</strong>, falls er eine hat. Sonst zahlt A selbst. Die Haftpflicht zahlt nie das eigene Auto.</li><li><strong>Malus</strong>: A wird für den Schadenfall um mehrere Stufen (in der Regel 4) hochgestuft, die Prämie steigt für Jahre. Auch die Vollkasko kann teurer werden.</li><li><strong>Ja, möglich.</strong> Ein missachtetes Stoppsignal oder Vortrittsrecht kann als <strong>grobfahrlässig</strong> gelten → Regress. Hat A einen <strong>Grobfahrlässigkeitsschutz</strong>, verzichtet die Versicherung darauf.</li></ol></div>
+</div>
+
+<h2>Rechtsfall 2 · Rotlicht überfahren</h2>
+<div class="quiz-q">
+  <p class="q-text">Lenker C fährt bei Rot über die Kreuzung und rammt einen korrekt fahrenden Motorradfahrer. Der Motorradfahrer wird schwer verletzt, das Motorrad hat Totalschaden. C hat eine Rippenprellung, sein Auto ist erheblich beschädigt.</p>
+  <ol style="font-size:0.95rem;"><li>Wer zahlt die Heilungskosten des Motorradfahrers <em>letztlich</em>?</li><li>Wer zahlt den Totalschaden am Motorrad?</li><li>Wer zahlt die Heilungskosten von C?</li><li>Wer zahlt den Schaden am Auto von C?</li></ol>
+  <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+  <div class="solution"><h4>Lösung</h4><ol><li>Zuerst zahlt seine eigene <strong>Unfallversicherung</strong> (bzw. Krankenkasse). Diese holt das Geld bei der <strong>Motorfahrzeughaftpflicht von C</strong> zurück, also zahlt <em>letztlich</em> die Haftpflicht von C. Weil Rotlicht grobfahrlässig ist, nimmt diese wiederum <strong>Regress auf C</strong> (ca. 20–40 %).</li><li>Die <strong>Motorfahrzeughaftpflicht von C</strong> (mit Regress auf C).</li><li>Seine <strong>Unfallversicherung (NBU)</strong>, falls er angestellt ist, sonst seine <strong>Krankenkasse</strong>. Wegen Grobfahrlässigkeit kann die UV das Taggeld kürzen.</li><li>Seine <strong>Vollkasko</strong>, die wegen Grobfahrlässigkeit kürzen darf. Ohne Vollkasko zahlt C selbst.</li></ol></div>
+</div>
+
+<div class="tool">
+  <h3>Rechner: Unterversicherung</h3>
+  <p class="tool-desc">Wie viel zahlt die Hausratversicherung, wenn du zu tief versichert bist?</p>
+  <div class="field-row">
+    <div class="field"><label for="uvWert">Effektiver Wert (Neuwert)</label><input type="number" id="uvWert" value="60000" step="1000" min="0"></div>
+    <div class="field"><label for="uvSumme">Versicherungssumme</label><input type="number" id="uvSumme" value="40000" step="1000" min="0"></div>
+    <div class="field"><label for="uvSchaden">Schaden</label><input type="number" id="uvSchaden" value="9000" step="100" min="0"></div>
+  </div>
+  <div class="result" id="uvResult"></div>
+</div>
+
+<div class="tool">
+  <h3>Rechner: Regress</h3>
+  <p class="tool-desc">Wie viel muss der Unfallverursacher selbst zurückzahlen, und wie lange dauert das in Raten?</p>
+  <div class="field-row">
+    <div class="field"><label for="rgSchaden">Schaden, den die Versicherung zahlt</label><input type="number" id="rgSchaden" value="155000" step="1000" min="0"></div>
+    <div class="field"><label for="rgQuote">Regressquote %</label><input type="number" id="rgQuote" value="15" step="1" min="0" max="100"></div>
+    <div class="field"><label for="rgRate">Rate pro Monat</label><input type="number" id="rgRate" value="400" step="50" min="1"></div>
+  </div>
+  <div class="btn-row"><button class="btn ghost sm" id="rgManuel">Fall Manuel</button><button class="btn ghost sm" id="rgBaumann">Fall Baumann</button></div>
+  <div class="result" id="rgResult"></div>
+</div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BEGRIFFE
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+<p class="intro">Alle Fachbegriffe aus den Lernzielen G03 und den beiden Ordnern. Such nach einem Wort oder filtere nach Thema.</p>
+<input type="text" class="begriff-search" id="begriffSearch" placeholder="Begriff oder Stichwort suchen …">
+<div class="cat-filter" id="catFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="sach">Sachversicherung</button>
+  <button class="cat-chip" data-cat="haft">Haftpflicht &amp; Regress</button>
+  <button class="cat-chip" data-cat="sozial">Sozialversicherungen</button>
+  <button class="cat-chip" data-cat="saeulen">3 Säulen</button>
+</div>
+<div class="begriff-grid" id="begriffGrid"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     KARTEIKARTEN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="karten">
+<p class="intro">Karte antippen zum Umdrehen. Ehrlich bewerten. Mit ← → blättern, mit der Leertaste umdrehen.</p>
+<div class="cat-filter" id="cardFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="sach">Sachversicherung</button>
+  <button class="cat-chip" data-cat="haft">Haftpflicht &amp; Regress</button>
+  <button class="cat-chip" data-cat="sozial">Sozialversicherungen</button>
+  <button class="cat-chip" data-cat="saeulen">3 Säulen</button>
+</div>
+<div class="flash-stage">
+  <div class="flash-card" id="flashCard" onclick="flipCard()">
+    <span class="side-label" id="flashSide">Frage</span>
+    <span class="law-ref-flash" id="flashRef"></span>
+    <div id="flashContent" class="flash-front">Karteikarten werden geladen …</div>
+  </div>
+</div>
+<p class="flash-hint">Tippen oder Leertaste zum Umdrehen</p>
+<div class="flash-controls">
+  <button class="flash-btn" onclick="prevCard()">‹ Zurück</button>
+  <span class="flash-counter" id="flashCounter">0 / 0</span>
+  <button class="flash-btn" onclick="nextCard()">Weiter ›</button>
+</div>
+<div class="flash-controls">
+  <button class="flash-btn bad" onclick="rateCard(false)">Nochmal</button>
+  <button class="flash-btn good" onclick="rateCard(true)">Sitzt</button>
+  <button class="flash-btn" onclick="shuffleCards()">Mischen</button>
+  <button class="flash-btn" onclick="resetCards()">Reset</button>
+</div>
+<div class="flash-stats">
+  <span>Sitzt: <strong id="statKnown">0</strong></span>
+  <span>Nochmal: <strong id="statUnknown">0</strong></span>
+  <span>Offen: <strong id="statOpen">0</strong></span>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     QUIZ
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="quiz">
+<p class="intro">Prüfungsfragen im Stil des Fragenblatts und der Lehrmittel-Aufgaben A4–A17. Zuerst selber antworten, dann aufdecken.</p>
+<div class="btn-row" style="margin-bottom:18px;">
+  <button class="btn ghost sm" onclick="revealAll(true)">Alle Lösungen zeigen</button>
+  <button class="btn ghost sm" onclick="revealAll(false)">Alle verstecken</button>
+</div>
+<div id="quizList"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PROBETEST
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="probetest">
+<p class="intro">Ein Probetest wie im Ernstfall: 25 Minuten, ohne Hilfsmittel. Antworten ins Feld schreiben, am Schluss Lösung aufdecken und dir selbst Punkte geben. Die Note wird mit der Schweizer Formel berechnet (Punkte ÷ Maximum × 5 + 1).</p>
+<div class="btn-row" style="margin-bottom:14px;"><button class="btn" id="ptStart">Timer starten (25:00)</button><button class="btn ghost" id="ptReveal">Alle Lösungen zeigen</button><button class="btn ghost" id="ptReset">Zurücksetzen</button></div>
+<div id="ptList"></div>
+<div class="pt-total"><span class="timer" id="ptTimer">25:00</span><span>Punkte: <strong id="ptPoints">0</strong> / <span id="ptMax">0</span></span><span class="big" id="ptNote">Note –</span></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LERNPLAN
+     ════════════════════════════════════════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+<p class="intro">Der Test ist <strong>heute, Mo 19.10.</strong>, im ABU-Block ab 12:50. Kurze Blöcke, damit es reinpasst: vor der Schule, in den Pausen, über Mittag. Hak ab, was erledigt ist (bleibt im Browser gespeichert).</p>
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">1</div><div class="day-content"><h4>Vor der Schule · 25 Min. · Sach und Haftpflicht</h4><ul class="day-tasks"><li>Theorie: Spickzettel + Kapitel 1–3 (Arten, Kasko, Neuwert/Zeitwert, Unterversicherung)</li><li>Rechner Unterversicherung einmal mit eigenen Zahlen</li><li>Quiz Q1–Q8</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">2</div><div class="day-content"><h4>Vor der Schule · 20 Min. · Haftpflicht, Bonus-Malus, Regress</h4><ul class="day-tasks"><li>Theorie Kapitel 4–6, Fall Baumann und Manuel genau lesen</li><li>Die 4 Kausalhaftungen auswendig: Kinder · Tier · Haus · Fahrzeughalter</li><li>Fälle: beide Rechtsfälle selber lösen, dann vergleichen</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Halbzeit</strong><p>Teil Sach/Haftpflicht sitzt. Jetzt die Sozialversicherungen.</p></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">3</div><div class="day-content"><h4>Pause 09:20 / Zugfahrt · 15 Min. · 3 Säulen</h4><ul class="day-tasks"><li>Säulen-Grafik abdecken und aus dem Kopf zeichnen: Säule, Vorsorge, Zweck, Versicherungen</li><li>Umlage- vs. Kapitaldeckungsverfahren in je einem Satz</li><li>Karteikarten-Filter «3 Säulen»</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">4</div><div class="day-content"><h4>Mittagspause 11:50 · 20 Min. · Sozialversicherungen</h4><ul class="day-tasks"><li>Übersichtstabelle: AHV, IV, EL, EO, ALV, BVG, MV, FAK, Zweck in einem Satz</li><li>Zahlen: 18 / 65 / 4,35 % / 0,7 % / 7'258 / 60 % / 1948</li><li>Trainer «Wer zahlt?» eine Runde</li></ul></div></div>
+
+<div class="day"><input type="checkbox" class="check"><div class="day-num">5</div><div class="day-content"><h4>12:30 · 10 Min. · Letzter Check</h4><ul class="day-tasks"><li>Nur die «Nochmal»-Karteikarten</li><li>Spickzettel einmal laut lesen</li><li>Kein neuer Stoff mehr</li></ul></div></div>
+
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Im Test</strong><p>Bei jedem Fall zuerst: Wessen Sache oder Körper? Eigentum → Sach. Fremdes → Haftpflicht. Körper → Krankheit oder Unfall? Bei Alkohol, Drogen oder Rotlicht immer an den Regress denken.</p></div></div>
+
+<p style="margin-top:20px; font-size:0.9rem; color:var(--ink-soft);">Mehr Zeit? Probetest unter Zeitdruck machen, danach den Quiz-Teil 3 Säulen und Sozialversicherungen (Q21–Q32).</p>
+</section>
+
+</div>
+
+<script>
+// ═══ TAB SWITCHING ═══
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+// ═══ REVEAL ═══
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const isShown = sol.classList.toggle('show');
+  btn.textContent = isShown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', isShown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    btn.nextElementSibling.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+
+const chf0 = n => Math.round(n).toLocaleString('de-CH');
+
+// ═══ WER ZAHLT? ═══
+const WZ_OPTS = ['Krankenkasse', 'Unfallversicherung (BU)', 'Unfallversicherung (NBU)', 'Privathaftpflicht', 'Motorfahrzeughaftpflicht', 'Hausrat', 'Teilkasko', 'Vollkasko', 'Gebäudeversicherung', 'Niemand, selber zahlen'];
+const WZ_CASES = [
+  { c: 'Ein Motorradfahrer fährt auf dem Zebrastreifen eine ältere Frau an. Wer zahlt ihre Behandlung und ihre Schäden?', a: 'Motorfahrzeughaftpflicht', e: 'Schaden an einer Drittperson durch ein Motorfahrzeug → Motorfahrzeughaftpflicht des Motorradfahrers.' },
+  { c: 'Nach einem Hagelgewitter ist dein Auto voller Dellen.', a: 'Teilkasko', e: 'Elementarschaden am eigenen Auto, du kannst nichts dafür → Teilkasko.' },
+  { c: 'Beim Einparken zerkratzt du die Front deines neuen Autos an einem Pfosten.', a: 'Vollkasko', e: 'Selbstverschuldeter Schaden am eigenen Auto → nur die Vollkasko.' },
+  { c: 'Eine Kollegin fährt unachtsam ins Heck des Autos vor ihr. Wer zahlt das Auto vorne?', a: 'Motorfahrzeughaftpflicht', e: 'Fremdes Auto beschädigt → Motorfahrzeughaftpflicht der Verursacherin.' },
+  { c: 'Du verletzt dich auf der Baustelle mit dem Seitenschneider an der Hand.', a: 'Unfallversicherung (BU)', e: 'Unfall bei der Arbeit → Berufsunfallversicherung, Prämie zahlt der Arbeitgeber.' },
+  { c: 'Am Samstag brichst du dir beim Fussball das Bein. Du arbeitest 42 Stunden pro Woche.', a: 'Unfallversicherung (NBU)', e: 'Unfall in der Freizeit, mehr als 8 Std. pro Woche beim gleichen Arbeitgeber → Nichtberufsunfallversicherung.' },
+  { c: 'Du musst dir den Blinddarm operieren lassen.', a: 'Krankenkasse', e: 'Krankheit, kein Unfall → Krankenkasse (mit Franchise und Selbstbehalt).' },
+  { c: 'Dein Hund beisst einen Passanten in die Wade.', a: 'Privathaftpflicht', e: 'Tierhalterhaftung (Kausalhaftung) → deine Privathaftpflicht zahlt den Schaden des Passanten.' },
+  { c: 'Ein Blitz schlägt ein, deine Stereoanlage und der Fernseher sind kaputt.', a: 'Hausrat', e: 'Eigene bewegliche Sachen → Hausratversicherung.' },
+  { c: 'Bei einem Sturm wird ein Teil des Daches deines Elternhauses abgedeckt.', a: 'Gebäudeversicherung', e: 'Elementarschaden am Gebäude selbst → Gebäudeversicherung (im Kanton Bern obligatorisch).' },
+  { c: 'Bei einer Party bei Freunden stösst du einen teuren Laptop vom Tisch.', a: 'Privathaftpflicht', e: 'Fremde Sache beschädigt → Privathaftpflicht.' },
+  { c: 'Aus deinem Keller wird bei einem Einbruch dein E-Bike gestohlen.', a: 'Hausrat', e: 'Diebstahl eigener Sachen aus der Wohnung oder dem Keller → Hausrat.' },
+  { c: 'Ein Marder zerbeisst Kabel im Motorraum deines Autos.', a: 'Teilkasko', e: 'Marderschaden am eigenen Auto → Teilkasko.' },
+  { c: 'Dein 6-jähriger Bruder zerkratzt mit dem Trottinett das Auto des Nachbarn.', a: 'Privathaftpflicht', e: 'Eltern haften für ihre Kinder (Kausalhaftung) → Privathaftpflicht der Familie.' },
+  { c: 'Du hast nur eine Haftpflicht fürs Auto und fährst selbstverschuldet in eine Mauer. Wer zahlt dein Auto?', a: 'Niemand, selber zahlen', e: 'Die Haftpflicht zahlt nur die Mauer (fremdes Eigentum). Fürs eigene Auto bräuchtest du eine Vollkasko.' },
+  { c: 'Du fällst in der Badewanne aus, weil du einen Kreislaufkollaps hast, und musst ins Spital.', a: 'Krankenkasse', e: 'Ursache liegt im Körper (Kollaps) → Krankheit → Krankenkasse.' }
+];
+let wzOrder = [], wzI = 0, wzRight = 0, wzDone = false;
+function wzShuffle() {
+  wzOrder = WZ_CASES.map((_, i) => i).sort(() => Math.random() - 0.5);
+  wzI = 0; wzRight = 0; wzRender();
+}
+function wzRender() {
+  const k = WZ_CASES[wzOrder[wzI]];
+  wzDone = false;
+  document.getElementById('wzCount').textContent = `Fall ${wzI + 1} / ${WZ_CASES.length}`;
+  document.getElementById('wzScore').textContent = `${wzRight} richtig`;
+  document.getElementById('wzCase').textContent = k.c;
+  document.getElementById('wzExplain').innerHTML = '';
+  const box = document.getElementById('wzOpts');
+  box.innerHTML = '';
+  WZ_OPTS.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'wz-opt'; b.textContent = o; b.type = 'button';
+    b.addEventListener('click', () => {
+      if (wzDone) return;
+      wzDone = true;
+      const ok = o === k.a;
+      if (ok) wzRight++;
+      [...box.children].forEach(x => { if (x.textContent === k.a) x.classList.add('right'); });
+      if (!ok) b.classList.add('wrong');
+      document.getElementById('wzScore').textContent = `${wzRight} richtig`;
+      document.getElementById('wzExplain').innerHTML = `<div class="verdict ${ok ? 'yes' : 'no'}">${ok ? '✓ Richtig' : '✕ Falsch, richtig ist: ' + k.a}<p>${k.e}</p></div>`;
+    });
+    box.appendChild(b);
+  });
+}
+document.getElementById('wzNext').addEventListener('click', () => {
+  if (wzI < WZ_CASES.length - 1) { wzI++; wzRender(); }
+  else { document.getElementById('wzExplain').innerHTML = `<div class="verdict yes">Durch! ${wzRight} von ${WZ_CASES.length} richtig.<p>Mit «Neu mischen» nochmals, bis alle sitzen.</p></div>`; }
+});
+document.getElementById('wzRestart').addEventListener('click', wzShuffle);
+wzShuffle();
+
+// ═══ RECHNER UNTERVERSICHERUNG ═══
+function calcUV() {
+  const w = parseFloat(document.getElementById('uvWert').value) || 0;
+  const s = parseFloat(document.getElementById('uvSumme').value) || 0;
+  const d = parseFloat(document.getElementById('uvSchaden').value) || 0;
+  const el = document.getElementById('uvResult');
+  if (!w || !d) { el.innerHTML = '<p style="margin:0;">Wert und Schaden eingeben.</p>'; return; }
+  if (s >= w) {
+    el.innerHTML = `<div class="big">CHF ${chf0(Math.min(d, s))}<small>zahlt die Versicherung</small></div><div class="verdict ${s > w ? 'maybe' : 'yes'}">${s > w ? 'Überversicherung' : 'Richtig versichert'}<p>${s > w ? `Du bist um CHF ${chf0(s - w)} zu hoch versichert. Du zahlst zu viel Prämie, bekommst aber nie mehr als den wirklichen Schaden.` : 'Versicherungssumme = Wert, der Schaden wird voll bezahlt.'}</p></div>`;
+    return;
+  }
+  const pay = d * s / w;
+  el.innerHTML = `<div class="split"><div class="big">CHF ${chf0(pay)}<small>zahlt die Versicherung</small></div><div class="big">CHF ${chf0(d - pay)}<small>zahlst du selbst</small></div></div>
+    <div class="verdict no">Unterversicherung: nur ${(s / w * 100).toFixed(0)} % versichert<p>Rechnung: ${chf0(d)} × ${chf0(s)} ÷ ${chf0(w)} = <strong>${chf0(pay)}</strong>. Die Leistung wird im gleichen Verhältnis gekürzt, auch beim kleinsten Schaden.</p></div>`;
+}
+['uvWert', 'uvSumme', 'uvSchaden'].forEach(id => document.getElementById(id).addEventListener('input', calcUV));
+calcUV();
+
+// ═══ RECHNER REGRESS ═══
+function calcRG() {
+  const d = parseFloat(document.getElementById('rgSchaden').value) || 0;
+  const q = parseFloat(document.getElementById('rgQuote').value) || 0;
+  const r = parseFloat(document.getElementById('rgRate').value) || 1;
+  const rg = d * q / 100;
+  const months = Math.ceil(rg / r);
+  const years = months / 12;
+  document.getElementById('rgResult').innerHTML = `<div class="split"><div class="big">CHF ${chf0(rg)}<small>Regress, zahlst du selbst</small></div><div class="big">${months} Monate<small>≈ ${years.toFixed(1)} Jahre à CHF ${chf0(r)}</small></div></div>
+    <div class="info-box" style="margin-bottom:0;"><p>Das Opfer bekommt trotzdem die vollen CHF ${chf0(d)} von der Haftpflichtversicherung. Der Regress betrifft nur das Verhältnis zwischen dir und deiner Versicherung.${years > 40 ? ' <strong>Mit dieser Rate wirst du es nie abzahlen. Genau so entsteht Überschuldung.</strong>' : ''}</p></div>`;
+}
+['rgSchaden', 'rgQuote', 'rgRate'].forEach(id => document.getElementById(id).addEventListener('input', calcRG));
+document.getElementById('rgManuel').addEventListener('click', () => { rgSet(155000, 15, 400); });
+document.getElementById('rgBaumann').addEventListener('click', () => { rgSet(1366499, 20, 1000); });
+function rgSet(d, q, r) { document.getElementById('rgSchaden').value = d; document.getElementById('rgQuote').value = q; document.getElementById('rgRate').value = r; calcRG(); }
+calcRG();
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  { term: 'Solidaritätsprinzip', cat: 'grund', def: 'Viele zahlen wenig in einen gemeinsamen Topf, damit wenigen Betroffenen viel geholfen werden kann.' },
+  { term: 'Risk Management', cat: 'grund', def: 'Risiken erkennen und bewusst entscheiden: vermeiden, vermindern, selber tragen oder versichern.' },
+  { term: 'Personenversicherung', cat: 'grund', def: 'Schützt die Person: Gesundheit, Einkommen, Leben. Z. B. Krankenkasse, UVG, AHV, Lebensversicherung.' },
+  { term: 'Sachversicherung', cat: 'sach', def: 'Schützt das eigene Eigentum. Z. B. Gebäude-, Hausrat-, Kaskoversicherung.' },
+  { term: 'Haftpflichtversicherung', cat: 'haft', def: 'Zahlt Schäden, die ich Dritten (Personen oder fremden Sachen) zufüge, und wehrt ungerechtfertigte Forderungen ab.' },
+  { term: 'Police', cat: 'grund', def: 'Der Versicherungsvertrag als Dokument: Versicherte Person, Deckung, Prämie, Selbstbehalt.' },
+  { term: 'Prämie', cat: 'grund', def: 'Der Betrag, den man regelmässig für die Versicherung bezahlt.' },
+  { term: 'Selbstbehalt', cat: 'grund', def: 'Kostenbeteiligung des Versicherten im Schadenfall. Höherer Selbstbehalt = tiefere Prämie.' },
+  { term: 'Gebäudeversicherung', cat: 'sach', def: 'Versichert das Gebäude gegen Feuer und Elementarschäden. Im Kanton Bern obligatorisch.' },
+  { term: 'Hausratversicherung', cat: 'sach', def: 'Versichert bewegliche eigene Sachen (Möbel, Kleider, Elektronik) gegen Feuer, Elementar, Wasser, Diebstahl. Meist zum Neuwert.' },
+  { term: 'Teilkasko', cat: 'sach', def: 'Schäden am eigenen Auto ohne eigenes Verschulden: Diebstahl, Feuer, Hagel, Glasbruch, Tiere, Marder.' },
+  { term: 'Vollkasko', cat: 'sach', def: 'Teilkasko plus selbstverschuldete Schäden am eigenen Auto (Parkschaden, Selbstunfall) und Vandalismus.' },
+  { term: 'Neuwert', cat: 'sach', def: 'Betrag, den die Wiederbeschaffung einer gleichwertigen neuen Sache heute kostet.' },
+  { term: 'Zeitwert', cat: 'sach', def: 'Neuwert minus Abschreibung (Alter, Abnützung): was die Sache heute noch wert ist.' },
+  { term: 'Unterversicherung', cat: 'sach', def: 'Versicherungssumme liegt unter dem effektiven Wert → Leistung wird im gleichen Verhältnis gekürzt.' },
+  { term: 'Überversicherung', cat: 'sach', def: 'Versicherungssumme liegt über dem effektiven Wert → zu hohe Prämie, aber kein finanzieller Vorteil.' },
+  { term: 'Elementarschaden', cat: 'sach', def: 'Schaden durch Naturgewalten: Hagel, Sturm, Hochwasser, Überschwemmung, Lawine, Erdrutsch, Steinschlag.' },
+  { term: 'Privathaftpflicht', cat: 'haft', def: 'Freiwillige Versicherung für Schäden, die man im Alltag anderen zufügt. Von Vermietern oft verlangt.' },
+  { term: 'Motorfahrzeughaftpflicht', cat: 'haft', def: 'Obligatorische Versicherung für Schäden, die man mit dem Fahrzeug Dritten zufügt. Ohne sie keine Nummernschilder.' },
+  { term: 'Verschuldenshaftung', cat: 'haft', def: 'Man haftet, weil man selbst schuld ist, absichtlich oder fahrlässig (Art. 41 OR).' },
+  { term: 'Kausalhaftung', cat: 'haft', def: 'Haftung ohne eigenes Verschulden: Eltern für Kinder, Tierhalter, Werkeigentümer, Motorfahrzeughalter, Arbeitgeber.' },
+  { term: 'Bonus-Malus', cat: 'haft', def: 'Bonus: pro schadenfreies Jahr eine Stufe tiefer. Malus: pro Schadenfall meist vier Stufen höher.' },
+  { term: 'Regress', cat: 'haft', def: 'Rückgriff auf den Versicherten: Die Versicherung zahlt dem Opfer alles und fordert bei Grobfahrlässigkeit einen Teil (ca. 10–50 %) zurück.' },
+  { term: 'Grobfahrlässigkeit', cat: 'haft', def: 'Missachten einer Vorsichtsregel, die jeder vernünftige Mensch befolgt hätte: Alkohol, Drogen, Rotlicht, Raserei, Handy am Steuer.' },
+  { term: 'Grobfahrlässigkeitsschutz', cat: 'haft', def: 'Zusatzdeckung: Versicherung verzichtet auf Regress, aber nie bei Alkohol, Drogen oder Raserdelikten.' },
+  { term: 'Direktes Forderungsrecht', cat: 'haft', def: 'Das Unfallopfer kann seinen Schaden direkt bei der Haftpflichtversicherung des Verursachers einfordern (Art. 65 SVG).' },
+  { term: 'Genugtuung', cat: 'haft', def: 'Geldsumme als Ausgleich für seelisches Leid (Schmerzensgeld).' },
+  { term: 'Administrativmassnahme', cat: 'haft', def: 'Massnahme des Strassenverkehrsamts: Verwarnung, Führerausweisentzug, Verkehrsunterricht.' },
+  { term: 'Versicherungsbetrug', cat: 'haft', def: 'Ungerechtfertigter Bezug von Versicherungsleistungen. Strafbar.' },
+  { term: 'Rente', cat: 'sozial', def: 'Betrag, den eine Versicherung regelmässig (monatlich) auszahlt.' },
+  { term: 'AHV', cat: 'sozial', def: 'Alters- und Hinterlassenenversicherung (seit 1948). 1. Säule. Existenzsicherung im Alter und für Hinterbliebene. Umlageverfahren.' },
+  { term: 'IV', cat: 'sozial', def: 'Invalidenversicherung. Zuerst Eingliederung ins Erwerbsleben, Rente erst wenn das nicht möglich ist.' },
+  { term: 'EL', cat: 'sozial', def: 'Ergänzungsleistungen: Zusätzliches Geld, wenn AHV/IV-Rente nicht zum Leben reicht. Von den Kantonen durchgeführt.' },
+  { term: 'EO', cat: 'sozial', def: 'Erwerbsersatzordnung: Lohnersatz bei Militär-, Zivil- und Zivilschutzdienst sowie Mutterschaft und Vaterschaft.' },
+  { term: 'ALV', cat: 'sozial', def: 'Arbeitslosenversicherung: Taggeld bei Arbeitslosigkeit, Kurzarbeit, Schlechtwetter, Konkurs des Arbeitgebers. Nur für Angestellte.' },
+  { term: 'BVG', cat: 'sozial', def: 'Bundesgesetz über die berufliche Vorsorge = 2. Säule = Pensionskasse. Kapitaldeckungsverfahren.' },
+  { term: 'MV', cat: 'sozial', def: 'Militärversicherung: Unfall und Krankheit im Militär-, Zivilschutz- und Zivildienst. Keine Beiträge, der Bund zahlt.' },
+  { term: 'FAK / Familienzulagen', cat: 'sozial', def: 'Kinderzulage (bis 16) und Ausbildungszulage (16–25). Bundes-Minimum seit 2025: 215.– / 268.– pro Monat.' },
+  { term: 'BU / NBU', cat: 'sozial', def: 'Berufsunfall (Prämie: Arbeitgeber) und Nichtberufsunfall (Prämie: meist Arbeitnehmer, nur ab 8 Std. pro Woche).' },
+  { term: 'Suva', cat: 'sozial', def: 'Grösste Unfallversicherung der Schweiz, zuständig u. a. für Bau- und Elektrobranche. Führt auch die Militärversicherung.' },
+  { term: 'RAV', cat: 'sozial', def: 'Regionales Arbeitsvermittlungszentrum: Dort meldet man sich persönlich, wenn man arbeitslos wird.' },
+  { term: 'Drei-Säulen-Konzept', cat: 'saeulen', def: '1. staatliche Vorsorge (AHV/IV/EL), 2. berufliche Vorsorge (BVG), 3. private Selbstvorsorge (3a/3b).' },
+  { term: '1. Säule', cat: 'saeulen', def: 'Staatliche, obligatorische Vorsorge: AHV, IV, EL. Zweck: Existenzsicherung.' },
+  { term: '2. Säule', cat: 'saeulen', def: 'Berufliche Vorsorge, Pensionskasse, BVG. Zweck: gewohnte Lebenshaltung fortsetzen.' },
+  { term: '3. Säule', cat: 'saeulen', def: 'Private, freiwillige Selbstvorsorge: schliesst Vorsorgelücken der 1. und 2. Säule.' },
+  { term: 'Säule 3a', cat: 'saeulen', def: 'Gebundene Vorsorge: steuerlich abziehbar, Geld gebunden bis zur Pension. 2026 max. 7\'258.– (mit PK).' },
+  { term: 'Säule 3b', cat: 'saeulen', def: 'Freie Vorsorge: Sparkonto, Wertschriften, Eigenheim, Lebensversicherung. Frei verfügbar, keine Steuervorteile.' },
+  { term: 'Lebensversicherung', cat: 'saeulen', def: 'Personenversicherung, die bei Tod oder bei Ablauf ein Kapital auszahlt. Teil der 3. Säule (3a oder 3b).' },
+  { term: 'Umlageverfahren', cat: 'saeulen', def: 'Die heutigen Beiträge der Erwerbstätigen finanzieren direkt die heutigen Renten (AHV).' },
+  { term: 'Kapitaldeckungsverfahren', cat: 'saeulen', def: 'Jede Person spart ihr eigenes Alterskapital an, das angelegt wird (Pensionskasse). Auch Anlageverfahren.' },
+  { term: 'Beitragslücke', cat: 'saeulen', def: 'Jahr ohne AHV-Beiträge: Die AHV-Rente wird dadurch lebenslang gekürzt.' },
+  { term: 'Freizügigkeit', cat: 'saeulen', def: 'Beim Stellenwechsel nimmt man sein Pensionskassen-Guthaben mit (Freizügigkeitskonto). In der KK: freie Wahl der Kasse.' }
+];
+function renderBegriffe(filter, search) {
+  search = (search || '').toLowerCase();
+  const list = BEGRIFFE.filter(b => (filter === 'all' || b.cat === filter) && (!search || b.term.toLowerCase().includes(search) || b.def.toLowerCase().includes(search)));
+  document.getElementById('begriffGrid').innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b =>
+    `<div class="begriff"><dt>${b.term}</dt><dd>${b.def}</dd></div>`).join('') ||
+    '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px;">Keine Begriffe gefunden.</div>';
+}
+let bFilter = 'all', bSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active'); bFilter = chip.dataset.cat; renderBegriffe(bFilter, bSearch);
+}));
+document.getElementById('begriffSearch').addEventListener('input', e => { bSearch = e.target.value; renderBegriffe(bFilter, bSearch); });
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+const EXTRA_CARDS = [
+  { term: 'Unterschied Sach- und Haftpflichtversicherung?', cat: 'grund', def: 'Sach: schützt das eigene Eigentum. Haftpflicht: schützt vor Schäden, die man Dritten zufügt.' },
+  { term: 'Die drei meistgenutzten Sachversicherungen?', cat: 'sach', def: 'Gebäudeversicherung, Hausratversicherung, Kaskoversicherung.' },
+  { term: 'Beispiel Versicherung zum Neuwert / zum Zeitwert?', cat: 'sach', def: 'Neuwert: Hausratversicherung. Zeitwert: Kaskoversicherung.' },
+  { term: 'Folge einer Unterversicherung?', cat: 'sach', def: 'Leistungskürzung im Verhältnis der Unterversicherung (Schaden × Summe ÷ Wert).' },
+  { term: 'Welche Haftpflichtversicherungen sind obligatorisch?', cat: 'haft', def: 'Motorfahrzeughaftpflicht, dazu Haftpflicht für Flugzeuge und Motorboote.' },
+  { term: 'Wie kann ich ohne direkte Schuld haftpflichtig werden?', cat: 'haft', def: 'Kausalhaftung: eigene Kinder, Tiere, Haus/Werk, eigenes Motorfahrzeug, Angestellte.' },
+  { term: 'Fall Baumann: Höhe des Regresses?', cat: 'haft', def: '20 % von rund CHF 1,37 Mio. = rund CHF 273\'300, wegen Fahren unter Cannabis-Einfluss.' },
+  { term: 'Promillegrenze für Neulenkende?', cat: 'haft', def: '0,1 ‰ (faktisch null). Bei Cannabis und Drogen gilt für alle Nulltoleranz.' },
+  { term: 'Drei rechtliche Folgen eines Unfalls?', cat: 'haft', def: 'Strafrecht (Busse, Gefängnis), Administrativmassnahmen (Ausweisentzug), Zivilrecht (Schadenersatz, Regress).' },
+  { term: 'Ab wann AHV-Beiträge für Lernende?', cat: 'sozial', def: 'Ab 1. Januar des Jahres, in dem man 18 wird.' },
+  { term: 'Wie hoch ist der AHV-Beitrag?', cat: 'sozial', def: '4,35 % Arbeitnehmer + 4,35 % Arbeitgeber (dazu IV 0,7 % + 0,7 %).' },
+  { term: 'Wofür ist die EO da?', cat: 'sozial', def: 'Lohnersatz bei Militär-, Zivil-, Zivilschutzdienst sowie Mutterschaft (14 Wochen) und Vaterschaft (2 Wochen).' },
+  { term: 'Bedingungen für Arbeitslosengeld?', cat: 'sozial', def: 'Genug Beitragszeit, arbeitsfähig und vermittlungsfähig, persönlich beim RAV melden.' },
+  { term: 'Seit wann gibt es die AHV?', cat: 'sozial', def: 'Seit 1948.' },
+  { term: 'Zwei andere Namen für die 2. Säule?', cat: 'saeulen', def: 'Pensionskasse, berufliche Vorsorge (BVG).' },
+  { term: 'Wie viel sollen 1. + 2. Säule zusammen abdecken?', cat: 'saeulen', def: 'Etwa 60 % des letzten Lohnes.' },
+  { term: 'Risiko bei der AHV?', cat: 'saeulen', def: 'Demografie: immer mehr Rentner, immer weniger Erwerbstätige, die zahlen (Umlageverfahren).' },
+  { term: 'Risiko bei der Pensionskasse?', cat: 'saeulen', def: 'Tiefe Zinsen, Börsenverluste, längere Lebenserwartung.' }
+];
+const ALL_CARDS = [...BEGRIFFE, ...EXTRA_CARDS];
+let cardSet = [], cardIdx = 0, cardFlipped = false, knownIds = new Set(), unknownIds = new Set(), cardCatFilter = 'all';
+function buildCardSet() {
+  cardSet = ALL_CARDS.map((c, i) => ({...c, _id: i})).filter(c => cardCatFilter === 'all' || c.cat === cardCatFilter);
+  cardIdx = 0; cardFlipped = false; knownIds = new Set(); unknownIds = new Set();
+  renderCard(); updateCardStats();
+}
+function renderCard() {
+  const content = document.getElementById('flashContent');
+  const side = document.getElementById('flashSide');
+  const counter = document.getElementById('flashCounter');
+  if (!cardSet.length) { content.className = 'flash-front'; content.textContent = 'Keine Karten in dieser Kategorie.'; counter.textContent = '0 / 0'; return; }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) { side.textContent = 'Antwort'; content.className = 'flash-back'; content.textContent = c.def; }
+  else { side.textContent = 'Frage'; content.className = 'flash-front'; content.textContent = c.term; }
+}
+function flipCard() { if (!cardSet.length) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (!cardSet.length) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (!cardSet.length) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx]._id;
+  if (known) { knownIds.add(id); unknownIds.delete(id); } else { unknownIds.add(id); knownIds.delete(id); }
+  updateCardStats(); nextCard();
+}
+function shuffleCards() {
+  for (let i = cardSet.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]]; }
+  cardIdx = 0; cardFlipped = false; renderCard();
+}
+function resetCards() { buildCardSet(); }
+function updateCardStats() {
+  document.getElementById('statKnown').textContent = knownIds.size;
+  document.getElementById('statUnknown').textContent = unknownIds.size;
+  document.getElementById('statOpen').textContent = Math.max(0, cardSet.length - knownIds.size - unknownIds.size);
+}
+document.querySelectorAll('#cardFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('#cardFilter .cat-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active'); cardCatFilter = chip.dataset.cat; buildCardSet();
+}));
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') { nextCard(); e.preventDefault(); }
+  if (e.key === 'ArrowLeft') { prevCard(); e.preventDefault(); }
+  if (e.key === ' ') { flipCard(); e.preventDefault(); }
+});
+buildCardSet();
+
+// ═══ QUIZ ═══
+const QUIZ = [
+  ['Grundlagen', 'Fragenblatt 1', 'Was ist der Unterschied zwischen einer Sach- und einer Haftpflichtversicherung?', 'Sachversicherungen schützen das <strong>eigene Eigentum</strong>. Haftpflichtversicherungen schützen vor Schäden, die man <strong>Dritten</strong> zufügt (fremdes Eigentum, fremde Personen).'],
+  ['Sach', 'Fragenblatt 2', 'Welches sind die meistgenutzten Sachversicherungen?', '<strong>Gebäudeversicherung, Hausratversicherung, Kaskoversicherung.</strong>'],
+  ['Sach', 'Fragenblatt 3', 'Erkläre den Unterschied zwischen Neuwert und Zeitwert und nenne je ein Beispiel.', '<strong>Neuwert − Abschreibung = Zeitwert.</strong> Neuwert = Preis einer neuen gleichwertigen Sache. Zeitwert = was die Sache heute noch wert ist. Beispiel Neuwert: Hausratversicherung. Beispiel Zeitwert: Kaskoversicherung.'],
+  ['Sach', 'Fragenblatt 4', 'Was versteht man unter Über- und Unterversicherung?', '<strong>Überversicherung:</strong> mehr versichert als der effektive Wert (Prämie zu hoch). <strong>Unterversicherung:</strong> weniger versichert als der effektive Wert (Prämie zu tief).'],
+  ['Sach', 'Fragenblatt 5 / A13', 'Was können die Folgen einer Unterversicherung sein? Und wie heisst es, wenn die Versicherungssumme deutlich unter dem Wiederbeschaffungswert liegt?', 'Die Versicherung <strong>kürzt die Leistung im Verhältnis zur Unterversicherung</strong>. Der Sachverhalt heisst <strong>Unterversicherung</strong>. (Eine Überversicherung bringt keinen finanziellen Vorteil.)'],
+  ['Sach', 'Rechnung', 'Hausrat effektiv 80\'000, versichert 60\'000. Schaden durch Wasser: 4\'000. Wie viel zahlt die Versicherung?', '4\'000 × 60\'000 ÷ 80\'000 = <strong>CHF 3\'000</strong>. Du zahlst die restlichen 1\'000 selbst (75 % versichert → 75 % bezahlt).'],
+  ['Sach', 'Abgrenzung', 'Teilkasko oder Vollkasko? a) Hagel · b) Parkschaden selbst verschuldet · c) Diebstahl · d) Selbstunfall in eine Leitplanke · e) Steinschlag in der Frontscheibe', 'a) <strong>Teilkasko</strong> · b) <strong>Vollkasko</strong> · c) <strong>Teilkasko</strong> · d) <strong>Vollkasko</strong> (die Leitplanke selbst: Haftpflicht) · e) <strong>Teilkasko</strong> (Glasbruch)'],
+  ['Haftpflicht', 'Fragenblatt 6', 'Welche Haftpflichtversicherungen sind obligatorisch?', 'Die <strong>Motorfahrzeughaftpflicht</strong>, dazu die Haftpflicht für Flugzeuge und Wasserfahrzeuge (Motorboote). Die Privathaftpflicht ist freiwillig.'],
+  ['Haftpflicht', 'Fragenblatt 7', 'Erkläre das Bonus-Malus-System.', '<strong>Bonus</strong> = Belohnung für unfallfreies Fahren: pro Jahr in der Regel eine Stufe Rabatt. <strong>Malus</strong> = «Strafe», wenn die Versicherung zahlen musste: pro Ereignis in der Regel vier Stufen höher.'],
+  ['Haftpflicht', 'Fragenblatt 8', 'Was bedeutet der Begriff Regress?', '<strong>Rückgriff auf den Versicherten.</strong> Die Versicherung zahlt den Schaden, verlangt dann aber einen prozentualen Anteil (zwischen ca. 10 und 50 %) zurück. Bei grobfahrlässigem Verhalten ist der Regress für die Versicherung gesetzlich vorgeschrieben.'],
+  ['Haftpflicht', 'Fragenblatt 9', 'Wie kann ich auch ohne direkte Schuld haftpflichtig werden?', 'Durch <strong>Kausalhaftung</strong>: als Eltern für die eigenen Kinder, als Tierhalter, als Haus- oder Werkeigentümer, als Halter eines Motorfahrzeugs, als Arbeitgeber.'],
+  ['Haftpflicht', 'A8', 'Ein Motorradfahrer fährt auf dem Zebrastreifen eine alte Dame an. Eine Lenkerin fährt unachtsam ins Heck des Autos vor ihr. Welche Versicherung zahlt jeweils?', 'Beide Male die <strong>Motorfahrzeughaftpflichtversicherung</strong> des Verursachers, denn der Schaden trifft Dritte.'],
+  ['Haftpflicht', 'A16', 'Ordne zu: Bonus · Versicherungsbetrug · Selbstbehalt · Regress · Rente · Einzelabrede. a) Rückgriff auf den Versicherten · b) Ungerechtfertigter Bezug von Leistungen · c) Regelmässig ausbezahlter Betrag · d) Verlängerung der Unfallversicherung nach Austritt · e) Kostenbeteiligung · f) Prämienreduktion für unfallfreies Fahren', 'a) <strong>Regress</strong> · b) <strong>Versicherungsbetrug</strong> · c) <strong>Rente</strong> · d) <strong>Einzelabrede</strong> · e) <strong>Selbstbehalt</strong> · f) <strong>Bonus</strong>'],
+  ['Haftpflicht', 'Regress-Checkliste', 'Nenne vier Beispiele für grobfahrlässiges Verhalten im Strassenverkehr.', 'Z. B. Fahren unter <strong>Alkohol, Drogen</strong> oder Medikamenten · <strong>übermüdet</strong> fahren · <strong>zu schnell</strong> fahren · <strong>Handy</strong> / abgelenkt · gefährlich überholen · <strong>Rotlicht</strong>, Stoppsignal, Sicherheitslinie oder Vortritt missachten · mit Flip-Flops fahren.'],
+  ['Haftpflicht', 'Fall Baumann', 'Fall Baumann: Welche drei Arten von Folgen hatte das Fahren unter Cannabis-Einfluss? Nenne je die Zahlen.', '<strong>Strafrecht:</strong> 20 Tage Gefängnis bedingt (2 Jahre Probezeit), CHF 500 Busse, CHF 1\'800 Verfahrenskosten. <strong>Zivilrecht/Versicherung:</strong> Die Haftpflicht zahlt dem Opfer rund CHF 1,37 Mio. und nimmt <strong>20 % Regress</strong> = rund CHF 273\'300. <strong>Vertrag:</strong> Kündigung der Versicherung bzw. Verzicht auf Deckung bei Drogenunfällen, sonst Einzug der Nummernschilder.'],
+  ['Haftpflicht', 'Regress-Checkliste', 'Manuel (0,85 ‰) verursacht einen Unfall mit CHF 155\'000 Schaden. Die Versicherung nimmt 15 % Regress. Wie viel muss er zahlen und wie lange dauert das bei CHF 400 pro Monat?', '155\'000 × 15 % = <strong>CHF 23\'250</strong>. 23\'250 ÷ 400 = rund <strong>58 Monate ≈ 5 Jahre</strong>, dazu kommt noch die Geldstrafe.'],
+  ['Haftpflicht', 'Prämienhöhe', 'Nenne fünf Kriterien, von denen die Prämie der Motorfahrzeughaftpflicht abhängt.', 'Alter und Fahrpraxis · Fahrzeug (PS, Neupreis, Marke) · Kilometer pro Jahr · Wohnort · Nationalität · Bonus-Malus-Stufe / frühere Schäden · Höhe des Selbstbehalts · Fahrerkreis unter 25.'],
+  ['Mix', 'A14', 'Welche Versicherung zahlt? a) Blinddarmoperation · b) Beinbruch (Arbeitnehmer) · c) Medikamente nach dem Beinbruch · d) Hund beisst Passanten in die Wade · e) Stereoanlage durch Blitzschlag defekt', 'a) <strong>Krankenkasse</strong> · b) <strong>Unfallversicherung</strong> · c) <strong>Unfallversicherung</strong> · d) <strong>Privathaftpflicht</strong> · e) <strong>Hausrat</strong>'],
+  ['Mix', 'A15', 'Obligatorisch oder freiwillig? Privathaftpflicht · Vollkasko · Krankenkasse · Motorfahrzeughaftpflicht · Teilkasko · Unfallversicherung', 'Obligatorisch: <strong>Krankenkasse, Motorfahrzeughaftpflicht, Unfallversicherung</strong> (für Arbeitnehmende). Freiwillig: <strong>Privathaftpflicht, Vollkasko, Teilkasko</strong>.'],
+  ['Grundlagen', 'A4', 'Beschreibe in zwei bis drei Sätzen, wie das Solidaritätsprinzip funktioniert.', 'Alle zahlen Geld in eine gemeinsame Kasse, um ein Risiko abzusichern. Nur wer einen versicherten Schaden erleidet, wird aus der Kasse entschädigt. <strong>Viele zahlen wenig, damit wenigen viel geholfen werden kann</strong>; man verhält sich solidarisch.'],
+  ['3 Säulen', 'Drei-Säulen-Blatt', 'Fülle das Drei-Säulen-Konzept aus: Säule, Art der Vorsorge, Zweck, Versicherungen.', '<strong>1. Säule:</strong> staatliche Vorsorge · Existenzsicherung · AHV, IV, EL. <strong>2. Säule:</strong> berufliche Vorsorge · gewohnte Lebenshaltung fortsetzen · BVG/Pensionskasse. <strong>3. Säule:</strong> Selbstvorsorge · Vorsorgelücken schliessen, individuelle Wünsche · 3a (gebunden), 3b (frei: Lebensversicherung, Eigenheim, Ersparnisse). Ziel 1. + 2. Säule: ca. 60 % des letzten Lohnes.'],
+  ['3 Säulen', 'Übersicht', 'Erkläre den Unterschied zwischen Umlageverfahren und Kapitaldeckungsverfahren. Welche Säule nutzt welches?', '<strong>Umlageverfahren (AHV):</strong> Die heutigen Erwerbstätigen bezahlen die heutigen Renten. <strong>Kapitaldeckungsverfahren (Pensionskasse):</strong> Jede Person spart ihr eigenes Kapital an, das angelegt wird.'],
+  ['3 Säulen', 'Übersicht', 'Säule 3a und 3b: Nenne je zwei Merkmale.', '<strong>3a:</strong> Beiträge vom steuerbaren Einkommen abziehbar · Geld gebunden bis zur Pension · max. CHF 7\'258 (2026, mit PK) · nur für Erwerbstätige. <strong>3b:</strong> freies Sparen (Konto, Wertschriften, Eigenheim, Lebensversicherung) · keine Steuervorteile · jederzeit verfügbar.'],
+  ['3 Säulen', 'Film', 'Nenne zwei andere Begriffe für die 2. Säule und erkläre, was die 3. Säule ist.', '2. Säule = <strong>Pensionskasse</strong> = <strong>berufliche Vorsorge (BVG)</strong>. Die 3. Säule ist die <strong>private, freiwillige Selbstvorsorge</strong>.'],
+  ['3 Säulen', 'Film', 'Welche Risiken gibt es bei der AHV, welche bei der Pensionskasse?', '<strong>AHV:</strong> Demografie: immer mehr Rentner, weniger Erwerbstätige, die einzahlen. <strong>Pensionskasse:</strong> tiefe Zinsen, Verluste an der Börse, höhere Lebenserwartung.'],
+  ['Sozial', 'A17', 'Richtig oder falsch? a) Beitragspflicht AHV/IV/EO/ALV beginnt für Lernende am 1. Januar des Jahres, in dem sie 18 werden · b) Die 1. Säule ist die staatliche, obligatorische Säule · c) 1. und 2. Säule sollen den bisherigen Lebensstandard garantieren · d) Privates Sparen gehört zur 2. Säule · e) Frauen erhalten ab 62 eine AHV-Rente', 'a) <strong>richtig</strong> · b) <strong>richtig</strong> · c) <strong>richtig</strong> (etwa 60 % des Lohnes) · d) <strong>falsch</strong>, 3. Säule · e) <strong>falsch</strong>: Referenzalter 65 (Frauen bis 2028 schrittweise von 64 auf 65)'],
+  ['Sozial', 'A9', 'Welchen Zwecken dient die Erwerbsersatzordnung (EO)? a) Erwerbsausfall bei langer Krankheit · b) Mutterschaftsurlaub · c) Lohneinbussen wegen Invalidität · d) Erwerbsausfall im Militär- oder Zivilschutzdienst', '<strong>b) und d)</strong>. Lange Krankheit (Krankentaggeld) und Invalidität (IV) gehören nicht zur EO.'],
+  ['Sozial', 'A10', 'Was muss man erfüllen, um Arbeitslosengeld zu beziehen? a) mind. 20 Jahre alt · b) arbeitsfähig · c) persönlich beim Arbeitsamt (RAV) erscheinen · d) einen Beruf gelernt haben', '<strong>b) und c)</strong>. Dazu braucht es genug Beitragszeit.'],
+  ['Sozial', 'Übersicht', 'Was ist der Grundsatz der IV und wer zahlt die Beiträge?', '<strong>Eingliederung vor Rente:</strong> Zuerst soll die Person (wieder) ins Erwerbsleben eingegliedert werden, eine Rente gibt es erst, wenn das nicht möglich ist. Beiträge zusammen mit der AHV: <strong>0,7 % AN + 0,7 % AG</strong>.'],
+  ['Sozial', 'Übersicht', 'Wer hat Anspruch auf Ergänzungsleistungen (EL) und wer führt sie durch?', 'Wer <strong>bedürftig</strong> ist, z. B. weil AHV- oder IV-Rente nicht ausreicht. Es besteht ein Rechtsanspruch. Durchgeführt von den <strong>Kantonen</strong>, mit Subventionen vom Bund.'],
+  ['Sozial', 'Plakat MV/FAK', 'Militärversicherung und Familienzulagen: Wer ist versichert, wer zahlt?', '<strong>MV:</strong> Personen im Militär-, Zivilschutz- und Zivildienst, gegen Unfall und Krankheit. Keine Beiträge, Finanzierung durch den Bund (geführt von der Suva). <strong>FAK:</strong> Kinderzulage bis 16 Jahre, Ausbildungszulage 16–25 Jahre. Bundes-Minimum 215.– / 268.– pro Monat (seit 2025), finanziert von den Arbeitgebern.'],
+  ['Sozial', 'Übersicht', 'Wer muss in die ALV einzahlen, wer nicht?', 'Alle <strong>unselbständig Erwerbenden</strong> (Angestellte), je 1,1 % AN und AG. <strong>Selbständigerwerbende können sich nicht versichern.</strong>']
+];
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">Q${i + 1}</span><span class="q-topic">${q[0]}</span><span class="q-source">${q[1]}</span></div>
+    <p class="q-text">${q[2]}</p>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[3]}</p></div>
+  </div>`).join('');
+
+// ═══ PROBETEST ═══
+const PT = [
+  [2, 'Erkläre den Unterschied zwischen einer Sachversicherung und einer Haftpflichtversicherung und nenne je ein Beispiel.', 'Sach: eigenes Eigentum (z. B. Hausrat). Haftpflicht: Schäden an Dritten (z. B. Privathaftpflicht). 1 P. Erklärung, 1 P. Beispiele.'],
+  [2, 'Was ist der Unterschied zwischen Neuwert und Zeitwert? Welche Versicherung zahlt zum Neuwert?', 'Neuwert − Abschreibung = Zeitwert (1 P.). Hausratversicherung zahlt zum Neuwert (1 P.).'],
+  [2, 'Hausrat effektiv 50\'000, versichert 30\'000, Schaden 5\'000. Wie viel zahlt die Versicherung? Rechnungsweg!', '5\'000 × 30\'000 ÷ 50\'000 = CHF 3\'000 (1 P. Weg, 1 P. Resultat).'],
+  [1, 'Welche Haftpflichtversicherung ist obligatorisch?', 'Motorfahrzeughaftpflicht.'],
+  [2, 'Erkläre das Bonus-Malus-System.', 'Bonus: pro schadenfreies Jahr eine Stufe tiefer (1 P.). Malus: pro Schadenfall ca. vier Stufen höher (1 P.).'],
+  [2, 'Was ist Regress und wann kommt er vor?', 'Rückgriff der Versicherung auf den Versicherten, sie fordert einen Teil zurück (1 P.), bei grober Fahrlässigkeit, z. B. Alkohol, Rotlicht (1 P.).'],
+  [2, 'Nenne zwei Fälle von Kausalhaftung.', 'Je 1 P.: Eltern für Kinder, Tierhalter, Hauseigentümer, Motorfahrzeughalter, Arbeitgeber.'],
+  [3, 'Lenker X fährt bei Rot über die Kreuzung und beschädigt das Auto von Y. Wer zahlt a) das Auto von Y, b) das Auto von X? c) Was passiert mit der Prämie von X?', 'a) Motorfahrzeughaftpflicht von X (mit Regress auf X) · b) Vollkasko von X, sonst X selbst · c) Malus, Prämie steigt. Je 1 P.'],
+  [3, 'Zeichne bzw. beschreibe das Drei-Säulen-Konzept (Säule, Vorsorge, je eine Versicherung).', '1. staatlich – AHV/IV/EL · 2. beruflich – BVG/PK · 3. privat – 3a/3b. Je 1 P.'],
+  [2, 'Umlageverfahren und Kapitaldeckungsverfahren: Erkläre beide kurz.', 'Umlage: Erwerbstätige zahlen die heutigen Renten (AHV) (1 P.). Kapitaldeckung: jeder spart eigenes Kapital (PK) (1 P.).'],
+  [2, 'Wofür ist die EO zuständig? Zwei Beispiele.', 'Militär-/Zivildienst/Zivilschutz und Mutterschaft/Vaterschaft. Je 1 P.'],
+  [2, 'Richtig oder falsch? a) Privates Sparen gehört zur 2. Säule. b) AHV-Beiträge zahlen Lernende ab 1. Januar des Jahres, in dem sie 18 werden.', 'a) falsch (3. Säule) · b) richtig. Je 1 P.']
+];
+const ptGot = new Array(PT.length).fill(0);
+const ptMax = PT.reduce((s, q) => s + q[0], 0);
+document.getElementById('ptMax').textContent = ptMax;
+document.getElementById('ptList').innerHTML = PT.map((q, i) => `
+  <div class="pt-q">
+    <span class="pts">${q[0]} P.</span>
+    <p class="q-text"><strong>${i + 1}.</strong> ${q[1]}</p>
+    <textarea aria-label="Antwort ${i + 1}" placeholder="Deine Antwort …"></textarea>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[2]}</p></div>
+    <div class="pt-score" data-i="${i}">Erreicht: ${Array.from({length: q[0] + 1}, (_, p) => `<button type="button" data-p="${p}">${p}</button>`).join('')}</div>
+  </div>`).join('');
+document.querySelectorAll('.pt-score').forEach(row => row.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  row.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  ptGot[+row.dataset.i] = +b.dataset.p;
+  ptUpdate();
+}));
+function ptUpdate() {
+  const sum = ptGot.reduce((a, b) => a + b, 0);
+  document.getElementById('ptPoints').textContent = sum;
+  const note = Math.round((sum / ptMax * 5 + 1) * 10) / 10;
+  document.getElementById('ptNote').textContent = 'Note ' + note.toFixed(1);
+}
+let ptLeft = 25 * 60, ptTimer = null;
+function ptTick() {
+  const m = String(Math.floor(ptLeft / 60)).padStart(2, '0'), s = String(ptLeft % 60).padStart(2, '0');
+  document.getElementById('ptTimer').textContent = `${m}:${s}`;
+}
+document.getElementById('ptStart').addEventListener('click', e => {
+  if (ptTimer) { clearInterval(ptTimer); ptTimer = null; e.target.textContent = 'Timer weiter'; return; }
+  e.target.textContent = 'Pause';
+  ptTimer = setInterval(() => { if (ptLeft > 0) { ptLeft--; ptTick(); } else { clearInterval(ptTimer); ptTimer = null; document.getElementById('ptTimer').textContent = 'Zeit um!'; } }, 1000);
+});
+document.getElementById('ptReveal').addEventListener('click', () => {
+  document.querySelectorAll('#probetest .reveal-btn').forEach(btn => { btn.nextElementSibling.classList.add('show'); btn.textContent = 'Lösung verstecken'; btn.classList.add('revealed'); });
+});
+document.getElementById('ptReset').addEventListener('click', () => {
+  clearInterval(ptTimer); ptTimer = null; ptLeft = 25 * 60; ptTick();
+  document.getElementById('ptStart').textContent = 'Timer starten (25:00)';
+  document.querySelectorAll('#probetest textarea').forEach(t => t.value = '');
+  document.querySelectorAll('#probetest .pt-score button').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('#probetest .solution').forEach(s => s.classList.remove('show'));
+  document.querySelectorAll('#probetest .reveal-btn').forEach(b => { b.textContent = 'Lösung anzeigen'; b.classList.remove('revealed'); });
+  ptGot.fill(0); ptUpdate(); document.getElementById('ptNote').textContent = 'Note –';
+});
+
+// ═══ LERNPLAN ═══
+const PLAN_KEY = 'sach-haft-sozial-lernplan';
+function updatePlanProgress() {
+  const boxes = [...document.querySelectorAll('.day .check')];
+  document.getElementById('planProgress').style.width = (boxes.filter(b => b.checked).length / boxes.length * 100) + '%';
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]');
+  document.querySelectorAll('.day .check').forEach((b, i) => { if (saved[i]) b.checked = true; });
+} catch (e) {}
+document.querySelectorAll('.day .check').forEach(b => b.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+
+</body>
+</html>
