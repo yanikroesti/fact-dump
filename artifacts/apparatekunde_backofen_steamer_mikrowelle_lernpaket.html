@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backofen, Steamer, Mikrowelle — Lernpaket | BZI Apparatekunde</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+/* ── ABT-Farbe (orange, wie auf schule.yanikroesti.ch) ── */
+:root { --accent: #9A4A12; --accent-light: #F6E9DF; --accent-dark: #6B320B; --heat: #D2452B; --cool: #2C5C8C; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151311; --surface: #1F1B18; --surface-alt: #2B2621; --ink: #F0EBE6; --ink-soft: #BDB4AB; --ink-mute: #8F867D;
+    --accent: #F0A46A; --accent-light: #3A2718; --accent-dark: #F7C9A4; --heat: #FF7A5C; --cool: #8DB8E8;
+    --success: #6FCB97; --success-light: #17301F; --warn: #E2B25A; --warn-light: #33290F;
+    --info: #8DB8E8; --info-light: #172636; --danger: #F08C80; --danger-light: #3A1A17;
+    --border: #3D3631; --border-soft: #2F2925;
+    --shadow: 0 2px 12px rgba(0,0,0,0.4); --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .milestone, .milestone strong, .milestone p { color: #151311; }
+}
+
+svg text { font-family: var(--font-body); }
+.fig { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 14px 0; }
+.fig svg { width: 100%; height: auto; display: block; }
+.fig-cap { font-size: 0.84rem; color: var(--ink-soft); margin-top: 8px; }
+.modes { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 12px 0; }
+.mode { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px; }
+.mode h4 { margin: 8px 0 4px; font-size: 0.95rem; }
+.mode p { font-size: 0.86rem; color: var(--ink-soft); margin: 0; }
+.mode .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; background: var(--accent-light); color: var(--accent); }
+.scope { border: 2px dashed var(--warn); border-radius: var(--radius); padding: 12px 16px; margin: 10px 0 18px; background: var(--warn-light); font-size: 0.92rem; }
+.part-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 6px; margin-top: 10px; }
+.part-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); border-radius: 6px; padding: 8px 10px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; text-align: left; cursor: pointer; }
+.part-btn .n { display: inline-block; min-width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 0.74rem; margin-right: 6px; }
+.part-btn.on { border-color: var(--accent); background: var(--accent-light); }
+.part-info { margin-top: 10px; min-height: 48px; }
+.hide-labels .lbl { opacity: 0; }
+.hot { cursor: pointer; }
+.hot.on rect, .hot.on path, .hot.on circle { stroke: var(--accent) !important; stroke-width: 4 !important; }
+.range-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; flex-wrap: wrap; }
+.range-row input[type=range] { flex: 1; min-width: 180px; accent-color: var(--accent); }
+.stufe { font-family: var(--font-display); font-size: 2rem; color: var(--accent); min-width: 40px; text-align: center; }
+.wz-case { font-size: 1.05rem; font-weight: 500; min-height: 56px; margin: 8px 0 14px; }
+.wz-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.wz-opt { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 10px 12px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: left; }
+.wz-opt:hover { border-color: var(--accent); }
+.wz-opt.right { background: var(--success-light); border-color: var(--success); color: var(--success); }
+.wz-opt.wrong { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+.wz-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); }
+.hand { font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; color: var(--cool); }
+.pt-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; }
+.pt-q .pts { float: right; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 4px; }
+.pt-q textarea { width: 100%; min-height: 64px; margin: 8px 0; padding: 9px 11px; border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-body); font-size: 0.94rem; background: var(--bg); color: var(--ink); resize: vertical; }
+.pt-score { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 8px; font-size: 0.84rem; color: var(--ink-soft); }
+.pt-score button { background: var(--surface-alt); border: 1px solid var(--border); color: var(--ink); border-radius: 5px; padding: 4px 10px; font-family: var(--font-mono); cursor: pointer; }
+.pt-score button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pt-total { position: sticky; bottom: 10px; background: var(--ink); color: var(--bg); border-radius: var(--radius); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow); margin-top: 16px; }
+.pt-total .big { font-family: var(--font-display); font-size: 1.5rem; }
+.timer { font-family: var(--font-mono); font-size: 1.1rem; }
+.k-table input { width: 90px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--ink); font-family: var(--font-mono); }
+.k-table select { padding: 6px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--ink); }
+.warnrow td { background: var(--danger-light); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ABT · Apparatekunde · Wärmeapparate</div>
+  <h1>Backofen, Steamer, Mikrowelle</h1>
+  <div class="meta">Lernpaket zu Lehrmittel-Seiten 5.7–5.11 · zum Grosstest vom Fr 23.10.2026 · Theorie, Aufbau, Übungen, Rechner, Karteikarten, Quiz, Probetest, Lernplan</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="aufbau">Aufbau</button>
+  <button class="tab-btn" data-tab="uebungen">Übungen</button>
+  <button class="tab-btn" data-tab="rechner">Küchenplan</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ═════════════ THEORIE ═════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<p class="intro">Alles aus den Lehrmittel-Seiten <strong>5.7 bis 5.11</strong> (Kapitel 5 Wärmeapparate) und aus der Lektion vom 16.10. Wäfler: <em>«Aufbau kennen»</em>. Darum steht bei jedem Gerät zuerst, <strong>woraus es besteht und was jedes Teil macht</strong>.</p>
+
+<div class="scope"><strong>Was genau kommt dran?</strong> «Kapitel 5.7–5.11» sind die <strong>Seiten</strong> 5.7 bis 5.11 im Lehrmittel. Darauf stehen: Energieregler (S. 5.7), elektronische Energieregler und Temperaturregler (S. 5.8), Backofen (S. 5.9), Steamer (S. 5.10) und Mikrowelle (S. 5.11). «Aufgaben 7–11» sind die Übungen <strong>8.1, 9.1, 10.1 und 11.1–11.3</strong> (auf S. 5.7 steht keine Übung). Weil Übung 8.1 zum Energieregler gehört, ist der <strong>Energieregler Prüfungsstoff</strong>. Deine Notiz sagt «keine elektrischen Leiter, Temperaturregler»: Nur der <strong>Temperaturregler</strong> (A3) ist darum mit <span class="badge warn">evtl. nicht geprüft</span> markiert.</div>
+
+<div class="section-label">Zuerst · Spickzettel</div>
+<h2>Die 12 Dinge, die morgen sitzen müssen</h2>
+<div class="cheat" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:12px 0 24px;">
+  <div class="card compact"><b>3 Arten der Wärmeübertragung</b><br>Strahlung (Grill; Ober-/Unterhitze zusammen mit natürlicher Konvektion) · Konvektion (Umluft, Heissluft) · Wärmeleitung (heisses Blech, Pfanne).</div>
+  <div class="card compact"><b>4 Beheizungsarten Backofen</b><br>Ober- und Unterhitze · Umluft · Heissluft · Grill. Weitere entstehen durch Kombination.</div>
+  <div class="card compact"><b>Heissluft</b><br>Ringheizkörper um den Ventilator · 2 Ebenen gleichzeitig · <strong>20–30 °C tiefer</strong> einstellen → spart Energie.</div>
+  <div class="card compact"><b>Ober-/Unterhitze</b><br>Heizspiralen an Decke und Boden, getrennt schaltbar · Strahlung + natürliche Konvektion · nur <strong>1 Ebene</strong>.</div>
+  <div class="card compact"><b>Pyrolyse</b><br>Reste verbrennen bei ca. <strong>500 °C</strong> · Tür verriegelt automatisch · Nachbrenner · ca. <strong>4 Stunden</strong>.</div>
+  <div class="card compact"><b>Katalytisch</b><br>Spezielle Emailschicht · reinigt bei 150–250 °C während dem normalen Backen · selten.</div>
+  <div class="card compact"><b>Steamer</b><br>Umluftofen + Dampf. Dämpfen bei ca. <strong>100 °C</strong>, Heissluft 30–300 °C. Braucht Wasseranschluss oder Tank und Ablauf.</div>
+  <div class="card compact"><b>Dampf erzeugen</b><br><strong>Boilersystem</b>: separater Dampferzeuger. <strong>Einspritzsystem</strong>: Heizkörper im Lüfterrad, Dampf direkt im Garraum.</div>
+  <div class="card compact"><b>Mikrowelle: Prinzip</b><br>Wärme entsteht <strong>im Essen</strong>: Wassermoleküle (Dipole) drehen sich milliardenfach pro Sekunde → Reibung → Wärme.</div>
+  <div class="card compact"><b>Mikrowelle: Weg der Wellen</b><br><strong>Magnetron</strong> erzeugt → <strong>Hohlleiter</strong> leitet → <strong>Wellenrührer</strong> verteilt → Metallwände reflektieren.</div>
+  <div class="card compact"><b>Mikrowelle: Zahlen</b><br><strong>2450 MHz</strong> (2,45 GHz) · dringt nur wenige Zentimeter ein · kann nicht backen (nur ca. 100 °C, keine Kruste).</div>
+  <div class="card compact"><b>Strom am Drehstrom</b><br><strong>I = P ÷ (√3 · 400 V) = P ÷ 693 V</strong>. Einphasig: I = P ÷ 230 V.</div>
+</div>
+
+<div class="section-label">Grundlage · aus der Lektion 16.10.</div>
+<h2>Wie kommt die Wärme ins Essen?</h2>
+<div class="modes">
+  <div class="mode"><span class="tag">Strahlung</span><h4>Wärmestrahlung</h4><p>Die heisse Heizspirale strahlt Wärme ab, ohne Luft dazwischen zu brauchen. Ober-/Unterhitze, Grill.</p></div>
+  <div class="mode"><span class="tag">Konvektion</span><h4>Wärmeströmung</h4><p>Bewegte Luft (oder Dampf) trägt die Wärme. Natürlich (warme Luft steigt) oder erzwungen mit Ventilator: Umluft, Heissluft.</p></div>
+  <div class="mode"><span class="tag">Leitung</span><h4>Wärmeleitung</h4><p>Wärme wandert durch direkten Kontakt: das heisse Blech gibt sie an den Teig weiter.</p></div>
+  <div class="mode"><span class="tag">Mikrowelle</span><h4>Im Essen selbst</h4><p>Die Wärme entsteht direkt im Wasser der Speise. Keine Wärme von aussen.</p></div>
+</div>
+<div class="info-box"><p><strong>Aus der Lektion:</strong> Sichtbare Heizspiralen sind <strong>schwer zu putzen</strong>. Darum gibt es die <strong>Mischlösung</strong>: oben offen (Grill-/Oberhitze an der Decke), unten gedeckt (Unterhitze unter dem Ofenboden). Heute sind die Heizkörper meist gar nicht mehr sichtbar.</p></div>
+
+<!-- TEIL A -->
+<div class="section-label">Teil A — Energieregler und Temperaturregler · S. 5.7–5.8</div>
+<h2>A1 · Mechanischer Energieregler</h2>
+<p>Glaskeramik- und Induktionskochfelder werden mit <strong>Energiereglern</strong> gesteuert. Es gibt <strong>mechanische</strong> und <strong>elektronische</strong>.</p>
+<p>Der mechanische Energieregler schaltet die volle Leistung <strong>immer wieder ein und aus</strong>. Auf der höchsten Stufe bleibt sie dauernd eingeschaltet. Auf einer tiefen Stufe ist sie pro Schaltperiode nur kurz eingeschaltet, das ergibt eine tiefe <strong>durchschnittliche</strong> Leistung.</p>
+
+<div class="tool">
+  <h3>Simulator: P-t-Diagramm</h3>
+  <p class="tool-desc">Schieb die Stufe und schau, wie lange der Heizleiter pro <strong>Schaltperiode T ≈ 20 s</strong> eingeschaltet ist. (Stufe 1 ≈ 13 % und Stufe 7 = 100 % stehen im Buch, die Stufen dazwischen sind Beispielwerte.)</p>
+  <div class="range-row"><span>Stufe</span><input type="range" id="erStufe" min="1" max="7" value="1" aria-label="Stufe"><span class="stufe" id="erStufeOut">1</span></div>
+  <div class="field-row"><div class="field"><label for="erPmax">Leistung der Kochstelle P<sub>max</sub> (W)</label><input type="number" id="erPmax" value="1800" step="100" min="100"></div></div>
+  <div class="fig" style="margin-bottom:0;"><svg id="erSvg" viewBox="0 0 640 210" role="img" aria-label="P-t-Diagramm"></svg></div>
+  <div class="result" id="erResult"></div>
+</div>
+
+<div class="schema">
+  <div class="schema-row"><div class="schema-key">Schaltperiode<small>Normalkochplatte, Glaskeramik</small></div><div class="schema-val">ca. <strong>20 Sekunden</strong>. Das ständige Ein- und Ausschalten heisst <strong>Pulsweitenmodulation</strong>.</div></div>
+  <div class="schema-row"><div class="schema-key">Herz des Reglers</div><div class="schema-val">ein <strong>beheiztes Bimetall</strong> und eine <strong>Schaltfeder mit Kontakt</strong>. Strom fliesst parallel zum Heizkörper auch durch das Bimetall, es wird warm, biegt sich und öffnet den <strong>Regelkontakt</strong>. Abgekühlt schliesst er wieder.</div></div>
+  <div class="schema-row"><div class="schema-key">Stufe verstellen</div><div class="schema-val">Der <strong>Schaltknebel</strong> dreht eine <strong>Verstellnocke (Kurvenscheibe)</strong>. Sie ändert den Abstand zwischen Bimetall und Kontakt: grösserer Abstand = länger eingeschaltet.</div></div>
+  <div class="schema-row"><div class="schema-key">Diode</div><div class="schema-val">sorgt dafür, dass das Bimetall auf hoher Stufe nur wenig erwärmt wird.</div></div>
+</div>
+<div class="info-box danger"><p><span class="badge exam">Merke</span> <strong>Mit dem Energieregler gibt es keine eigentliche Temperaturregelung!</strong> Er misst keine Temperatur. Er dosiert nur die zugeführte Energie (Leistung × Zeit).</p></div>
+
+<h3>Bauteile im Schema (S. 5.7)</h3>
+<div class="table-wrap"><table>
+  <tr><th>Nr.</th><th>Bauteil</th><th>Aufgabe</th></tr>
+  <tr><td>1</td><td>Glaskeramikkochfeld</td><td>Kochfläche, darunter liegt der Heizkörper</td></tr>
+  <tr><td>2</td><td>Überhitzungsschutz (Stabausdehnungsfühler)</td><td>schaltet ab, wenn das Glas zu heiss wird</td></tr>
+  <tr><td>3</td><td>Heizleiter (Drahtwicklung oder Band)</td><td>erzeugt die Wärme</td></tr>
+  <tr><td>4</td><td>beheiztes Bimetall</td><td>biegt sich bei Wärme und löst den Regelkontakt aus</td></tr>
+  <tr><td>5</td><td>Regelkontakt</td><td>schaltet die Leistung ein und aus</td></tr>
+  <tr><td>6</td><td>Verstellnocken (Kurvenscheibe)</td><td>verstellt den Abstand Bimetall–Kontakt</td></tr>
+  <tr><td>7</td><td>Schaltknebel</td><td>Drehknopf, mit dem man die Stufe wählt</td></tr>
+  <tr><td>8</td><td>Restwärmeanzeige</td><td>Lämpchen: Achtung, Kochfeld noch heiss</td></tr>
+</table></div>
+
+<h2>A2 · Elektronischer Energieregler</h2>
+<ul>
+  <li>Enthält einen <strong>Mikroprozessor</strong>. Der Hersteller programmiert viel feinere Leistungsstufen, Ein-/Ausschaltzeiten und die Schaltperiode.</li>
+  <li>Vorteil: <strong>absolut stufenlos</strong>, und auf der tiefsten Stufe ist die Leistung <strong>noch tiefer</strong> als beim mechanischen Regler → ideal zum <strong>Warmhalten</strong>.</li>
+</ul>
+<div class="info-box"><p><strong>Übung 8.1:</strong> Ein <strong>Zweikreis</strong>-Strahlungsheizkörper (innerer und äusserer Heizkreis) braucht einen <strong>Zweikreis-Energieregler</strong>. Der Regler muss zur Anzahl Heizkreise passen.</p></div>
+
+<h2>A3 · Temperaturregler <span class="badge warn">evtl. nicht geprüft</span></h2>
+<p>Heute nur noch selten im Einsatz, nämlich bei <strong>Automatikkochplatten</strong>. Das gleiche Prinzip steckt aber im <strong>Boiler</strong> (Wassererwärmer).</p>
+<div class="fig">
+  <svg viewBox="0 0 640 120" role="img" aria-label="Wirkungskette Temperaturregler">
+    <defs><marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+    <g font-size="13" fill="var(--ink)">
+      <rect x="6" y="30" width="104" height="54" rx="8" fill="var(--surface-alt)" stroke="var(--border)"/><text x="58" y="54" text-anchor="middle" font-weight="700">Fühler</text><text x="58" y="72" text-anchor="middle" font-size="11" fill="var(--ink-soft)">wird warm</text>
+      <rect x="134" y="30" width="114" height="54" rx="8" fill="var(--surface-alt)" stroke="var(--border)"/><text x="191" y="54" text-anchor="middle" font-weight="700">Öl dehnt sich</text><text x="191" y="72" text-anchor="middle" font-size="11" fill="var(--ink-soft)">im Kapillarrohr</text>
+      <rect x="272" y="30" width="104" height="54" rx="8" fill="var(--surface-alt)" stroke="var(--border)"/><text x="324" y="54" text-anchor="middle" font-weight="700">Druck steigt</text><text x="324" y="72" text-anchor="middle" font-size="11" fill="var(--ink-soft)">geschlossenes System</text>
+      <rect x="400" y="30" width="104" height="54" rx="8" fill="var(--surface-alt)" stroke="var(--border)"/><text x="452" y="54" text-anchor="middle" font-weight="700">Membrane</text><text x="452" y="72" text-anchor="middle" font-size="11" fill="var(--ink-soft)">drückt Schalthebel</text>
+      <rect x="528" y="30" width="106" height="54" rx="8" fill="var(--accent-light)" stroke="var(--accent)"/><text x="581" y="54" text-anchor="middle" font-weight="700">Regelkontakt</text><text x="581" y="72" text-anchor="middle" font-size="11" fill="var(--ink-soft)">Schnappschalter aus</text>
+    </g>
+    <g stroke="var(--accent)" stroke-width="2" marker-end="url(#arA)"><line x1="112" y1="57" x2="131" y2="57"/><line x1="250" y1="57" x2="269" y2="57"/><line x1="378" y1="57" x2="397" y2="57"/><line x1="506" y1="57" x2="525" y2="57"/></g>
+  </svg>
+  <div class="fig-cap">Wärmefühler = Fühler + Kapillarrohr + Membrane + Füllmedium (meist wärmefestes Öl).</div>
+</div>
+<ul>
+  <li>Beim <strong>Aufheizen</strong> wird zuerst der eine, dann der andere Heizkörper abgeschaltet.</li>
+  <li>Beim <strong>Weiterkochen</strong> hält ein Ein- und Ausschalten die eingestellte Temperatur. Je nach Bedarf kommt ein Heizkörper dazu, oder beide.</li>
+  <li>Bauteile (S. 5.8): 1 Heizkörper · 2 Wärmefühler · 3 Kapillarrohr · 4 Ausdehnungsmembrane · 5 Regelkontakt · 6 Schalthebel · 7 Einstellspindel · 8 Abschaltkontakte · 9 Schalterknebel.</li>
+</ul>
+<div class="compare">
+  <div class="compare-col kvg"><h4>Energieregler</h4><ul><li>misst <strong>keine</strong> Temperatur</li><li>dosiert Energie über die Einschaltzeit</li><li>Bimetall + Kontakt, Takt ca. 20 s</li><li>Glaskeramik mit Strahlungsheizkörper (mechanisch oder elektronisch); Induktion nur elektronisch</li></ul></div>
+  <div class="compare-col uvg"><h4>Temperaturregler</h4><ul><li><strong>misst</strong> die Temperatur mit einem Fühler</li><li>schaltet beim Sollwert ab</li><li>Fühler, Kapillarrohr, Membrane, Öl</li><li>Automatikkochplatte, Boiler, Backofen</li></ul></div>
+</div>
+
+<!-- TEIL B -->
+<div class="section-label">Teil B — Backofen · S. 5.9</div>
+<h2>B1 · Aufbau und Beheizungsarten</h2>
+<p>Ein Backofen ist ein <strong>wärmeisolierter Innenraum</strong>, der elektrisch beheizt wird. Wie er backen kann, hängt von <strong>Anzahl und Lage der Heizwicklungen</strong> ab. Heutige Backöfen haben eine <strong>Anschlussleistung von ca. 3–4 kW</strong> (Übung 9.1).</p>
+
+<div class="modes">
+  <div class="mode">
+    <svg viewBox="0 0 160 120" role="img" aria-label="Ober- und Unterhitze"><rect x="10" y="8" width="140" height="104" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/><path d="M22 20 h20 v6 h-20 v6 h20 M48 20 h20 v6 h-20 v6 h20 M74 20 h20 v6 h-20 v6 h20 M100 20 h20 v6 h-20 v6 h20" fill="none" stroke="var(--heat)" stroke-width="2.5"/><rect x="22" y="98" width="116" height="6" fill="var(--heat)"/><g stroke="var(--heat)" stroke-width="1.5"><line x1="40" y1="40" x2="40" y2="56"/><line x1="80" y1="40" x2="80" y2="56"/><line x1="120" y1="40" x2="120" y2="56"/><line x1="40" y1="94" x2="40" y2="78"/><line x1="80" y1="94" x2="80" y2="78"/><line x1="120" y1="94" x2="120" y2="78"/></g><line x1="30" y1="66" x2="130" y2="66" stroke="var(--ink-mute)" stroke-dasharray="4 3"/></svg>
+    <span class="tag">Strahlung + natürliche Konvektion</span><h4>Ober- und Unterhitze</h4><p>Heizspiralen an <strong>Decke und Boden</strong>, getrennt schaltbar. Nur <strong>eine Ebene</strong>. Mit Ventilator dazu heisst er <strong>Umluftofen</strong>.</p>
+  </div>
+  <div class="mode">
+    <svg viewBox="0 0 160 120" role="img" aria-label="Heissluft"><rect x="10" y="8" width="140" height="104" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/><circle cx="80" cy="60" r="22" fill="none" stroke="var(--heat)" stroke-width="3"/><circle cx="80" cy="60" r="10" fill="var(--surface-alt)" stroke="var(--ink-soft)"/><path d="M80 52 l4 8 l-4 8 l-4 -8 z" fill="var(--ink-soft)"/><g fill="none" stroke="var(--heat)" stroke-width="1.6"><path d="M58 44 C34 40 26 30 22 22"/><path d="M58 76 C34 80 26 90 22 98"/><path d="M102 44 C126 40 134 30 138 22"/><path d="M102 76 C126 80 134 90 138 98"/></g><line x1="30" y1="40" x2="130" y2="40" stroke="var(--ink-mute)" stroke-dasharray="4 3"/><line x1="30" y1="84" x2="130" y2="84" stroke="var(--ink-mute)" stroke-dasharray="4 3"/></svg>
+    <span class="tag">Konvektion (erzwungen)</span><h4>Heissluft</h4><p><strong>Ringheizkörper</strong> um den Ventilator an der Rückwand. Luft schneller und gleichmässiger verteilt → <strong>2 Ebenen</strong>, <strong>20–30 °C tiefer</strong> einstellen, spart Energie.</p>
+  </div>
+  <div class="mode">
+    <svg viewBox="0 0 160 120" role="img" aria-label="Grill"><rect x="10" y="8" width="140" height="104" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/><path d="M22 18 h116 M22 24 h116 M22 30 h116" fill="none" stroke="var(--heat)" stroke-width="2.5"/><g stroke="var(--heat)" stroke-width="1.5"><line x1="35" y1="36" x2="30" y2="62"/><line x1="60" y1="36" x2="58" y2="62"/><line x1="85" y1="36" x2="85" y2="62"/><line x1="110" y1="36" x2="112" y2="62"/><line x1="130" y1="36" x2="135" y2="62"/></g><rect x="40" y="66" width="80" height="8" rx="2" fill="var(--ink-mute)"/></svg>
+    <span class="tag">Strahlung (intensiv)</span><h4>Grill</h4><p><strong>Unverdeckte</strong> Heizwendel an der Decke strahlt stark nach unten → Bräunung. Bei manchen Geräten Umluft zuschaltbar.</p>
+  </div>
+  <div class="mode">
+    <svg viewBox="0 0 160 120" role="img" aria-label="Temperaturregelung"><rect x="10" y="8" width="140" height="104" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/><rect x="66" y="18" width="10" height="70" rx="5" fill="none" stroke="var(--cool)" stroke-width="2"/><rect x="69" y="50" width="4" height="36" fill="var(--heat)"/><circle cx="71" cy="94" r="9" fill="var(--heat)"/><text x="92" y="48" font-size="12" fill="var(--ink)">Soll 180 °C</text><text x="92" y="66" font-size="12" fill="var(--ink-soft)">Ist 175 °C</text><text x="92" y="84" font-size="12" fill="var(--success)">→ Heizung ein</text></svg>
+    <span class="tag">Regelung</span><h4>Temperatur halten</h4><p>Ein <strong>Stabausdehnungs-</strong>, <strong>Flüssigkeitsausdehnungsregler</strong> oder <strong>PTC-Widerstand</strong> misst die Temperatur. Beim Sollwert schaltet die Heizung aus, darunter wieder ein.</p>
+  </div>
+</div>
+<div class="info-box"><p><span class="badge exam">Prüfungsstoff</span> Jeder Backofen hat: <strong>Ober- und Unterhitze, Umluft, Heissluft und Grill</strong>. Weitere Arten entstehen durch Kombination.</p></div>
+
+<h2>B2 · Selbstreinigung</h2>
+<div class="compare">
+  <div class="compare-col con"><h4>Pyrolytisch</h4><ul><li>Speisereste werden <strong>verbrannt</strong></li><li>ca. <strong>500 °C</strong> im Innenraum</li><li>Tür wird <strong>automatisch verriegelt</strong></li><li>Gase und Staub über einen <strong>Nachbrenner</strong> ins Abluftsystem</li><li>dauert ca. <strong>4 Stunden</strong></li></ul></div>
+  <div class="compare-col kvg"><h4>Katalytisch <small>(nur noch selten)</small></h4><ul><li><strong>Katalytische Emailschicht</strong> an den Wänden</li><li>beim normalen Backen bei <strong>150–250 °C</strong></li><li>Schmutz wird chemisch umgewandelt und löst sich</li></ul></div>
+</div>
+
+<h2>B3 · Typenschild lesen (Lektion 16.10.)</h2>
+<p style="font-size:0.9rem;color:var(--ink-soft);">Im Unterrichtsplan heisst es «Typenschild von einem Backofen». Die Modellnummer EWF12040W gehört eigentlich zu einer Electrolux-Waschmaschine. Für den Test spielt das keine Rolle: Gelesen wird jedes Typenschild gleich.</p>
+<div class="fig">
+  <svg viewBox="0 0 640 200" role="img" aria-label="Typenschild eines Backofens">
+    <rect x="120" y="20" width="400" height="150" rx="10" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+    <g font-size="15" fill="var(--ink)">
+      <text x="140" y="56" font-weight="700">Mod. EWF12040W   Type HI942861</text>
+      <text x="140" y="86">Prod.No. 914520402 05</text><text x="420" y="86" font-weight="700">IPX4</text>
+      <text x="140" y="116">220–230 V · 50 Hz · 2200 W · Sicherung 10 A</text>
+      <text x="300" y="146">Ser.No. 12345678</text>
+      <text x="430" y="50" font-size="13" fill="var(--ink-soft)">CE · ⊠</text>
+    </g>
+    <g font-size="13" fill="var(--accent)" font-weight="700">
+      <text x="20" y="56">1 Modell</text><text x="20" y="86">2 Produkt-Nr.</text>
+      <text x="540" y="86">3 Schutzart</text><text x="540" y="146">4 Serie-Nr.</text>
+    </g>
+    <g stroke="var(--accent)" stroke-width="1.5"><line x1="96" y1="52" x2="136" y2="52"/><line x1="112" y1="82" x2="136" y2="82"/><line x1="466" y1="82" x2="536" y2="82"/><line x1="440" y1="142" x2="536" y2="142"/></g>
+  </svg>
+  <div class="fig-cap"><strong>IPX4</strong> = geschützt gegen Spritzwasser von allen Seiten (X = Fremdkörperschutz nicht angegeben). 2200 W bei 230 V ergibt ca. 9,6 A, darum reicht hier 10 A. <strong>CE</strong> = erfüllt EU-Vorschriften, durchgestrichene Mülltonne = nicht in den Hauskehricht. Das Modell steht auf der Bestellung, die <strong>Serienummer</strong> braucht der Service für genau dieses Gerät.</div>
+</div>
+
+<!-- TEIL C -->
+<div class="section-label">Teil C — Steamer · S. 5.10</div>
+<h2>C1 · Was ist ein Steamer?</h2>
+<p>Ein Steamer ist ein <strong>Umluft-Backofen, der zusätzlich Heissdampf erzeugt</strong>. Er vereint einen <strong>Dämpfer</strong> (Garen in gesättigtem Dampf) und einen <strong>Umluftofen</strong>. Temperatur <strong>und</strong> Feuchte sind einstellbar: volle Kontrolle über das Garklima.</p>
+<div class="compare">
+  <div class="compare-col pro"><h4>Betriebsarten</h4><ul><li><strong>Dämpfen</strong>: Garen unter wasserdampfgesättigter Garatmosphäre, typisch <strong>100 °C</strong></li><li><strong>Heissluft</strong>: ohne Dampf, je nach Hersteller <strong>30–300 °C</strong></li><li>Mischungen und Spezialprogramme</li></ul></div>
+  <div class="compare-col kvg"><h4>Vorteile</h4><ul><li>kurze Garzeit dank schnellem Lüfter und Kondensation des Dampfes</li><li>schonend: <strong>weniger Nährstoff- und Vitaminverluste</strong> als im Wasser (Übung 10.1)</li><li>mehrere Speisen gleichzeitig <strong>ohne Geschmacksübertragung</strong></li><li>Programme mit mehreren Schritten, elektronisches Kochbuch, z. T. PC-Anschluss</li></ul></div>
+</div>
+<h2>C2 · Zwei Systeme, um Dampf zu machen</h2>
+<div class="fig">
+  <svg viewBox="0 0 640 190" role="img" aria-label="Boilersystem und Einspritzsystem">
+    <g font-size="13" fill="var(--ink)">
+      <text x="150" y="20" text-anchor="middle" font-weight="700">Boilersystem</text>
+      <rect x="40" y="34" width="160" height="130" rx="8" fill="none" stroke="var(--ink-soft)" stroke-width="2"/><text x="120" y="104" text-anchor="middle" fill="var(--ink-soft)">Garraum</text>
+      <rect x="222" y="74" width="60" height="70" rx="6" fill="var(--accent-light)" stroke="var(--accent)"/><text x="252" y="104" text-anchor="middle" font-size="11">Dampf-</text><text x="252" y="118" text-anchor="middle" font-size="11">erzeuger</text>
+      <path d="M222 92 C210 92 210 70 196 70" fill="none" stroke="var(--cool)" stroke-width="2.5"/><text x="210" y="62" font-size="11" fill="var(--cool)">Dampf</text>
+      <text x="470" y="20" text-anchor="middle" font-weight="700">Einspritzsystem</text>
+      <rect x="380" y="34" width="180" height="130" rx="8" fill="none" stroke="var(--ink-soft)" stroke-width="2"/>
+      <circle cx="530" cy="99" r="22" fill="none" stroke="var(--heat)" stroke-width="3"/><circle cx="530" cy="99" r="8" fill="var(--surface-alt)" stroke="var(--ink-soft)"/>
+      <path d="M600 99 h-48" stroke="var(--cool)" stroke-width="2.5"/><text x="568" y="90" font-size="11" fill="var(--cool)">Wasser</text>
+      <g fill="none" stroke="var(--cool)" stroke-width="1.6"><path d="M506 88 C470 80 440 70 420 60"/><path d="M506 110 C470 118 440 128 420 138"/></g>
+      <text x="450" y="104" font-size="11" fill="var(--ink-soft)">Dampf im Garraum</text>
+    </g>
+  </svg>
+  <div class="fig-cap"><strong>Boilersystem</strong>: Dampf entsteht in einem <em>separaten</em> Dampferzeuger und wird bei Bedarf in den Garraum geleitet. <strong>Einspritzsystem</strong>: Wasser trifft den Heizkörper <em>im Kern des rotierenden Lüfterrads</em>, der Dampf entsteht direkt im Garraum.</div>
+</div>
+<div class="info-box warn"><p><span class="badge exam">Installation</span> Steamer brauchen einen <strong>Wasseranschluss oder einen Wassertank</strong> und einen <strong>Wasserablauf</strong>. Elektrisch beheizte Geräte brauchen zum Teil einen <strong>Drehstromanschluss</strong>.</p></div>
+
+<!-- TEIL D -->
+<div class="section-label">Teil D — Mikrowelle · S. 5.11</div>
+<h2>D1 · Warum wird das Essen warm?</h2>
+<div class="fig">
+  <svg viewBox="0 0 640 170" role="img" aria-label="Wassermolekül dreht sich im Wechselfeld">
+    <g font-size="13" fill="var(--ink)">
+      <rect x="20" y="10" width="270" height="18" rx="3" fill="var(--danger-light)" stroke="var(--danger)"/><text x="155" y="24" text-anchor="middle" fill="var(--danger)">+ + + + + + + +</text>
+      <rect x="20" y="140" width="270" height="18" rx="3" fill="var(--info-light)" stroke="var(--info)"/><text x="155" y="154" text-anchor="middle" fill="var(--info)">− − − − − − − −</text>
+      <circle cx="155" cy="62" r="18" fill="var(--heat)"/><text x="155" y="67" text-anchor="middle" fill="#fff" font-weight="700">O</text><text x="182" y="54" fill="var(--danger)" font-weight="700">−</text>
+      <circle cx="130" cy="104" r="12" fill="var(--cool)"/><text x="130" y="108" text-anchor="middle" fill="#fff" font-size="11">H</text>
+      <circle cx="180" cy="104" r="12" fill="var(--cool)"/><text x="180" y="108" text-anchor="middle" fill="#fff" font-size="11">H</text><text x="155" y="124" text-anchor="middle" fill="var(--info)" font-weight="700">+</text>
+      <text x="320" y="78" font-size="22" fill="var(--accent)">⇄</text>
+      <rect x="370" y="10" width="250" height="18" rx="3" fill="var(--info-light)" stroke="var(--info)"/><text x="495" y="24" text-anchor="middle" fill="var(--info)">− − − − − − − −</text>
+      <rect x="370" y="140" width="250" height="18" rx="3" fill="var(--danger-light)" stroke="var(--danger)"/><text x="495" y="154" text-anchor="middle" fill="var(--danger)">+ + + + + + + +</text>
+      <circle cx="495" cy="106" r="18" fill="var(--heat)"/><text x="495" y="111" text-anchor="middle" fill="#fff" font-weight="700">O</text>
+      <circle cx="470" cy="62" r="12" fill="var(--cool)"/><text x="470" y="66" text-anchor="middle" fill="#fff" font-size="11">H</text>
+      <circle cx="520" cy="62" r="12" fill="var(--cool)"/><text x="520" y="66" text-anchor="middle" fill="#fff" font-size="11">H</text>
+    </g>
+  </svg>
+  <div class="fig-cap">Wasser (H₂O) ist ein <strong>Dipol</strong>: Der Sauerstoff zieht die Elektronen stärker an und wirkt negativ, die zwei Wasserstoffatome positiv. Die Mikrowelle polt <strong>milliardenfach pro Sekunde</strong> um, die Moleküle drehen sich mit und <strong>reiben</strong> sich an den Nachbarn → Wärme.</div>
+</div>
+<ul>
+  <li>Die Wärme wird <strong>nicht von aussen zugeführt</strong>, sie entsteht <strong>direkt im Essen</strong>.</li>
+  <li>Mikrowellen sind <strong>elektromagnetische Wellen</strong> (wie Licht, UV- oder Röntgenstrahlen). Sie wirken besonders stark auf <strong>Wassermoleküle</strong>, und fast alle Speisen enthalten Wasser.</li>
+  <li>Frequenz: <strong>2450 MHz = 2,45 GHz</strong> (Übung 11.2).</li>
+</ul>
+
+<h2>D2 · Aufbau</h2>
+<p>Den Aufbau mit allen Bauteilen findest du interaktiv im Tab <strong>Aufbau</strong>. Kurz:</p>
+<div class="flow" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0;">
+  <span class="fact acc">Netzgerät</span> → <span class="fact acc">Magnetron</span> erzeugt die Wellen → <span class="fact acc">Hohlleiter</span> führt sie → <span class="fact acc">Wellenrührer</span> verteilt sie → <span class="fact">Garraum</span> mit Metallwänden, die reflektieren
+</div>
+<p>Dazu: <strong>Türverriegelung</strong> und <strong>zwei Sicherheitsschalter</strong> (Gerät strahlt nur bei geschlossener Tür) und ein <strong>Kühlgerät</strong> (Ventilator) für Magnetron und Netzgerät.</p>
+
+<h2>D3 · Was geht, was geht nicht?</h2>
+<div class="compare">
+  <div class="compare-col pro"><h4>Geeignetes Geschirr (Übung 11.1)</h4><ul><li><strong>Glas</strong></li><li><strong>Keramik</strong>, Porzellan (ohne Goldrand)</li><li><strong>mikrowellengeeigneter Kunststoff</strong></li></ul></div>
+  <div class="compare-col con"><h4>Nicht geeignet</h4><ul><li><strong>Metall</strong>, Alufolie, Goldrand: reflektiert die Wellen, kann Funken schlagen</li><li>Kunststoff, der nicht dafür gemacht ist: kann schmelzen</li></ul></div>
+</div>
+<div class="info-box danger"><p><span class="badge exam">Übung 11.3</span> <strong>Warum kann eine reine Mikrowelle nicht backen?</strong> Die Speise wird nur so heiss, wie das Wasser darin werden kann, also ca. <strong>100 °C</strong>. Für Kruste und Bräunung braucht es trockene Hitze von 150–250 °C (Strahlung, Heissluft). Darum gibt es <strong>Kombigeräte mit Grill oder Heissluft</strong>.</p></div>
+<div class="info-box"><p><strong>Eindringtiefe (Übung 11.2):</strong> Im Buch steht dazu keine Zahl, nur die Frage. Deine Antwort aus dem Unterricht: <strong>6 cm</strong>. Allgemein gilt: nur <strong>wenige Zentimeter</strong>, den Rest der Speise erwärmt die Wärmeleitung.</p></div>
+
+</section>
+
+<!-- ═════════════ AUFBAU ═════════════ -->
+<section class="tab-pane" id="aufbau">
+<p class="intro">«Aufbau kennen» heisst: Bauteile benennen <strong>und</strong> sagen, was sie tun. Tippe auf ein Bauteil im Bild oder in der Liste. Mit «Beschriftung aus» testest du dich selbst.</p>
+
+<div class="tool">
+  <h3>Backofen: Frontansicht</h3>
+  <div class="btn-row"><button class="btn ghost sm dg-toggle" data-fig="ofenFig" type="button">Beschriftung aus</button></div>
+  <div class="fig" id="ofenFig">
+    <svg viewBox="0 0 640 360" role="img" aria-label="Aufbau Backofen">
+      <rect x="20" y="10" width="600" height="340" rx="14" fill="var(--surface-alt)" stroke="var(--ink-soft)" stroke-width="2"/>
+      <g class="hot" data-d="ofen" data-p="isolation"><rect x="40" y="30" width="560" height="300" rx="10" fill="none" stroke="var(--warn)" stroke-width="10" stroke-dasharray="2 6"/></g>
+      <g class="hot" data-d="ofen" data-p="garraum"><rect x="80" y="60" width="400" height="230" rx="6" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="2"/></g>
+      <g class="hot" data-d="ofen" data-p="oberhitze"><path d="M100 74 H460" stroke="var(--heat)" stroke-width="5" opacity="0.55"/></g>
+      <g class="hot" data-d="ofen" data-p="grill"><path d="M110 86 h40 v8 h-40 v8 h40 M170 86 h40 v8 h-40 v8 h40 M230 86 h40 v8 h-40 v8 h40 M290 86 h40 v8 h-40 v8 h40 M350 86 h40 v8 h-40 v8 h40 M410 86 h40 v8 h-40 v8 h40" fill="none" stroke="var(--heat)" stroke-width="2.5"/></g>
+      <g class="hot" data-d="ofen" data-p="unterhitze"><rect x="100" y="298" width="360" height="10" rx="3" fill="var(--heat)" opacity="0.75"/></g>
+      <g class="hot" data-d="ofen" data-p="ringheiz"><circle cx="280" cy="180" r="44" fill="none" stroke="var(--heat)" stroke-width="5"/></g>
+      <g class="hot" data-d="ofen" data-p="ventilator"><circle cx="280" cy="180" r="22" fill="var(--surface-alt)" stroke="var(--ink-soft)" stroke-width="2"/><path d="M280 162 l7 18 l-7 18 l-7 -18 z" fill="var(--ink-soft)"/></g>
+      <g class="hot" data-d="ofen" data-p="schienen"><path d="M84 140 h18 M84 190 h18 M84 240 h18 M476 140 h-18 M476 190 h-18 M476 240 h-18" stroke="var(--ink)" stroke-width="4"/></g>
+      <g class="hot" data-d="ofen" data-p="fuehler"><rect x="420" y="112" width="8" height="60" rx="4" fill="var(--cool)"/></g>
+      <g class="hot" data-d="ofen" data-p="verriegelung"><rect x="500" y="60" width="70" height="26" rx="5" fill="var(--danger)"/></g>
+      <g class="hot" data-d="ofen" data-p="nachbrenner"><rect x="500" y="110" width="70" height="44" rx="5" fill="var(--ink-mute)"/><path d="M535 110 V40" stroke="var(--ink-mute)" stroke-width="6"/></g>
+      <g class="lbl" font-size="12" font-weight="700" fill="var(--ink)">
+        <text x="300" y="52">2 Oberhitze</text><text x="112" y="122">3 Grill-Heizwendel</text>
+        <text x="200" y="326">4 Unterhitze (unter dem Boden)</text>
+        <text x="330" y="236">6 Ringheizkörper</text><text x="248" y="150" font-size="11">5 Ventilator</text>
+        <text x="108" y="262" font-size="11">8 Einschubschienen</text><text x="376" y="190" font-size="11">7 Fühler</text>
+        <text x="500" y="102" font-size="11">9 Türverriegelung</text><text x="500" y="172" font-size="11">10 Nachbrenner</text>
+        <text x="160" y="160" font-size="11" fill="var(--ink-soft)">1 Garraum</text><text x="500" y="320" font-size="11" fill="var(--warn)">11 Isolation</text>
+      </g>
+    </svg>
+  </div>
+  <div class="part-list" id="ofenParts"></div>
+  <div class="part-info" id="ofenInfo"><p style="color:var(--ink-mute);margin:0;">Tippe auf ein Bauteil.</p></div>
+</div>
+
+<div class="tool">
+  <h3>Steamer: Aufbau</h3>
+  <div class="btn-row"><button class="btn ghost sm dg-toggle" data-fig="steamFig" type="button">Beschriftung aus</button></div>
+  <div class="fig" id="steamFig">
+    <svg viewBox="0 0 640 330" role="img" aria-label="Aufbau Steamer">
+      <rect x="20" y="10" width="600" height="300" rx="14" fill="var(--surface-alt)" stroke="var(--ink-soft)" stroke-width="2"/>
+      <g class="hot" data-d="steam" data-p="blende"><rect x="40" y="24" width="400" height="30" rx="5" fill="var(--ink-mute)"/><rect x="60" y="31" width="80" height="16" rx="3" fill="var(--success-light)"/></g>
+      <g class="hot" data-d="steam" data-p="garraum"><rect x="40" y="66" width="400" height="200" rx="6" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="2"/></g>
+      <g class="hot" data-d="steam" data-p="behaelter"><rect x="70" y="100" width="180" height="22" rx="3" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 3"/><rect x="70" y="160" width="180" height="22" rx="3" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 3"/><rect x="70" y="220" width="180" height="22" rx="3" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 3"/></g>
+      <g class="hot" data-d="steam" data-p="luefter"><circle cx="360" cy="166" r="42" fill="none" stroke="var(--heat)" stroke-width="5"/><circle cx="360" cy="166" r="20" fill="var(--surface-alt)" stroke="var(--ink-soft)" stroke-width="2"/><path d="M360 148 l7 18 l-7 18 l-7 -18 z" fill="var(--ink-soft)"/></g>
+      <g class="hot" data-d="steam" data-p="boiler"><rect x="470" y="110" width="70" height="90" rx="8" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2"/><path d="M470 140 H440" stroke="var(--cool)" stroke-width="4"/></g>
+      <g class="hot" data-d="steam" data-p="zulauf"><path d="M600 230 H540 V200" fill="none" stroke="var(--cool)" stroke-width="5"/><rect x="560" y="236" width="48" height="40" rx="4" fill="var(--info-light)" stroke="var(--info)"/></g>
+      <g class="hot" data-d="steam" data-p="ablauf"><path d="M240 266 V296 H90" fill="none" stroke="var(--ink-soft)" stroke-width="5"/></g>
+      <g class="lbl" font-size="12" font-weight="700" fill="var(--ink)">
+        <text x="150" y="44" font-size="11" fill="#fff">1 Bedienblende · Programme</text>
+        <text x="270" y="92" font-size="11" fill="var(--ink-soft)">2 Garraum</text>
+        <text x="80" y="96" font-size="11">3 Garbehälter (gelocht)</text>
+        <text x="306" y="232" font-size="11">4 Lüfterrad + Heizkörper</text>
+        <text x="472" y="100" font-size="11">5 Dampferzeuger</text>
+        <text x="548" y="292" font-size="11">6 Wasser</text>
+        <text x="96" y="290" font-size="11">7 Wasserablauf</text>
+      </g>
+    </svg>
+  </div>
+  <div class="part-list" id="steamParts"></div>
+  <div class="part-info" id="steamInfo"><p style="color:var(--ink-mute);margin:0;">Tippe auf ein Bauteil.</p></div>
+</div>
+
+<div class="tool">
+  <h3>Mikrowelle: Schnittbild</h3>
+  <div class="btn-row"><button class="btn ghost sm dg-toggle" data-fig="mwFig" type="button">Beschriftung aus</button></div>
+  <div class="fig" id="mwFig">
+    <svg viewBox="0 0 640 330" role="img" aria-label="Schnittbild Mikrowellengerät">
+      <rect x="20" y="20" width="600" height="290" rx="14" fill="var(--surface-alt)" stroke="var(--ink-soft)" stroke-width="2"/>
+      <g class="hot" data-d="mw" data-p="garraum"><rect x="60" y="90" width="330" height="180" rx="6" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="2"/></g>
+      <g fill="none" stroke="var(--success)" stroke-width="1.5" opacity="0.8"><path d="M120 110 L200 250 L280 120 L360 240"/><path d="M90 200 L180 110 L300 260 L380 150"/></g>
+      <g class="hot" data-d="mw" data-p="wellenruehrer"><path d="M190 92 l30 -10 l30 10 l-30 10 z" fill="var(--ink-mute)" stroke="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="hohlleiter"><path d="M250 60 H470 V120 H440 V84 H250 z" fill="#E8C34A" stroke="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="magnetron"><rect x="440" y="120" width="80" height="70" rx="6" fill="#E07B2E" stroke="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="netzgeraet"><rect x="440" y="215" width="80" height="70" rx="6" fill="var(--ink-mute)" stroke="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="kuehlgeraet"><circle cx="570" cy="190" r="26" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="2"/><path d="M570 172 l6 18 l-6 18 l-6 -18 z" fill="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="tuer"><rect x="30" y="80" width="22" height="200" rx="4" fill="var(--info-light)" stroke="var(--info)"/></g>
+      <g class="hot" data-d="mw" data-p="verriegelung"><rect x="40" y="40" width="40" height="22" rx="4" fill="var(--danger)" stroke="var(--ink-soft)"/></g>
+      <g class="hot" data-d="mw" data-p="sicherheit"><rect x="96" y="40" width="34" height="22" rx="4" fill="var(--warn)" stroke="var(--ink-soft)"/><rect x="150" y="282" width="34" height="18" rx="4" fill="var(--warn)" stroke="var(--ink-soft)"/></g>
+      <g class="lbl" font-size="13" font-weight="700" fill="var(--ink)">
+        <text x="210" y="190">Garraum</text>
+        <text x="186" y="76" font-size="12">Wellenrührer</text>
+        <text x="300" y="54">Hohlleiter</text>
+        <text x="446" y="160" font-size="12" fill="#fff">Magnetron</text>
+        <text x="446" y="255" font-size="12" fill="#fff">Netzgerät</text>
+        <text x="540" y="236" font-size="12">Kühlgerät</text>
+        <text x="58" y="300" font-size="12">Sicherheitsschalter</text>
+        <text x="136" y="36" font-size="12">Türverriegelung · Sicherheitsschalter</text>
+        <text x="22" y="76" font-size="11">Tür</text>
+      </g>
+    </svg>
+  </div>
+  <div class="part-list" id="mwParts"></div>
+  <div class="part-info" id="mwInfo"><p style="color:var(--ink-mute);margin:0;">Tippe auf ein Bauteil.</p></div>
+</div>
+
+<div class="tool">
+  <h3>Trainer: Welches Bauteil ist das?</h3>
+  <p class="tool-desc">Lies die Beschreibung und wähle das Bauteil. Alle Geräte gemischt.</p>
+  <div class="wz-meta"><span id="btCount">Frage 1</span><span id="btScore">0 richtig</span></div>
+  <div class="wz-case" id="btCase"></div>
+  <div class="wz-opts" id="btOpts"></div>
+  <div id="btExplain"></div>
+  <div class="btn-row" style="margin-top:12px;"><button class="btn" id="btNext" type="button">Nächste Frage ›</button><button class="btn ghost" id="btRestart" type="button">Neu mischen</button></div>
+</div>
+
+<h2>Aufbau auf einen Blick</h2>
+<div class="table-wrap"><table>
+  <tr><th>Gerät</th><th>Bauteile</th><th>Wie entsteht die Wärme?</th></tr>
+  <tr><td><strong>Backofen</strong></td><td>wärmeisolierter Garraum, Oberhitze und Grill-Heizwendel an der Decke, Unterhitze unter dem Boden, Ventilator mit Ringheizkörper an der Rückwand, Temperaturfühler (Stab-, Flüssigkeitsausdehnung oder PTC), Einschubschienen, bei Pyrolyse Türverriegelung + Nachbrenner</td><td>Strahlung, Konvektion, Wärmeleitung übers Blech</td></tr>
+  <tr><td><strong>Steamer</strong></td><td>Umluftofen (Lüfterrad + Heizkörper) + Dampferzeuger (Boiler) <em>oder</em> Heizkörper im Lüfterrad (Einspritzung), gelochte Garbehälter, Wasseranschluss/Tank, Ablauf, Elektronik mit Programmen</td><td>Dampf (Kondensation) und Heissluft</td></tr>
+  <tr><td><strong>Mikrowelle</strong></td><td>Magnetron, Hohlleiter, Wellenrührer, Garraum mit Metallwänden, Türverriegelung, 2 Sicherheitsschalter, Netzgerät, Kühlgerät</td><td>direkt im Essen (Wassermoleküle reiben)</td></tr>
+  <tr><td><strong>Glaskeramik-Kochfeld</strong></td><td>Glaskeramik, Strahlungsheizkörper (1- oder 2-Kreis), Überhitzungsschutz (Stabausdehnungsfühler), Energieregler (Bimetall, Regelkontakt, Nocke, Knebel), Restwärmeanzeige</td><td>Strahlung durchs Glas, Wärmeleitung in die Pfanne</td></tr>
+</table></div>
+</section>
+
+<!-- ═════════════ ÜBUNGEN ═════════════ -->
+<section class="tab-pane" id="uebungen">
+<p class="intro">Alle Übungen von den Seiten 5.7–5.11 mit <span class="hand">deiner Antwort aus dem Buch</span> und einer Musterlösung. «Aufgaben 7–11» sind die Übungen 8.1, 9.1, 10.1 und 11.1–11.3; auf S. 5.7 steht keine Übung. Erst selber antworten, dann aufdecken.</p>
+<div id="ueList"></div>
+</section>
+
+<!-- ═════════════ KÜCHENPLAN ═════════════ -->
+<section class="tab-pane" id="rechner">
+<p class="intro">Der Arbeitsauftrag «Küchenplan» vom 16.10.: Leistung jedes Geräts, Strom, Vorsicherung, Leiterzahl und Querschnitt. Werte ändern, alles rechnet sofort neu.</p>
+<div class="info-box"><p><strong>Formeln:</strong> Drehstrom (3-phasig, 400 V): <strong>I = P ÷ (√3 · 400 V) = P ÷ 693 V</strong>. Einphasig (230 V): <strong>I = P ÷ 230 V</strong>. Dann die nächstgrössere Sicherung wählen. Zuerst auf dem Typenschild schauen, für welche Spannung das Gerät gebaut ist.</p><p><strong>Achtung:</strong> P ÷ 693 V gilt nur, wenn die Leistung gleichmässig auf L1, L2 und L3 verteilt ist. Bei Kochfeld und Backofen ist das oft nicht so; dann zählt der Strom der am stärksten belasteten Phase (Typenschild, Montageanleitung).</p></div>
+<div class="tool">
+  <h3>Rechner Küchenplan</h3>
+  <div class="table-wrap"><table class="k-table" id="kTable">
+    <tr><th>Gerät</th><th>Leistung (W)</th><th>Anschluss</th><th class="num">Strom</th><th>Sicherung</th><th>Leitung</th></tr>
+  </table></div>
+  <div class="btn-row"><button class="btn ghost sm" id="kAdd" type="button">+ Gerät</button><button class="btn ghost sm" id="kReset" type="button">Beispiel laden</button></div>
+  <div class="info-box warn" style="margin-bottom:0;"><p><strong>Richtwerte</strong> für Kupfer, normale Verlegung: bis 13 A → 1,5 mm², bis 16 A → 2,5 mm², bis 25 A → 4 mm², bis 32 A → 6 mm² (genau entscheiden Verlegeart und Häufung nach NIN). In der Praxis wird ein Kochfeld meist mit 3 × 16 A und 5 × 2,5 mm² angeschlossen, auch wenn die Schulrechnung weniger ergibt. Einphasig 3 Leiter (L, N, PE), Drehstrom 5 Leiter (L1, L2, L3, N, PE). Die Leistungen sind typische Werte, vergleiche mit deiner Lösung vom 16.10.</p></div>
+</div>
+<div class="card">
+  <div class="card-title"><span class="num">Zusatz</span><h3>Mikrowelle und Wasserkocher auf der Küchenablage</h3></div>
+  <p>Mikrowelle ca. <span class="fact">1'200 W</span> + Wasserkocher ca. <span class="fact">2'200 W</span> = <span class="fact">3'400 W</span> → I = 3'400 W ÷ 230 V ≈ <strong>14,8 A</strong>.</p>
+  <p><strong>Worauf achten?</strong> Eine normale Steckdose <strong>Typ 13 ist nur für 10 A</strong> (ca. 2'300 W) gebaut. Beide Geräte an <strong>einer</strong> Steckdose oder einem Mehrfachstecker überlasten sie. Darum: die Geräte an Steckdosen auf <strong>zwei verschiedenen Stromkreisen</strong> anschliessen. Zwei Steckdosen am gleichen Stromkreis helfen nicht, dann fliessen trotzdem 14,8 A über dieselbe Sicherung und Leitung. Eine grössere Sicherung ist keine Lösung: Leitung und Steckdose bestimmen die Absicherung.</p>
+</div>
+<div class="card">
+  <div class="card-title"><span class="num">Erkenntnisse</span><h3>Was du aus dem Küchenplan mitnimmst</h3></div>
+  <ul>
+    <li>Grosse Geräte wie das Kochfeld werden <strong>dreiphasig an 3 × 400 V</strong> angeschlossen (I = P ÷ 693 V).</li>
+    <li>Backofen und Steamer bekommen je einen <strong>eigenen Stromkreis</strong>.</li>
+    <li>Jede Leitung wird nach dem Strom <strong>abgesichert</strong>, und der <strong>Querschnitt passt zur Sicherung</strong>.</li>
+    <li>Einphasig 3 Leiter (L, N, PE), dreiphasig 5 Leiter (L1, L2, L3, N, PE).</li>
+    <li>Steckdosen auf der Ablage auf <strong>mehrere Stromkreise</strong> verteilen, weil eine Steckdose Typ 13 nur 10 A trägt.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ═════════════ BEGRIFFE ═════════════ -->
+<section class="tab-pane" id="begriffe">
+<p class="intro">Die Fachbegriffe der Seiten 5.7–5.11 und der Lektion. Such oder filtere nach Gerät.</p>
+<input type="text" class="begriff-search" id="begriffSearch" placeholder="Begriff suchen …">
+<div class="cat-filter" id="catFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="regler">Energie-/Temperaturregler</button>
+  <button class="cat-chip" data-cat="ofen">Backofen</button>
+  <button class="cat-chip" data-cat="steamer">Steamer</button>
+  <button class="cat-chip" data-cat="mw">Mikrowelle</button>
+  <button class="cat-chip" data-cat="inst">Installation</button>
+</div>
+<div class="begriff-grid" id="begriffGrid"></div>
+</section>
+
+<!-- ═════════════ KARTEIKARTEN ═════════════ -->
+<section class="tab-pane" id="karten">
+<p class="intro">Karte antippen zum Umdrehen. Mit ← → blättern, Leertaste dreht um.</p>
+<div class="cat-filter" id="cardFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen</button>
+  <button class="cat-chip" data-cat="regler">Regler</button>
+  <button class="cat-chip" data-cat="ofen">Backofen</button>
+  <button class="cat-chip" data-cat="steamer">Steamer</button>
+  <button class="cat-chip" data-cat="mw">Mikrowelle</button>
+  <button class="cat-chip" data-cat="inst">Installation</button>
+</div>
+<div class="flash-stage"><div class="flash-card" id="flashCard" onclick="flipCard()"><span class="side-label" id="flashSide">Frage</span><span class="law-ref-flash" id="flashRef"></span><div id="flashContent" class="flash-front">Karteikarten werden geladen …</div></div></div>
+<p class="flash-hint">Tippen oder Leertaste zum Umdrehen</p>
+<div class="flash-controls"><button class="flash-btn" onclick="prevCard()">‹ Zurück</button><span class="flash-counter" id="flashCounter">0 / 0</span><button class="flash-btn" onclick="nextCard()">Weiter ›</button></div>
+<div class="flash-controls"><button class="flash-btn bad" onclick="rateCard(false)">Nochmal</button><button class="flash-btn good" onclick="rateCard(true)">Sitzt</button><button class="flash-btn" onclick="shuffleCards()">Mischen</button><button class="flash-btn" onclick="resetCards()">Reset</button></div>
+<div class="flash-stats"><span>Sitzt: <strong id="statKnown">0</strong></span><span>Nochmal: <strong id="statUnknown">0</strong></span><span>Offen: <strong id="statOpen">0</strong></span></div>
+</section>
+
+<!-- ═════════════ QUIZ ═════════════ -->
+<section class="tab-pane" id="quiz">
+<p class="intro">Prüfungsfragen zu allen fünf Seiten. Erst selber antworten, dann aufdecken.</p>
+<div class="btn-row" style="margin-bottom:18px;"><button class="btn ghost sm" onclick="revealAll(true)">Alle Lösungen zeigen</button><button class="btn ghost sm" onclick="revealAll(false)">Alle verstecken</button></div>
+<div id="quizList"></div>
+</section>
+
+<!-- ═════════════ PROBETEST ═════════════ -->
+<section class="tab-pane" id="probetest">
+<p class="intro">Probetest wie ein Grosstest: 30 Minuten, ohne Hilfsmittel. Antworten aufschreiben, dann Lösung aufdecken und dir Punkte geben. Note = Punkte ÷ Maximum × 5 + 1.</p>
+<div class="btn-row" style="margin-bottom:14px;"><button class="btn" id="ptStart" type="button">Timer starten (30:00)</button><button class="btn ghost" id="ptReveal" type="button">Alle Lösungen zeigen</button><button class="btn ghost" id="ptReset" type="button">Zurücksetzen</button></div>
+<div id="ptList"></div>
+<div class="pt-total"><span class="timer" id="ptTimer">30:00</span><span>Punkte: <strong id="ptPoints">0</strong> / <span id="ptMax">0</span></span><span class="big" id="ptNote">Note –</span></div>
+</section>
+
+<!-- ═════════════ LERNPLAN ═════════════ -->
+<section class="tab-pane" id="lernplan">
+<p class="intro">Der Test ist <strong>morgen, Fr 23.10.</strong> Kurze Blöcke heute Abend und ein Check morgen früh. Abhaken wird im Browser gespeichert.</p>
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">1</div><div class="day-content"><h4>Heute · 20 Min. · Backofen</h4><ul class="day-tasks"><li>Spickzettel lesen, dann Teil B</li><li>Die 4 Beheizungsarten mit Wärmeübertragung aus dem Kopf aufschreiben</li><li>Tab Aufbau: Backofen mit «Beschriftung aus», bis alle Teile sitzen</li><li>Pyrolyse vs. katalytisch: je 3 Merkmale</li><li>Quiz Q1–Q12</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">2</div><div class="day-content"><h4>Heute · 20 Min. · Steamer und Mikrowelle</h4><ul class="day-tasks"><li>Teil C und D lesen</li><li>Tab Aufbau: Steamer und Mikrowelle mit «Beschriftung aus», bis die Teile sitzen (Mikrowelle: 8 Bauteile aus dem Buch, Sicherheitsschalter 2×)</li><li>Boiler- vs. Einspritzsystem in je einem Satz</li><li>Quiz Q13–Q26</li></ul></div></div>
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Pause</strong><p>Die drei Geräte sitzen. Jetzt Typenschild, Strom und der Energieregler (Übung 8.1).</p></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">3</div><div class="day-content"><h4>Heute · 15 Min. · Typenschild, Strom, Regler</h4><ul class="day-tasks"><li>Typenschild: 4 Nummern erklären können, IPX4</li><li>Küchenplan-Rechner einmal durchspielen, P ÷ 693 V auswendig</li><li>Teil A: Energieregler-Simulator, «keine eigentliche Temperaturregelung», Übung 8.1 (Zweikreis); Temperaturregler nur kurz</li><li>Quiz Q27–Q37 (Regler, Strom, Typenschild, Sicherheitsregeln)</li><li>Trainer «Welches Bauteil?» eine Runde</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">4</div><div class="day-content"><h4>Heute · 30 Min. · Probetest</h4><ul class="day-tasks"><li>Probetest mit Timer, ehrlich bewerten</li><li>Was falsch war: Karteikarten dazu auf «Nochmal»</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">5</div><div class="day-content"><h4>Morgen früh · 10 Min. · Letzter Check</h4><ul class="day-tasks"><li>Nur die «Nochmal»-Karten</li><li>Spickzettel einmal laut lesen</li><li>Kein neuer Stoff</li></ul></div></div>
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Im Test</strong><p>Bei jeder Frage zum Aufbau: Bauteil nennen <em>und</em> sagen, was es tut. Bei Wärme: Strahlung, Konvektion oder Leitung? Bei Strom: 3-phasig durch 693 V.</p></div></div>
+</section>
+
+</div>
+
+<script>
+// ═══ TABS ═══
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.tab).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}));
+function toggleSol(btn) {
+  const sol = btn.nextElementSibling;
+  const shown = sol.classList.toggle('show');
+  btn.textContent = shown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', shown);
+}
+function revealAll(show) {
+  document.querySelectorAll('#quiz .reveal-btn').forEach(btn => {
+    btn.nextElementSibling.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+const fmt = (n, d = 1) => n.toLocaleString('de-CH', {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/\.(\d+)$/, ',$1');
+
+// ═══ ENERGIEREGLER-SIMULATOR ═══
+const DUTY = {1: 0.13, 2: 0.25, 3: 0.38, 4: 0.5, 5: 0.63, 6: 0.8, 7: 1};
+function drawER() {
+  const st = +document.getElementById('erStufe').value;
+  const pmax = parseFloat(document.getElementById('erPmax').value) || 0;
+  const d = DUTY[st];
+  document.getElementById('erStufeOut').textContent = st;
+  const x0 = 50, y0 = 170, w = 560, h = 120, periods = 4, pw = w / periods;
+  let s = `<line x1="${x0}" y1="${y0}" x2="${x0 + w + 10}" y2="${y0}" stroke="var(--ink)" stroke-width="1.5"/><line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 - h - 20}" stroke="var(--ink)" stroke-width="1.5"/>`;
+  s += `<text x="${x0 - 8}" y="${y0 - h + 4}" text-anchor="end" font-size="12" fill="var(--ink)">P<tspan font-size="9" dy="3">max</tspan></text><text x="${x0 + w + 14}" y="${y0 + 4}" font-size="12" fill="var(--ink)">t</text>`;
+  s += `<line x1="${x0}" y1="${y0 - h}" x2="${x0 + w}" y2="${y0 - h}" stroke="var(--ink-mute)" stroke-dasharray="4 4"/>`;
+  for (let i = 0; i < periods; i++) {
+    const px = x0 + i * pw;
+    s += `<rect x="${px}" y="${y0 - h}" width="${(pw * d).toFixed(1)}" height="${h}" fill="var(--heat)" opacity="0.55"/>`;
+    s += `<line x1="${px}" y1="${y0 + 4}" x2="${px}" y2="${y0 + 14}" stroke="var(--ink-soft)"/><text x="${px + pw / 2}" y="${y0 + 26}" text-anchor="middle" font-size="11" fill="var(--ink-soft)">T ≈ 20 s</text>`;
+  }
+  const ya = y0 - h * d;
+  s += `<line x1="${x0}" y1="${ya}" x2="${x0 + w}" y2="${ya}" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="8 5"/><text x="${x0 + w - 4}" y="${ya - 6}" text-anchor="end" font-size="12" font-weight="700" fill="var(--accent)">Durchschnitt ${Math.round(d * 100)} %</text>`;
+  document.getElementById('erSvg').innerHTML = s;
+  document.getElementById('erResult').innerHTML = `<div class="split"><div class="big">${fmt(20 * d)} s<small>ein pro Schaltperiode (von 20 s)</small></div><div class="big">${Math.round(pmax * d)} W<small>durchschnittliche Leistung</small></div></div>
+    <p style="margin:10px 0 0;font-size:0.9rem;">${st === 7 ? 'Höchste Stufe: Der Heizleiter wird <strong>nie abgeschaltet</strong>, 100 % Leistung.' : `Der Heizleiter hat immer die volle Leistung ${pmax} W, aber nur ${Math.round(d * 100)} % der Zeit. Es wird keine Temperatur gemessen.`}</p>`;
+}
+['erStufe', 'erPmax'].forEach(id => document.getElementById(id).addEventListener('input', drawER));
+drawER();
+
+// ═══ AUFBAU-DIAGRAMME ═══
+const DIAG = {
+  ofen: { parts: 'ofenParts', info: 'ofenInfo', data: {
+    garraum: ['Garraum', 'Wärmeisolierter Innenraum, in dem gebacken wird.'],
+    oberhitze: ['Oberhitze-Heizkörper', 'An der Decke. Zusammen mit der Unterhitze: Wärme durch Strahlung und natürliche Konvektion, nur 1 Ebene.'],
+    grill: ['Grill-Heizwendel', 'Unverdeckt an der Decke, strahlt intensiv nach unten → starke Bräunung. Oben offen = Teil der «Mischlösung».'],
+    unterhitze: ['Unterhitze-Heizkörper', 'Verdeckt unter dem Ofenboden (unten gedeckt, darum leicht zu putzen). Getrennt von der Oberhitze schaltbar.'],
+    ventilator: ['Ventilator', 'An der Rückwand. Verteilt die Wärme (Umluft) bzw. die Heissluft schnell und gleichmässig.'],
+    ringheiz: ['Ringheizkörper', 'Ringförmig um den Ventilator: erhitzt die Luft für Heissluft → 2 Ebenen, 20–30 °C tiefer einstellen.'],
+    fuehler: ['Temperaturfühler', 'Stabausdehnungs-, Flüssigkeitsausdehnungsregler oder PTC-Widerstand. Beim Sollwert schaltet die Heizung aus.'],
+    schienen: ['Einschubschienen', 'Die Ebenen für Blech und Rost. Mit Heissluft kann man 2 Ebenen gleichzeitig nutzen.'],
+    verriegelung: ['Türverriegelung', 'Verriegelt die Tür bei der Pyrolyse automatisch, weil es innen ca. 500 °C heiss wird.'],
+    nachbrenner: ['Nachbrenner mit Abluft', 'Verbrennt bei der Pyrolyse Gase und Staub und führt sie ins Abluftsystem.'],
+    isolation: ['Wärmeisolation', 'Hält die Wärme im Garraum und die Aussenseite kühl.']
+  } },
+  steam: { parts: 'steamParts', info: 'steamInfo', data: {
+    blende: ['Bedienblende mit Elektronik', 'Garprogramme mit mehreren Schritten, elektronisches Kochbuch, zum Teil PC-Anschluss.'],
+    garraum: ['Garraum', 'Hier wird mit Dampf (ca. 100 °C) oder Heissluft (30–300 °C) gegart. Temperatur und Feuchte sind einstellbar.'],
+    behaelter: ['Garbehälter (gelocht)', 'Mehrere Speisen gleichzeitig, ohne Geschmacksübertragung.'],
+    luefter: ['Lüfterrad mit Heizkörper', 'Der Umluftofen im Steamer. Beim Einspritzsystem sitzt der Heizkörper im Kern des Lüfterrads und macht den Dampf direkt im Garraum.'],
+    boiler: ['Dampferzeuger (Boilersystem)', 'Getrennt vom Garraum. Erzeugt den Dampf und leitet ihn bei Bedarf hinein.'],
+    zulauf: ['Wasseranschluss oder Wassertank', 'Liefert das Wasser für den Dampf. Muss bei der Installation eingeplant werden.'],
+    ablauf: ['Wasserablauf', 'Führt Kondens- und Restwasser weg. Ebenfalls Installationssache.']
+  } },
+  mw: { parts: 'mwParts', info: 'mwInfo', data: {
+    magnetron: ['Magnetron', 'Erzeugt die Mikrowellen (2450 MHz). Das Herz des Geräts.'],
+    hohlleiter: ['Hohlleiter', 'Metallkanal, der die Mikrowellen vom Magnetron in den Garraum führt.'],
+    wellenruehrer: ['Wellenrührer', 'Drehendes Flügelrad oben im Garraum. Verteilt die Wellen, damit es weniger heisse und kalte Stellen gibt.'],
+    garraum: ['Garraum', 'Innenraum mit Metallwänden. Die Wände reflektieren die Mikrowellen hin und her, bis sie im Essen landen.'],
+    verriegelung: ['Türverriegelung', 'Hält die Tür zu. Wird sie geöffnet, wird das Gerät sofort abgeschaltet.'],
+    sicherheit: ['Sicherheitsschalter (2×)', 'Überwachen, ob die Tür geschlossen ist. Nur dann darf das Magnetron strahlen.'],
+    netzgeraet: ['Netzgerät', 'Liefert dem Magnetron die nötige Hochspannung (mehrere tausend Volt). Achtung: auch ausgeschaltet gefährlich (Kondensator).'],
+    kuehlgeraet: ['Kühlgerät (Ventilator)', 'Kühlt Magnetron und Netzgerät, damit sie nicht überhitzen.'],
+    tuer: ['Tür mit Sichtfenster (Zusatz, nicht im Buchbild)', 'Im Glas ist ein Metallgitter: Man sieht hinein, aber die Mikrowellen bleiben drin.']
+  } }
+};
+function dgShow(d, k) {
+  const cfg = DIAG[d];
+  document.querySelectorAll(`#${cfg.parts} .part-btn`).forEach(b => b.classList.toggle('on', b.dataset.p === k));
+  document.querySelectorAll(`.hot[data-d="${d}"]`).forEach(g => g.classList.toggle('on', g.dataset.p === k));
+  document.getElementById(cfg.info).innerHTML = `<div class="verdict yes">${cfg.data[k][0]}<p>${cfg.data[k][1]}</p></div>`;
+}
+function mwShow(k) { dgShow('mw', k); }
+Object.entries(DIAG).forEach(([d, cfg]) => {
+  const box = document.getElementById(cfg.parts);
+  Object.entries(cfg.data).forEach(([k, v], i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'part-btn'; b.dataset.p = k;
+    b.innerHTML = `<span class="n">${i + 1}</span>${v[0]}`;
+    b.addEventListener('click', () => dgShow(d, k));
+    box.appendChild(b);
+  });
+});
+document.querySelectorAll('.hot').forEach(g => g.addEventListener('click', () => dgShow(g.dataset.d, g.dataset.p)));
+document.querySelectorAll('.dg-toggle').forEach(btn => btn.addEventListener('click', () => {
+  const hidden = document.getElementById(btn.dataset.fig).classList.toggle('hide-labels');
+  btn.textContent = hidden ? 'Beschriftung an' : 'Beschriftung aus';
+}));
+
+// ═══ BAUTEIL-TRAINER ═══
+const BT = [
+  ['Erzeugt die Mikrowellen.', 'Magnetron'],
+  ['Führt die Mikrowellen vom Erzeuger in den Garraum.', 'Hohlleiter'],
+  ['Verteilt die Mikrowellen im Garraum.', 'Wellenrührer'],
+  ['Schaltet die Mikrowelle ab, sobald die Tür offen ist.', 'Sicherheitsschalter'],
+  ['Kühlt Magnetron und Netzgerät.', 'Kühlgerät'],
+  ['Sitzt im Heissluftofen ringförmig um den Ventilator.', 'Ringheizkörper'],
+  ['Unverdeckte Heizwendel an der Backofendecke für starke Bräunung.', 'Grill-Heizwendel'],
+  ['Verbrennt bei der Pyrolyse die Gase und den Staub.', 'Nachbrenner'],
+  ['Erzeugt beim Steamer den Dampf ausserhalb des Garraums.', 'Dampferzeuger (Boiler)'],
+  ['Biegt sich im Energieregler bei Wärme und löst den Kontakt aus.', 'Bimetall'],
+  ['Ändert im Energieregler den Abstand zwischen Bimetall und Kontakt.', 'Verstellnocke'],
+  ['Schaltet beim Glaskeramik-Kochfeld ab, wenn das Glas zu heiss wird.', 'Stabausdehnungsfühler'],
+  ['Leitet im Temperaturregler den Druck des Öls vom Fühler zur Membrane.', 'Kapillarrohr'],
+  ['Wird im Temperaturregler vom Druck bewegt und betätigt den Schalthebel.', 'Ausdehnungsmembrane'],
+  ['Messfühler im Backofen, dessen Widerstand mit der Temperatur steigt.', 'PTC-Widerstand'],
+  ['Bringt beim Steamer das Frischwasser für den Dampf.', 'Wasseranschluss oder Tank'],
+  ['Führt beim Steamer Kondens- und Restwasser weg.', 'Wasserablauf'],
+  ['Macht beim Einspritzsystem den Dampf direkt im Garraum.', 'Heizkörper im Lüfterrad'],
+  ['Liefert dem Magnetron die Hochspannung.', 'Netzgerät'],
+  ['Zeigt nach dem Ausschalten, dass das Kochfeld noch heiss ist.', 'Restwärmeanzeige']
+];
+const BT_OPTS = [...new Set(BT.map(b => b[1]))];
+let btOrder = [], btI = 0, btRight = 0, btDone = false;
+function btShuffle() { btOrder = BT.map((_, i) => i).sort(() => Math.random() - 0.5); btI = 0; btRight = 0; btRender(); }
+function btRender() {
+  const q = BT[btOrder[btI]];
+  btDone = false;
+  document.getElementById('btCount').textContent = `Frage ${btI + 1} / ${BT.length}`;
+  document.getElementById('btScore').textContent = `${btRight} richtig`;
+  document.getElementById('btCase').textContent = q[0];
+  document.getElementById('btExplain').innerHTML = '';
+  const others = BT_OPTS.filter(o => o !== q[1]).sort(() => Math.random() - 0.5).slice(0, 5);
+  const opts = [q[1], ...others].sort(() => Math.random() - 0.5);
+  const box = document.getElementById('btOpts');
+  box.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'wz-opt'; b.textContent = o;
+    b.addEventListener('click', () => {
+      if (btDone) return;
+      btDone = true;
+      const ok = o === q[1];
+      if (ok) btRight++;
+      [...box.children].forEach(x => { if (x.textContent === q[1]) x.classList.add('right'); });
+      if (!ok) b.classList.add('wrong');
+      document.getElementById('btScore').textContent = `${btRight} richtig`;
+      document.getElementById('btExplain').innerHTML = `<div class="verdict ${ok ? 'yes' : 'no'}">${ok ? '✓ Richtig' : '✕ Richtig ist: ' + q[1]}</div>`;
+    });
+    box.appendChild(b);
+  });
+}
+document.getElementById('btNext').addEventListener('click', () => {
+  if (btI < BT.length - 1) { btI++; btRender(); }
+  else document.getElementById('btExplain').innerHTML = `<div class="verdict yes">Durch! ${btRight} von ${BT.length} richtig.</div>`;
+});
+document.getElementById('btRestart').addEventListener('click', btShuffle);
+btShuffle();
+
+// ═══ ÜBUNGEN ═══
+const UE = [
+  ['Übung 8.1 · S. 5.8', 'Zwei Strahlungsheizkörper für Glaskeramik: einer mit einem Heizkreis, einer mit innerem und äusserem Heizkreis. Worauf musst du bei der Wahl des Energiereglers achten?', 'Für den Zweikreis-Strahlungsheizkörper braucht es einen Zweikreis-Energieregler.', 'Richtig. Der Energieregler muss zur <strong>Anzahl Heizkreise</strong> passen: Einkreis-Heizkörper → Einkreis-Regler, Zweikreis-Heizkörper → <strong>Zweikreis-Energieregler</strong> (damit man den äusseren Ring dazuschalten kann).'],
+  ['Übung 9.1 · S. 5.9', 'Welche Anschlussleistung haben heutige Backöfen?', '3–4 kW in Küche', 'Richtig: ca. <strong>3–4 kW</strong>. (Das Typenschild aus der Lektion hat 2200 W, es stammt eigentlich von einer Waschmaschine.)'],
+  ['Übung 10.1 · S. 5.10', 'Du empfiehlst einer Kundin statt eines normalen Backofens einen Steamer, wegen dem Gemüse. Was ist der Vorteil gegenüber einer Pfanne mit Wasser?', 'Die Nährstoff- und Vitaminverluste sind deutlich geringer.', 'Richtig. Das Gemüse liegt nicht im Wasser, darum werden <strong>Vitamine und Nährstoffe nicht ausgelaugt</strong>. Dazu bleiben Farbe und Geschmack besser, und man kann mehrere Speisen gleichzeitig ohne Geschmacksübertragung garen.'],
+  ['Übung 11.1 · S. 5.11', 'Welches Geschirr kann man in der Mikrowelle verwenden?', 'Glas, Kunststoff, Keramik', 'Richtig: <strong>Glas, Keramik/Porzellan und mikrowellengeeigneter Kunststoff</strong>. Nicht: Metall, Alufolie, Goldrand (reflektiert, Funken).'],
+  ['Übung 11.2 · S. 5.11', 'Mit welcher Frequenz arbeiten Mikrowellengeräte und wie tief dringen die Wellen in die Speisen ein?', '2450 MHz, 6 cm', '<strong>2450 MHz (2,45 GHz)</strong> ist richtig. Eindringtiefe: <strong>nur wenige Zentimeter</strong>, im Buch steht keine Zahl; deine Antwort aus dem Unterricht ist 6 cm. Den Rest der Speise erwärmt die Wärmeleitung.'],
+  ['Übung 11.3 · S. 5.11', 'Warum kann man mit einer reinen Mikrowelle nicht backen?', 'Weil Wasser nur bis 100 °C erhitzt wird in dem Zustand', 'Die Idee stimmt. Besser formuliert: Die Speise wird nur etwa so heiss wie das <strong>Wasser darin, also ca. 100 °C</strong>. Für <strong>Kruste und Bräunung</strong> braucht es trockene Hitze von 150–250 °C. Darum gibt es Kombigeräte mit Grill oder Heissluft.'],
+  ['Lektion 16.10. · Typenschild', 'Erkläre die vier markierten Angaben auf dem Typenschild aus der Lektion und was 230 V · 50 Hz · 2200 W · 10 A bedeutet.', null, '<strong>1 Modell</strong> (Mod.), <strong>2 Produktnummer</strong> (Prod.No.), <strong>3 Schutzart IPX4</strong> = spritzwassergeschützt, <strong>4 Seriennummer</strong> (genau dieses Gerät, für den Service). Anschluss an 230 V Wechselstrom mit 50 Hz, Leistung 2200 W, abzusichern mit 10 A (2200 W ÷ 230 V ≈ 9,6 A).'],
+  ['Lektion 16.10. · Serviceauftrag', 'Serviceauftrag: Ein Kunde will einen neuen Backofen anschliessen lassen. Was machst du vorher, beim Anschliessen und danach?', null, '<strong>Vorher:</strong> Typenschild lesen (<strong>Spannung, Leistung, Absicherung</strong>) und prüfen, ob der Anschluss passt (Sicherung, Querschnitt, Leiterzahl, 230 V oder 400 V). Bei 3–4 kW eigener Stromkreis. Steamer: zusätzlich Wasseranschluss und Ablauf. <strong>Beim Anschliessen:</strong> die 5 Sicherheitsregeln (freischalten, gegen Wiedereinschalten sichern, Spannungsfreiheit prüfen, erden und kurzschliessen, benachbarte Teile unter Spannung abdecken), nach Anschlussbild des Herstellers anschliessen, Schutzleiter (PE) sicher anschliessen. <strong>Danach:</strong> messen und prüfen (Schutzleiter, Isolation, Spannung), Funktionsprobe, Kunde instruieren.']
+];
+document.getElementById('ueList').innerHTML = UE.map(u => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">${u[0]}</span></div>
+    <p class="q-text">${u[1]}</p>
+    ${u[2] ? `<p style="font-size:0.92rem;margin:0 0 8px;">Deine Antwort im Buch: <span class="hand">${u[2]}</span></p>` : ''}
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Musterlösung</h4><p>${u[3]}</p></div>
+  </div>`).join('');
+
+// ═══ KÜCHENPLAN-RECHNER ═══
+const K_DEMO = [['Glaskeramik-Kochfeld', 7400, '3'], ['Backofen', 3500, '1'], ['Steamer', 3000, '1'], ['Geschirrspüler', 2300, '1'], ['Kühlschrank', 150, '1']];
+const FUSES = [10, 13, 16, 20, 25, 32];
+function kRow(name, p, ph) {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input type="text" value="${name}" style="width:160px;font-family:var(--font-body)" aria-label="Gerät"></td>
+    <td><input type="number" value="${p}" min="0" step="100" aria-label="Leistung"></td>
+    <td><select aria-label="Anschluss"><option value="1"${ph === '1' ? ' selected' : ''}>1 × 230 V</option><option value="3"${ph === '3' ? ' selected' : ''}>3 × 400 V</option></select></td>
+    <td class="num out-i"></td><td class="out-f"></td><td class="out-l"></td>`;
+  tr.querySelectorAll('input,select').forEach(el => el.addEventListener('input', kCalc));
+  document.getElementById('kTable').appendChild(tr);
+}
+function kCalc() {
+  [...document.querySelectorAll('#kTable tr')].slice(1).forEach(tr => {
+    const p = parseFloat(tr.querySelector('input[type=number]').value) || 0;
+    const ph = tr.querySelector('select').value;
+    const i = ph === '3' ? p / 693 : p / 230;
+    const f = FUSES.find(x => x >= i) || null;
+    const q = !f ? '–' : f <= 13 ? '1,5 mm²' : f <= 16 ? '2,5 mm²' : f <= 25 ? '4 mm²' : '6 mm²';
+    const n = ph === '3' ? '5 Leiter (L1, L2, L3, N, PE)' : '3 Leiter (L, N, PE)';
+    tr.querySelector('.out-i').innerHTML = `${fmt(i)} A<br><small style="color:var(--ink-mute)">${fmt(p, 0)} ÷ ${ph === '3' ? '693' : '230'}</small>`;
+    tr.querySelector('.out-f').textContent = f ? `${f} A` : 'zu gross';
+    tr.querySelector('.out-l').textContent = `${n} · ${q}`;
+  });
+}
+function kLoad() {
+  [...document.querySelectorAll('#kTable tr')].slice(1).forEach(tr => tr.remove());
+  K_DEMO.forEach(r => kRow(...r)); kCalc();
+}
+document.getElementById('kAdd').addEventListener('click', () => { kRow('Neues Gerät', 1000, '1'); kCalc(); });
+document.getElementById('kReset').addEventListener('click', kLoad);
+kLoad();
+
+// ═══ BEGRIFFE ═══
+const BEGRIFFE = [
+  { term: 'Wärmestrahlung', cat: 'grund', def: 'Wärme wird ohne Luft als Strahlung übertragen. Grill; bei Ober-/Unterhitze zusammen mit natürlicher Konvektion.' },
+  { term: 'Konvektion', cat: 'grund', def: 'Wärmeströmung: Luft oder Dampf trägt die Wärme. Natürlich oder mit Ventilator (Umluft, Heissluft).' },
+  { term: 'Wärmeleitung', cat: 'grund', def: 'Wärme wandert durch direkten Kontakt, z. B. vom heissen Blech in den Teig.' },
+  { term: 'Energieregler', cat: 'regler', def: 'Steuert Glaskeramik- und Induktionskochfelder, indem er die volle Leistung im Takt ein- und ausschaltet. Misst keine Temperatur.' },
+  { term: 'Mechanischer Energieregler', cat: 'regler', def: 'Beheiztes Bimetall + Schaltfeder mit Kontakt. Längere oder kürzere Einschaltzeiten je nach Stufe.' },
+  { term: 'Elektronischer Energieregler', cat: 'regler', def: 'Mit Mikroprozessor: feinere, stufenlose Leistungsstufen und tiefere Minimalleistung, gut zum Warmhalten.' },
+  { term: 'Schaltperiode', cat: 'regler', def: 'Ein Ein-Aus-Zyklus des Energiereglers, bei Normalkochplatten und Glaskeramik ca. 20 s.' },
+  { term: 'Pulsweitenmodulation', cat: 'regler', def: 'Leistung steuern, indem man im festen Takt (ca. 20 s) unterschiedlich lange einschaltet.' },
+  { term: 'Bimetall', cat: 'regler', def: 'Zwei verbundene Metalle, die sich bei Wärme unterschiedlich ausdehnen. Biegt sich und betätigt einen Kontakt.' },
+  { term: 'Regelkontakt', cat: 'regler', def: 'Kontakt, der die Heizleistung ein- und ausschaltet (im Energie- und im Temperaturregler).' },
+  { term: 'Verstellnocke', cat: 'regler', def: 'Kurvenscheibe am Schaltknebel. Verstellt den Abstand Bimetall–Kontakt und damit die Einschaltdauer.' },
+  { term: 'Restwärmeanzeige', cat: 'regler', def: 'Lämpchen, das zeigt, dass das Kochfeld nach dem Ausschalten noch heiss ist.' },
+  { term: 'Stabausdehnungsfühler', cat: 'regler', def: 'Stab, der sich bei Wärme ausdehnt. Als Überhitzungsschutz im Glaskeramik-Kochfeld oder als Temperaturfühler im Backofen.' },
+  { term: 'Zweikreis-Strahlungsheizkörper', cat: 'regler', def: 'Heizkörper mit innerem und äusserem Heizkreis. Braucht einen Zweikreis-Energieregler.' },
+  { term: 'Temperaturregler', cat: 'regler', def: 'Misst die Temperatur mit einem Fühler und schaltet beim Sollwert ab. Heute selten (Automatikkochplatte), Prinzip im Boiler.' },
+  { term: 'Kapillarrohr', cat: 'regler', def: 'Dünnes Rohr im Temperaturregler, durch das das erwärmte Öl vom Fühler zur Membrane drückt.' },
+  { term: 'Ausdehnungsmembrane', cat: 'regler', def: 'Wird vom Öldruck bewegt und betätigt über den Schalthebel den Schnappschalter (Regelkontakt).' },
+  { term: 'Ober- und Unterhitze', cat: 'ofen', def: 'Heizspiralen an Decke und Boden, getrennt schaltbar. Strahlung und natürliche Konvektion, nur eine Ebene.' },
+  { term: 'Umluft', cat: 'ofen', def: 'Ober-/Unterhitze plus Ventilator, der die Wärme verteilt.' },
+  { term: 'Heissluft', cat: 'ofen', def: 'Ringheizkörper um den Ventilator an der Rückwand. 2 Ebenen, 20–30 °C tiefer einstellen, spart Energie.' },
+  { term: 'Grill', cat: 'ofen', def: 'Unverdeckte Heizwendel an der Decke strahlt intensiv nach unten → Bräunung.' },
+  { term: 'Pyrolyse', cat: 'ofen', def: 'Selbstreinigung: Reste verbrennen bei ca. 500 °C, Tür verriegelt, Nachbrenner, ca. 4 Stunden.' },
+  { term: 'Katalytische Selbstreinigung', cat: 'ofen', def: 'Katalytische Emailschicht wandelt Schmutz bei 150–250 °C während dem Backen um. Selten.' },
+  { term: 'Nachbrenner', cat: 'ofen', def: 'Verbrennt bei der Pyrolyse Gase und Staub, angeschlossen ans Abluftsystem.' },
+  { term: 'PTC-Widerstand', cat: 'ofen', def: 'Widerstand steigt mit der Temperatur (positiver Temperaturkoeffizient, im Backofen meist ein Platin-Messwiderstand wie Pt1000). Eine Elektronik wertet ihn aus und regelt die Temperatur.' },
+  { term: 'Steamer', cat: 'steamer', def: 'Umluft-Backofen, der zusätzlich Heissdampf erzeugt. Dämpfer + Umluftofen in einem.' },
+  { term: 'Dämpfen', cat: 'steamer', def: 'Garen unter wasserdampfgesättigter Garatmosphäre, typisch bei 100 °C.' },
+  { term: 'Boilersystem', cat: 'steamer', def: 'Dampf entsteht in einem vom Garraum getrennten Dampferzeuger und wird bei Bedarf eingeleitet.' },
+  { term: 'Einspritzsystem', cat: 'steamer', def: 'Dampf entsteht direkt im Garraum am Heizkörper im Kern des rotierenden Lüfterrads.' },
+  { term: 'Garklima', cat: 'steamer', def: 'Temperatur und Feuchte im Garraum. Beim Steamer beides einstellbar.' },
+  { term: 'Mikrowellen', cat: 'mw', def: 'Elektromagnetische Wellen mit 2450 MHz, die besonders stark auf Wassermoleküle wirken.' },
+  { term: 'Dipol', cat: 'mw', def: 'Molekül mit Plus- und Minuspol. Wasser: O negativ, die zwei H positiv.' },
+  { term: 'Magnetron', cat: 'mw', def: 'Erzeugt die Mikrowellen.' },
+  { term: 'Hohlleiter', cat: 'mw', def: 'Metallkanal, der die Mikrowellen vom Magnetron in den Garraum führt.' },
+  { term: 'Wellenrührer', cat: 'mw', def: 'Flügelrad, das die Mikrowellen im Garraum verteilt.' },
+  { term: 'Sicherheitsschalter', cat: 'mw', def: 'Zwei Schalter überwachen die Tür. Offen = Magnetron aus.' },
+  { term: 'Netzgerät', cat: 'mw', def: 'Liefert dem Magnetron die Hochspannung.' },
+  { term: 'Kühlgerät', cat: 'mw', def: 'Ventilator, kühlt Magnetron und Netzgerät.' },
+  { term: 'Türverriegelung (Mikrowelle)', cat: 'mw', def: 'Hält die Tür zu; mit den Sicherheitsschaltern strahlt das Magnetron nur bei geschlossener Tür.' },
+  { term: 'Ringheizkörper', cat: 'ofen', def: 'Heizkörper ringförmig um den Ventilator an der Rückwand, für Heissluft.' },
+  { term: 'Mischlösung', cat: 'ofen', def: 'Oben offen (Grill/Oberhitze an der Decke), unten gedeckt (Unterhitze unter dem Boden). Sichtbare Heizspiralen sind schwer zu putzen.' },
+  { term: 'Dampferzeuger', cat: 'steamer', def: 'Beim Boilersystem: erzeugt den Dampf ausserhalb des Garraums.' },
+  { term: 'Lüfterrad', cat: 'steamer', def: 'Ventilator des Umluftofens im Steamer; beim Einspritzsystem mit Heizkörper im Kern.' },
+  { term: 'Wasserablauf', cat: 'steamer', def: 'Führt beim Steamer Kondens- und Restwasser weg.' },
+  { term: 'Füllmedium', cat: 'regler', def: 'Meist wärmefestes Öl im Wärmefühler des Temperaturreglers; dehnt sich bei Wärme aus.' },
+  { term: 'Schnappschalter', cat: 'regler', def: 'Der Regelkontakt im Temperaturregler; wird von der Membrane betätigt und öffnet oder schliesst den Stromkreis.' },
+  { term: 'Typenschild', cat: 'inst', def: 'Angaben zum Gerät: Modell, Produkt- und Seriennummer, Schutzart, Spannung, Frequenz, Leistung, Absicherung.' },
+  { term: 'IPX4', cat: 'inst', def: 'Schutzart: geschützt gegen Spritzwasser von allen Seiten. X = Fremdkörperschutz nicht angegeben.' },
+  { term: 'Drehstrom-Formel', cat: 'inst', def: 'I = P ÷ (√3 · 400 V) = P ÷ 693 V.' },
+  { term: 'Steckdose Typ 13', cat: 'inst', def: 'Normale Schweizer Steckdose für 10 A (ca. 2300 W).' }
+];
+function renderBegriffe(filter, search) {
+  search = (search || '').toLowerCase();
+  const list = BEGRIFFE.filter(b => (filter === 'all' || b.cat === filter) && (!search || b.term.toLowerCase().includes(search) || b.def.toLowerCase().includes(search)));
+  document.getElementById('begriffGrid').innerHTML = list.sort((a, b) => a.term.localeCompare(b.term, 'de')).map(b => `<div class="begriff"><dt>${b.term}</dt><dd>${b.def}</dd></div>`).join('') || '<div style="grid-column:1/-1;color:var(--ink-mute);text-align:center;padding:24px;">Keine Begriffe gefunden.</div>';
+}
+let bFilter = 'all', bSearch = '';
+document.querySelectorAll('#catFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('#catFilter .cat-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active'); bFilter = chip.dataset.cat; renderBegriffe(bFilter, bSearch);
+}));
+document.getElementById('begriffSearch').addEventListener('input', e => { bSearch = e.target.value; renderBegriffe(bFilter, bSearch); });
+renderBegriffe('all', '');
+
+// ═══ KARTEIKARTEN ═══
+const EXTRA_CARDS = [
+  { term: 'Welche 4 Beheizungsarten hat jeder Backofen?', cat: 'ofen', def: 'Ober- und Unterhitze (getrennt schaltbar), Umluft, Heissluft, Grill. Weitere entstehen durch Kombination.' },
+  { term: 'Warum nur 1 Ebene bei Ober-/Unterhitze?', cat: 'ofen', def: 'Die Wärme kommt nur von oben und unten (Strahlung, natürliche Konvektion). Ohne Ventilator wird es nicht gleichmässig.' },
+  { term: 'Warum bei Heissluft tiefer einstellen?', cat: 'ofen', def: 'Der Ventilator verteilt die Wärme schneller und gleichmässiger: 20–30 °C tiefer reichen, das spart Energie.' },
+  { term: 'Wie misst der Backofen die Temperatur?', cat: 'ofen', def: 'Stabausdehnungs-, Flüssigkeitsausdehnungsregler oder PTC-Widerstand mit Elektronik.' },
+  { term: 'Pyrolyse: Temperatur, Dauer, Sicherheit?', cat: 'ofen', def: 'ca. 500 °C, ca. 4 Stunden, Tür automatisch verriegelt, Nachbrenner.' },
+  { term: 'Anschlussleistung heutiger Backöfen?', cat: 'inst', def: 'ca. 3–4 kW.' },
+  { term: 'Was braucht ein Steamer bei der Installation?', cat: 'steamer', def: 'Wasseranschluss oder Wassertank, Wasserablauf, zum Teil Drehstromanschluss.' },
+  { term: 'Steamer: Vorteil gegenüber Pfanne mit Wasser?', cat: 'steamer', def: 'Weniger Nährstoff- und Vitaminverluste, kein Auslaugen ins Wasser.' },
+  { term: 'Steamer: Temperaturen der Betriebsarten?', cat: 'steamer', def: 'Dämpfen ca. 100 °C, Heissluft 30–300 °C.' },
+  { term: 'Woher kommt die Wärme in der Mikrowelle?', cat: 'mw', def: 'Aus dem Essen selbst: Wassermoleküle drehen sich im Wechselfeld und reiben sich.' },
+  { term: 'Weg der Mikrowellen?', cat: 'mw', def: 'Magnetron → Hohlleiter → Wellenrührer → Garraum (Metallwände reflektieren).' },
+  { term: 'Frequenz und Eindringtiefe der Mikrowelle?', cat: 'mw', def: '2450 MHz = 2,45 GHz. Nur wenige cm tief (deine Antwort: 6 cm).' },
+  { term: 'Warum backt eine reine Mikrowelle nicht?', cat: 'mw', def: 'Die Speise wird nur ca. 100 °C heiss (Wasser). Für Kruste braucht es 150–250 °C trockene Hitze.' },
+  { term: 'Welches Geschirr in die Mikrowelle?', cat: 'mw', def: 'Glas, Keramik/Porzellan, mikrowellengeeigneter Kunststoff. Kein Metall, keine Alufolie, kein Goldrand.' },
+  { term: 'Merksatz Energieregler?', cat: 'regler', def: 'Keine eigentliche Temperaturregelung! Er dosiert die Energie (Leistung × Zeit).' },
+  { term: 'Wozu die Diode im Energieregler?', cat: 'regler', def: 'Damit das Bimetall auf hoher Stufe nur wenig erwärmt wird.' },
+  { term: 'Bestandteile des Wärmefühlers?', cat: 'regler', def: 'Fühler, Kapillarrohr, Membrane, Füllmedium (meist wärmefestes Öl).' },
+  { term: 'Strom eines 7,4-kW-Kochfelds an 3 × 400 V?', cat: 'inst', def: 'Schulrechnung: 7400 W ÷ 693 V ≈ 10,7 A → 13 A. In der Praxis meist 3 × 16 A mit 5 × 2,5 mm² (Last ungleich verteilt).' }
+];
+const ALL_CARDS = [...BEGRIFFE, ...EXTRA_CARDS];
+let cardSet = [], cardIdx = 0, cardFlipped = false, knownIds = new Set(), unknownIds = new Set(), cardCatFilter = 'all';
+function buildCardSet() {
+  cardSet = ALL_CARDS.map((c, i) => ({...c, _id: i})).filter(c => cardCatFilter === 'all' || c.cat === cardCatFilter);
+  cardIdx = 0; cardFlipped = false; knownIds = new Set(); unknownIds = new Set(); renderCard(); updateCardStats();
+}
+function renderCard() {
+  const content = document.getElementById('flashContent'), side = document.getElementById('flashSide'), counter = document.getElementById('flashCounter');
+  if (!cardSet.length) { content.className = 'flash-front'; content.textContent = 'Keine Karten in dieser Kategorie.'; counter.textContent = '0 / 0'; return; }
+  const c = cardSet[cardIdx];
+  counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) { side.textContent = 'Antwort'; content.className = 'flash-back'; content.textContent = c.def; }
+  else { side.textContent = 'Frage'; content.className = 'flash-front'; content.textContent = c.term; }
+}
+function flipCard() { if (!cardSet.length) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (!cardSet.length) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (!cardSet.length) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) {
+  if (!cardSet.length) return;
+  const id = cardSet[cardIdx]._id;
+  if (known) { knownIds.add(id); unknownIds.delete(id); } else { unknownIds.add(id); knownIds.delete(id); }
+  updateCardStats(); nextCard();
+}
+function shuffleCards() { for (let i = cardSet.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [cardSet[i], cardSet[j]] = [cardSet[j], cardSet[i]]; } cardIdx = 0; cardFlipped = false; renderCard(); }
+function resetCards() { buildCardSet(); }
+function updateCardStats() {
+  document.getElementById('statKnown').textContent = knownIds.size;
+  document.getElementById('statUnknown').textContent = unknownIds.size;
+  document.getElementById('statOpen').textContent = Math.max(0, cardSet.length - knownIds.size - unknownIds.size);
+}
+document.querySelectorAll('#cardFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('#cardFilter .cat-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active'); cardCatFilter = chip.dataset.cat; buildCardSet();
+}));
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') { nextCard(); e.preventDefault(); }
+  if (e.key === 'ArrowLeft') { prevCard(); e.preventDefault(); }
+  if (e.key === ' ') { flipCard(); e.preventDefault(); }
+});
+buildCardSet();
+
+// ═══ QUIZ ═══
+const QUIZ = [
+  ['Backofen', 'S. 5.9', 'Welche Beheizungsarten besitzt jeder Backofen?', '<strong>Ober- und Unterhitze, Umluft, Heissluft und Grill.</strong> Weitere Arten entstehen durch Kombination oder Abwandlung.'],
+  ['Backofen', 'S. 5.9', 'Wovon hängt ab, auf welche Arten ein Backofen betrieben werden kann?', 'Von der <strong>Anzahl und Lage der Heizwicklungen</strong>.'],
+  ['Backofen', 'S. 5.9', 'Ober- und Unterhitze: Wo sitzen die Heizspiralen, wie wird die Wärme übertragen, und auf wie vielen Ebenen kann man backen?', 'An <strong>Decke und Boden</strong>, getrennt schaltbar. Übertragung durch <strong>Strahlung und natürliche Konvektion</strong>. Nur auf <strong>einer Ebene</strong>.'],
+  ['Backofen', 'S. 5.9', 'Was ist der Unterschied zwischen Umluft und Heissluft?', '<strong>Umluft</strong> = Ober-/Unterhitze plus Ventilator, der die Wärme verteilt. <strong>Heissluft</strong> = eigener <strong>Ringheizkörper um den Ventilator</strong>, die heisse Luft wird schnell und gleichmässig verteilt.'],
+  ['Backofen', 'S. 5.9', 'Nenne zwei Vorteile von Heissluft.', '<strong>Zwei Ebenen</strong> gleichzeitig nutzbar. Temperatur <strong>20–30 °C tiefer</strong> einstellen → <strong>spart Energie</strong>.'],
+  ['Backofen', 'S. 5.9', 'Wie funktioniert der Grill?', 'Eine an der Decke montierte, <strong>unverdeckte Heizwendel</strong> strahlt intensiv nach unten → starke Bräunung. Bei manchen Geräten ist Umluft zuschaltbar für schnelleres Garen.'],
+  ['Backofen', 'S. 5.9', 'Wie wird die Backofentemperatur erfasst und geregelt?', 'Mit einem <strong>Stabausdehnungsregler</strong>, <strong>Flüssigkeitsausdehnungsregler</strong> oder <strong>PTC-Widerstand</strong> (mit Elektronik). Ist der Sollwert erreicht, schaltet die Heizwicklung aus, bis die Temperatur wieder darunter fällt.'],
+  ['Backofen', 'S. 5.9', 'Beschreibe die pyrolytische Selbstreinigung (Temperatur, Sicherheit, Abgase, Dauer).', 'Speisereste werden <strong>verbrannt</strong> bei ca. <strong>500 °C</strong>. Die <strong>Tür verriegelt automatisch</strong>. Gase und Staub gehen über einen <strong>Nachbrenner</strong> ins Abluftsystem. Dauer ca. <strong>4 Stunden</strong>.'],
+  ['Backofen', 'S. 5.9', 'Wie funktioniert die katalytische Selbstreinigung?', 'Die Wände haben eine <strong>katalytische Emailschicht</strong>. Beim normalen Backen bei <strong>150–250 °C</strong> wird der Schmutz chemisch umgewandelt und löst sich. Wird nur noch selten verwendet.'],
+  ['Backofen', 'Aufbau', 'Beschreibe den Aufbau eines Backofens: Wo sitzen die Heizkörper, und welche weiteren Bauteile hat er?', 'Wärmeisolierter Garraum · <strong>Oberhitze und Grill-Heizwendel an der Decke</strong> (Grill unverdeckt) · <strong>Unterhitze unter dem Ofenboden</strong> (verdeckt) · <strong>Ventilator mit Ringheizkörper</strong> an der Rückwand (Umluft/Heissluft) · Temperaturfühler (Stab-, Flüssigkeitsausdehnung oder PTC) · Einschubschienen · bei Pyrolyse Türverriegelung und Nachbrenner.'],
+  ['Backofen', 'Übung 9.1', 'Welche Anschlussleistung haben heutige Backöfen?', 'Ca. <strong>3–4 kW</strong>.'],
+  ['Backofen', 'Lektion', 'Ordne zu: Ober-/Unterhitze, Umluft, heisses Blech. Welche Art der Wärmeübertragung ist das jeweils?', 'Ober-/Unterhitze → <strong>Wärmestrahlung</strong> (laut Buch S. 5.9: Strahlung und natürliche Konvektion) · Umluft → <strong>Konvektion</strong> · Blech → <strong>Wärmeleitung</strong>.'],
+  ['Steamer', 'S. 5.10', 'Was ist ein Steamer?', 'Ein Garungsgerät, das zusätzlich zur Funktion eines <strong>Umluft-Backofens</strong> auch <strong>Heissdampf</strong> erzeugt. Es vereint Dämpfer und Umluftofen.'],
+  ['Steamer', 'S. 5.10', 'Welche Betriebsarten hat ein Steamer und bei welchen Temperaturen?', '<strong>Dämpfen</strong> unter wasserdampfgesättigter Garatmosphäre, typisch <strong>100 °C</strong>. <strong>Heissluft</strong> ohne Dampf, je nach Hersteller <strong>30–300 °C</strong>. Dazu Mischungen und Spezialprogramme.'],
+  ['Steamer', 'S. 5.10', 'Warum ist die Gardauer im Steamer vergleichsweise kurz?', 'Wegen der <strong>hohen Umluftgeschwindigkeit des Lüfters</strong> und der <strong>Kondensation des Dampfes</strong> (der Dampf gibt beim Kondensieren viel Wärme ab).'],
+  ['Steamer', 'S. 5.10', 'Erkläre Boilersystem und Einspritzsystem.', '<strong>Boilersystem</strong>: Dampf entsteht in einem <strong>vom Garraum getrennten Dampferzeuger</strong> und wird bei Bedarf eingeleitet. <strong>Einspritzsystem</strong>: Dampf entsteht <strong>direkt im Garraum</strong> am Heizkörper im Kern des rotierenden Lüfterrads.'],
+  ['Steamer', 'S. 5.10', 'Was muss der Elektroinstallateur bei einem Steamer beachten?', '<strong>Wasseranschluss oder separater Wassertank</strong>, <strong>Wasserablauf</strong>, und zum Teil braucht das Gerät einen <strong>Drehstromanschluss</strong>.'],
+  ['Steamer', 'S. 5.10', 'Nenne drei Vorteile eines Steamers.', 'Schonend: <strong>weniger Nährstoff- und Vitaminverluste</strong> · mehrere Speisen gleichzeitig <strong>ohne Geschmacksübertragung</strong> · Temperatur und Feuchte einstellbar · kurze Garzeit · Programme speicherbar.'],
+  ['Mikrowelle', 'S. 5.11', 'Was ist der grundlegende Unterschied zwischen Mikrowelle und Backofen bei der Wärme?', 'Bei der Mikrowelle wird die Wärme <strong>nicht von aussen zugeführt</strong>, sondern <strong>direkt im Essen</strong> erzeugt.'],
+  ['Mikrowelle', 'S. 5.11', 'Erkläre, warum sich ein Wassermolekül im Mikrowellenfeld bewegt.', 'H₂O ist ein <strong>Dipol</strong>: Der Sauerstoff zieht die Elektronen stärker an und wirkt negativ, die beiden Wasserstoffatome positiv. Das Feld wechselt ständig die Richtung, darum dreht sich das Molekül immer wieder um.'],
+  ['Mikrowelle', 'S. 5.11', 'Wie entsteht daraus Wärme?', 'Die Moleküle richten sich <strong>milliardenfach pro Sekunde</strong> neu aus und <strong>reiben</strong> sich dabei an den Nachbarmolekülen. Diese Reibung ist die Wärme.'],
+  ['Mikrowelle', 'S. 5.11', 'Beschreibe den Weg der Mikrowellen von der Erzeugung bis ins Essen.', '<strong>Magnetron</strong> erzeugt sie → <strong>Hohlleiter</strong> führt sie in den Garraum → <strong>Wellenrührer</strong> verteilt sie → die <strong>Metallwände</strong> reflektieren sie, bis sie im Essen landen.'],
+  ['Mikrowelle', 'S. 5.11', 'Nenne mindestens sechs Bauteile einer Mikrowelle.', 'Magnetron · Hohlleiter · Wellenrührer · Garraum · Türverriegelung · Sicherheitsschalter (2×) · Netzgerät · Kühlgerät (Ventilator).'],
+  ['Mikrowelle', 'S. 5.11', 'Wozu hat die Mikrowelle eine Türverriegelung und Sicherheitsschalter?', 'Damit das Magnetron <strong>nur bei geschlossener Tür</strong> strahlt. Öffnet man die Tür, wird sofort abgeschaltet. Mikrowellen ausserhalb des Geräts wären gefährlich.'],
+  ['Mikrowelle', 'Übung 11.2', 'Mit welcher Frequenz arbeiten Mikrowellengeräte, und wie tief dringen die Wellen ein?', '<strong>2450 MHz = 2,45 GHz.</strong> Nur wenige Zentimeter (deine Antwort aus dem Unterricht: 6 cm), der Rest über Wärmeleitung.'],
+  ['Mikrowelle', 'Übung 11.3', 'Warum kann eine reine Mikrowelle nicht backen?', 'Die Speise wird nur ca. <strong>100 °C</strong> heiss (so heiss wie das Wasser darin). Für <strong>Kruste und Bräunung</strong> braucht es trockene Hitze von 150–250 °C.'],
+  ['Regler', 'S. 5.7', 'Wie steuert ein mechanischer Energieregler die Leistung?', 'Er schaltet die <strong>volle Leistung</strong> in <strong>längeren oder kürzeren Zeitabschnitten</strong> ein und aus. Höchste Stufe = dauernd ein. Tiefe Stufe = kurz ein pro Schaltperiode → tiefe Durchschnittsleistung.'],
+  ['Regler', 'S. 5.7', 'Wie lange dauert eine Schaltperiode, und wie heisst das Prinzip?', 'Ca. <strong>20 Sekunden</strong> (Normalkochplatten, Glaskeramik). Das Prinzip heisst <strong>Pulsweitenmodulation</strong>.'],
+  ['Regler', 'S. 5.7', 'Erkläre die Funktion von Bimetall, Regelkontakt und Verstellnocke.', 'Strom fliesst parallel zum Heizkörper durch das <strong>beheizte Bimetall</strong>. Es wird warm, verformt sich und löst den <strong>Regelkontakt</strong> aus. Der Schaltknebel dreht die <strong>Verstellnocke</strong>, die den Abstand Bimetall–Kontakt ändert → längere oder kürzere Einschaltzeiten.'],
+  ['Regler', 'S. 5.7', 'Ein Kollege sagt: «Der Energieregler regelt die Temperatur.» Stimmt das?', '<strong>Nein.</strong> Mit dem Energieregler gibt es <strong>keine eigentliche Temperaturregelung</strong>. Er dosiert nur die zugeführte Energie (Leistung × Zeit).'],
+  ['Regler', 'Übung 8.1', 'Worauf musst du bei der Wahl des Energiereglers für einen Zweikreis-Strahlungsheizkörper achten?', 'Der Regler muss zur <strong>Anzahl Heizkreise</strong> passen: Zweikreis-Heizkörper → <strong>Zweikreis-Energieregler</strong>.'],
+  ['Regler', 'S. 5.8', 'Welche Vorteile hat ein elektronischer Energieregler?', 'Mit <strong>Mikroprozessor</strong>: viel feinere, <strong>stufenlose</strong> Regelung, und auf der tiefsten Stufe eine <strong>noch tiefere Leistung</strong> → gut zum <strong>Warmhalten</strong>.'],
+  ['Regler', 'S. 5.8', 'Beschreibe die Funktion des Temperaturreglers einer Automatikkochplatte.', 'Der <strong>Fühler</strong> wird warm, das <strong>Öl</strong> im <strong>Kapillarrohr</strong> dehnt sich aus, der Druck im geschlossenen System steigt. Bei einem bestimmten Druck betätigt die <strong>Membrane</strong> einen <strong>Schnappschalter (Regelkontakt)</strong>, der den Stromkreis öffnet oder schliesst.'],
+  ['Installation', 'Lektion', 'Ein Backofen hat 3,5 kW. Wie gross ist der Strom an 3 × 400 V, und wie gross an 230 V?', 'Ist er laut Typenschild für 3 × 400 V gebaut: I = 3500 ÷ 693 ≈ <strong>5,1 A</strong> (bei gleichmässiger Verteilung). Am Einphasen-Anschluss: 3500 ÷ 230 ≈ <strong>15,2 A</strong> → Sicherung 16 A. Immer zuerst das Typenschild lesen.'],
+  ['Installation', 'Serviceauftrag', 'Du schliesst einen neuen Backofen an. Nenne die 5 Sicherheitsregeln.', '1 <strong>Freischalten</strong> · 2 gegen <strong>Wiedereinschalten sichern</strong> · 3 <strong>Spannungsfreiheit prüfen</strong> · 4 <strong>erden und kurzschliessen</strong> · 5 benachbarte, unter Spannung stehende Teile <strong>abdecken</strong>. Danach: nach Anschlussbild anschliessen, PE sicher, messen, Funktionsprobe.'],
+  ['Installation', 'Lektion', 'Was bedeutet IPX4 auf dem Typenschild?', '<strong>Schutz gegen Spritzwasser von allen Seiten.</strong> Das X heisst: Der Schutz gegen Fremdkörper ist nicht angegeben.'],
+  ['Installation', 'Lektion', 'Mikrowelle (1200 W) und Wasserkocher (2200 W) an derselben Steckdose. Problem?', '3400 W ÷ 230 V ≈ <strong>14,8 A</strong>. Eine Steckdose Typ 13 ist nur für <strong>10 A</strong>. Lösung: zwei Steckdosen, besser auf zwei Stromkreisen.']
+];
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">Q${i + 1}</span><span class="q-topic">${q[0]}</span><span class="q-source">${q[1]}</span></div>
+    <p class="q-text">${q[2]}</p>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[3]}</p></div>
+  </div>`).join('');
+
+// ═══ PROBETEST ═══
+const PT = [
+  [3, 'Nenne die Beheizungsarten, die jeder Backofen hat, und gib bei zwei davon die Art der Wärmeübertragung an.', 'Ober-/Unterhitze, Umluft, Heissluft, Grill (2 P.). Z. B. Ober-/Unterhitze = Strahlung + natürliche Konvektion, Heissluft = Konvektion (1 P.).'],
+  [3, 'Beschreibe den Aufbau eines Backofens: Wo sitzen die Heizkörper für Ober-/Unterhitze, Grill und Heissluft?', 'Oberhitze und Grill an der Decke (Grill unverdeckt) (1 P.), Unterhitze unter dem Boden (1 P.), Ringheizkörper um den Ventilator an der Rückwand (1 P.).'],
+  [1, 'Welche Anschlussleistung haben heutige Backöfen? (Übung 9.1)', 'ca. 3–4 kW (1 P.).'],
+  [2, 'Warum kann man bei Heissluft die Temperatur tiefer einstellen, und um wie viel?', 'Ventilator verteilt die Wärme schneller und gleichmässiger (1 P.), 20–30 °C tiefer (1 P.).'],
+  [3, 'Beschreibe die pyrolytische Selbstreinigung mit drei Merkmalen.', 'Je 1 P.: ca. 500 °C · Tür verriegelt automatisch · Nachbrenner/Abluft · ca. 4 Stunden · Reste werden verbrannt.'],
+  [2, 'Was ist ein Steamer, und welche zwei Betriebsarten hat er?', 'Umluftofen, der zusätzlich Dampf erzeugt (1 P.). Dämpfen ca. 100 °C und Heissluft 30–300 °C (1 P.).'],
+  [2, 'Erkläre den Unterschied zwischen Boilersystem und Einspritzsystem.', 'Boiler: separater Dampferzeuger ausserhalb des Garraums (1 P.). Einspritzung: Dampf direkt im Garraum am Heizkörper im Lüfterrad (1 P.).'],
+  [1, 'Steamer statt Pfanne mit Wasser: Was ist der Vorteil beim Gemüse? (Übung 10.1)', 'Deutlich geringere Nährstoff- und Vitaminverluste, weil nichts ins Wasser ausgelaugt wird (1 P.).'],
+  [2, 'Welche zwei Anschlüsse ausser Strom braucht ein Steamer?', 'Wasserzulauf (oder Tank) und Wasserablauf. Je 1 P.'],
+  [3, 'Erkläre, wie in der Mikrowelle Wärme entsteht.', 'Wasser ist ein Dipol (1 P.), dreht sich im wechselnden Feld milliardenfach pro Sekunde (1 P.), Reibung an Nachbarmolekülen erzeugt Wärme im Essen (1 P.).'],
+  [4, 'Nenne vier Bauteile der Mikrowelle und ihre Aufgabe.', 'Je 1 P.: Magnetron erzeugt · Hohlleiter führt · Wellenrührer verteilt · Sicherheitsschalter/Türverriegelung schützen · Netzgerät versorgt · Kühlgerät kühlt.'],
+  [3, 'Welche Frequenz hat eine Mikrowelle, wie tief dringen die Wellen ein, und warum kann sie nicht backen?', '2450 MHz (1 P.). Nur wenige cm, deine Antwort 6 cm (1 P.). Nur ca. 100 °C, keine Kruste/Bräunung (1 P.).'],
+  [2, 'Welches Geschirr eignet sich für die Mikrowelle, welches nicht?', 'Geeignet: Glas, Keramik, mikrowellengeeigneter Kunststoff (1 P.). Nicht: Metall, Alufolie, Goldrand (1 P.).'],
+  [2, 'Berechne den Strom eines 7,4-kW-Kochfelds an 3 × 400 V und wähle die Sicherung.', '7400 ÷ 693 ≈ 10,7 A (1 P.) → 13 A (1 P.). Hinweis: In der Praxis meist 3 × 16 A, weil die Last nicht gleichmässig verteilt ist.'],
+  [2, 'Was bedeuten auf einem Typenschild «IPX4» und «Ser.No.»?', 'IPX4 = spritzwassergeschützt (1 P.). Seriennummer = genau dieses Gerät, für den Service (1 P.).'],
+  [2, 'Worauf musst du bei der Wahl des Energiereglers für einen Zweikreis-Strahlungsheizkörper achten? (Übung 8.1)', 'Regler muss zur Anzahl Heizkreise passen (1 P.): Zweikreis-Energieregler (1 P.).'],
+  [3, 'Wie steuert ein mechanischer Energieregler die Leistung? Was muss man sich dazu merken?', 'Volle Leistung im Takt ein/aus, Schaltperiode ca. 20 s (1 P.), Bimetall löst Regelkontakt aus (1 P.), keine eigentliche Temperaturregelung (1 P.).']
+];
+const ptGot = new Array(PT.length).fill(0);
+const ptMax = PT.reduce((s, q) => s + q[0], 0);
+document.getElementById('ptMax').textContent = ptMax;
+document.getElementById('ptList').innerHTML = PT.map((q, i) => `
+  <div class="pt-q">
+    <span class="pts">${q[0]} P.</span>
+    <p class="q-text"><strong>${i + 1}.</strong> ${q[1]}</p>
+    <textarea aria-label="Antwort ${i + 1}" placeholder="Deine Antwort …"></textarea>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[2]}</p></div>
+    <div class="pt-score" data-i="${i}">Erreicht: ${Array.from({length: q[0] + 1}, (_, p) => `<button type="button" data-p="${p}">${p}</button>`).join('')}</div>
+  </div>`).join('');
+document.querySelectorAll('.pt-score').forEach(row => row.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  row.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); ptGot[+row.dataset.i] = +b.dataset.p; ptUpdate();
+}));
+function ptUpdate() {
+  const sum = ptGot.reduce((a, b) => a + b, 0);
+  document.getElementById('ptPoints').textContent = sum;
+  document.getElementById('ptNote').textContent = 'Note ' + (Math.round((sum / ptMax * 5 + 1) * 10) / 10).toFixed(1);
+}
+const PT_SECONDS = 30 * 60;
+let ptLeft = PT_SECONDS, ptTimer = null;
+function ptTick() { document.getElementById('ptTimer').textContent = `${String(Math.floor(ptLeft / 60)).padStart(2, '0')}:${String(ptLeft % 60).padStart(2, '0')}`; }
+document.getElementById('ptStart').addEventListener('click', e => {
+  if (ptTimer) { clearInterval(ptTimer); ptTimer = null; e.target.textContent = 'Timer weiter'; return; }
+  e.target.textContent = 'Pause';
+  ptTimer = setInterval(() => { if (ptLeft > 0) { ptLeft--; ptTick(); } else { clearInterval(ptTimer); ptTimer = null; document.getElementById('ptTimer').textContent = 'Zeit um!'; } }, 1000);
+});
+document.getElementById('ptReveal').addEventListener('click', () => {
+  document.querySelectorAll('#probetest .reveal-btn').forEach(btn => { btn.nextElementSibling.classList.add('show'); btn.textContent = 'Lösung verstecken'; btn.classList.add('revealed'); });
+});
+document.getElementById('ptReset').addEventListener('click', () => {
+  clearInterval(ptTimer); ptTimer = null; ptLeft = PT_SECONDS; ptTick();
+  document.getElementById('ptStart').textContent = 'Timer starten (30:00)';
+  document.querySelectorAll('#probetest textarea').forEach(t => t.value = '');
+  document.querySelectorAll('#probetest .pt-score button').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('#probetest .solution').forEach(s => s.classList.remove('show'));
+  document.querySelectorAll('#probetest .reveal-btn').forEach(b => { b.textContent = 'Lösung anzeigen'; b.classList.remove('revealed'); });
+  ptGot.fill(0); ptUpdate(); document.getElementById('ptNote').textContent = 'Note –';
+});
+
+// ═══ LERNPLAN ═══
+const PLAN_KEY = 'apparate-5-7-5-11-lernplan';
+function updatePlanProgress() {
+  const boxes = [...document.querySelectorAll('.day .check')];
+  document.getElementById('planProgress').style.width = (boxes.filter(b => b.checked).length / boxes.length * 100) + '%';
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+}
+try { const saved = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]'); document.querySelectorAll('.day .check').forEach((b, i) => { if (saved[i]) b.checked = true; }); } catch (e) {}
+document.querySelectorAll('.day .check').forEach(b => b.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+</body>
+</html>
