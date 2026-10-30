@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visuelles Lernpaket Werkstoffkunde für ABT: Werkstoffgruppen, Eigenschaften, Zustandsänderungen, Korrosion und Säuren/Basen als Zusatz.">
+  <title>Werkstoffkunde — Test 06.11.2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Azeret+Mono:wght@400;500;600&display=swap');
+    :root {
+      --bg: #f4f5f1; --surface: #ffffff; --surface-alt: #e9ece5;
+      --ink: #18211e; --ink-soft: #424a47; --ink-mute: #6c7071;
+      --line: #cbd2ca; --line-soft: #dde2dc; --accent: #a94b18;
+      --accent-pale: #f8e5d8; --teal: #17676a; --teal-pale: #dceded;
+      --blue: #315d93; --blue-pale: #e1eafa; --yellow: #f0c84b;
+      --danger: #a33232; --danger-pale: #fae3e3; --radius: 10px;
+      --font-body: Archivo, Arial, sans-serif; --font-mono: 'Azeret Mono', monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.58; }
+    .container { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; overflow-x: hidden; }
+    header { border-bottom: 2px solid var(--ink); padding: 0 0 24px; margin-bottom: 18px; }
+    .eyebrow, .meta, .source, .chip, .q-topic, .small-label { font-family: var(--font-mono); font-size: .76rem; letter-spacing: .03em; }
+    .eyebrow { display: flex; flex-wrap: wrap; gap: 7px; color: var(--ink-soft); margin: 0 0 12px; }
+    .chip { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: var(--surface); }
+    .chip.extra { background: var(--accent-pale); border-color: #dfb89f; color: #692b0c; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; font-size: clamp(2.25rem, 7vw, 4.4rem); line-height: .95; letter-spacing: -.06em; margin-bottom: 14px; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.45rem); line-height: 1.05; letter-spacing: -.045em; margin: 36px 0 12px; }
+    h3 { font-size: 1.08rem; margin: 24px 0 8px; }
+    .lead { max-width: 700px; font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 0; }
+    .tab-nav { display: flex; gap: 4px; margin: 18px 0 30px; padding: 5px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface-alt); overflow-x: auto; position: sticky; top: 8px; z-index: 10; }
+    .tab-btn, .filter, .plain-btn { cursor: pointer; font: inherit; }
+    .tab-btn { flex: 1 0 auto; border: 0; background: transparent; color: var(--ink-soft); padding: 10px 13px; border-radius: 8px; font-size: .88rem; font-weight: 700; white-space: nowrap; }
+    .tab-btn:hover, .tab-btn:focus-visible { color: var(--ink); outline: 2px solid var(--teal); outline-offset: 2px; }
+    .tab-btn.active { color: var(--bg); background: var(--ink); }
+    .tab-pane { display: none; animation: appear .2s ease; }
+    .tab-pane.active { display: block; }
+    @keyframes appear { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .intro, .note, .warning, .extra-box, .fact, .tool, .source-box { border-radius: var(--radius); padding: 18px 20px; margin: 16px 0; }
+    .intro { background: var(--ink); color: #f8f8f4; }
+    .intro h2 { margin-top: 0; color: #fff; }
+    .intro p:last-child, .note p:last-child, .warning p:last-child, .extra-box p:last-child { margin-bottom: 0; }
+    .note { border: 1px solid #a5cbcc; background: var(--teal-pale); }
+    .warning { border-left: 5px solid var(--accent); background: var(--accent-pale); }
+    .extra-box { border: 1px dashed #ce9d7e; background: #fff6f0; }
+    .fact { background: var(--ink); color: #f6f6f3; }
+    .fact em, .fact i, .fact .meta, .fact .law-ref, .fact small { color: rgba(246,246,243,.86); }
+    .fact strong, .fact b { color: #fff; }
+    .tip .meta, .tip .law-ref, .info-box .law-ref, .info-box .meta { color: var(--ink-soft); }
+    .grid { display: grid; gap: 12px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card { background: var(--surface); border: 1px solid var(--line); padding: 16px; border-radius: var(--radius); min-width: 0; }
+    .card h3 { margin: 0 0 6px; }
+    .card p { color: var(--ink-soft); margin-bottom: 0; font-size: .94rem; }
+    .icon { display: block; color: var(--accent); font: 600 1.55rem/1 var(--font-mono); margin-bottom: 12px; }
+    .small-label { color: var(--ink-mute); text-transform: uppercase; }
+    .table-wrap { overflow-x: auto; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+    table { border-collapse: collapse; width: 100%; min-width: 620px; background: var(--surface); font-size: .93rem; }
+    th, td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line-soft); }
+    th { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; background: var(--surface-alt); }
+    tr:last-child td { border-bottom: 0; }
+    .map { display: grid; grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr) 36px minmax(0, 1fr); gap: 8px; align-items: stretch; margin: 16px 0; }
+    .map-node { text-align: center; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 14px 9px; min-height: 106px; display: flex; flex-direction: column; justify-content: center; }
+    .map-node strong { display: block; font-size: 1.03rem; }
+    .map-node span { color: var(--ink-soft); font-size: .83rem; margin-top: 4px; }
+    .map-node.hot { background: var(--accent-pale); border-color: #dbac8d; }
+    .map-node.cool { background: var(--blue-pale); border-color: #b5c6e2; }
+    .arrow { display: flex; align-items: center; justify-content: center; font: 700 1.5rem/1 var(--font-mono); color: var(--ink-soft); }
+    .state-wrap { display: grid; grid-template-columns: 1fr 54px 1fr 54px 1fr; gap: 4px; align-items: center; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .state { min-height: 124px; border-radius: 9px; padding: 14px; display: flex; flex-direction: column; justify-content: center; }
+    .state strong { font-size: 1.15rem; }
+    .state small { color: var(--ink-soft); }
+    .state.solid { background: #e5eaed; } .state.liquid { background: var(--blue-pale); } .state.gas { background: #f8edc7; }
+    .state-arrow { text-align: center; color: var(--accent); font: 700 1.4rem/1.1 var(--font-mono); }
+    .state-arrow small { display: block; margin-top: 4px; font-size: .65rem; color: var(--ink-soft); }
+    .flow { display: grid; grid-template-columns: 1fr 42px 1fr 42px 1fr; gap: 5px; align-items: stretch; margin: 16px 0; }
+    .flow-step { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 15px; }
+    .flow-step strong { display: block; margin-bottom: 6px; }
+    .flow-step p { color: var(--ink-soft); font-size: .9rem; margin-bottom: 0; }
+    .flow-arrow { align-self: center; color: var(--accent); text-align: center; font: 700 1.5rem/1 var(--font-mono); }
+    .visual-board { background: #17201d; color: #f6f6f3; padding: clamp(18px, 4vw, 34px); border-radius: 14px; margin: 16px 0; }
+    .visual-board h2 { color: #fff; margin-top: 0; }
+    .visual-board .meta { color: #c1cbc5; }
+    .week-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .week { padding: 14px; border-radius: 9px; background: rgba(255,255,255,.08); border-top: 4px solid var(--yellow); }
+    .week strong { display: block; color: #fff; }
+    .week p { font-size: .88rem; color: #d9e0dc; margin: 7px 0 0; }
+    .lens-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .lens { min-height: 118px; padding: 15px; background: var(--surface); color: var(--ink); border-radius: 8px; }
+    .lens b { display: block; font: 600 .76rem var(--font-mono); color: var(--accent); text-transform: uppercase; }
+    .lens p { font-size: .9rem; margin: 7px 0 0; color: var(--ink-soft); }
+    .ph-wrap { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .ph-scale { height: 16px; border-radius: 999px; background: linear-gradient(90deg, #be3d48 0%, #e9733e 26%, #f0c84b 43%, #6fbe72 50%, #48a7a5 65%, #35689f 100%); position: relative; margin: 20px 0 8px; }
+    .ph-labels { display: flex; justify-content: space-between; color: var(--ink-soft); font: .72rem var(--font-mono); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 30px; }
+    .ph-readout { min-height: 52px; margin-top: 12px; padding: 12px; border-radius: 8px; background: var(--surface-alt); font-weight: 600; }
+    .term-search { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+    .term-search:focus { outline: 3px solid #9bc9c9; border-color: var(--teal); }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; }
+    .filter { border: 1px solid var(--line); background: var(--surface); padding: 7px 10px; border-radius: 999px; color: var(--ink-soft); font-size: .85rem; }
+    .filter.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .terms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .term { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 13px; }
+    .term b { display: block; } .term span { display: block; color: var(--ink-soft); font-size: .9rem; margin-top: 3px; }
+    .flash { border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--surface); min-height: 240px; display: grid; grid-template-rows: 1fr auto; }
+    .flash-body { cursor: pointer; display: grid; place-items: center; padding: 30px; text-align: center; font-size: clamp(1.15rem, 3vw, 1.65rem); font-weight: 700; }
+    .flash-body.back { font-weight: 400; font-size: 1.05rem; text-align: left; align-content: center; }
+    .flash-foot { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--surface-alt); }
+    .plain-btn { border: 1px solid var(--ink); border-radius: 7px; padding: 9px 12px; color: var(--ink); background: var(--surface); font-weight: 700; }
+    .plain-btn.primary { background: var(--ink); color: #fff; }
+    .plain-btn.good { border-color: var(--teal); color: var(--teal); }
+    .plain-btn.bad { border-color: var(--danger); color: var(--danger); }
+    .counter { margin-left: auto; align-self: center; color: var(--ink-soft); font: .75rem var(--font-mono); }
+    .quiz-item { border: 1px solid var(--line); border-radius: 9px; background: var(--surface); margin: 9px 0; overflow: hidden; }
+    .quiz-item summary { cursor: pointer; list-style: none; padding: 15px; font-weight: 700; }
+    .quiz-item summary::-webkit-details-marker { display: none; }
+    .quiz-item summary::before { content: '+'; color: var(--accent); font: 700 1.1rem var(--font-mono); margin-right: 10px; }
+    .quiz-item[open] summary::before { content: '–'; }
+    .quiz-answer { border-top: 1px solid var(--line-soft); padding: 14px 15px; color: var(--ink-soft); }
+    .quiz-answer strong { color: var(--ink); }
+    .plan { list-style: none; margin: 0; padding: 0; }
+    .plan li { display: grid; grid-template-columns: 25px 1fr; gap: 11px; align-items: start; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .plan input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--teal); }
+    .progress { height: 10px; background: var(--surface-alt); border-radius: 999px; overflow: hidden; margin: 16px 0 6px; }
+    .progress span { display: block; width: 0%; height: 100%; transition: width .2s ease; background: var(--teal); }
+    .source-box { background: var(--surface-alt); border: 1px solid var(--line); }
+    .source-box ul { margin: 8px 0 0; padding-left: 20px; }
+    a { color: #155c8c; } a:hover { color: #0c3f63; }
+    .muted { color: var(--ink-soft); } .hidden { display: none; }
+    .master-map { margin: 20px 0 34px; border: 2px solid var(--ink); border-radius: 16px; background: var(--surface); overflow: hidden; }
+    .master-map > header { padding: 22px; background: var(--ink); color: #f7f7f2; }
+    .master-map > header h2 { color: #fff; margin: 0 0 8px; }
+    .master-map > header p { margin: 0; color: #dce3dd; max-width: 800px; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 7px; padding: 14px 18px; background: var(--surface-alt); border-bottom: 1px solid var(--line); }
+    .map-status { display: inline-flex; align-items: center; min-height: 25px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; background: var(--surface); color: var(--ink-soft); font: .72rem var(--font-mono); line-height: 1.2; }
+    .map-status.core { border-color: #7eb7a7; background: #e5f1ec; color: #164e3d; }
+    .map-status.research { border-color: #d5b56b; background: #fff5d9; color: #725405; }
+    .map-status.open { border-color: #c88c8c; background: #fce8e8; color: #7d2a2a; }
+    .map-status.extra { border-color: #dfb89f; background: var(--accent-pale); color: #692b0c; }
+    .atlas-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 18px; }
+    .group-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .map-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; font-weight: 700; }
+    [id] { scroll-margin-top: 85px; }
+    .jump-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 8px; }
+    .jump-nav a { display: inline-flex; align-items: center; padding: 7px 12px; min-height: 44px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); font-size: .88rem; }
+    .atlas-panel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+    .atlas-panel > h3 { margin: 0 0 5px; font-size: 1.23rem; }
+    .atlas-panel > p { margin-bottom: 13px; color: var(--ink-soft); }
+    .tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+    .tree > li { position: relative; margin: 11px 0; padding: 10px 0 0 18px; border-top: 1px solid var(--line-soft); }
+    .tree > li:first-child { border-top: 0; padding-top: 0; }
+    .tree > li::before { content: ''; position: absolute; left: 0; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .tree > li:first-child::before { top: 6px; }
+    .tree strong { display: inline; }
+    .tree ul { margin: 7px 0 0 7px; padding-left: 13px; border-left: 1px solid var(--line); }
+    .tree ul li { margin: 6px 0; color: var(--ink-soft); font-size: .93rem; }
+    .tree .map-status { margin: 3px 0 0; vertical-align: middle; }
+    .property-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .property-branch { --branch: var(--accent); --branch-pale: var(--accent-pale); min-width: 0; border: 1px solid var(--line); border-left: 6px solid var(--branch); border-radius: 10px; background: var(--surface); overflow: hidden; }
+    .property-branch.mechanical { --branch: #a94b18; --branch-pale: #f8e5d8; }
+    .property-branch.electrical { --branch: #315d93; --branch-pale: #e1eafa; }
+    .property-branch.thermal { --branch: #9a6a05; --branch-pale: #fbefcd; }
+    .property-branch.chemical { --branch: #17676a; --branch-pale: #dceded; }
+    .property-branch summary { cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 9px; align-items: center; min-height: 58px; padding: 12px; list-style: none; background: var(--branch-pale); }
+    .property-branch summary::-webkit-details-marker { display: none; }
+    .property-branch summary:focus-visible { outline: 3px solid var(--teal); outline-offset: -3px; }
+    .branch-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--branch); color: #fff; font: 700 .78rem var(--font-mono); }
+    .property-branch summary b { display: block; font-size: 1.02rem; }
+    .property-branch summary small { display: block; color: var(--ink-soft); margin-top: 1px; }
+    .branch-body { padding: 12px 14px 14px; }
+    .branch-body > p { color: var(--ink-soft); margin-bottom: 9px; font-size: .91rem; }
+    .leaf-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+    .leaf-list li { padding: 8px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line-soft); color: var(--ink-soft); font-size: .9rem; }
+    .leaf-list b { color: var(--ink); }
+    .composition-atlas, .extra-branch { margin: 0 18px 18px; padding: 16px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface-alt); }
+    .composition-atlas h3, .extra-branch h3 { margin: 0 0 6px; }
+    .composition-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .composition-grid > div { padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .composition-grid p { margin: 5px 0 0; color: var(--ink-soft); font-size: .92rem; }
+    .extra-branch { border-style: dashed; border-color: #d8a184; background: #fff6f0; }
+    .note-atlas { margin: 24px 0 34px; }
+    .note-atlas > p { color: var(--ink-soft); max-width: 800px; }
+    .atlas-detail { margin: 11px 0; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); overflow: hidden; }
+    .atlas-detail > summary { cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 52px; padding: 13px 15px; font-weight: 700; list-style: none; }
+    .atlas-detail > summary::-webkit-details-marker { display: none; }
+    .atlas-detail > summary::before { content: '+'; color: var(--accent); font: 700 1.2rem var(--font-mono); }
+    .atlas-detail[open] > summary::before { content: '–'; }
+    .atlas-detail > summary:focus-visible { outline: 3px solid var(--teal); outline-offset: -3px; }
+    .atlas-body { border-top: 1px solid var(--line-soft); padding: 16px; }
+    .atlas-body h3 { margin: 17px 0 7px; }
+    .atlas-body h3:first-child { margin-top: 0; }
+    .atlas-body p, .atlas-body li { color: var(--ink-soft); }
+    .atlas-body ul { padding-left: 20px; }
+    .atlas-body .table-wrap { margin: 10px 0 18px; }
+    .atlas-body .warning, .atlas-body .note { margin: 12px 0; }
+    @media (max-width: 700px) {
+      .container { padding: 18px 14px 60px; }
+      .grid.two, .grid.four, .terms, .week-map { grid-template-columns: 1fr; }
+      .map { grid-template-columns: 1fr; } .map .arrow { transform: rotate(90deg); min-height: 22px; }
+      .state-wrap, .flow { grid-template-columns: 1fr; } .state-arrow, .flow-arrow { transform: rotate(90deg); min-height: 24px; }
+      .lens-grid { grid-template-columns: 1fr; }
+      .atlas-grid, .property-grid, .composition-grid, .group-grid { grid-template-columns: 1fr; }
+      .atlas-panel { padding: 12px; }
+      .state-arrow { transform: none; padding: 8px; }
+      .state-arrow::first-letter { writing-mode: vertical-lr; }
+      .master-map > header { padding: 18px; }
+      .atlas-grid { padding: 12px; gap: 12px; }
+      .composition-atlas, .extra-branch { margin: 0 12px 12px; }
+      .tree ul { margin-left: 2px; }
+      .tab-btn { padding: 9px 11px; font-size: .82rem; }
+      .counter { width: 100%; margin-left: 0; }
+    }
+  textarea{background:var(--surface);color:var(--ink)}summary{cursor:pointer;min-height:44px}button{min-height:44px}@media print{.tab-nav,.plain-btn{display:none!important}.tab-pane{display:block!important;break-before:page}.card{break-inside:avoid}textarea{height:100px}details:not([open])>*:not(summary){display:none}}</style>
+</head>
+<body>
+<main class="container">
+  <header><div class="eyebrow">ABT · Wäfler · Lernziele vom 30.10.2026</div><h1>Vom Erz<br>zum Werkstoff.</h1><p class="lead">Test am 06.11.2026 · 15 Lernziele · Metalle und Nichtmetalle · Zink, Zinn und Wolfram.</p><p><a href="https://schule.yanikroesti.ch/material.html">← Schulmaterial</a></p></header>
+
+  <nav class="tab-nav" aria-label="Lernpaket-Reiter">
+    <button class="tab-btn active" data-tab="theorie">Theorie</button>
+    <button class="tab-btn" data-tab="visuals">Visuals</button>
+    <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+    <button class="tab-btn" data-tab="karten">Karteikarten</button>
+    <button class="tab-btn" data-tab="quiz">Quiz</button>
+    <button class="tab-btn" data-tab="probetest">Probetest</button>
+    <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+  </nav>
+
+  <section class="tab-pane active" id="theorie"><h2>15 Lernziele · Test 06.11.2026</h2><div class="intro"><p>Werkstoff nennen → Eigenschaft erklären → Einsatz begründen. Grundlage: Lernziele-Screenshot vom 30.10.2026. Zink, Zinn und Wolfram sind ausdrücklich enthalten.</p></div><article class="card" id="ziel-1"><p class="small-label">Lernziel 01</p><h3>Wie werden Metalle gewonnen?</h3><p>Erz abbauen → zerkleinern und anreichern → Metall gewinnen → reinigen (raffinieren). Viele Metalle sind chemisch gebunden. Metalloxide werden z. B. mit Kohlenmonoxid reduziert; Aluminium wird elektrolytisch gewonnen. Das konkrete Verfahren hängt vom Erz ab.</p></article><article class="card" id="ziel-2"><p class="small-label">Lernziel 02</p><h3>Wie wird Kupfer/Aluminium hergestellt?</h3><p>Kupfer (Sulfiderzroute): Erz → Flotation → Konzentrat → Schmelzen → Kupferstein → Konvertieren → Rohkupfer → Feuerraffination/Anodenguss → elektrolytische Raffination. Unreine Anode (+) löst sich, reines Kupfer wächst an der Kathode (−). Aluminium: Bauxit → Bayer-Verfahren → Tonerde (Al₂O₃) → in Kryolithschmelze lösen → Schmelzflusselektrolyse (Hall-Héroult) → Aluminium. Unterschied: Cu-Elektrolyse reinigt Rohmetall; Al-Elektrolyse gewinnt Metall aus dem Oxid.</p></article><article class="card" id="ziel-3"><p class="small-label">Lernziel 03</p><h3>Wie wird Stahl hergestellt?</h3><p>Klassische Route: Eisenerz → Hochofen → kohlenstoffreiches Roheisen → Sauerstoffkonverter → Stahl einstellen → Giessen. CO reduziert Eisenoxid im Hochofen. Im Konverter wird überschüssiger Kohlenstoff vermindert. Alternative: Elektrolichtbogenofen mit Schrott und/oder direkt reduziertem Eisen; nicht jeder Stahl braucht einen Hochofen.</p></article><article class="card" id="ziel-4"><p class="small-label">Lernziel 04</p><h3>Was wird für Stahl benötigt?</h3><p>Hochofen: Eisenerz liefert Eisen; Koks liefert Wärme und CO für die Reduktion; Kalkstein unterstützt die Schlackenbildung; Heisswind ermöglicht die Verbrennung. Im Konverter braucht es Sauerstoff. Legierungselemente wie Cr, Ni oder Mo stellen Eigenschaften ein. Elektrolichtbogenroute: geeigneter Einsatzstoff und elektrische Energie.</p></article><article class="card" id="ziel-5"><p class="small-label">Lernziel 05</p><h3>Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?</h3><p>Härten: geeigneten Stahl erwärmen und rasch abschrecken → höhere Härte, oft spröder. Anlassen: nach dem Härten erneut bei tieferer Temperatur erwärmen → Sprödigkeit/Spannungen vermindern. Vergüten = Härten und geeignetes Anlassen für Festigkeit und Zähigkeit. Weichglühen erleichtert die Bearbeitung; Spannungsarmglühen vermindert innere Spannungen. Walzen, Ziehen und Schmieden sind Umformen, keine Wärmebehandlungsnamen. Die Stahlsorte bestimmt, welche Behandlung geeignet ist.</p></article><article class="card" id="ziel-6"><p class="small-label">Lernziel 06</p><h3>Welche Metalle kennen wir noch?</h3><p>Kupfer Cu, Aluminium Al, Gold Au, Silber Ag, Wolfram W, Blei Pb, Quecksilber Hg, Zink Zn, Zinn Sn, Nickel Ni, Lithium Li; Eisen Fe als Basis von Stahl. Stahl ist eine Legierung, kein chemisches Element. Lerne Symbol → Eigenschaft → Anwendung.</p></article><article class="card" id="ziel-7"><p class="small-label">Lernziel 07</p><h3>Wo werden die Metalle eingeteilt?</h3><p>Eisenmetalle: Eisen und eisenbasierte Werkstoffe, etwa Stahl/Gusseisen. Nichteisenmetalle: Eisen ist nicht Hauptbestandteil. Im Unterricht: Leichtmetalle unter 5 kg/dm³, Schwermetalle ab 5 kg/dm³. Al und Li sind leicht; Cu, Zn, Sn und W schwer. Edel/unedel ist eine andere, chemische Einteilung. Schwer heisst nicht automatisch giftig.</p></article><article class="card" id="ziel-8"><p class="small-label">Lernziel 08</p><h3>Wie/wo werden die Metalle eingesetzt und weshalb?</h3><p>Kupfer für Leiter und Wicklungen: sehr gute Leitfähigkeit und gut formbar. Aluminium für Freileitungen: leicht bei guter Leitfähigkeit. Gold für Kontaktoberflächen: korrosionsbeständig. Silber für Kontakte: beste elektrische Leitfähigkeit der Metalle. Wolfram für Elektroden: sehr temperaturbeständig. Zink schützt Stahl; Zinn dient für Lote/Überzüge. Alle Metallporträts unten wiederholen.</p></article><article class="card" id="ziel-9"><p class="small-label">Lernziel 09</p><h3>Was sind Legierungen?</h3><p>Metallische Werkstoffe aus mindestens zwei chemischen Elementen, davon mindestens eines ein Metall. Zusätze verändern etwa Härte, Zähigkeit, Korrosionsbeständigkeit oder elektrischen Widerstand. Auch Nichtmetalle können dazugehören: Fe + C bei Stahl. Beschichten ist etwas anderes: verzinkter Stahl trägt eine Zinkschicht; Messing enthält Zn als Legierungsbestandteil.</p></article><article class="card" id="ziel-10"><p class="small-label">Lernziel 10</p><h3>Wo kommen Legierungen zum Einsatz und weshalb?</h3><p>Messing Cu+Zn: gut bearbeitbare Armaturen und Bauteile. Klassische Zinnbronze Cu+Sn: verschleissfeste Lager und geeignete Federteile. NiCr: hoher elektrischer Widerstand und Hitzebeständigkeit → Heizdraht. CuNi: Widerstandswerkstoffe. Zinn-Silber-Kupfer (SAC): Elektroniklot. Chromreiche nichtrostende Stähle: schützende Passivschicht → beständige Gehäuse. Edelstahl allein bedeutet nicht automatisch rostfrei.</p></article><article class="card" id="ziel-11"><p class="small-label">Lernziel 11</p><h3>Was sind Nichtmetalle?</h3><p>Nichtmetallische Werkstoffe besitzen nicht den typischen metallischen Eigenschaftssatz. Hier: Kunststoffe, Gummi, Papier, Holz, Glas und Keramik. Diese Werkstoffgruppe ist nicht identisch mit der chemischen Liste nichtmetallischer Elemente. Viele isolieren elektrisch, aber nicht alle: Graphit ist eine leitende Ausnahme.</p></article><article class="card" id="ziel-12"><p class="small-label">Lernziel 12</p><h3>Wie werden Nichtmetalle unterteilt?</h3><p>Bei den Isolierstoffen: fest organisch (Kunststoffe, Gummi, Papier, Holz), fest anorganisch (Glas, Keramik, Porzellan, Glimmer), flüssig (Transformatorenöl), gasförmig (Luft, Stickstoff, SF₆). Organisch/anorganisch ist eine chemische Einteilung, nicht natürlich/künstlich. Kunststoffe zusätzlich: Thermoplaste, Duroplaste, Elastomere.</p></article><article class="card" id="ziel-13"><p class="small-label">Lernziel 13</p><h3>Welche Eigenschaften machen den Unterschied?</h3><p>Elektrische Isolation, Wärmeverhalten, Elastizität, Härte, Feuchte- und Chemikalienbeständigkeit. Thermoplaste: keine dauerhafte Vernetzung, warm weich und erneut formbar. Duroplaste: eng vernetzt, nicht aufschmelzbar, bei hoher Temperatur Zersetzung. Elastomere: weitmaschig vernetzt und gummielastisch. Glas/Keramik sind oft hart, spröde und temperaturbeständig.</p></article><article class="card" id="ziel-14"><p class="small-label">Lernziel 14</p><h3>Welche Nichtmetalle kennen wir?</h3><p>PVC, PE, PA, PC, PS, PET; EP-, PF-, MF- und UP-Harze; SBR, Silikonkautschuk, CR; ausserdem Papier, Holz, Glas, Porzellan, Glimmer und Öle. PET = Polyethylenterephthalat. Silikonharz und Silikonkautschuk unterscheiden: Harz kann duroplastisch, Kautschuk elastomer sein.</p></article><article class="card" id="ziel-15"><p class="small-label">Lernziel 15</p><h3>Wo kommen diese zum Einsatz und weshalb?</h3><p>PVC/PE für Kabel wegen Isolation und Formbarkeit; PC für schlagzähe Gehäuse; EP für Leiterplatten/Verguss; Gummi für flexible Leitungen/Dichtungen. Keramik/Porzellan für temperaturbeständige Isolierteile. Papier als Isolation in geeigneten Transformatoren. Transformatorenöl isoliert und führt Wärme ab. Luft isoliert bei ausreichenden Abständen. Feuchtes Holz isoliert schlechter als trockenes.</p></article><h2>Kunststoffherstellung · heutiger Unterricht</h2><div class="note"><p><strong>Polymerisation:</strong> Kettenwachstum, keine Abspaltung kleiner Moleküle; z. B. PE, PVC, PS.</p><p><strong>Polykondensation:</strong> stufenweise Verknüpfung mit Abspaltung kleiner Moleküle (etwa Wasser); z. B. PET.</p><p><strong>Polyaddition:</strong> stufenweise Verknüpfung ohne Abspaltung kleiner Moleküle; z. B. PUR.</p><p>Reaktion ≠ Vernetzungsgrad: PUR kann je nach Aufbau thermoplastisch, elastomer oder duroplastisch sein. Hilfs-/Schmier-/Betriebsstoffe: Öle und Fette vermindern Reibung, Kühlmittel führen Wärme ab.</p></div><h2>Metallwissen · 11 Porträts</h2><p>Bei jedem Metall: Symbol, Eigenschaft, Anwendung und Begründung. Fokus: Zn, Sn, W.</p><div class="grid two"><article class="card"><span class="chip">Cu · schwer</span><h3>Kupfer</h3><p><strong>Eigenschaften:</strong> Sehr gut elektrisch und thermisch leitfähig; gut zu Drähten formbar.</p><p><strong>Einsatz:</strong> Kabel, Wicklungen, Sammelschienen, Leiterplatten.</p><p><strong>Legierungen:</strong> Messing Cu+Zn; klassische Bronze Cu+Sn.</p><p class="warning">Silber leitet besser; Gold ist vor allem wegen beständiger Kontaktoberflächen wichtig.</p></article><article class="card"><span class="chip">Al · leicht</span><h3>Aluminium</h3><p><strong>Eigenschaften:</strong> Geringes Gewicht, gute Leitfähigkeit, schützende Oxidschicht.</p><p><strong>Einsatz:</strong> Freileitungen, Gehäuse, Kühlkörper.</p><p><strong>Legierungen:</strong> Al-Mg und Al-Si für leichte Bauteile.</p><p class="warning">Bei gleichem Widerstand benötigt Al mehr Querschnitt als Cu.</p></article><article class="card"><span class="chip">Au · schwer</span><h3>Gold</h3><p><strong>Eigenschaften:</strong> Sehr korrosionsbeständig, leitfähig, weich.</p><p><strong>Einsatz:</strong> Dünne Beschichtungen hochwertiger Kontakte.</p><p><strong>Legierungen:</strong> Goldlegierungen sind härter als Reingold.</p><p class="warning">Nicht der beste Leiter: Korrosionsbeständigkeit begründet den Kontakteinsatz.</p></article><article class="card"><span class="chip">Ag · schwer</span><h3>Silber</h3><p><strong>Eigenschaften:</strong> Beste elektrische Leitfähigkeit aller Metalle, sehr gute Wärmeleitung.</p><p><strong>Einsatz:</strong> Kontakte, Elektronik, Photovoltaik.</p><p><strong>Legierungen:</strong> Silberhaltige Lote und Kontaktwerkstoffe.</p><p class="warning">Leitfähigkeit und Beständigkeit sind verschiedene Eigenschaften.</p></article><article class="card"><span class="chip">W · schwer</span><h3>Wolfram</h3><p><strong>Eigenschaften:</strong> Sehr hoher Schmelzpunkt (ca. 3414 °C), hohe Dichte und Temperaturbeständigkeit.</p><p><strong>Einsatz:</strong> Wolframelektroden; Heizelemente in geeigneter Atmosphäre; früher Glühfäden.</p><p><strong>Legierungen:</strong> W in Schnellarbeitsstahl; Wolframcarbid in Hartmetallwerkzeugen.</p><p class="warning">Hartmetallschneiden bestehen oft aus Wolframcarbid mit Bindemetall, nicht reinem Wolfram. Wolfram kann in heisser Luft oxidieren.</p></article><article class="card"><span class="chip">Pb · schwer</span><h3>Blei</h3><p><strong>Eigenschaften:</strong> Sehr dicht, weich, giftig; gute Strahlenabschirmung.</p><p><strong>Einsatz:</strong> Bleiakkus und Strahlenschutz.</p><p><strong>Legierungen:</strong> Blei-Antimon-Legierungen für Akkubauteile.</p><p class="warning">Hohe Dichte und Giftigkeit sind getrennte Eigenschaften.</p></article><article class="card"><span class="chip">Hg · schwer</span><h3>Quecksilber</h3><p><strong>Eigenschaften:</strong> Bei Raumtemperatur flüssig; giftig.</p><p><strong>Einsatz:</strong> Früher Messgeräte und Schalter, heute vielfach ersetzt.</p><p><strong>Legierungen:</strong> Amalgame sind Legierungen mit Quecksilber.</p><p class="warning">Trotz flüssigem Zustand ein Metall.</p></article><article class="card"><span class="chip">Zn · schwer</span><h3>Zink</h3><p><strong>Eigenschaften:</strong> Unedler als Eisen; schützt Stahl als Barriere und Opferanode.</p><p><strong>Einsatz:</strong> Verzinkte Stahlteile, Batterien, Druckgussteile.</p><p><strong>Legierungen:</strong> Messing = Kupfer + Zink.</p><p class="warning">Verzinken = beschichten. Zn nicht mit Zinn Sn verwechseln.</p></article><article class="card"><span class="chip">Sn · schwer</span><h3>Zinn</h3><p><strong>Eigenschaften:</strong> Niedriger Schmelzpunkt (ca. 232 °C); geeignet für Lote und Überzüge.</p><p><strong>Einsatz:</strong> Elektroniklote, verzinnte Kupferlitzen, Weissblech.</p><p><strong>Legierungen:</strong> Bronze = Cu+Sn; SAC = Sn+Ag+Cu.</p><p class="warning">Weissblech ist verzinnter Stahl, keine homogene Legierung. Zinn schützt Eisen nicht als Zink-Opferanode.</p></article><article class="card"><span class="chip">Ni · schwer</span><h3>Nickel</h3><p><strong>Eigenschaften:</strong> Zäh, korrosions- und hitzebeständig; wichtig als Legierungselement.</p><p><strong>Einsatz:</strong> Beschichtungen, Akkus und nichtrostende Stähle.</p><p><strong>Legierungen:</strong> NiCr für Heizdrähte; CuNi für Widerstandswerkstoffe.</p><p class="warning">Reines Nickel ist ferromagnetisch; es kann Kontaktallergien auslösen.</p></article><article class="card"><span class="chip">Li · leicht</span><h3>Lithium</h3><p><strong>Eigenschaften:</strong> Sehr leicht und elektrochemisch reaktiv.</p><p><strong>Einsatz:</strong> Lithiumverbindungen in Lithium-Ionen-Akkus; Lithiumseifen in Fetten.</p><p><strong>Legierungen:</strong> Al-Li für leichte Konstruktionen.</p><p class="warning">In üblichen Lithium-Ionen-Akkus liegt Lithium überwiegend gebunden vor, nicht als Stück reines Metall.</p></article></div><h2>Quellen und Grenzen</h2><p>Prüfungsumfang: Screenshot «Lernziele für Test, 06.11.2026» in der Notiz vom 30.10.2026. Inhalt: Unterrichtsnotizen vom 11.09., 18.09., 16.10., 23.10. und 30.10. sowie vorhandene Lernübersichten. Metallwerte stammen aus diesen Notizen. Wärmebehandlungen sind ergänzende Grunderklärungen.</p><ul><li><a href="https://www.aurubis.de/aurubis-com/en/products/copper-products/shapes/Production">Aurubis: Kupferproduktion</a></li><li><a href="https://www.hydro.com/us/global/aluminum/about-aluminum/aluminum-life-cycle/">Hydro: Aluminiumherstellung</a></li><li><a href="https://www.bodycote.com/what-we-do/precision-heat-treatment/">Bodycote: Wärmebehandlungen</a></li><li><a href="https://www.tis-gdv.de/tis_e/verpack/kunststo/bildung/bildung-htm/">GDV/TIS: Kunststoffreaktionen</a></li></ul><p class="source">Roth-Blätter S. 32–39 fehlen als vollständige Originalquelle. Spezifische Wärmebehandlungsparameter sind nicht belegt; deshalb keine verbindlichen Temperaturen. Probetest und Fragen sind selbst erstellte Übungen, kein offizieller Test. Asbest und Löten stehen nicht ausdrücklich in den 15 Lernzielen.</p></section>
+<section class="tab-pane" id="visuals"><h2>Vom Rohstoff zum Einsatz</h2><article class="card"><h3>Stahl</h3><div style="display:flex;flex-wrap:wrap;gap:10px"><div class="note" style="flex:1 1 145px">Erz + Koks + Kalkstein</div><div class="note" style="flex:1 1 145px">Hochofen → Roheisen</div><div class="note" style="flex:1 1 145px">Konverter → C vermindern</div><div class="note" style="flex:1 1 145px">Stahl → Giessen</div></div></article><article class="card"><h3>Kupfer</h3><div style="display:flex;flex-wrap:wrap;gap:10px"><div class="note" style="flex:1 1 145px">Erz → Konzentrat</div><div class="note" style="flex:1 1 145px">Schmelzen → Kupferstein</div><div class="note" style="flex:1 1 145px">Konvertieren → Rohkupfer</div><div class="note" style="flex:1 1 145px">Anoden → Raffination</div></div></article><article class="card"><h3>Aluminium</h3><div style="display:flex;flex-wrap:wrap;gap:10px"><div class="note" style="flex:1 1 145px">Bauxit</div><div class="note" style="flex:1 1 145px">Bayer → Tonerde</div><div class="note" style="flex:1 1 145px">Kryolith + Elektrolyse</div><div class="note" style="flex:1 1 145px">Aluminium</div></div></article><article class="card"><h3>Vergüten</h3><div style="display:flex;flex-wrap:wrap;gap:10px"><div class="note" style="flex:1 1 145px">Erwärmen</div><div class="note" style="flex:1 1 145px">Abschrecken → hart</div><div class="note" style="flex:1 1 145px">Anlassen</div><div class="note" style="flex:1 1 145px">Festigkeit + Zähigkeit</div></div></article><h2>Ketten und Vernetzung</h2><div class="grid two"><article class="card"><h3>Thermoplast</h3><svg viewBox="0 0 360 150" style="width:100%" role="img" aria-label="Thermoplast: Unvernetzt → warm weich, erneut formbar."><g fill="none" stroke="currentColor" stroke-width="4"><path d="M15 30 Q45 8 75 30 T135 30 T195 30 T255 30 T315 30"/><path d="M15 75 Q45 53 75 75 T135 75 T195 75 T255 75 T315 75"/><path d="M15 120 Q45 98 75 120 T135 120 T195 120 T255 120 T315 120"/></g></svg><p>Unvernetzt → warm weich, erneut formbar.</p></article><article class="card"><h3>Elastomer</h3><svg viewBox="0 0 360 150" style="width:100%" role="img" aria-label="Elastomer: Weitmaschig vernetzt → elastisch."><g fill="none" stroke="currentColor" stroke-width="4"><path d="M15 30 Q45 8 75 30 T135 30 T195 30 T255 30 T315 30"/><path d="M15 75 Q45 53 75 75 T135 75 T195 75 T255 75 T315 75"/><path d="M15 120 Q45 98 75 120 T135 120 T195 120 T255 120 T315 120"/><path stroke="#a94b18" d="M75 30V75 M83 75V120"/><path stroke="#a94b18" d="M255 30V75 M263 75V120"/></g></svg><p>Weitmaschig vernetzt → elastisch.</p></article><article class="card"><h3>Duroplast</h3><svg viewBox="0 0 360 150" style="width:100%" role="img" aria-label="Duroplast: Eng vernetzt → starr, nicht aufschmelzbar."><g fill="none" stroke="currentColor" stroke-width="4"><path d="M15 30 Q45 8 75 30 T135 30 T195 30 T255 30 T315 30"/><path d="M15 75 Q45 53 75 75 T135 75 T195 75 T255 75 T315 75"/><path d="M15 120 Q45 98 75 120 T135 120 T195 120 T255 120 T315 120"/><path stroke="#a94b18" d="M45 30V75 M53 75V120"/><path stroke="#a94b18" d="M75 30V75 M83 75V120"/><path stroke="#a94b18" d="M105 30V75 M113 75V120"/><path stroke="#a94b18" d="M135 30V75 M143 75V120"/><path stroke="#a94b18" d="M165 30V75 M173 75V120"/><path stroke="#a94b18" d="M195 30V75 M203 75V120"/><path stroke="#a94b18" d="M225 30V75 M233 75V120"/><path stroke="#a94b18" d="M255 30V75 M263 75V120"/><path stroke="#a94b18" d="M285 30V75 M293 75V120"/></g></svg><p>Eng vernetzt → starr, nicht aufschmelzbar.</p></article></div><div class="fact"><h3>Zn ≠ Sn ≠ W</h3><p>Zink schützt Stahl · Zinn lötet und steckt in Bronze · Wolfram widersteht hoher Temperatur.</p><p>Messing = Cu + Zn · Bronze = Cu + Sn · Hartmetall oft = Wolframcarbid + Bindemetall.</p></div></section>
+<section class="tab-pane" id="begriffe">
+    <div class="intro"><h2>Begriffe statt Textwand.</h2><p>Tippe ein Wort ein oder wähle eine Kategorie. Jede Karte enthält nur das Nötigste.</p></div>
+    <label class="small-label" for="termSearch">Begriff suchen</label>
+    <input class="term-search" id="termSearch" type="search" placeholder="z. B. Zink, Wolfram, Stahl …">
+    <div class="filters" id="termFilters"></div>
+    <div class="terms" id="termList"></div>
+  </section>
+
+  <section class="tab-pane" id="karten">
+    <div class="intro"><h2>Denken, dann umdrehen.</h2><p>Die Karte zeigt nur die Frage. Erst eine eigene Antwort bilden, dann antippen. «Gewusst» und «noch üben» werden auf diesem Gerät gespeichert.</p></div>
+    <div class="filters" id="cardFilters"></div>
+    <button class="plain-btn" id="reviewCards" aria-pressed="false">Nur «noch üben» anzeigen</button>
+    <div class="flash" id="flashCard">
+      <div class="flash-body" id="flashBody" role="button" tabindex="0" aria-label="Karte umdrehen"></div>
+      <div class="flash-foot"><button class="plain-btn" id="prevCard">← Zurück</button><button class="plain-btn primary" id="flipCard">Umdrehen</button><button class="plain-btn good" id="knowCard">Gewusst</button><button class="plain-btn bad" id="missCard">Noch üben</button><span class="counter" id="cardCounter"></span></div>
+    </div>
+  </section>
+
+  <section class="tab-pane" id="quiz">
+    <div class="intro"><h2>Quiz ohne Zeitdruck.</h2><p>Jede Lösung bleibt versteckt, bis du sie bewusst öffnest. Wenn du unsicher bist: zur passenden Karte zurück, nicht raten.</p></div>
+    <div id="quizList"></div>
+  </section>
+
+  <section class="tab-pane" id="probetest"><h2>Probetest · 18 Aufgaben</h2><p>Selbst erstellte Übungen zu allen 15 Lernzielen, dazu Zn, Sn und W. Vorschlag: 35 Minuten ohne Hilfe. Keine offizielle Notenskala. Antworten werden lokal gespeichert. Für einen Blankodruck Lösungen schliessen.</p><button class="plain-btn" onclick="window.print()">Drucken</button><article class="card"><h3>1. Wie werden Metalle gewonnen?</h3><label for="test-0">Deine Antwort</label><textarea id="test-0" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="0"></textarea><details><summary>Musterlösung</summary><p>Erz abbauen → zerkleinern und anreichern → Metall gewinnen → reinigen (raffinieren). Viele Metalle sind chemisch gebunden. Metalloxide werden z. B. mit Kohlenmonoxid reduziert; Aluminium wird elektrolytisch gewonnen. Das konkrete Verfahren hängt vom Erz ab.</p></details></article><article class="card"><h3>2. Wie wird Kupfer/Aluminium hergestellt?</h3><label for="test-1">Deine Antwort</label><textarea id="test-1" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="1"></textarea><details><summary>Musterlösung</summary><p>Kupfer (Sulfiderzroute): Erz → Flotation → Konzentrat → Schmelzen → Kupferstein → Konvertieren → Rohkupfer → Feuerraffination/Anodenguss → elektrolytische Raffination. Unreine Anode (+) löst sich, reines Kupfer wächst an der Kathode (−). Aluminium: Bauxit → Bayer-Verfahren → Tonerde (Al₂O₃) → in Kryolithschmelze lösen → Schmelzflusselektrolyse (Hall-Héroult) → Aluminium. Unterschied: Cu-Elektrolyse reinigt Rohmetall; Al-Elektrolyse gewinnt Metall aus dem Oxid.</p></details></article><article class="card"><h3>3. Wie wird Stahl hergestellt?</h3><label for="test-2">Deine Antwort</label><textarea id="test-2" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="2"></textarea><details><summary>Musterlösung</summary><p>Klassische Route: Eisenerz → Hochofen → kohlenstoffreiches Roheisen → Sauerstoffkonverter → Stahl einstellen → Giessen. CO reduziert Eisenoxid im Hochofen. Im Konverter wird überschüssiger Kohlenstoff vermindert. Alternative: Elektrolichtbogenofen mit Schrott und/oder direkt reduziertem Eisen; nicht jeder Stahl braucht einen Hochofen.</p></details></article><article class="card"><h3>4. Was wird für Stahl benötigt?</h3><label for="test-3">Deine Antwort</label><textarea id="test-3" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="3"></textarea><details><summary>Musterlösung</summary><p>Hochofen: Eisenerz liefert Eisen; Koks liefert Wärme und CO für die Reduktion; Kalkstein unterstützt die Schlackenbildung; Heisswind ermöglicht die Verbrennung. Im Konverter braucht es Sauerstoff. Legierungselemente wie Cr, Ni oder Mo stellen Eigenschaften ein. Elektrolichtbogenroute: geeigneter Einsatzstoff und elektrische Energie.</p></details></article><article class="card"><h3>5. Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?</h3><label for="test-4">Deine Antwort</label><textarea id="test-4" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="4"></textarea><details><summary>Musterlösung</summary><p>Härten: geeigneten Stahl erwärmen und rasch abschrecken → höhere Härte, oft spröder. Anlassen: nach dem Härten erneut bei tieferer Temperatur erwärmen → Sprödigkeit/Spannungen vermindern. Vergüten = Härten und geeignetes Anlassen für Festigkeit und Zähigkeit. Weichglühen erleichtert die Bearbeitung; Spannungsarmglühen vermindert innere Spannungen. Walzen, Ziehen und Schmieden sind Umformen, keine Wärmebehandlungsnamen. Die Stahlsorte bestimmt, welche Behandlung geeignet ist.</p></details></article><article class="card"><h3>6. Welche Metalle kennen wir noch?</h3><label for="test-5">Deine Antwort</label><textarea id="test-5" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="5"></textarea><details><summary>Musterlösung</summary><p>Kupfer Cu, Aluminium Al, Gold Au, Silber Ag, Wolfram W, Blei Pb, Quecksilber Hg, Zink Zn, Zinn Sn, Nickel Ni, Lithium Li; Eisen Fe als Basis von Stahl. Stahl ist eine Legierung, kein chemisches Element. Lerne Symbol → Eigenschaft → Anwendung.</p></details></article><article class="card"><h3>7. Wo werden die Metalle eingeteilt?</h3><label for="test-6">Deine Antwort</label><textarea id="test-6" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="6"></textarea><details><summary>Musterlösung</summary><p>Eisenmetalle: Eisen und eisenbasierte Werkstoffe, etwa Stahl/Gusseisen. Nichteisenmetalle: Eisen ist nicht Hauptbestandteil. Im Unterricht: Leichtmetalle unter 5 kg/dm³, Schwermetalle ab 5 kg/dm³. Al und Li sind leicht; Cu, Zn, Sn und W schwer. Edel/unedel ist eine andere, chemische Einteilung. Schwer heisst nicht automatisch giftig.</p></details></article><article class="card"><h3>8. Wie/wo werden die Metalle eingesetzt und weshalb?</h3><label for="test-7">Deine Antwort</label><textarea id="test-7" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="7"></textarea><details><summary>Musterlösung</summary><p>Kupfer für Leiter und Wicklungen: sehr gute Leitfähigkeit und gut formbar. Aluminium für Freileitungen: leicht bei guter Leitfähigkeit. Gold für Kontaktoberflächen: korrosionsbeständig. Silber für Kontakte: beste elektrische Leitfähigkeit der Metalle. Wolfram für Elektroden: sehr temperaturbeständig. Zink schützt Stahl; Zinn dient für Lote/Überzüge. Alle Metallporträts unten wiederholen.</p></details></article><article class="card"><h3>9. Was sind Legierungen?</h3><label for="test-8">Deine Antwort</label><textarea id="test-8" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="8"></textarea><details><summary>Musterlösung</summary><p>Metallische Werkstoffe aus mindestens zwei chemischen Elementen, davon mindestens eines ein Metall. Zusätze verändern etwa Härte, Zähigkeit, Korrosionsbeständigkeit oder elektrischen Widerstand. Auch Nichtmetalle können dazugehören: Fe + C bei Stahl. Beschichten ist etwas anderes: verzinkter Stahl trägt eine Zinkschicht; Messing enthält Zn als Legierungsbestandteil.</p></details></article><article class="card"><h3>10. Wo kommen Legierungen zum Einsatz und weshalb?</h3><label for="test-9">Deine Antwort</label><textarea id="test-9" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="9"></textarea><details><summary>Musterlösung</summary><p>Messing Cu+Zn: gut bearbeitbare Armaturen und Bauteile. Klassische Zinnbronze Cu+Sn: verschleissfeste Lager und geeignete Federteile. NiCr: hoher elektrischer Widerstand und Hitzebeständigkeit → Heizdraht. CuNi: Widerstandswerkstoffe. Zinn-Silber-Kupfer (SAC): Elektroniklot. Chromreiche nichtrostende Stähle: schützende Passivschicht → beständige Gehäuse. Edelstahl allein bedeutet nicht automatisch rostfrei.</p></details></article><article class="card"><h3>11. Was sind Nichtmetalle?</h3><label for="test-10">Deine Antwort</label><textarea id="test-10" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="10"></textarea><details><summary>Musterlösung</summary><p>Nichtmetallische Werkstoffe besitzen nicht den typischen metallischen Eigenschaftssatz. Hier: Kunststoffe, Gummi, Papier, Holz, Glas und Keramik. Diese Werkstoffgruppe ist nicht identisch mit der chemischen Liste nichtmetallischer Elemente. Viele isolieren elektrisch, aber nicht alle: Graphit ist eine leitende Ausnahme.</p></details></article><article class="card"><h3>12. Wie werden Nichtmetalle unterteilt?</h3><label for="test-11">Deine Antwort</label><textarea id="test-11" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="11"></textarea><details><summary>Musterlösung</summary><p>Bei den Isolierstoffen: fest organisch (Kunststoffe, Gummi, Papier, Holz), fest anorganisch (Glas, Keramik, Porzellan, Glimmer), flüssig (Transformatorenöl), gasförmig (Luft, Stickstoff, SF₆). Organisch/anorganisch ist eine chemische Einteilung, nicht natürlich/künstlich. Kunststoffe zusätzlich: Thermoplaste, Duroplaste, Elastomere.</p></details></article><article class="card"><h3>13. Welche Eigenschaften machen den Unterschied?</h3><label for="test-12">Deine Antwort</label><textarea id="test-12" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="12"></textarea><details><summary>Musterlösung</summary><p>Elektrische Isolation, Wärmeverhalten, Elastizität, Härte, Feuchte- und Chemikalienbeständigkeit. Thermoplaste: keine dauerhafte Vernetzung, warm weich und erneut formbar. Duroplaste: eng vernetzt, nicht aufschmelzbar, bei hoher Temperatur Zersetzung. Elastomere: weitmaschig vernetzt und gummielastisch. Glas/Keramik sind oft hart, spröde und temperaturbeständig.</p></details></article><article class="card"><h3>14. Welche Nichtmetalle kennen wir?</h3><label for="test-13">Deine Antwort</label><textarea id="test-13" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="13"></textarea><details><summary>Musterlösung</summary><p>PVC, PE, PA, PC, PS, PET; EP-, PF-, MF- und UP-Harze; SBR, Silikonkautschuk, CR; ausserdem Papier, Holz, Glas, Porzellan, Glimmer und Öle. PET = Polyethylenterephthalat. Silikonharz und Silikonkautschuk unterscheiden: Harz kann duroplastisch, Kautschuk elastomer sein.</p></details></article><article class="card"><h3>15. Wo kommen diese zum Einsatz und weshalb?</h3><label for="test-14">Deine Antwort</label><textarea id="test-14" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="14"></textarea><details><summary>Musterlösung</summary><p>PVC/PE für Kabel wegen Isolation und Formbarkeit; PC für schlagzähe Gehäuse; EP für Leiterplatten/Verguss; Gummi für flexible Leitungen/Dichtungen. Keramik/Porzellan für temperaturbeständige Isolierteile. Papier als Isolation in geeigneten Transformatoren. Transformatorenöl isoliert und führt Wärme ab. Luft isoliert bei ausreichenden Abständen. Feuchtes Holz isoliert schlechter als trockenes.</p></details></article><article class="card"><h3>16. Erkläre Wolfram: Eigenschaften, Anwendung mit Begründung und Legierung/Abgrenzung.</h3><label for="test-15">Deine Antwort</label><textarea id="test-15" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="15"></textarea><details><summary>Musterlösung</summary><p>Sehr hoher Schmelzpunkt (ca. 3414 °C), hohe Dichte und Temperaturbeständigkeit. Wolframelektroden; Heizelemente in geeigneter Atmosphäre; früher Glühfäden. W in Schnellarbeitsstahl; Wolframcarbid in Hartmetallwerkzeugen. Hartmetallschneiden bestehen oft aus Wolframcarbid mit Bindemetall, nicht reinem Wolfram. Wolfram kann in heisser Luft oxidieren.</p></details></article><article class="card"><h3>17. Erkläre Zink: Eigenschaften, Anwendung mit Begründung und Legierung/Abgrenzung.</h3><label for="test-16">Deine Antwort</label><textarea id="test-16" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="16"></textarea><details><summary>Musterlösung</summary><p>Unedler als Eisen; schützt Stahl als Barriere und Opferanode. Verzinkte Stahlteile, Batterien, Druckgussteile. Messing = Kupfer + Zink. Verzinken = beschichten. Zn nicht mit Zinn Sn verwechseln.</p></details></article><article class="card"><h3>18. Erkläre Zinn: Eigenschaften, Anwendung mit Begründung und Legierung/Abgrenzung.</h3><label for="test-17">Deine Antwort</label><textarea id="test-17" class="wk-answer" style="width:100%;min-height:100px;font:inherit" data-key="17"></textarea><details><summary>Musterlösung</summary><p>Niedriger Schmelzpunkt (ca. 232 °C); geeignet für Lote und Überzüge. Elektroniklote, verzinnte Kupferlitzen, Weissblech. Bronze = Cu+Sn; SAC = Sn+Ag+Cu. Weissblech ist verzinnter Stahl, keine homogene Legierung. Zinn schützt Eisen nicht als Zink-Opferanode.</p></details></article></section><section class="tab-pane" id="lernplan">
+    <div class="intro"><h2>Eine Lernrunde, nicht alles auf einmal.</h2><p>Es ist noch kein Werkstoffkunde-Prüfungsdatum bekannt. Darum rechnet dieser Plan nicht künstlich bis zu einem Termin, sondern mit drei überschaubaren 25-Minuten-Hauptblöcken und kurzen Abschlussrunden.</p></div>
+    <ol class="plan" id="planList"></ol>
+    <div class="progress"><span id="progressFill"></span></div><p class="meta" id="progressText"></p>
+    <div class="note"><strong>Wenn du nur 10 Minuten hast:</strong> 1) Vier-Linsen-Check laut aufsagen. 2) Fest → flüssig → gasförmig und die Übergänge nennen. 3) Optional: den Korrosionsfluss als <em>Vertiefung</em> ohne Hilfe erklären. Das deckt die grosse Landkarte ab.</div>
+  </section>
+</main>
+
+<script>
+  // Reiter und direkte Wege von der Karte zu den vollständigen Notizdetails.
+  function showTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.toggle('active', b.dataset.tab === id); b.setAttribute('aria-pressed', String(b.dataset.tab === id)); });
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === id));
+  }
+  document.querySelectorAll('.tab-btn').forEach(button => button.addEventListener('click', () => { showTab(button.dataset.tab); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+  function revealHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = document.getElementById(id); if (!target) return;
+    const pane = target.closest('.tab-pane'); if (pane) showTab(pane.id);
+    let ancestor = target; while (ancestor) { if (ancestor.tagName === 'DETAILS') ancestor.open = true; ancestor = ancestor.parentElement; }
+    if (target.id.startsWith('details-') && target.nextElementSibling?.tagName === 'DETAILS') target.nextElementSibling.open = true;
+    requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: 'instant' }));
+  }
+  document.addEventListener('click', e => { const link = e.target.closest('a[href^="#"]'); if (link && link.hash === location.hash) { e.preventDefault(); revealHash(); } });
+  window.addEventListener('hashchange', revealHash);
+  showTab('theorie'); revealHash();
+
+  // Zusatz: pH-Visualisierung. Keine Stoffwerte werden behauptet.
+  const TERMS = [
+  [
+    "grundlagen",
+    "Kupfer (Cu)",
+    "Sehr gut elektrisch und thermisch leitfähig; gut zu Drähten formbar. Kabel, Wicklungen, Sammelschienen, Leiterplatten. Messing Cu+Zn; klassische Bronze Cu+Sn."
+  ],
+  [
+    "grundlagen",
+    "Aluminium (Al)",
+    "Geringes Gewicht, gute Leitfähigkeit, schützende Oxidschicht. Freileitungen, Gehäuse, Kühlkörper. Al-Mg und Al-Si für leichte Bauteile."
+  ],
+  [
+    "grundlagen",
+    "Gold (Au)",
+    "Sehr korrosionsbeständig, leitfähig, weich. Dünne Beschichtungen hochwertiger Kontakte. Goldlegierungen sind härter als Reingold."
+  ],
+  [
+    "grundlagen",
+    "Silber (Ag)",
+    "Beste elektrische Leitfähigkeit aller Metalle, sehr gute Wärmeleitung. Kontakte, Elektronik, Photovoltaik. Silberhaltige Lote und Kontaktwerkstoffe."
+  ],
+  [
+    "grundlagen",
+    "Wolfram (W)",
+    "Sehr hoher Schmelzpunkt (ca. 3414 °C), hohe Dichte und Temperaturbeständigkeit. Wolframelektroden; Heizelemente in geeigneter Atmosphäre; früher Glühfäden. W in Schnellarbeitsstahl; Wolframcarbid in Hartmetallwerkzeugen."
+  ],
+  [
+    "grundlagen",
+    "Blei (Pb)",
+    "Sehr dicht, weich, giftig; gute Strahlenabschirmung. Bleiakkus und Strahlenschutz. Blei-Antimon-Legierungen für Akkubauteile."
+  ],
+  [
+    "grundlagen",
+    "Quecksilber (Hg)",
+    "Bei Raumtemperatur flüssig; giftig. Früher Messgeräte und Schalter, heute vielfach ersetzt. Amalgame sind Legierungen mit Quecksilber."
+  ],
+  [
+    "grundlagen",
+    "Zink (Zn)",
+    "Unedler als Eisen; schützt Stahl als Barriere und Opferanode. Verzinkte Stahlteile, Batterien, Druckgussteile. Messing = Kupfer + Zink."
+  ],
+  [
+    "grundlagen",
+    "Zinn (Sn)",
+    "Niedriger Schmelzpunkt (ca. 232 °C); geeignet für Lote und Überzüge. Elektroniklote, verzinnte Kupferlitzen, Weissblech. Bronze = Cu+Sn; SAC = Sn+Ag+Cu."
+  ],
+  [
+    "grundlagen",
+    "Nickel (Ni)",
+    "Zäh, korrosions- und hitzebeständig; wichtig als Legierungselement. Beschichtungen, Akkus und nichtrostende Stähle. NiCr für Heizdrähte; CuNi für Widerstandswerkstoffe."
+  ],
+  [
+    "grundlagen",
+    "Lithium (Li)",
+    "Sehr leicht und elektrochemisch reaktiv. Lithiumverbindungen in Lithium-Ionen-Akkus; Lithiumseifen in Fetten. Al-Li für leichte Konstruktionen."
+  ],
+  [
+    "grundlagen",
+    "Wie werden Metalle gewonnen?",
+    "Erz abbauen → zerkleinern und anreichern → Metall gewinnen → reinigen (raffinieren). Viele Metalle sind chemisch gebunden. Metalloxide werden z. B. mit Kohlenmonoxid reduziert; Aluminium wird elektrolytisch gewonnen. Das konkrete Verfahren hängt vom Erz ab."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Kupfer/Aluminium hergestellt?",
+    "Kupfer (Sulfiderzroute): Erz → Flotation → Konzentrat → Schmelzen → Kupferstein → Konvertieren → Rohkupfer → Feuerraffination/Anodenguss → elektrolytische Raffination. Unreine Anode (+) löst sich, reines Kupfer wächst an der Kathode (−). Aluminium: Bauxit → Bayer-Verfahren → Tonerde (Al₂O₃) → in Kryolithschmelze lösen → Schmelzflusselektrolyse (Hall-Héroult) → Aluminium. Unterschied: Cu-Elektrolyse reinigt Rohmetall; Al-Elektrolyse gewinnt Metall aus dem Oxid."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Stahl hergestellt?",
+    "Klassische Route: Eisenerz → Hochofen → kohlenstoffreiches Roheisen → Sauerstoffkonverter → Stahl einstellen → Giessen. CO reduziert Eisenoxid im Hochofen. Im Konverter wird überschüssiger Kohlenstoff vermindert. Alternative: Elektrolichtbogenofen mit Schrott und/oder direkt reduziertem Eisen; nicht jeder Stahl braucht einen Hochofen."
+  ],
+  [
+    "grundlagen",
+    "Was wird für Stahl benötigt?",
+    "Hochofen: Eisenerz liefert Eisen; Koks liefert Wärme und CO für die Reduktion; Kalkstein unterstützt die Schlackenbildung; Heisswind ermöglicht die Verbrennung. Im Konverter braucht es Sauerstoff. Legierungselemente wie Cr, Ni oder Mo stellen Eigenschaften ein. Elektrolichtbogenroute: geeigneter Einsatzstoff und elektrische Energie."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?",
+    "Härten: geeigneten Stahl erwärmen und rasch abschrecken → höhere Härte, oft spröder. Anlassen: nach dem Härten erneut bei tieferer Temperatur erwärmen → Sprödigkeit/Spannungen vermindern. Vergüten = Härten und geeignetes Anlassen für Festigkeit und Zähigkeit. Weichglühen erleichtert die Bearbeitung; Spannungsarmglühen vermindert innere Spannungen. Walzen, Ziehen und Schmieden sind Umformen, keine Wärmebehandlungsnamen. Die Stahlsorte bestimmt, welche Behandlung geeignet ist."
+  ],
+  [
+    "grundlagen",
+    "Welche Metalle kennen wir noch?",
+    "Kupfer Cu, Aluminium Al, Gold Au, Silber Ag, Wolfram W, Blei Pb, Quecksilber Hg, Zink Zn, Zinn Sn, Nickel Ni, Lithium Li; Eisen Fe als Basis von Stahl. Stahl ist eine Legierung, kein chemisches Element. Lerne Symbol → Eigenschaft → Anwendung."
+  ],
+  [
+    "grundlagen",
+    "Wo werden die Metalle eingeteilt?",
+    "Eisenmetalle: Eisen und eisenbasierte Werkstoffe, etwa Stahl/Gusseisen. Nichteisenmetalle: Eisen ist nicht Hauptbestandteil. Im Unterricht: Leichtmetalle unter 5 kg/dm³, Schwermetalle ab 5 kg/dm³. Al und Li sind leicht; Cu, Zn, Sn und W schwer. Edel/unedel ist eine andere, chemische Einteilung. Schwer heisst nicht automatisch giftig."
+  ],
+  [
+    "grundlagen",
+    "Wie/wo werden die Metalle eingesetzt und weshalb?",
+    "Kupfer für Leiter und Wicklungen: sehr gute Leitfähigkeit und gut formbar. Aluminium für Freileitungen: leicht bei guter Leitfähigkeit. Gold für Kontaktoberflächen: korrosionsbeständig. Silber für Kontakte: beste elektrische Leitfähigkeit der Metalle. Wolfram für Elektroden: sehr temperaturbeständig. Zink schützt Stahl; Zinn dient für Lote/Überzüge. Alle Metallporträts unten wiederholen."
+  ],
+  [
+    "grundlagen",
+    "Was sind Legierungen?",
+    "Metallische Werkstoffe aus mindestens zwei chemischen Elementen, davon mindestens eines ein Metall. Zusätze verändern etwa Härte, Zähigkeit, Korrosionsbeständigkeit oder elektrischen Widerstand. Auch Nichtmetalle können dazugehören: Fe + C bei Stahl. Beschichten ist etwas anderes: verzinkter Stahl trägt eine Zinkschicht; Messing enthält Zn als Legierungsbestandteil."
+  ],
+  [
+    "grundlagen",
+    "Wo kommen Legierungen zum Einsatz und weshalb?",
+    "Messing Cu+Zn: gut bearbeitbare Armaturen und Bauteile. Klassische Zinnbronze Cu+Sn: verschleissfeste Lager und geeignete Federteile. NiCr: hoher elektrischer Widerstand und Hitzebeständigkeit → Heizdraht. CuNi: Widerstandswerkstoffe. Zinn-Silber-Kupfer (SAC): Elektroniklot. Chromreiche nichtrostende Stähle: schützende Passivschicht → beständige Gehäuse. Edelstahl allein bedeutet nicht automatisch rostfrei."
+  ],
+  [
+    "grundlagen",
+    "Was sind Nichtmetalle?",
+    "Nichtmetallische Werkstoffe besitzen nicht den typischen metallischen Eigenschaftssatz. Hier: Kunststoffe, Gummi, Papier, Holz, Glas und Keramik. Diese Werkstoffgruppe ist nicht identisch mit der chemischen Liste nichtmetallischer Elemente. Viele isolieren elektrisch, aber nicht alle: Graphit ist eine leitende Ausnahme."
+  ],
+  [
+    "grundlagen",
+    "Wie werden Nichtmetalle unterteilt?",
+    "Bei den Isolierstoffen: fest organisch (Kunststoffe, Gummi, Papier, Holz), fest anorganisch (Glas, Keramik, Porzellan, Glimmer), flüssig (Transformatorenöl), gasförmig (Luft, Stickstoff, SF₆). Organisch/anorganisch ist eine chemische Einteilung, nicht natürlich/künstlich. Kunststoffe zusätzlich: Thermoplaste, Duroplaste, Elastomere."
+  ],
+  [
+    "grundlagen",
+    "Welche Eigenschaften machen den Unterschied?",
+    "Elektrische Isolation, Wärmeverhalten, Elastizität, Härte, Feuchte- und Chemikalienbeständigkeit. Thermoplaste: keine dauerhafte Vernetzung, warm weich und erneut formbar. Duroplaste: eng vernetzt, nicht aufschmelzbar, bei hoher Temperatur Zersetzung. Elastomere: weitmaschig vernetzt und gummielastisch. Glas/Keramik sind oft hart, spröde und temperaturbeständig."
+  ],
+  [
+    "grundlagen",
+    "Welche Nichtmetalle kennen wir?",
+    "PVC, PE, PA, PC, PS, PET; EP-, PF-, MF- und UP-Harze; SBR, Silikonkautschuk, CR; ausserdem Papier, Holz, Glas, Porzellan, Glimmer und Öle. PET = Polyethylenterephthalat. Silikonharz und Silikonkautschuk unterscheiden: Harz kann duroplastisch, Kautschuk elastomer sein."
+  ],
+  [
+    "grundlagen",
+    "Wo kommen diese zum Einsatz und weshalb?",
+    "PVC/PE für Kabel wegen Isolation und Formbarkeit; PC für schlagzähe Gehäuse; EP für Leiterplatten/Verguss; Gummi für flexible Leitungen/Dichtungen. Keramik/Porzellan für temperaturbeständige Isolierteile. Papier als Isolation in geeigneten Transformatoren. Transformatorenöl isoliert und führt Wärme ab. Luft isoliert bei ausreichenden Abständen. Feuchtes Holz isoliert schlechter als trockenes."
+  ]
+];
+  const CATEGORY_NAMES = { all: 'Alle', grundlagen: 'Grundlagen', mechanisch: 'Mechanisch', thermisch: 'Thermisch', elektrisch: 'Elektrisch · Vertiefung', chemie: 'Chemie · Vertiefung', extra: 'Zusatz' };
+  let termCategory = 'all'; const termList = document.getElementById('termList'), termSearch = document.getElementById('termSearch'), termFilters = document.getElementById('termFilters');
+  function categoryButtons(host, selected, onSelect) {
+    host.innerHTML = Object.entries(CATEGORY_NAMES).map(([id, name]) => `<button class="filter${id === selected ? ' active' : ''}" data-category="${id}">${name}</button>`).join('');
+    host.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => onSelect(b.dataset.category)));
+  }
+  function renderTerms() {
+    const needle = termSearch.value.trim().toLocaleLowerCase('de-CH');
+    const visible = TERMS.filter(([cat, term, definition]) => (termCategory === 'all' || cat === termCategory) && `${term} ${definition}`.toLocaleLowerCase('de-CH').includes(needle));
+    termList.innerHTML = visible.length ? visible.map(([cat, term, definition]) => `<article class="term"><span class="small-label">${CATEGORY_NAMES[cat]}</span><b>${term}</b><span>${definition}</span></article>`).join('') : '<p class="muted">Kein Begriff passt dazu.</p>';
+  }
+  function refreshTermFilters() { categoryButtons(termFilters, termCategory, id => { termCategory = id; refreshTermFilters(); renderTerms(); }); }
+  refreshTermFilters(); termSearch.addEventListener('input', renderTerms); renderTerms();
+
+  const CARDS = [
+  [
+    "grundlagen",
+    "Wie werden Metalle gewonnen?",
+    "Erz abbauen → zerkleinern und anreichern → Metall gewinnen → reinigen (raffinieren). Viele Metalle sind chemisch gebunden. Metalloxide werden z. B. mit Kohlenmonoxid reduziert; Aluminium wird elektrolytisch gewonnen. Das konkrete Verfahren hängt vom Erz ab."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Kupfer/Aluminium hergestellt?",
+    "Kupfer (Sulfiderzroute): Erz → Flotation → Konzentrat → Schmelzen → Kupferstein → Konvertieren → Rohkupfer → Feuerraffination/Anodenguss → elektrolytische Raffination. Unreine Anode (+) löst sich, reines Kupfer wächst an der Kathode (−). Aluminium: Bauxit → Bayer-Verfahren → Tonerde (Al₂O₃) → in Kryolithschmelze lösen → Schmelzflusselektrolyse (Hall-Héroult) → Aluminium. Unterschied: Cu-Elektrolyse reinigt Rohmetall; Al-Elektrolyse gewinnt Metall aus dem Oxid."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Stahl hergestellt?",
+    "Klassische Route: Eisenerz → Hochofen → kohlenstoffreiches Roheisen → Sauerstoffkonverter → Stahl einstellen → Giessen. CO reduziert Eisenoxid im Hochofen. Im Konverter wird überschüssiger Kohlenstoff vermindert. Alternative: Elektrolichtbogenofen mit Schrott und/oder direkt reduziertem Eisen; nicht jeder Stahl braucht einen Hochofen."
+  ],
+  [
+    "grundlagen",
+    "Was wird für Stahl benötigt?",
+    "Hochofen: Eisenerz liefert Eisen; Koks liefert Wärme und CO für die Reduktion; Kalkstein unterstützt die Schlackenbildung; Heisswind ermöglicht die Verbrennung. Im Konverter braucht es Sauerstoff. Legierungselemente wie Cr, Ni oder Mo stellen Eigenschaften ein. Elektrolichtbogenroute: geeigneter Einsatzstoff und elektrische Energie."
+  ],
+  [
+    "grundlagen",
+    "Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?",
+    "Härten: geeigneten Stahl erwärmen und rasch abschrecken → höhere Härte, oft spröder. Anlassen: nach dem Härten erneut bei tieferer Temperatur erwärmen → Sprödigkeit/Spannungen vermindern. Vergüten = Härten und geeignetes Anlassen für Festigkeit und Zähigkeit. Weichglühen erleichtert die Bearbeitung; Spannungsarmglühen vermindert innere Spannungen. Walzen, Ziehen und Schmieden sind Umformen, keine Wärmebehandlungsnamen. Die Stahlsorte bestimmt, welche Behandlung geeignet ist."
+  ],
+  [
+    "grundlagen",
+    "Welche Metalle kennen wir noch?",
+    "Kupfer Cu, Aluminium Al, Gold Au, Silber Ag, Wolfram W, Blei Pb, Quecksilber Hg, Zink Zn, Zinn Sn, Nickel Ni, Lithium Li; Eisen Fe als Basis von Stahl. Stahl ist eine Legierung, kein chemisches Element. Lerne Symbol → Eigenschaft → Anwendung."
+  ],
+  [
+    "grundlagen",
+    "Wo werden die Metalle eingeteilt?",
+    "Eisenmetalle: Eisen und eisenbasierte Werkstoffe, etwa Stahl/Gusseisen. Nichteisenmetalle: Eisen ist nicht Hauptbestandteil. Im Unterricht: Leichtmetalle unter 5 kg/dm³, Schwermetalle ab 5 kg/dm³. Al und Li sind leicht; Cu, Zn, Sn und W schwer. Edel/unedel ist eine andere, chemische Einteilung. Schwer heisst nicht automatisch giftig."
+  ],
+  [
+    "grundlagen",
+    "Wie/wo werden die Metalle eingesetzt und weshalb?",
+    "Kupfer für Leiter und Wicklungen: sehr gute Leitfähigkeit und gut formbar. Aluminium für Freileitungen: leicht bei guter Leitfähigkeit. Gold für Kontaktoberflächen: korrosionsbeständig. Silber für Kontakte: beste elektrische Leitfähigkeit der Metalle. Wolfram für Elektroden: sehr temperaturbeständig. Zink schützt Stahl; Zinn dient für Lote/Überzüge. Alle Metallporträts unten wiederholen."
+  ],
+  [
+    "grundlagen",
+    "Was sind Legierungen?",
+    "Metallische Werkstoffe aus mindestens zwei chemischen Elementen, davon mindestens eines ein Metall. Zusätze verändern etwa Härte, Zähigkeit, Korrosionsbeständigkeit oder elektrischen Widerstand. Auch Nichtmetalle können dazugehören: Fe + C bei Stahl. Beschichten ist etwas anderes: verzinkter Stahl trägt eine Zinkschicht; Messing enthält Zn als Legierungsbestandteil."
+  ],
+  [
+    "grundlagen",
+    "Wo kommen Legierungen zum Einsatz und weshalb?",
+    "Messing Cu+Zn: gut bearbeitbare Armaturen und Bauteile. Klassische Zinnbronze Cu+Sn: verschleissfeste Lager und geeignete Federteile. NiCr: hoher elektrischer Widerstand und Hitzebeständigkeit → Heizdraht. CuNi: Widerstandswerkstoffe. Zinn-Silber-Kupfer (SAC): Elektroniklot. Chromreiche nichtrostende Stähle: schützende Passivschicht → beständige Gehäuse. Edelstahl allein bedeutet nicht automatisch rostfrei."
+  ],
+  [
+    "grundlagen",
+    "Was sind Nichtmetalle?",
+    "Nichtmetallische Werkstoffe besitzen nicht den typischen metallischen Eigenschaftssatz. Hier: Kunststoffe, Gummi, Papier, Holz, Glas und Keramik. Diese Werkstoffgruppe ist nicht identisch mit der chemischen Liste nichtmetallischer Elemente. Viele isolieren elektrisch, aber nicht alle: Graphit ist eine leitende Ausnahme."
+  ],
+  [
+    "grundlagen",
+    "Wie werden Nichtmetalle unterteilt?",
+    "Bei den Isolierstoffen: fest organisch (Kunststoffe, Gummi, Papier, Holz), fest anorganisch (Glas, Keramik, Porzellan, Glimmer), flüssig (Transformatorenöl), gasförmig (Luft, Stickstoff, SF₆). Organisch/anorganisch ist eine chemische Einteilung, nicht natürlich/künstlich. Kunststoffe zusätzlich: Thermoplaste, Duroplaste, Elastomere."
+  ],
+  [
+    "grundlagen",
+    "Welche Eigenschaften machen den Unterschied?",
+    "Elektrische Isolation, Wärmeverhalten, Elastizität, Härte, Feuchte- und Chemikalienbeständigkeit. Thermoplaste: keine dauerhafte Vernetzung, warm weich und erneut formbar. Duroplaste: eng vernetzt, nicht aufschmelzbar, bei hoher Temperatur Zersetzung. Elastomere: weitmaschig vernetzt und gummielastisch. Glas/Keramik sind oft hart, spröde und temperaturbeständig."
+  ],
+  [
+    "grundlagen",
+    "Welche Nichtmetalle kennen wir?",
+    "PVC, PE, PA, PC, PS, PET; EP-, PF-, MF- und UP-Harze; SBR, Silikonkautschuk, CR; ausserdem Papier, Holz, Glas, Porzellan, Glimmer und Öle. PET = Polyethylenterephthalat. Silikonharz und Silikonkautschuk unterscheiden: Harz kann duroplastisch, Kautschuk elastomer sein."
+  ],
+  [
+    "grundlagen",
+    "Wo kommen diese zum Einsatz und weshalb?",
+    "PVC/PE für Kabel wegen Isolation und Formbarkeit; PC für schlagzähe Gehäuse; EP für Leiterplatten/Verguss; Gummi für flexible Leitungen/Dichtungen. Keramik/Porzellan für temperaturbeständige Isolierteile. Papier als Isolation in geeigneten Transformatoren. Transformatorenöl isoliert und führt Wärme ab. Luft isoliert bei ausreichenden Abständen. Feuchtes Holz isoliert schlechter als trockenes."
+  ],
+  [
+    "grundlagen",
+    "Kupfer: Symbol und Einteilung?",
+    "Cu · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Kupfer: Eigenschaft → Einsatz?",
+    "Sehr gut elektrisch und thermisch leitfähig; gut zu Drähten formbar. Kabel, Wicklungen, Sammelschienen, Leiterplatten."
+  ],
+  [
+    "grundlagen",
+    "Kupfer: Legierung und typische Verwechslung?",
+    "Messing Cu+Zn; klassische Bronze Cu+Sn. Silber leitet besser; Gold ist vor allem wegen beständiger Kontaktoberflächen wichtig."
+  ],
+  [
+    "grundlagen",
+    "Aluminium: Symbol und Einteilung?",
+    "Al · leichtes Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Aluminium: Eigenschaft → Einsatz?",
+    "Geringes Gewicht, gute Leitfähigkeit, schützende Oxidschicht. Freileitungen, Gehäuse, Kühlkörper."
+  ],
+  [
+    "grundlagen",
+    "Aluminium: Legierung und typische Verwechslung?",
+    "Al-Mg und Al-Si für leichte Bauteile. Bei gleichem Widerstand benötigt Al mehr Querschnitt als Cu."
+  ],
+  [
+    "grundlagen",
+    "Gold: Symbol und Einteilung?",
+    "Au · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Gold: Eigenschaft → Einsatz?",
+    "Sehr korrosionsbeständig, leitfähig, weich. Dünne Beschichtungen hochwertiger Kontakte."
+  ],
+  [
+    "grundlagen",
+    "Gold: Legierung und typische Verwechslung?",
+    "Goldlegierungen sind härter als Reingold. Nicht der beste Leiter: Korrosionsbeständigkeit begründet den Kontakteinsatz."
+  ],
+  [
+    "grundlagen",
+    "Silber: Symbol und Einteilung?",
+    "Ag · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Silber: Eigenschaft → Einsatz?",
+    "Beste elektrische Leitfähigkeit aller Metalle, sehr gute Wärmeleitung. Kontakte, Elektronik, Photovoltaik."
+  ],
+  [
+    "grundlagen",
+    "Silber: Legierung und typische Verwechslung?",
+    "Silberhaltige Lote und Kontaktwerkstoffe. Leitfähigkeit und Beständigkeit sind verschiedene Eigenschaften."
+  ],
+  [
+    "grundlagen",
+    "Wolfram: Symbol und Einteilung?",
+    "W · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Wolfram: Eigenschaft → Einsatz?",
+    "Sehr hoher Schmelzpunkt (ca. 3414 °C), hohe Dichte und Temperaturbeständigkeit. Wolframelektroden; Heizelemente in geeigneter Atmosphäre; früher Glühfäden."
+  ],
+  [
+    "grundlagen",
+    "Wolfram: Legierung und typische Verwechslung?",
+    "W in Schnellarbeitsstahl; Wolframcarbid in Hartmetallwerkzeugen. Hartmetallschneiden bestehen oft aus Wolframcarbid mit Bindemetall, nicht reinem Wolfram. Wolfram kann in heisser Luft oxidieren."
+  ],
+  [
+    "grundlagen",
+    "Blei: Symbol und Einteilung?",
+    "Pb · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Blei: Eigenschaft → Einsatz?",
+    "Sehr dicht, weich, giftig; gute Strahlenabschirmung. Bleiakkus und Strahlenschutz."
+  ],
+  [
+    "grundlagen",
+    "Blei: Legierung und typische Verwechslung?",
+    "Blei-Antimon-Legierungen für Akkubauteile. Hohe Dichte und Giftigkeit sind getrennte Eigenschaften."
+  ],
+  [
+    "grundlagen",
+    "Quecksilber: Symbol und Einteilung?",
+    "Hg · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Quecksilber: Eigenschaft → Einsatz?",
+    "Bei Raumtemperatur flüssig; giftig. Früher Messgeräte und Schalter, heute vielfach ersetzt."
+  ],
+  [
+    "grundlagen",
+    "Quecksilber: Legierung und typische Verwechslung?",
+    "Amalgame sind Legierungen mit Quecksilber. Trotz flüssigem Zustand ein Metall."
+  ],
+  [
+    "grundlagen",
+    "Zink: Symbol und Einteilung?",
+    "Zn · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Zink: Eigenschaft → Einsatz?",
+    "Unedler als Eisen; schützt Stahl als Barriere und Opferanode. Verzinkte Stahlteile, Batterien, Druckgussteile."
+  ],
+  [
+    "grundlagen",
+    "Zink: Legierung und typische Verwechslung?",
+    "Messing = Kupfer + Zink. Verzinken = beschichten. Zn nicht mit Zinn Sn verwechseln."
+  ],
+  [
+    "grundlagen",
+    "Zinn: Symbol und Einteilung?",
+    "Sn · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Zinn: Eigenschaft → Einsatz?",
+    "Niedriger Schmelzpunkt (ca. 232 °C); geeignet für Lote und Überzüge. Elektroniklote, verzinnte Kupferlitzen, Weissblech."
+  ],
+  [
+    "grundlagen",
+    "Zinn: Legierung und typische Verwechslung?",
+    "Bronze = Cu+Sn; SAC = Sn+Ag+Cu. Weissblech ist verzinnter Stahl, keine homogene Legierung. Zinn schützt Eisen nicht als Zink-Opferanode."
+  ],
+  [
+    "grundlagen",
+    "Nickel: Symbol und Einteilung?",
+    "Ni · schweres Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Nickel: Eigenschaft → Einsatz?",
+    "Zäh, korrosions- und hitzebeständig; wichtig als Legierungselement. Beschichtungen, Akkus und nichtrostende Stähle."
+  ],
+  [
+    "grundlagen",
+    "Nickel: Legierung und typische Verwechslung?",
+    "NiCr für Heizdrähte; CuNi für Widerstandswerkstoffe. Reines Nickel ist ferromagnetisch; es kann Kontaktallergien auslösen."
+  ],
+  [
+    "grundlagen",
+    "Lithium: Symbol und Einteilung?",
+    "Li · leichtes Nichteisenmetall."
+  ],
+  [
+    "grundlagen",
+    "Lithium: Eigenschaft → Einsatz?",
+    "Sehr leicht und elektrochemisch reaktiv. Lithiumverbindungen in Lithium-Ionen-Akkus; Lithiumseifen in Fetten."
+  ],
+  [
+    "grundlagen",
+    "Lithium: Legierung und typische Verwechslung?",
+    "Al-Li für leichte Konstruktionen. In üblichen Lithium-Ionen-Akkus liegt Lithium überwiegend gebunden vor, nicht als Stück reines Metall."
+  ],
+  [
+    "grundlagen",
+    "Polymerisation, Polykondensation, Polyaddition?",
+    "Polymerisation: Kettenwachstum, z. B. PE. Polykondensation: Abspaltung kleiner Moleküle, z. B. PET. Polyaddition: keine Abspaltung kleiner Moleküle, z. B. PUR."
+  ],
+  [
+    "grundlagen",
+    "Ist PUR immer ein Duroplast?",
+    "Nein. Je nach Aufbau thermoplastisch, elastomer oder duroplastisch. Reaktionsart und Vernetzungsgrad unterscheiden."
+  ]
+];
+  let cardCategory = 'all', cardIndex = 0, flipped = false, reviewOnly = false; let known = new Set(), missed = new Set(); const cardFilters = document.getElementById('cardFilters');
+  try { const saved = JSON.parse(localStorage.getItem('werkstoff-0611-karten-v1') || '{}'); known = new Set(saved.known || []); missed = new Set(saved.missed || []); } catch (_) {}
+  function currentCards() { return CARDS.map((card, id) => ({ card, id })).filter(({ card, id }) => (cardCategory === 'all' || card[0] === cardCategory) && (!reviewOnly || missed.has(id))); }
+  function saveCards() { try { localStorage.setItem('werkstoff-0611-karten-v1', JSON.stringify({ known: [...known], missed: [...missed] })); } catch (_) {} }
+  function renderCard() {
+    const cards = currentCards(); if (cardIndex >= cards.length) cardIndex = 0; const body = document.getElementById('flashBody');
+    document.getElementById('knowCard').disabled = document.getElementById('missCard').disabled = !cards.length;
+    if (!cards.length) { body.textContent = 'Keine Karten zum Üben in dieser Auswahl. Schalte den Üben-Filter aus oder wähle eine andere Kategorie.'; body.setAttribute('aria-label', body.textContent); document.getElementById('cardCounter').textContent = `0 / 0 · ${known.size} gewusst · ${missed.size} üben`; return; }
+    const { card, id } = cards[cardIndex]; body.className = `flash-body${flipped ? ' back' : ''}`; body.innerHTML = flipped ? card[2] : card[1];
+    document.getElementById('cardCounter').textContent = `${cardIndex + 1} / ${cards.length} · ${known.size} gewusst · ${missed.size} üben`;
+    body.dataset.id = id; body.setAttribute('aria-label', `${body.textContent} — Karte umdrehen`);
+  }
+  function nextCard() { const cards = currentCards(); cardIndex = cards.length ? (cardIndex + 1) % cards.length : 0; flipped = false; renderCard(); }
+  function rateCard(ok) { if (!currentCards().length) return; const id = Number(document.getElementById('flashBody').dataset.id); if (ok) { known.add(id); missed.delete(id); } else { missed.add(id); known.delete(id); } saveCards(); if (reviewOnly && ok) { flipped = false; renderCard(); } else nextCard(); }
+  document.getElementById('reviewCards').addEventListener('click', e => { reviewOnly = !reviewOnly; cardIndex = 0; flipped = false; e.currentTarget.setAttribute('aria-pressed', String(reviewOnly)); e.currentTarget.textContent = reviewOnly ? 'Alle Karten wieder anzeigen' : 'Nur «noch üben» anzeigen'; renderCard(); });
+  function refreshCardFilters() { categoryButtons(cardFilters, cardCategory, id => { cardCategory = id; cardIndex = 0; flipped = false; refreshCardFilters(); renderCard(); }); }
+  refreshCardFilters(); document.getElementById('flashCard').addEventListener('click', e => { if (!e.target.closest('button')) { flipped = !flipped; renderCard(); } });
+  document.getElementById('flashBody').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipped = !flipped; renderCard(); } });
+  document.getElementById('flipCard').addEventListener('click', () => { flipped = !flipped; renderCard(); }); document.getElementById('prevCard').addEventListener('click', () => { const cards = currentCards(); cardIndex = cards.length ? (cardIndex - 1 + cards.length) % cards.length : 0; flipped = false; renderCard(); });
+  document.getElementById('knowCard').addEventListener('click', () => rateCard(true)); document.getElementById('missCard').addEventListener('click', () => rateCard(false)); renderCard();
+
+  const QUIZ = [
+  [
+    "Wie werden Metalle gewonnen?",
+    "Erz abbauen → zerkleinern und anreichern → Metall gewinnen → reinigen (raffinieren). Viele Metalle sind chemisch gebunden. Metalloxide werden z. B. mit Kohlenmonoxid reduziert; Aluminium wird elektrolytisch gewonnen. Das konkrete Verfahren hängt vom Erz ab."
+  ],
+  [
+    "Wie wird Kupfer/Aluminium hergestellt?",
+    "Kupfer (Sulfiderzroute): Erz → Flotation → Konzentrat → Schmelzen → Kupferstein → Konvertieren → Rohkupfer → Feuerraffination/Anodenguss → elektrolytische Raffination. Unreine Anode (+) löst sich, reines Kupfer wächst an der Kathode (−). Aluminium: Bauxit → Bayer-Verfahren → Tonerde (Al₂O₃) → in Kryolithschmelze lösen → Schmelzflusselektrolyse (Hall-Héroult) → Aluminium. Unterschied: Cu-Elektrolyse reinigt Rohmetall; Al-Elektrolyse gewinnt Metall aus dem Oxid."
+  ],
+  [
+    "Wie wird Stahl hergestellt?",
+    "Klassische Route: Eisenerz → Hochofen → kohlenstoffreiches Roheisen → Sauerstoffkonverter → Stahl einstellen → Giessen. CO reduziert Eisenoxid im Hochofen. Im Konverter wird überschüssiger Kohlenstoff vermindert. Alternative: Elektrolichtbogenofen mit Schrott und/oder direkt reduziertem Eisen; nicht jeder Stahl braucht einen Hochofen."
+  ],
+  [
+    "Was wird für Stahl benötigt?",
+    "Hochofen: Eisenerz liefert Eisen; Koks liefert Wärme und CO für die Reduktion; Kalkstein unterstützt die Schlackenbildung; Heisswind ermöglicht die Verbrennung. Im Konverter braucht es Sauerstoff. Legierungselemente wie Cr, Ni oder Mo stellen Eigenschaften ein. Elektrolichtbogenroute: geeigneter Einsatzstoff und elektrische Energie."
+  ],
+  [
+    "Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?",
+    "Härten: geeigneten Stahl erwärmen und rasch abschrecken → höhere Härte, oft spröder. Anlassen: nach dem Härten erneut bei tieferer Temperatur erwärmen → Sprödigkeit/Spannungen vermindern. Vergüten = Härten und geeignetes Anlassen für Festigkeit und Zähigkeit. Weichglühen erleichtert die Bearbeitung; Spannungsarmglühen vermindert innere Spannungen. Walzen, Ziehen und Schmieden sind Umformen, keine Wärmebehandlungsnamen. Die Stahlsorte bestimmt, welche Behandlung geeignet ist."
+  ],
+  [
+    "Welche Metalle kennen wir noch?",
+    "Kupfer Cu, Aluminium Al, Gold Au, Silber Ag, Wolfram W, Blei Pb, Quecksilber Hg, Zink Zn, Zinn Sn, Nickel Ni, Lithium Li; Eisen Fe als Basis von Stahl. Stahl ist eine Legierung, kein chemisches Element. Lerne Symbol → Eigenschaft → Anwendung."
+  ],
+  [
+    "Wo werden die Metalle eingeteilt?",
+    "Eisenmetalle: Eisen und eisenbasierte Werkstoffe, etwa Stahl/Gusseisen. Nichteisenmetalle: Eisen ist nicht Hauptbestandteil. Im Unterricht: Leichtmetalle unter 5 kg/dm³, Schwermetalle ab 5 kg/dm³. Al und Li sind leicht; Cu, Zn, Sn und W schwer. Edel/unedel ist eine andere, chemische Einteilung. Schwer heisst nicht automatisch giftig."
+  ],
+  [
+    "Wie/wo werden die Metalle eingesetzt und weshalb?",
+    "Kupfer für Leiter und Wicklungen: sehr gute Leitfähigkeit und gut formbar. Aluminium für Freileitungen: leicht bei guter Leitfähigkeit. Gold für Kontaktoberflächen: korrosionsbeständig. Silber für Kontakte: beste elektrische Leitfähigkeit der Metalle. Wolfram für Elektroden: sehr temperaturbeständig. Zink schützt Stahl; Zinn dient für Lote/Überzüge. Alle Metallporträts unten wiederholen."
+  ],
+  [
+    "Was sind Legierungen?",
+    "Metallische Werkstoffe aus mindestens zwei chemischen Elementen, davon mindestens eines ein Metall. Zusätze verändern etwa Härte, Zähigkeit, Korrosionsbeständigkeit oder elektrischen Widerstand. Auch Nichtmetalle können dazugehören: Fe + C bei Stahl. Beschichten ist etwas anderes: verzinkter Stahl trägt eine Zinkschicht; Messing enthält Zn als Legierungsbestandteil."
+  ],
+  [
+    "Wo kommen Legierungen zum Einsatz und weshalb?",
+    "Messing Cu+Zn: gut bearbeitbare Armaturen und Bauteile. Klassische Zinnbronze Cu+Sn: verschleissfeste Lager und geeignete Federteile. NiCr: hoher elektrischer Widerstand und Hitzebeständigkeit → Heizdraht. CuNi: Widerstandswerkstoffe. Zinn-Silber-Kupfer (SAC): Elektroniklot. Chromreiche nichtrostende Stähle: schützende Passivschicht → beständige Gehäuse. Edelstahl allein bedeutet nicht automatisch rostfrei."
+  ],
+  [
+    "Was sind Nichtmetalle?",
+    "Nichtmetallische Werkstoffe besitzen nicht den typischen metallischen Eigenschaftssatz. Hier: Kunststoffe, Gummi, Papier, Holz, Glas und Keramik. Diese Werkstoffgruppe ist nicht identisch mit der chemischen Liste nichtmetallischer Elemente. Viele isolieren elektrisch, aber nicht alle: Graphit ist eine leitende Ausnahme."
+  ],
+  [
+    "Wie werden Nichtmetalle unterteilt?",
+    "Bei den Isolierstoffen: fest organisch (Kunststoffe, Gummi, Papier, Holz), fest anorganisch (Glas, Keramik, Porzellan, Glimmer), flüssig (Transformatorenöl), gasförmig (Luft, Stickstoff, SF₆). Organisch/anorganisch ist eine chemische Einteilung, nicht natürlich/künstlich. Kunststoffe zusätzlich: Thermoplaste, Duroplaste, Elastomere."
+  ],
+  [
+    "Welche Eigenschaften machen den Unterschied?",
+    "Elektrische Isolation, Wärmeverhalten, Elastizität, Härte, Feuchte- und Chemikalienbeständigkeit. Thermoplaste: keine dauerhafte Vernetzung, warm weich und erneut formbar. Duroplaste: eng vernetzt, nicht aufschmelzbar, bei hoher Temperatur Zersetzung. Elastomere: weitmaschig vernetzt und gummielastisch. Glas/Keramik sind oft hart, spröde und temperaturbeständig."
+  ],
+  [
+    "Welche Nichtmetalle kennen wir?",
+    "PVC, PE, PA, PC, PS, PET; EP-, PF-, MF- und UP-Harze; SBR, Silikonkautschuk, CR; ausserdem Papier, Holz, Glas, Porzellan, Glimmer und Öle. PET = Polyethylenterephthalat. Silikonharz und Silikonkautschuk unterscheiden: Harz kann duroplastisch, Kautschuk elastomer sein."
+  ],
+  [
+    "Wo kommen diese zum Einsatz und weshalb?",
+    "PVC/PE für Kabel wegen Isolation und Formbarkeit; PC für schlagzähe Gehäuse; EP für Leiterplatten/Verguss; Gummi für flexible Leitungen/Dichtungen. Keramik/Porzellan für temperaturbeständige Isolierteile. Papier als Isolation in geeigneten Transformatoren. Transformatorenöl isoliert und führt Wärme ab. Luft isoliert bei ausreichenden Abständen. Feuchtes Holz isoliert schlechter als trockenes."
+  ],
+  [
+    "Kupfer: Begründe eine Anwendung und nenne eine Legierung.",
+    "Sehr gut elektrisch und thermisch leitfähig; gut zu Drähten formbar. Kabel, Wicklungen, Sammelschienen, Leiterplatten. Messing Cu+Zn; klassische Bronze Cu+Sn. Silber leitet besser; Gold ist vor allem wegen beständiger Kontaktoberflächen wichtig."
+  ],
+  [
+    "Aluminium: Begründe eine Anwendung und nenne eine Legierung.",
+    "Geringes Gewicht, gute Leitfähigkeit, schützende Oxidschicht. Freileitungen, Gehäuse, Kühlkörper. Al-Mg und Al-Si für leichte Bauteile. Bei gleichem Widerstand benötigt Al mehr Querschnitt als Cu."
+  ],
+  [
+    "Gold: Begründe eine Anwendung und nenne eine Legierung.",
+    "Sehr korrosionsbeständig, leitfähig, weich. Dünne Beschichtungen hochwertiger Kontakte. Goldlegierungen sind härter als Reingold. Nicht der beste Leiter: Korrosionsbeständigkeit begründet den Kontakteinsatz."
+  ],
+  [
+    "Silber: Begründe eine Anwendung und nenne eine Legierung.",
+    "Beste elektrische Leitfähigkeit aller Metalle, sehr gute Wärmeleitung. Kontakte, Elektronik, Photovoltaik. Silberhaltige Lote und Kontaktwerkstoffe. Leitfähigkeit und Beständigkeit sind verschiedene Eigenschaften."
+  ],
+  [
+    "Wolfram: Begründe eine Anwendung und nenne eine Legierung.",
+    "Sehr hoher Schmelzpunkt (ca. 3414 °C), hohe Dichte und Temperaturbeständigkeit. Wolframelektroden; Heizelemente in geeigneter Atmosphäre; früher Glühfäden. W in Schnellarbeitsstahl; Wolframcarbid in Hartmetallwerkzeugen. Hartmetallschneiden bestehen oft aus Wolframcarbid mit Bindemetall, nicht reinem Wolfram. Wolfram kann in heisser Luft oxidieren."
+  ],
+  [
+    "Blei: Begründe eine Anwendung und nenne eine Legierung.",
+    "Sehr dicht, weich, giftig; gute Strahlenabschirmung. Bleiakkus und Strahlenschutz. Blei-Antimon-Legierungen für Akkubauteile. Hohe Dichte und Giftigkeit sind getrennte Eigenschaften."
+  ],
+  [
+    "Quecksilber: Begründe eine Anwendung und nenne eine Legierung.",
+    "Bei Raumtemperatur flüssig; giftig. Früher Messgeräte und Schalter, heute vielfach ersetzt. Amalgame sind Legierungen mit Quecksilber. Trotz flüssigem Zustand ein Metall."
+  ],
+  [
+    "Zink: Begründe eine Anwendung und nenne eine Legierung.",
+    "Unedler als Eisen; schützt Stahl als Barriere und Opferanode. Verzinkte Stahlteile, Batterien, Druckgussteile. Messing = Kupfer + Zink. Verzinken = beschichten. Zn nicht mit Zinn Sn verwechseln."
+  ],
+  [
+    "Zinn: Begründe eine Anwendung und nenne eine Legierung.",
+    "Niedriger Schmelzpunkt (ca. 232 °C); geeignet für Lote und Überzüge. Elektroniklote, verzinnte Kupferlitzen, Weissblech. Bronze = Cu+Sn; SAC = Sn+Ag+Cu. Weissblech ist verzinnter Stahl, keine homogene Legierung. Zinn schützt Eisen nicht als Zink-Opferanode."
+  ],
+  [
+    "Nickel: Begründe eine Anwendung und nenne eine Legierung.",
+    "Zäh, korrosions- und hitzebeständig; wichtig als Legierungselement. Beschichtungen, Akkus und nichtrostende Stähle. NiCr für Heizdrähte; CuNi für Widerstandswerkstoffe. Reines Nickel ist ferromagnetisch; es kann Kontaktallergien auslösen."
+  ],
+  [
+    "Lithium: Begründe eine Anwendung und nenne eine Legierung.",
+    "Sehr leicht und elektrochemisch reaktiv. Lithiumverbindungen in Lithium-Ionen-Akkus; Lithiumseifen in Fetten. Al-Li für leichte Konstruktionen. In üblichen Lithium-Ionen-Akkus liegt Lithium überwiegend gebunden vor, nicht als Stück reines Metall."
+  ]
+];
+  document.getElementById('quizList').innerHTML = QUIZ.map(([question, answer], index) => `<details class="quiz-item"><summary><span class="q-topic">${String(index + 1).padStart(2, '0')}</span> ${question}</summary><div class="quiz-answer">${answer}</div></details>`).join('');
+
+  const PLAN = [
+  "Fr 30.10. · 20 min: alle Lernziele überblicken; Zn, Sn, W laut erklären.",
+  "Sa 31.10. · 25 min: Stahl-, Cu- und Al-Gewinnung aus dem Kopf zeichnen.",
+  "So 01.11. · 25 min: Wärmebehandlungen, Messing/Bronze und NiCr wiederholen.",
+  "Mo 02.11. · 20 min: vier Isolierstoffgruppen und drei Kunststoffgruppen vergleichen.",
+  "Di 03.11. · 25 min: alle 11 Metalle mit Karten abfragen; Quiz frei beantworten.",
+  "Mi 04.11. · 35 min: Probetest ohne Hilfe; danach Lücken mit Lösungen vergleichen.",
+  "Do 05.11. · 25 min: nur «noch üben»; alle Lernziele frei erklären.",
+  "Fr 06.11. · 5–10 min: Abläufe und Zn/Sn/W wiederholen, keine neue Theorie."
+];
+  const planList = document.getElementById('planList'); planList.innerHTML = PLAN.map((item, index) => `<li><input type="checkbox" id="plan${index}"><label for="plan${index}">${item}</label></li>`).join('');
+  function updatePlan() { const boxes = [...planList.querySelectorAll('input')], done = boxes.filter(x => x.checked).length; document.getElementById('progressFill').style.width = `${done / boxes.length * 100}%`; document.getElementById('progressText').textContent = done === boxes.length ? 'Lernrunde fertig. Morgen nur noch die Karten mit «noch üben».' : `${done} von ${boxes.length} Schritten erledigt`; try { localStorage.setItem('werkstoff-0611-plan-v1', JSON.stringify(boxes.map(x => x.checked))); } catch (_) {} }
+  try { const stored = JSON.parse(localStorage.getItem('werkstoff-0611-plan-v1') || '[]'); [...planList.querySelectorAll('input')].forEach((box, index) => { box.checked = Boolean(stored[index]); }); } catch (_) {}
+  planList.querySelectorAll('input').forEach(box => box.addEventListener('change', updatePlan)); updatePlan();
+</script>
+<script>document.querySelectorAll(".wk-answer").forEach(x=>{try{x.value=localStorage.getItem("wk0611-answer-"+x.dataset.key)||""}catch{}x.oninput=()=>{try{localStorage.setItem("wk0611-answer-"+x.dataset.key,x.value)}catch{}}});</script></body>
+</html>
