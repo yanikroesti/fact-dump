@@ -1,0 +1,568 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.400
+Du kennst das vielleicht: Die Formel steht
+
+00:00:02.400 --> 00:00:05.760
+da, die gesuchte Grösse auch. Trotzdem weiss
+
+00:00:05.760 --> 00:00:08.360
+man kurz nicht, wo man anfangen soll.
+
+00:00:08.360 --> 00:00:10.320
+Und beim Hebel ist die Rechnung eigentlich
+
+00:00:10.320 --> 00:00:13.720
+einfach, aber man nimmt die falsche Länge.
+
+00:00:13.720 --> 00:00:15.860
+Genau diese beiden Stellen schauen wir uns
+
+00:00:15.860 --> 00:00:18.580
+an. Für deinen Test am zweiten November
+
+00:00:18.580 --> 00:00:23.700
+sind Formelumstellen und Hebelgesetz mit Drehmoment angekündigt.
+
+00:00:23.700 --> 00:00:26.980
+Wir rechnen ein paar typische Beispiele zusammen.
+
+00:00:26.980 --> 00:00:29.600
+Nicht möglichst schnell, sondern so, dass du
+
+00:00:29.600 --> 00:00:32.960
+beim nächsten Beispiel selbst weiterkommst. Auf dem
+
+00:00:32.960 --> 00:00:35.080
+Bildschirm siehst du immer nur den Schritt,
+
+00:00:35.080 --> 00:00:36.754
+der gerade dran ist.
+
+00:00:37.542 --> 00:00:40.122
+Fangen wir mit etwas Kleinem an. P
+
+00:00:40.122 --> 00:00:44.202
+gleich U mal I. Du suchst I.
+
+00:00:44.202 --> 00:00:46.182
+Was hält das I noch fest? Der
+
+00:00:46.182 --> 00:00:49.402
+Faktor U. Also teilst du beide Seiten
+
+00:00:49.402 --> 00:00:53.022
+durch U. Übrig bleibt: I gleich P
+
+00:00:53.022 --> 00:00:56.282
+durch U. Du verschiebst nichts auf magische
+
+00:00:56.282 --> 00:00:59.962
+Weise. Du machst auf beiden Seiten dasselbe.
+
+00:00:59.962 --> 00:01:03.322
+Bei mehreren Rechenschritten hilft dieses Bild: Du
+
+00:01:03.322 --> 00:01:06.282
+packst die Formel rückwärts aus. Was beim
+
+00:01:06.282 --> 00:01:10.462
+Ausrechnen zuletzt passiert, machst du zuerst rückgängig.
+
+00:01:10.462 --> 00:01:12.902
+Ein Faktor vor einer ganzen Klammer kommt
+
+00:01:12.902 --> 00:01:15.702
+deshalb vor dem Inhalt der Klammer dran.
+
+00:01:15.702 --> 00:01:18.142
+Und bevor du durch etwas teilst, prüfst
+
+00:01:18.142 --> 00:01:21.584
+du: Dieser Ausdruck darf nicht null sein.
+
+00:01:22.375 --> 00:01:24.988
+Nehmen wir die Widerstandsformel aus deinen Notizen.
+
+00:01:24.988 --> 00:01:28.465
+R Theta gleich R zwanzig mal Klammer
+
+00:01:28.465 --> 00:01:32.335
+eins plus Alpha mal Delta Theta. Gesucht
+
+00:01:32.335 --> 00:01:36.235
+ist Delta Theta. Das R zwanzig multipliziert
+
+00:01:36.235 --> 00:01:39.035
+die ganze Klammer. Darum teilen wir zuerst
+
+00:01:39.035 --> 00:01:41.675
+durch R zwanzig. Noch nicht die Eins
+
+00:01:41.675 --> 00:01:45.095
+abziehen. Jetzt steht rechts eins plus Alpha
+
+00:01:45.095 --> 00:01:48.395
+mal Delta Theta. Die Eins darf weg:
+
+00:01:48.395 --> 00:01:51.215
+auf beiden Seiten eins abziehen. Zum Schluss
+
+00:01:51.215 --> 00:01:54.495
+teilen wir durch Alpha. Fertig. Schau auf
+
+00:01:54.495 --> 00:01:57.555
+den Bruch: R Theta durch R zwanzig,
+
+00:01:57.555 --> 00:02:00.915
+dann minus eins. Dieses ganze Ergebnis wird
+
+00:02:00.915 --> 00:02:03.935
+durch Alpha geteilt. Die Reihenfolge macht hier
+
+00:02:03.935 --> 00:02:07.495
+den Unterschied. Probieren wir die Rückrichtung. Hundert
+
+00:02:07.495 --> 00:02:11.028
+Ohm, hundertzwanzig Ohm und Alpha gleich null
+
+00:02:11.028 --> 00:02:13.995
+Komma null null vier pro Kelvin. Die
+
+00:02:13.995 --> 00:02:17.475
+Umstellung liefert fünfzig Kelvin. In der ursprünglichen
+
+00:02:17.475 --> 00:02:19.875
+Formel ergibt hundert mal eins Komma zwei
+
+00:02:19.875 --> 00:02:23.875
+wieder hundertzwanzig Ohm. So eine kurze Rückprobe
+
+00:02:23.875 --> 00:02:26.009
+fängt erstaunlich viele Fehler ab.
+
+00:02:26.792 --> 00:02:28.832
+Was machst du, wenn die gesuchte Grösse
+
+00:02:28.832 --> 00:02:31.912
+im Nenner steckt? Zum Beispiel I gleich
+
+00:02:31.912 --> 00:02:35.632
+U durch R, gesucht R. Einfach den
+
+00:02:35.632 --> 00:02:39.532
+Bruch umzudrehen wäre geraten. Multipliziere lieber beide
+
+00:02:39.532 --> 00:02:42.472
+Seiten mit R. Dann steht da I
+
+00:02:42.472 --> 00:02:45.492
+mal R gleich U. Jetzt durch I
+
+00:02:45.492 --> 00:02:49.172
+teilen. R gleich U durch I. Jeder
+
+00:02:49.172 --> 00:02:51.572
+Schritt ist begründet. Und wenn im Zähler
+
+00:02:51.572 --> 00:02:55.232
+mehrere Summanden stehen, bleiben sie zusammen. Bei
+
+00:02:55.232 --> 00:02:57.732
+der Kraftformel auf deinem Blatt multiplizierst du
+
+00:02:57.732 --> 00:03:00.232
+zuerst mit der Länge. Dann ziehst du
+
+00:03:00.232 --> 00:03:03.362
+die beiden anderen Kraftmomente ab. Erst danach
+
+00:03:03.362 --> 00:03:06.132
+teilst du durch F eins. Achte auf
+
+00:03:06.132 --> 00:03:08.532
+die Klammer im letzten Schritt: Der ganze
+
+00:03:08.532 --> 00:03:10.599
+restliche Zähler wird geteilt.
+
+00:03:11.375 --> 00:03:14.895
+Jetzt eine Wurzel. S gleich Wurzel aus
+
+00:03:14.895 --> 00:03:18.635
+R Quadrat plus Q Quadrat. Gesucht ist
+
+00:03:18.635 --> 00:03:22.995
+R. Zuerst quadrierst du beide Seiten. Dadurch
+
+00:03:22.995 --> 00:03:26.895
+verschwindet die äussere Wurzel. Danach Q Quadrat
+
+00:03:26.895 --> 00:03:30.795
+abziehen. Erst jetzt ziehst du die Wurzel.
+
+00:03:30.795 --> 00:03:33.655
+Die Reihenfolge ist wichtig: Aus einer Wurzel
+
+00:03:33.655 --> 00:03:36.675
+über einer Summe werden nicht zwei einzelne
+
+00:03:36.675 --> 00:03:40.855
+Wurzeln. Wenn R ein nichtnegativer Betrag ist,
+
+00:03:40.855 --> 00:03:43.955
+nimmst du die positive Wurzel. Allgemein kann
+
+00:03:43.955 --> 00:03:46.835
+bei einer quadratischen Gleichung auch das negative
+
+00:03:46.835 --> 00:03:51.415
+Vorzeichen dazugehören. Mit S gleich dreizehn und
+
+00:03:51.415 --> 00:03:54.225
+Q gleich fünf bekommst du R gleich
+
+00:03:54.225 --> 00:03:57.785
+zwölf. Die Probe passt: zwölf Quadrat plus
+
+00:03:57.785 --> 00:04:02.782
+fünf Quadrat ergibt hundertneunundsechzig. Dessen Wurzel ist
+
+00:04:02.782 --> 00:04:03.489
+dreizehn.
+
+00:04:04.250 --> 00:04:07.510
+Aufgabe vierundzwanzig kombiniert einen Nenner mit einer
+
+00:04:07.510 --> 00:04:11.670
+Wurzel. Gesucht ist L. Wir bilden zuerst
+
+00:04:11.670 --> 00:04:14.490
+auf beiden Seiten den Kehrwert. Dann durch
+
+00:04:14.490 --> 00:04:18.810
+zwei Pi teilen. Jetzt quadrieren. Dabei wird
+
+00:04:18.810 --> 00:04:21.957
+alles quadriert: die Zwei, das Pi und
+
+00:04:21.957 --> 00:04:24.710
+f null. Danach nur noch durch C
+
+00:04:24.710 --> 00:04:27.470
+teilen. Du musst nicht die fertige Formel
+
+00:04:27.470 --> 00:04:30.170
+auswendig kennen, wenn du diese vier Schritte
+
+00:04:30.170 --> 00:04:33.930
+erkennst. Bei Aufgabe zweiundzwanzig ist noch etwas
+
+00:04:33.930 --> 00:04:37.210
+wichtig: Die gedruckte Lösung für Kosinus Phi
+
+00:04:37.210 --> 00:04:40.250
+auf dem Blatt ist falsch. Links steht
+
+00:04:40.250 --> 00:04:43.630
+P zu minus P Verlust. Diese ganze
+
+00:04:43.630 --> 00:04:45.790
+Differenz wird durch das Produkt auf der
+
+00:04:45.790 --> 00:04:48.470
+rechten Seite geteilt. Nicht nur einer der
+
+00:04:48.470 --> 00:04:51.810
+beiden Terme. Im Lernpaket ist die korrigierte
+
+00:04:51.810 --> 00:04:55.090
+Lösung markiert. Verlass dich auf die Umformung,
+
+00:04:55.090 --> 00:04:57.252
+nicht auf das gedruckte Ergebnis.
+
+00:04:58.042 --> 00:05:00.542
+Wechseln wir zum Hebel. Stell dir eine
+
+00:05:00.542 --> 00:05:03.662
+feste Schraube vor. Mit einem kurzen Schlüssel
+
+00:05:03.662 --> 00:05:06.562
+brauchst du viel Kraft. Greifst du weiter
+
+00:05:06.562 --> 00:05:09.382
+aussen an, geht es leichter. Was du
+
+00:05:09.382 --> 00:05:12.082
+dabei veränderst, ist die Drehwirkung um die
+
+00:05:12.082 --> 00:05:16.622
+Schraube. Diese Drehwirkung nennen wir Drehmoment. Das
+
+00:05:16.622 --> 00:05:21.302
+Drehmoment ist Kraft mal senkrechter Hebelarm. Hundertfünfzig
+
+00:05:21.302 --> 00:05:26.042
+Newton bei zwanzig Zentimetern ergeben dreissig Newtonmeter.
+
+00:05:26.042 --> 00:05:29.262
+Aber erst die Länge umrechnen: zwanzig Zentimeter
+
+00:05:29.262 --> 00:05:32.727
+sind null Komma zwei Meter. Hundertfünfzig mal
+
+00:05:32.727 --> 00:05:36.022
+null Komma zwei ergibt dreissig. Wenn du
+
+00:05:36.022 --> 00:05:38.682
+direkt mit zwanzig rechnest, liegt dein Ergebnis
+
+00:05:38.682 --> 00:05:41.872
+um den Faktor hundert daneben. Du kannst
+
+00:05:41.872 --> 00:05:44.922
+dieselbe Formel wieder umstellen. Gesucht ist die
+
+00:05:44.922 --> 00:05:49.622
+Kraft: Drehmoment durch Hebelarm. Bei vierzig Newtonmetern
+
+00:05:49.622 --> 00:05:53.722
+und zwanzig Zentimetern brauchst du zweihundert Newton.
+
+00:05:53.722 --> 00:05:56.868
+Mit dreissig Zentimetern sind es nur ungefähr
+
+00:05:56.868 --> 00:06:01.662
+hundertdreiunddreissig Newton. Längerer Hebel, weniger Kraft. Das
+
+00:06:01.662 --> 00:06:04.242
+ist auch ein guter Plausibilitätscheck für deine
+
+00:06:04.242 --> 00:06:05.046
+Rechnung.
+
+00:06:05.833 --> 00:06:08.973
+Der häufigste Denkfehler ist die Länge. Der
+
+00:06:08.973 --> 00:06:11.633
+Hebelarm ist nicht automatisch die ganze Griff-
+
+00:06:11.633 --> 00:06:15.413
+oder Rohrlänge. Er ist der kürzeste, senkrechte
+
+00:06:15.413 --> 00:06:19.353
+Abstand vom Drehpunkt zur Wirkungslinie der Kraft.
+
+00:06:19.353 --> 00:06:22.573
+Verlängere also den Kraftpfeil gedanklich zu einer
+
+00:06:22.573 --> 00:06:25.893
+Geraden. Dann zeichnest du vom Drehpunkt ein
+
+00:06:25.893 --> 00:06:29.973
+Lot auf diese Gerade. Diese Strecke zählt.
+
+00:06:29.973 --> 00:06:33.033
+Ein einfacher Gegencheck: Ziehst du genau in
+
+00:06:33.033 --> 00:06:36.213
+Richtung des Schraubenschlüssels, geht die Wirkungslinie durch
+
+00:06:36.213 --> 00:06:40.053
+die Schraube. Der senkrechte Abstand ist null.
+
+00:06:40.053 --> 00:06:42.573
+Du ziehst zwar kräftig, erzeugst damit aber
+
+00:06:42.573 --> 00:06:45.333
+kein Drehmoment um die Schraube. Für die
+
+00:06:45.333 --> 00:06:47.673
+Rechnung brauchst du also eine Kraft und
+
+00:06:47.673 --> 00:06:49.797
+einen wirksamen Hebelarm.
+
+00:06:50.583 --> 00:06:53.043
+Bei einer Wippe wirken zwei Kräfte auf
+
+00:06:53.043 --> 00:06:56.443
+verschiedenen Seiten des Drehpunkts. Die eine will
+
+00:06:56.443 --> 00:07:00.643
+im Uhrzeigersinn drehen, die andere dagegen. Gleichgewicht
+
+00:07:00.643 --> 00:07:04.163
+herrscht, wenn beide Momente gleich gross sind.
+
+00:07:04.163 --> 00:07:07.363
+Nicht unbedingt beide Kräfte. Eine kleinere Kraft
+
+00:07:07.363 --> 00:07:11.663
+kann durch einen längeren Hebelarm ausgeglichen werden.
+
+00:07:11.663 --> 00:07:14.258
+Links wirken hundert Newton bei null Komma
+
+00:07:14.258 --> 00:07:18.263
+drei Metern. Das sind dreissig Newtonmeter. Rechts
+
+00:07:18.263 --> 00:07:20.543
+ist der Arm null Komma sechs Meter
+
+00:07:20.543 --> 00:07:24.318
+lang. Welche Kraft braucht es? Dreissig durch
+
+00:07:24.318 --> 00:07:27.963
+null Komma sechs ergibt fünfzig Newton. Der
+
+00:07:27.963 --> 00:07:30.403
+rechte Arm ist doppelt so lang. Also
+
+00:07:30.403 --> 00:07:33.483
+genügt dort die halbe Kraft. Rechnung und
+
+00:07:33.483 --> 00:07:35.331
+Vorstellung passen zusammen.
+
+00:07:36.083 --> 00:07:38.223
+Bei der Schubkarre ist die Radachse der
+
+00:07:38.223 --> 00:07:41.383
+Drehpunkt. Die Last zieht nach unten, deine
+
+00:07:41.383 --> 00:07:43.943
+Hände halten die Griffe nach oben. Wir
+
+00:07:43.943 --> 00:07:47.463
+rechnen mit fünfzig Kilogramm Last. Ihr waagrechter
+
+00:07:47.463 --> 00:07:50.903
+Abstand zur Achse beträgt vierzig Zentimeter. Die
+
+00:07:50.903 --> 00:07:53.490
+Hände greifen in einem waagrechten Abstand von
+
+00:07:53.490 --> 00:07:56.383
+einem Komma zwei fünf Metern an. Das
+
+00:07:56.383 --> 00:07:58.717
+Eigengewicht der Karre lassen wir hier weg.
+
+00:07:58.717 --> 00:08:02.463
+Fünfzig Kilogramm sind noch keine Kraft. Zuerst
+
+00:08:02.463 --> 00:08:05.791
+die Gewichtskraft: fünfzig mal neun Komma acht
+
+00:08:05.791 --> 00:08:10.239
+eins ergibt vierhundertneunzig Komma fünf Newton. Mit
+
+00:08:10.239 --> 00:08:12.883
+null Komma vier Metern Lastarm entsteht ein
+
+00:08:12.883 --> 00:08:17.323
+Moment von hundertsechsundneunzig Komma zwei Newtonmetern. Dieses
+
+00:08:17.323 --> 00:08:21.383
+Moment müssen deine Hände ausgleichen. Also teilen
+
+00:08:21.383 --> 00:08:24.093
+wir das Moment durch den Handarm. Hundertsechsundneunzig
+
+00:08:24.093 --> 00:08:27.203
+Komma zwei durch eins Komma zwei fünf
+
+00:08:27.203 --> 00:08:31.503
+ergibt rund hundertsiebenundfünfzig Newton. Das ist die
+
+00:08:31.503 --> 00:08:35.323
+Kraft beider Hände zusammen. Bei gleichmässiger Verteilung
+
+00:08:35.323 --> 00:08:38.363
+trägt jede Hand ungefähr die Hälfte. Und
+
+00:08:38.363 --> 00:08:40.903
+auch hier zählen die waagrechten Abstände zu
+
+00:08:40.903 --> 00:08:44.367
+den senkrechten Kräften, nicht die schrägen Rohre.
+
+00:08:45.125 --> 00:08:48.465
+Zeit für eine kleine Probe. Ein Schraubenschlüssel
+
+00:08:48.465 --> 00:08:52.525
+soll sechsunddreissig Newtonmeter erzeugen. Die Kraft wirkt
+
+00:08:52.525 --> 00:08:56.105
+senkrecht zum Schlüssel, dreissig Zentimeter vom Drehpunkt
+
+00:08:56.105 --> 00:08:59.745
+entfernt. Welche Kraft brauchst du? Halt kurz
+
+00:08:59.745 --> 00:09:02.585
+an und rechne selbst. Du brauchst nur
+
+00:09:02.585 --> 00:09:06.365
+eine Umstellung und eine Umrechnung. Die dreissig
+
+00:09:06.365 --> 00:09:09.805
+Zentimeter werden zu null Komma drei Metern.
+
+00:09:09.805 --> 00:09:14.175
+Kraft gleich Moment durch Hebelarm. Sechsunddreissig durch
+
+00:09:14.175 --> 00:09:18.365
+null Komma drei ergibt hundertzwanzig Newton. Wenn
+
+00:09:18.365 --> 00:09:21.345
+du ungefähr so vorgegangen bist, passt es.
+
+00:09:21.345 --> 00:09:24.305
+Falls nicht, prüfe zuerst die Einheit und
+
+00:09:24.305 --> 00:09:26.111
+dann die Richtung des Bruchs.
+
+00:09:26.875 --> 00:09:29.655
+Bei Formeln fragst du zuerst: Was hält
+
+00:09:29.655 --> 00:09:32.815
+meine gesuchte Grösse noch fest? Dann löst
+
+00:09:32.815 --> 00:09:36.175
+du die äusseren Rechenschritte rückwärts auf. Klammern
+
+00:09:36.175 --> 00:09:39.475
+und ganze Zähler bleiben zusammen. Bei Wurzeln
+
+00:09:39.475 --> 00:09:42.035
+wird die ganze Seite quadriert. Und am
+
+00:09:42.035 --> 00:09:45.455
+Schluss lohnt sich eine kurze Rückprobe. Beim
+
+00:09:45.455 --> 00:09:48.295
+Hebel zeichnest du zuerst den Drehpunkt und
+
+00:09:48.295 --> 00:09:51.635
+die Kraftpfeile. Dann bestimmst du den senkrechten
+
+00:09:51.635 --> 00:09:56.175
+Hebelarm. Zentimeter werden Meter, Kilogramm werden über
+
+00:09:56.175 --> 00:09:59.435
+die Gewichtskraft Newton. Erst danach setzt du
+
+00:09:59.435 --> 00:10:01.935
+ein. Wenn du das bei einem Beispiel
+
+00:10:01.935 --> 00:10:04.895
+ohne offene Lösung erklären kannst, hast du
+
+00:10:04.895 --> 00:10:08.675
+mehr gewonnen als durch zehnmaliges Durchlesen. Nimm
+
+00:10:08.675 --> 00:10:11.388
+dir jetzt den Probetest aus dem Lernpaket.
