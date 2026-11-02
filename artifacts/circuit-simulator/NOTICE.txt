@@ -1,0 +1,22 @@
+Circuit Simulator (CircuitJS1, version 1.16)
+===========================================
+
+This folder is an unmodified copy of the browser build of the circuit simulator
+by Paul Falstad, https://www.falstad.com/circuit/ . The JavaScript port is by
+Iain Sharp; the current TypeScript version is maintained by Paul Falstad and
+contributors. Source code: https://github.com/pfalstad/circuitjs1
+
+Licence: GNU General Public License, version 2 (see COPYING.txt). The compiled
+code in circuitjs116/ is generated from the sources in the repository above;
+anyone may obtain the corresponding source there.
+
+Changes made for this copy (nothing inside circuitjs116/ was edited):
+  - index.html: removed the Dropbox script and the web-app manifest link.
+  - service-worker.js: replaced by a small stub that clears old caches.
+  - The wrapper page ../circuit-simulator.html adds the German/English switch
+    (it starts the app with ?lang=de or ?lang=en; the app's own translations
+    are circuitjs116/locale/locale_de.txt).
+  - circuitjs116/circuits/pong/ponghfull.txt was left out; falstad.com itself
+    refuses to serve that file.
+
+Copied 02.11.2026.

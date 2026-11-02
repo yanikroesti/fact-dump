@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuit Simulator</title>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --border: #252a3a;
+  --border2: #313852;
+  --accent: #5b8fff;
+  --accent-bg: rgba(91,143,255,.16);
+  --text: #e8eaf2;
+  --muted: #8a92b0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.back { color: var(--muted); text-decoration: none; font-size: 13px; }
+.back:hover { color: var(--text); }
+h1 { font-size: 15px; font-weight: 650; letter-spacing: .01em; margin-right: auto; }
+h1 span { color: var(--muted); font-weight: 400; }
+.seg { display: inline-flex; border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; }
+.seg button {
+  background: none; border: 0; color: var(--muted); font: inherit;
+  padding: 5px 14px; cursor: pointer;
+}
+.seg button + button { border-left: 1px solid var(--border2); }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--accent-bg); color: var(--text); font-weight: 600; }
+.links { display: flex; gap: 14px; font-size: 13px; }
+.links a { color: var(--accent); text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+iframe { flex: 1; width: 100%; border: 0; background: #000; min-height: 0; }
+@media (max-width: 560px) {
+  header { gap: 8px 12px; padding: 8px 12px; }
+  h1 { flex-basis: 100%; }
+  .links { margin-left: auto; }
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../index.html" id="back">← dump</a>
+  <h1 id="title">Schaltungssimulator <span>· Circuit Simulator</span></h1>
+  <div class="seg" role="group" aria-label="Sprache / Language">
+    <button type="button" data-lang="de" aria-pressed="false">Deutsch</button>
+    <button type="button" data-lang="en" aria-pressed="false">English</button>
+  </div>
+  <nav class="links">
+    <a id="full" href="circuit-simulator/index.html" target="_blank" rel="noopener">Vollbild</a>
+    <a id="src" href="circuit-simulator/NOTICE.txt" target="_blank" rel="noopener">Lizenz &amp; Quelle</a>
+  </nav>
+</header>
+<iframe id="app" title="Circuit Simulator" allow="fullscreen; clipboard-read; clipboard-write"></iframe>
+
+<script>
+(function () {
+  var APP = 'circuit-simulator/index.html';
+  var TXT = {
+    de: { title: 'Schaltungssimulator', sub: '· Falstad-Kopie', full: 'Vollbild', src: 'Lizenz & Quelle',
+          warn: 'Beim Wechsel der Sprache wird der Simulator neu geladen. Nicht gespeicherte Schaltungen gehen verloren. Fortfahren?' },
+    en: { title: 'Circuit Simulator', sub: '· copy of Falstad’s', full: 'Full screen', src: 'Licence & source',
+          warn: 'Switching language reloads the simulator. Unsaved circuits will be lost. Continue?' }
+  };
+  var frame = document.getElementById('app');
+  var buttons = document.querySelectorAll('.seg button');
+  var current = null;
+
+  function store(v) { try { if (v) localStorage.setItem('circuit-sim-lang', v); return localStorage.getItem('circuit-sim-lang'); } catch (e) { return null; } }
+  function pick() {
+    var q = new URLSearchParams(location.search).get('lang');
+    if (q && /^(de|en)/i.test(q)) return q.slice(0, 2).toLowerCase();
+    var s = store();
+    if (s === 'de' || s === 'en') return s;
+    return /^de/i.test(navigator.language || '') ? 'de' : 'en';
+  }
+  function apply(lang) {
+    current = lang;
+    var t = TXT[lang];
+    document.documentElement.lang = lang;
+    document.getElementById('title').innerHTML = t.title + ' <span>' + t.sub + '</span>';
+    document.getElementById('full').textContent = t.full;
+    document.getElementById('src').textContent = t.src;
+    document.getElementById('full').href = APP + '?lang=' + lang;
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
+    frame.src = APP + '?lang=' + lang;
+    store(lang);
+    try { history.replaceState(null, '', '?lang=' + lang); } catch (e) {}
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = b.dataset.lang;
+      if (l === current) return;
+      if (frame.getAttribute('src') && !confirm(TXT[l].warn)) return;
+      apply(l);
+    });
+  });
+  apply(pick());
+})();
+</script>
+</body>
+</html>
