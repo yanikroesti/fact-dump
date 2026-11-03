@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Vorlage zum Arbeitsauftrag Potentielle und kinetische Energie (Physik, Kap. 5 Arbeit, Energie, Leistung): Vorgehen, Formeln, Rechenbeispiel mit erfundenen Zahlen, Verluste und Wirkungsgrad sowie eine leere A4-Seite für die eigene Dokumentation.">
+<title>Arbeitsauftrag Energie am Hügel — Vorlage</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eceeea;color:#171d1e;font:15px/1.55 'Archivo',system-ui,-apple-system,sans-serif}
+nav{max-width:210mm;margin:18px auto;padding:20px;background:#fff;border-left:4px solid #2a7049}
+.eyebrow{font:600 11px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#2a7049}
+nav h1{font-size:27px;line-height:1.1;margin:8px 0 14px;letter-spacing:-.03em}
+nav h2{font-size:15px;margin:22px 0 6px}
+nav p{margin:8px 0}
+nav ol,nav ul{margin:8px 0;padding-left:22px}
+nav li{margin:4px 0}
+nav a{color:#2a7049}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 6px}
+button{font:inherit;font-weight:600;font-size:14px;padding:11px 17px;min-height:44px;background:#2a7049;color:#fff;border:1px solid #2a7049;cursor:pointer}
+button.secondary{background:#fff;color:#2a7049}
+a:focus-visible,button:focus-visible{outline:3px solid #2a7049;outline-offset:3px}
+.warn{border-left:4px solid #b4531a;background:#fdf4ee;padding:12px 14px;margin:16px 0}
+.warn strong{color:#8f400f}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+.meta div{border:1px solid #d5dbd6;padding:8px 10px}
+.meta dt{font:600 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5c6665;margin:0}
+.meta dd{margin:3px 0 0;font-weight:600;font-size:14px}
+main{width:210mm;max-width:100%;margin:18px auto}
+.page{background:#fff;padding:12mm 12mm 16mm;margin:0 0 18px;position:relative}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1.5px solid #171d1e;padding-bottom:4px;margin:0 0 6mm}
+.ph b{font-size:13px}
+.ph span{font:600 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5c6665;white-space:nowrap}
+h2.t{font-size:19px;margin:0 0 3mm;letter-spacing:-.02em}
+h3{font-size:13.5px;margin:5mm 0 2mm}
+.page p,.page li{font-size:12px;line-height:1.5}
+.page ul,.page ol{padding-left:19px;margin:2mm 0}
+.lead{font-size:12.5px;color:#2d3634}
+table{width:100%;border-collapse:collapse;font-size:11px;margin:2mm 0 3mm}
+th,td{border:.8px solid #9aa5a2;padding:4px 6px;text-align:left;vertical-align:middle}
+th{background:#eef1ee;font-weight:600}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.e{height:8mm}
+.note{border-left:3px solid #2a7049;background:#f0f6f2;padding:7px 10px;margin:3mm 0;font-size:11px}
+.safe{border-left:3px solid #b4531a;background:#fdf4ee;padding:7px 10px;margin:3mm 0;font-size:11px}
+.box{border:1px solid #9aa5a2;padding:8px 10px;margin:3mm 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.pf{position:absolute;bottom:6mm;left:12mm;right:12mm;border-top:.8px solid #c3cdc6;padding-top:2.5px;font-size:9px;color:#5c6665;display:flex;justify-content:space-between}
+.tag{display:inline-block;font:600 9.5px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;background:#b4531a;color:#fff;padding:2px 6px}
+/* Formeln mit waagrechtem Bruchstrich */
+.f{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:15px;margin:2mm 0;font-variant-numeric:tabular-nums}
+.f.big{font-size:17px}
+.fr{display:inline-flex;flex-direction:column;align-items:stretch;vertical-align:middle;text-align:center;margin:0 2px;line-height:1.25}
+.fr>span:first-child{border-bottom:1.3px solid currentColor;padding:0 4px 1px}
+.fr>span:last-child{padding:1px 4px 0}
+.fbox{border:1px solid #c3cdc6;background:#fafbfa;padding:6px 12px;margin:1mm 0}
+.fbox .lbl{font:600 9.5px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5c6665;display:block;margin-bottom:2px}
+.step{display:grid;grid-template-columns:22mm 1fr;gap:3mm;align-items:center;border-bottom:.8px solid #e1e6e2;padding:1.2mm 0}
+.step b{font-size:11px;color:#5c6665;font-weight:600}
+/* A4-Vorlage */
+.tpl .feld{border:1.2px dashed #8d9794;background:#fafbfa;padding:6px 8px;font-size:10.5px;color:#5c6665}
+.tpl .zeile{border-bottom:1px solid #b9c2bf;height:7.5mm}
+.tpl .kopf{display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:3mm;margin-bottom:3mm}
+.tpl .kopf div{border-bottom:1px solid #8d9794;font-size:10px;color:#5c6665;padding-top:5mm}
+.tpl h3{margin:3mm 0 1.5mm;font-size:12px}
+.tpl table{font-size:10.5px;margin:1mm 0 2mm}
+.tpl td.e{height:7mm}
+.rech{display:grid;grid-template-columns:1fr;gap:1.5mm}
+.rech .r{display:grid;grid-template-columns:26mm 1fr;align-items:center;border-bottom:1px solid #b9c2bf;min-height:10mm;font-size:11px}
+.rech .r .f{font-size:12.5px;margin:0}
+svg{display:block;width:100%;height:auto}
+svg text{font:11px 'Archivo',system-ui,sans-serif;fill:#171d1e}
+@media screen and (max-width:620px){
+  nav{margin:8px;padding:14px}
+  nav h1{font-size:22px}
+  main{margin:8px 0}
+  .page{padding:14px 14px 34px}
+  .grid2{grid-template-columns:1fr}
+  .step{grid-template-columns:1fr;gap:1mm}
+  .tpl .kopf{grid-template-columns:1fr}
+  .rech .r{grid-template-columns:1fr}
+  table{font-size:10px}
+  .f.big{font-size:16px}
+}
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  nav,.noprint{display:none}
+  body{background:#fff}
+  main{width:auto;max-width:none;margin:0}
+  .page{padding:0 0 10mm;margin:0;break-after:page;page-break-after:always}
+  .page:last-child{break-after:auto;page-break-after:auto}
+  .pf{bottom:0;left:0;right:0}
+  body.only-tpl .page:not(.tpl){display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="eyebrow">Physik · Kap. 5 Arbeit, Energie, Leistung · Arbeitsauftrag</div>
+  <h1>Energie am Hügel: potentielle und kinetische Energie</h1>
+  <p>Ein Rahmen zum Arbeiten: wie du den Versuch durchführst, was du messen und notieren musst, welche Formeln du brauchst und wie deine A4-Seite aufgebaut sein kann. Das Rechenbeispiel benutzt <strong>erfundene Zahlen</strong>.</p>
+  <div class="warn"><strong>Das ist eine Vorlage, keine Abgabe.</strong> Messen, rechnen und die A4-Seite gestalten musst du selbst, mit deinen eigenen Werten.</div>
+  <dl class="meta">
+    <div><dt>Zeit</dt><dd>45 min</dd></div>
+    <div><dt>Ort</dt><dd>Draussen</dd></div>
+    <div><dt>Sozialform</dt><dd>Einzelarbeit</dd></div>
+    <div><dt>Abgabe</dt><dd>1 Seite A4 (OneNote)</dd></div>
+  </dl>
+  <h2>Grober Vorschlag in 6 Schritten</h2>
+  <ol>
+    <li><strong>Masse bestimmen:</strong> dich wägen, das Leergewicht des Fahrzeugs nachschlagen oder wägen, zusammenzählen.</li>
+    <li><strong>Hügel wählen:</strong> möglichst grosser Höhenunterschied, gerade Strecke, wenig Verkehr, unten genug Auslauf.</li>
+    <li><strong>Oben:</strong> Höhe mit der GPS-App ablesen. Aus dem Stillstand starten.</li>
+    <li><strong>Herunterrollen, ohne anzutreiben und ohne zu bremsen,</strong> solange es sicher ist. Unten Höhe und Maximalgeschwindigkeit ablesen.</li>
+    <li><strong>Rechnen:</strong> E<sub>pot</sub> oben, E<sub>kin</sub> unten, Wirkungsgrad η.</li>
+    <li><strong>Verbessern und wiederholen:</strong> eine Idee ausprobieren (z. B. geduckte Haltung), zweite Fahrt messen, vergleichen. Dann die A4-Seite machen.</li>
+  </ol>
+  <div class="actions noprint">
+    <button onclick="document.body.classList.remove('only-tpl');window.print()">Alles drucken (4 Seiten A4)</button>
+    <button class="secondary" onclick="document.body.classList.add('only-tpl');window.print();document.body.classList.remove('only-tpl')">Nur die leere A4-Seite drucken</button>
+  </div>
+  <p style="font-size:13px;color:#5c6665">Verwandt: <a href="moser_et_physik_lernpaket.html">Lernpaket Elektrotechnik &amp; Physik</a> · <a href="../index.html">zurück zum Dump</a></p>
+</nav>
+
+<main>
+
+<!-- ============ SEITE 1: VORGEHEN ============ -->
+<section class="page">
+  <div class="ph"><b>Vorgehen und Messung</b><span>Seite 1 von 4</span></div>
+  <h2 class="t">Was du misst — und worauf es ankommt</h2>
+  <p class="lead">Oben hast du nur Lageenergie (E<sub>pot</sub>), unten vor allem Bewegungsenergie (E<sub>kin</sub>). Der Versuch zeigt, wie viel der Lageenergie unten wirklich als Bewegung ankommt. Der Rest geht als Wärme durch Reibung und Luftwiderstand verloren.</p>
+
+  <svg viewBox="0 0 640 210" role="img" aria-label="Skizze: Fahrer startet oben auf dem Hügel mit Höhe h und rollt hinunter, unten wird die Maximalgeschwindigkeit gemessen">
+    <path d="M20 60 C 150 60, 230 70, 330 140 S 520 190, 620 190" fill="none" stroke="#171d1e" stroke-width="2.2"/>
+    <path d="M20 60 C 150 60, 230 70, 330 140 S 520 190, 620 190 L620 205 L20 205 Z" fill="#eef4ef"/>
+    <circle cx="70" cy="48" r="11" fill="#2a7049"/>
+    <text x="52" y="28" font-weight="700">Start oben</text>
+    <text x="52" y="90" style="font-size:10px;fill:#5c6665">v = 0, Höhe h₁ ablesen</text>
+    <circle cx="560" cy="178" r="11" fill="#b4531a"/>
+    <text x="480" y="160" font-weight="700">unten: v<tspan dy="3" font-size="8">max</tspan></text>
+    <text x="470" y="203" style="font-size:10px;fill:#5c6665">Höhe h₂ ablesen</text>
+    <line x1="600" y1="60" x2="600" y2="188" stroke="#171d1e" stroke-width="1.2"/>
+    <line x1="592" y1="60" x2="608" y2="60" stroke="#171d1e" stroke-width="1.2"/>
+    <line x1="592" y1="188" x2="608" y2="188" stroke="#171d1e" stroke-width="1.2"/>
+    <line x1="80" y1="60" x2="600" y2="60" stroke="#9aa5a2" stroke-dasharray="4 4"/>
+    <text x="610" y="128" font-weight="700">h</text>
+    <text x="150" y="122" style="fill:#2a7049;font-weight:600">E<tspan dy="3" font-size="8">pot</tspan><tspan dy="-3"> → E</tspan><tspan dy="3" font-size="8">kin</tspan><tspan dy="-3"> + Verluste</tspan></text>
+  </svg>
+
+  <h3>Messwerte, die du brauchst</h3>
+  <table>
+    <tr><th style="width:30%">Grösse</th><th style="width:16%">Zeichen</th><th style="width:14%">Einheit</th><th>Wie messen</th></tr>
+    <tr><td>Masse Person</td><td>m<sub>P</sub></td><td>kg</td><td>Waage, mit Kleidung und Helm</td></tr>
+    <tr><td>Masse Fahrzeug</td><td>m<sub>F</sub></td><td>kg</td><td>Leergewichtsangabe oder Waage</td></tr>
+    <tr><td>Gesamtmasse</td><td>m</td><td>kg</td><td>m = m<sub>P</sub> + m<sub>F</sub></td></tr>
+    <tr><td>Höhe oben / unten</td><td>h₁ / h₂</td><td>m</td><td>GPS-App, je mehrmals ablesen</td></tr>
+    <tr><td>Höhenunterschied</td><td>h</td><td>m</td><td>h = h₁ − h₂, nur bis zum Punkt der Höchstgeschwindigkeit</td></tr>
+    <tr><td>Maximalgeschwindigkeit</td><td>v<sub>max</sub></td><td>km/h</td><td>GPS-App (Tacho-Funktion), Maximalwert</td></tr>
+  </table>
+
+  <div class="note"><strong>Masse oder Gewicht?</strong> Die Waage zeigt kg, also die <strong>Masse</strong>. Das Gewicht im physikalischen Sinn ist die Gewichtskraft F<sub>G</sub> = m · g in Newton. In die Formeln kommt die Masse in kg.</div>
+  <div class="note"><strong>GPS ist ungenau in der Höhe</strong> (oft ±5 m oder mehr). Darum: grosser Höhenunterschied, oben und unten ein paar Sekunden warten und mehrmals ablesen. Die Geschwindigkeit misst GPS deutlich genauer als die Höhe.</div>
+  <div class="safe"><strong>Sicherheit zuerst.</strong> Helm tragen, nur auf übersichtlicher Strecke mit wenig Verkehr, bremsen, sobald es nötig ist. Das Handy nicht während der Fahrt bedienen, die App läuft im Hintergrund. Ein Auto nur, wenn eine erwachsene Person fährt und verantwortet. Für dich sind Velo, Skateboard oder Inlines die einfache Wahl.</div>
+  <div class="pf"><span>Arbeitsauftrag Energie am Hügel · Vorlage</span><span>Seite 1</span></div>
+</section>
+
+<!-- ============ SEITE 2: FORMELN + BEISPIEL ============ -->
+<section class="page">
+  <div class="ph"><b>Formeln und Rechenbeispiel</b><span>Seite 2 von 4</span></div>
+  <h2 class="t">Die vier Formeln</h2>
+
+  <div class="grid2">
+    <div class="fbox"><span class="lbl">Potentielle Energie oben</span>
+      <div class="f big">E<sub>pot</sub> = m · g · h</div>
+      <p style="margin:0;font-size:10.5px;color:#5c6665">g = 9,81 m/s² · Resultat in J (Joule)</p></div>
+    <div class="fbox"><span class="lbl">Kinetische Energie unten</span>
+      <div class="f big">E<sub>kin</sub> = <span class="fr"><span>1</span><span>2</span></span> · m · v²</div>
+      <p style="margin:0;font-size:10.5px;color:#5c6665">v in m/s einsetzen, nicht in km/h</p></div>
+    <div class="fbox"><span class="lbl">km/h in m/s umrechnen</span>
+      <div class="f big">v<sub>m/s</sub> = <span class="fr"><span>v<sub>km/h</sub></span><span>3,6</span></span></div>
+      <p style="margin:0;font-size:10.5px;color:#5c6665">1 m/s = 3,6 km/h</p></div>
+    <div class="fbox"><span class="lbl">Wirkungsgrad</span>
+      <div class="f big">η = <span class="fr"><span>E<sub>kin</sub></span><span>E<sub>pot</sub></span></span> · 100 %</div>
+      <p style="margin:0;font-size:10.5px;color:#5c6665">genutzte Energie durch zugeführte Energie</p></div>
+  </div>
+
+  <h3>Rechenbeispiel <span class="tag">erfundene Zahlen</span></h3>
+  <p style="margin:0 0 1mm">Velo, Person 68 kg, Velo 12 kg, Hügel von 612 m auf 587 m, gemessene Höchstgeschwindigkeit 40 km/h.</p>
+  <div class="step"><b>Masse</b><div class="f">m = 68 kg + 12 kg = <strong>80 kg</strong></div></div>
+  <div class="step"><b>Höhe</b><div class="f">h = 612 m − 587 m = <strong>25 m</strong></div></div>
+  <div class="step"><b>E<sub>pot</sub></b><div class="f">E<sub>pot</sub> = 80 kg · 9,81 <span class="fr"><span>m</span><span>s²</span></span> · 25 m = <strong>19 620 J ≈ 19,6 kJ</strong></div></div>
+  <div class="step"><b>v in m/s</b><div class="f">v = <span class="fr"><span>40 km/h</span><span>3,6</span></span> = <strong>11,11 m/s</strong></div></div>
+  <div class="step"><b>E<sub>kin</sub></b><div class="f">E<sub>kin</sub> = <span class="fr"><span>1</span><span>2</span></span> · 80 kg · (11,11 m/s)² = <strong>4 938 J ≈ 4,9 kJ</strong></div></div>
+  <div class="step"><b>η</b><div class="f">η = <span class="fr"><span>4 938 J</span><span>19 620 J</span></span> · 100 % = <strong>25 %</strong></div></div>
+
+  <div class="note"><strong>So liest du das Resultat:</strong> Nur ein Viertel der Lageenergie kam unten als Bewegung an. Drei Viertel wurden durch Luftwiderstand, Rollreibung und Lagerreibung in Wärme umgewandelt. Ein tiefer Wirkungsgrad ist bei diesem Versuch normal, kein Rechenfehler.</div>
+
+  <h3>Kontrolle: Wie schnell wärst du ohne Verluste?</h3>
+  <p style="margin:0 0 1mm">Setzt man E<sub>pot</sub> = E<sub>kin</sub>, kürzt sich die Masse weg:</p>
+  <div class="f">v<sub>ideal</sub> = √<span style="border-top:1.3px solid currentColor;padding:0 3px">2 · g · h</span> = √<span style="border-top:1.3px solid currentColor;padding:0 3px">2 · 9,81 · 25</span> = 22,1 m/s ≈ <strong>80 km/h</strong></div>
+  <p style="font-size:11px">Liegt dein gemessenes v<sub>max</sub> über diesem Wert, stimmt etwas nicht: Meist ist dann die GPS-Höhe zu klein oder du hast doch angetrieben.</p>
+  <div class="pf"><span>Arbeitsauftrag Energie am Hügel · Vorlage</span><span>Seite 2</span></div>
+</section>
+
+<!-- ============ SEITE 3: WIRKUNGSGRAD ============ -->
+<section class="page">
+  <div class="ph"><b>Wirkungsgrad: Verluste und Verbesserung</b><span>Seite 3 von 4</span></div>
+  <h2 class="t">Warum nicht 100 %?</h2>
+  <svg viewBox="0 0 640 120" role="img" aria-label="Energiefluss: 100 Prozent potentielle Energie teilt sich auf in kinetische Energie und Verluste">
+    <rect x="10" y="30" width="150" height="60" fill="#2a7049"/>
+    <text x="22" y="56" style="fill:#fff;font-weight:700">E<tspan dy="3" font-size="8">pot</tspan><tspan dy="-3"> oben</tspan></text>
+    <text x="22" y="76" style="fill:#fff">100 %</text>
+    <path d="M160 30 L300 30 L300 50 L160 50 Z" fill="#d97c45"/>
+    <path d="M160 50 L300 50 L300 90 L160 90 Z" fill="#c9d7cd"/>
+    <rect x="300" y="30" width="150" height="20" fill="#b4531a"/>
+    <text x="458" y="45" font-weight="700">E<tspan dy="3" font-size="8">kin</tspan><tspan dy="-3"> unten (genutzt)</tspan></text>
+    <rect x="300" y="50" width="150" height="40" fill="#9aa5a2"/>
+    <text x="458" y="74" font-weight="700">Verluste → Wärme</text>
+    <text x="458" y="90" style="font-size:10px;fill:#5c6665">Luft, Rollen, Lager, Bremsen</text>
+  </svg>
+
+  <div class="grid2">
+    <div>
+      <h3>Was den Wirkungsgrad senkt</h3>
+      <ul>
+        <li><strong>Luftwiderstand:</strong> wächst mit v², bei Velo und Inlines der grösste Verlust.</li>
+        <li><strong>Rollreibung:</strong> weiche Reifen, wenig Luftdruck, rauer Belag, Kies.</li>
+        <li><strong>Lagerreibung:</strong> Naben, Kette, Kugellager der Rollen.</li>
+        <li><strong>Bremsen</strong> und Kurven, in denen man Tempo verliert.</li>
+        <li><strong>Gegenwind</strong> und eine sehr lange, flache Strecke.</li>
+        <li><strong>Messfehler:</strong> GPS-Höhe ungenau, Maximalwert verpasst.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Was ihn steigern könnte</h3>
+      <ul>
+        <li>Geduckte, schmale Haltung (weniger Luftwiderstand).</li>
+        <li>Reifen stärker aufpumpen.</li>
+        <li>Kürzere, steilere und gerade Strecke ohne Kurven.</li>
+        <li>Glatter Belag, Rückenwind oder Windstille.</li>
+        <li>Nicht bremsen (nur wenn sicher).</li>
+        <li>Fahrzeug vergleichen: Velo, Skateboard, Inlines.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Vergleich deiner Fahrten</h3>
+  <table>
+    <tr><th style="width:24%">&nbsp;</th><th>Fahrt 1</th><th>Fahrt 2 (mit Verbesserung)</th></tr>
+    <tr><td>Was geändert?</td><td>—</td><td class="e"></td></tr>
+    <tr><td>h in m</td><td class="e"></td><td class="e"></td></tr>
+    <tr><td>v<sub>max</sub> in km/h</td><td class="e"></td><td class="e"></td></tr>
+    <tr><td>E<sub>pot</sub> in J</td><td class="e"></td><td class="e"></td></tr>
+    <tr><td>E<sub>kin</sub> in J</td><td class="e"></td><td class="e"></td></tr>
+    <tr><td>η in %</td><td class="e"></td><td class="e"></td></tr>
+  </table>
+  <div class="note">Ändere pro Wiederholung <strong>nur eine Sache</strong>, sonst weisst du nicht, was den Unterschied gemacht hat. Und nimm denselben Hügel mit denselben Start- und Messpunkten.</div>
+  <div class="pf"><span>Arbeitsauftrag Energie am Hügel · Vorlage</span><span>Seite 3</span></div>
+</section>
+
+<!-- ============ SEITE 4: LEERE A4-VORLAGE ============ -->
+<section class="page tpl">
+  <div class="ph"><b>Versuch: Potentielle und kinetische Energie</b><span>Seite 4 von 4</span></div>
+  <div class="kopf"><div>Name</div><div>Datum</div><div>Fahrzeug</div></div>
+
+  <div class="grid2">
+    <div>
+      <h3>1 · Skizze</h3>
+      <div class="feld" style="height:52mm">Hügel mit Start und Ziel, Höhenunterschied h, Fahrtrichtung, Ort von v<sub>max</sub>.</div>
+    </div>
+    <div>
+      <h3>2 · Messwerte</h3>
+      <table>
+        <tr><th>Grösse</th><th>Fahrt 1</th><th>Fahrt 2</th></tr>
+        <tr><td>m<sub>P</sub> in kg</td><td class="e"></td><td class="e"></td></tr>
+        <tr><td>m<sub>F</sub> in kg</td><td class="e"></td><td class="e"></td></tr>
+        <tr><td>m in kg</td><td class="e"></td><td class="e"></td></tr>
+        <tr><td>h₁ / h₂ in m</td><td class="e"></td><td class="e"></td></tr>
+        <tr><td>h in m</td><td class="e"></td><td class="e"></td></tr>
+        <tr><td>v<sub>max</sub> in km/h</td><td class="e"></td><td class="e"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>3 · Berechnungen (Formel → eingesetzt → Resultat mit Einheit)</h3>
+  <div class="rech">
+    <div class="r"><b>E<sub>pot</sub></b><div class="f">E<sub>pot</sub> = m · g · h =</div></div>
+    <div class="r"><b>v in m/s</b><div class="f">v = <span class="fr"><span>v<sub>km/h</sub></span><span>3,6</span></span> =</div></div>
+    <div class="r"><b>E<sub>kin</sub></b><div class="f">E<sub>kin</sub> = <span class="fr"><span>1</span><span>2</span></span> · m · v² =</div></div>
+    <div class="r"><b>η</b><div class="f">η = <span class="fr"><span>E<sub>kin</sub></span><span>E<sub>pot</sub></span></span> · 100 % =</div></div>
+  </div>
+
+  <h3>4 · Auswertung</h3>
+  <p style="margin:0;font-size:10.5px;color:#5c6665">Wie gross ist der Wirkungsgrad?</p><div class="zeile"></div>
+  <p style="margin:2mm 0 0;font-size:10.5px;color:#5c6665">Was hast du verändert, um ihn zu steigern, und was kam heraus?</p><div class="zeile"></div><div class="zeile"></div>
+  <p style="margin:2mm 0 0;font-size:10.5px;color:#5c6665">Welche Faktoren senken den Wirkungsgrad bei diesem Experiment?</p><div class="zeile"></div><div class="zeile"></div>
+  <div class="pf"><span>Arbeitsauftrag Energie am Hügel · A4-Dokumentation</span><span>Seite 4</span></div>
+</section>
+
+</main>
+</body>
+</html>
