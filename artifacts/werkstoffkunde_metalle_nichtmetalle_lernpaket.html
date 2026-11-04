@@ -490,10 +490,13 @@ details.more[open] summary { margin-bottom: 8px; }
 <p class="intro">Wäfler hat am 30.10. die <strong>15 Lernziele</strong> für den Test gezeigt. Hier steht jedes mit der Kurzantwort, die du im Test geben können musst. Ein Klick auf «Zum Thema» führt zur ausführlichen Erklärung. Hake ab, was sitzt.</p>
 <div class="scope"><strong>Was kommt dran?</strong> Im Buch sind das die Seiten <strong>10–24</strong> (Kapitel 1.5 Metalle bis 1.8.1 Kunststoffe) und die Isolierstoffe aus den Lektionen vom 23.10. und 30.10. Die Seiten <strong>2–9</strong> (Werkstoffeigenschaften) waren Stoff im Test vom 11.09. Du brauchst sie hier nur als Grundlage, die Übungen dazu stehen im Tab «Übungen» unter «Grundlagen». Die Seiten 25–30 habt ihr in der Schule noch nicht behandelt, sie kommen im nächsten Test. Die Isolierstoffe hier stammen aus deinen Lektionsnotizen.</div>
 <div class="tool" id="hoeren">
-<h3>Zum Anhören · 20 Min. · Englisch</h3>
-<p class="tool-desc">Alle 15 Lernziele auf Englisch vorgelesen, der Reihe nach, zum Beispiel für den Arbeitsweg. Computerstimme (Kokoro, lokal erzeugt). Der Test ist auf Deutsch: Die Fachbegriffe stehen in der Theorie und auf den Karten.</p>
-<audio controls preload="none" style="width:100%;" src="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-englisch.mp3"></audio>
-<p style="font-size:0.84rem;margin:6px 0 0;"><a href="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-englisch.mp3" download>MP3 herunterladen</a> (9 MB)</p>
+<h3>Zum Anhören · alle 15 Lernziele</h3>
+<p class="tool-desc">Alle 15 Lernziele vorgelesen, der Reihe nach, zum Beispiel für den Arbeitsweg. Wähle die Sprache: Beim Umschalten springt die Wiedergabe ins gleiche Kapitel.</p>
+<div class="btn-row" id="audioSel" role="group" aria-label="Sprache der Hörversion"><button class="btn sm" type="button" data-audio-lang="de" aria-pressed="true" data-src="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-deutsch.mp3" data-mb="9" data-duration="1103.2" data-marks="0.0,16.3,111.2,244.4,360.3,414.6,493.3,519.6,574.6,705.3,739.5,845.2,872.8,905.1,967.3,1013.6,1083.3">Deutsch</button><button class="btn ghost sm" type="button" data-audio-lang="en" aria-pressed="false" data-src="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-englisch.mp3" data-mb="9" data-duration="1189.9" data-marks="0.0,18.3,124.3,267.9,390.9,449.1,529.9,559.0,617.1,761.8,799.8,912.2,943.4,977.2,1038.7,1089.0,1170.2">English</button></div>
+<p class="tool-desc" data-audio-note="de">18 Min. · Deutsch · Computerstimme (Qwen3-TTS, lokal erzeugt).</p>
+<p class="tool-desc" data-audio-note="en" hidden>20 Min. · Englisch · Computerstimme (Kokoro). Der Test ist auf Deutsch: Die Fachbegriffe stehen in der Theorie und auf den Karten.</p>
+<audio controls preload="none" style="width:100%;" src="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-deutsch.mp3"></audio>
+<p style="font-size:0.84rem;margin:6px 0 0;"><a id="audioDl" href="https://schule.yanikroesti.ch/material/werkstoffkunde/audio-deutsch.mp3" download>MP3 herunterladen</a> (<span id="audioMb">9</span> MB)</p>
 </div>
 <div class="lz-progress"><span><strong id="lzCount">0</strong> von 15 sitzen</span><div class="progress"><div class="progress-fill" id="lzProgress"></div></div></div>
 <div id="lzList"></div>
@@ -1704,6 +1707,40 @@ document.getElementById('ptReset').addEventListener('click', () => {
   document.querySelectorAll('#probetest textarea').forEach(t => t.value = ''); document.querySelectorAll('#probetest .pt-score button').forEach(b => b.classList.remove('on'));
   revealIn('probetest', false); ptGot.fill(0); ptUpdate(); document.getElementById('ptNote').textContent = 'Note –';
 });
+
+// ═══ HÖRVERSION: Deutsch / English ═══
+(function () {
+  const box = document.getElementById('hoeren'), audio = box.querySelector('audio');
+  const btns = [...box.querySelectorAll('#audioSel .btn')];
+  const marks = b => b.dataset.marks.split(',').map(Number);
+  const endOf = (b, i) => { const m = marks(b); return i + 1 < m.length ? m[i + 1] : Number(b.dataset.duration); };
+  let cur = 'de';
+  function set(lang, keep) {
+    const from = btns.find(b => b.dataset.audioLang === cur), to = btns.find(b => b.dataset.audioLang === lang);
+    if (!to) return;
+    btns.forEach(b => { b.classList.toggle('ghost', b !== to); b.setAttribute('aria-pressed', String(b === to)); });
+    box.querySelectorAll('[data-audio-note]').forEach(n => { n.hidden = n.dataset.audioNote !== lang; });
+    document.getElementById('audioDl').href = to.dataset.src;
+    document.getElementById('audioMb').textContent = to.dataset.mb;
+    if (audio.getAttribute('src') === to.dataset.src) { cur = lang; return; }
+    const t = audio.currentTime || 0, playing = !audio.paused;
+    let target = 0;
+    if (keep && t > 1) {
+      const m = marks(from); let i = 0;
+      while (i + 1 < m.length && m[i + 1] <= t) i++;
+      const f = Math.min(1, (t - m[i]) / ((endOf(from, i) - m[i]) || 1));
+      const m2 = marks(to);
+      target = Math.max(0, m2[i] + f * (endOf(to, i) - m2[i]) - 2);
+    }
+    cur = lang;
+    audio.setAttribute('src', to.dataset.src);
+    if (target > 0 || playing) audio.addEventListener('loadedmetadata', () => { if (target > 0) audio.currentTime = target; if (playing) audio.play().catch(() => {}); }, { once: true });
+    audio.load();
+    store.set('wk-audio-lang', lang);
+  }
+  btns.forEach(b => b.addEventListener('click', () => set(b.dataset.audioLang, true)));
+  set(store.get('wk-audio-lang', 'de') === 'en' ? 'en' : 'de', false);
+})();
 
 // ═══ LERNPLAN ═══
 const PLAN_KEY = 'wk-0611-lernplan';
