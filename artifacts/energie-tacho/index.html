@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Energie-Tacho</title>
+<meta name="description" content="GPS-Tacho für den Physik-Versuch: Höhenunterschied, Höchstgeschwindigkeit, Epot, Ekin und Wirkungsgrad.">
+<meta name="theme-color" content="#1e1f1d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* Layout: one phone-height column like an 80s bike computer: START on top, LCD glass, small keys, STOP at the bottom. */
+:root {
+  --bezel: #2b2d2a; --bezel-dark: #1e1f1d; --bezel-light: #454842;
+  --lcd-top: #a9b497; --lcd-bottom: #8e997d;
+  --ink: #1c2418; --ink-soft: #3a4430; --ghost: rgba(28, 36, 24, .11); --warn: #8a1c10;
+  --label: #c9ccc2; --key: #5a5d57; --go: #4e6b3e; --stop: #8e2a1e; --del: #6b3a33;
+  --mono: ui-monospace, "DejaVu Sans Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  --math: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: linear-gradient(var(--bezel-light), var(--bezel) 30%, var(--bezel-dark));
+  color: var(--label); font-family: var(--mono); -webkit-tap-highlight-color: transparent;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+#app { max-width: 560px; margin: 0 auto; height: 100%; display: flex; flex-direction: column; gap: 10px; }
+.brand { display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.brand span:first-child { font-size: 15px; }
+.brand span:last-child { font-size: 12px; color: #8d9188; }
+
+.lcd {
+  flex: 1; min-height: 0; background: var(--bezel-dark); border-radius: 14px; padding: 5px;
+}
+.glass {
+  height: 100%; overflow-y: auto; border-radius: 10px; padding: 10px 14px; color: var(--ink);
+  background: linear-gradient(var(--lcd-top), var(--lcd-bottom)); box-shadow: inset 0 0 0 2px rgba(0,0,0,.2), inset 0 3px 8px rgba(0,0,0,.18);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.lab { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--ink); }
+.lab.soft { color: var(--ink-soft); }
+.row { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+.row > div { min-width: 0; }
+.status { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; letter-spacing: 1px; }
+.dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+.dot.on { background: var(--ink); }
+.status .right { margin-left: auto; font-size: 13px; }
+.seg { display: block; }
+.big { display: flex; justify-content: center; }
+.phase { font-weight: 700; font-size: 15px; letter-spacing: .5px; margin-top: auto; text-transform: uppercase; }
+.hint { font-size: 13px; color: var(--ink-soft); }
+
+.keys { display: flex; gap: 8px; }
+.keys > * { flex: 1; }
+.btn {
+  position: relative; display: block; width: 100%; height: var(--h, 60px); border: 0; padding: 0; margin: 0 0 6px;
+  border-radius: 12px; background: #111210; cursor: pointer; font: inherit;
+}
+.btn > span {
+  position: absolute; inset: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-align: center;
+  color: var(--label); font-family: var(--mono); font-weight: 900; letter-spacing: 2px; font-size: var(--fs, 16px); text-transform: uppercase;
+  background: linear-gradient(color-mix(in srgb, var(--c, var(--key)), white 18%), var(--c, var(--key)) 50%, color-mix(in srgb, var(--c, var(--key)), black 18%));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--c, var(--key)), white 35%), inset 0 -1px 0 color-mix(in srgb, var(--c, var(--key)), black 40%);
+  transform: translateY(-6px); transition: transform 60ms;
+}
+.btn:active:not(:disabled) > span { transform: translateY(-1px); }
+.btn:disabled { cursor: default; }
+.btn:disabled > span { background: #3b3d39; color: #777a73; box-shadow: none; }
+.btn:focus-visible { outline: 3px solid var(--label); outline-offset: 2px; }
+.btn.go { --c: var(--go); } .btn.stop { --c: var(--stop); } .btn.del { --c: var(--del); }
+.btn.huge { --h: 84px; --fs: 28px; }
+
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field .box { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,.13); border: 1px solid var(--ink-soft); border-radius: 6px; padding: 10px 12px; }
+.field input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font: 700 22px var(--mono); color: var(--ink); }
+.field .unit { font-weight: 700; font-size: 18px; }
+.field:focus-within .box { outline: 2px solid var(--ink); }
+.kv { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; }
+.kv b { font-size: 16px; text-align: right; }
+.kv span { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--ink-soft); }
+.warnbox { border: 2px solid var(--warn); color: var(--warn); font-weight: 700; padding: 8px; border-radius: 6px; font-size: 14px; }
+
+.run { display: flex; align-items: stretch; border: 1px solid rgba(28,36,24,.3); border-radius: 6px; }
+.run.sel { background: rgba(28,36,24,.13); }
+.run .info { flex: 1; padding: 10px; cursor: pointer; min-width: 0; }
+.run .info b { display: block; font-size: 14px; }
+.run .info div { font-size: 13px; }
+.run .vgl { width: 74px; flex: none; background: none; border: 0; border-left: 1px solid rgba(28,36,24,.3); font: 700 13px var(--mono); color: var(--ink); cursor: pointer; }
+
+.cmp { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cmp th, .cmp td { text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(28,36,24,.2); vertical-align: top; }
+.cmp th { font-size: 12px; letter-spacing: 1px; color: var(--ink-soft); width: 28%; }
+.cmp td { font-weight: 700; }
+
+.step { margin-top: 8px; }
+.step .lab { color: var(--ink-soft); }
+.math { font-family: var(--math); font-size: 18px; padding: 4px 0 4px 8px; display: block; white-space: pre-wrap; line-height: 1.5; }
+.math sub { font-size: 65%; vertical-align: -0.35em; line-height: 0; }
+.frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 3px; line-height: 1.2; }
+.frac sub { vertical-align: -0.3em; }
+.frac > span { padding: 0 4px; }
+.frac > span:first-child { border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+.frac > span:last-child { padding-top: 2px; }
+.sqrt { display: inline-flex; align-items: stretch; }
+.sqrt .rad { font-size: 125%; line-height: 1; }
+.sqrt .body { border-top: 2px solid var(--ink); padding: 2px 3px 0; }
+.note { font-size: 12px; color: var(--ink-soft); padding-left: 8px; }
+.note.warn { color: var(--warn); font-weight: 700; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--ink); color: var(--lcd-top); padding: 10px 16px; border-radius: 8px; font-weight: 700; z-index: 5; max-width: 90vw; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript>Energie-Tacho braucht JavaScript.</noscript>
+<script type="module" src="app.js"></script>
+</body>
+</html>
