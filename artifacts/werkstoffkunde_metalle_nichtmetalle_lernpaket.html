@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metalle und Nichtmetalle — Lernpaket | BZI Werkstoffkunde</title>
+<meta name="description" content="Lernpaket Werkstoffkunde zum Test vom 06.11.2026: alle 15 Lernziele, Metallgewinnung, Kupfer, Aluminium, Stahl, Wärmebehandlung, Metalle, Legierungen, Nichtmetalle und Kunststoffe nach dem BAP-Lehrmittel S. 10–24.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #85898A;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #B7791F;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #C0392B;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ── HEADER ── */
+header { text-align: center; padding: 40px 0 28px; border-bottom: 3px solid var(--ink); margin-bottom: 28px; }
+header h1 { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 32px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED ── */
+h2 { font-family: var(--font-display); font-size: 1.9rem; margin: 40px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 24px 0 10px; color: var(--ink); }
+h4 { font-size: 0.96rem; font-weight: 700; margin: 14px 0 6px; color: var(--ink); }
+p { margin-bottom: 12px; }
+strong { font-weight: 700; }
+em { font-style: italic; color: var(--ink-soft); }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 44px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light);
+}
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+/* ── CARD ── */
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 16px 18px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+.card-title h3 { margin: 0; }
+
+/* ── BADGE ── */
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.kvg { background: var(--info-light); color: var(--info); }
+.badge.uvg { background: var(--warn-light); color: var(--warn); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.warn { background: var(--danger-light); color: var(--danger); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+
+/* ── INFO BOX ── */
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 12px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+th { background: var(--surface-alt); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.ja { color: var(--success); font-weight: 700; }
+.nein { color: var(--danger); font-weight: 700; }
+
+/* ── REVEAL ── */
+.reveal-btn { background: var(--ink); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.reveal-btn:hover { background: var(--accent); }
+.reveal-btn.revealed { background: var(--surface-alt); color: var(--ink-soft); }
+.solution { display: none; margin-top: 12px; padding: 14px 16px; background: var(--success-light); border-left: 3px solid var(--success); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.94rem; }
+.solution.show { display: block; animation: fadeIn 0.2s ease; }
+.solution h4 { margin-top: 0; color: var(--success); }
+.solution p:last-child, .solution ul:last-child { margin-bottom: 0; }
+
+/* ── BEGRIFFE ── */
+.begriff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.begriff { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.begriff dt { font-weight: 700; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.begriff dt .law-ref { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--ink-mute); margin-left: 6px; }
+.begriff dd { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.begriff-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); margin-bottom: 8px; }
+.begriff-search:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.cat-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.cat-chip { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid transparent; padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.cat-chip:hover { background: var(--border-soft); }
+.cat-chip.active { background: var(--ink); color: var(--bg); }
+
+/* ── KARTEIKARTEN ── */
+.flash-stage { position: relative; margin: 18px 0 14px; }
+.flash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; min-height: 220px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; cursor: pointer; user-select: none; position: relative; transition: all 0.2s; }
+.flash-card:hover { box-shadow: 0 4px 18px rgba(23,29,30,0.12); }
+.flash-card .side-label { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.flash-card .law-ref-flash { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mute); }
+.flash-front { font-family: var(--font-display); font-size: 1.7rem; line-height: 1.2; color: var(--ink); }
+.flash-back { font-size: 1rem; line-height: 1.55; color: var(--ink); }
+.flash-back .ref { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.flash-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-top: -4px; }
+.flash-controls { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+.flash-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 8px 14px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.flash-btn:hover { background: var(--surface-alt); }
+.flash-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.flash-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.flash-btn.bad { color: var(--danger); border-color: var(--danger-light); }
+.flash-btn.bad:hover { background: var(--danger-light); }
+.flash-btn.good { color: var(--success); border-color: var(--success-light); }
+.flash-btn.good:hover { background: var(--success-light); }
+.flash-counter { font-family: var(--font-mono); font-size: 0.84rem; color: var(--ink-soft); padding: 0 8px; }
+.flash-stats { display: flex; gap: 14px; justify-content: center; margin-top: 10px; font-size: 0.84rem; color: var(--ink-soft); font-family: var(--font-mono); }
+.flash-stats span strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.progress { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; transition: width 0.3s ease; }
+
+/* ── LERNPLAN ── */
+.day { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; box-shadow: var(--shadow-sm); align-items: flex-start; }
+.day-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); min-width: 50px; }
+.day-content { flex: 1; }
+.day-content h4 { margin: 4px 0 4px; font-size: 1rem; }
+.day-tasks { font-size: 0.92rem; color: var(--ink-soft); }
+.day-tasks li { margin-bottom: 2px; }
+.day .check { appearance: none; width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; margin-top: 6px; flex-shrink: 0; transition: all 0.15s; position: relative; }
+.day .check:checked { background: var(--success); border-color: var(--success); }
+.day .check:checked::after { content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.milestone { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; padding: 14px 20px; border-radius: var(--radius); margin: 14px 0; display: flex; align-items: center; gap: 12px; }
+.milestone-icon { font-family: var(--font-display); font-size: 1.6rem; line-height: 1; }
+.milestone strong { color: white; font-weight: 700; }
+.milestone p { color: rgba(255,255,255,0.92); margin: 2px 0 0; font-size: 0.9rem; }
+
+/* ── QUIZ ── */
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.quiz-q .q-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+.quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+.quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
+
+/* ── SCHEMA ── */
+.schema { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+.schema-row { display: grid; grid-template-columns: 210px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); align-items: start; }
+.schema-row:last-child { border-bottom: none; }
+.schema-key { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+.schema-key small { display: block; font-weight: 500; color: var(--ink-mute); font-size: 0.76rem; margin-top: 2px; font-family: var(--font-mono); }
+.schema-val { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ── COMPARE ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.compare-col { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+.compare-col h4 { margin-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-soft); margin-bottom: 10px; }
+.compare-col.pro h4 { border-color: var(--success); color: var(--success); }
+.compare-col.con h4 { border-color: var(--danger); color: var(--danger); }
+.compare-col.kvg h4 { border-color: var(--info); color: var(--info); }
+.compare-col.uvg h4 { border-color: var(--warn); color: var(--warn); }
+.compare-col ul { padding-left: 18px; font-size: 0.9rem; }
+.compare-col li { margin-bottom: 6px; }
+
+/* ── FACT PILL ── */
+.fact { display: inline-block; background: var(--ink); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.86rem; font-weight: 500; }
+.fact.acc { background: var(--accent); }
+
+/* ── PRÄMIENFRANKEN BAR ── */
+.money-bar { display: flex; height: 42px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--border); }
+.money-seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: #fff; overflow: hidden; }
+.money-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 14px; font-size: 0.86rem; color: var(--ink-soft); }
+.money-legend span { display: flex; align-items: center; gap: 7px; }
+.money-legend i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── TOOLS ── */
+.tool { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.tool > h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.tool-desc { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.field input, .field select {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.95rem; background: var(--surface); color: var(--ink); width: 100%;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.bill-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.btn { background: var(--ink); color: var(--bg); border: none; padding: 9px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+.btn.ghost:hover { background: var(--surface-alt); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.result { margin-top: 16px; padding: 16px 18px; background: var(--surface-alt); border-radius: var(--radius-sm); }
+.result h4 { margin-top: 0; }
+.result .big { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; color: var(--accent-dark); }
+.result .big small { font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.verdict { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; margin-top: 14px; }
+.verdict.yes { background: var(--success-light); border-left: 4px solid var(--success); color: var(--success); }
+.verdict.no { background: var(--danger-light); border-left: 4px solid var(--danger); color: var(--danger); }
+.verdict.maybe { background: var(--warn-light); border-left: 4px solid var(--warn); color: var(--warn); }
+.verdict p { color: var(--ink); font-weight: 400; font-size: 0.92rem; margin: 6px 0 0; }
+.check-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 2px; position: relative; }
+.check-item input:checked { background: var(--accent); border-color: var(--accent); }
+.check-item input:checked::after { content: '✓'; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+.check-item .ci-text { font-size: 0.93rem; }
+.check-item .ci-text b { display: block; }
+.check-item .ci-text small { color: var(--ink-mute); font-size: 0.82rem; }
+.mini-bar { height: 26px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; padding: 0 8px; color: #fff; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; min-width: 60px; transition: width 0.3s ease; }
+.mini-bar.alt { background: var(--ink-soft); }
+
+@media (max-width: 620px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  .container { padding: 16px 14px 60px; }
+  .compare, .split { grid-template-columns: 1fr; }
+  .schema-row { grid-template-columns: 1fr; gap: 4px; }
+  .day { padding: 12px 14px; gap: 10px; }
+  .day-num { font-size: 1.5rem; min-width: 36px; }
+  .tab-btn { padding: 9px 11px; font-size: 0.84rem; }
+  .flash-front { font-size: 1.35rem; }
+  .tool { padding: 16px 16px; }
+}
+
+/* ── ABT-Farbe (orange, wie auf schule.yanikroesti.ch) ── */
+:root { --accent: #9A4A12; --accent-light: #F6E9DF; --accent-dark: #6B320B; --heat: #D2452B; --cool: #2C5C8C;
+  --cu: #B8652A; --al: #8C99A6; --fe: #5E6670; --au: #C9A227; --gas: #6FA8C9; --oil: #C79A3A; --org: #4F8A3A; --anorg: #8A6FB0; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151311; --surface: #1F1B18; --surface-alt: #2B2621; --ink: #F0EBE6; --ink-soft: #BDB4AB; --ink-mute: #8F867D;
+    --accent: #F0A46A; --accent-light: #3A2718; --accent-dark: #F7C9A4; --heat: #FF7A5C; --cool: #8DB8E8;
+    --success: #6FCB97; --success-light: #17301F; --warn: #E2B25A; --warn-light: #33290F;
+    --info: #8DB8E8; --info-light: #172636; --danger: #F08C80; --danger-light: #3A1A17;
+    --border: #3D3631; --border-soft: #2F2925;
+    --shadow: 0 2px 12px rgba(0,0,0,0.4); --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
+    --cu: #E08A4C; --al: #AEB9C4; --fe: #9AA3AD; --au: #E2C150; --gas: #8CC3E0; --oil: #DDB45A; --org: #7DBA66; --anorg: #B49BDA;
+  }
+  .milestone, .milestone strong, .milestone p { color: #151311; }
+}
+
+svg text { font-family: var(--font-body); fill: var(--ink); }
+.sv-ink { stroke: var(--ink); fill: none; }
+.sv-soft { stroke: var(--ink-soft); fill: none; }
+.sv-surface { fill: var(--surface); stroke: var(--border); }
+.sv-alt { fill: var(--surface-alt); stroke: var(--border); }
+.sv-acc { stroke: var(--accent); fill: none; }
+.sv-mute { fill: var(--ink-mute); }
+.fig { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 14px 0; }
+.fig svg { width: 100%; height: auto; display: block; }
+.fig-cap { font-size: 0.84rem; color: var(--ink-soft); margin-top: 8px; }
+.scope { border: 2px dashed var(--warn); border-radius: var(--radius); padding: 12px 16px; margin: 10px 0 18px; background: var(--warn-light); font-size: 0.92rem; }
+.hand { font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; color: var(--cool); }
+.frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 0.2em; line-height: 1.15; font-size: 0.95em; }
+.frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 0.25em 1px; }
+.frac > span:last-child { padding: 1px 0.25em 0; }
+.formula { font-family: var(--font-mono); font-size: 1.15rem; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; background: var(--accent-light); border-radius: var(--radius-sm); color: var(--accent-dark); }
+
+/* Lernziele */
+.lz-block { margin: 22px 0 10px; }
+.lz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.lz { background: var(--surface); border: 1px solid var(--border-soft); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.lz.done { border-left-color: var(--success); background: var(--success-light); }
+.lz-top { display: flex; gap: 10px; align-items: flex-start; }
+.lz-nr { flex: none; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; }
+.lz.done .lz-nr { background: var(--success); }
+.lz-q { font-weight: 700; font-size: 0.97rem; line-height: 1.35; }
+.lz-a { font-size: 0.88rem; color: var(--ink-soft); }
+.lz-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; }
+.lz-foot .src { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-mute); }
+.lz-foot label { font-size: 0.8rem; display: flex; gap: 5px; align-items: center; cursor: pointer; color: var(--ink-soft); }
+.go-btn { background: none; border: 1px solid var(--accent); color: var(--accent); border-radius: 5px; padding: 3px 9px; font-family: var(--font-body); font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+.go-btn:hover { background: var(--accent-light); }
+.lz-progress { display: flex; align-items: center; gap: 12px; margin: 8px 0 4px; font-size: 0.88rem; color: var(--ink-soft); }
+.lz-progress .progress { flex: 1; margin: 0; }
+
+/* Kette / Ablauf */
+.chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; margin: 12px 0; }
+.chain .st { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 0.84rem; flex: 1 1 120px; min-width: 110px; }
+.chain .st b { display: block; font-size: 0.88rem; color: var(--accent-dark); }
+.chain .ar { align-self: center; color: var(--ink-mute); font-weight: 700; }
+.tree { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 14px 0; }
+.tree .node { background: var(--accent-light); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 8px; padding: 6px 12px; font-weight: 700; font-size: 0.9rem; text-align: center; }
+.tree .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; }
+.tree .leaf { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 0.84rem; flex: 1 1 150px; max-width: 260px; }
+.tree .leaf b { display: block; margin-bottom: 2px; }
+.tree .down { color: var(--ink-mute); font-size: 1rem; line-height: 1; }
+.need { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 12px 0; }
+.need .card { margin: 0; }
+.need .ico { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+
+/* C-Gehalt Slider */
+.cbar { position: relative; height: 54px; margin: 18px 4px 6px; }
+.cbar .zone { position: absolute; top: 0; height: 24px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; }
+.cbar .z2 { top: 28px; }
+.cbar .limit { position: absolute; top: -6px; bottom: -6px; width: 2px; background: var(--danger); }
+.cbar .limit span { position: absolute; top: -18px; left: -26px; font-size: 0.7rem; font-family: var(--font-mono); color: var(--danger); white-space: nowrap; }
+.cbar .mark { position: absolute; top: -8px; bottom: -8px; width: 3px; background: var(--ink); border-radius: 2px; transition: left 0.15s; }
+.cscale { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin: 0 4px 10px; }
+.range-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; flex-wrap: wrap; }
+.range-row input[type=range] { flex: 1; min-width: 180px; accent-color: var(--accent); }
+.big-val { font-family: var(--font-display); font-size: 1.8rem; color: var(--accent); min-width: 90px; }
+
+/* Wärmebehandlung Mini-Diagramme */
+.wb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin: 12px 0; }
+.wb { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px; }
+.wb h4 { margin: 0 0 4px; }
+.wb svg { width: 100%; height: auto; display: block; margin: 6px 0; }
+.wb p { font-size: 0.86rem; margin: 0 0 4px; }
+.wb .goal { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; background: var(--accent-light); color: var(--accent); }
+
+/* Prozesse */
+.hot { cursor: pointer; }
+.hot:hover .hl, .hot.on .hl { stroke: var(--accent) !important; stroke-width: 3 !important; }
+.hot .hl { fill: transparent; stroke: transparent; }
+.part-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; margin-top: 10px; }
+.part-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); border-radius: 6px; padding: 8px 10px; font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; text-align: left; cursor: pointer; }
+.part-btn .n { display: inline-block; min-width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 0.74rem; margin-right: 6px; }
+.part-btn.on { border-color: var(--accent); background: var(--accent-light); }
+.part-info { margin-top: 10px; min-height: 52px; background: var(--surface-alt); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.92rem; }
+.ion { animation: ionmove 3.2s linear infinite; }
+@keyframes ionmove { from { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } to { transform: translateX(176px); opacity: 0; } }
+.bub { animation: bubup 2.4s ease-in infinite; }
+@keyframes bubup { from { transform: translateY(0); opacity: 0.9; } to { transform: translateY(-46px); opacity: 0; } }
+.paused .ion, .paused .bub { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .ion, .bub { animation: none; } }
+.ord-pool, .ord-done { display: flex; flex-wrap: wrap; gap: 6px; min-height: 40px; margin: 8px 0; }
+.ord-done { background: var(--surface-alt); border-radius: var(--radius-sm); padding: 6px; }
+.ord-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink); border-radius: 6px; padding: 7px 10px; font-family: var(--font-body); font-size: 0.85rem; cursor: pointer; }
+.ord-btn:hover { border-color: var(--accent); }
+.ord-btn.ok { background: var(--success-light); border-color: var(--success); color: var(--success); cursor: default; }
+.ord-btn.bad { animation: shake 0.3s; border-color: var(--danger); }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.ord-msg { font-size: 0.9rem; min-height: 22px; }
+
+/* Metalle */
+.metal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin: 12px 0; }
+.metal { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 14px; }
+.metal-head { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+.sym { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; color: #fff; flex: none; }
+.metal-head h4 { margin: 0; font-size: 1.02rem; }
+.metal-head small { color: var(--ink-mute); font-family: var(--font-mono); font-size: 0.72rem; }
+.mvals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 6px 0 8px; }
+.mvals div { background: var(--surface-alt); border-radius: 5px; padding: 4px 6px; font-size: 0.72rem; color: var(--ink-soft); }
+.mvals b { display: block; font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
+.metal p { font-size: 0.86rem; margin: 4px 0; }
+.metal .why { border-top: 1px dashed var(--border); padding-top: 6px; margin-top: 6px; }
+.extra { font-size: 0.7rem; color: var(--ink-mute); }
+.bars { margin: 10px 0; }
+.bar-row { display: grid; grid-template-columns: 92px 1fr 86px; align-items: center; gap: 8px; margin: 3px 0; font-size: 0.84rem; }
+.bar-row .bar { height: 18px; border-radius: 4px; transition: width 0.3s; min-width: 2px; }
+.bar-row .v { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-soft); }
+.bar-sep { border-top: 2px dashed var(--danger); margin: 6px 0; position: relative; }
+.bar-sep span { position: absolute; right: 0; top: -9px; background: var(--surface); padding: 0 6px; font-size: 0.72rem; color: var(--danger); font-family: var(--font-mono); }
+.wz-case { font-size: 1.05rem; font-weight: 500; min-height: 56px; margin: 8px 0 14px; }
+.wz-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.wz-opt { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 10px 12px; border-radius: 6px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: left; }
+.wz-opt:hover { border-color: var(--accent); }
+.wz-opt.right { background: var(--success-light); border-color: var(--success); color: var(--success); }
+.wz-opt.wrong { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+.wz-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); }
+.wz-why { margin-top: 10px; font-size: 0.9rem; min-height: 24px; }
+
+/* Kunststoffe */
+.poly-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 10px 0; }
+.poly { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px; }
+.poly h4 { margin: 0 0 2px; }
+.poly svg { width: 100%; height: auto; display: block; margin: 6px 0; }
+.poly p { font-size: 0.86rem; margin: 0 0 4px; }
+.chainline { fill: none; stroke-width: 2.4; stroke-linecap: round; transition: transform 0.9s ease; }
+.xlink { stroke: var(--heat); stroke-width: 2.6; stroke-linecap: round; transition: transform 0.9s ease; }
+.heated .tp-a { transform: translate(-10px, -8px) rotate(-4deg); }
+.heated .tp-b { transform: translate(12px, 4px) rotate(5deg); }
+.heated .tp-c { transform: translate(-6px, 10px) rotate(3deg); }
+.heated .el-g { transform: scale(1.08); transform-origin: center; }
+.heated .du-g { opacity: 0.55; }
+.heat-state { font-size: 0.84rem; font-weight: 600; min-height: 40px; }
+.grp-t { color: var(--cool); } .grp-d { color: var(--heat); } .grp-e { color: var(--org); }
+
+/* Übungen */
+.ue-status { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 4px; margin-left: 6px; }
+.st-ok { background: var(--success-light); color: var(--success); }
+.st-plus { background: var(--info-light); color: var(--info); }
+.st-fix { background: var(--danger-light); color: var(--danger); }
+.st-leer { background: var(--warn-light); color: var(--warn); }
+
+/* Probetest */
+.pt-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; }
+.pt-q .pts { float: right; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 4px; }
+.pt-q textarea { width: 100%; min-height: 64px; margin: 8px 0; padding: 9px 11px; border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-body); font-size: 0.94rem; background: var(--bg); color: var(--ink); resize: vertical; }
+.pt-score { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 8px; font-size: 0.84rem; color: var(--ink-soft); }
+.pt-score button { background: var(--surface-alt); border: 1px solid var(--border); color: var(--ink); border-radius: 5px; padding: 4px 10px; font-family: var(--font-mono); cursor: pointer; }
+.pt-score button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pt-total { position: sticky; bottom: 10px; background: var(--ink); color: var(--bg); border-radius: var(--radius); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow); margin-top: 16px; }
+.pt-total .big { font-family: var(--font-display); font-size: 1.5rem; }
+.timer { font-family: var(--font-mono); font-size: 1.1rem; }
+details.more { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 10px 14px; margin: 12px 0; }
+details.more summary { cursor: pointer; font-weight: 600; }
+details.more[open] summary { margin-bottom: 8px; }
+.tab-nav { flex-wrap: wrap; }
+@media (max-width: 600px) {
+  .bar-row { grid-template-columns: 72px 1fr 70px; font-size: 0.78rem; }
+  .mvals { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ABT · Werkstoffkunde · Stefan Wäfler</div>
+  <h1>Metalle und Nichtmetalle</h1>
+  <div class="meta">Lernpaket zum Test vom Fr 06.11.2026 · alle 15 Lernziele · Lehrmittel «Werkstoffkunde für Elektroberufe» S. 10–24 und die Lektionen vom 18.09., 16.10., 23.10. und 30.10.</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="lernziele">Lernziele</button>
+  <button class="tab-btn" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="prozesse">Prozesse</button>
+  <button class="tab-btn" data-tab="metalle">Metalle</button>
+  <button class="tab-btn" data-tab="kunststoffe">Kunststoffe</button>
+  <button class="tab-btn" data-tab="uebungen">Übungen</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ═════════════ LERNZIELE ═════════════ -->
+<section class="tab-pane active" id="lernziele">
+<p class="intro">Wäfler hat am 30.10. die <strong>15 Lernziele</strong> für den Test gezeigt. Hier steht jedes mit der Kurzantwort, die du im Test geben können musst. Ein Klick auf «Zum Thema» führt zur ausführlichen Erklärung. Hake ab, was sitzt.</p>
+<div class="scope"><strong>Was kommt dran?</strong> Im Buch sind das die Seiten <strong>10–24</strong> (Kapitel 1.5 Metalle bis 1.8.1 Kunststoffe) und die Isolierstoffe aus den Lektionen vom 23.10. und 30.10. Die Seiten <strong>2–9</strong> (Werkstoffeigenschaften) waren Stoff im Test vom 11.09. Du brauchst sie hier nur als Grundlage, die Übungen dazu stehen im Tab «Übungen» unter «Grundlagen». Die Seiten 25–27 (anorganische, flüssige, gasförmige Isolierstoffe) waren nicht auf deinen Fotos. Dieser Teil stammt aus deinen Lektionsnotizen.</div>
+<div class="tool" id="hoeren">
+<h3>Zum Anhören · 21 Min.</h3>
+<p class="tool-desc">Alle 15 Lernziele vorgelesen, der Reihe nach, zum Beispiel für den Arbeitsweg. Computerstimme (Kokoro, lokal erzeugt) mit leichtem englischem Akzent.</p>
+<audio controls preload="none" style="width:100%;" src="https://schule.yanikroesti.ch/material/werkstoffkunde/hoerversion.mp3"></audio>
+<p style="font-size:0.84rem;margin:6px 0 0;"><a href="https://schule.yanikroesti.ch/material/werkstoffkunde/hoerversion.mp3" download>MP3 herunterladen</a> (10 MB)</p>
+</div>
+<div class="lz-progress"><span><strong id="lzCount">0</strong> von 15 sitzen</span><div class="progress"><div class="progress-fill" id="lzProgress"></div></div></div>
+<div id="lzList"></div>
+<div class="info-box"><p><strong>Lernvideo:</strong> Das 20-minütige Werkstoffkunde-Video zu denselben 15 Lernzielen findest du auf der Schulseite unter <a href="https://schule.yanikroesti.ch/material.html#werkstoffkunde-video" target="_blank" rel="noopener">Material → Lernvideos</a>.</p></div>
+</section>
+
+<!-- ═════════════ THEORIE ═════════════ -->
+<section class="tab-pane" id="theorie">
+<p class="intro">Die Theorie folgt der Reihenfolge der Lernziele. Hinter jedem Titel steht, welche Lernziele er abdeckt und wo es im Buch steht.</p>
+
+<!-- A -->
+<div class="section-label" id="t-gewinnung">Lernziel 1 · Buch S. 10 und 16</div>
+<h2>A · Wie werden Metalle gewonnen?</h2>
+<p>Die meisten Metalle kommen in der Natur <strong>nicht rein</strong> vor. Sie stecken in <strong>Erzen</strong>, das ist metallhaltiges Gestein (Übung 16.1). Im Erz ist das Metall chemisch an einen anderen Stoff gebunden. Daneben enthält das Erz noch Begleitstoffe wie Silizium, Schwefel, Phosphor oder Mangan.</p>
+<p><strong>Ausnahme Edelmetalle:</strong> Gold kommt fast nur in reiner (<strong>gediegener</strong>) Form vor. Goldstaub und Goldkörner werden mit Wasser aus dem Gestein gewaschen.</p>
+<h3>Die drei Erzgruppen (Buch S. 10)</h3>
+<div class="table-wrap"><table>
+<tr><th>Erzgruppe</th><th>Metall gebunden an …</th><th>Beispiele aus dem Buch</th><th>Was muss weg, und wie?</th></tr>
+<tr><td><strong>Metalloxide</strong></td><td>Sauerstoff</td><td>Bauxit (Al), Magneteisenstein (Fe)</td><td>Sauerstoff entfernen. Eisen: im <strong>Hochofen</strong> mit Koks (Reduktion). Aluminium: mit Strom (Elektrolyse).</td></tr>
+<tr><td><strong>Metallsulfide</strong></td><td>Schwefel</td><td>Kupferkies (Cu), Bleiglanz (Pb)</td><td>Schwefel entfernen, z. B. bei Kupfer im <strong>Röstofen</strong>. Danach reduzieren.</td></tr>
+<tr><td><strong>Metallkarbonate</strong></td><td>Kohlenstoff (als Karbonat)</td><td>Wolframit (W), Zinkspat (Zn)</td><td>Kohlenstoff entfernen: Erz erhitzen (brennen). Bei Zinkspat entweicht dabei CO₂. Danach reduzieren. <span class="extra">(Wolframit steht im Buch in dieser Gruppe, chemisch ist es ein Wolframat.)</span></td></tr>
+</table></div>
+<h3>Der Weg vom Erz zum Metall</h3>
+<div class="chain">
+  <div class="st"><b>1 Abbau</b>Erz aus dem Bergwerk oder Tagebau holen.</div><span class="ar">→</span>
+  <div class="st"><b>2 Aufbereiten</b>Zerkleinern, taubes Gestein abtrennen, Metallanteil anreichern.</div><span class="ar">→</span>
+  <div class="st"><b>3 Vorbehandeln</b>Sulfide rösten, Karbonate brennen. So wird daraus ein Oxid.</div><span class="ar">→</span>
+  <div class="st"><b>4 Reduzieren</b>Sauerstoff entziehen (Koks) oder mit Strom trennen (Elektrolyse).</div><span class="ar">→</span>
+  <div class="st"><b>5 Raffinieren</b>Rohmetall reinigen, bis es rein genug ist.</div>
+</div>
+<div class="info-box success"><p><strong>Merksatz:</strong> Oxide werden reduziert, Sulfide zuerst geröstet, Karbonate zuerst gebrannt. Sehr unedle Metalle wie Aluminium gewinnt man mit Strom (Elektrolyse). Gold findet man rein.</p></div>
+<details class="more"><summary>Aus der Lektion 18.09.: die Reaktionen dazu</summary>
+<p><strong>Reduktion (Eisen):</strong> Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂. Das Kohlenmonoxid aus dem Koks nimmt dem Eisenoxid den Sauerstoff weg.</p>
+<p><strong>Rösten (Zinksulfid):</strong> 2 ZnS + 3 O₂ → 2 ZnO + 2 SO₂. Aus dem Sulfid wird ein Oxid, der Schwefel geht als Schwefeldioxid weg.</p>
+<p><strong>Brennen (Zinkkarbonat):</strong> ZnCO₃ → ZnO + CO₂. Das Kohlendioxid entweicht, das Oxid bleibt.</p>
+<p>Die Buchseite sagt selbst: Für Elektrofachleute zählen vor allem Eigenschaften und Anwendungen. Vom Gewinnungsverfahren musst du das Prinzip kennen.</p>
+</details>
+
+<!-- B -->
+<div class="section-label" id="t-cu-al">Lernziel 2 · Buch S. 10–12 · Kupfer-Schritte aus der Lektion 18.09.</div>
+<h2>B · Wie werden Kupfer und Aluminium hergestellt?</h2>
+<div class="split" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
+<div class="card">
+<h3 style="margin-top:0;">Kupfer: aus Sulfiderz, mit Strom gereinigt</h3>
+<p>Kupfer steckt meist im <strong>Sulfiderz Kupferkies</strong>.</p>
+<ol>
+<li><strong>Zerkleinern und anreichern:</strong> Das Erz wird gemahlen, ein kupferreiches Konzentrat wird abgetrennt (Flotation).</li>
+<li><strong>Rösten und Schmelzen:</strong> Das Konzentrat wird stark erhitzt. Schwefel geht als Schwefeldioxid weg, es entsteht <strong>Kupferstein</strong>.</li>
+<li><strong>Konverter:</strong> Sauerstoff wird eingeblasen. Eisen geht in die Schlacke, der Rest Schwefel entweicht. Ergebnis: <strong>Rohkupfer</strong> mit etwa 98–99 % Kupfer.</li>
+<li><strong>Elektrolytische Raffination:</strong> Rohkupfer als <strong>Anode (+)</strong>, dünnes Reinkupferblech als <strong>Kathode (−)</strong>, dazwischen Kupfersulfatlösung. Gleichstrom bringt das Kupfer als Ionen zur Kathode. Dort wächst reines Kupfer. Edle Verunreinigungen (Gold, Silber) fallen als <strong>Anodenschlamm</strong> zu Boden.</li>
+</ol>
+<p>Ergebnis: <strong>Elektrolytkupfer</strong> mit bis zu <strong>99,98 %</strong> Reinheit (Buch S. 11). So rein muss es sein, weil jede Verunreinigung die Leitfähigkeit verschlechtert.</p>
+</div>
+<div class="card">
+<h3 style="margin-top:0;">Aluminium: aus Bauxit, mit Strom gewonnen</h3>
+<p>Aluminium kommt <strong>nicht rein</strong> vor. Das aluminiumreichste Erz heisst <strong>Bauxit</strong>.</p>
+<ol>
+<li><strong>Bauxit → Tonerde:</strong> Im ersten Schritt gewinnt man aus Bauxit Tonerde, eine Verbindung aus Aluminium und Sauerstoff (Aluminiumoxid, Al₂O₃).</li>
+<li><strong>Schmelzflusselektrolyse:</strong> Reine Tonerde schmilzt erst über 2000 °C. Darum wird sie in geschmolzenem <strong>Kryolith</strong> gelöst, so läuft die Elektrolyse bei etwa 950 °C (Lektion 18.09.). Strom entfernt den Sauerstoff, es entsteht reines Aluminium.</li>
+</ol>
+<div class="need" style="grid-template-columns:repeat(2,1fr);">
+  <div class="card compact"><span class="ico">Strom</span><br><strong>bis 100'000 A</strong> bei etwa 6 V</div>
+  <div class="card compact"><span class="ico">Rohstoff</span><br><strong>4 t Bauxit</strong> für 1 t Aluminium</div>
+  <div class="card compact" style="grid-column:1/-1;"><span class="ico">Energie</span><br>rund <strong>20'000 kWh</strong> pro Tonne Aluminium (Buch; in der Lektion 18.09.: 13–15 MWh. Im Test gilt die Zahl aus dem Buch.)</div>
+</div>
+<p><strong>Fazit (Übung 12.2):</strong> Die Herstellung braucht enorm viel Energie. Darum ist und bleibt bei Aluminium das <strong>Recycling</strong> wichtig.</p>
+</div>
+</div>
+<div class="info-box warn"><p><strong>Der Unterschied, den man oft verwechselt:</strong> Bei Kupfer <strong>reinigt</strong> der Strom ein Metall, das schon da ist (Rohkupfer → Reinkupfer, in einer wässrigen Lösung). Bei Aluminium <strong>gewinnt</strong> der Strom das Metall erst aus der Tonerde (Sauerstoff weg, in einer Schmelze). Beides ist eine Elektrolyse, aber mit verschiedenem Zweck. Animiert im Tab <a href="#" onclick="go('prozesse','p-kupfer');return false;">Prozesse</a>.</p></div>
+
+<!-- C -->
+<div class="section-label" id="t-stahl">Lernziele 3 und 4 · Buch S. 16–18 · Lektionen 11.09. und 18.09.</div>
+<h2>C · Wie wird Stahl hergestellt, und was braucht es dafür?</h2>
+<p>Eisen ist das wichtigste Metall der Metallindustrie, aus drei Gründen (Buch S. 16): Es gibt es <strong>in gewaltigen Mengen</strong> auf der ganzen Erde, es ist <strong>eines der billigsten Metalle</strong>, und seine Eigenschaften lassen sich <strong>fast unbegrenzt anpassen</strong>.</p>
+<h3>Lernziel 4: Was wird für Stahl benötigt?</h3>
+<div class="need">
+  <div class="card compact"><span class="ico">Rohstoff</span><br><strong>Eisenerz</strong><br>liefert das Eisen. Vier Sorten: Magneteisenstein (50–70 % Fe), Roteisenstein (40–60 %), Brauneisenstein (30–50 %), Spateisenstein (20–40 %).</div>
+  <div class="card compact"><span class="ico">Brennstoff</span><br><strong>Koks</strong> (Hochofenkoks aus Kohle)<br>liefert die Hitze und das Kohlenmonoxid, das dem Erz den Sauerstoff entzieht.</div>
+  <div class="card compact"><span class="ico">Zuschläge</span><br><strong>z. B. Kalkstein</strong><br>binden die Begleitstoffe des Erzes. Daraus wird die Schlacke.</div>
+  <div class="card compact"><span class="ico">Luft</span><br><strong>Wind (Heisswind)</strong><br>heisse Luft, unten eingeblasen. Damit verbrennt der Koks.</div>
+  <div class="card compact"><span class="ico">Frischen</span><br><strong>Sauerstoff</strong> (Aufblasverfahren) oder <strong>Strom</strong> für den Lichtbogenofen, oft mit <strong>Stahlschrott</strong>.</div>
+  <div class="card compact"><span class="ico">Legieren</span><br><strong>Legierungselemente</strong> wie Chrom, Nickel, Vanadium, Wolfram, Molybdän, Mangan für die gewünschte Stahlsorte.</div>
+</div>
+<h3>Lernziel 3: Der Weg zum Stahl</h3>
+<div class="chain">
+  <div class="st"><b>1 Erz aufbereiten</b>zerkleinern, taubes Gestein trennen, zu Sinter oder Pellets formen</div><span class="ar">→</span>
+  <div class="st"><b>2 Hochofen</b>Erz, Koks und Zuschläge oben, Wind unten. Der Sauerstoff wird dem Erz entzogen.</div><span class="ar">→</span>
+  <div class="st"><b>3 Roheisen</b>flüssig, etwa 4–5 % Kohlenstoff, darum spröde. Dazu Schlacke als Abfall.</div><span class="ar">→</span>
+  <div class="st"><b>4 Frischen</b>Kohlenstoff und Begleitstoffe (Schwefel, Phosphor, Silizium, Mangan) entfernen</div><span class="ar">→</span>
+  <div class="st"><b>5 Legieren</b>Zusammensetzung einstellen</div><span class="ar">→</span>
+  <div class="st"><b>6 Giessen, formen</b>zu Brammen und Knüppeln giessen, dann walzen, schmieden, ziehen</div>
+</div>
+<p><strong>Der Hochofen</strong> (Buch S. 16): Die aufbereiteten Erze kommen zusammen mit Koks und Zuschlägen oben in den Hochofen. Unten wird heisse Luft (Wind) eingeblasen. Auf dem Weg nach unten durchläuft das Erz Zonen von etwa <strong>200 °C</strong> oben bis etwa <strong>2000 °C</strong> unten. Unten fliessen <strong>Roheisen</strong> (grau und weiss) und darüber die leichtere <strong>Schlacke</strong> ab. Oben entweicht das <strong>Gichtgas</strong>. Der Zweck des Hochofens (Übung 16.2): <strong>Dem Erz wird der Sauerstoff entzogen</strong>, die Begleitstoffe gehen in die Schlacke.</p>
+<p><strong>Warum nicht Roheisen verwenden?</strong> Roheisen enthält zu viel Kohlenstoff, es ist spröde. Im Elektrobereich hat es keine Anwendung (S. 16). <strong>Warum nicht reines Eisen?</strong> Reines Eisen ist zu weich (Übung 17.1). Erst der richtige Kohlenstoffgehalt und die Legierungselemente machen es brauchbar.</p>
+<h3>Frischen: aus Roheisen wird Stahl (Buch S. 17)</h3>
+<p>Die Umwandlung von Roheisen in Stahl heisst <strong>Frischen</strong>. Dem Roheisen wird der hohe Kohlenstoffanteil entzogen. Gleichzeitig verschwinden Schwefel, Phosphor, Silizium und Mangan.</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>Sauerstoff-Aufblasverfahren (Konverter)</th><th>Lichtbogenofen</th></tr>
+<tr><td><strong>Ausgangsmaterial</strong></td><td>flüssiges Roheisen</td><td>vor allem Stahlschrott</td></tr>
+<tr><td><strong>Wärme</strong></td><td>aus den Reaktionen selbst: Kohlenstoff und Begleitstoffe verbrennen mit dem Sauerstoff</td><td>aus dem elektrischen Lichtbogen zwischen Elektroden und Metall</td></tr>
+<tr><td><strong>Merksatz</strong></td><td>Sauerstoff rein → Verunreinigungen verbrennen</td><td>Strom rein → Lichtbogen → Schrott schmilzt</td></tr>
+</table></div>
+<h3>Stahl und Kohlenstoff (Buch S. 16–17)</h3>
+<p><strong>Stahl</strong> ist eine Eisen-Kohlenstoff-Legierung mit <strong>weniger als 2,06 % Kohlenstoff</strong> (Übung 16.3). Allgemein gilt: <strong>weniger Kohlenstoff → zäher und verformbarer</strong>, <strong>mehr Kohlenstoff → härter und fester</strong>.</p>
+<div class="tool">
+<h3>Schieberegler: Kohlenstoffgehalt</h3>
+<div class="cbar" id="cbar"></div>
+<div class="cscale"><span>0 %</span><span>1 %</span><span>2 %</span><span>3 %</span><span>4 %</span><span>5 %</span></div>
+<div class="range-row"><input type="range" id="cRange" min="0" max="50" value="3" aria-label="Kohlenstoffgehalt"><span class="big-val" id="cVal">0,3 %</span></div>
+<div class="result" id="cOut"></div>
+</div>
+
+<!-- D -->
+<div class="section-label" id="t-waerme">Lernziel 5 · Buch S. 17–18 · Lektion 11.09.</div>
+<h2>D · Wie wird Stahl weiterverarbeitet? (Wärmebehandlungen)</h2>
+<p>Nach dem Giessen wird Stahl <strong>gewalzt, geschmiedet oder gezogen</strong>. Dann kommen die Wärmebehandlungen. Ein Werkstück soll am Ende <strong>hart, verschleissfest, weich, elastisch, dehnbar, fest oder zäh</strong> sein. Neben der Wahl des richtigen Stahls erreicht man das mit einer <strong>Wärmebehandlung</strong>: Erwärmen und Abkühlen verändern den <strong>Gefügeaufbau</strong> (die innere Struktur).</p>
+<div class="wb-grid">
+<div class="wb"><h4>Glühen</h4><span class="goal">Ziel: Spannungen weg</span>
+<svg viewBox="0 0 220 90" aria-label="Temperaturverlauf Glühen"><line x1="20" y1="78" x2="212" y2="78" class="sv-soft" stroke-width="1"/><line x1="20" y1="8" x2="20" y2="78" class="sv-soft" stroke-width="1"/><text x="4" y="14" font-size="9">T</text><text x="200" y="88" font-size="9">t</text><polyline points="22,74 60,26 120,26 205,72" fill="none" stroke="var(--heat)" stroke-width="2.5"/><text x="70" y="20" font-size="8.5">halten</text><text x="150" y="40" font-size="8.5">langsam abkühlen</text></svg>
+<p>Auf eine bestimmte Temperatur erwärmen, <strong>halten</strong>, dann <strong>langsam</strong> abkühlen. Beseitigt unerwünschte <strong>Spannungen</strong> und Gefügeverfestigungen.</p></div>
+<div class="wb"><h4>Härten</h4><span class="goal">Ziel: hart, verschleissfest</span>
+<svg viewBox="0 0 220 90" aria-label="Temperaturverlauf Härten"><line x1="20" y1="78" x2="212" y2="78" class="sv-soft" stroke-width="1"/><line x1="20" y1="8" x2="20" y2="78" class="sv-soft" stroke-width="1"/><text x="4" y="14" font-size="9">T</text><text x="200" y="88" font-size="9">t</text><polyline points="22,74 55,18 85,18 90,74 120,74 140,50 165,50 205,74" fill="none" stroke="var(--heat)" stroke-width="2.5"/><text x="40" y="12" font-size="8.5">Härtetemperatur</text><text x="92" y="66" font-size="8.5" fill="var(--cool)">abschrecken</text><text x="128" y="44" font-size="8.5">erneut erwärmen</text></svg>
+<p>Auf <strong>Härtetemperatur</strong> erwärmen, dann <strong>abschrecken</strong>. Der Stahl wird glashart, aber auch <strong>spröde und brüchig</strong>. Darum wird er <strong>erneut erwärmt</strong> und an der Luft abgekühlt (das nennt man Anlassen). Das lockert das Gefüge wieder etwas.</p></div>
+<div class="wb"><h4>Vergüten</h4><span class="goal">Ziel: hohe Zähigkeit</span>
+<svg viewBox="0 0 220 90" aria-label="Temperaturverlauf Vergüten"><line x1="20" y1="78" x2="212" y2="78" class="sv-soft" stroke-width="1"/><line x1="20" y1="8" x2="20" y2="78" class="sv-soft" stroke-width="1"/><text x="4" y="14" font-size="9">T</text><text x="200" y="88" font-size="9">t</text><polyline points="22,74 55,18 85,18 90,74 115,74 135,32 170,32 205,74" fill="none" stroke="var(--heat)" stroke-width="2.5"/><text x="40" y="12" font-size="8.5">härten</text><text x="128" y="26" font-size="8.5">stärker anlassen</text></svg>
+<p>Wärmebehandlung für eine <strong>hohe Zähigkeit</strong>. Für <strong>hoch beanspruchte Maschinenteile</strong>. (Ergänzung, nicht im Buch: Vergüten ist Härten und anschliessend Anlassen bei höherer Temperatur.)</p></div>
+<div class="wb"><h4>Oberflächenhärten</h4><span class="goal">Ziel: aussen hart, innen zäh</span>
+<svg viewBox="0 0 220 90" aria-label="Querschnitt Oberflächenhärten"><rect x="30" y="14" width="160" height="62" rx="8" fill="var(--heat)" opacity="0.85"/><rect x="40" y="24" width="140" height="42" rx="5" fill="var(--al)"/><text x="110" y="49" font-size="10" text-anchor="middle" fill="#fff">Kern zäh</text><text x="110" y="11" font-size="9" text-anchor="middle">Randschicht hart</text></svg>
+<p>Nur die <strong>Randschicht</strong> wird gehärtet, der <strong>Kern bleibt zäh</strong>. Beispiel <strong>Meissel</strong>: Die Schneide muss hart sein, damit sie nicht abnützt. Der zähe Kern verhindert, dass der Meissel beim Hämmern bricht.</p></div>
+</div>
+<div class="info-box"><p><strong>Hart, zäh, spröde (Buch S. 5):</strong> <strong>Härte</strong> ist der Widerstand gegen das Eindringen eines anderen Körpers. <strong>Zähigkeit</strong> ist der Widerstand gegen Risse und Bruch. <strong>Spröde</strong> ist das Gegenteil von zäh. Sehr harte Stoffe sind oft spröde (Glas, glasharter Stahl).</p></div>
+<div class="info-box success"><p><strong>Merksatz:</strong> Glühen entspannt. Härten macht hart, aber spröde. Erneutes Erwärmen nimmt die Sprödigkeit. Vergüten macht zäh. Oberflächenhärten: aussen hart, innen zäh.</p></div>
+<h3>Stahlsorten (Buch S. 17–18, Lektion 11.09.)</h3>
+<div class="table-wrap"><table>
+<tr><th>Einteilung</th><th>Kohlenstoff bzw. Legierung</th><th>Beispiele</th></tr>
+<tr><td><strong>Baustahl</strong></td><td>0,1–0,6 % C</td><td>Stahlkonstruktionen, Armierungseisen, Träger</td></tr>
+<tr><td><strong>Werkzeugstahl</strong></td><td>0,35–1,5 % C</td><td>Werkzeuge (siehe unten)</td></tr>
+<tr><td><strong>Eisen-Gusswerkstoffe</strong></td><td>2,5–3,6 % C (kein Stahl mehr)</td><td>gegossene Teile</td></tr>
+<tr><td>Werkzeugstahl <strong>unlegiert</strong></td><td>kaum Zusätze, Eigenschaften vom Kohlenstoff</td><td>Hammer, Meissel, Säge</td></tr>
+<tr><td>Werkzeugstahl <strong>niedriglegiert</strong></td><td>kein Element über etwa 5 %</td><td>Bohrer, Fräser</td></tr>
+<tr><td>Werkzeugstahl <strong>hochlegiert</strong></td><td>mindestens ein Element ab etwa 5 %, Kurzzeichen beginnt mit <strong>X</strong></td><td>Schneidwerkzeuge, rostfreier Stahl</td></tr>
+</table></div>
+<p><strong>Womit wird Stahl legiert?</strong> Chrom, Nickel, Wolfram, Vanadium, Molybdän, Mangan, Kobalt, Silizium. <strong>Vanadium</strong> gibt hohe Härte und Verschleissfestigkeit, <strong>Wolfram</strong> Warmfestigkeit (Wärmebeständigkeit). Chrom und Nickel machen den Stahl rostbeständig (Übungen 18.3 und 18.4).</p>
+<p><strong>Eigenschaften von Stahl (S. 18):</strong> Härte und Zugfestigkeit hängen vom Kohlenstoffgehalt ab. Stahl leitet den Strom gut und ist <strong>magnetisch</strong>. Er ist allgemein gut wärmebeständig. Seine bekannteste chemische Eigenschaft ist das <strong>Rosten</strong>. Dagegen hilft: verzinken, verchromen, lackieren oder beschichten, oder gleich rostfreien Stahl verwenden.</p>
+
+<!-- E -->
+<div class="section-label" id="t-metalle">Lernziele 6, 7 und 8 · Buch S. 3, 6, 10–16</div>
+<h2>E · Welche Metalle gibt es, wie teilt man sie ein, und wo setzt man sie ein?</h2>
+<p><strong>Metalle</strong> (Buch S. 10) leiten den Strom, leiten Wärme gut, haben einen metallischen Glanz und sind meist gut verformbar.</p>
+<h3>Lernziel 7: Die Einteilung</h3>
+<div class="tree">
+  <div class="node">Metalle</div><div class="down">▼</div>
+  <div class="row">
+    <div class="leaf"><b>Eisenmetalle</b>Eisen und Stahl: Baustähle, Werkzeugstähle, Eisen-Gusswerkstoffe. Im Elektrobereich als Magnet- und Konstruktionswerkstoffe.</div>
+    <div class="leaf"><b>Nichteisenmetalle (NE-Metalle)</b>alle anderen: Kupfer, Aluminium, Gold, Silber, Wolfram, Blei, Quecksilber, Zink, Zinn, Nickel, Lithium</div>
+  </div>
+</div>
+<p>Die <strong>Nichteisenmetalle</strong> teilt man auf zwei Arten ein:</p>
+<div class="split" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
+<div class="card"><h4 style="margin-top:0;">Nach der Verwendung (S. 3 und 10)</h4>
+<ul><li><strong>Leiterwerkstoffe</strong> leiten den Strom: Kupfer, Aluminium, Silber</li>
+<li><strong>Kontaktwerkstoffe</strong> schalten den Strom: Silber, Gold, Wolfram</li>
+<li><strong>Widerstandswerkstoffe</strong> begrenzen den Strom: Konstantan, Chrom-Nickel</li>
+<li><strong>Konstruktionswerkstoffe</strong> tragen und schützen: Aluminium, Messing</li></ul></div>
+<div class="card"><h4 style="margin-top:0;">Nach der Dichte (S. 6)</h4>
+<ul><li><strong>Schwermetalle</strong> ab 5 kg/dm³: Kupfer, Blei, Wolfram. Legierungen: Messing (CuZn), Bronze (CuSn), Lote</li>
+<li><strong>Leichtmetalle</strong> unter 5 kg/dm³: Aluminium, Titan, Magnesium. Legierungen: Aldrey (AlMgSi), Anticorodal (AlSiMg), Aluman (AlMnCu)</li></ul>
+<p style="margin:8px 0 0;">Dichte <span class="formula" style="font-size:1rem;padding:4px 10px;">ρ = <span class="frac"><span>m</span><span>V</span></span></span> &nbsp;in kg/dm³ (= g/cm³)</p></div>
+</div>
+<p>Dazu kommen die <strong>Edelmetalle</strong> Gold und Silber: Sie oxidieren nicht (Gold) oder kaum (Silber).</p>
+<h3>Lernziele 6 und 8: Die Metalle und wo man sie einsetzt</h3>
+<p>Das Prinzip ist immer gleich: <strong>Die Eigenschaft erklärt den Einsatz.</strong> Im Test reicht «Kupfer für Kabel» nicht. Es heisst: «Kupfer für Kabel, <em>weil</em> es nach Silber am besten leitet und sich gut verformen lässt.»</p>
+<div class="table-wrap"><table>
+<tr><th>Metall</th><th>Wichtigste Eigenschaft</th><th>Einsatz</th></tr>
+<tr><td><strong>Kupfer Cu</strong></td><td>zweitbester Leiter, weich, gut verformbar, gut lötbar</td><td>Kabel, Wicklungen von Spulen und Motoren, Stromschienen, Dächer, Kessel</td></tr>
+<tr><td><strong>Aluminium Al</strong></td><td>über dreimal leichter als Cu, leitet 1,6-mal schlechter, rostet nicht dank Oxidschicht</td><td>Freileitungen (als Aldrey), Kanäle, Gehäuse, Leitern, Antennen</td></tr>
+<tr><td><strong>Gold Au</strong></td><td>oxidiert nicht, beste Korrosionsbeständigkeit</td><td>Kontakte im Schwachstrom, vergoldete Stecker, Kontakte in PC und Elektronik</td></tr>
+<tr><td><strong>Silber Ag</strong></td><td>bester elektrischer und thermischer Leiter</td><td>Überzug von Kontakten, Schmelzleiter in Sicherungen, Hartlote</td></tr>
+<tr><td><strong>Wolfram W</strong></td><td>höchster Schmelzpunkt aller Metalle (3380 °C), sehr hart</td><td>Glühwendel (früher), hoch belastete Kontakte, WIG-Schweisselektroden, Hartmetall</td></tr>
+<tr><td><strong>Blei Pb</strong></td><td>schwer, sehr weich, dämpft Strahlung, giftig</td><td>Bleiakkumulator, Strahlenschutz (Bleischürze); früher in Lötzinn</td></tr>
+<tr><td><strong>Quecksilber Hg</strong></td><td>einziges bei Raumtemperatur flüssiges Metall, Dämpfe sehr giftig</td><td>Entladungslampen, früher prellfreie Schalter; Sondermüll</td></tr>
+<tr><td><strong>Zink Zn</strong></td><td>schützt Stahl vor Korrosion, geringe Festigkeit</td><td>Verzinken (Rostschutz), Zink-Kohle-Batterie, Bestandteil von Messing</td></tr>
+<tr><td><strong>Zinn Sn</strong></td><td>tiefer Schmelzpunkt, korrosionsbeständig</td><td>Lötzinn, Verzinnen von Kupferlitzen, Bestandteil von Bronze</td></tr>
+<tr><td><strong>Nickel Ni</strong></td><td>korrosions- und hitzebeständig, magnetisch</td><td>Korrosionsschutz (vernickeln), Akkus (NiCd, NiMH), Widerstandslegierungen</td></tr>
+<tr><td><strong>Lithium Li</strong></td><td>sehr leichtes, reaktives Leichtmetall</td><td>Lithium-Ionen-Akkus in Smartphones, E-Bikes, Notebooks</td></tr>
+<tr><td><strong>Eisen Fe / Stahl</strong></td><td>billig, fest, magnetisch, Eigenschaften einstellbar</td><td>Konstruktionen, Trafo- und Motorbleche, Werkzeuge, Schrauben</td></tr>
+</table></div>
+<p>Alle Werte und Einsätze als Steckbriefe, mit Vergleich und Trainer: Tab <a href="#" onclick="go('metalle');return false;">Metalle</a>.</p>
+<div class="info-box success"><p><strong>Merksätze (Lektion 16.10.):</strong> Kupfer leitet, Aluminium spart Gewicht. Silber leitet am besten, Gold korrodiert kaum. Zink schützt Stahl, Zinn schützt Kupferlitzen. Wolfram hält sehr hohe Temperaturen aus. Blei und Quecksilber sind giftig.</p></div>
+
+<!-- F -->
+<div class="section-label" id="t-legierungen">Lernziele 9 und 10 · Buch S. 19–21, 6, 11–12</div>
+<h2>F · Legierungen: was sie sind, wo und warum man sie braucht</h2>
+<div class="card">
+<p style="margin-top:0;"><strong>Legierung (Buch S. 19):</strong> ein Stoffgemisch mit metallischem Charakter aus <strong>zwei oder mehr chemischen Elementen</strong>, von denen <strong>mindestens eines ein Metall</strong> ist.</p>
+<p style="margin-bottom:0;"><strong>Warum?</strong> Man legiert immer dann, wenn die Eigenschaften eines reinen Stoffs für die Anwendung <strong>nicht ausreichen</strong>. Zum Beispiel wird Aluminium mit 0,5 % Magnesium und 0,5 % Silizium (Aldrey) viel zugfester. Erst so taugt es für Freileitungen.</p>
+</div>
+<h3>Die wichtigsten Legierungen</h3>
+<div class="table-wrap"><table>
+<tr><th>Legierung</th><th>Zusammensetzung</th><th>Einsatz und Grund</th></tr>
+<tr><td><strong>Messing</strong> ⭐</td><td>Kupfer + Zink (CuZn)</td><td>Klemmen, Steckerstifte, Schrauben, Armaturen. Härter als Kupfer und gut bearbeitbar.</td></tr>
+<tr><td><strong>Bronze</strong> ⭐</td><td>Kupfer + Zinn (CuSn)</td><td>Federn, Lager, Kontakte. Hart, verschleissfest, korrosionsbeständig.</td></tr>
+<tr><td><strong>Rotguss</strong></td><td>Kupfer + Zinn + Zink + Blei</td><td>gegossene Armaturen. Gut giessbar.</td></tr>
+<tr><td><strong>Aldrey</strong></td><td>Aluminium + je 0,5 % Magnesium und Silizium</td><td>Freileitungen. Viel höhere Zugfestigkeit als Reinaluminium.</td></tr>
+<tr><td><strong>Konstantan, Manganin, Nickelin</strong></td><td>CuNi44 · CuMn12Ni · CuNi30Mn</td><td>Präzisionswiderstände. Widerstand ändert sich bei Wärme kaum.</td></tr>
+<tr><td><strong>Chrom-Nickel</strong>, Eisen-Chrom-Nickel</td><td>NiCr, FeCrNi</td><td>Heizleiter in Kochplatten und Elektroöfen. Hitzefest, oxidiert nicht.</td></tr>
+<tr><td><strong>Weichlot</strong></td><td>Zinn mit Silber und/oder Gold (Buch), in der Praxis meist Zinn-Silber-Kupfer</td><td>Löten unter 450 °C, Elektronik</td></tr>
+<tr><td><strong>Hartlot</strong></td><td>aus Stahl, Kupfer, Messing und Silber (Buch); Lektion: Kupfer, Silber, Zink, Phosphor</td><td>Löten über 450 °C, wo die Lötstelle fest sein muss</td></tr>
+<tr><td><strong>AlNiCo</strong></td><td>Eisen mit Aluminium, Nickel, Kobalt</td><td>Dauermagnete, bis 500 °C, meist gegossen</td></tr>
+<tr><td><strong>Stahl</strong></td><td>Eisen + Kohlenstoff unter 2,06 %, oft mit Cr, Ni, V, W</td><td>überall, wo es fest sein muss</td></tr>
+</table></div>
+<h3>Lernziel 10: Wo kommen Legierungen zum Einsatz? (Buch S. 19–21)</h3>
+<div class="need" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));">
+<div class="card compact"><span class="ico">1.6.1 · S. 19</span><br><strong>Kontaktwerkstoffe</strong><br>Schütze, Stecker, Schleifer im Potenziometer. Sie müssen von einigen mA bis <strong>60 kA</strong> Kurzschlussstrom sicher abschalten. Das Problem beim Öffnen ist der <strong>Lichtbogen</strong>: Er ist mehrere tausend Grad heiss, der Kontakt kann abbrennen oder verschweissen. Darum braucht es: Festigkeit und Härte, hohe Leitfähigkeit, hohen Schmelzpunkt, hohe Abbrandfestigkeit, kein Verschweissen, geringe Oxidation. Werkstoffe: Silber, Gold, Wolfram, Kohle. Kupfer und Nickel nur in Legierungen, weil sie rein schnell oxidieren. In der Elektronik vergoldet, weil Gold nicht oxidiert.</div>
+<div class="card compact"><span class="ico">1.6.2 · S. 20</span><br><strong>Widerstandswerkstoffe</strong><br>hoher spezifischer Widerstand (leiten viel schlechter als Cu oder Al) und ein Widerstand, der sich bei Erwärmung kaum ändert (kleiner Temperaturkoeffizient). Dazu fest bei grosser Hitze und oxidationsbeständig. Für Heizungen, Kochplatten, Messgeräte, Widerstände.</div>
+<div class="card compact"><span class="ico">1.6.3 · S. 20</span><br><strong>Lote</strong><br>Löten verbindet zwei Metalle mit einem Lot. Werkstoff und Lot bilden eine Legierung, die Verbindung ist unlösbar. <strong>Weichlöten unter 450 °C</strong>, <strong>Hartlöten über 450 °C</strong>. Weichlot gibt es als Draht mit Flussmittel. Früher Zinn-Blei, heute verboten, weil Blei giftig ist.</div>
+<div class="card compact"><span class="ico">1.6.4 · S. 21</span><br><strong>Hartmetalle</strong><br>gesinterte Metallkarbide (Wolfram, Titan) mit <strong>Kobalt</strong> als Bindemittel, unter Hitze und Druck zusammengebacken. Extrem hart und verschleissfest, nur mit Diamant bearbeitbar. Beim Steinbohrer ist nur das Plättchen aus Hartmetall. Es ist auf zähen Werkzeugstahl hartgelötet.</div>
+<div class="card compact"><span class="ico">1.6.5 · S. 21</span><br><strong>Dauermagnete</strong><br>Eisen, Nickel und Kobalt verstärken ein Magnetfeld (ferromagnetisch). Starke Magnete sind Legierungen: <strong>AlNiCo</strong>, Ferrit-, Neodym-Eisen-Bor-, Samarium-Kobalt- und kunststoffgebundene Magnete.</div>
+<div class="card compact"><span class="ico">1.6.6 · S. 21</span><br><strong>Bimetalle</strong><br>zwei zusammengewalzte Metallstreifen mit verschiedener Wärmeausdehnung. Bei Wärme biegt sich der Streifen. Einsatz: thermischer Auslöser im Leitungsschutzschalter und Motorschutz, Thermostate, Energieregler.</div>
+</div>
+<div class="info-box warn"><p><strong>Drei Fallen:</strong> (1) Ein <strong>Bimetall ist keine Legierung</strong>, sondern ein Verbundwerkstoff aus zwei Schichten (S. 21). (2) Eine <strong>verzinnte</strong> Litze oder ein <strong>verzinkter</strong> Stahl ist beschichtet, nicht legiert. Das Zinn liegt nur aussen. (3) <strong>Hartmetall</strong> ist gesintertes Pulver mit Bindemittel, kein geschmolzenes Gemisch.</p></div>
+
+<!-- G -->
+<div class="section-label" id="t-nichtmetalle">Lernziele 11 bis 15 · Buch S. 3, 22–24 · Lektionen 23.10. und 30.10.</div>
+<h2>G · Nichtmetalle</h2>
+<h3>Lernziel 11: Was sind Nichtmetalle?</h3>
+<p>Nichtmetalle haben keinen metallischen Charakter: Sie leiten Strom und Wärme schlecht und glänzen nicht metallisch. Für Elektrofachleute sind die wichtigsten Nichtmetalle die <strong>Isolierstoffe</strong> (Buch S. 22). Sie sorgen dafür, dass <strong>kein Strom unkontrolliert fliesst</strong>, zum Beispiel wenn jemand ein Kabel unter Spannung berührt. Weitere Nichtmetalle im Elektrobereich (S. 3): <strong>Hilfs- und Schmierstoffe</strong> und <strong>Konstruktionswerkstoffe</strong> wie Kunststoff für Kanäle und Gehäuse.</p>
+<p>Auch bei Isolierstoffen zählen nicht nur die elektrischen Eigenschaften. Mechanische, thermische, chemische und ökologische Eigenschaften müssen ebenso passen.</p>
+<h3>Lernziel 12: Wie werden Nichtmetalle unterteilt?</h3>
+<div class="tree">
+  <div class="node">Nichtmetalle → Isolierstoffe</div><div class="down">▼</div>
+  <div class="row">
+    <div class="leaf" style="border-top:4px solid var(--org);"><b>feste organische</b>Kunststoffe, Gummi, Papier, Holz · S. 23–25</div>
+    <div class="leaf" style="border-top:4px solid var(--anorg);"><b>feste anorganische</b>Glas, Keramik, Porzellan, Glimmer · S. 26</div>
+    <div class="leaf" style="border-top:4px solid var(--oil);"><b>flüssige</b>Transformatorenöl · S. 27</div>
+    <div class="leaf" style="border-top:4px solid var(--gas);"><b>gasförmige</b>Luft, Stickstoff, SF₆ · S. 27</div>
+  </div>
+</div>
+<h3>Lernziel 13: Welche Eigenschaften machen den Unterschied?</h3>
+<div class="table-wrap"><table>
+<tr><th>Unterschied</th><th>Worum es geht</th></tr>
+<tr><td><strong>Aggregatzustand</strong></td><td>fest, flüssig oder gasförmig. Flüssige und gasförmige Isolierstoffe füllen Räume aus und kühlen, z. B. Öl im Trafo.</td></tr>
+<tr><td><strong>organisch oder anorganisch</strong></td><td>Es zählt die <strong>chemische Zusammensetzung</strong>, nicht ob natürlich oder künstlich. Organisch = vor allem <strong>Kohlenstoffverbindungen</strong> (Kohlenstoffketten): Kunststoff, Gummi, Papier, Holz. Anorganisch = <strong>mineralisch</strong>: Glas, Keramik, Porzellan, Glimmer. Anorganische halten viel mehr Hitze aus und brennen nicht.</td></tr>
+<tr><td><strong>Vernetzung der Ketten</strong> (bei Kunststoffen)</td><td>Sie bestimmt das Verhalten bei <strong>Wärme</strong>: Thermoplaste werden weich und schmelzen, Duroplaste bleiben hart und verkohlen, Elastomere bleiben gummielastisch.</td></tr>
+<tr><td><strong>Eigenschaften für die Auswahl</strong></td><td>Durchschlagsfestigkeit, maximale Temperatur, Elastizität, Härte, UV- und Witterungsbeständigkeit, Brennbarkeit, Umweltverträglichkeit</td></tr>
+</table></div>
+<div class="info-box"><p><strong>Ausnahme:</strong> Nicht jede Kohlenstoffverbindung ist organisch. Kohlendioxid (CO₂), Kohlenmonoxid (CO), Karbonate und Karbide gelten als anorganisch (Lektion 30.10.). Und: <strong>Kohle (Graphit)</strong> ist ein Nichtmetall, das den Strom leitet. Darum taugt sie für Kohlebürsten und Elektroden.</p></div>
+<h3>Lernziele 14 und 15: Welche Nichtmetalle kennen wir, und wo setzt man sie ein?</h3>
+<div class="table-wrap"><table>
+<tr><th>Gruppe</th><th>Beispiele</th><th>Einsatz</th><th>Weshalb</th></tr>
+<tr><td><strong>fest organisch</strong></td><td>PVC, PE, Gummi, Kunstharze, Papier, Holz</td><td>Kabelisolation und -mantel, Rohre, Kanäle, Schaltergehäuse, Leiterplatten</td><td>isoliert gut, leicht, gut formbar, günstig</td></tr>
+<tr><td><strong>fest anorganisch</strong></td><td>Glas, Porzellan, Keramik, Glimmer, Quarz</td><td>Freileitungs- und Hochspannungsisolatoren, Sicherungen, Träger von Heizelementen</td><td>hitzebeständig, nicht brennbar, wetterfest, sehr hohe Durchschlagsfestigkeit</td></tr>
+<tr><td><strong>flüssig</strong></td><td>Transformatorenöl (mineralisch), Esteröl, Silikonöl</td><td>Transformatoren, Leistungsschalter, Kondensatoren</td><td>isoliert und kühlt zugleich, füllt jeden Spalt</td></tr>
+<tr><td><strong>gasförmig</strong></td><td>Luft, Stickstoff (N₂), Schwefelhexafluorid (SF₆)</td><td>Luftisolation in Installationen und Freileitungen, gasisolierte Schaltanlagen</td><td>Luft ist überall und gratis (Durchschlag ca. 3 kV/mm). SF₆ isoliert sehr gut, braucht wenig Platz.</td></tr>
+</table></div>
+<div class="info-box danger"><p><strong>SF₆</strong> isoliert hervorragend, ist aber ein <strong>extrem starkes Treibhausgas</strong>. Darum wird es zunehmend reduziert oder ersetzt (Lektion 23.10.).</p></div>
+<h3>Kunststoffe (Buch S. 23–24)</h3>
+<p>Organische Isolierstoffe sind <strong>natürlich</strong> (Papier, Baumwolle) oder <strong>synthetisch</strong>, also künstlich hergestellt (z. B. PVC). Die synthetischen heissen <strong>Kunststoffe</strong>. Es gibt drei Arten:</p>
+<div class="table-wrap"><table>
+<tr><th>Art</th><th>Ketten</th><th>Bei Wärme</th><th>Beispiele</th></tr>
+<tr><td><strong class="grp-t">Thermoplaste</strong></td><td>nicht vernetzt</td><td>werden weich, schmelzen, wieder formbar, schweissbar</td><td>PVC, PE, PA, PC, PS</td></tr>
+<tr><td><strong class="grp-d">Duroplaste</strong></td><td>eng vernetzt</td><td>werden nicht mehr weich, verkohlen bei starker Erwärmung</td><td>PUR, UP, EP, PF, MF, SI (alles «Harze»)</td></tr>
+<tr><td><strong class="grp-e">Elastomere</strong></td><td>wenig, weitmaschig vernetzt</td><td>werden etwas weicher, schmelzen nicht, bleiben gummielastisch</td><td>Styrol-Butadien-, Silikon-, Chloropren-Gummi</td></tr>
+</table></div>
+<p>Alle 14 Kunststoffe aus dem Buch mit Einsatz und maximaler Temperatur, dazu ein Animations-Modell der Ketten: Tab <a href="#" onclick="go('kunststoffe');return false;">Kunststoffe</a>.</p>
+<p><strong>Vorteile von Kunststoffen (Lektion 30.10.):</strong> isolieren gut, leicht, rosten nicht, gut formbar, günstig herzustellen, stoss- und bruchfest, dämmen Wärme und Schall, einfärbbar, Eigenschaften gezielt einstellbar.</p>
+<div class="info-box"><p><strong>Halbleiter (Buch S. 22)</strong> sind eine eigene Gruppe zwischen Leitern und Isolatoren. Ob sie leiten, hängt von Temperatur, Spannung, Licht und der <strong>Dotierung</strong> (gezielte Verunreinigung) ab. Die wichtigsten: <strong>Silizium und Germanium</strong>, beide mit <strong>4 Valenzelektronen</strong>. Verwendung: Dioden, Gleichrichter, Transistoren, NTC, PTC, LDR, VDR, Diac, Triac.</p></div>
+
+<!-- H -->
+<div class="section-label" id="t-grundlagen">Grundlage · Buch S. 2–9 · Stoff vom Test 11.09.</div>
+<h2>H · Kurz wiederholt: Stoffe und Eigenschaften</h2>
+<details class="more"><summary>Chemische Einteilung der Stoffe (S. 2)</summary>
+<p><strong>Stoffe</strong> → <strong>Gemische</strong> (aus mehreren Reinstoffen, trennbar) und <strong>Reinstoffe</strong> (nur eine Stoffart, definierte Eigenschaften).</p>
+<p>Gemische: <strong>heterogen</strong> (uneinheitlich, man sieht die Teile: Beton, Granit) oder <strong>homogen</strong> (einheitlich: Luft, Erdöl, Schnaps, verdünnte Säure, Stahl als Legierung). Reinstoffe: <strong>Verbindungen</strong> (chemisch zerlegbar: Wasser, Salz, Ammoniak) oder <strong>Elemente</strong> (nicht zerlegbar: Kupfer, Gold, Eisen, Schwefel).</p></details>
+<details class="more"><summary>Werkstoffe im Elektrobereich (S. 3)</summary>
+<p>Vier Gruppen: <strong>Metalle</strong> (Nichteisen- und Eisenmetalle), <strong>Halbleiterwerkstoffe</strong>, <strong>Nichtmetalle</strong> (Isolierstoffe, Hilfs- und Schmierstoffe, Konstruktionswerkstoffe) und <strong>Verbundwerkstoffe</strong> (Bimetalle, Elektro- und Konstruktionsverbundwerkstoffe).</p></details>
+<details class="more"><summary>Die vier Eigenschaftsgruppen (S. 4–9)</summary>
+<p><strong>Mechanisch:</strong> Festigkeit (Zug, Druck, Biegung, Torsion, Scherung), Härte, Sprödigkeit und Zähigkeit, Elastizität (federt zurück), Plastizität (bleibt verformt), Dichte.</p>
+<p><strong>Elektrisch:</strong> Leitfähigkeit (in Metallen sind die Elektronen die Ladungsträger), Durchschlagsfestigkeit (Luft ca. 3 kV/mm), magnetische Eigenschaften (Eisen, Nickel, Kobalt sind ferromagnetisch), dielektrische Eigenschaften (Kondensator, Koaxialkabel).</p>
+<p><strong>Thermisch:</strong> Schmelzpunkt (reines Eisen 1536 °C, Aluminium 658 °C), Siedepunkt (Wasser 100 °C, hängt vom Luftdruck ab), Hitzebeständigkeit und Brennbarkeit, Wärmekapazität (Wasser 4,19 kJ/(kg·K)), Wärmeleitfähigkeit (gute elektrische Leiter leiten auch Wärme gut).</p>
+<p><strong>Chemisch und ökologisch:</strong> Korrosionsbeständigkeit (bekannteste Korrosion: Rosten), Giftigkeit (Quecksilber, Blei), Abbaubarkeit, UV-Beständigkeit (sonst wird der Stoff porös und brüchig), elektrochemische Spannungsreihe.</p></details>
+</section>
+
+<!-- ═════════════ PROZESSE ═════════════ -->
+<section class="tab-pane" id="prozesse">
+<p class="intro">Die drei Herstellungswege aus den Lernzielen 1–4 zum Anklicken: Hochofen und Frischen (Stahl), Raffination (Kupfer) und Schmelzflusselektrolyse (Aluminium). Unten kannst du jede Reihenfolge selbst legen.</p>
+
+<div class="section-label" id="p-stahl">Stahl · Buch S. 16–17</div>
+<h2>Der Hochofen</h2>
+<div class="fig">
+<svg viewBox="0 0 560 450" role="img" aria-label="Hochofen im Schnitt">
+<defs>
+  <linearGradient id="hoGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#6b6f75"/><stop offset="0.35" stop-color="#8c5a35"/><stop offset="0.7" stop-color="#d9552a"/><stop offset="1" stop-color="#f2b233"/>
+  </linearGradient>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
+</defs>
+<polygon points="232,62 328,62 372,250 346,330 346,420 214,420 214,330 188,250" fill="url(#hoGrad)" stroke="var(--ink)" stroke-width="2.5"/>
+<rect x="216" y="368" width="128" height="20" fill="#7d6b4f"/>
+<rect x="216" y="388" width="128" height="30" fill="#f6c445"/>
+<line x1="280" y1="22" x2="280" y2="58" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="280" y="16" font-size="13" text-anchor="middle" font-weight="700">Erz, Koks + Zuschläge</text>
+<path d="M238,66 Q200,40 150,40" fill="none" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="140" y="44" font-size="13" text-anchor="end">Gichtgas</text>
+<g font-size="11.5" font-family="var(--font-mono)">
+  <line x1="338" y1="92" x2="420" y2="92" stroke="var(--border)"/><text x="425" y="96">200 °C</text>
+  <line x1="352" y1="150" x2="420" y2="150" stroke="var(--border)"/><text x="425" y="154">400 °C</text>
+  <line x1="366" y1="210" x2="420" y2="210" stroke="var(--border)"/><text x="425" y="214">900 °C</text>
+  <line x1="370" y1="258" x2="420" y2="258" stroke="var(--border)"/><text x="425" y="262">1200 °C</text>
+  <line x1="350" y1="312" x2="420" y2="312" stroke="var(--border)"/><text x="425" y="316">1800 °C</text>
+  <line x1="346" y1="346" x2="420" y2="346" stroke="var(--border)"/><text x="425" y="350">2000 °C</text>
+</g>
+<line x1="110" y1="345" x2="210" y2="345" stroke="var(--heat)" stroke-width="3" marker-end="url(#arr)"/>
+<text x="20" y="338" font-size="13" font-weight="700">Wind</text><text x="20" y="354" font-size="11">(heisse Luft)</text>
+<line x1="346" y1="378" x2="410" y2="400" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="414" y="406" font-size="13">Schlacke</text>
+<line x1="214" y1="408" x2="150" y2="430" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="140" y="440" font-size="13" text-anchor="end" font-weight="700">Roheisen</text>
+<g class="hot" data-d="ho" data-p="gicht"><rect class="hl" x="228" y="4" width="104" height="60" rx="6"/></g>
+<g class="hot" data-d="ho" data-p="gas"><rect class="hl" x="60" y="26" width="170" height="30" rx="6"/></g>
+<g class="hot" data-d="ho" data-p="schacht"><rect class="hl" x="196" y="70" width="168" height="180" rx="6"/></g>
+<g class="hot" data-d="ho" data-p="rast"><rect class="hl" x="200" y="252" width="160" height="110" rx="6"/></g>
+<g class="hot" data-d="ho" data-p="wind"><rect class="hl" x="14" y="322" width="196" height="40" rx="6"/></g>
+<g class="hot" data-d="ho" data-p="schlacke"><rect class="hl" x="214" y="366" width="250" height="24" rx="4"/></g>
+<g class="hot" data-d="ho" data-p="roheisen"><rect class="hl" x="60" y="388" width="286" height="58" rx="4"/></g>
+</svg>
+<div class="part-list" id="hoParts"></div>
+<div class="part-info" id="hoInfo">Tippe auf einen Teil des Hochofens oder einen Knopf.</div>
+</div>
+
+<h2>Frischen: zwei Verfahren</h2>
+<div class="split" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+<div class="fig" style="margin:0;">
+<svg viewBox="0 0 240 190" role="img" aria-label="Sauerstoff-Aufblasverfahren">
+<path d="M70,40 L170,40 L200,110 Q200,170 120,170 Q40,170 40,110 Z" fill="var(--surface-alt)" stroke="var(--ink)" stroke-width="2.5"/>
+<path d="M48,112 Q120,100 192,112 Q196,165 120,165 Q44,165 48,112 Z" fill="#f2a33a"/>
+<rect x="114" y="6" width="12" height="96" fill="var(--fe)" stroke="var(--ink)"/>
+<text x="134" y="20" font-size="12" font-weight="700">O₂</text>
+<path d="M120,102 L108,116 L120,110 L132,118 Z" fill="var(--heat)"/>
+<text x="120" y="186" font-size="11" text-anchor="middle">flüssiges Roheisen</text>
+</svg>
+<p class="fig-cap"><strong>Sauerstoff-Aufblasverfahren:</strong> Eine Lanze bläst reinen Sauerstoff auf das flüssige Roheisen. Kohlenstoff, Silizium, Mangan und Phosphor verbrennen. Diese Reaktion liefert selbst die Wärme.</p>
+</div>
+<div class="fig" style="margin:0;">
+<svg viewBox="0 0 240 190" role="img" aria-label="Lichtbogenofen">
+<path d="M30,80 L210,80 L196,165 Q120,182 44,165 Z" fill="var(--surface-alt)" stroke="var(--ink)" stroke-width="2.5"/>
+<path d="M36,62 Q120,40 204,62 L210,80 L30,80 Z" fill="var(--al)" stroke="var(--ink)" stroke-width="2"/>
+<rect x="78" y="8" width="14" height="100" fill="#444"/><rect x="113" y="8" width="14" height="100" fill="#444"/><rect x="148" y="8" width="14" height="100" fill="#444"/>
+<polyline points="85,108 80,118 90,124 84,134" fill="none" stroke="#ffd34d" stroke-width="2.5"/>
+<polyline points="120,108 114,118 126,124 118,134" fill="none" stroke="#ffd34d" stroke-width="2.5"/>
+<polyline points="155,108 150,118 160,124 154,134" fill="none" stroke="#ffd34d" stroke-width="2.5"/>
+<path d="M50,140 L70,132 L95,142 L120,134 L150,143 L175,133 L192,142 L188,160 Q120,174 52,160 Z" fill="var(--fe)"/>
+<text x="168" y="22" font-size="11">Elektroden</text>
+<text x="120" y="186" font-size="11" text-anchor="middle">Stahlschrott</text>
+</svg>
+<p class="fig-cap"><strong>Lichtbogenofen:</strong> Zwischen den Elektroden und dem Metall brennt ein Lichtbogen. Seine Hitze schmilzt vor allem Stahlschrott ein. Die Wärme kommt aus dem Strom.</p>
+</div>
+</div>
+
+<div class="section-label" id="p-kupfer">Kupfer · Lektion 18.09. · Buch S. 11</div>
+<h2>Elektrolytische Raffination von Kupfer</h2>
+<div class="fig" id="cuFig">
+<svg viewBox="0 0 520 330" role="img" aria-label="Elektrolytische Kupferraffination">
+<rect x="200" y="10" width="120" height="38" rx="6" fill="var(--surface-alt)" stroke="var(--ink)" stroke-width="2"/>
+<text x="260" y="34" font-size="13" text-anchor="middle" font-weight="700">Gleichstrom</text>
+<text x="212" y="34" font-size="16" font-weight="700" fill="var(--heat)">+</text>
+<text x="300" y="34" font-size="16" font-weight="700" fill="var(--cool)">−</text>
+<polyline points="200,29 150,29 150,80" fill="none" stroke="var(--heat)" stroke-width="2.5"/>
+<polyline points="320,29 362,29 362,80" fill="none" stroke="var(--cool)" stroke-width="2.5"/>
+<rect x="80" y="92" width="360" height="180" rx="8" fill="var(--gas)" fill-opacity="0.22" stroke="var(--ink-soft)" stroke-width="2"/>
+<rect x="135" y="80" width="30" height="170" fill="#8a5a2a" stroke="var(--ink)"/>
+<rect x="355" y="80" width="14" height="170" fill="#e0884a" stroke="var(--ink)"/>
+<g font-size="12" font-weight="700">
+<circle class="ion" cx="172" cy="120" r="7" fill="var(--cu)"/>
+<circle class="ion" cx="172" cy="150" r="7" fill="var(--cu)" style="animation-delay:-0.8s"/>
+<circle class="ion" cx="172" cy="180" r="7" fill="var(--cu)" style="animation-delay:-1.6s"/>
+<circle class="ion" cx="172" cy="210" r="7" fill="var(--cu)" style="animation-delay:-2.4s"/>
+<circle class="ion" cx="172" cy="135" r="7" fill="var(--cu)" style="animation-delay:-2s"/>
+<circle class="ion" cx="172" cy="195" r="7" fill="var(--cu)" style="animation-delay:-0.4s"/>
+</g>
+<text x="262" y="112" font-size="12" text-anchor="middle">Cu²⁺ wandert zur Kathode →</text>
+<g fill="#c9a227"><circle cx="140" cy="262" r="3"/><circle cx="150" cy="265" r="2.5"/><circle cx="160" cy="261" r="3"/><circle cx="146" cy="258" r="2"/><circle cx="168" cy="264" r="2.5"/><circle cx="132" cy="264" r="2"/></g>
+<text x="150" y="290" font-size="11.5" text-anchor="middle">Anodenschlamm (Gold, Silber)</text>
+<text x="260" y="226" font-size="11.5" text-anchor="middle">Elektrolyt:</text>
+<text x="260" y="242" font-size="11.5" text-anchor="middle">Kupfersulfat + Schwefelsäure</text>
+<text x="150" y="316" font-size="12" text-anchor="middle"><tspan font-weight="700">Anode (+)</tspan> Rohkupfer, löst sich auf</text>
+<text x="408" y="316" font-size="12" text-anchor="middle"><tspan font-weight="700">Kathode (−)</tspan> Reinkupfer</text>
+</svg>
+<div class="btn-row"><button class="btn ghost sm" type="button" onclick="document.getElementById('cuFig').classList.toggle('paused')">Animation anhalten / weiter</button></div>
+<p class="fig-cap">Am Pluspol löst sich das unreine Rohkupfer als Kupfer-Ionen (Cu²⁺) auf. Am Minuspol nehmen die Ionen wieder Elektronen auf und setzen sich als fast reines Kupfer ab: <strong>99,98 %</strong>. Gold und Silber lösen sich nicht und fallen als Anodenschlamm zu Boden. Den Schlamm verwertet man weiter. <strong>Merksatz: Unreines Kupfer ist die Anode, reines Kupfer wächst an der Kathode.</strong></p>
+</div>
+
+<div class="section-label" id="p-alu">Aluminium · Buch S. 12</div>
+<h2>Schmelzflusselektrolyse von Aluminium</h2>
+<div class="fig" id="alFig">
+<svg viewBox="0 0 520 300" role="img" aria-label="Schmelzflusselektrolyse von Aluminium">
+<line x1="120" y1="52" x2="400" y2="52" stroke="var(--heat)" stroke-width="5"/>
+<text x="260" y="40" font-size="12.5" text-anchor="middle" font-weight="700" fill="var(--heat)">+ Anoden aus Kohle</text>
+<rect x="70" y="112" width="380" height="164" rx="6" fill="var(--fe)"/>
+<rect x="84" y="122" width="352" height="142" fill="#3a3a3a"/>
+<rect x="94" y="150" width="332" height="62" fill="#f0a040" fill-opacity="0.9"/>
+<rect x="94" y="212" width="332" height="42" fill="#c9d1d9"/>
+<rect x="140" y="52" width="60" height="128" fill="#4a4a4a" stroke="var(--ink-soft)"/>
+<rect x="230" y="52" width="60" height="128" fill="#4a4a4a" stroke="var(--ink-soft)"/>
+<rect x="320" y="52" width="60" height="128" fill="#4a4a4a" stroke="var(--ink-soft)"/>
+<g fill="#fff" fill-opacity="0.85">
+<circle class="bub" cx="150" cy="186" r="4"/><circle class="bub" cx="190" cy="188" r="3.5" style="animation-delay:-1.1s"/>
+<circle class="bub" cx="240" cy="186" r="4" style="animation-delay:-0.5s"/><circle class="bub" cx="280" cy="188" r="3.5" style="animation-delay:-1.7s"/>
+<circle class="bub" cx="330" cy="186" r="4" style="animation-delay:-0.9s"/><circle class="bub" cx="370" cy="188" r="3.5" style="animation-delay:-2s"/>
+</g>
+<text x="260" y="203" font-size="12" text-anchor="middle" fill="#1a1a1a" font-weight="600">Tonerde in Kryolith gelöst, ca. 950 °C</text>
+<text x="260" y="238" font-size="12" text-anchor="middle" fill="#1a1a1a" font-weight="700">flüssiges Aluminium</text>
+<text x="260" y="294" font-size="12" text-anchor="middle" font-weight="700" fill="var(--cool)">− Kathode: Kohleboden der Wanne</text>
+<text x="12" y="40" font-size="11.5">bis 100'000 A · ca. 6 V</text>
+<line x1="436" y1="236" x2="500" y2="236" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="458" y="228" font-size="11">abstechen</text>
+</svg>
+<div class="btn-row"><button class="btn ghost sm" type="button" onclick="document.getElementById('alFig').classList.toggle('paused')">Animation anhalten / weiter</button></div>
+<p class="fig-cap">Die Tonerde (Aluminiumoxid aus Bauxit) schmilzt erst über 2000 °C. Darum wird sie in geschmolzenem <strong>Kryolith</strong> gelöst, so läuft die Elektrolyse bei etwa 950 °C (Lektion 18.09.). Ein sehr grosser Gleichstrom trennt Aluminium und Sauerstoff. Das Aluminium sammelt sich flüssig am Boden (Minuspol). Der Sauerstoff verbindet sich an den Kohleanoden (Pluspol) zu CO₂. Darum brennen die Anoden ab und müssen ersetzt werden. Strom bis 100'000 A bei etwa 6 V, rund 20'000 kWh pro Tonne. Darum lohnt sich <strong>Recycling</strong>.</p>
+</div>
+
+<div class="section-label">Selbst legen</div>
+<h2>Reihenfolge-Trainer</h2>
+<div class="tool">
+<div class="btn-row" id="ordSel"><button class="btn sm" type="button" data-o="stahl">Stahl</button><button class="btn ghost sm" type="button" data-o="kupfer">Kupfer</button><button class="btn ghost sm" type="button" data-o="alu">Aluminium</button></div>
+<p class="tool-desc">Tippe die Schritte in der richtigen Reihenfolge an. Ein falscher Schritt wackelt.</p>
+<div class="ord-done" id="ordDone"></div>
+<div class="ord-pool" id="ordPool"></div>
+<div class="ord-msg" id="ordMsg"></div>
+<div class="btn-row"><button class="btn ghost sm" type="button" id="ordReset">Neu mischen</button></div>
+</div>
+</section>
+
+<!-- ═════════════ METALLE ═════════════ -->
+<section class="tab-pane" id="metalle">
+<p class="intro">Alle Metalle aus dem Buch (S. 11–18) als Steckbrief: Werte, Eigenschaften, Einsatz und <strong>warum</strong>. Werte mit «Zusatz» stehen nicht im Buch. Darunter ein Vergleich und ein Trainer.</p>
+<div class="metal-grid" id="metalGrid"></div>
+
+<div class="section-label">Vergleich</div>
+<h2>Welches Metall ist am …</h2>
+<div class="btn-row" id="barSel"><button class="btn sm" type="button" data-m="dichte">schwersten (Dichte)</button><button class="btn ghost sm" type="button" data-m="rho">besten Leiter (spez. Widerstand)</button><button class="btn ghost sm" type="button" data-m="smp">hitzefestesten (Schmelzpunkt)</button></div>
+<div class="fig"><div class="bars" id="bars"></div><p class="fig-cap" id="barCap"></p></div>
+
+<div class="section-label">Trainer</div>
+<h2>Welches Metall passt?</h2>
+<div class="tool">
+<div class="wz-meta"><span id="mtCount">1 / 1</span><span id="mtScore">0 richtig</span></div>
+<div class="wz-case" id="mtCase"></div>
+<div class="wz-opts" id="mtOpts"></div>
+<div class="wz-why" id="mtWhy"></div>
+<div class="btn-row" style="margin-top:12px;"><button class="btn" type="button" id="mtNext">Nächste Frage</button><button class="btn ghost" type="button" id="mtRestart">Neu starten</button></div>
+</div>
+</section>
+
+<!-- ═════════════ KUNSTSTOFFE ═════════════ -->
+<section class="tab-pane" id="kunststoffe">
+<p class="intro">Kunststoffe sind die wichtigsten Nichtmetalle für Elektrofachleute. Ob ein Kunststoff Thermoplast, Duroplast oder Elastomer ist, hängt davon ab, wie stark seine langen Ketten miteinander <strong>vernetzt</strong> sind. Drück auf «Erwärmen».</p>
+<div class="poly-wrap" id="polyWrap">
+<div class="poly-grid">
+<div class="poly"><h4 class="grp-t">Thermoplast</h4><p>Ketten <strong>nicht vernetzt</strong></p>
+<svg viewBox="0 0 200 110" aria-label="Thermoplast: lose Ketten">
+<g class="tp-a" style="transform-box:fill-box;transition:transform .9s"><polyline class="chainline" stroke="var(--cool)" points="10,26 30,18 50,28 70,18 90,28 110,18 130,28 150,18 170,28 190,20"/></g>
+<g class="tp-b" style="transform-box:fill-box;transition:transform .9s"><polyline class="chainline" stroke="var(--cool)" points="10,56 30,48 50,58 70,48 90,58 110,48 130,58 150,48 170,58 190,50"/></g>
+<g class="tp-c" style="transform-box:fill-box;transition:transform .9s"><polyline class="chainline" stroke="var(--cool)" points="10,86 30,78 50,88 70,78 90,88 110,78 130,88 150,78 170,88 190,80"/></g>
+</svg>
+<p class="heat-state" data-cold="Fest. Die Ketten liegen nebeneinander, nichts hält sie zusammen." data-hot="Wird weich und schmilzt: Die Ketten gleiten aneinander vorbei. Beim Abkühlen wieder fest, also neu formbar und schweissbar."></p></div>
+<div class="poly"><h4 class="grp-e">Elastomer</h4><p>Ketten <strong>wenig, weitmaschig vernetzt</strong></p>
+<svg viewBox="0 0 200 110" aria-label="Elastomer: weitmaschig vernetzt">
+<g class="el-g" style="transform-box:fill-box;transform-origin:center;transition:transform .9s">
+<polyline class="chainline" stroke="var(--org)" points="10,26 30,18 50,28 70,18 90,28 110,18 130,28 150,18 170,28 190,20"/>
+<polyline class="chainline" stroke="var(--org)" points="10,56 30,48 50,58 70,48 90,58 110,48 130,58 150,48 170,58 190,50"/>
+<polyline class="chainline" stroke="var(--org)" points="10,86 30,78 50,88 70,78 90,88 110,78 130,88 150,78 170,88 190,80"/>
+<line class="xlink" x1="50" y1="28" x2="50" y2="58"/><line class="xlink" x1="150" y1="48" x2="150" y2="78"/>
+</g></svg>
+<p class="heat-state" data-cold="Gummielastisch: dehnbar, federt in die Ausgangsform zurück." data-hot="Wird etwas weicher, schmilzt aber nicht. Die wenigen Verbindungen halten die Ketten zusammen."></p></div>
+<div class="poly"><h4 class="grp-d">Duroplast</h4><p>Ketten <strong>eng vernetzt</strong></p>
+<svg viewBox="0 0 200 110" aria-label="Duroplast: eng vernetzt">
+<g class="du-g" style="transition:opacity .9s">
+<polyline class="chainline" stroke="var(--heat)" points="10,26 30,18 50,28 70,18 90,28 110,18 130,28 150,18 170,28 190,20"/>
+<polyline class="chainline" stroke="var(--heat)" points="10,56 30,48 50,58 70,48 90,58 110,48 130,58 150,48 170,58 190,50"/>
+<polyline class="chainline" stroke="var(--heat)" points="10,86 30,78 50,88 70,78 90,88 110,78 130,88 150,78 170,88 190,80"/>
+<g stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><line x1="30" y1="18" x2="30" y2="48"/><line x1="70" y1="18" x2="70" y2="48"/><line x1="110" y1="18" x2="110" y2="48"/><line x1="150" y1="18" x2="150" y2="48"/><line x1="190" y1="20" x2="190" y2="50"/><line x1="50" y1="58" x2="50" y2="88"/><line x1="90" y1="58" x2="90" y2="88"/><line x1="130" y1="58" x2="130" y2="88"/><line x1="170" y1="58" x2="170" y2="88"/><line x1="10" y1="56" x2="10" y2="86"/></g>
+</g></svg>
+<p class="heat-state" data-cold="Hart und formstabil, aber eher spröde." data-hot="Wird nicht weich. Bei starker Erwärmung verkohlt (zersetzt) er. Einmal ausgehärtet, nie mehr formbar."></p></div>
+</div>
+<div class="btn-row"><button class="btn" type="button" id="heatBtn">Erwärmen</button></div>
+</div>
+<div class="info-box success"><p><strong>Merksatz:</strong> Keine Vernetzung → Thermoplast (wird warm weich). Wenige Vernetzungen → Elastomer (Gummi). Dichte Vernetzung → Duroplast (bleibt hart). Und ein Trick aus deinem Buch (Übung 24.1): Endet der Name auf <strong>«…harz»</strong>, ist es ein Duroplast, auch wenn er mit «Poly» anfängt (Polyurethanharz, Polyesterharz). Endet er auf <strong>«…Gummi»</strong>, ist es ein Elastomer. Die übrigen «Poly…» ohne «harz» sind Thermoplaste.</p></div>
+
+<div class="section-label">Buch S. 23–24</div>
+<h2>Alle Kunststoffe aus dem Buch</h2>
+<div id="ksTables"></div>
+
+<div class="section-label">Lektion 23.10.</div>
+<h2>Die anderen Isolierstoffe</h2>
+<div class="table-wrap"><table>
+<tr><th>Gruppe</th><th>Beispiele</th><th>Typische Verwendung</th></tr>
+<tr><td><strong>fest anorganisch</strong></td><td>Glas, Porzellan, Keramik, Glimmer (Mica), Quarz</td><td>Freileitungs- und Hochspannungsisolatoren, Sicherungen, Heizelemente</td></tr>
+<tr><td><strong>flüssig</strong></td><td>mineralisches Transformatorenöl, Esteröl, Silikonöl</td><td>Transformatoren, Leistungsschalter, Kondensatoren</td></tr>
+<tr><td><strong>gasförmig</strong></td><td>Luft, Stickstoff (N₂), Schwefelhexafluorid (SF₆)</td><td>Luftisolation in Installationen, gasisolierte Schaltanlagen, Hochspannungsanlagen. SF₆ ist ein extrem starkes Treibhausgas.</td></tr>
+<tr><td><strong>fest organisch, natürlich</strong></td><td>Papier, Holz, Baumwolle</td><td>Papier als Isolation in Transformatoren; Holz isoliert nur in trockenem Zustand gut</td></tr>
+</table></div>
+
+<div class="section-label">Trainer</div>
+<h2>Welche Gruppe?</h2>
+<div class="tool">
+<div class="btn-row" id="ksSel"><button class="btn sm" type="button" data-k="ks">Kunststoffart</button><button class="btn ghost sm" type="button" data-k="iso">Isolierstoffgruppe</button></div>
+<div class="wz-meta"><span id="ksCount">1 / 1</span><span id="ksScore">0 richtig</span></div>
+<div class="wz-case" id="ksCase"></div>
+<div class="wz-opts" id="ksOpts"></div>
+<div class="wz-why" id="ksWhy"></div>
+<div class="btn-row" style="margin-top:12px;"><button class="btn" type="button" id="ksNext">Nächste Frage</button><button class="btn ghost" type="button" id="ksRestart">Neu starten</button></div>
+</div>
+</section>
+
+<!-- ═════════════ ÜBUNGEN ═════════════ -->
+<section class="tab-pane" id="uebungen">
+<p class="intro">Alle Übungen aus deinem Buch mit deiner Antwort in <span class="hand">Handschrift</span> und der Musterlösung. Die Markierung zeigt: <span class="ue-status st-ok">richtig</span> <span class="ue-status st-plus">ergänzen</span> <span class="ue-status st-fix">korrigieren</span> <span class="ue-status st-leer">leer im Buch</span>. Die leeren solltest du vor dem Test ins Buch nachtragen.</p>
+<div class="cat-filter" id="ueFilter">
+  <button class="cat-chip active" data-cat="test">Test 06.11. (S. 10–24)</button>
+  <button class="cat-chip" data-cat="leer">Noch leer</button>
+  <button class="cat-chip" data-cat="grund">Grundlagen (S. 2–9)</button>
+  <button class="cat-chip" data-cat="all">Alle</button>
+</div>
+<div class="btn-row" style="margin-bottom:14px;"><button class="btn ghost sm" type="button" onclick="revealIn('uebungen',true)">Alle Lösungen zeigen</button><button class="btn ghost sm" type="button" onclick="revealIn('uebungen',false)">Alle verstecken</button></div>
+<div id="ueList"></div>
+</section>
+
+<!-- ═════════════ KARTEIKARTEN ═════════════ -->
+<section class="tab-pane" id="karten">
+<p class="intro">Karte antippen zum Umdrehen. Mit ← → blättern, Leertaste dreht um.</p>
+<div class="cat-filter" id="cardFilter">
+  <button class="cat-chip active" data-cat="all">Alle</button>
+  <button class="cat-chip" data-cat="gew">Gewinnung</button>
+  <button class="cat-chip" data-cat="stahl">Stahl</button>
+  <button class="cat-chip" data-cat="met">Metalle</button>
+  <button class="cat-chip" data-cat="leg">Legierungen</button>
+  <button class="cat-chip" data-cat="nm">Nichtmetalle</button>
+</div>
+<div class="flash-stage"><div class="flash-card" id="flashCard" onclick="flipCard()"><span class="side-label" id="flashSide">Frage</span><div id="flashContent" class="flash-front">Karteikarten werden geladen …</div></div></div>
+<p class="flash-hint">Tippen oder Leertaste zum Umdrehen</p>
+<div class="flash-controls"><button class="flash-btn" onclick="prevCard()">‹ Zurück</button><span class="flash-counter" id="flashCounter">0 / 0</span><button class="flash-btn" onclick="nextCard()">Weiter ›</button></div>
+<div class="flash-controls"><button class="flash-btn bad" onclick="rateCard(false)">Nochmal</button><button class="flash-btn good" onclick="rateCard(true)">Sitzt</button><button class="flash-btn" onclick="shuffleCards()">Mischen</button><button class="flash-btn" onclick="resetCards()">Reset</button></div>
+<div class="flash-stats"><span>Sitzt: <strong id="statKnown">0</strong></span><span>Nochmal: <strong id="statUnknown">0</strong></span><span>Offen: <strong id="statOpen">0</strong></span></div>
+</section>
+
+<!-- ═════════════ QUIZ ═════════════ -->
+<section class="tab-pane" id="quiz">
+<p class="intro">Fragen im Stil von Wäflers Tests, sortiert nach Lernziel. Erst selber antworten, dann aufdecken.</p>
+<div class="btn-row" style="margin-bottom:18px;"><button class="btn ghost sm" type="button" onclick="revealIn('quiz',true)">Alle Lösungen zeigen</button><button class="btn ghost sm" type="button" onclick="revealIn('quiz',false)">Alle verstecken</button></div>
+<div id="quizList"></div>
+</section>
+
+<!-- ═════════════ PROBETEST ═════════════ -->
+<section class="tab-pane" id="probetest">
+<p class="intro">Probetest über alle 15 Lernziele: 40 Minuten, ohne Buch. Antworten aufschreiben, dann Lösung aufdecken und dir ehrlich Punkte geben. Note = <span class="frac"><span>Punkte</span><span>Maximum</span></span> × 5 + 1.</p>
+<div class="btn-row" style="margin-bottom:14px;"><button class="btn" id="ptStart" type="button">Timer starten (40:00)</button><button class="btn ghost" id="ptReveal" type="button">Alle Lösungen zeigen</button><button class="btn ghost" id="ptReset" type="button">Zurücksetzen</button></div>
+<div id="ptList"></div>
+<div class="pt-total"><span class="timer" id="ptTimer">40:00</span><span>Punkte: <strong id="ptPoints">0</strong> / <span id="ptMax">0</span></span><span class="big" id="ptNote">Note –</span></div>
+</section>
+
+<!-- ═════════════ LERNPLAN ═════════════ -->
+<section class="tab-pane" id="lernplan">
+<p class="intro">Der Test ist am <strong>Freitag, 06.11.</strong> Zwei Abende plus ein kurzer Check am Freitagmorgen. Abhaken wird im Browser gespeichert.</p>
+<div class="progress"><div class="progress-fill" id="planProgress"></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">1</div><div class="day-content"><h4>Mi 04.11. Abend · 25 Min. · Metalle gewinnen und herstellen (LZ 1–5)</h4><ul class="day-tasks"><li>Theorie A bis D lesen</li><li>Tab Prozesse: Hochofen alle Teile antippen, Kupfer- und Alu-Animation anschauen</li><li>Reihenfolge-Trainer: Stahl, Kupfer und Aluminium je einmal fehlerfrei</li><li>Kohlenstoff-Regler: 0,3 %, 1 %, 2,06 % und 4 % ausprobieren</li><li>Karteikarten «Gewinnung» und «Stahl»</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">2</div><div class="day-content"><h4>Mi 04.11. Abend · 15 Min. · Leere Übungen nachtragen</h4><ul class="day-tasks"><li>Tab Übungen → «Noch leer»: 10.1, 10.2, 15.3, 21.2, 23.1, 24.1 ins Buch schreiben, dazu 20.2 b</li><li>Lernziele 1–5 abhaken, wenn du sie ohne Hilfe erklären kannst</li></ul></div></div>
+<div class="milestone"><div class="milestone-icon">★</div><div><strong>Halbzeit</strong><p>Wie man Metalle gewinnt und Stahl macht, sitzt. Morgen kommt der Teil mit «wo und weshalb».</p></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">3</div><div class="day-content"><h4>Do 05.11. Abend · 25 Min. · Metalle und Legierungen (LZ 6–10)</h4><ul class="day-tasks"><li>Theorie E und F, Steckbriefe im Tab Metalle</li><li>Für jedes Metall laut sagen: Eigenschaft → Einsatz → weshalb</li><li>Trainer «Welches Metall passt?» eine Runde mit mindestens 80 %</li><li>Die drei Fallen: Bimetall, verzinnt, Hartmetall</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">4</div><div class="day-content"><h4>Do 05.11. Abend · 20 Min. · Nichtmetalle (LZ 11–15)</h4><ul class="day-tasks"><li>Theorie G, Tab Kunststoffe mit «Erwärmen»</li><li>Trainer «Welche Gruppe?» beide Modi</li><li>Die 4 Isolierstoffgruppen mit je 2 Beispielen und dem Einsatz aufschreiben</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">5</div><div class="day-content"><h4>Do 05.11. Abend · 30 Min. · Probetest</h4><ul class="day-tasks"><li>Probetest mit Timer (40 Min.), ehrlich bewerten</li><li>Was falsch war: Karteikarten dazu auf «Nochmal»</li></ul></div></div>
+<div class="day"><input type="checkbox" class="check"><div class="day-num">6</div><div class="day-content"><h4>Fr 06.11. früh · 10 Min. · Letzter Check</h4><ul class="day-tasks"><li>Tab Lernziele: alle 15 Kurzantworten einmal lesen</li><li>Nur die «Nochmal»-Karten</li><li>Kein neuer Stoff</li></ul></div></div>
+<div class="milestone"><div class="milestone-icon">✓</div><div><strong>Im Test</strong><p>Bei «Wo und weshalb»-Fragen immer beides schreiben: den Einsatz <em>und</em> die Eigenschaft, die ihn erklärt. Bei Herstellungsfragen die Schritte in der richtigen Reihenfolge, mit dem, was jeweils entfernt wird.</p></div></div>
+</section>
+
+</div>
+
+<script>
+// ═══ ALLGEMEIN ═══
+function showTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === id));
+}
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => { showTab(btn.dataset.tab); window.scrollTo({top: 0, behavior: 'smooth'}); }));
+function go(tab, anchor) {
+  showTab(tab);
+  const el = anchor && document.getElementById(anchor);
+  if (el) setTimeout(() => el.scrollIntoView({behavior: 'smooth', block: 'start'}), 30); else window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function toggleSol(btn) {
+  const shown = btn.nextElementSibling.classList.toggle('show');
+  btn.textContent = shown ? 'Lösung verstecken' : 'Lösung anzeigen';
+  btn.classList.toggle('revealed', shown);
+}
+function revealIn(sec, show) {
+  document.querySelectorAll('#' + sec + ' .reveal-btn').forEach(btn => {
+    btn.nextElementSibling.classList.toggle('show', show);
+    btn.textContent = show ? 'Lösung verstecken' : 'Lösung anzeigen';
+    btn.classList.toggle('revealed', show);
+  });
+}
+const num = (n, d) => n.toLocaleString('de-CH', {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/\.(\d+)$/, ',$1');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+// ═══ LERNZIELE ═══
+const LZ_BLOCKS = [["Metalle gewinnen und Stahl herstellen", 1, 5], ["Metalle kennen, einteilen, einsetzen", 6, 8], ["Legierungen", 9, 10], ["Nichtmetalle", 11, 15]];
+const LZ = [
+  [1, "Wie werden Metalle gewonnen?", "Aus <strong>Erzen</strong>: Metalloxide, -sulfide, -karbonate. Abbauen, aufbereiten, dann Sauerstoff, Schwefel oder Kohlenstoff entfernen: Oxide <strong>reduzieren</strong> (Hochofen), Sulfide <strong>rösten</strong>, Karbonate <strong>brennen</strong>, unedle Metalle per <strong>Elektrolyse</strong>. Am Schluss raffinieren. Gold kommt gediegen vor.", "S. 10, 16", "theorie", "t-gewinnung"],
+  [2, "Wie wird Kupfer/Aluminium hergestellt?", "<strong>Kupfer:</strong> Kupferkies → anreichern → rösten und schmelzen (Kupferstein) → Konverter (Rohkupfer 98–99 %) → <strong>elektrolytische Raffination</strong> (Anode Rohkupfer, Kathode Reinkupfer) → 99,98 %. <strong>Aluminium:</strong> Bauxit → Tonerde → in Kryolith gelöst → <strong>Schmelzflusselektrolyse</strong> (bis 100'000 A, ca. 20'000 kWh/t) → darum Recycling.", "S. 10–12 und Lektion 18.09.", "theorie", "t-cu-al"],
+  [3, "Wie wird Stahl hergestellt?", "Erz aufbereiten → <strong>Hochofen</strong> (Sauerstoff wird dem Erz entzogen) → <strong>Roheisen</strong> mit 4–5 % C, spröde → <strong>Frischen</strong> im Sauerstoff-Aufblasverfahren oder Lichtbogenofen (Kohlenstoff, S, P, Si, Mn raus) → legieren → giessen, walzen. Stahl = Eisen mit unter 2,06 % C.", "S. 16–17", "prozesse", "p-stahl"],
+  [4, "Was wird für Stahl benötigt?", "<strong>Eisenerz</strong> (Eisen), <strong>Koks</strong> (Hitze und CO, das den Sauerstoff entzieht), <strong>Zuschläge</strong> wie Kalkstein (binden Begleitstoffe zu Schlacke), <strong>Wind</strong> (heisse Luft). Zum Frischen <strong>Sauerstoff</strong> oder <strong>Strom</strong> (Lichtbogen, Schrott). Dazu Legierungselemente.", "S. 16", "theorie", "t-stahl"],
+  [5, "Wie wird Stahl weiterverarbeitet (Wärmebehandlungen)?", "Giessen, walzen, schmieden, ziehen. Wärmebehandlung ändert das Gefüge: <strong>Glühen</strong> (Spannungen weg), <strong>Härten</strong> (abschrecken, dann erneut erwärmen gegen Sprödigkeit), <strong>Vergüten</strong> (hohe Zähigkeit), <strong>Oberflächenhärten</strong> (aussen hart, Kern zäh, z. B. Meissel).", "S. 17", "theorie", "t-waerme"],
+  [6, "Welche Metalle kennen wir noch?", "Neben Eisen/Stahl: <strong>Kupfer, Aluminium, Gold, Silber, Wolfram, Blei, Quecksilber, Zink, Zinn, Nickel, Lithium</strong>. Dazu Titan und Magnesium (Leichtmetalle).", "S. 11–15", "metalle", ""],
+  [7, "Wo werden die Metalle eingeteilt?", "<strong>Eisenmetalle</strong> und <strong>Nichteisenmetalle</strong>. NE-Metalle nach Verwendung: <strong>Leiter-, Kontakt-, Widerstands-, Konstruktionswerkstoffe</strong>. Nach Dichte: <strong>Schwermetalle ab 5 kg/dm³</strong> (Cu, Pb, W), <strong>Leichtmetalle unter 5</strong> (Al, Ti, Mg). Eisen nach C-Gehalt: Baustahl, Werkzeugstahl, Guss.", "S. 3, 6, 10", "theorie", "t-metalle"],
+  [8, "Wie/wo werden die Metalle eingesetzt und weshalb?", "Die Eigenschaft erklärt den Einsatz: Cu Kabel (zweitbester Leiter), Al Freileitungen (leicht), Au Kontakte (oxidiert nicht), Ag Sicherungen und Kontakte (bester Leiter), W Glühwendel und Kontakte (3380 °C), Pb Akku, Zn Rostschutz, Sn Lot, Ni Akku und Korrosionsschutz, Li Akkus, Fe/Stahl Konstruktion und Magnetbleche.", "S. 11–18", "metalle", ""],
+  [9, "Was sind Legierungen?", "Ein Stoffgemisch mit metallischem Charakter aus <strong>zwei oder mehr Elementen</strong>, davon <strong>mindestens eines ein Metall</strong>. Man legiert, wenn die Eigenschaften des reinen Stoffs nicht ausreichen.", "S. 19", "theorie", "t-legierungen"],
+  [10, "Wo kommen Legierungen zum Einsatz und weshalb?", "<strong>Kontaktwerkstoffe</strong> (Lichtbogen, Abbrand), <strong>Widerstandswerkstoffe</strong> (Konstantan: Widerstand bleibt bei Wärme gleich; CrNi Heizleiter), <strong>Lote</strong> (weich unter 450 °C, hart darüber), <strong>Hartmetalle</strong>, <strong>Dauermagnete</strong> (AlNiCo), Messing (CuZn) und Bronze (CuSn), Aldrey für Freileitungen (zugfester). Bimetall ist keine Legierung!", "S. 19–21", "theorie", "t-legierungen"],
+  [11, "Was sind Nichtmetalle?", "Stoffe ohne metallischen Charakter, leiten schlecht. Für Elektrofachleute vor allem <strong>Isolierstoffe</strong>: Sie verhindern, dass Strom unkontrolliert fliesst. Dazu Hilfs- und Schmierstoffe und Konstruktionswerkstoffe (Kunststoff).", "S. 3, 22", "theorie", "t-nichtmetalle"],
+  [12, "Wie werden Nichtmetalle unterteilt?", "Isolierstoffe in vier Gruppen: <strong>fest organisch</strong> (Kunststoffe, Gummi, Papier, Holz), <strong>fest anorganisch</strong> (Glas, Keramik, Porzellan, Glimmer), <strong>flüssig</strong> (Trafoöl), <strong>gasförmig</strong> (Luft, N₂, SF₆). Kunststoffe: Thermoplaste, Duroplaste, Elastomere.", "S. 22–23", "theorie", "t-nichtmetalle"],
+  [13, "Welche Eigenschaften machen den Unterschied?", "Aggregatzustand · <strong>organisch</strong> (Kohlenstoffketten) oder <strong>anorganisch</strong> (mineralisch, hitzefest, brennt nicht) · bei Kunststoffen die <strong>Vernetzung</strong>: Thermoplast wird weich, Duroplast verkohlt, Elastomer bleibt elastisch · dazu max. Temperatur, Durchschlagsfestigkeit, UV-Beständigkeit.", "S. 22–24", "kunststoffe", ""],
+  [14, "Welche Nichtmetalle kennen wir?", "PVC, PE, PA, PC, PS · PUR, UP, EP, PF, MF, SI · Styrol-Butadien-, Silikon-, Chloropren-Gummi · Papier, Holz · Glas, Porzellan, Keramik, Glimmer, Quarz · Trafoöl, Silikonöl · Luft, Stickstoff, SF₆.", "S. 22–24 und Lektionen 23.10./30.10.", "kunststoffe", ""],
+  [15, "Wo kommen diese zum Einsatz und weshalb?", "PVC Kabelisolation und Rohre (isoliert, günstig, formbar) · EP Giessharz und Leiterplatten (hart, chemisch beständig) · Silikon bis 300 °C · Gummi für flexible Kabel · Porzellan Freileitungsisolatoren (hitze- und wetterfest) · Öl im Trafo (isoliert und kühlt) · Luft zwischen Leitern · SF₆ in Schaltanlagen (isoliert sehr gut, aber Treibhausgas).", "S. 23–24 und Lektion 23.10.", "theorie", "t-nichtmetalle"]
+];
+const LZ_KEY = 'wk-0611-lernziele';
+let lzDone = store.get(LZ_KEY, []);
+function renderLZ() {
+  document.getElementById('lzList').innerHTML = LZ_BLOCKS.map(([t, a, b]) => `
+    <div class="lz-block"><div class="section-label">Lernziele ${a}–${b} · ${t}</div>
+    <div class="lz-grid">${LZ.filter(l => l[0] >= a && l[0] <= b).map(l => `
+      <div class="lz${lzDone.includes(l[0]) ? ' done' : ''}" data-n="${l[0]}">
+        <div class="lz-top"><span class="lz-nr">${l[0]}</span><span class="lz-q">${l[1]}</span></div>
+        <div class="lz-a">${l[2]}</div>
+        <div class="lz-foot"><span class="src">Buch ${l[3]}</span>
+          <button class="go-btn" type="button" onclick="go('${l[4]}','${l[5]}')">Zum Thema →</button>
+          <label><input type="checkbox" ${lzDone.includes(l[0]) ? 'checked' : ''} onchange="lzToggle(${l[0]}, this.checked)"> sitzt</label></div>
+      </div>`).join('')}</div></div>`).join('');
+  document.getElementById('lzCount').textContent = lzDone.length;
+  document.getElementById('lzProgress').style.width = (lzDone.length / 15 * 100) + '%';
+}
+function lzToggle(n, on) { lzDone = lzDone.filter(x => x !== n); if (on) lzDone.push(n); store.set(LZ_KEY, lzDone); renderLZ(); }
+renderLZ();
+
+// ═══ KOHLENSTOFF-REGLER ═══
+(function () {
+  const bar = document.getElementById('cbar');
+  const Z = [[0.1, 0.6, 'Baustahl', 'var(--cool)', ''], [0.35, 1.5, 'Werkzeugstahl', 'var(--accent)', ' z2'], [2.5, 3.6, 'Eisen-Guss', 'var(--fe)', ''], [4, 5, 'Roheisen', 'var(--heat)', ' z2']];
+  bar.innerHTML = Z.map(z => `<div class="zone${z[4]}" style="left:${z[0] / 5 * 100}%;width:${(z[1] - z[0]) / 5 * 100}%;background:${z[3]}">${z[2]}</div>`).join('')
+    + `<div class="limit" style="left:${2.06 / 5 * 100}%"><span>2,06 % Stahlgrenze</span></div><div class="mark" id="cMark"></div>`;
+  const r = document.getElementById('cRange');
+  function upd() {
+    const c = r.value / 10;
+    document.getElementById('cVal').textContent = num(c, 1) + ' %';
+    document.getElementById('cMark').style.left = `calc(${c / 5 * 100}% - 1px)`;
+    let h, p;
+    if (c < 0.1) { h = 'Fast reines Eisen'; p = 'Zu weich für normale Anwendungen (Übung 17.1). Darum wird Eisen zu Stahl verarbeitet.'; }
+    else if (c < 0.35) { h = 'Baustahl'; p = 'Wenig Kohlenstoff: <strong>zäh und gut verformbar</strong>, gut schweissbar. Für Träger, Armierungseisen, Konstruktionen.'; }
+    else if (c <= 0.6) { h = 'Baustahl oder Werkzeugstahl'; p = 'Hier überschneiden sich die Bereiche (Baustahl bis 0,6 %, Werkzeugstahl ab 0,35 %). Je mehr Kohlenstoff, desto härter.'; }
+    else if (c <= 1.5) { h = 'Werkzeugstahl'; p = 'Mehr Kohlenstoff: <strong>hart und fest</strong>, härtbar. Für Hammer, Meissel, Säge, Bohrer.'; }
+    else if (c < 2.06) { h = 'Stahl mit sehr viel Kohlenstoff'; p = 'Noch Stahl, aber sehr hart und schon spröde.'; }
+    else if (c < 2.5) { h = 'Über der Stahlgrenze'; p = 'Ab 2,06 % Kohlenstoff ist es <strong>kein Stahl mehr</strong>, sondern Gusseisen.'; }
+    else if (c <= 3.6) { h = 'Eisen-Gusswerkstoff'; p = '2,5–3,6 % Kohlenstoff: gut giessbar, aber spröde. Lässt sich nicht schmieden.'; }
+    else if (c < 4) { h = 'Gusseisen bis Roheisen'; p = 'Sehr viel Kohlenstoff, sehr spröde.'; }
+    else { h = 'Roheisen'; p = 'So kommt es aus dem Hochofen: 4–5 % Kohlenstoff, <strong>spröde</strong>, im Elektrobereich unbrauchbar. Muss gefrischt werden.'; }
+    document.getElementById('cOut').innerHTML = `<h4>${h}</h4><p style="margin:0;">${p}</p>`;
+  }
+  r.addEventListener('input', upd); upd();
+})();
+
+// ═══ HOCHOFEN ═══
+const HO = {
+  gicht: ["Gicht (oben)", "Hier kommen <strong>Erz, Koks und Zuschläge</strong> (z. B. Kalkstein) schichtweise hinein. Oben ist es am kühlsten, etwa 200 °C."],
+  gas: ["Gichtgas", "Das heisse Abgas entweicht oben. Es enthält noch brennbares Kohlenmonoxid und wird zum Vorheizen des Winds genutzt."],
+  schacht: ["Schacht (400–1200 °C)", "Auf dem Weg nach unten wird das Erz immer heisser. Das <strong>Kohlenmonoxid</strong> aus dem Koks entzieht dem Eisenoxid den <strong>Sauerstoff</strong>: Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂. Das ist die Reduktion, der eigentliche Zweck des Hochofens."],
+  rast: ["Unterer Teil (1800–2000 °C)", "Das Eisen nimmt Kohlenstoff auf und <strong>schmilzt</strong>. Die Begleitstoffe des Erzes verbinden sich mit den Zuschlägen zu <strong>Schlacke</strong>."],
+  wind: ["Wind", "<strong>Heisse Luft</strong> wird unten eingeblasen. Ihr Sauerstoff verbrennt den Koks. Das liefert die Hitze und das Kohlenmonoxid für die Reduktion."],
+  schlacke: ["Schlacke", "Leichter als Eisen, schwimmt darum <strong>oben auf dem Roheisen</strong> und wird separat abgelassen. Sie enthält die Begleitstoffe. Abfallprodukt."],
+  roheisen: ["Roheisen", "Sammelt sich ganz unten und wird abgestochen. Es gibt <strong>graues und weisses</strong> Roheisen. Mit etwa 4–5 % Kohlenstoff ist es spröde. Darum wird es zu Stahl <strong>gefrischt</strong>."]
+};
+(function () {
+  const parts = document.getElementById('hoParts');
+  Object.keys(HO).forEach((k, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'part-btn'; b.dataset.p = k;
+    b.innerHTML = `<span class="n">${i + 1}</span>${HO[k][0]}`; b.addEventListener('click', () => hoShow(k)); parts.appendChild(b);
+  });
+  document.querySelectorAll('.hot[data-d="ho"]').forEach(g => g.addEventListener('click', () => hoShow(g.dataset.p)));
+})();
+function hoShow(k) {
+  document.querySelectorAll('.hot[data-d="ho"]').forEach(g => g.classList.toggle('on', g.dataset.p === k));
+  document.querySelectorAll('#hoParts .part-btn').forEach(b => b.classList.toggle('on', b.dataset.p === k));
+  document.getElementById('hoInfo').innerHTML = `<strong>${HO[k][0]}:</strong> ${HO[k][1]}`;
+}
+
+// ═══ REIHENFOLGE-TRAINER ═══
+const ORDER = {
+  stahl: ["Eisenerz abbauen und aufbereiten", "Erz, Koks und Zuschläge oben in den Hochofen", "Heissen Wind unten einblasen", "CO aus dem Koks entzieht dem Erz den Sauerstoff", "Roheisen und Schlacke unten abstechen", "Frischen: Kohlenstoff mit Sauerstoff verbrennen", "Legierungselemente zugeben", "Giessen und walzen", "Wärmebehandlung, z. B. härten"],
+  kupfer: ["Kupferkies abbauen", "Mahlen und anreichern (Flotation)", "Rösten und schmelzen → Kupferstein", "Konverter: Sauerstoff einblasen → Rohkupfer", "Rohkupfer zu Anodenplatten giessen", "Elektrolyse: Kupfer wandert zur Kathode", "Reinkupfer 99,98 % von der Kathode"],
+  alu: ["Bauxit abbauen", "Aus Bauxit Tonerde (Al₂O₃) gewinnen", "Tonerde in geschmolzenem Kryolith lösen", "Schmelzflusselektrolyse: Strom entfernt den Sauerstoff", "Flüssiges Aluminium unten abstechen", "Altaluminium sammeln und recyceln"]
+};
+let ordKey = 'stahl', ordNext = 0;
+function ordStart(k) {
+  ordKey = k || ordKey; ordNext = 0;
+  document.querySelectorAll('#ordSel .btn').forEach(b => b.classList.toggle('ghost', b.dataset.o !== ordKey));
+  document.getElementById('ordDone').innerHTML = ''; document.getElementById('ordMsg').textContent = '';
+  const pool = document.getElementById('ordPool'); pool.innerHTML = '';
+  shuffle(ORDER[ordKey].map((t, i) => [t, i])).forEach(([t, i]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'ord-btn'; b.textContent = t;
+    b.addEventListener('click', () => {
+      if (i === ordNext) {
+        ordNext++; b.classList.add('ok'); b.textContent = `${ordNext}. ${t}`; document.getElementById('ordDone').appendChild(b);
+        if (ordNext === ORDER[ordKey].length) document.getElementById('ordMsg').innerHTML = '<strong style="color:var(--success)">Alles in der richtigen Reihenfolge.</strong>';
+      } else { b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); document.getElementById('ordMsg').textContent = 'Noch nicht. Was kommt vorher?'; }
+    });
+    pool.appendChild(b);
+  });
+}
+document.querySelectorAll('#ordSel .btn').forEach(b => b.addEventListener('click', () => ordStart(b.dataset.o)));
+document.getElementById('ordReset').addEventListener('click', () => ordStart());
+ordStart('stahl');
+
+// ═══ METALLE ═══
+const METALS = [
+  {k: "Cu", n: "Kupfer", col: "var(--cu)", d: 8.9, r: 0.0175, s: 1083, ex: [], p: "S. 11", gruppe: "Schwermetall · Leiterwerkstoff",
+   e: "Weich, durch Bearbeitung hart, durch Glühen wieder weich. Leicht verformbar (walzen, ziehen), gut lötbar, schweissbar, klemmbar, verzinn- und versilberbar. Zweitbester Leiter, nicht magnetisch, sehr guter Wärmeleiter. Schützt sich mit einer Patina (Edelrost). Grünspan entsteht mit Essigsäure und ist giftig.",
+   u: "Kabel und Drähte, Wicklungen in Spulen, Motoren und Trafos, Stromschienen, Leiterplatten, Dächer, Kessel, Wasserwärmer. Als Elektrolytkupfer mit 99,98 %.",
+   w: "Nach Silber der beste Leiter, aber viel günstiger, und gut zu verarbeiten."},
+  {k: "Al", n: "Aluminium", col: "var(--al)", d: 2.7, r: 0.0278, s: 658, ex: [], p: "S. 12", gruppe: "Leichtmetall · Leiter- und Konstruktionswerkstoff",
+   e: "Sehr leicht, geringe Festigkeit, gut bearbeitbar, giessbar und schweissbar. Guter elektrischer und Wärmeleiter. Über dreimal leichter als Kupfer, leitet 1,6-mal schlechter. Korrosionsbeständig dank Oxidschicht.",
+   u: "Freileitungen und Hochspannungsleitungen (als Aldrey), Kabel mit grossem Querschnitt, Kanäle, Gehäuse, Leitern, Antennen, Gerüste.",
+   w: "Leicht und rostet nicht. Für Freileitungen zählt das Gewicht mehr als die etwas schlechtere Leitfähigkeit."},
+  {k: "Au", n: "Gold", col: "var(--au)", d: 19.3, r: 0.022, s: 1063, ex: [], p: "S. 13", gruppe: "Schwermetall · Edelmetall · Kontaktwerkstoff",
+   e: "Weich, dehnbar, geringe Festigkeit, sehr hohe Dichte. Guter Leiter. Beste Korrosionsbeständigkeit: Gold oxidiert nicht. Kommt gediegen (rein) vor.",
+   u: "Kontakte im Schwachstrom, vergoldete Steckverbinder (Cinch), Kontaktstellen in PC und Hochfrequenztechnik.",
+   w: "Oxidiert nicht, darum bleibt der Übergangswiderstand des Kontakts konstant."},
+  {k: "Ag", n: "Silber", col: "#A7AFB8", d: 10.5, r: 0.0165, s: 961, ex: [], p: "S. 13", gruppe: "Schwermetall · Edelmetall · Kontaktwerkstoff",
+   e: "Weiss glänzend, geringe Festigkeit. Bester elektrischer Leiter und bester Wärmeleiter. Korrosionsbeständig, oxidiert nur an der Oberfläche.",
+   u: "Überzug von Kontakten, Schmelzleiter in Sicherungen, Steckerstifte, Hartlote.",
+   w: "Leitet am besten. Ist aber teuer, darum nur dort, wo es sich lohnt."},
+  {k: "W", n: "Wolfram", col: "#5B6470", d: 19.3, r: 0.055, s: 3380, ex: [], p: "S. 14", gruppe: "Schwermetall · Kontaktwerkstoff",
+   e: "Sehr hart, spröde und fest, darum schlecht zu bearbeiten. Gleiche Dichte wie Gold. Höchster Schmelzpunkt aller Metalle. Korrosionsbeständig.",
+   u: "Glühwendel (früher in Glühlampen, heute in Halogenlampen), hoch belastete Kontakte in Schützen, Elektroden zum WIG-Schweissen, Hartmetall (Wolframkarbid), Legierungselement für warmfesten Werkzeugstahl.",
+   w: "Hält Temperaturen aus, bei denen alle anderen Metalle schmelzen. Der Lichtbogen brennt ihn kaum weg."},
+  {k: "Pb", n: "Blei", col: "#6E7480", d: 11.34, r: 0.21, s: 327, ex: [], p: "S. 14", gruppe: "Schwermetall",
+   e: "Schwer, sehr weich, dehnbar, sehr geringe Festigkeit. Dämpft Röntgen- und radioaktive Strahlung stark. Beständig gegen Schwefel- und Salzsäure. Giftig!",
+   u: "Elektroden im Bleiakkumulator (Autobatterie), Strahlenschutz (Bleischürze beim Zahnarzt). Früher in Lötzinn, heute verboten.",
+   w: "Säurebeständig und schwer. Im Lot ersetzt, weil giftig."},
+  {k: "Hg", n: "Quecksilber", col: "#8E98A3", d: 13.6, r: 0.96, s: -38.9, ex: ["r"], p: "S. 15", gruppe: "Schwermetall",
+   e: "Silbrig glänzend, einziges Metall, das bei Raumtemperatur flüssig ist. Hohe Dichte. Prellfreies Schalten möglich. Dämpfe sehr giftig!",
+   u: "Entladungslampen (Leuchtstoff-, Energiespar-, Quecksilberdampflampen), früher Schaltröhrchen und Thermometer. Muss in den Sondermüll.",
+   w: "Flüssig, darum prellfrei. Verliert an Bedeutung, weil die Dämpfe giftig sind."},
+  {k: "Zn", n: "Zink", col: "#7F96A8", d: 7.14, r: 0.059, s: 419, ex: ["d", "r", "s"], p: "S. 15", gruppe: "Schwermetall",
+   e: "Geringe Festigkeit, gute Korrosionseigenschaften. Unedler als Eisen.",
+   u: "Verzinken von Stahl (Rostschutz, Opferanode), Becher der Zink-Kohle-Batterie, Bestandteil von Messing.",
+   w: "Weil Zink unedler ist, korrodiert es zuerst und schützt so den Stahl darunter."},
+  {k: "Sn", n: "Zinn", col: "#9AA4AE", d: 7.3, r: 0.11, s: 232, ex: ["d", "r", "s"], p: "S. 15", gruppe: "Schwermetall",
+   e: "Silbrig glänzend, niedriger Schmelzpunkt, korrosionsbeständig.",
+   u: "Weichlot (Lötzinn), Verzinnen von Kupferlitzen und Drähten, Bestandteil von Bronze, Weissblech.",
+   w: "Schmilzt tief und schützt Kupfer, z. B. vor dem Schwefel im Gummi."},
+  {k: "Ni", n: "Nickel", col: "#8C8F7A", d: 8.9, r: 0.069, s: 1455, ex: ["d", "r", "s"], p: "S. 15", gruppe: "Schwermetall",
+   e: "Mattsilbrig mit gelblichem Schimmer. Korrosions- und hitzebeständig, ferromagnetisch.",
+   u: "Korrosionsschutz (vernickeln), Elektrode in NiCd- und NiMH-Akkus, Legierungen (Konstantan, Chrom-Nickel-Heizdraht, rostfreier Stahl, AlNiCo).",
+   w: "Rostet nicht und verträgt Hitze, darum in Schutzschichten und Heizdrähten."},
+  {k: "Li", n: "Lithium", col: "#B9A27A", d: 0.53, r: 0.094, s: 180, ex: ["d", "r", "s"], p: "S. 15", gruppe: "Leichtmetall",
+   e: "Silbrig glänzendes, sehr leichtes und reaktives Leichtmetall (das leichteste Metall).",
+   u: "Lithium-Ionen-Akkus in Smartphones, E-Bikes, Notebooks.",
+   w: "Sehr leicht und speichert viel Energie pro Kilogramm."},
+  {k: "Fe", n: "Eisen und Stahl", col: "var(--fe)", d: 7.85, r: 0.10, s: 1536, ex: ["d", "r"], p: "S. 8, 16–18", gruppe: "Eisenmetall",
+   e: "Billig, in riesigen Mengen vorhanden, Eigenschaften fast unbegrenzt einstellbar (Kohlenstoff, Legierung, Wärmebehandlung). Guter Leiter, magnetisch, wärmebeständig. Rostet. Dichte 7,85 ist Stahl (deine Antwort in Übung 6.1, nicht gedruckt), Schmelzpunkt 1536 °C ist reines Eisen (Buch S. 8).",
+   u: "Stahlkonstruktionen, Träger, Armierungseisen, Werkzeuge, Schrauben, Trafo- und Motorbleche, Kabelpritschen.",
+   w: "Fest, billig und magnetisch. Gegen Rost wird er verzinkt, verchromt oder lackiert."}
+];
+document.getElementById('metalGrid').innerHTML = METALS.map(m => {
+  const x = f => m.ex.includes(f) ? ' <span class="extra">Zusatz</span>' : '';
+  return `<div class="metal"><div class="metal-head"><div class="sym" style="background:${m.col}">${m.k}</div><div><h4>${m.n}</h4><small>${m.gruppe} · Buch ${m.p}</small></div></div>
+  <div class="mvals"><div>Dichte${x('d')}<b>${num(m.d, m.d < 1 ? 2 : (m.d * 100) % 10 ? 2 : 1)}</b>kg/dm³</div><div>spez. Widerstand${x('r')}<b>${num(m.r, m.r < 0.1 ? 4 : 2).replace(/0+$/, '').replace(/,$/, '')}</b>Ω·mm²/m</div><div>Schmelzpunkt${x('s')}<b>${num(m.s, m.s % 1 ? 1 : 0)}</b>°C</div></div>
+  <p><strong>Eigenschaften:</strong> ${m.e}</p><p><strong>Einsatz:</strong> ${m.u}</p><p class="why"><strong>Weshalb:</strong> ${m.w}</p></div>`;
+}).join('');
+const BARS = {
+  dichte: {f: 'd', u: 'kg/dm³', asc: false, cap: 'Rote Linie bei 5 kg/dm³: darüber Schwermetalle, darunter Leichtmetalle (Buch S. 6).', sep: 5},
+  rho: {f: 'r', u: 'Ω·mm²/m', asc: true, cap: 'Spezifischer Widerstand: <strong>je kleiner, desto besser leitet das Metall</strong>. Silber vor Kupfer, Gold, Aluminium.', sep: null},
+  smp: {f: 's', u: '°C', asc: false, cap: 'Wolfram schmilzt erst bei 3380 °C, Quecksilber ist schon bei −38,9 °C flüssig.', sep: null}
+};
+function drawBars(key) {
+  const c = BARS[key];
+  document.querySelectorAll('#barSel .btn').forEach(b => b.classList.toggle('ghost', b.dataset.m !== key));
+  const list = METALS.slice().sort((a, b) => c.asc ? a[c.f] - b[c.f] : b[c.f] - a[c.f]);
+  const max = Math.max(...list.map(m => Math.abs(m[c.f])));
+  let html = '', sepDone = false;
+  list.forEach(m => {
+    const v = m[c.f];
+    if (c.sep && !sepDone && v < c.sep) { html += `<div class="bar-sep"><span>5 kg/dm³</span></div>`; sepDone = true; }
+    const w = key === 'rho' ? Math.max(1.5, Math.sqrt(v / max) * 100) : Math.max(1.5, Math.abs(v) / max * 100);
+    const d = key === 'rho' ? (v < 0.1 ? 4 : 2) : (key === 'smp' ? (v % 1 ? 1 : 0) : 2);
+    html += `<div class="bar-row"><span>${m.k} ${m.n.split(' ')[0]}</span><div class="bar" style="width:${w}%;background:${m.col}"></div><span class="v">${num(v, d).replace(/(,\d*?)0+$/, '$1').replace(/,$/, '')} ${c.u}${m.ex.includes(c.f) ? ' *' : ''}</span></div>`;
+  });
+  document.getElementById('bars').innerHTML = html;
+  document.getElementById('barCap').innerHTML = c.cap + ' Mit * markierte Werte stehen nicht im Buch.' + (key === 'rho' ? ' Balken gestaucht, damit die kleinen Werte sichtbar bleiben.' : '');
+}
+document.querySelectorAll('#barSel .btn').forEach(b => b.addEventListener('click', () => drawBars(b.dataset.m)));
+drawBars('dichte');
+
+// ═══ TRAINER: WELCHES METALL ═══
+const MT = [
+  ["Freileitungen über Land: Der Leiter muss leicht sein und darf nicht rosten.", "Al", "Aluminium (als Aldrey) ist über dreimal leichter als Kupfer und schützt sich mit einer Oxidschicht."],
+  ["Kabel und Wicklungen in der Hausinstallation: sehr gute Leitfähigkeit zu vernünftigem Preis.", "Cu", "Kupfer ist der zweitbeste Leiter und gut verformbar."],
+  ["Steckkontakte im PC, die nie oxidieren dürfen.", "Au", "Gold oxidiert nicht, der Kontaktwiderstand bleibt konstant."],
+  ["Der beste elektrische Leiter überhaupt. Steckt als Schmelzleiter in Feinsicherungen.", "Ag", "Silber hat den kleinsten spezifischen Widerstand: 0,0165 Ω·mm²/m."],
+  ["Glühwendel einer Halogenlampe, die weit über 2000 °C heiss wird.", "W", "Wolfram hat den höchsten Schmelzpunkt aller Metalle: 3380 °C."],
+  ["Elektroden in der Autobatterie.", "Pb", "Der Bleiakkumulator. Blei ist beständig gegen Schwefelsäure."],
+  ["Einziges Metall, das bei Raumtemperatur flüssig ist. Steckt in Entladungslampen.", "Hg", "Quecksilber, Schmelzpunkt −38,9 °C. Dämpfe sehr giftig, Sondermüll."],
+  ["Überzug auf Stahl, damit Kabelpritschen nicht rosten.", "Zn", "Verzinken: Zink ist unedler und opfert sich für den Stahl."],
+  ["Lötdraht für die Elektronik mit tiefem Schmelzpunkt.", "Sn", "Zinn ist der Hauptbestandteil von Weichlot."],
+  ["Akku im E-Bike und im Smartphone.", "Li", "Lithium-Ionen-Akku: Lithium ist sehr leicht."],
+  ["Elektrode im NiCd-Akku, dazu als Schutzschicht auf Metallteilen.", "Ni", "Nickel ist korrosions- und hitzebeständig."],
+  ["Kern eines Transformators: Der Werkstoff muss magnetisch sein.", "Fe", "Eisen ist ferromagnetisch (wie Nickel und Kobalt)."],
+  ["Schutzschürze beim Röntgen.", "Pb", "Blei dämpft Röntgenstrahlen stark."],
+  ["Hoch belastete Schaltkontakte in Schützen: Der Lichtbogen darf sie nicht wegbrennen.", "W", "Wolfram hält den Lichtbogen aus, ohne abzubrennen."],
+  ["Damit werden Kupferlitzen in Gummikabeln überzogen, weil der Schwefel im Gummi Kupfer angreift.", "Sn", "Verzinnen schützt das Kupfer."],
+  ["Leitet etwa 1,6-mal schlechter als Kupfer, wiegt aber nur einen Drittel.", "Al", "Aluminium: 2,7 kg/dm³ statt 8,9 kg/dm³."],
+  ["Becher der Zink-Kohle-Batterie.", "Zn", "Zink ist der Minuspol dieser Batterie."],
+  ["Dachbedeckung, die sich mit einer grünen Patina selbst schützt.", "Cu", "Kupfer bildet an feuchter Luft Edelrost."],
+  ["Zusammen mit Kupfer ergibt es Messing.", "Zn", "Messing = CuZn."],
+  ["Zusammen mit Kupfer ergibt es Bronze.", "Sn", "Bronze = CuSn."],
+  ["Kommt in der Natur rein (gediegen) vor und wird mit Wasser aus dem Gestein gewaschen.", "Au", "Gold muss nicht aus einem Erz gewonnen werden."],
+  ["Billig, in riesigen Mengen vorhanden, für Träger und Armierungen.", "Fe", "Baustahl mit 0,1–0,6 % Kohlenstoff."],
+  ["Muss nach dem Gebrauch zwingend in den Sondermüll, wegen giftiger Dämpfe.", "Hg", "Quecksilberhaltige Lampen und Schalter gehören in den Sondermüll."],
+  ["Gleich schwer wie Gold (19,3 kg/dm³), aber sehr hart und spröde.", "W", "Wolfram, darum schwer zu bearbeiten."]
+];
+function makeTrainer(cfg) {
+  let order = [], i = 0, right = 0, done = false;
+  const $ = id => document.getElementById(cfg.p + id);
+  function start() { order = shuffle(cfg.data().map((_, j) => j)); i = 0; right = 0; render(); }
+  function render() {
+    const data = cfg.data(), q = data[order[i]]; done = false;
+    $('Count').textContent = `${i + 1} / ${order.length}`; $('Score').textContent = `${right} richtig`;
+    $('Case').innerHTML = q[0]; $('Why').innerHTML = '';
+    const opts = cfg.opts(q);
+    const box = $('Opts'); box.innerHTML = '';
+    opts.forEach(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'wz-opt'; b.textContent = cfg.label(o);
+      b.addEventListener('click', () => {
+        if (done) return; done = true;
+        const ok = o === q[1]; if (ok) right++;
+        box.querySelectorAll('.wz-opt').forEach((x, j) => { if (opts[j] === q[1]) x.classList.add('right'); });
+        if (!ok) b.classList.add('wrong');
+        $('Score').textContent = `${right} richtig`;
+        $('Why').innerHTML = (ok ? '<strong style="color:var(--success)">Richtig.</strong> ' : '<strong style="color:var(--danger)">Nicht ganz.</strong> ') + (q[2] || '');
+      });
+      box.appendChild(b);
+    });
+  }
+  $('Next').addEventListener('click', () => { if (i < order.length - 1) { i++; render(); } else { $('Case').innerHTML = `<strong>Fertig: ${right} von ${order.length} richtig.</strong> Mit «Neu starten» nochmal mischen.`; $('Opts').innerHTML = ''; $('Why').innerHTML = ''; } });
+  $('Restart').addEventListener('click', start);
+  return {start};
+}
+const MKEYS = METALS.map(m => m.k);
+const mtTrainer = makeTrainer({p: 'mt', data: () => MT, label: k => { const m = METALS.find(x => x.k === k); return `${k} · ${m.n.split(' ')[0]}`; },
+  opts: q => shuffle([q[1], ...shuffle(MKEYS.filter(k => k !== q[1])).slice(0, 3)])});
+mtTrainer.start();
+
+// ═══ KUNSTSTOFFE ═══
+const KS = {
+  "Thermoplaste": ["grp-t", [
+    ["Polyvinylchlorid (PVC)", "Ader- und Kabelisolation (z. B. T-Drähte), Installationsrohre (KIR, KRH), Installationskanäle, Folien, Steckvorrichtungen (Typ-11-Stecker)", "durchsichtig und farblos (einfärbbar), schweissbar, klebbar", 90],
+    ["Polyethylen (PE)", "Isolation von Netzwerkkabeln, Installationsrohre (KRF, KRFW), Formteile, Schrumpfschläuche", "farblos bis milchig, schweissbar", 110],
+    ["Polyamid (PA)", "Schutzhelme, Dübel, Steckvorrichtungen", "milchig-weiss, schweissbar", 150],
+    ["Polycarbonat (PC)", "Leuchtenabdeckungen, Schalter- und Steckdosenteile, Brillengläser, Schutzhelme, Visiere, DVDs", "glasklar, einfärb-, schweiss- und klebbar", 150],
+    ["Polystyrol (PS)", "Drucktasten, Gehäuse von Elektrogeräten, geschäumt als Wärmeisolation (Boiler), Zeichnungsschablonen", "glasklar, hart, spröde, klebbar", 90]]],
+  "Duroplaste": ["grp-d", [
+    ["Polyurethanharz (PUR)", "Gehäuse von Elektrogeräten, zum Aufschäumen und Ausgiessen, Lacke", "Varianten von hart bis weich und elastisch, schäumbar", 100],
+    ["Ungesättigte Polyesterharze (UP)", "Grundgerüste in Kleinverteilern, Giessharz", "farblos, zäh, klebbar, hart bis weich", 150],
+    ["Epoxidharz (EP)", "Giessharz in Motoren und Transformatoren, Kabelmuffen, Leiterplatten", "hart, zäh, gut giessbar, chemisch beständig", 150],
+    ["Phenol-Formaldehydharz (PF)", "Schalterteile, Klemmenbretter bei Motoren, Spulenkörper von Elektromagneten", "eher dunkel, hart, spröde", 130],
+    ["Melamin-Formaldehydharz (MF)", "Schalter- und Steckdosenteile, Abzweigdosen, Beschichtungen, Lacke", "hart, zäh, UV-beständig, eher zerbrechlich", 120],
+    ["Silikonharz (SI)", "Motoren und Transformatoren, Imprägnierung von Wicklungen", "hart bis elastisch, nimmt kein Wasser auf, ölbeständig", 300]]],
+  "Elastomere": ["grp-e", [
+    ["Styrol-Butadien-Gummi", "Kabelmantel, Gummifedern", "gute Wärme- und Alterungsbeständigkeit, hohe Elastizität", null],
+    ["Silikon-Gummi", "Laborkabelisolation, wasserdichte Dosen, Fugenmaterial", "wasserabweisend, gute Temperaturbeständigkeit", null],
+    ["Chloropren-Gummi (Neopren)", "Isolation von Schlauchleitungen, witterungsbeständige Kleidung", "hohe Temperaturbeständigkeit, schwer entflammbar, säurebeständig (verdünnt)", null]]]
+};
+document.getElementById('ksTables').innerHTML = Object.entries(KS).map(([g, [cls, rows]]) => `
+  <h3 class="${cls}">${g}</h3><div class="table-wrap"><table><tr><th>Kunststoff</th><th>Verwendung</th><th>Eigenschaften</th>${rows[0][3] ? '<th class="num">max. °C</th>' : ''}</tr>
+  ${rows.map(r => `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td>${r[3] ? `<td class="num">${r[3]}</td>` : ''}</tr>`).join('')}</table></div>`).join('')
+  + '<p style="font-size:0.88rem;color:var(--ink-soft);">Höchste Temperatur: Silikonharz mit 300 °C. Am wenigsten: PVC und PS mit 90 °C. PUR steht im Buch bei den Duroplasten, es gibt aber auch weiche, elastische PUR-Varianten (z. B. PUR-Kabelmantel).</p>';
+(function () {
+  const wrap = document.getElementById('polyWrap'), btn = document.getElementById('heatBtn');
+  function upd() { const hot = wrap.classList.contains('heated'); wrap.querySelectorAll('.heat-state').forEach(p => p.textContent = hot ? p.dataset.hot : p.dataset.cold); btn.textContent = hot ? 'Abkühlen' : 'Erwärmen'; }
+  btn.addEventListener('click', () => { wrap.classList.toggle('heated'); upd(); }); upd();
+})();
+const KSQ = [
+  ["PVC (Polyvinylchlorid)", "T", "Thermoplast. Kabelisolation, Rohre, Kanäle. Max. 90 °C."], ["PE (Polyethylen)", "T", "Thermoplast. Isolation von Netzwerkkabeln, Rohre."],
+  ["PA (Polyamid)", "T", "Thermoplast. Dübel, Helme, Steckvorrichtungen."], ["PC (Polycarbonat)", "T", "Thermoplast. Glasklare Leuchtenabdeckungen."],
+  ["PS (Polystyrol)", "T", "Thermoplast. Geschäumt als Wärmeisolation im Boiler."], ["PUR (Polyurethanharz)", "D", "Duroplast laut Buch (es gibt aber auch elastische Varianten)."],
+  ["UP (ungesättigtes Polyesterharz)", "D", "Duroplast. Grundgerüste in Kleinverteilern."], ["EP (Epoxidharz)", "D", "Duroplast. Giessharz, Leiterplatten, Kabelmuffen."],
+  ["PF (Phenol-Formaldehydharz, Bakelit)", "D", "Duroplast. Klemmenbretter bei Motoren."], ["MF (Melamin-Formaldehydharz)", "D", "Duroplast. Abzweigdosen, Steckdosenteile."],
+  ["SI (Silikonharz)", "D", "Duroplast. Bis 300 °C, Imprägnierung von Wicklungen."], ["Styrol-Butadien-Gummi", "E", "Elastomer. Kabelmantel, Gummifedern."],
+  ["Silikon-Gummi", "E", "Elastomer. Wasserdichte Dosen, Laborkabel."], ["Chloropren-Gummi (Neopren)", "E", "Elastomer. Schlauchleitungen."],
+  ["Wird beim Erwärmen weich und lässt sich schweissen.", "T", "Thermoplaste sind nicht vernetzt, darum schmelzbar."], ["Verkohlt bei starker Erwärmung, statt zu schmelzen.", "D", "Duroplaste sind eng vernetzt."],
+  ["Federt nach dem Dehnen in die Ausgangsform zurück.", "E", "Elastomere sind weitmaschig vernetzt."], ["Nach dem Aushärten hart und spröde, nie wieder formbar.", "D", "Duroplast."],
+  ["Isolation eines T-Drahts.", "T", "PVC, ein Thermoplast."], ["Leiterplatte in der Elektronik.", "D", "Epoxidharz, ein Duroplast."]
+];
+const ISOQ = [
+  ["PVC", "o", ""], ["Gummi", "o", ""], ["Papier", "o", "Natürlicher organischer Isolierstoff, z. B. im Transformator."], ["Holz", "o", "Isoliert nur in trockenem Zustand."],
+  ["Epoxidharz", "o", "Kunststoff = organisch."], ["Porzellan", "a", "Freileitungsisolatoren."], ["Glas", "a", ""], ["Glimmer (Mica)", "a", ""],
+  ["Keramik", "a", ""], ["Quarz", "a", ""], ["Transformatorenöl", "f", "Isoliert und kühlt."], ["Silikonöl", "f", ""], ["Esteröl", "f", ""],
+  ["Luft", "g", "Durchschlagsfestigkeit ca. 3 kV/mm."], ["Stickstoff (N₂)", "g", ""], ["SF₆ (Schwefelhexafluorid)", "g", "Gasisolierte Schaltanlagen, starkes Treibhausgas."],
+  ["Polyethylen (PE)", "o", ""], ["Silikon-Gummi", "o", "Silikon enthält zwar Silizium, als Kunststoff gilt es im Buch aber bei den organischen."], ["Baumwolle", "o", "Natürlicher organischer Isolierstoff."]
+];
+const KSL = {T: "Thermoplast", D: "Duroplast", E: "Elastomer", o: "fest organisch", a: "fest anorganisch", f: "flüssig", g: "gasförmig"};
+let ksMode = 'ks';
+const ksTrainer = makeTrainer({p: 'ks', data: () => ksMode === 'ks' ? KSQ : ISOQ, label: k => KSL[k], opts: () => ksMode === 'ks' ? ['T', 'D', 'E'] : ['o', 'a', 'f', 'g']});
+document.querySelectorAll('#ksSel .btn').forEach(b => b.addEventListener('click', () => { ksMode = b.dataset.k; document.querySelectorAll('#ksSel .btn').forEach(x => x.classList.toggle('ghost', x !== b)); ksTrainer.start(); }));
+ksTrainer.start();
+
+// ═══ ÜBUNGEN ═══
+const ST = {ok: ['st-ok', 'richtig'], plus: ['st-plus', 'ergänzen'], fix: ['st-fix', 'korrigieren'], leer: ['st-leer', 'leer im Buch']};
+const UE = [
+  ["Übung 10.1 · S. 10", "test", "leer", "Was sind Legierungen?", null, "Stoffgemische mit metallischem Charakter aus <strong>zwei oder mehr chemischen Elementen</strong>, von denen <strong>mindestens eines ein Metall</strong> ist (Buch S. 19). Beispiele: Messing (Cu + Zn), Bronze (Cu + Sn), Stahl (Fe + C)."],
+  ["Übung 10.2 · S. 10", "test", "leer", "Warum werden Legierungen erstellt und nicht einfach das Reinmetall verwendet?", null, "Weil die Eigenschaften des reinen Metalls für die Anwendung <strong>nicht ausreichen</strong>. Durch Legieren wird ein Metall z. B. fester, härter, korrosionsbeständiger oder bekommt einen bestimmten elektrischen Widerstand. Beispiel: Aldrey ist viel zugfester als reines Aluminium."],
+  ["Übung 11.1 · S. 11", "test", "ok", "Geben Sie einige Beispiele an, wofür Kupfer eingesetzt wird.", "Dächer, Spulen, Kabel, Kessel, Wasserwärmer, Stromschienen", "Richtig. Dazu: Wicklungen in Motoren und Transformatoren, Leiterplatten, Erdungs- und Blitzschutzanlagen."],
+  ["Übung 11.2 · S. 11", "test", "plus", "Nennen Sie zwei bekannte Kupferlegierungen und geben Sie deren Zusammensetzung an.", "Bronze, Messing, Rotguss · Zinn, Zink, Zinn/Zink/Blei", "Die Namen und Zusätze stimmen, aber das Kupfer fehlt. Schreib immer die ganze Zusammensetzung: <strong>Messing = Kupfer + Zink (CuZn)</strong>, <strong>Bronze = Kupfer + Zinn (CuSn)</strong>, Rotguss = Kupfer + Zinn + Zink + Blei. Messing und Bronze sind laut Lektion Prüfungsstoff."],
+  ["Übung 11.3 · S. 11", "test", "plus", "Warum werden Kupferlitzen in gummiisolierten Kabeln verzinnt?", "Weil im Gummi Schwefel ist, sauer, greift Kupfer an", "Die Idee stimmt, aber <strong>Schwefel ist nicht sauer</strong> und keine Säure (Lektion 18.09.). Gummi enthält Schwefel vom <strong>Vulkanisieren</strong>. Dieser Schwefel greift das Kupfer an. Die Zinnschicht schützt die Litze."],
+  ["Übung 12.1 · S. 12", "test", "ok", "Wofür wird Aluminium in der Praxis verwendet?", "Kanäle, Werkzeug, Leiter, Hochspannungsleitung, Antenne, Gerüst", "Richtig. Dazu Gehäuse und Kühlkörper. Für Freileitungen als Legierung Aldrey."],
+  ["Übung 12.2 · S. 12", "test", "ok", "Was ist und bleibt bei Aluminium wichtig?", "Recycling, wegen Energieverbrauch ist hoch", "Richtig. Für 1 t Aluminium braucht es 4 t Bauxit und rund 20'000 kWh. Darum ist <strong>Recycling</strong> so wichtig."],
+  ["Übung 13.1 · S. 13", "test", "ok", "Nennen Sie eine elektrotechnische Anwendung von Gold.", "Kontaktwerkstoff, Schwachstrom", "Richtig: Kontakte und vergoldete Steckverbinder, vor allem in der Elektronik, weil Gold nicht oxidiert."],
+  ["Übung 13.2 · S. 13", "test", "ok", "Welches sind wichtige elektrotechnische Anwendungen von Silber?", "Überzugsmaterial für Kontakte, Schmelzleister in Sicherungen", "Richtig (geschrieben wird es «Schmelzleiter»). Dazu Steckerstifte und Hartlote."],
+  ["Übung 14.1 · S. 14", "test", "plus", "Wo wird Wolfram ausser in Glühlampen noch eingesetzt?", "Kontaktwerkstoff, hoch belastete Kontakte, Schütz, Zündkerze", "Kontakte und Schütz stimmen. «Zündkerze» lieber weglassen: Die Elektroden heutiger Zündkerzen sind aus Nickel, Platin oder Iridium. Bessere Beispiele aus der Lektion 18.09.: <strong>Elektroden zum WIG-Schweissen</strong>, Röntgenröhren, dazu <strong>Hartmetall</strong> (Wolframkarbid) und warmfester Werkzeugstahl."],
+  ["Übung 14.2 · S. 14", "test", "ok", "Nennen Sie ein wichtiges Beispiel, wo Blei in der Elektrotechnik eine Rolle spielt.", "Als Elektrodenmaterial in Bleikumulatoren", "Richtig: <strong>Bleiakkumulator</strong> (Autobatterie). Dazu Strahlenschutz."],
+  ["Übung 15.1 · S. 15", "test", "ok", "Welche Lampenarten enthalten Quecksilber?", "Entladungslampe", "Richtig: Entladungslampen, also Leuchtstofflampen, Energiesparlampen und Quecksilberdampflampen."],
+  ["Übung 15.2 · S. 15", "test", "plus", "Nennen Sie einige Verwendungen von Zink.", "Rostschutz, Zinkkohle-Batterie", "Stimmt. Ergänzen: <strong>Verzinken</strong> von Stahl (Zink wirkt als Opferanode), Bestandteil von <strong>Messing</strong>, Dachrinnen und Bleche."],
+  ["Übung 15.3 · S. 15", "test", "leer", "Wofür wird Zinn im technischen Bereich eingesetzt?", null, "<strong>Weichlot</strong> (Lötzinn), <strong>Verzinnen</strong> von Kupferlitzen und Drähten (Korrosionsschutz), Bestandteil von <strong>Bronze</strong> (CuSn), Weissblech (verzinntes Stahlblech)."],
+  ["Übung 15.4 · S. 15", "test", "ok", "Wofür wird Nickel in der Praxis verwendet?", "Korrosionsschutz, Elektrode in Ni-Cd-Akku", "Richtig. Dazu als Legierungselement: Konstantan, Chrom-Nickel-Heizdraht, rostfreier Stahl."],
+  ["Übung 16.1 · S. 16", "test", "ok", "Was sind Erze?", "Metallhaltiges Gestein und Mineralien", "Richtig. Das Metall ist darin chemisch gebunden, meist an Sauerstoff, Schwefel oder Kohlenstoff."],
+  ["Übung 16.2 · S. 16", "test", "ok", "Welchen Zweck hat der Hochofenprozess?", "Dem Erz wird der Sauerstoff entzogen und die Verunreinigungen im Erz", "Richtig: Dem Eisenerz wird der <strong>Sauerstoff entzogen</strong> (Reduktion). Die Begleitstoffe gehen mit den Zuschlägen in die Schlacke. Es entsteht Roheisen."],
+  ["Übung 16.3 · S. 16", "test", "ok", "Was ist Stahl?", "Eine Kohlenstoff/Eisen-Legierung unter 2,06 % Kohlenstoff", "Richtig. Weniger Kohlenstoff macht ihn zäher, mehr Kohlenstoff härter und fester."],
+  ["Übung 17.1 · S. 17", "test", "ok", "Weshalb wird Eisen zu Stahl weiterverarbeitet? Warum wird kein reines Eisen verwendet?", "Reines Eisen ist zu weich für normale Anwendung", "Richtig. Und Roheisen ist mit seinen 4–5 % Kohlenstoff zu spröde. Stahl liegt dazwischen und lässt sich einstellen."],
+  ["Übung 18.1 · S. 18", "test", "ok", "Wofür wird Baustahl eingesetzt?", "Stahlkonstruktionen, Armierungseisen, Träger", "Richtig."],
+  ["Übung 18.2 · S. 18", "test", "ok", "Beispiele für un-, niedrig- und hochlegierten Werkzeugstahl.", "Unlegiert: Hammer, Meissel, Säge · niedriglegiert: Bohrer, Fräse · hochlegiert: Schneidwerkzeug, rostfrei (X)", "Richtig. Hochlegierte Stähle erkennt man am <strong>X</strong> im Kurzzeichen, z. B. X5CrNi18-10."],
+  ["Übung 18.3 · S. 18", "test", "ok", "Womit werden Stähle legiert?", "Kohlenstoff, Chrom, Nickel, Wolfram, Vanadium", "Richtig. Kohlenstoff ist in jedem Stahl. Legiert wird zusätzlich mit Chrom, Nickel, Wolfram, Vanadium, Molybdän, Mangan, Kobalt."],
+  ["Übung 18.4 · S. 18", "test", "ok", "Was wird erreicht, wenn Stahl a) mit Vanadium und b) mit Wolfram legiert wird?", "a) hohe Härte · b) Wärmebeständigkeit", "Richtig. Vanadium: Härte und Verschleissfestigkeit. Wolfram: Warmfestigkeit (bleibt auch heiss hart)."],
+  ["Übung 18.5 · S. 18", "test", "ok", "Wie heisst die bekannteste chemische Eigenschaft von Stahl/Eisen?", "Rosten", "Richtig."],
+  ["Übung 18.6 · S. 18", "test", "plus", "Wodurch kann das Rosten von Stahl verhindert werden?", "Verchromen / Verzinken, Farbe oder Lack", "Stimmt. Ergänzen: Kunststoff- oder Pulverbeschichtung, Ölen, und <strong>rostfreien Stahl</strong> (mit Chrom und Nickel) verwenden."],
+  ["Übung 19.1 · S. 19", "test", "ok", "Was ist das Problem, wenn Schaltkontakte sehr hohe Ströme unterbrechen müssen?", "Bei Öffnung → Schaltlichtbogen, Temp. bis 6000 °C, dadurch könnte der Kontakt schmelzen", "Richtig. Der Lichtbogen lässt den Kontakt <strong>abbrennen</strong> oder <strong>verschweissen</strong>. Im Kurzschluss sind es bis zu 60 kA."],
+  ["Übung 19.2 · S. 19", "test", "ok", "Welche Werkstoffe kommen für elektrische Kontaktstellen in Frage?", "Wolfram, Gold, Silber, Kohle, Kupfer, Nickel", "Richtig. Kupfer und Nickel aber nur in Legierungen, weil sie rein schnell oxidieren."],
+  ["Übung 20.1 · S. 20", "test", "ok", "Wofür braucht es Widerstandswerkstoffe im Alltag?", "Elektroofen, Wasserwärmer, Heizwicklungen, Messgeräte, Widerstände, elektronische Bauteile", "Richtig."],
+  ["Übung 20.2 · S. 20", "test", "plus","Was passiert beim Löten, wenn die Arbeitstemperatur a) zu klein oder b) zu gross gewählt wird?", "a) Es entsteht hoher Widerstand, kalte Lötstelle · b) leer", "a) stimmt: Das Lot verbindet sich nicht richtig mit dem Metall, es gibt eine <strong>kalte Lötstelle</strong> mit hohem Übergangswiderstand. b) <strong>zu heiss</strong>: Das Flussmittel verbrennt, Lot und Metall oxidieren, Bauteile und Leiterplatte können beschädigt werden."],
+  ["Übung 21.1 · S. 21", "test", "ok", "Sind Steinbohrer und Mauerfräser nur aus Hartmetall?", "Nein, nur die Schneideplättchen. Bohrer und Fräse Werkzeugstahl.", "Richtig. Die Hartmetallplättchen sind auf zähen Werkzeugstahl hartgelötet. Der zähe Stahl verhindert Risse und Brüche."],
+  ["Übung 21.2 · S. 21", "test", "leer", "Nennen Sie zwei Beispiele, wo Bimetalle in der Praxis eingesetzt werden.", null, "Thermischer Auslöser im <strong>Leitungsschutzschalter</strong> und im <strong>Motorschutzschalter</strong> (Überlast), <strong>Thermostate</strong> (Bügeleisen, Wasserkocher, Boiler), Energieregler beim Kochfeld, Bimetallthermometer."],
+  ["Übung 22.1 · S. 22", "test", "ok", "Nennen Sie die beiden wichtigsten Halbleiterelemente.", "Silizium, Germanium", "Richtig."],
+  ["Übung 22.2 · S. 22", "test", "ok", "Wie viele Valenzelektronen besitzen diese beiden?", "Vier, Si und Ge sind vierwertige Elemente", "Richtig."],
+  ["Übung 22.3 · S. 22", "test", "plus", "a) Unterschied zwischen festen organischen und anorganischen Isolierstoffen? b) Wie heissen die wichtigsten organischen Isolierstoffe?", "a) Organisch → Kohlenstoff · b) Kunststoff", "Stimmt. Ganz: a) Organische bestehen vor allem aus <strong>Kohlenstoffverbindungen</strong>, anorganische sind <strong>mineralisch</strong> (Glas, Keramik, Porzellan, Glimmer). b) Die <strong>Kunststoffe</strong>, dazu Gummi, Papier und Holz."],
+  ["Übung 23.1 · S. 23", "test", "leer", "Thermoplaste und Duroplaste sehen gleich aus. Wie unterscheiden sich ihre thermischen Eigenschaften?", null, "<strong>Thermoplaste</strong> werden bei Erwärmung weich und schmelzen. Beim Abkühlen werden sie wieder fest, sie sind also neu formbar und schweissbar. <strong>Duroplaste</strong> werden nach dem Aushärten nicht mehr weich. Bei starker Erwärmung verkohlen (zersetzen) sie."],
+  ["Übung 24.1 · S. 24", "test", "leer", "Was fällt auf, wenn Sie die Namen der Duroplaste anschauen?", null, "Sie heissen fast alle <strong>«…harz»</strong>: Polyurethanharz, Polyesterharz, Epoxidharz, Phenol- und Melamin-Formaldehydharz, Silikonharz. Das hast du im Buch schon über das Diagramm geschrieben: Thermoplaste «Poly», Duroplaste «Harz», Elastomere «Gummi». Achtung: Polyurethanharz und Polyesterharz fangen mit «Poly» an und sind trotzdem Duroplaste. Entscheidend ist das «…harz»."],
+  ["Übung 2.1 · S. 2", "grund", "ok", "Ergänzen Sie die Grafik zur chemischen Einteilung der Stoffe mit je zwei Beispielen.", "Stoffe → Gemische / Reinstoffe → heterogen (Beton, Mensch), homogen (Erdöl, Luft), Verbindungen (Salz, Wasser), Elemente (Kupfer, Gold)", "Richtig."],
+  ["Übung 2.2 · S. 2", "grund", "ok", "Ordnen Sie zu: verdünnte Säure, Eisen, Stahl, Ammoniak, Granit, Schwefelpulver, Schnaps.", "homogenes Gemisch, Element, homogenes Gemisch, Verbindung (NH₃), heterogenes Gemisch, Element, homogenes Gemisch", "Alles richtig."],
+  ["Übung 4.1 · S. 4", "grund", "ok", "Ordnen Sie die vier Festigkeitsbegriffe zu.", "Zugfestigkeit, Biegefestigkeit, Torsionsfestigkeit, Druckfestigkeit", "Richtig."],
+  ["Übung 5.1 · S. 5", "grund", "plus", "Je ein Praxisbeispiel für Zug-, Biege-, Druckfestigkeit und Scherbelastung.", "Zug: Kupferdraht Einzug · Biegung: KRH biegen · Druck: (unklar) · Scherung: Schrauben, Nieten", "Zug, Biegung und Scherung stimmen. Druck z. B.: Kabel, das in einer Klemme gequetscht wird, oder ein Erdkabel unter einer Fahrbahn."],
+  ["Übung 5.2 · S. 5", "grund", "ok", "Beispiel für ein Bauteil, das grosse Härte braucht.", "Hartmetallfräser von Mauerfräse", "Richtig."],
+  ["Übung 6.1 · S. 6", "grund", "ok", "Dichte von Kupfer, Aluminium, Blei, Gold, Wolfram, Stahl.", "8,96 · 2,7 · 11,34 · 19,32 · 19,25 · 7,85 kg/dm³", "Richtig (im Buch gerundet: Cu 8,9, Au und W je 19,3)."],
+  ["Übung 6.2 · S. 6", "grund", "ok", "Wie heissen die Ladungsträger in einem Metall?", "Elektronen", "Richtig."],
+  ["Übung 7.1 · S. 7", "grund", "ok", "Wie hoch ist die Durchschlagsfestigkeit von Luft?", "3 kV/mm", "Richtig (abhängig von Feuchtigkeit und Elektrodenform)."],
+  ["Übung 7.2 · S. 7", "grund", "ok", "Welche Metalle sind ferromagnetisch?", "Eisen, Nickel, Kobald", "Richtig, geschrieben «Kobalt»."],
+  ["Übung 7.3 · S. 7", "grund", "ok", "Wo werden Dauer- oder Elektromagnete eingesetzt?", "Trafo, Motor, Generator, Schalter, Lautsprecher, Wecker", "Richtig."],
+  ["Übung 7.4 · S. 7", "grund", "ok", "Zwei Beispiele, wo Dielektrika vorkommen.", "Kondensatoren, Koaxialkabel", "Richtig."],
+  ["Übung 8.1 · S. 8", "grund", "ok", "Anwendungen, bei denen der Schmelzpunkt entscheidend ist.", "Sicherungen, Löten, Schweissen", "Richtig."],
+  ["Übung 8.2 · S. 8", "grund", "ok", "a) Siedepunkt von Wasser? b) Wovon hängt er noch ab?", "100 °C, Luftdruck", "Richtig."],
+  ["Übung 8.3 · S. 8", "grund", "ok", "Welche Arten von Brennbarkeit unterscheidet die NIN?", "Leicht – mittel – schwer, nicht", "Richtig: leicht brennbar, mittel brennbar, schwer brennbar und nicht brennbar."],
+  ["Übung 8.4 · S. 8", "grund", "fix", "Wie gross ist die spezifische Wärmekapazität von Wasser?", "4,817 kJ/kg·K", "Zahlendreher: <strong>4,187 kJ/(kg·K)</strong>, gerundet 4,19."],
+  ["Übung 8.5 · S. 8", "grund", "ok", "Welche Werkstoffe haben eine hohe Wärmeleitfähigkeit?", "Gute elektrische Leiter", "Richtig, also die Metalle: Silber, Kupfer, Aluminium."],
+  ["Übung 9.1 · S. 9", "grund", "ok", "Bekannteste Art von Korrosion?", "Rosten, Oxidation", "Richtig."],
+  ["Übung 9.2 · S. 9", "grund", "ok", "Zwei typische giftige Metalle.", "Quecksilber und Blei", "Richtig."],
+  ["Übung 9.3 · S. 9", "grund", "ok", "Was passiert mit nicht UV-beständigen Materialien?", "Wird porös, brüchig", "Richtig."],
+  ["Übung 9.4 · S. 9", "grund", "leer", "Zwei Beispiele, wofür man die elektrochemische Spannungsreihe braucht.", null, "<strong>Batterien und Akkus</strong> (welche Spannung zwei Metalle ergeben) und <strong>Korrosion</strong> verhindern, wenn verschiedene Metalle sich berühren (z. B. Kupfer an Aluminium nur mit passender Klemme; Zink als Opferanode)."]
+];
+function renderUE(cat) {
+  const list = UE.filter(u => cat === 'all' || (cat === 'leer' ? u[2] === 'leer' : u[1] === cat));
+  document.getElementById('ueList').innerHTML = list.map(u => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">${u[0]}</span><span class="ue-status ${ST[u[2]][0]}">${ST[u[2]][1]}</span></div>
+    <p class="q-text">${u[3]}</p>
+    <p style="font-size:0.92rem;margin:0 0 8px;">Deine Antwort im Buch: ${u[4] ? `<span class="hand">${u[4]}</span>` : '<em style="color:var(--ink-mute)">leer</em>'}</p>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Musterlösung</h4><p>${u[5]}</p></div>
+  </div>`).join('');
+}
+document.querySelectorAll('#ueFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('#ueFilter .cat-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); renderUE(chip.dataset.cat);
+}));
+renderUE('test');
+
+
+// ═══ KARTEIKARTEN ═══
+const CARDS = [
+  ["Was ist ein Erz?", "Metallhaltiges Gestein. Das Metall ist chemisch gebunden, meist an Sauerstoff, Schwefel oder Kohlenstoff.", "gew"],
+  ["Die drei Erzgruppen mit je einem Beispiel?", "Metalloxide (Bauxit, Magneteisenstein) · Metallsulfide (Kupferkies, Bleiglanz) · Metallkarbonate (Wolframit, Zinkspat).", "gew"],
+  ["Was muss bei einem Oxid, Sulfid, Karbonat jeweils weg?", "Oxid: Sauerstoff (reduzieren, z. B. Hochofen). Sulfid: Schwefel (rösten, Röstofen). Karbonat: Kohlenstoff (brennen).", "gew"],
+  ["Welches Metall findet man rein (gediegen)?", "Gold. Es wird mit Wasser aus dem Gestein gewaschen.", "gew"],
+  ["Was heisst Raffinieren?", "Das Rohmetall reinigen, z. B. Rohkupfer elektrolytisch zu 99,98 % Reinkupfer.", "gew"],
+  ["Wie rein ist Elektrolytkupfer?", "Bis 99,98 %.", "gew"],
+  ["Kupferraffination: Was ist Anode, was Kathode?", "Anode (+) = Rohkupfer, löst sich auf. Kathode (−) = Reinkupferblech, darauf wächst reines Kupfer.", "gew"],
+  ["Was ist Anodenschlamm?", "Edle Verunreinigungen (Gold, Silber), die sich nicht lösen und unter der Anode absetzen.", "gew"],
+  ["Aus welchem Erz gewinnt man Aluminium?", "Aus Bauxit. Daraus zuerst Tonerde (Aluminiumoxid).", "gew"],
+  ["Wie wird aus Tonerde Aluminium?", "Schmelzflusselektrolyse: Die Tonerde wird in geschmolzenem Kryolith gelöst (ca. 950 °C), Strom entfernt den Sauerstoff.", "gew"],
+  ["Aluminium: Strom, Rohstoff, Energie pro Tonne?", "Bis 100'000 A bei ca. 6 V · 4 t Bauxit · rund 20'000 kWh.", "gew"],
+  ["Was ist bei Aluminium wichtig, weil die Herstellung so viel Energie braucht?", "Recycling.", "gew"],
+  ["Kupfer- vs. Aluminium-Elektrolyse: der Unterschied?", "Kupfer: Strom reinigt vorhandenes Rohkupfer (Lösung). Aluminium: Strom gewinnt das Metall aus der Tonerde (Schmelze).", "gew"],
+  ["Was braucht es für den Hochofen?", "Eisenerz, Koks, Zuschläge (z. B. Kalkstein) und Wind (heisse Luft).", "stahl"],
+  ["Wozu dient der Koks im Hochofen?", "Er liefert die Hitze und das Kohlenmonoxid, das dem Erz den Sauerstoff entzieht.", "stahl"],
+  ["Wozu dienen die Zuschläge (Kalkstein)?", "Sie binden die Begleitstoffe des Erzes zu Schlacke.", "stahl"],
+  ["Zweck des Hochofens?", "Dem Eisenerz den Sauerstoff entziehen (Reduktion). Es entsteht Roheisen.", "stahl"],
+  ["Was kommt unten aus dem Hochofen, was oben?", "Unten Roheisen und darüber Schlacke. Oben Gichtgas.", "stahl"],
+  ["Temperaturen im Hochofen?", "Oben etwa 200 °C, unten etwa 2000 °C.", "stahl"],
+  ["Die vier Eisenerzsorten nach Eisengehalt?", "Magneteisenstein 50–70 % · Roteisenstein 40–60 % · Brauneisenstein 30–50 % · Spateisenstein 20–40 %.", "stahl"],
+  ["Warum braucht man im Elektrobereich kein Roheisen?", "Zu viel Kohlenstoff (4–5 %), darum spröde.", "stahl"],
+  ["Was ist Frischen?", "Roheisen zu Stahl machen: den hohen Kohlenstoffanteil entziehen, dazu Schwefel, Phosphor, Silizium, Mangan.", "stahl"],
+  ["Die zwei Frischverfahren?", "Sauerstoff-Aufblasverfahren (Konverter, Roheisen) und Lichtbogenofen (Strom, vor allem Schrott).", "stahl"],
+  ["Was ist Stahl?", "Eisen-Kohlenstoff-Legierung mit unter 2,06 % Kohlenstoff.", "stahl"],
+  ["Weniger oder mehr Kohlenstoff im Stahl?", "Weniger: zäher, verformbarer. Mehr: härter, fester.", "stahl"],
+  ["Kohlenstoffgehalt Baustahl, Werkzeugstahl, Eisen-Guss?", "0,1–0,6 % · 0,35–1,5 % · 2,5–3,6 %.", "stahl"],
+  ["Was macht Glühen?", "Erwärmen, halten, langsam abkühlen. Beseitigt Spannungen und Gefügeverfestigungen.", "stahl"],
+  ["Was macht Härten?", "Auf Härtetemperatur erwärmen, abschrecken: glashart, aber spröde. Darum erneut erwärmen und an der Luft abkühlen.", "stahl"],
+  ["Wozu Vergüten?", "Für eine hohe Zähigkeit, bei hoch beanspruchten Maschinenteilen.", "stahl"],
+  ["Was ist Oberflächenhärten? Beispiel?", "Nur die Randschicht härten, der Kern bleibt zäh. Beispiel Meissel.", "stahl"],
+  ["Stahl mit Vanadium, mit Wolfram?", "Vanadium: hohe Härte. Wolfram: Wärmebeständigkeit (Warmfestigkeit).", "stahl"],
+  ["Wie verhindert man Rost?", "Verzinken, verchromen, lackieren, beschichten oder rostfreien Stahl verwenden.", "stahl"],
+  ["Woran erkennt man hochlegierten Stahl im Kurzzeichen?", "Am X, z. B. X5CrNi18-10.", "stahl"],
+  ["Wie teilt man Metalle ein?", "Eisenmetalle und Nichteisenmetalle. NE nach Verwendung (Leiter, Kontakt, Widerstand, Konstruktion) und nach Dichte (Schwer-/Leichtmetall).", "met"],
+  ["Grenze Schwermetall/Leichtmetall?", "5 kg/dm³. Darüber Schwermetall (Cu, Pb, W), darunter Leichtmetall (Al, Ti, Mg).", "met"],
+  ["Dichte: Formel?", "ρ = <span class=\"frac\"><span>m</span><span>V</span></span> &nbsp;(Masse durch Volumen), in kg/dm³.", "met"],
+  ["Kupfer: Dichte, spez. Widerstand, Schmelzpunkt?", "8,9 kg/dm³ · 0,0175 Ω·mm²/m · 1083 °C.", "met"],
+  ["Aluminium: Dichte, spez. Widerstand, Schmelzpunkt?", "2,7 kg/dm³ · 0,0278 Ω·mm²/m · 658 °C.", "met"],
+  ["Bester elektrischer Leiter?", "Silber (0,0165 Ω·mm²/m). Kupfer ist der zweitbeste.", "met"],
+  ["Höchster Schmelzpunkt aller Metalle?", "Wolfram, 3380 °C.", "met"],
+  ["Einziges flüssiges Metall bei Raumtemperatur?", "Quecksilber, Schmelzpunkt −38,9 °C.", "met"],
+  ["Gold: warum für Kontakte?", "Oxidiert nicht, der Kontaktwiderstand bleibt konstant.", "met"],
+  ["Silber: zwei Anwendungen?", "Überzug von Kontakten, Schmelzleiter in Sicherungen (auch Hartlote).", "met"],
+  ["Blei: Anwendung und Problem?", "Bleiakkumulator, Strahlenschutz. Giftig, darum aus dem Lot verbannt.", "met"],
+  ["Zink: Anwendungen?", "Verzinken (Rostschutz), Zink-Kohle-Batterie, Messing.", "met"],
+  ["Zinn: Anwendungen?", "Lötzinn, Verzinnen von Kupferlitzen, Bronze.", "met"],
+  ["Nickel: Anwendungen?", "Korrosionsschutz, NiCd-/NiMH-Akkus, Legierungen (Konstantan, Chrom-Nickel).", "met"],
+  ["Lithium: Anwendung?", "Lithium-Ionen-Akkus (Smartphone, E-Bike, Notebook).", "met"],
+  ["Aluminium gegenüber Kupfer?", "Etwas mehr als dreimal leichter, leitet etwa 1,6-mal schlechter.", "met"],
+  ["Patina oder Grünspan?", "Patina (Edelrost) schützt Kupfer. Grünspan entsteht mit Essigsäure, zerstört Kupfer und ist giftig.", "met"],
+  ["Welche Metalle sind ferromagnetisch?", "Eisen, Nickel, Kobalt.", "met"],
+  ["Was ist eine Legierung?", "Stoffgemisch mit metallischem Charakter aus zwei oder mehr Elementen, mindestens eines ein Metall.", "leg"],
+  ["Warum legiert man?", "Weil die Eigenschaften des reinen Stoffs für die Anwendung nicht ausreichen.", "leg"],
+  ["Messing?", "Kupfer + Zink (CuZn).", "leg"],
+  ["Bronze?", "Kupfer + Zinn (CuSn).", "leg"],
+  ["Aldrey: Zusammensetzung und Einsatz?", "Aluminium + je 0,5 % Magnesium und Silizium. Freileitungen, weil viel zugfester.", "leg"],
+  ["Anforderungen an Kontaktwerkstoffe?", "Fest und hart, gut leitend, hoher Schmelzpunkt, abbrandfest, verschweisst nicht, oxidiert wenig.", "leg"],
+  ["Warum Kupfer und Nickel nur legiert als Kontakt?", "Rein oxidieren sie zu schnell.", "leg"],
+  ["Anforderungen an Widerstandswerkstoffe?", "Hoher spezifischer Widerstand, Widerstand bleibt bei Wärme fast gleich (kleiner Temperaturkoeffizient).", "leg"],
+  ["Werkstoffe für Präzisionswiderstände?", "Konstantan (CuNi44), Manganin (CuMn12Ni), Nickelin (CuNi30Mn).", "leg"],
+  ["Werkstoff für Heizwiderstände?", "Chrom-Nickel oder Eisen-Chrom-Nickel.", "leg"],
+  ["Weichlöten und Hartlöten: die Grenze?", "450 °C. Weichlöten darunter, Hartlöten darüber.", "leg"],
+  ["Warum ist Zinn-Blei-Lot verboten?", "Blei ist giftig.", "leg"],
+  ["Was sind Hartmetalle?", "Gesinterte Metallkarbide (Wolfram, Titan) mit Kobalt als Bindemittel. Nur mit Diamant bearbeitbar.", "leg"],
+  ["Bekannteste Legierung für Dauermagnete?", "AlNiCo (Eisen mit Aluminium, Nickel, Kobalt), bis 500 °C.", "leg"],
+  ["Ist ein Bimetall eine Legierung?", "Nein. Ein Verbundwerkstoff aus zwei zusammengewalzten Metallen.", "leg"],
+  ["Wie funktioniert ein Bimetall?", "Die zwei Metalle dehnen sich bei Wärme verschieden aus, der Streifen biegt sich.", "leg"],
+  ["Wichtigste Nichtmetalle für Elektrofachleute?", "Die Isolierstoffe.", "nm"],
+  ["Die vier Isolierstoffgruppen?", "Fest organisch, fest anorganisch, flüssig, gasförmig.", "nm"],
+  ["Organisch oder anorganisch: woran entscheidet man?", "An der chemischen Zusammensetzung: organisch = Kohlenstoffverbindungen (Ketten), anorganisch = mineralisch.", "nm"],
+  ["Beispiele fest anorganisch?", "Glas, Porzellan, Keramik, Glimmer, Quarz.", "nm"],
+  ["Flüssiger Isolierstoff und Einsatz?", "Transformatorenöl, im Trafo: isoliert und kühlt.", "nm"],
+  ["Gasförmige Isolierstoffe?", "Luft, Stickstoff, SF₆ (Schwefelhexafluorid).", "nm"],
+  ["Problem mit SF₆?", "Extrem starkes Treibhausgas.", "nm"],
+  ["Die drei Kunststoffarten?", "Thermoplaste, Duroplaste, Elastomere.", "nm"],
+  ["Thermoplast: Ketten und Wärme?", "Nicht vernetzt. Wird weich, schmilzt, wieder formbar und schweissbar.", "nm"],
+  ["Duroplast: Ketten und Wärme?", "Eng vernetzt. Wird nicht weich, verkohlt bei starker Erwärmung.", "nm"],
+  ["Elastomer: Ketten und Wärme?", "Weitmaschig vernetzt. Gummielastisch, wird etwas weicher, schmilzt nicht.", "nm"],
+  ["Fünf Thermoplaste?", "PVC, PE, PA, PC, PS.", "nm"],
+  ["Sechs Duroplaste?", "PUR, UP, EP, PF, MF, SI (alles Harze).", "nm"],
+  ["Drei Elastomere?", "Styrol-Butadien-Gummi, Silikon-Gummi, Chloropren-Gummi.", "nm"],
+  ["PVC: Einsatz und max. Temperatur?", "Ader- und Kabelisolation, Rohre, Kanäle, Stecker · 90 °C.", "nm"],
+  ["Welcher Kunststoff hält am meisten Hitze aus?", "Silikonharz (SI), 300 °C.", "nm"],
+  ["Epoxidharz: Einsatz?", "Giessharz in Motoren und Trafos, Kabelmuffen, Leiterplatten.", "nm"],
+  ["Die zwei wichtigsten Halbleiter?", "Silizium und Germanium, je 4 Valenzelektronen.", "nm"]
+];
+let cardSet = [], cardIdx = 0, cardFlipped = false, knownIds = new Set(), unknownIds = new Set(), cardCat = 'all';
+function buildCardSet() { cardSet = CARDS.map((c, i) => ({q: c[0], a: c[1], cat: c[2], _id: i})).filter(c => cardCat === 'all' || c.cat === cardCat); cardIdx = 0; cardFlipped = false; knownIds = new Set(); unknownIds = new Set(); renderCard(); updateCardStats(); }
+function renderCard() {
+  const content = document.getElementById('flashContent'), side = document.getElementById('flashSide'), counter = document.getElementById('flashCounter');
+  if (!cardSet.length) { content.className = 'flash-front'; content.textContent = 'Keine Karten in dieser Kategorie.'; counter.textContent = '0 / 0'; return; }
+  const c = cardSet[cardIdx]; counter.textContent = `${cardIdx + 1} / ${cardSet.length}`;
+  if (cardFlipped) { side.textContent = 'Antwort'; content.className = 'flash-back'; content.innerHTML = c.a; } else { side.textContent = 'Frage'; content.className = 'flash-front'; content.innerHTML = c.q; }
+}
+function flipCard() { if (!cardSet.length) return; cardFlipped = !cardFlipped; renderCard(); }
+function nextCard() { if (!cardSet.length) return; cardIdx = (cardIdx + 1) % cardSet.length; cardFlipped = false; renderCard(); }
+function prevCard() { if (!cardSet.length) return; cardIdx = (cardIdx - 1 + cardSet.length) % cardSet.length; cardFlipped = false; renderCard(); }
+function rateCard(known) { if (!cardSet.length) return; const id = cardSet[cardIdx]._id; if (known) { knownIds.add(id); unknownIds.delete(id); } else { unknownIds.add(id); knownIds.delete(id); } updateCardStats(); nextCard(); }
+function shuffleCards() { cardSet = shuffle(cardSet); cardIdx = 0; cardFlipped = false; renderCard(); }
+function resetCards() { buildCardSet(); }
+function updateCardStats() { document.getElementById('statKnown').textContent = knownIds.size; document.getElementById('statUnknown').textContent = unknownIds.size; document.getElementById('statOpen').textContent = Math.max(0, cardSet.length - knownIds.size - unknownIds.size); }
+document.querySelectorAll('#cardFilter .cat-chip').forEach(chip => chip.addEventListener('click', () => { document.querySelectorAll('#cardFilter .cat-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); cardCat = chip.dataset.cat; buildCardSet(); }));
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('karten').classList.contains('active')) return;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') { nextCard(); e.preventDefault(); } if (e.key === 'ArrowLeft') { prevCard(); e.preventDefault(); } if (e.key === ' ') { flipCard(); e.preventDefault(); }
+});
+buildCardSet();
+
+// ═══ QUIZ ═══
+const QUIZ = [
+  [1, "S. 10", "Nenne die drei Erzgruppen mit je einem Beispiel und sag, was bei der Gewinnung jeweils entfernt werden muss.", "<strong>Metalloxide</strong> (Bauxit, Magneteisenstein) → Sauerstoff entfernen. <strong>Metallsulfide</strong> (Kupferkies, Bleiglanz) → Schwefel entfernen (Röstofen). <strong>Metallkarbonate</strong> (Wolframit, Zinkspat) → Kohlenstoff entfernen."],
+  [1, "S. 10", "Warum muss man Gold nicht aus einem Erz gewinnen?", "Gold kommt fast nur <strong>gediegen</strong> (rein) vor. Goldstaub und -körner werden mit Wasser aus dem Gestein gewaschen."],
+  [1, "Lektion", "Beschreibe den allgemeinen Weg vom Erz zum reinen Metall in fünf Schritten.", "Abbauen → aufbereiten (zerkleinern, taubes Gestein trennen) → vorbehandeln (Sulfide rösten, Karbonate brennen) → reduzieren oder Elektrolyse → raffinieren."],
+  [2, "Lektion", "Beschreibe die Herstellung von Reinkupfer.", "Kupferkies mahlen und anreichern → rösten und schmelzen (Kupferstein) → Konverter (Rohkupfer 98–99 %) → <strong>elektrolytische Raffination</strong>: Rohkupfer als Anode (+), Reinkupfer wächst an der Kathode (−) → bis 99,98 %."],
+  [2, "Lektion", "Was passiert bei der Kupferraffination mit Gold und Silber aus dem Rohkupfer?", "Sie lösen sich nicht und setzen sich als <strong>Anodenschlamm</strong> unter der Anode ab. Man gewinnt sie daraus zurück."],
+  [2, "Lektion 18.09.", "Warum muss Leiterkupfer so rein sein?", "Jede Verunreinigung verschlechtert die <strong>elektrische Leitfähigkeit</strong> deutlich."],
+  [2, "S. 12", "Beschreibe die Herstellung von Aluminium in zwei Schritten.", "1. Aus <strong>Bauxit</strong> wird <strong>Tonerde</strong> (Aluminiumoxid) gewonnen. 2. Die Tonerde wird in geschmolzenem Kryolith gelöst, und in der <strong>Schmelzflusselektrolyse</strong> wird ihr mit Strom der Sauerstoff entzogen."],
+  [2, "S. 12", "Welches Fazit zieht man aus der Aluminiumherstellung? Begründe mit Zahlen.", "<strong>Recycling</strong> ist wichtig. Für 1 t Aluminium braucht es 4 t Bauxit und rund 20'000 kWh, mit Strömen bis 100'000 A."],
+  [3, "S. 16", "Welchen Zweck hat der Hochofenprozess?", "Dem Eisenerz wird der <strong>Sauerstoff entzogen</strong> (Reduktion). Die Begleitstoffe gehen in die Schlacke. Es entsteht Roheisen."],
+  [3, "S. 16", "Was kommt aus dem Hochofen heraus?", "Unten <strong>Roheisen</strong> (grau und weiss) und die leichtere <strong>Schlacke</strong> als Abfallprodukt. Oben das <strong>Gichtgas</strong>."],
+  [3, "S. 16–17", "Warum wird Roheisen nicht direkt verwendet, und wie wird daraus Stahl?", "Es enthält <strong>zu viel Kohlenstoff</strong> (4–5 %) und ist spröde. Beim <strong>Frischen</strong> (Sauerstoff-Aufblasverfahren oder Lichtbogenofen) werden Kohlenstoff und Begleitstoffe wie Schwefel, Phosphor, Silizium und Mangan entfernt."],
+  [3, "S. 17", "Vergleiche Sauerstoff-Aufblasverfahren und Lichtbogenofen.", "Aufblasverfahren: Sauerstoff auf flüssiges Roheisen, die Verbrennung liefert die Wärme. Lichtbogenofen: Ein elektrischer Lichtbogen schmilzt vor allem Stahlschrott."],
+  [3, "S. 16", "Was ist Stahl, und wie wirkt der Kohlenstoffgehalt?", "Eisen-Kohlenstoff-Legierung mit <strong>unter 2,06 % C</strong>. Weniger C → zäher und verformbarer. Mehr C → härter und fester."],
+  [4, "S. 16", "Was wird in den Hochofen gegeben, und wozu dient es?", "<strong>Eisenerz</strong> (liefert das Eisen), <strong>Koks</strong> (Hitze und Kohlenmonoxid, das den Sauerstoff entzieht), <strong>Zuschläge</strong> wie Kalkstein (binden Begleitstoffe zu Schlacke). Unten <strong>Wind</strong> (heisse Luft) zum Verbrennen des Koks."],
+  [4, "S. 16", "Nenne die vier Eisenerzsorten. Welche hat am meisten Eisen?", "Magneteisenstein (50–70 %, am meisten), Roteisenstein (40–60 %), Brauneisenstein (30–50 %), Spateisenstein (20–40 %)."],
+  [4, "S. 16", "Nenne drei Gründe, warum Eisen so wichtig ist.", "In <strong>gewaltigen Mengen</strong> vorhanden, eines der <strong>billigsten</strong> Metalle, Eigenschaften <strong>fast unbegrenzt anpassbar</strong>."],
+  [5, "S. 17", "Nenne die vier Wärmebehandlungen und ihr Ziel.", "<strong>Glühen</strong>: Spannungen beseitigen. <strong>Härten</strong>: hart und verschleissfest. <strong>Vergüten</strong>: hohe Zähigkeit. <strong>Oberflächenhärten</strong>: Randschicht hart, Kern zäh."],
+  [5, "S. 17", "Warum wird ein gehärteter Stahl nochmals erwärmt?", "Nach dem Abschrecken ist er glashart, aber <strong>spröde und brüchig</strong>. Erneutes Erwärmen und Abkühlen an der Luft lockert das Gefüge wieder etwas."],
+  [5, "S. 17", "Warum wird ein Meissel nur an der Oberfläche gehärtet?", "Die Schneide muss <strong>hart</strong> sein, damit sie nicht abnützt. Der <strong>zähe Kern</strong> verhindert, dass der Meissel beim Hämmern bricht."],
+  [5, "S. 17", "Was verändert eine Wärmebehandlung im Stahl?", "Den <strong>Gefügeaufbau</strong> (die innere Struktur). Dadurch wird er z. B. hart, weich, zäh oder elastisch."],
+  [6, "S. 11–15", "Nenne acht Nichteisenmetalle aus dem Buch.", "Kupfer, Aluminium, Gold, Silber, Wolfram, Blei, Quecksilber, Zink, Zinn, Nickel, Lithium."],
+  [6, "S. 10", "Was ist typisch für Metalle?", "Elektrisch leitfähig, gute Wärmeleiter, metallischer Glanz, meist gut verformbar."],
+  [7, "S. 3, 10", "Wie werden die Nichteisenmetalle nach ihrer Verwendung eingeteilt? Je ein Beispiel.", "<strong>Leiterwerkstoffe</strong> (Kupfer) · <strong>Kontaktwerkstoffe</strong> (Silber) · <strong>Widerstandswerkstoffe</strong> (Konstantan) · <strong>Konstruktionswerkstoffe</strong> (Aluminium)."],
+  [7, "S. 6", "Wie unterscheidet man Schwer- und Leichtmetalle? Je zwei Beispiele.", "Grenze <strong>5 kg/dm³</strong>. Schwer: Kupfer, Blei, Wolfram. Leicht: Aluminium, Titan, Magnesium."],
+  [7, "S. 17", "Wie werden die Eisenwerkstoffe nach dem Kohlenstoffgehalt eingeteilt?", "<strong>Baustähle</strong> 0,1–0,6 %, <strong>Werkzeugstähle</strong> 0,35–1,5 %, <strong>Eisen-Gusswerkstoffe</strong> 2,5–3,6 %."],
+  [8, "S. 12", "Warum nimmt man für Freileitungen Aluminium und nicht Kupfer?", "Aluminium ist über <strong>dreimal leichter</strong> und rostet nicht (Oxidschicht). Als <strong>Aldrey</strong> ist es zugfest genug. Die 1,6-mal schlechtere Leitfähigkeit gleicht man mit grösserem Querschnitt aus."],
+  [8, "S. 13", "Wo setzt man Gold ein, wo Silber? Begründe.", "<strong>Gold</strong>: Kontakte in Elektronik und PC, weil es nicht oxidiert. <strong>Silber</strong>: Kontaktüberzug und Schmelzleiter in Sicherungen, weil es am besten leitet."],
+  [8, "S. 14", "Warum Wolfram für Glühwendel und hoch belastete Kontakte?", "Höchster Schmelzpunkt aller Metalle (<strong>3380 °C</strong>), sehr hart, korrosionsbeständig."],
+  [8, "S. 15", "Wozu Zink und wozu Zinn? Was schützt jeweils was?", "<strong>Zink</strong> schützt Stahl (verzinken), Batterie, Messing. <strong>Zinn</strong> schützt Kupferlitzen (verzinnen), Lot, Bronze."],
+  [8, "S. 14–15", "Welche Metalle sind giftig, und was bedeutet das für die Entsorgung?", "<strong>Blei und Quecksilber</strong>. Quecksilberhaltige Betriebsmittel müssen in den <strong>Sondermüll</strong>. Bleihaltige Lote sind verboten."],
+  [9, "S. 19", "Was ist eine Legierung, und warum stellt man sie her?", "Stoffgemisch mit metallischem Charakter aus zwei oder mehr Elementen, <strong>mindestens eines ein Metall</strong>. Weil die Eigenschaften des reinen Stoffs <strong>nicht ausreichen</strong>."],
+  [9, "S. 6, 11", "Gib die Zusammensetzung von Messing, Bronze und Aldrey an.", "Messing = <strong>CuZn</strong>. Bronze = <strong>CuSn</strong>. Aldrey = Aluminium mit je 0,5 % Magnesium und Silizium."],
+  [9, "S. 21", "Ist ein Bimetall eine Legierung? Begründe.", "<strong>Nein.</strong> Es besteht aus zwei zusammengewalzten Metallbändern, ist also ein Verbundwerkstoff. Die Schichten können aber selbst Legierungen sein (z. B. Messing)."],
+  [10, "S. 19", "Welche Anforderungen stellt man an Kontaktwerkstoffe, und warum?", "Weil beim Öffnen ein heisser <strong>Lichtbogen</strong> entsteht (bis 60 kA im Kurzschluss): fest und hart, gut leitend, hoher Schmelzpunkt, abbrandfest, verschweisst nicht, chemisch beständig, oxidiert wenig."],
+  [10, "S. 20", "Welche Eigenschaften brauchen Widerstandswerkstoffe? Nenne zwei Beispiele.", "Hoher spezifischer Widerstand und ein Widerstand, der sich bei Erwärmung <strong>kaum ändert</strong>. Dazu fest bei Hitze und oxidationsbeständig. Konstantan (Präzisionswiderstand), Chrom-Nickel (Heizleiter)."],
+  [10, "S. 20", "Unterschied Weich- und Hartlöten? Wann nimmt man welches?", "Weichlöten <strong>unter 450 °C</strong>, z. B. Elektronik. Hartlöten <strong>über 450 °C</strong>, wo die Lötstelle mechanisch fest sein muss."],
+  [10, "S. 21", "Was sind Hartmetalle, und wo setzt man sie ein?", "Gesinterte Metallkarbide (Wolfram, Titan) mit Kobalt als Bindemittel. Extrem hart. Als Schneideplättchen auf Steinbohrern und Mauerfräsern, hartgelötet auf zähen Werkzeugstahl."],
+  [11, "S. 22", "Was sind die wichtigsten Nichtmetalle für Elektrofachleute, und welche Aufgabe haben sie?", "Die <strong>Isolierstoffe</strong>. Sie verhindern, dass Strom unkontrolliert fliesst, zum Beispiel wenn man ein Kabel unter Spannung berührt."],
+  [12, "S. 22", "In welche vier Gruppen teilt man die Isolierstoffe ein? Je ein Beispiel.", "Fest organisch (PVC) · fest anorganisch (Porzellan) · flüssig (Transformatorenöl) · gasförmig (Luft, SF₆)."],
+  [12, "S. 23", "Welche drei Arten Kunststoffe gibt es? Je zwei Beispiele.", "<strong>Thermoplaste</strong> (PVC, PE) · <strong>Duroplaste</strong> (EP, PF) · <strong>Elastomere</strong> (Silikon-Gummi, Chloropren-Gummi)."],
+  [13, "Lektion 30.10.", "Wonach entscheidet man, ob ein Isolierstoff organisch oder anorganisch ist?", "Nach der <strong>chemischen Zusammensetzung</strong>: organisch = Kohlenstoffverbindungen (Ketten), anorganisch = mineralisch. Nicht danach, ob er natürlich oder künstlich ist."],
+  [13, "S. 23–24", "Wie unterscheiden sich Thermoplaste und Duroplaste bei Wärme, und warum?", "Thermoplaste werden <strong>weich und schmelzen</strong> (Ketten nicht vernetzt). Duroplaste werden <strong>nicht weich</strong> und verkohlen bei starker Erwärmung (Ketten eng vernetzt)."],
+  [14, "S. 23–24", "Nenne je drei Thermoplaste und Duroplaste mit Abkürzung.", "Thermoplaste: PVC, PE, PA, PC, PS. Duroplaste: PUR, UP, EP, PF, MF, SI."],
+  [15, "S. 23", "Wo setzt man PVC ein, und weshalb?", "Ader- und Kabelisolation, Installationsrohre (KIR, KRH), Kanäle, Stecker. Isoliert gut, ist günstig, formbar, schweissbar und klebbar. Maximal 90 °C."],
+  [15, "S. 24", "Welcher Kunststoff wird für Motoren- und Trafowicklungen verwendet, und warum?", "<strong>Silikonharz (SI)</strong> zur Imprägnierung, bis <strong>300 °C</strong>, ölbeständig, nimmt kein Wasser auf. Als Giessharz auch Epoxidharz (bis 150 °C)."],
+  [15, "Lektion 23.10.", "Warum steckt im Transformator Öl, und warum hängen Freileitungen an Porzellan?", "Öl <strong>isoliert und kühlt</strong> und füllt jeden Spalt. Porzellan ist <strong>hitze- und witterungsbeständig</strong>, brennt nicht und hält hohe Spannungen."]
+];
+document.getElementById('quizList').innerHTML = QUIZ.map((q, i) => `
+  <div class="quiz-q">
+    <div class="q-head"><span class="q-num">Q${i + 1}</span><span class="q-topic">Lernziel ${q[0]}</span><span class="q-source">${q[1]}</span></div>
+    <p class="q-text">${q[2]}</p>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[3]}</p></div>
+  </div>`).join('');
+
+// ═══ PROBETEST ═══
+const PT = [
+  [3, "Nenne die drei Erzgruppen mit je einem Beispiel.", "Je 1 P.: Metalloxide (Bauxit, Magneteisenstein) · Metallsulfide (Kupferkies, Bleiglanz) · Metallkarbonate (Wolframit, Zinkspat)."],
+  [3, "Beschreibe, wie aus Rohkupfer Reinkupfer wird. Was ist Anode, was Kathode?", "Elektrolytische Raffination mit Gleichstrom (1 P.). Anode (+) = Rohkupfer, löst sich auf (1 P.). Kathode (−) = reines Kupfer wächst, bis 99,98 % (1 P.)."],
+  [3, "Wie wird Aluminium hergestellt? Warum ist Recycling wichtig?", "Bauxit → Tonerde (1 P.) → Schmelzflusselektrolyse, Strom entfernt den Sauerstoff (1 P.). Riesiger Energiebedarf, rund 20'000 kWh pro Tonne (1 P.)."],
+  [4, "Was braucht es im Hochofen, und wozu dient jeder Stoff?", "Je 1 P.: Eisenerz (Eisen) · Koks (Hitze, CO entzieht Sauerstoff) · Zuschläge/Kalkstein (Schlacke) · Wind/heisse Luft (verbrennt Koks)."],
+  [2, "Welchen Zweck hat der Hochofen, und was kommt unten heraus?", "Dem Erz den Sauerstoff entziehen (1 P.). Roheisen und Schlacke (1 P.)."],
+  [3, "Wie wird aus Roheisen Stahl? Nenne beide Verfahren.", "Frischen: Kohlenstoff und Begleitstoffe entfernen (1 P.). Sauerstoff-Aufblasverfahren (1 P.) und Lichtbogenofen (1 P.)."],
+  [2, "Was ist Stahl? Wie wirkt mehr Kohlenstoff?", "Eisen-Kohlenstoff-Legierung unter 2,06 % C (1 P.). Mehr C: härter und fester, weniger zäh (1 P.)."],
+  [4, "Nenne die vier Wärmebehandlungen und ihr Ziel.", "Je 1 P.: Glühen (Spannungen weg) · Härten (hart, verschleissfest) · Vergüten (zäh) · Oberflächenhärten (aussen hart, innen zäh)."],
+  [2, "Warum wird ein Meissel oberflächengehärtet?", "Harte Schneide nützt nicht ab (1 P.), zäher Kern bricht nicht (1 P.)."],
+  [3, "Teile die Nichteisenmetalle nach der Verwendung ein (mit Beispiel).", "Je ½ P. für Gruppe und Beispiel: Leiter (Cu) · Kontakt (Ag) · Widerstand (Konstantan). 3 von 4 Gruppen = 3 P."],
+  [2, "Wo liegt die Grenze zwischen Schwer- und Leichtmetall? Ordne Kupfer und Aluminium zu.", "5 kg/dm³ (1 P.). Kupfer 8,9 = Schwermetall, Aluminium 2,7 = Leichtmetall (1 P.)."],
+  [4, "Nenne für Silber, Gold, Wolfram und Zink je einen Einsatz mit Begründung.", "Je 1 P.: Silber Sicherung/Kontakt (bester Leiter) · Gold Steckkontakte (oxidiert nicht) · Wolfram Glühwendel/Kontakt (3380 °C) · Zink Verzinken (schützt Stahl)."],
+  [2, "Was ist eine Legierung? Warum stellt man sie her?", "Gemisch aus mindestens zwei Elementen, eines ein Metall (1 P.). Weil das reine Metall die Anforderungen nicht erfüllt (1 P.)."],
+  [2, "Zusammensetzung von Messing und Bronze?", "Messing CuZn (1 P.), Bronze CuSn (1 P.)."],
+  [3, "Nenne drei Anforderungen an Kontaktwerkstoffe und das Problem, das sie lösen.", "Lichtbogen beim Öffnen (1 P.). Zwei von: hoher Schmelzpunkt, abbrandfest, verschweisst nicht, gut leitend, oxidiert wenig (je 1 P.)."],
+  [2, "Ist ein Bimetall eine Legierung? Nenne ein Einsatzbeispiel.", "Nein, Verbundwerkstoff aus zwei Metallschichten (1 P.). Leitungsschutzschalter, Thermostat (1 P.)."],
+  [4, "Nenne die vier Gruppen der Isolierstoffe mit je einem Beispiel.", "Je 1 P.: fest organisch (PVC) · fest anorganisch (Porzellan) · flüssig (Trafoöl) · gasförmig (Luft, SF₆)."],
+  [3, "Erkläre den Unterschied zwischen Thermoplast, Duroplast und Elastomer.", "Je 1 P.: Thermoplast nicht vernetzt, schmilzt · Duroplast eng vernetzt, verkohlt · Elastomer weitmaschig vernetzt, gummielastisch."],
+  [2, "Wo setzt man PVC und wo Epoxidharz ein?", "PVC: Kabelisolation, Rohre, Kanäle (1 P.). EP: Giessharz, Leiterplatten, Kabelmuffen (1 P.)."]
+];
+const ptGot = new Array(PT.length).fill(0);
+const ptMax = PT.reduce((s, q) => s + q[0], 0);
+document.getElementById('ptMax').textContent = ptMax;
+document.getElementById('ptList').innerHTML = PT.map((q, i) => `
+  <div class="pt-q"><span class="pts">${q[0]} P.</span>
+    <p class="q-text"><strong>${i + 1}.</strong> ${q[1]}</p>
+    <textarea aria-label="Antwort ${i + 1}" placeholder="Deine Antwort …"></textarea>
+    <button class="reveal-btn" onclick="toggleSol(this)">Lösung anzeigen</button>
+    <div class="solution"><h4>Lösung</h4><p>${q[2]}</p></div>
+    <div class="pt-score" data-i="${i}">Erreicht: ${Array.from({length: q[0] + 1}, (_, p) => `<button type="button" data-p="${p}">${p}</button>`).join('')}</div>
+  </div>`).join('');
+document.querySelectorAll('.pt-score').forEach(row => row.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  row.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); ptGot[+row.dataset.i] = +b.dataset.p; ptUpdate();
+}));
+function ptUpdate() { const sum = ptGot.reduce((a, b) => a + b, 0); document.getElementById('ptPoints').textContent = sum; document.getElementById('ptNote').textContent = 'Note ' + num(Math.round((sum / ptMax * 5 + 1) * 10) / 10, 1); }
+const PT_SECONDS = 40 * 60; let ptLeft = PT_SECONDS, ptTimer = null;
+function ptTick() { document.getElementById('ptTimer').textContent = `${String(Math.floor(ptLeft / 60)).padStart(2, '0')}:${String(ptLeft % 60).padStart(2, '0')}`; }
+document.getElementById('ptStart').addEventListener('click', e => {
+  if (ptTimer) { clearInterval(ptTimer); ptTimer = null; e.target.textContent = 'Timer weiter'; return; }
+  e.target.textContent = 'Pause';
+  ptTimer = setInterval(() => { if (ptLeft > 0) { ptLeft--; ptTick(); } else { clearInterval(ptTimer); ptTimer = null; document.getElementById('ptTimer').textContent = 'Zeit um!'; } }, 1000);
+});
+document.getElementById('ptReveal').addEventListener('click', () => revealIn('probetest', true));
+document.getElementById('ptReset').addEventListener('click', () => {
+  clearInterval(ptTimer); ptTimer = null; ptLeft = PT_SECONDS; ptTick(); document.getElementById('ptStart').textContent = 'Timer starten (40:00)';
+  document.querySelectorAll('#probetest textarea').forEach(t => t.value = ''); document.querySelectorAll('#probetest .pt-score button').forEach(b => b.classList.remove('on'));
+  revealIn('probetest', false); ptGot.fill(0); ptUpdate(); document.getElementById('ptNote').textContent = 'Note –';
+});
+
+// ═══ LERNPLAN ═══
+const PLAN_KEY = 'wk-0611-lernplan';
+function updatePlanProgress() {
+  const boxes = [...document.querySelectorAll('.day .check')];
+  document.getElementById('planProgress').style.width = (boxes.filter(b => b.checked).length / boxes.length * 100) + '%';
+  store.set(PLAN_KEY, boxes.map(b => b.checked));
+}
+store.get(PLAN_KEY, []).forEach((v, i) => { const b = document.querySelectorAll('.day .check')[i]; if (b && v) b.checked = true; });
+document.querySelectorAll('.day .check').forEach(b => b.addEventListener('change', updatePlanProgress));
+updatePlanProgress();
+</script>
+</body>
+</html>
