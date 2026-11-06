@@ -755,5 +755,6 @@ function updatePlan() { const b = [...document.querySelectorAll('.day .check')];
 try { const s = JSON.parse(localStorage.getItem(PLAN_KEY) || '[]'); document.querySelectorAll('.day .check').forEach((b, i) => { if (s[i]) b.checked = true; }); } catch (e) {}
 document.querySelectorAll('.day .check').forEach(b => b.addEventListener('change', updatePlan)); updatePlan();
 </script>
+<script src="https://schule.yanikroesti.ch/assets/lernbot.js" defer></script>
 </body>
 </html>

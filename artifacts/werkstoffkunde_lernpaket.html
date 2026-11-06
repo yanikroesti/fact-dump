@@ -1182,5 +1182,6 @@
   try { const stored = JSON.parse(localStorage.getItem('werkstoff-plan-v1') || '[]'); [...planList.querySelectorAll('input')].forEach((box, index) => { box.checked = Boolean(stored[index]); }); } catch (_) {}
   planList.querySelectorAll('input').forEach(box => box.addEventListener('change', updatePlan)); updatePlan();
 </script>
+<script src="https://schule.yanikroesti.ch/assets/lernbot.js" defer></script>
 </body>
 </html>
