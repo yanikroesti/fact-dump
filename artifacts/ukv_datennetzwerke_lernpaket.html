@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKV und Datennetzwerke — Lernpaket | BZI ATD</title>
+<meta name="description" content="Lernpaket Telekommunikation Kapitel 5 bei Simon Aeschlimann: UKV, Kabel, RJ45, Kategorie und Link-Klasse, Dämpfung, NEXT, ACR, Netzwerkkomponenten, Topologien, PoE, PLC und Netzwerksicherheit. Theorie, Visuals, Begriffe, Karteikarten, Quiz, Probetest und Lernplan.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-alt: #EAEBE6;
+  --ink: #171D1E;
+  --ink-soft: #52585A;
+  --ink-mute: #7A7F80;
+  --accent: #0E6B72;
+  --accent-light: #E2F1F1;
+  --accent-dark: #084A4F;
+  --success: #27774A;
+  --success-light: #E6F4EC;
+  --warn: #9A6410;
+  --warn-light: #FAF1DC;
+  --info: #2C5C8C;
+  --info-light: #E5EEF6;
+  --danger: #B0352A;
+  --danger-light: #FBE9E7;
+  --border: #D2D4CE;
+  --border-soft: #E3E5E0;
+  --shadow: 0 2px 12px rgba(23,29,30,0.08);
+  --shadow-sm: 0 1px 4px rgba(23,29,30,0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111516;
+    --surface: #1A1F20;
+    --surface-alt: #232829;
+    --ink: #ECEEED;
+    --ink-soft: #B3B9B9;
+    --ink-mute: #8C9393;
+    --accent: #5FC8CE;
+    --accent-light: #163335;
+    --accent-dark: #9FE3E7;
+    --success: #6FCB97;
+    --success-light: #16301F;
+    --warn: #E0B057;
+    --warn-light: #332714;
+    --info: #86B6E8;
+    --info-light: #152636;
+    --danger: #EE8C80;
+    --danger-light: #351A17;
+    --border: #353B3C;
+    --border-soft: #2A3031;
+    --shadow: 0 2px 14px rgba(0,0,0,0.45);
+    --shadow-sm: 0 1px 5px rgba(0,0,0,0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111516;
+  --surface: #1A1F20;
+  --surface-alt: #232829;
+  --ink: #ECEEED;
+  --ink-soft: #B3B9B9;
+  --ink-mute: #8C9393;
+  --accent: #5FC8CE;
+  --accent-light: #163335;
+  --accent-dark: #9FE3E7;
+  --success: #6FCB97;
+  --success-light: #16301F;
+  --warn: #E0B057;
+  --warn-light: #332714;
+  --info: #86B6E8;
+  --info-light: #152636;
+  --danger: #EE8C80;
+  --danger-light: #351A17;
+  --border: #353B3C;
+  --border-soft: #2A3031;
+  --shadow: 0 2px 14px rgba(0,0,0,0.45);
+  --shadow-sm: 0 1px 5px rgba(0,0,0,0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px 16px 80px; }
+
+header { text-align: center; padding: 34px 0 24px; border-bottom: 3px solid var(--ink); margin-bottom: 24px; }
+header h1 { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.1; }
+header .subtitle { font-size: 0.8rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }
+header .meta { margin-top: 12px; font-size: 0.85rem; color: var(--ink-mute); }
+.countdown { display: inline-block; margin-top: 14px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+  background: var(--accent-light); color: var(--accent); padding: 6px 14px; border-radius: 999px; letter-spacing: 0.04em; }
+
+.theme-toggle { position: absolute; top: 14px; right: 14px; background: var(--surface); border: 1px solid var(--border);
+  color: var(--ink-soft); width: 38px; height: 38px; border-radius: 999px; cursor: pointer; font-size: 1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+.theme-toggle:hover { color: var(--ink); }
+
+.tab-nav {
+  display: flex; gap: 2px; background: var(--surface-alt); border-radius: 12px; padding: 4px;
+  margin-bottom: 28px; position: sticky; top: 8px; z-index: 100; box-shadow: var(--shadow); overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  flex: 1; min-width: max-content; background: transparent; border: none; padding: 11px 14px;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: var(--ink-soft);
+  cursor: pointer; border-radius: 9px; transition: all 0.18s ease; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
+.tab-pane { display: none; animation: fadeIn 0.25s ease; }
+.tab-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+h2 { font-family: var(--font-display); font-size: 1.8rem; margin: 38px 0 14px; letter-spacing: -0.01em; line-height: 1.15; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.1rem; font-weight: 700; margin: 22px 0 10px; }
+h4 { font-size: 0.95rem; font-weight: 700; margin: 14px 0 6px; }
+p { margin-bottom: 12px; }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 5px; }
+a { color: var(--accent); }
+em { font-style: italic; color: var(--ink-soft); }
+code { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-alt); padding: 1px 5px; border-radius: 4px; }
+
+.intro { font-size: 1rem; color: var(--ink-soft); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 24px; }
+.section-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-top: 40px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-light); }
+.section-label:first-child { margin-top: 0; }
+.section-label + h2 { margin-top: 16px; }
+
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
+.card.compact { padding: 14px 16px; }
+.card-title { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-title .num { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
+.card-title h3 { margin: 0; }
+
+.badge { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge.k3 { background: var(--info-light); color: var(--info); }
+.badge.k4 { background: var(--warn-light); color: var(--warn); }
+.badge.exam { background: var(--accent-light); color: var(--accent); }
+.badge.tip { background: var(--success-light); color: var(--success); }
+.badge.off { background: var(--danger-light); color: var(--danger); }
+
+.info-box { border-left: 3px solid var(--info); background: var(--info-light); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 14px 0; font-size: 0.94rem; }
+.info-box.warn { border-color: var(--warn); background: var(--warn-light); }
+.info-box.danger { border-color: var(--danger); background: var(--danger-light); }
+.info-box.success { border-color: var(--success); background: var(--success-light); }
+.info-box p:last-child, .info-box ul:last-child { margin-bottom: 0; }
+.info-box h4 { margin-top: 0; }
+
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+th { background: var(--surface-alt); text-align: left; padding: 9px 12px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); border-bottom: 1px solid var(--border); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+
+.btn { font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; background: var(--ink); color: var(--bg);
+  border: none; padding: 9px 16px; border-radius: var(--radius-sm); cursor: pointer; transition: opacity 0.15s; }
+.btn:hover { opacity: 0.85; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+.btn.sm { font-size: 0.8rem; padding: 5px 11px; }
+
+details { border: 1px solid var(--border-soft); border-radius: var(--radius-sm); background: var(--surface); margin: 8px 0; }
+details summary { cursor: pointer; padding: 10px 14px; font-weight: 600; font-size: 0.92rem; list-style: none; display: flex; align-items: center; gap: 8px; }
+details summary::-webkit-details-marker { display: none; }
+details summary::before { content: "▸"; color: var(--accent); font-size: 0.9em; transition: transform 0.15s; }
+details[open] summary::before { transform: rotate(90deg); }
+details .body { padding: 0 14px 14px; font-size: 0.93rem; border-top: 1px solid var(--border-soft); padding-top: 12px; }
+details .body p:last-child, details .body ul:last-child { margin-bottom: 0; }
+
+.ue { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); margin-bottom: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+.ue-head { padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; }
+.ue-head .nr { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+.ue-head .q { font-weight: 600; }
+.ue-body { padding: 0 18px 16px 18px; }
+.ue-sol { border-top: 1px dashed var(--border); padding-top: 12px; font-size: 0.94rem; }
+.ue-sol .lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--success); font-weight: 600; display: block; margin-bottom: 6px; }
+.ue.off { opacity: 0.78; border-style: dashed; }
+
+figure { margin: 18px 0; }
+figure svg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px; }
+figcaption { font-size: 0.82rem; color: var(--ink-mute); margin-top: 8px; text-align: center; }
+.svg-ink { fill: var(--ink); }
+.svg-soft { fill: var(--ink-soft); }
+.svg-mute { fill: var(--ink-mute); }
+.s-line { stroke: var(--ink-soft); fill: none; stroke-width: 1.4; }
+.s-axis { stroke: var(--ink-mute); fill: none; stroke-width: 1.2; }
+.s-acc { stroke: var(--accent); fill: none; stroke-width: 2.2; }
+.s-box { fill: var(--surface-alt); stroke: var(--border); stroke-width: 1.2; }
+.s-box-acc { fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.4; }
+text { font-family: var(--font-body); }
+
+.card-deck { position: relative; }
+.flash { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 22px; min-height: 190px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; box-shadow: var(--shadow); }
+.flash .side-label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 12px; }
+.flash .text { font-size: 1.1rem; font-weight: 600; line-height: 1.45; }
+.flash .text.answer { font-weight: 400; font-size: 1rem; text-align: left; }
+.flash-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.flash-count { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-mute); }
+
+.quiz-q { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+.quiz-q .qtext { font-weight: 600; margin-bottom: 10px; }
+.opt { display: block; width: 100%; text-align: left; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 9px 13px; margin-bottom: 6px; cursor: pointer; font-family: var(--font-body); font-size: 0.92rem; color: var(--ink); transition: all 0.14s; }
+.opt:hover { border-color: var(--accent); }
+.opt.right { background: var(--success-light); border-color: var(--success); color: var(--ink); font-weight: 600; }
+.opt.wrong { background: var(--danger-light); border-color: var(--danger); color: var(--ink); }
+.opt:disabled { cursor: default; }
+.quiz-fb { font-size: 0.89rem; color: var(--ink-soft); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); display: none; }
+.quiz-fb.show { display: block; }
+.score { font-family: var(--font-mono); font-size: 0.9rem; background: var(--surface-alt); padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; }
+
+.plan-day { display: flex; gap: 14px; margin-bottom: 4px; }
+.plan-rail { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+.plan-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex: 0 0 auto; }
+.plan-dot.test { background: var(--danger); }
+.plan-stem { width: 2px; flex: 1; background: var(--border); min-height: 14px; }
+.plan-body { flex: 1; padding-bottom: 18px; }
+.plan-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.plan-head .d { font-weight: 700; }
+.plan-head .t { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-mute); }
+.plan-body ul { margin: 6px 0 0; }
+
+footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--ink-mute); }
+footer a { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .container { padding: 16px 16px 64px; }
+  header { padding: 46px 0 20px; }
+  header h1 { font-size: 1.85rem; }
+  h2 { font-size: 1.5rem; }
+  .card { padding: 16px 16px; }
+  .ue-head { padding: 12px 14px; }
+  .ue-body { padding: 0 14px 14px; }
+  .tab-btn { font-size: 0.84rem; padding: 10px 11px; }
+  .btn.sm { padding: 9px 13px; }
+  table { font-size: 0.84rem; }
+  th, td { padding: 7px 9px; }
+}
+.topo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 14px 0; }
+.topo { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 10px; text-align: center; box-shadow: var(--shadow-sm); }
+.topo svg { width: 100%; height: auto; max-width: 160px; }
+.topo b { display: block; font-size: 0.95rem; }
+.topo span { font-size: 0.8rem; color: var(--ink-soft); }
+.s-node { fill: var(--accent); }
+.s-node2 { fill: var(--warn); }
+.chip { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; margin: 3px 2px; border: 1px solid var(--border); background: var(--surface); }
+.chip.akt { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+.chip.pas { background: var(--surface-alt); color: var(--ink-soft); }
+.big-idea { font-size: 1.15rem; font-weight: 600; background: var(--accent-light); color: var(--accent-dark); border-radius: var(--radius); padding: 14px 18px; margin: 14px 0; }
+.pins { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin: 10px 0; }
+.pin { border-radius: 4px; height: 54px; position: relative; border: 1px solid var(--border); }
+.pin i { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-style: normal; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); }
+.pin-lbl { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin-top: 24px; font-size: 0.66rem; text-align: center; color: var(--ink-mute); word-break: break-word; }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Hell oder dunkel umschalten">◐</button>
+
+<div class="container">
+
+<header>
+  <div class="subtitle">BZI · ATD · Telekommunikation bei Simon Aeschlimann</div>
+  <h1>UKV und Datennetzwerke</h1>
+  <div class="meta">Kapitel 5 — Netzwerkkomponenten und Topologien · Arbeitsauftrag vom Freitag 06.11.2026</div>
+  <div class="countdown">18 Lernziele · Fokus: Komponenten, Topologien, Sicherheit</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="theorie">Theorie</button>
+  <button class="tab-btn" data-tab="visuals">Visuals</button>
+  <button class="tab-btn" data-tab="begriffe">Begriffe</button>
+  <button class="tab-btn" data-tab="karten">Karteikarten</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="probetest">Probetest</button>
+  <button class="tab-btn" data-tab="lernplan">Lernplan</button>
+</nav>
+
+<!-- ════════════════════════ THEORIE ════════════════════════ -->
+<section class="tab-pane active" id="theorie">
+
+<div class="info-box warn">
+  <h4>Ehrlich bleiben beim Arbeitsauftrag</h4>
+  <p style="margin-bottom:0">Ein Teil des «Arbeitsauftrags UKV» zählt als <b>Kurztestnote</b> (max. 36 Punkte). Dieses Paket enthält <b>keine Lösungen</b> zu diesem Blatt. Es erklärt den Stoff und hat eigene Übungen mit anderen Situationen. Teil B (Einzelarbeit) musst du selbst lösen — mit dem Lehrmittel und den Lösungen zu den Arbeitsblättern als erlaubte Hilfsmittel.</p>
+</div>
+
+<div class="section-label">Der Rahmen</div>
+<h2>Was UKV ist — in einem Satz</h2>
+<div class="big-idea">UKV = <b>Universelle Kommunikationsverkabelung</b>: ein einheitliches Kabelnetz im Gebäude, über das jeder Dienst laufen kann — Telefon, Computer, TV, Gebäudeautomation.</div>
+<p>Früher hatte jeder Dienst sein eigenes Kabel. Mit UKV verlegst du einmal ein <b>anwendungsneutrales</b> Netz nach Norm (EN 50173) und entscheidest erst am Verteiler mit einem Patchkabel, was an welcher Dose läuft. Sinn und Zweck: flexibel, erweiterbar, einheitlich, normiert und messbar.</p>
+
+<h3>Die drei Verkabelungsstrecken</h3>
+<div class="table-wrap"><table>
+<tr><th>Strecke</th><th>Wo</th><th>Typische Länge</th><th>Kabel</th></tr>
+<tr><td><b>Primär</b> (Campus / Gelände)</td><td>zwischen Gebäuden: Standortverteiler → Gebäudeverteiler</td><td class="num">bis 1500 m</td><td>meist Glasfaser</td></tr>
+<tr><td><b>Sekundär</b> (Gebäude / Steigzone)</td><td>im Gebäude: Gebäudeverteiler → Etagenverteiler</td><td class="num">bis 500 m</td><td>Glasfaser oder Kupfer</td></tr>
+<tr><td><b>Tertiär</b> (Etage / horizontal)</td><td>Etagenverteiler → Anschlussdose</td><td class="num">90 m fest + 10 m Patch = 100 m</td><td>Twisted Pair (Kupfer)</td></tr>
+</table></div>
+<p><b>Verteiler</b> von gross nach klein: <b>Standortverteiler</b> (SV) → <b>Gebäudeverteiler</b> (GV) → <b>Etagenverteiler</b> (EV) → <b>Anschlussdose</b> (TO, Telecommunication Outlet). <em>Längenangaben nach EN 50173 — vergleiche mit deinem Lehrmittel, falls dort andere Werte stehen.</em></p>
+
+<div class="section-label">Kabel</div>
+<h2>Asymmetrisch und symmetrisch</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>Asymmetrisch (Koax)</th><th>Symmetrisch (Twisted Pair)</th></tr>
+<tr><td>Aufbau</td><td>Innenleiter · Dielektrikum · Schirm (= Aussenleiter) · Mantel</td><td>Adern paarweise verdrillt, 4 Paare, eventuell geschirmt</td></tr>
+<tr><td>Signal</td><td>gegen den Schirm (Masse)</td><td>zwei gleiche Adern mit Gegensignal — Störungen heben sich auf</td></tr>
+<tr><td>Einsatz</td><td>TV, Radio, Satellit, Kabelnetz</td><td>LAN, Telefon, UKV</td></tr>
+</table></div>
+
+<h3>Die Schirm-Bezeichnung lesen: X/YTP</h3>
+<p><b>Vor dem Schrägstrich</b> = Gesamtschirm um alle Paare. <b>Nach dem Schrägstrich</b> = Schirm um jedes Paar. U = ungeschirmt · F = Folie · S = Geflecht · SF = Geflecht + Folie. TP = Twisted Pair.</p>
+<div class="table-wrap"><table>
+<tr><th>Name</th><th>Gesamtschirm</th><th>Paarschirm</th></tr>
+<tr><td><code>U/UTP</code></td><td>keiner</td><td>keiner</td></tr>
+<tr><td><code>F/UTP</code></td><td>Folie</td><td>keiner</td></tr>
+<tr><td><code>U/FTP</code></td><td>keiner</td><td>Folie</td></tr>
+<tr><td><code>S/FTP</code></td><td>Geflecht</td><td>Folie</td></tr>
+<tr><td><code>SF/FTP</code></td><td>Geflecht + Folie</td><td>Folie</td></tr>
+</table></div>
+
+<h3>U72 5×4 — das Telefon-Installationskabel</h3>
+<p>«5×4» heisst <b>5 Vierer</b> (Sternvierer) mit je 4 Adern = <b>20 Adern</b>. In jedem Vierer haben die Adern die Farben a = <b>weiss</b>, b = <b>Kennfarbe</b> des Vierers, c = <b>türkis</b>, d = <b>violett</b>. Die Kennfarbe nummeriert die Vierer: 1 <b>blau</b> · 2 <b>orange</b> · 3 <b>grün</b> · 4 <b>braun</b> · 5 <b>schwarz</b>.</p>
+<p><em>Bitte mit dem Lehrmittel vergleichen. Ich habe den Farbcode aus Normwissen und konnte ihn nicht mit deinem Buch prüfen.</em></p>
+
+<div class="section-label">Stecker</div>
+<h2>RJ45 und andere Stecksysteme</h2>
+<p>Am RJ45 werden 8 Pins belegt, nach <b>T568A</b> oder <b>T568B</b>. Wichtig ist nur: <b>beide Enden gleich</b>. Die Farbleiste unter «Visuals» zeigt beide.</p>
+<ul>
+<li><b>Für hohe Übertragungsraten</b> (Kategorie 7/7A, bis 1000 MHz): <b>GG45</b> (rückwärtskompatibel zu RJ45) und <b>TERA</b>.</li>
+<li><b>Multimedia-Stecksysteme</b>: modulare Dosen, in die man je nach Dienst RJ45-, Koax- oder Glasfasermodule steckt. Mit <b>Kabelsharing</b>-Adaptern laufen zwei Dienste über ein 4-Paar-Kabel, zum Beispiel Telefon + Daten. Beispiel: Wohnzimmer-Dose mit TV, Internet und Telefon.</li>
+</ul>
+
+<div class="section-label">Qualität</div>
+<h2>Kategorie, Link-Klasse und Messwerte</h2>
+<p><b>Kategorie</b> gilt für eine <b>einzelne Komponente</b> (Kabel, Dose, Stecker). <b>Link-Klasse</b> gilt für die <b>ganze Strecke</b>. Die Strecke ist nur so gut wie ihr schwächstes Teil.</p>
+<div class="table-wrap"><table>
+<tr><th>Kategorie (Teil)</th><th>Klasse (Strecke)</th><th class="num">bis</th></tr>
+<tr><td>Cat 5e</td><td>D</td><td class="num">100 MHz</td></tr>
+<tr><td>Cat 6</td><td>E</td><td class="num">250 MHz</td></tr>
+<tr><td>Cat 6A</td><td>E<sub>A</sub></td><td class="num">500 MHz</td></tr>
+<tr><td>Cat 7</td><td>F</td><td class="num">600 MHz</td></tr>
+<tr><td>Cat 7A</td><td>F<sub>A</sub></td><td class="num">1000 MHz</td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>Begriff</th><th>Bedeutung</th><th>Gut ist …</th></tr>
+<tr><td><b>Dämpfung</b></td><td>Signal wird auf dem Weg schwächer (in dB). Steigt mit Länge und Frequenz.</td><td>klein</td></tr>
+<tr><td><b>NEXT</b></td><td>Near End Crosstalk: Nebensprechen am nahen Ende — ein Paar stört das andere.</td><td>gross (viel dB Abstand)</td></tr>
+<tr><td><b>ACR</b></td><td>Attenuation to Crosstalk Ratio = NEXT − Dämpfung. Abstand zwischen Nutzsignal und Störung.</td><td>gross</td></tr>
+<tr><td><b>PSNEXT</b></td><td>Powersum NEXT: alle anderen Paare stören zusammen ein Paar.</td><td>gross</td></tr>
+</table></div>
+<p><b>Die Grafik:</b> Die Dämpfung steigt mit der Frequenz, der NEXT-Wert sinkt. Wo sich die Kurven treffen, ist ACR = 0 — darüber ist das Signal nicht mehr von der Störung zu unterscheiden. Bessere Kategorie = Kurven treffen sich bei höherer Frequenz.</p>
+
+<h3>Permanent Link und Channel</h3>
+<p><b>Permanent Link</b> = nur die fest verlegte Strecke von Patchpanel bis Dose, <b>max. 90 m</b> — das misst der Installateur bei der Abnahme. <b>Channel</b> = die ganze Verbindung inklusive Patch- und Geräteanschlusskabel, <b>max. 100 m</b>.</p>
+
+<h3>Montage — mindestens sechs Punkte</h3>
+<ol>
+<li><b>Biegeradius</b> einhalten (etwa 8 × Kabeldurchmesser), nie knicken.</li>
+<li><b>Zugkraft</b> beim Einziehen begrenzen (Herstellerangabe, etwa 100 N).</li>
+<li><b>Verdrillung</b> erst kurz vor dem Kontakt öffnen (max. ca. 13 mm).</li>
+<li><b>Abstand zu Starkstromkabeln</b> einhalten oder trennen.</li>
+<li>Kabelbinder <b>nicht zu fest</b> — Quetschen verändert die Werte.</li>
+<li><b>Schirm</b> durchgehend und rundum auflegen.</li>
+<li><b>Alle Komponenten gleiche Kategorie</b>.</li>
+<li><b>Beschriften</b>, <b>messen</b> und dokumentieren.</li>
+</ol>
+
+<div class="section-label">Netzwerke</div>
+<h2>LAN und WAN</h2>
+<p><b>LAN</b> = Local Area Network, lokales Netz in einem Gebäude oder Grundstück (Büro, Wohnung, Schulhaus). <b>WAN</b> = Wide Area Network, weiträumig über Städte und Länder (das Internet, verbundene Firmenstandorte).</p>
+
+<h2>Aktiv oder passiv?</h2>
+<div class="big-idea">Braucht es Strom und verarbeitet oder verstärkt es das Signal? → <b>aktiv</b>. Leitet es das Signal nur weiter? → <b>passiv</b>.</div>
+<p><span class="chip akt">Switch</span><span class="chip akt">Router</span><span class="chip akt">Repeater</span><span class="chip akt">Hub</span><span class="chip akt">Access Point</span><span class="chip akt">Medienkonverter</span><span class="chip akt">Firewall</span><span class="chip akt">Modem</span></p>
+<p><span class="chip pas">Kabel</span><span class="chip pas">Patchpanel</span><span class="chip pas">Anschlussdose</span><span class="chip pas">Stecker</span><span class="chip pas">Patchkabel</span><span class="chip pas">Rack</span></p>
+
+<h2>Die Komponenten — was sie tun</h2>
+<div class="table-wrap"><table>
+<tr><th>Gerät</th><th>Merksatz</th><th>Funktion</th></tr>
+<tr><td><b>Repeater</b></td><td>der Verstärker</td><td>frischt das Signal auf und verlängert so die Strecke. Versteht keine Adressen.</td></tr>
+<tr><td><b>Hub</b></td><td>der Lautsprecher</td><td>schickt alles an <b>alle</b> Ports. Viele Kollisionen, heute veraltet.</td></tr>
+<tr><td><b>Switch</b></td><td>der Briefträger im Haus</td><td>lernt die <b>MAC-Adressen</b> und schickt Daten nur an den richtigen Port. Herz jedes LAN.</td></tr>
+<tr><td><b>Router</b></td><td>der Grenzübergang</td><td>verbindet <b>verschiedene Netze</b> über <b>IP-Adressen</b>, z. B. Heimnetz ↔ Internet.</td></tr>
+<tr><td><b>Gateway</b></td><td>der Übersetzer</td><td>verbindet Netze mit <b>unterschiedlichen Protokollen</b>, z. B. KNX ↔ IP. Auch: Standard-Ausgang ins Internet.</td></tr>
+<tr><td><b>Access Point</b></td><td>die Funkbrücke</td><td>bindet WLAN-Geräte ans kabelgebundene Netz an.</td></tr>
+<tr><td><b>NAS</b></td><td>die Netzwerk-Festplatte</td><td>Network Attached Storage: zentraler Speicher für alle im Netz, oft mit RAID und Backup.</td></tr>
+<tr><td><b>Medienkonverter</b></td><td>der Adapter</td><td>wandelt Kupfer ↔ Glasfaser.</td></tr>
+<tr><td><b>Patchpanel</b></td><td>die Steckleiste</td><td>Endpunkt der festen Verkabelung im Rack — passiv.</td></tr>
+</table></div>
+
+<h2>Topologien</h2>
+<div class="table-wrap"><table>
+<tr><th>Topologie</th><th>Aufbau</th><th>Vorteil</th><th>Nachteil</th></tr>
+<tr><td><b>Bus</b></td><td>alle an einer Leitung</td><td>wenig Kabel, billig</td><td>Kabelbruch = Netz tot, Kollisionen</td></tr>
+<tr><td><b>Ring</b></td><td>jedes Gerät mit zwei Nachbarn, geschlossen</td><td>gleichmässiger Zugriff</td><td>ein Ausfall kann den Ring unterbrechen (ausser Doppelring)</td></tr>
+<tr><td><b>Stern</b></td><td>alle an einem Switch</td><td>Ausfall eines Kabels trifft nur ein Gerät, einfach erweiterbar</td><td>fällt der Switch aus, ist alles tot; viel Kabel</td></tr>
+<tr><td><b>Baum</b></td><td>Sterne hierarchisch verbunden</td><td>gut für grosse Gebäude, gut strukturiert (= UKV)</td><td>fällt ein oberer Knoten aus, ist ein ganzer Ast weg</td></tr>
+<tr><td><b>Vermascht</b></td><td>Geräte mehrfach verbunden</td><td>sehr ausfallsicher, mehrere Wege</td><td>teuer, aufwendig</td></tr>
+</table></div>
+<p>Die <b>UKV ist eine Baum-Topologie</b>: SV → GV → EV → Dose, auf jeder Ebene ein Stern.</p>
+
+<h2>PoE und PLC</h2>
+<p><b>PoE</b> = <b>Power over Ethernet</b>: Strom und Daten über dasselbe Netzwerkkabel. Kein Netzteil an der Decke nötig. Beispiele: IP-Kamera, WLAN-Access-Point, VoIP-Telefon, Türsprechstelle. Normen: 802.3af ≈ 15 W · 802.3at (PoE+) ≈ 30 W · 802.3bt bis 90 W.</p>
+<p><b>PLC</b> = <b>Powerline Communication</b>: Daten über das Stromnetz. <b>Indoor</b>: in der Hausinstallation, Adapter in die Steckdose, um z. B. den Keller ans Heimnetz anzuschliessen. <b>Outdoor</b>: im Verteilnetz des Energieversorgers bis zum Haus, z. B. für Smart Meter und Fernauslesung.</p>
+
+<h2>Sicherheit im Netz — was wirklich hilft</h2>
+<div class="table-wrap"><table>
+<tr><th>Massnahme</th><th>Wirkung</th></tr>
+<tr><td>WLAN mit <b>WPA3</b> (oder WPA2) und langem Passwort</td><td>stark</td></tr>
+<tr><td><b>Standard-Passwort</b> des Routers ändern</td><td>stark</td></tr>
+<tr><td><b>Firmware-Updates</b> regelmässig</td><td>stark</td></tr>
+<tr><td><b>Gastnetz</b> oder <b>VLAN</b> für Gäste und Smart-Home-Geräte</td><td>stark</td></tr>
+<tr><td><b>Firewall</b> aktiv, nur nötige Ports offen</td><td>stark</td></tr>
+<tr><td><b>Backup</b> des NAS an einem zweiten Ort</td><td>stark (gegen Datenverlust)</td></tr>
+<tr><td>Rack / Verteiler <b>abschliessen</b></td><td>mittel bis stark</td></tr>
+<tr><td><b>WPS</b> ausschalten</td><td>mittel</td></tr>
+<tr><td><b>SSID verstecken</b></td><td>schwach — leicht auffindbar</td></tr>
+<tr><td><b>MAC-Filter</b></td><td>schwach — MAC-Adressen lassen sich fälschen</td></tr>
+<tr><td>WEP-Verschlüsselung</td><td>unsicher, nicht verwenden</td></tr>
+</table></div>
+
+</section>
+
+<!-- ════════════════════════ VISUALS ════════════════════════ -->
+<section class="tab-pane" id="visuals">
+
+<h2>UKV als Baum</h2>
+<figure>
+<svg viewBox="0 0 640 300" role="img" aria-label="UKV-Struktur vom Standortverteiler bis zur Dose">
+  <rect class="s-box-acc" x="250" y="14" width="140" height="40" rx="8"/><text x="320" y="39" text-anchor="middle" class="svg-ink" font-weight="700" font-size="15">SV</text>
+  <text x="400" y="38" class="svg-mute" font-size="12">Standortverteiler</text>
+  <path class="s-acc" d="M320 54 V80 M160 80 H480 M160 80 V110 M480 80 V110"/>
+  <text x="500" y="98" class="svg-soft" font-size="12">Primär · bis 1500 m</text>
+  <rect class="s-box" x="100" y="110" width="120" height="36" rx="8"/><text x="160" y="133" text-anchor="middle" class="svg-ink" font-weight="700">GV Haus A</text>
+  <rect class="s-box" x="420" y="110" width="120" height="36" rx="8"/><text x="480" y="133" text-anchor="middle" class="svg-ink" font-weight="700">GV Haus B</text>
+  <path class="s-line" d="M160 146 V170 M80 170 H240 M80 170 V190 M240 170 V190 M480 146 V190"/>
+  <text x="250" y="168" class="svg-soft" font-size="12">Sekundär · bis 500 m</text>
+  <rect class="s-box" x="40" y="190" width="80" height="32" rx="6"/><text x="80" y="211" text-anchor="middle" class="svg-ink" font-size="13">EV 1. OG</text>
+  <rect class="s-box" x="200" y="190" width="80" height="32" rx="6"/><text x="240" y="211" text-anchor="middle" class="svg-ink" font-size="13">EV EG</text>
+  <rect class="s-box" x="440" y="190" width="80" height="32" rx="6"/><text x="480" y="211" text-anchor="middle" class="svg-ink" font-size="13">EV EG</text>
+  <path class="s-line" d="M80 222 V250 M50 250 H110 M50 250 V266 M80 250 V266 M110 250 V266 M240 222 V266 M480 222 V250 M455 250 H505 M455 250 V266 M505 250 V266"/>
+  <g class="s-node"><rect x="42" y="266" width="16" height="16" rx="3"/><rect x="72" y="266" width="16" height="16" rx="3"/><rect x="102" y="266" width="16" height="16" rx="3"/><rect x="232" y="266" width="16" height="16" rx="3"/><rect x="447" y="266" width="16" height="16" rx="3"/><rect x="497" y="266" width="16" height="16" rx="3"/></g>
+  <text x="290" y="280" class="svg-soft" font-size="12">Tertiär · Dosen · 90 m + Patch</text>
+</svg>
+<figcaption>Von oben nach unten wird das Netz feiner. Auf jeder Ebene ist es ein Stern — zusammen ein Baum.</figcaption>
+</figure>
+
+<h2>Kabel im Querschnitt</h2>
+<figure>
+<svg viewBox="0 0 640 220" role="img" aria-label="Koaxialkabel und Twisted-Pair-Kabel im Querschnitt">
+  <circle cx="140" cy="100" r="80" fill="var(--ink-mute)"/><circle cx="140" cy="100" r="66" fill="var(--warn)"/><circle cx="140" cy="100" r="58" fill="var(--surface-alt)"/><circle cx="140" cy="100" r="12" fill="var(--danger)"/>
+  <text x="140" y="205" text-anchor="middle" class="svg-ink" font-weight="700">Koax · asymmetrisch</text>
+  <text x="240" y="40" class="svg-soft" font-size="12">Mantel · Schirm · Dielektrikum · Innenleiter</text>
+  <circle cx="480" cy="100" r="80" fill="var(--ink-mute)"/><circle cx="480" cy="100" r="72" fill="var(--surface)"/>
+  <g><circle cx="455" cy="75" r="11" fill="#E07B24"/><circle cx="470" cy="62" r="11" fill="#F3D9C2"/>
+  <circle cx="505" cy="75" r="11" fill="#2E8B57"/><circle cx="520" cy="88" r="11" fill="#CDE8D6"/>
+  <circle cx="455" cy="125" r="11" fill="#2E5FA8"/><circle cx="440" cy="112" r="11" fill="#CCD9EE"/>
+  <circle cx="505" cy="125" r="11" fill="#7A4B2A"/><circle cx="490" cy="138" r="11" fill="#E3D3C6"/></g>
+  <text x="480" y="205" text-anchor="middle" class="svg-ink" font-weight="700">Twisted Pair · symmetrisch · 4 Paare</text>
+</svg>
+<figcaption>Koax: ein Leiter in der Mitte, der Schirm ist der Rückleiter. Twisted Pair: 4 verdrillte Paare, jedes Paar trägt Signal und Gegensignal.</figcaption>
+</figure>
+
+<h2>RJ45-Belegung</h2>
+<h3>T568B</h3>
+<div class="pins">
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#E07B24 6px 12px)"><i>1</i></div>
+  <div class="pin" style="background:#E07B24"><i>2</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#2E8B57 6px 12px)"><i>3</i></div>
+  <div class="pin" style="background:#2E5FA8"><i>4</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#2E5FA8 6px 12px)"><i>5</i></div>
+  <div class="pin" style="background:#2E8B57"><i>6</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#7A4B2A 6px 12px)"><i>7</i></div>
+  <div class="pin" style="background:#7A4B2A"><i>8</i></div>
+</div>
+<div class="pin-lbl"><span>ws-or</span><span>or</span><span>ws-gn</span><span>bl</span><span>ws-bl</span><span>gn</span><span>ws-br</span><span>br</span></div>
+<h3>T568A</h3>
+<div class="pins">
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#2E8B57 6px 12px)"><i>1</i></div>
+  <div class="pin" style="background:#2E8B57"><i>2</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#E07B24 6px 12px)"><i>3</i></div>
+  <div class="pin" style="background:#2E5FA8"><i>4</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#2E5FA8 6px 12px)"><i>5</i></div>
+  <div class="pin" style="background:#E07B24"><i>6</i></div>
+  <div class="pin" style="background:repeating-linear-gradient(90deg,#fff 0 6px,#7A4B2A 6px 12px)"><i>7</i></div>
+  <div class="pin" style="background:#7A4B2A"><i>8</i></div>
+</div>
+<div class="pin-lbl"><span>ws-gn</span><span>gn</span><span>ws-or</span><span>bl</span><span>ws-bl</span><span>or</span><span>ws-br</span><span>br</span></div>
+<p style="margin-top:12px"><b>Trick:</b> A und B unterscheiden sich nur darin, dass <b>Orange und Grün die Plätze tauschen</b>. Blau (4/5) und Braun (7/8) bleiben immer gleich.</p>
+
+<h2>Dämpfung, NEXT und ACR</h2>
+<figure>
+<svg viewBox="0 0 640 300" role="img" aria-label="Dämpfung steigt, NEXT sinkt mit der Frequenz, Abstand ist ACR">
+  <path class="s-axis" d="M60 250 H610 M60 250 V20"/>
+  <text x="600" y="272" text-anchor="end" class="svg-mute" font-size="12">Frequenz →</text>
+  <text x="66" y="30" class="svg-mute" font-size="12">dB</text>
+  <path d="M60 50 C200 80 360 130 560 210" stroke="var(--success)" stroke-width="3" fill="none"/>
+  <path d="M60 235 C200 215 360 170 560 110" stroke="var(--danger)" stroke-width="3" fill="none"/>
+  <path d="M200 79 V214" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="208" y="150" class="svg-ink" font-weight="700" font-size="14">ACR</text>
+  <text x="90" y="46" fill="var(--success)" font-weight="700" font-size="13">NEXT (sinkt)</text>
+  <text x="90" y="232" fill="var(--danger)" font-weight="700" font-size="13">Dämpfung (steigt)</text>
+  <circle cx="452" cy="163" r="6" fill="var(--warn)"/>
+  <text x="462" y="186" fill="var(--warn)" font-weight="700" font-size="13">ACR = 0 → Grenze</text>
+</svg>
+<figcaption>Der grüne Abstand über der roten Linie ist dein «Sicherheitsabstand» gegen Störungen. Wo er null wird, ist Schluss.</figcaption>
+</figure>
+
+<h2>Permanent Link und Channel</h2>
+<figure>
+<svg viewBox="0 0 640 170" role="img" aria-label="Permanent Link 90 Meter, Channel 100 Meter">
+  <rect class="s-box" x="20" y="60" width="70" height="40" rx="6"/><text x="55" y="85" text-anchor="middle" class="svg-ink" font-size="12">Switch</text>
+  <rect class="s-box" x="130" y="60" width="80" height="40" rx="6"/><text x="170" y="85" text-anchor="middle" class="svg-ink" font-size="12">Patchpanel</text>
+  <rect class="s-box" x="470" y="60" width="60" height="40" rx="6"/><text x="500" y="85" text-anchor="middle" class="svg-ink" font-size="12">Dose</text>
+  <rect class="s-box" x="570" y="60" width="50" height="40" rx="6"/><text x="595" y="85" text-anchor="middle" class="svg-ink" font-size="12">PC</text>
+  <path class="s-line" d="M90 80 H130 M530 80 H570" stroke-dasharray="4 3"/>
+  <path class="s-acc" d="M210 80 H470"/>
+  <path d="M170 50 V36 H500 V50" stroke="var(--accent)" stroke-width="2" fill="none"/>
+  <text x="335" y="30" text-anchor="middle" fill="var(--accent)" font-weight="700" font-size="13">Permanent Link · max. 90 m</text>
+  <path d="M30 110 V128 H610 V110" stroke="var(--warn)" stroke-width="2" fill="none"/>
+  <text x="320" y="150" text-anchor="middle" fill="var(--warn)" font-weight="700" font-size="13">Channel · max. 100 m (mit Patchkabeln)</text>
+</svg>
+</figure>
+
+<h2>Die fünf Topologien</h2>
+<div class="topo-grid">
+  <div class="topo"><svg viewBox="0 0 160 100"><path class="s-line" stroke-width="3" d="M10 50 H150 M30 50 V25 M70 50 V75 M110 50 V25 M140 50 V75"/><g class="s-node"><circle cx="30" cy="22" r="8"/><circle cx="70" cy="78" r="8"/><circle cx="110" cy="22" r="8"/><circle cx="140" cy="78" r="8"/></g></svg><b>Bus</b><span>eine Leitung für alle</span></div>
+  <div class="topo"><svg viewBox="0 0 160 100"><circle cx="80" cy="50" r="38" class="s-line" stroke-width="3"/><g class="s-node"><circle cx="80" cy="12" r="8"/><circle cx="118" cy="50" r="8"/><circle cx="80" cy="88" r="8"/><circle cx="42" cy="50" r="8"/></g></svg><b>Ring</b><span>geschlossener Kreis</span></div>
+  <div class="topo"><svg viewBox="0 0 160 100"><path class="s-line" stroke-width="3" d="M80 50 L30 18 M80 50 L130 18 M80 50 L30 82 M80 50 L130 82 M80 50 L80 10"/><rect class="s-node2" x="68" y="40" width="24" height="20" rx="4"/><g class="s-node"><circle cx="30" cy="18" r="8"/><circle cx="130" cy="18" r="8"/><circle cx="30" cy="82" r="8"/><circle cx="130" cy="82" r="8"/><circle cx="80" cy="10" r="7"/></g></svg><b>Stern</b><span>alle am Switch</span></div>
+  <div class="topo"><svg viewBox="0 0 160 100"><path class="s-line" stroke-width="3" d="M80 14 L40 48 M80 14 L120 48 M40 48 L20 85 M40 48 L60 85 M120 48 L100 85 M120 48 L140 85"/><g class="s-node2"><rect x="70" y="6" width="20" height="16" rx="3"/><rect x="30" y="40" width="20" height="16" rx="3"/><rect x="110" y="40" width="20" height="16" rx="3"/></g><g class="s-node"><circle cx="20" cy="86" r="7"/><circle cx="60" cy="86" r="7"/><circle cx="100" cy="86" r="7"/><circle cx="140" cy="86" r="7"/></g></svg><b>Baum</b><span>Sterne in Ebenen</span></div>
+  <div class="topo"><svg viewBox="0 0 160 100"><path class="s-line" stroke-width="2.5" d="M30 20 L130 20 L130 80 L30 80 Z M30 20 L130 80 M130 20 L30 80 M80 50 L30 20 M80 50 L130 80"/><g class="s-node"><circle cx="30" cy="20" r="8"/><circle cx="130" cy="20" r="8"/><circle cx="130" cy="80" r="8"/><circle cx="30" cy="80" r="8"/><circle cx="80" cy="50" r="8"/></g></svg><b>Vermascht</b><span>viele Wege</span></div>
+</div>
+<div class="info-box"><p style="margin-bottom:0"><b>Merkhilfe Ausfall:</b> Bus — das Kabel ist der Schwachpunkt. Stern — der Switch ist der Schwachpunkt. Baum — ein Knoten oben nimmt einen ganzen Ast mit. Vermascht — kaum ein Schwachpunkt, dafür teuer.</p></div>
+
+</section>
+
+<!-- ════════════════════════ BEGRIFFE ════════════════════════ -->
+<section class="tab-pane" id="begriffe">
+<h2>Begriffe A–Z</h2>
+<div class="table-wrap"><table>
+<tr><th>Begriff</th><th>Erklärung</th></tr>
+<tr><td>ACR</td><td>Attenuation to Crosstalk Ratio = NEXT − Dämpfung, in dB</td></tr>
+<tr><td>Access Point</td><td>verbindet WLAN-Geräte mit dem kabelgebundenen Netz</td></tr>
+<tr><td>Aktive Komponente</td><td>braucht Strom, verarbeitet oder verstärkt das Signal</td></tr>
+<tr><td>Channel</td><td>ganze Übertragungsstrecke inkl. Patchkabel, max. 100 m</td></tr>
+<tr><td>Dämpfung</td><td>Abschwächung des Signals, in dB, steigt mit Länge und Frequenz</td></tr>
+<tr><td>Etagenverteiler (EV)</td><td>Verteiler pro Stockwerk, Start der Tertiärverkabelung</td></tr>
+<tr><td>Gateway</td><td>verbindet Netze mit unterschiedlichen Protokollen</td></tr>
+<tr><td>Gebäudeverteiler (GV)</td><td>Hauptverteiler eines Gebäudes</td></tr>
+<tr><td>GG45 / TERA</td><td>Stecksysteme für hohe Frequenzen (Cat 7/7A)</td></tr>
+<tr><td>Hub</td><td>verteilt Daten an alle Ports, veraltet</td></tr>
+<tr><td>Kategorie</td><td>Qualitätsstufe einer Komponente (Cat 5e, 6, 6A, 7 …)</td></tr>
+<tr><td>Koax</td><td>asymmetrisches Kabel: Innenleiter, Dielektrikum, Schirm, Mantel</td></tr>
+<tr><td>LAN</td><td>Local Area Network, lokales Netz</td></tr>
+<tr><td>Link-Klasse</td><td>Qualitätsstufe der ganzen Strecke (D, E, E<sub>A</sub>, F, F<sub>A</sub>)</td></tr>
+<tr><td>MAC-Adresse</td><td>Hardware-Adresse eines Netzwerkgeräts, nutzt der Switch</td></tr>
+<tr><td>NAS</td><td>Network Attached Storage, Netzwerkspeicher</td></tr>
+<tr><td>NEXT</td><td>Near End Crosstalk, Nebensprechen am nahen Ende</td></tr>
+<tr><td>Passive Komponente</td><td>ohne Strom, leitet nur weiter (Kabel, Dose, Patchpanel)</td></tr>
+<tr><td>Patchpanel</td><td>Anschlussfeld der festen Verkabelung im Rack</td></tr>
+<tr><td>Permanent Link</td><td>fest verlegte Strecke Patchpanel–Dose, max. 90 m</td></tr>
+<tr><td>PLC</td><td>Powerline Communication, Daten über das Stromnetz (indoor / outdoor)</td></tr>
+<tr><td>PoE</td><td>Power over Ethernet, Strom über das Netzwerkkabel</td></tr>
+<tr><td>PSNEXT</td><td>Powersum NEXT, Summe des Nebensprechens aller Paare</td></tr>
+<tr><td>Repeater</td><td>frischt das Signal auf, verlängert die Strecke</td></tr>
+<tr><td>Router</td><td>verbindet verschiedene Netze über IP-Adressen</td></tr>
+<tr><td>S/FTP</td><td>Geflecht-Gesamtschirm, Folie um jedes Paar</td></tr>
+<tr><td>Standortverteiler (SV)</td><td>oberster Verteiler eines Areals, Start der Primärverkabelung</td></tr>
+<tr><td>Switch</td><td>leitet Daten gezielt an den Port mit der richtigen MAC-Adresse</td></tr>
+<tr><td>Topologie</td><td>Anordnung der Geräte und Leitungen im Netz</td></tr>
+<tr><td>U72 5×4</td><td>Telefon-Installationskabel, 5 Vierer = 20 Adern</td></tr>
+<tr><td>UKV</td><td>Universelle Kommunikationsverkabelung</td></tr>
+<tr><td>VLAN</td><td>virtuelles LAN, trennt Netze logisch auf demselben Switch</td></tr>
+<tr><td>WAN</td><td>Wide Area Network, weiträumiges Netz</td></tr>
+<tr><td>WPA3</td><td>aktuelle WLAN-Verschlüsselung</td></tr>
+</table></div>
+</section>
+
+<!-- ════════════════════════ KARTEN ════════════════════════ -->
+<section class="tab-pane" id="karten">
+<h2>Karteikarten</h2>
+<p class="intro">Karte antippen dreht sie um. «Sitzt» drückt sie weg, «Nochmals üben» bringt sie am Schluss wieder.</p>
+<div class="flash-bar" style="margin-bottom:12px">
+  <span class="flash-count" id="flashCount">Karte 1</span>
+  <span>
+    <button class="btn ghost sm" type="button" id="flashShuffle">Mischen</button>
+    <button class="btn ghost sm" type="button" id="flashReset">Von vorn</button>
+  </span>
+</div>
+<div class="card-deck">
+  <div class="flash" id="flashCard" role="button" tabindex="0">
+    <span class="side-label" id="flashSide">Frage</span>
+    <span class="text" id="flashText">Wird geladen …</span>
+  </div>
+</div>
+<div class="flash-bar">
+  <button class="btn ghost sm" type="button" id="flashAgain">Nochmals üben</button>
+  <span class="flash-count" id="flashStats"></span>
+  <button class="btn sm" type="button" id="flashKnown">Sitzt</button>
+</div>
+<div class="info-box success" id="flashDone" style="display:none">
+  <p style="margin-bottom:0"><b>Durch.</b> <span id="flashDoneText"></span></p>
+</div>
+</section>
+
+<!-- ════════════════════════ QUIZ ════════════════════════ -->
+<section class="tab-pane" id="quiz">
+<h2>Quiz</h2>
+<p class="intro">Eine Antwort pro Frage, sofort mit Begründung.</p>
+<div class="score" id="quizScore">Noch keine Frage beantwortet.</div>
+<div id="quizList"></div>
+<p><button class="btn ghost" type="button" id="quizReset">Quiz zurücksetzen</button></p>
+</section>
+
+<!-- ════════════════════════ PROBETEST ════════════════════════ -->
+<section class="tab-pane" id="probetest">
+<h2>Probetest — 12 Aufgaben, 30 Punkte</h2>
+<p class="intro">Eigene Aufgaben mit anderen Situationen als auf dem Arbeitsauftrag. 35 Minuten, Blatt und Stift, Lösungen zu lassen bis du fertig bist.</p>
+<div class="info-box"><p style="margin-bottom:0"><b>Selbstkontrolle:</b> 26–30 P sitzt · 20–25 P Lücken nachlesen · unter 20 P nochmals Theorie. <em>Punkte sind meine eigene Verteilung.</em></p></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">1 · 2 P</span><span class="q">Schreiben Sie UKV, LAN und PoE aus und erklären Sie UKV in einem Satz.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p>Universelle Kommunikationsverkabelung · Local Area Network · Power over Ethernet.</p><p style="margin-bottom:0">UKV ist eine normierte, anwendungsneutrale Gebäudeverkabelung, über die alle Dienste (Telefon, Daten, TV …) laufen können.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">2 · 3 P</span><span class="q">In einer Turnhalle werden verbaut: Medienkonverter, Patchkabel, PoE-Switch, Bodendose, Glasfaserkabel, WLAN-Access-Point. Ordnen Sie zu: aktiv oder passiv?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0"><b>Aktiv:</b> Medienkonverter, PoE-Switch, Access Point. <b>Passiv:</b> Patchkabel, Bodendose, Glasfaserkabel. Regel: braucht Strom und bearbeitet das Signal = aktiv.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">3 · 2 P</span><span class="q">Ein Kunde fragt: «Warum kauft man heute keinen Hub mehr, sondern einen Switch?»</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Der Hub schickt jedes Paket an alle Ports — das erzeugt Kollisionen und unnötigen Verkehr, und jeder kann mitlesen. Der Switch lernt die MAC-Adressen und schickt nur an den richtigen Port: schneller und sicherer.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">4 · 2 P</span><span class="q">Eine Gemeinde will die Gebäudesteuerung (KNX) ihres Schulhauses über das Internet überwachen. Welches Gerät braucht es zwischen KNX und IP-Netz, und warum reicht ein Router nicht?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ein <b>Gateway</b> (KNX/IP-Gateway oder -Router der KNX-Seite). KNX und IP sprechen unterschiedliche Protokolle — ein Router verbindet nur IP-Netze untereinander, er übersetzt nicht zwischen Protokollen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">5 · 3 P</span><span class="q">Ein Bauernhof hat ein Wohnhaus und eine Scheune 60 m entfernt. In der Scheune sollen zwei IP-Kameras und ein Access Point an. Schlagen Sie Kabel und Komponenten vor.</span></div>
+<div class="ue-body"><details><summary>Lösung (eine mögliche)</summary><div class="body"><p style="margin-bottom:0">Zwischen den Gebäuden <b>Glasfaser</b> (keine Potenzialprobleme, blitzsicherer) mit je einem <b>Medienkonverter</b> oder einem Switch mit SFP-Port. In der Scheune ein <b>PoE-Switch</b>, der Kameras und Access Point über das Netzwerkkabel speist. Kupfer ginge auch (60 m &lt; 90 m), dann aber Erdverlegung und Überspannungsschutz beachten.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">6 · 3 P</span><span class="q">In einem Baum-Netz fällt am Montagmorgen im ganzen 2. OG das Netz aus, im EG und 1. OG läuft alles. Was prüfen Sie zuerst, in welcher Reihenfolge?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Ein ganzer Ast ist weg → Fehler am Knoten dieses Astes. 1. <b>Stromversorgung und LEDs des Etagen-Switches</b> im 2. OG. 2. <b>Uplink</b> zwischen Gebäudeverteiler und Etagenverteiler (Patchkabel, Port, Medienkonverter). 3. Port am Gebäudeverteiler. Einzelne Dosen sind nicht schuld, sonst wäre nur ein Platz betroffen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">7 · 2 P</span><span class="q">Lesen Sie die Bezeichnung <code>F/FTP</code> und <code>U/UTP</code> — was ist geschirmt?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">F/FTP: Folie als Gesamtschirm und Folie um jedes Paar. U/UTP: gar nichts geschirmt.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">8 · 2 P</span><span class="q">Unterschied Kategorie und Link-Klasse? Was ist die Link-Klasse einer Strecke mit Cat-6A-Kabel und Cat-6-Dosen?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Kategorie = einzelne Komponente, Klasse = ganze Strecke. Das schwächste Teil entscheidet: Cat 6 → höchstens <b>Klasse E</b> (250 MHz).</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">9 · 3 P</span><span class="q">Erklären Sie Dämpfung, NEXT und ACR und sagen Sie jeweils, ob ein grosser oder kleiner Wert gut ist.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Dämpfung: Signalverlust → klein ist gut. NEXT: Nebensprechen am nahen Ende, angegeben als Abstand in dB → gross ist gut. ACR = NEXT − Dämpfung → gross ist gut.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">10 · 3 P</span><span class="q">Eine Zahnarztpraxis mit Wartezimmer-WLAN macht diese Massnahmen. Bewerten Sie je mit «stark», «schwach» oder «schädlich»: a) Gäste im gleichen WLAN wie die Patientendatenbank, b) MAC-Filter, c) Router-Passwort «admin» belassen, d) Gastnetz mit WPA3, e) tägliches Backup auf eine externe Disk ausser Haus, f) SSID verstecken.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">a) schädlich · b) schwach · c) schädlich · d) stark · e) stark · f) schwach.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">11 · 3 P</span><span class="q">Nennen Sie sechs Punkte, die bei der Montage von UKV-Kabeln wichtig sind.</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0">Biegeradius · Zugkraft · Verdrillung erst kurz vor dem Kontakt öffnen · Abstand zu Starkstrom · nicht quetschen (Kabelbinder) · Schirm sauber auflegen · gleiche Kategorie · beschriften und messen. Sechs davon genügen.</p></div></details></div></div>
+
+<div class="ue"><div class="ue-head"><span class="nr">12 · 2 P</span><span class="q">Ein Kunde möchte den Hobbyraum im Keller ohne neues Kabel ans Heimnetz anschliessen. Welche Technik passt, und ist das indoor oder outdoor?</span></div>
+<div class="ue-body"><details><summary>Lösung</summary><div class="body"><p style="margin-bottom:0"><b>PLC / Powerline</b> mit Adaptern in den Steckdosen — <b>indoor</b>, weil es nur in der Hausinstallation läuft. (Alternative: WLAN-Mesh.)</p></div></details></div></div>
+</section>
+
+<!-- ════════════════════════ LERNPLAN ════════════════════════ -->
+<section class="tab-pane" id="lernplan">
+<h2>Lernplan — kleine Portionen</h2>
+<p class="intro">Je 15–20 Minuten, dann Pause. Ein Häkchen pro Block reicht.</p>
+
+<div class="plan-day"><div class="plan-rail"><div class="plan-dot test"></div><div class="plan-stem"></div></div><div class="plan-body"><div class="plan-head"><span class="d">Fr 06.11.</span><span class="t">im Unterricht</span></div>
+<ul><li>Arbeitsauftrag UKV selbst lösen (Teil A im Team, Teil B allein).</li><li>Lehrmittel Seiten 5.13–5.16 lesen.</li><li>Wer fertig ist: Repetitionsaufgaben.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><div class="plan-dot"></div><div class="plan-stem"></div></div><div class="plan-body"><div class="plan-head"><span class="d">Wochenende</span><span class="t">2 × 15 min</span></div>
+<ul><li>Reiter «Visuals»: die fünf Topologien und den UKV-Baum einmal aus dem Kopf skizzieren.</li><li>Karteikarten einmal durch.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><div class="plan-dot"></div><div class="plan-stem"></div></div><div class="plan-body"><div class="plan-head"><span class="d">Mo–Mi</span><span class="t">je 15 min</span></div>
+<ul><li>Mo: Kabel, Schirmbezeichnung, RJ45-Farben.</li><li>Di: Kategorie, Klasse, Dämpfung, NEXT, ACR, Permanent Link.</li><li>Mi: Quiz, falsche Fragen im Theorie-Reiter nachlesen.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><div class="plan-dot"></div><div class="plan-stem"></div></div><div class="plan-body"><div class="plan-head"><span class="d">Do</span><span class="t">35 min</span></div>
+<ul><li>Probetest auf Papier, danach erst Lösungen aufklappen.</li></ul></div></div>
+
+<div class="plan-day"><div class="plan-rail"><div class="plan-dot"></div></div><div class="plan-body"><div class="plan-head"><span class="d">Fr 13.11.</span><span class="t">nächste Telekom-Lektion</span></div>
+<ul><li>Offene Fragen an Herrn Aeschlimann mitnehmen.</li></ul></div></div>
+</section>
+
+<footer>
+<p><b>Quellen:</b> Unterrichtsplanung Kommunikation vom 06.11.2026 (18 Lernziele Kapitel 5) · Arbeitsauftrag UKV vom 06.11.2026 (nur Themen, keine Aufgaben übernommen). Normwerte nach EN 50173, IEEE 802.3.</p>
+<p><b>Nicht mit dem Lehrmittel geprüft:</b> der U72-Farbcode, die genauen Längen der Primär- und Sekundärstrecke, welche RJ45-Norm (A oder B) das Lehrmittel bevorzugt, die Multimedia-Stecksysteme im Lehrmittel.</p>
+<p>Lernpaket erstellt am 06.11.2026 · <a href="https://schule.yanikroesti.ch">schule.yanikroesti.ch</a></p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Tabs ── */
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".tab-btn"));
+  var panes = Array.prototype.slice.call(document.querySelectorAll(".tab-pane"));
+  function openTab(name) {
+    btns.forEach(function (b) { b.classList.toggle("active", b.dataset.tab === name); });
+    panes.forEach(function (p) { p.classList.toggle("active", p.id === name); });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  btns.forEach(function (b) { b.addEventListener("click", function () { openTab(b.dataset.tab); }); });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-open-tab]") : null;
+    if (t) { openTab(t.dataset.openTab); }
+  });
+  if (location.hash) {
+    var h = location.hash.slice(1);
+    if (panes.some(function (p) { return p.id === h; })) { openTab(h); }
+  }
+
+  /* ── Hell / dunkel ── */
+  var root = document.documentElement, tt = document.getElementById("themeToggle");
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  var saved = load("ukv-theme");
+  if (saved === "dark" || saved === "light") { root.setAttribute("data-theme", saved); }
+  tt.addEventListener("click", function () {
+    var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var cur = root.getAttribute("data-theme") || (dark ? "dark" : "light");
+    var next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    store("ukv-theme", next);
+  });
+
+  /* ── Karteikarten ── */
+  var order = [], idx = 0, flipped = false, known = 0, again = [];
+  var elCard = document.getElementById("flashCard"), elText = document.getElementById("flashText"),
+      elSide = document.getElementById("flashSide"), elCount = document.getElementById("flashCount"),
+      elStats = document.getElementById("flashStats"), elDone = document.getElementById("flashDone"),
+      elDoneT = document.getElementById("flashDoneText");
+  function resetDeck(shuffle) {
+    order = CARDS.map(function (_, i) { return i; });
+    if (shuffle) { for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; } }
+    idx = 0; flipped = false; known = 0; again = []; elDone.style.display = "none"; render();
+  }
+  function render() {
+    if (idx >= order.length) {
+      elSide.textContent = "Fertig";
+      elText.textContent = again.length ? "Noch " + again.length + " Karten im Nachbrenner." : "Alle Karten sassen.";
+      elText.classList.remove("answer");
+      elCount.textContent = order.length + " von " + order.length;
+      elStats.textContent = "Gewusst: " + known;
+      elDone.style.display = "block";
+      elDoneT.textContent = again.length
+        ? "Du hast " + known + " von " + order.length + " gewusst. Drück «Nochmals üben», dann kommen nur die offenen Karten."
+        : "Alle " + order.length + " Karten sassen. Jetzt den Probetest.";
+      return;
+    }
+    var c = CARDS[order[idx]];
+    elSide.textContent = flipped ? "Antwort" : "Frage";
+    elText.textContent = flipped ? c[1] : c[0];
+    elText.classList.toggle("answer", flipped);
+    elCount.textContent = "Karte " + (idx + 1) + " von " + order.length;
+    elStats.textContent = "Gewusst: " + known;
+  }
+  function flip() { if (idx < order.length) { flipped = !flipped; render(); } }
+  elCard.addEventListener("click", flip);
+  elCard.addEventListener("keydown", function (e) { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); } });
+  document.getElementById("flashKnown").addEventListener("click", function () { if (idx < order.length) { known++; idx++; flipped = false; render(); } });
+  document.getElementById("flashAgain").addEventListener("click", function () {
+    if (idx < order.length) { again.push(order[idx]); idx++; flipped = false; render(); }
+    else if (again.length) { order = again.slice(); again = []; idx = 0; known = 0; flipped = false; elDone.style.display = "none"; render(); }
+  });
+  document.getElementById("flashShuffle").addEventListener("click", function () { resetDeck(true); });
+  document.getElementById("flashReset").addEventListener("click", function () { resetDeck(false); });
+  resetDeck(false);
+
+  /* ── Quiz ── */
+  var CARDS = [
+    ["UKV — ausgeschrieben?", "Universelle Kommunikationsverkabelung."],
+    ["Sinn und Zweck der UKV?", "Eine einheitliche, normierte, anwendungsneutrale Verkabelung für alle Dienste — flexibel und erweiterbar."],
+    ["Die drei Verkabelungsstrecken?", "Primär (Gelände, zwischen Gebäuden) · Sekundär (Gebäude, Steigzone) · Tertiär (Etage bis Dose)."],
+    ["Die vier Verteiler-Ebenen?", "Standortverteiler → Gebäudeverteiler → Etagenverteiler → Anschlussdose."],
+    ["Maximal Permanent Link / Channel?", "Permanent Link 90 m, Channel 100 m (mit Patchkabeln)."],
+    ["Asymmetrisches Kabel — Aufbau?", "Koax: Innenleiter, Dielektrikum, Schirm (Aussenleiter), Mantel."],
+    ["Symmetrisches Kabel — Prinzip?", "Paarweise verdrillte Adern mit Signal und Gegensignal — Störungen heben sich auf."],
+    ["S/FTP — was heisst das?", "Geflecht als Gesamtschirm, Folie um jedes Paar, Twisted Pair."],
+    ["U72 5×4 — wie viele Adern?", "5 Vierer × 4 Adern = 20 Adern."],
+    ["T568A und T568B — Unterschied?", "Orange und Grün tauschen die Plätze. Blau und Braun bleiben."],
+    ["RJ45 T568B Pin 1 und 2?", "1 weiss-orange, 2 orange."],
+    ["Zwei Stecksysteme für hohe Raten?", "GG45 und TERA."],
+    ["Kategorie vs. Link-Klasse?", "Kategorie = Komponente, Klasse = ganze Strecke. Das schwächste Teil zählt."],
+    ["Cat 6A — Klasse und Frequenz?", "Klasse EA, 500 MHz."],
+    ["Dämpfung?", "Abschwächung des Signals in dB, steigt mit Länge und Frequenz. Klein ist gut."],
+    ["NEXT?", "Near End Crosstalk — Nebensprechen am nahen Ende. Grosser Wert ist gut."],
+    ["ACR?", "Attenuation to Crosstalk Ratio = NEXT − Dämpfung. Gross ist gut, bei 0 ist Schluss."],
+    ["PSNEXT?", "Powersum NEXT — alle anderen Paare stören zusammen ein Paar."],
+    ["LAN und WAN?", "Local Area Network (lokal, Gebäude) · Wide Area Network (weiträumig, Internet)."],
+    ["Aktive Komponente — Regel?", "Braucht Strom und verarbeitet oder verstärkt das Signal."],
+    ["Drei passive Komponenten?", "Kabel, Patchpanel, Anschlussdose (auch Stecker, Patchkabel)."],
+    ["Hub vs. Switch?", "Hub schickt an alle Ports. Switch lernt MAC-Adressen und schickt gezielt."],
+    ["Router?", "Verbindet verschiedene Netze über IP-Adressen."],
+    ["Gateway?", "Verbindet Netze mit unterschiedlichen Protokollen, z. B. KNX ↔ IP."],
+    ["Repeater?", "Frischt das Signal auf und verlängert die Strecke."],
+    ["NAS?", "Network Attached Storage — zentraler Speicher im Netz."],
+    ["Stern — Vor- und Nachteil?", "Kabelausfall trifft nur ein Gerät · fällt der Switch, ist alles weg."],
+    ["Bus — Vor- und Nachteil?", "Wenig Kabel · Kabelbruch legt alles lahm."],
+    ["Vermascht — Vor- und Nachteil?", "Sehr ausfallsicher · teuer und aufwendig."],
+    ["Welche Topologie ist die UKV?", "Baum: auf jeder Ebene ein Stern."],
+    ["PoE — was und Beispiele?", "Power over Ethernet: Strom über das Datenkabel. IP-Kamera, Access Point, VoIP-Telefon."],
+    ["PLC indoor vs. outdoor?", "Indoor: in der Hausinstallation (Steckdosen-Adapter). Outdoor: Netz des Energieversorgers bis zum Haus (z. B. Smart Meter)."],
+    ["Warum ist ein MAC-Filter schwach?", "MAC-Adressen lassen sich fälschen."],
+    ["Drei starke Sicherheitsmassnahmen?", "WPA3 mit langem Passwort · Standard-Passwort ändern · Gastnetz/VLAN · Updates · Backup."]
+  ];
+  var QUIZ = [
+    ["Wofür steht UKV?", ["Universelle Kommunikationsverkabelung", "Ultrakurzwellen-Verteilung", "Unterverteilung Kupfer-Verkabelung", "Universelle Kabelverlegung"], 0, "Universelle Kommunikationsverkabelung — nicht verwechseln mit UKW-Radio."],
+    ["Welche Strecke führt vom Etagenverteiler zur Dose?", ["Primär", "Sekundär", "Tertiär", "Channel"], 2, "Tertiär = horizontal auf der Etage."],
+    ["Maximale Länge des Permanent Link?", ["50 m", "90 m", "100 m", "500 m"], 1, "90 m fest verlegt. Mit Patchkabeln wird es der Channel mit 100 m."],
+    ["Was ist ein Koaxialkabel?", ["symmetrisch", "asymmetrisch", "ein Glasfaserkabel", "ein Vierer"], 1, "Asymmetrisch: das Signal läuft gegen den Schirm."],
+    ["U/FTP bedeutet …", ["Gesamtschirm Folie, Paare ungeschirmt", "kein Gesamtschirm, Folie um jedes Paar", "alles geschirmt", "nichts geschirmt"], 1, "Vor dem Schrägstrich Gesamtschirm (U = keiner), danach Paarschirm (F = Folie)."],
+    ["Bei T568A gegenüber T568B tauschen …", ["Blau und Braun", "Orange und Grün", "Pin 1 und 8", "nichts"], 1, "Orange ↔ Grün. Blau und Braun bleiben."],
+    ["Was ist die Link-Klasse?", ["Qualität einer Dose", "Qualität der ganzen Strecke", "die Kabellänge", "die Schirmart"], 1, "Klasse = Strecke, Kategorie = Komponente."],
+    ["ACR berechnet sich als …", ["Dämpfung − NEXT", "NEXT − Dämpfung", "NEXT + Dämpfung", "NEXT × Länge"], 1, "Abstand zwischen Nebensprechdämpfung und Dämpfung — gross ist gut."],
+    ["Mit steigender Frequenz …", ["sinkt die Dämpfung", "steigt die Dämpfung", "bleibt die Dämpfung gleich", "verschwindet NEXT"], 1, "Dämpfung steigt, NEXT sinkt — irgendwann wird ACR null."],
+    ["Welches Gerät ist passiv?", ["Switch", "Repeater", "Patchpanel", "Access Point"], 2, "Das Patchpanel leitet nur weiter, braucht keinen Strom."],
+    ["Welches Gerät arbeitet mit MAC-Adressen?", ["Hub", "Switch", "Repeater", "Patchpanel"], 1, "Der Switch lernt, welche MAC an welchem Port hängt."],
+    ["Welches Gerät verbindet das Heimnetz mit dem Internet?", ["Switch", "Hub", "Router", "NAS"], 2, "Der Router verbindet verschiedene IP-Netze."],
+    ["Was macht ein Gateway?", ["verstärkt das Signal", "übersetzt zwischen Protokollen", "speichert Daten", "verteilt Strom"], 1, "Zum Beispiel KNX ↔ IP."],
+    ["Bei welcher Topologie legt ein einziger Kabelbruch das ganze Netz lahm?", ["Stern", "Bus", "Vermascht", "Baum"], 1, "Beim Bus hängen alle an einer Leitung."],
+    ["Welche Topologie ist am ausfallsichersten?", ["Bus", "Ring", "Stern", "Vermascht"], 3, "Mehrere Wege — dafür teuer."],
+    ["Was ist PoE?", ["Daten über Stromleitung", "Strom über Netzwerkkabel", "ein Glasfaserstandard", "eine WLAN-Verschlüsselung"], 1, "Power over Ethernet. Daten über Stromleitung wäre PLC."],
+    ["Welche Massnahme ist am schwächsten?", ["WPA3", "Firmware-Updates", "SSID verstecken", "Gastnetz"], 2, "Eine versteckte SSID findet man mit jedem WLAN-Scanner."],
+    ["Was heisst WAN?", ["Wireless Access Network", "Wide Area Network", "Web Access Node", "Wired Area Network"], 1, "Weiträumiges Netz, z. B. das Internet."],
+    ["Was verlängert eine Kupferstrecke, ohne Adressen zu verstehen?", ["Router", "Repeater", "Gateway", "Switch"], 1, "Der Repeater frischt nur das Signal auf."],
+    ["Die Montage-Regel zur Verdrillung lautet …", ["möglichst lang aufdrehen", "erst kurz vor dem Kontakt öffnen", "Paare vertauschen", "gar nicht beachten"], 1, "Sonst steigt das Nebensprechen (NEXT wird schlechter)."]
+  ];
+  var answered = 0, correct = 0;
+  var list = document.getElementById("quizList"), scoreEl = document.getElementById("quizScore");
+  function buildQuiz() {
+    list.innerHTML = ""; answered = 0; correct = 0; updateScore();
+    QUIZ.forEach(function (q, qi) {
+      var wrap = document.createElement("div");
+      wrap.className = "quiz-q";
+      var t = document.createElement("div");
+      t.className = "qtext"; t.textContent = (qi + 1) + ". " + q[0];
+      wrap.appendChild(t);
+      var fb = document.createElement("div");
+      fb.className = "quiz-fb"; fb.textContent = q[3];
+      q[1].forEach(function (opt, oi) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "opt"; b.textContent = opt;
+        b.addEventListener("click", function () {
+          var all = wrap.querySelectorAll(".opt");
+          Array.prototype.forEach.call(all, function (x) { x.disabled = true; });
+          all[q[2]].classList.add("right");
+          if (oi !== q[2]) { b.classList.add("wrong"); } else { correct++; }
+          answered++; fb.classList.add("show"); updateScore();
+        });
+        wrap.appendChild(b);
+      });
+      wrap.appendChild(fb);
+      list.appendChild(wrap);
+    });
+  }
+  function updateScore() {
+    if (!answered) { scoreEl.textContent = "Noch keine Frage beantwortet. " + QUIZ.length + " warten."; return; }
+    var txt = correct + " von " + answered + " richtig";
+    if (answered === QUIZ.length) {
+      var p = Math.round(correct / QUIZ.length * 100);
+      txt += " — " + p + " %. " + (p >= 85 ? "Das sitzt." : p >= 65 ? "Solide, die Fehler gezielt nachlesen." : "Nochmals durch den Theorie-Reiter.");
+    }
+    scoreEl.textContent = txt;
+  }
+  document.getElementById("quizReset").addEventListener("click", buildQuiz);
+  buildQuiz();
+})();
+</script>
+<script src="https://schule.yanikroesti.ch/assets/lernbot.js" defer></script>
+</body>
+</html>
