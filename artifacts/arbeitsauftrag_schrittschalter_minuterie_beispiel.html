@@ -46,6 +46,10 @@ figcaption{font-size:10.5px;color:#424949;margin-top:1.5mm;line-height:1.45}
 table{width:100%;border-collapse:collapse;font-size:11px;margin:2mm 0 3mm}
 th,td{border:.8px solid #9aa5a2;padding:3.5px 5px;text-align:left;vertical-align:top}
 th{background:#eef1ee;font-weight:600}
+/* Breite Tabellen scrollen auf dem Handy in sich, statt die Seite zu verbreitern */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tscroll>table{margin:0}
+.tscroll{margin:2mm 0 3mm}
 td.n{font-variant-numeric:tabular-nums}
 .fill{display:inline-block;min-width:60px;border-bottom:1px solid #8d9794}
 .fillbox{border:1px dashed #9aa5a2;background:#fafbfa;height:11mm}
@@ -1332,7 +1336,7 @@ td.n{font-variant-numeric:tabular-nums}
   <h2 class="t">Woran der Lehrer die 20 Punkte verteilt</h2>
   <p class="lead">Fünf Kriterien zu je 4 Punkten, aus dem Auftragsblatt übernommen. Die mittlere Spalte ist die Falle: «funktioniert theoretisch, aber unübersichtlich» kostet die Hälfte.</p>
 
-  <table>
+  <div class="tscroll"><table>
     <tr><th style="width:21%">Kriterium</th><th style="width:28%">4 Punkte — vollständig</th><th style="width:28%">2 Punkte — Nachbesserung nötig</th><th>0 Punkte</th></tr>
     <tr>
       <td><b>Installationspläne</b><br>Schritt &amp; Minuterie</td>
@@ -1364,7 +1368,7 @@ td.n{font-variant-numeric:tabular-nums}
       <td>Mängel bei Struktur oder Fachsprache, oder verspätete Abgabe.</td>
       <td>Unordentlich, gravierende Mängel im Aufbau, unvollständige Abgabe.</td>
     </tr>
-  </table>
+  </table></div>
 
   <div class="pf"><span>Bewertungsraster</span><span>Seite 16</span></div>
 </section>

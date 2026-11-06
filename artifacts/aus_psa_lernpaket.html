@@ -195,6 +195,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); white-space: 
 .quiz-q .q-num { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 7px; border-radius: 4px; }
 .quiz-q .q-topic { font-size: 0.74rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
 .quiz-q .q-source { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-mute); margin-left: auto; }
+/* Lange Quellen-URLs duerfen umbrechen, sonst wird die Seite auf dem Handy breiter */
+.q-source { overflow-wrap: anywhere; }
 .quiz-q p.q-text { font-weight: 500; margin-bottom: 6px; font-size: 0.98rem; }
 
 /* ── SCHEMA ── */
