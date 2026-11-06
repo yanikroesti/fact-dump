@@ -702,6 +702,64 @@ footer a { color: var(--accent); }
 <script>
 (function () {
   "use strict";
+  var CARDS = [
+    ["UKV — ausgeschrieben?", "Universelle Kommunikationsverkabelung."],
+    ["Sinn und Zweck der UKV?", "Eine einheitliche, normierte, anwendungsneutrale Verkabelung für alle Dienste — flexibel und erweiterbar."],
+    ["Die drei Verkabelungsstrecken?", "Primär (Gelände, zwischen Gebäuden) · Sekundär (Gebäude, Steigzone) · Tertiär (Etage bis Dose)."],
+    ["Die vier Verteiler-Ebenen?", "Standortverteiler → Gebäudeverteiler → Etagenverteiler → Anschlussdose."],
+    ["Maximal Permanent Link / Channel?", "Permanent Link 90 m, Channel 100 m (mit Patchkabeln)."],
+    ["Asymmetrisches Kabel — Aufbau?", "Koax: Innenleiter, Dielektrikum, Schirm (Aussenleiter), Mantel."],
+    ["Symmetrisches Kabel — Prinzip?", "Paarweise verdrillte Adern mit Signal und Gegensignal — Störungen heben sich auf."],
+    ["S/FTP — was heisst das?", "Geflecht als Gesamtschirm, Folie um jedes Paar, Twisted Pair."],
+    ["U72 5×4 — wie viele Adern?", "5 Vierer × 4 Adern = 20 Adern."],
+    ["T568A und T568B — Unterschied?", "Orange und Grün tauschen die Plätze. Blau und Braun bleiben."],
+    ["RJ45 T568B Pin 1 und 2?", "1 weiss-orange, 2 orange."],
+    ["Zwei Stecksysteme für hohe Raten?", "GG45 und TERA."],
+    ["Kategorie vs. Link-Klasse?", "Kategorie = Komponente, Klasse = ganze Strecke. Das schwächste Teil zählt."],
+    ["Cat 6A — Klasse und Frequenz?", "Klasse EA, 500 MHz."],
+    ["Dämpfung?", "Abschwächung des Signals in dB, steigt mit Länge und Frequenz. Klein ist gut."],
+    ["NEXT?", "Near End Crosstalk — Nebensprechen am nahen Ende. Grosser Wert ist gut."],
+    ["ACR?", "Attenuation to Crosstalk Ratio = NEXT − Dämpfung. Gross ist gut, bei 0 ist Schluss."],
+    ["PSNEXT?", "Powersum NEXT — alle anderen Paare stören zusammen ein Paar."],
+    ["LAN und WAN?", "Local Area Network (lokal, Gebäude) · Wide Area Network (weiträumig, Internet)."],
+    ["Aktive Komponente — Regel?", "Braucht Strom und verarbeitet oder verstärkt das Signal."],
+    ["Drei passive Komponenten?", "Kabel, Patchpanel, Anschlussdose (auch Stecker, Patchkabel)."],
+    ["Hub vs. Switch?", "Hub schickt an alle Ports. Switch lernt MAC-Adressen und schickt gezielt."],
+    ["Router?", "Verbindet verschiedene Netze über IP-Adressen."],
+    ["Gateway?", "Verbindet Netze mit unterschiedlichen Protokollen, z. B. KNX ↔ IP."],
+    ["Repeater?", "Frischt das Signal auf und verlängert die Strecke."],
+    ["NAS?", "Network Attached Storage — zentraler Speicher im Netz."],
+    ["Stern — Vor- und Nachteil?", "Kabelausfall trifft nur ein Gerät · fällt der Switch, ist alles weg."],
+    ["Bus — Vor- und Nachteil?", "Wenig Kabel · Kabelbruch legt alles lahm."],
+    ["Vermascht — Vor- und Nachteil?", "Sehr ausfallsicher · teuer und aufwendig."],
+    ["Welche Topologie ist die UKV?", "Baum: auf jeder Ebene ein Stern."],
+    ["PoE — was und Beispiele?", "Power over Ethernet: Strom über das Datenkabel. IP-Kamera, Access Point, VoIP-Telefon."],
+    ["PLC indoor vs. outdoor?", "Indoor: in der Hausinstallation (Steckdosen-Adapter). Outdoor: Netz des Energieversorgers bis zum Haus (z. B. Smart Meter)."],
+    ["Warum ist ein MAC-Filter schwach?", "MAC-Adressen lassen sich fälschen."],
+    ["Drei starke Sicherheitsmassnahmen?", "WPA3 mit langem Passwort · Standard-Passwort ändern · Gastnetz/VLAN · Updates · Backup."]
+  ];
+  var QUIZ = [
+    ["Wofür steht UKV?", ["Universelle Kommunikationsverkabelung", "Ultrakurzwellen-Verteilung", "Unterverteilung Kupfer-Verkabelung", "Universelle Kabelverlegung"], 0, "Universelle Kommunikationsverkabelung — nicht verwechseln mit UKW-Radio."],
+    ["Welche Strecke führt vom Etagenverteiler zur Dose?", ["Primär", "Sekundär", "Tertiär", "Channel"], 2, "Tertiär = horizontal auf der Etage."],
+    ["Maximale Länge des Permanent Link?", ["50 m", "90 m", "100 m", "500 m"], 1, "90 m fest verlegt. Mit Patchkabeln wird es der Channel mit 100 m."],
+    ["Was ist ein Koaxialkabel?", ["symmetrisch", "asymmetrisch", "ein Glasfaserkabel", "ein Vierer"], 1, "Asymmetrisch: das Signal läuft gegen den Schirm."],
+    ["U/FTP bedeutet …", ["Gesamtschirm Folie, Paare ungeschirmt", "kein Gesamtschirm, Folie um jedes Paar", "alles geschirmt", "nichts geschirmt"], 1, "Vor dem Schrägstrich Gesamtschirm (U = keiner), danach Paarschirm (F = Folie)."],
+    ["Bei T568A gegenüber T568B tauschen …", ["Blau und Braun", "Orange und Grün", "Pin 1 und 8", "nichts"], 1, "Orange ↔ Grün. Blau und Braun bleiben."],
+    ["Was ist die Link-Klasse?", ["Qualität einer Dose", "Qualität der ganzen Strecke", "die Kabellänge", "die Schirmart"], 1, "Klasse = Strecke, Kategorie = Komponente."],
+    ["ACR berechnet sich als …", ["Dämpfung − NEXT", "NEXT − Dämpfung", "NEXT + Dämpfung", "NEXT × Länge"], 1, "Abstand zwischen Nebensprechdämpfung und Dämpfung — gross ist gut."],
+    ["Mit steigender Frequenz …", ["sinkt die Dämpfung", "steigt die Dämpfung", "bleibt die Dämpfung gleich", "verschwindet NEXT"], 1, "Dämpfung steigt, NEXT sinkt — irgendwann wird ACR null."],
+    ["Welches Gerät ist passiv?", ["Switch", "Repeater", "Patchpanel", "Access Point"], 2, "Das Patchpanel leitet nur weiter, braucht keinen Strom."],
+    ["Welches Gerät arbeitet mit MAC-Adressen?", ["Hub", "Switch", "Repeater", "Patchpanel"], 1, "Der Switch lernt, welche MAC an welchem Port hängt."],
+    ["Welches Gerät verbindet das Heimnetz mit dem Internet?", ["Switch", "Hub", "Router", "NAS"], 2, "Der Router verbindet verschiedene IP-Netze."],
+    ["Was macht ein Gateway?", ["verstärkt das Signal", "übersetzt zwischen Protokollen", "speichert Daten", "verteilt Strom"], 1, "Zum Beispiel KNX ↔ IP."],
+    ["Bei welcher Topologie legt ein einziger Kabelbruch das ganze Netz lahm?", ["Stern", "Bus", "Vermascht", "Baum"], 1, "Beim Bus hängen alle an einer Leitung."],
+    ["Welche Topologie ist am ausfallsichersten?", ["Bus", "Ring", "Stern", "Vermascht"], 3, "Mehrere Wege — dafür teuer."],
+    ["Was ist PoE?", ["Daten über Stromleitung", "Strom über Netzwerkkabel", "ein Glasfaserstandard", "eine WLAN-Verschlüsselung"], 1, "Power over Ethernet. Daten über Stromleitung wäre PLC."],
+    ["Welche Massnahme ist am schwächsten?", ["WPA3", "Firmware-Updates", "SSID verstecken", "Gastnetz"], 2, "Eine versteckte SSID findet man mit jedem WLAN-Scanner."],
+    ["Was heisst WAN?", ["Wireless Access Network", "Wide Area Network", "Web Access Node", "Wired Area Network"], 1, "Weiträumiges Netz, z. B. das Internet."],
+    ["Was verlängert eine Kupferstrecke, ohne Adressen zu verstehen?", ["Router", "Repeater", "Gateway", "Switch"], 1, "Der Repeater frischt nur das Signal auf."],
+    ["Die Montage-Regel zur Verdrillung lautet …", ["möglichst lang aufdrehen", "erst kurz vor dem Kontakt öffnen", "Paare vertauschen", "gar nicht beachten"], 1, "Sonst steigt das Nebensprechen (NEXT wird schlechter)."]
+  ];
 
   /* ── Tabs ── */
   var btns = Array.prototype.slice.call(document.querySelectorAll(".tab-btn"));
@@ -779,64 +837,6 @@ footer a { color: var(--accent); }
   resetDeck(false);
 
   /* ── Quiz ── */
-  var CARDS = [
-    ["UKV — ausgeschrieben?", "Universelle Kommunikationsverkabelung."],
-    ["Sinn und Zweck der UKV?", "Eine einheitliche, normierte, anwendungsneutrale Verkabelung für alle Dienste — flexibel und erweiterbar."],
-    ["Die drei Verkabelungsstrecken?", "Primär (Gelände, zwischen Gebäuden) · Sekundär (Gebäude, Steigzone) · Tertiär (Etage bis Dose)."],
-    ["Die vier Verteiler-Ebenen?", "Standortverteiler → Gebäudeverteiler → Etagenverteiler → Anschlussdose."],
-    ["Maximal Permanent Link / Channel?", "Permanent Link 90 m, Channel 100 m (mit Patchkabeln)."],
-    ["Asymmetrisches Kabel — Aufbau?", "Koax: Innenleiter, Dielektrikum, Schirm (Aussenleiter), Mantel."],
-    ["Symmetrisches Kabel — Prinzip?", "Paarweise verdrillte Adern mit Signal und Gegensignal — Störungen heben sich auf."],
-    ["S/FTP — was heisst das?", "Geflecht als Gesamtschirm, Folie um jedes Paar, Twisted Pair."],
-    ["U72 5×4 — wie viele Adern?", "5 Vierer × 4 Adern = 20 Adern."],
-    ["T568A und T568B — Unterschied?", "Orange und Grün tauschen die Plätze. Blau und Braun bleiben."],
-    ["RJ45 T568B Pin 1 und 2?", "1 weiss-orange, 2 orange."],
-    ["Zwei Stecksysteme für hohe Raten?", "GG45 und TERA."],
-    ["Kategorie vs. Link-Klasse?", "Kategorie = Komponente, Klasse = ganze Strecke. Das schwächste Teil zählt."],
-    ["Cat 6A — Klasse und Frequenz?", "Klasse EA, 500 MHz."],
-    ["Dämpfung?", "Abschwächung des Signals in dB, steigt mit Länge und Frequenz. Klein ist gut."],
-    ["NEXT?", "Near End Crosstalk — Nebensprechen am nahen Ende. Grosser Wert ist gut."],
-    ["ACR?", "Attenuation to Crosstalk Ratio = NEXT − Dämpfung. Gross ist gut, bei 0 ist Schluss."],
-    ["PSNEXT?", "Powersum NEXT — alle anderen Paare stören zusammen ein Paar."],
-    ["LAN und WAN?", "Local Area Network (lokal, Gebäude) · Wide Area Network (weiträumig, Internet)."],
-    ["Aktive Komponente — Regel?", "Braucht Strom und verarbeitet oder verstärkt das Signal."],
-    ["Drei passive Komponenten?", "Kabel, Patchpanel, Anschlussdose (auch Stecker, Patchkabel)."],
-    ["Hub vs. Switch?", "Hub schickt an alle Ports. Switch lernt MAC-Adressen und schickt gezielt."],
-    ["Router?", "Verbindet verschiedene Netze über IP-Adressen."],
-    ["Gateway?", "Verbindet Netze mit unterschiedlichen Protokollen, z. B. KNX ↔ IP."],
-    ["Repeater?", "Frischt das Signal auf und verlängert die Strecke."],
-    ["NAS?", "Network Attached Storage — zentraler Speicher im Netz."],
-    ["Stern — Vor- und Nachteil?", "Kabelausfall trifft nur ein Gerät · fällt der Switch, ist alles weg."],
-    ["Bus — Vor- und Nachteil?", "Wenig Kabel · Kabelbruch legt alles lahm."],
-    ["Vermascht — Vor- und Nachteil?", "Sehr ausfallsicher · teuer und aufwendig."],
-    ["Welche Topologie ist die UKV?", "Baum: auf jeder Ebene ein Stern."],
-    ["PoE — was und Beispiele?", "Power over Ethernet: Strom über das Datenkabel. IP-Kamera, Access Point, VoIP-Telefon."],
-    ["PLC indoor vs. outdoor?", "Indoor: in der Hausinstallation (Steckdosen-Adapter). Outdoor: Netz des Energieversorgers bis zum Haus (z. B. Smart Meter)."],
-    ["Warum ist ein MAC-Filter schwach?", "MAC-Adressen lassen sich fälschen."],
-    ["Drei starke Sicherheitsmassnahmen?", "WPA3 mit langem Passwort · Standard-Passwort ändern · Gastnetz/VLAN · Updates · Backup."]
-  ];
-  var QUIZ = [
-    ["Wofür steht UKV?", ["Universelle Kommunikationsverkabelung", "Ultrakurzwellen-Verteilung", "Unterverteilung Kupfer-Verkabelung", "Universelle Kabelverlegung"], 0, "Universelle Kommunikationsverkabelung — nicht verwechseln mit UKW-Radio."],
-    ["Welche Strecke führt vom Etagenverteiler zur Dose?", ["Primär", "Sekundär", "Tertiär", "Channel"], 2, "Tertiär = horizontal auf der Etage."],
-    ["Maximale Länge des Permanent Link?", ["50 m", "90 m", "100 m", "500 m"], 1, "90 m fest verlegt. Mit Patchkabeln wird es der Channel mit 100 m."],
-    ["Was ist ein Koaxialkabel?", ["symmetrisch", "asymmetrisch", "ein Glasfaserkabel", "ein Vierer"], 1, "Asymmetrisch: das Signal läuft gegen den Schirm."],
-    ["U/FTP bedeutet …", ["Gesamtschirm Folie, Paare ungeschirmt", "kein Gesamtschirm, Folie um jedes Paar", "alles geschirmt", "nichts geschirmt"], 1, "Vor dem Schrägstrich Gesamtschirm (U = keiner), danach Paarschirm (F = Folie)."],
-    ["Bei T568A gegenüber T568B tauschen …", ["Blau und Braun", "Orange und Grün", "Pin 1 und 8", "nichts"], 1, "Orange ↔ Grün. Blau und Braun bleiben."],
-    ["Was ist die Link-Klasse?", ["Qualität einer Dose", "Qualität der ganzen Strecke", "die Kabellänge", "die Schirmart"], 1, "Klasse = Strecke, Kategorie = Komponente."],
-    ["ACR berechnet sich als …", ["Dämpfung − NEXT", "NEXT − Dämpfung", "NEXT + Dämpfung", "NEXT × Länge"], 1, "Abstand zwischen Nebensprechdämpfung und Dämpfung — gross ist gut."],
-    ["Mit steigender Frequenz …", ["sinkt die Dämpfung", "steigt die Dämpfung", "bleibt die Dämpfung gleich", "verschwindet NEXT"], 1, "Dämpfung steigt, NEXT sinkt — irgendwann wird ACR null."],
-    ["Welches Gerät ist passiv?", ["Switch", "Repeater", "Patchpanel", "Access Point"], 2, "Das Patchpanel leitet nur weiter, braucht keinen Strom."],
-    ["Welches Gerät arbeitet mit MAC-Adressen?", ["Hub", "Switch", "Repeater", "Patchpanel"], 1, "Der Switch lernt, welche MAC an welchem Port hängt."],
-    ["Welches Gerät verbindet das Heimnetz mit dem Internet?", ["Switch", "Hub", "Router", "NAS"], 2, "Der Router verbindet verschiedene IP-Netze."],
-    ["Was macht ein Gateway?", ["verstärkt das Signal", "übersetzt zwischen Protokollen", "speichert Daten", "verteilt Strom"], 1, "Zum Beispiel KNX ↔ IP."],
-    ["Bei welcher Topologie legt ein einziger Kabelbruch das ganze Netz lahm?", ["Stern", "Bus", "Vermascht", "Baum"], 1, "Beim Bus hängen alle an einer Leitung."],
-    ["Welche Topologie ist am ausfallsichersten?", ["Bus", "Ring", "Stern", "Vermascht"], 3, "Mehrere Wege — dafür teuer."],
-    ["Was ist PoE?", ["Daten über Stromleitung", "Strom über Netzwerkkabel", "ein Glasfaserstandard", "eine WLAN-Verschlüsselung"], 1, "Power over Ethernet. Daten über Stromleitung wäre PLC."],
-    ["Welche Massnahme ist am schwächsten?", ["WPA3", "Firmware-Updates", "SSID verstecken", "Gastnetz"], 2, "Eine versteckte SSID findet man mit jedem WLAN-Scanner."],
-    ["Was heisst WAN?", ["Wireless Access Network", "Wide Area Network", "Web Access Node", "Wired Area Network"], 1, "Weiträumiges Netz, z. B. das Internet."],
-    ["Was verlängert eine Kupferstrecke, ohne Adressen zu verstehen?", ["Router", "Repeater", "Gateway", "Switch"], 1, "Der Repeater frischt nur das Signal auf."],
-    ["Die Montage-Regel zur Verdrillung lautet …", ["möglichst lang aufdrehen", "erst kurz vor dem Kontakt öffnen", "Paare vertauschen", "gar nicht beachten"], 1, "Sonst steigt das Nebensprechen (NEXT wird schlechter)."]
-  ];
   var answered = 0, correct = 0;
   var list = document.getElementById("quizList"), scoreEl = document.getElementById("quizScore");
   function buildQuiz() {
