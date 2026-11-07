@@ -1,0 +1,7 @@
+-- Chess Duel (artifacts/chess-duel.html) — lives in the easel Supabase project (vcglqoqtcsiqfjutizib).
+-- Applied 2026-11-07 as migration "chess_duel_invites". Tables have RLS on and no policies:
+-- everything goes through the SECURITY DEFINER functions below.
+-- chess_create_invite / chess_list_invites / chess_revoke_invite / chess_delete_invite: owner only (easel_is_owner()).
+-- chess_redeem(code): anon, one-time, 30 wrong tries per 10 min globally; returns room + 12 h session token.
+-- chess_resume(token): anon, lets the player reload and rejoin the same room.
+-- Codes: 12 chars of a 32-letter alphabet, stored as sha256 only. Rebuild: see the migration in Supabase.
