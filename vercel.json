@@ -3,33 +3,186 @@
   "redirects": [
     {
       "source": "/",
-      "has": [{ "type": "host", "value": "calendar.swisslock.net" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "calendar.swisslock.net"
+        }
+      ],
       "destination": "/artifacts/kalender.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/algebra_bzi.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/algebra_bzi.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/apparatekunde_backofen_steamer_mikrowelle_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/apparatekunde_backofen_steamer_mikrowelle_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/apparatekunde_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/apparatekunde_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/apparatekunde_waermeapparate_lap_theorie.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/apparatekunde_waermeapparate_lap_theorie.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/arbeitsauftrag_energie_huegel_vorlage.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/arbeitsauftrag_energie_huegel_vorlage.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/arbeitsauftrag_schrittschalter_minuterie_beispiel.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/arbeitsauftrag_schrittschalter_minuterie_beispiel.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/aus_psa_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/aus_psa_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/geld_und_kauf_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/geld_und_kauf_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/hebelgesetz_a4.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/hebelgesetz_a4.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/hebelgesetz_schemazeichnungen_a4.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/hebelgesetz_schemazeichnungen_a4.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/kaufvertrag_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/kaufvertrag_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/krankenkasse_unfall_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/krankenkasse_unfall_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/lerndoku_stromstossschaltung.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/lerndoku_stromstossschaltung.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/lerndoku_treppenhausautomat.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/lerndoku_treppenhausautomat.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/moser_et_physik_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/moser_et_physik_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/moser_formelumstellen_hebelgesetz_2026_11_02_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/moser_formelumstellen_hebelgesetz_2026_11_02_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/nin_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/nin_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/niv_im_griff_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/niv_im_griff_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/rechtschreibung_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/rechtschreibung_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/telekom_kap3_4_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/telekom_kap3_4_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/telekom_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/telekom_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/ukv_datennetzwerke_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/ukv_datennetzwerke_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/versicherungen_vorsorge_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/versicherungen_vorsorge_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/werkstoffkunde_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/werkstoffkunde_lernpaket.html",
+      "permanent": false
+    },
+    {
+      "source": "/artifacts/werkstoffkunde_metalle_nichtmetalle_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/werkstoffkunde_metalle_nichtmetalle_lernpaket.html",
       "permanent": false
     }
   ],
   "rewrites": [
-    { "source": "/q/:slug", "destination": "/api/q?slug=:slug" }
+    {
+      "source": "/q/:slug",
+      "destination": "/api/q?slug=:slug"
+    }
   ],
   "headers": [
     {
       "source": "/artifacts/kalender(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Referrer-Policy", "value": "no-referrer" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
       ]
     },
     {
       "source": "/scan.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "X-Robots-Tag", "value": "noindex" },
-        { "key": "Referrer-Policy", "value": "no-referrer" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
       ]
     }
   ],
   "crons": [
-    { "path": "/api/ping", "schedule": "23 4 * * *" }
+    {
+      "path": "/api/ping",
+      "schedule": "23 4 * * *"
+    }
   ],
-  "regions": ["dub1"]
+  "regions": [
+    "dub1"
+  ]
 }
