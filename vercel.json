@@ -93,6 +93,11 @@
       "permanent": false
     },
     {
+      "source": "/artifacts/nin_grosstest_2026_11_20_lernpaket.html",
+      "destination": "https://schule.yanikroesti.ch/lernpakete/nin_grosstest_2026_11_20_lernpaket.html",
+      "permanent": false
+    },
+    {
       "source": "/artifacts/nin_lernpaket.html",
       "destination": "https://schule.yanikroesti.ch/lernpakete/nin_lernpaket.html",
       "permanent": false
