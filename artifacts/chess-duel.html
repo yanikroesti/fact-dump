@@ -283,6 +283,7 @@
         <div class="pill" id="conn"></div>
         <div class="viewbar" id="viewbar" hidden><span id="viewTxt"></span><button class="primary" id="backLive">Back to live</button></div>
         <div class="banner" id="drawBanner" hidden><span>Your opponent offers a draw.</span><button class="primary" id="drawYes">Accept</button><button id="drawNo">Decline</button></div>
+        <div class="banner" id="tbBanner" hidden><span id="tbTxt">Your opponent asks to take back a move.</span><button class="primary" id="tbYes">Allow</button><button id="tbNo">Decline</button></div>
         <div class="nav">
           <button id="navFirst" title="First position (Home)">⏮</button><button id="navPrev" title="Previous move (←)">◀</button>
           <button id="navNext" title="Next move (→)">▶</button><button id="navLast" title="Live position (End)">⏭</button>
@@ -291,10 +292,12 @@
         <div class="mat" id="mat"></div>
         <div class="actions">
           <button id="drawBtn">Offer draw</button>
+          <button id="tbBtn">Ask take-back</button>
           <button class="danger" id="resignBtn">Resign</button>
+          <button id="flipBtn">Flip board</button>
           <button class="primary" id="rematchBtn" hidden style="grid-column:1/-1">Rematch</button>
-          <button id="flipBtn" style="grid-column:1/-1">Flip board</button>
         </div>
+        <label class="chk" id="tbToggleRow" hidden><input type="checkbox" id="tbToggle"> Allow take-back requests (host setting)</label>
       </div>
     </div>
   </section>
@@ -569,11 +572,11 @@ let ctx = null, net = null, chess = null, G = null, selected = null, flipped = f
 let prevEp = null, prevKey = null, connStatus = 'connecting';
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-const defaultSettings = () => ({ set: 'ivory', clock: { on: false, min: 5, inc: 3 } });
+const defaultSettings = () => ({ set: 'ivory', takeback: true, clock: { on: false, min: 5, inc: 3 } });
 function cleanSettings(s) {
   const d = defaultSettings(); if (!s || typeof s !== 'object') return d;
   const c = s.clock || {};
-  return { set: SETS[s.set] ? s.set : d.set, clock: { on: !!c.on, min: clamp(Math.round(+c.min) || 5, 1, 180), inc: clamp(Math.round(+c.inc) || 0, 0, 60) } };
+  return { set: SETS[s.set] ? s.set : d.set, takeback: s.takeback !== false, clock: { on: !!c.on, min: clamp(Math.round(+c.min) || 5, 1, 180), inc: clamp(Math.round(+c.inc) || 0, 0, 60) } };
 }
 const stKey = () => `chess.game.${ctx.role}.${ctx.room}`;
 const myColor = () => G.hostColor ? (ctx.role === 'host' ? G.hostColor : (G.hostColor === 'w' ? 'b' : 'w')) : null;
@@ -607,7 +610,7 @@ function fmt(ms) {
 }
 
 function newState() {
-  const s = { moves: [], hostColor: ctx.role === 'host' ? (Math.random() < .5 ? 'w' : 'b') : null, gameNo: 1, over: null, settings: defaultSettings(), clock: null };
+  const s = { moves: [], hostColor: ctx.role === 'host' ? (Math.random() < .5 ? 'w' : 'b') : null, gameNo: 1, rev: 0, over: null, settings: defaultSettings(), clock: null };
   return s;
 }
 function loadState() {
@@ -637,17 +640,35 @@ function gameOver() {
   if (chess.isDraw()) return 'Draw (50-move rule)';
   return null;
 }
-const syncMsg = () => ({ t: 'sync', from: ctx.role, moves: chess.history(), hostColor: G.hostColor, gameNo: G.gameNo, over: G.over, settings: G.settings, clk: clkSnap() });
+const syncMsg = () => ({ t: 'sync', from: ctx.role, moves: chess.history(), hostColor: G.hostColor, gameNo: G.gameNo, rev: G.rev || 0, over: G.over, settings: G.settings, clk: clkSnap() });
 function sendSync() { if (G.hostColor) net.send(syncMsg()); }
 const isPrefix = (a, b) => a.length <= b.length && a.every((x, i) => x === b[i]);
 const okClk = c => c && isFinite(c.w) && isFinite(c.b) && c.w >= 0 && c.b >= 0;
 
-let flags = { drawFromThem: false, rematchMine: false, rematchTheirs: false };
-function resetFlags() { flags = { drawFromThem: false, rematchMine: false, rematchTheirs: false }; }
+let flags = { drawFromThem: false, rematchMine: false, rematchTheirs: false, tbPending: false, tbFromThem: null };
+function resetFlags() { flags = { drawFromThem: false, rematchMine: false, rematchTheirs: false, tbPending: false, tbFromThem: null }; }
+
+/* take-back: the asker's last move goes (1 ply if it was the last move played, else 2 plies: the reply + their move) */
+const lastMover = () => chess.turn() === 'w' ? 'b' : 'w';
+const undoCount = rc => lastMover() === rc ? 1 : 2;
+const canAsk = rc => { const n = chess.history().length; return n >= 1 && (lastMover() === rc || n >= 2); };
+function doUndo(k) {
+  freezeClock();
+  G.moves = chess.history().slice(0, -k); G.over = null; G.rev = (G.rev || 0) + 1;
+  rebuild(); selected = null; viewPly = null; resetFlags();
+  if (G.clock) G.clock.last = Date.now();
+  persist(); render();
+}
+function setTakeback(on) {
+  if (ctx.role !== 'host') return;
+  G.settings = { ...G.settings, takeback: !!on };
+  flags.tbPending = false; flags.tbFromThem = null;
+  persist(); sendSync(); render();
+}
 
 function takeClock(m) { G.clock = clkOn() ? (okClk(m.clk) ? { w: +m.clk.w, b: +m.clk.b, last: Date.now() } : freshClock()) : null; }
 function adopt(m) {
-  G.moves = m.moves.slice(); G.hostColor = m.hostColor; G.gameNo = m.gameNo; G.over = m.over || null;
+  G.moves = m.moves.slice(); G.hostColor = m.hostColor; G.gameNo = m.gameNo; G.rev = m.rev || 0; G.over = m.over || null;
   G.settings = cleanSettings(m.settings); takeClock(m);
   rebuild(); selected = null; viewPly = null; resetFlags(); persist(); render();
 }
@@ -656,6 +677,8 @@ function handleSync(m) {
   if (G.hostColor == null) return adopt(m);
   if (m.gameNo > G.gameNo) return adopt(m);
   if (m.gameNo < G.gameNo) return sendSync();
+  if ((m.rev || 0) > (G.rev || 0)) return adopt(m);      // a take-back happened there
+  if ((m.rev || 0) < (G.rev || 0)) return sendSync();    // stale state from before a take-back
   const mine = chess.history();
   if (m.moves.length > mine.length && isPrefix(mine, m.moves)) return adopt({ ...m, over: m.over || G.over });
   if (mine.length > m.moves.length && isPrefix(m.moves, mine)) return sendSync();
@@ -684,8 +707,18 @@ function onMsg(m) {
       if (chess.turn() === mc) return;             // not their turn
       try { chess.move({ from: m.from, to: m.to, promotion: m.promotion }); } catch { return net.send({ t: 'need' }); }
       if (clkOn() && okClk(m.clk)) G.clock = { w: +m.clk.w, b: +m.clk.b, last: Date.now() };
-      selected = null; persist(); render(); return;
+      selected = null; flags.tbPending = false; flags.tbFromThem = null; persist(); render(); return;
     }
+    case 'tb-req': {
+      const mc = myColor(), rc = mc && other(mc);
+      if (!G.settings.takeback || !mc || gameOver() || m.n !== chess.history().length || !canAsk(rc)) return net.send({ t: 'tb-no' });
+      flags.tbFromThem = { n: m.n }; render(); return;
+    }
+    case 'tb-no': if (flags.tbPending) { flags.tbPending = false; toast('Take-back declined'); render(); } return;
+    case 'tb-ok':
+      if (flags.tbPending && chess.history().length === m.n && !gameOver()) doUndo(undoCount(myColor()));
+      else net.send({ t: 'need' });
+      return;
     case 'resign': if (!gameOver()) finish(`${colName(other(myColor()))} resigned — ${colName(myColor())} wins`); return;
     case 'draw': if (!gameOver()) { flags.drawFromThem = true; render(); } return;
     case 'draw-no': toast('Draw declined'); return;
@@ -701,7 +734,7 @@ function onMsg(m) {
 }
 function maybeRematch() {
   if (ctx.role === 'host' && flags.rematchMine && flags.rematchTheirs) {
-    G.gameNo++; G.hostColor = other(G.hostColor); G.moves = []; G.over = null; G.clock = freshClock();
+    G.gameNo++; G.hostColor = other(G.hostColor); G.moves = []; G.over = null; G.rev = 0; G.clock = freshClock();
     rebuild(); resetFlags(); viewPly = null; persist(); sendSync(); render();
   }
 }
@@ -826,6 +859,14 @@ function render() {
 
   renderSetup(); renderInfo();
   $('#drawBanner').hidden = !(flags.drawFromThem && !over);
+  const tbOn = G.settings.takeback;
+  if (!tbOn) { flags.tbPending = false; flags.tbFromThem = null; }
+  const tb = $('#tbBtn');
+  tb.hidden = !tbOn; tb.disabled = !mc || !!over || viewPly != null || !canAsk(mc) || flags.tbPending;
+  tb.textContent = flags.tbPending ? 'Request sent…' : 'Ask take-back';
+  $('#tbBanner').hidden = !(flags.tbFromThem && !over && tbOn);
+  if (flags.tbFromThem && mc) $('#tbTxt').textContent = `Your opponent asks to take back ${undoCount(other(mc)) === 1 ? 'their last move' : 'their last move (and your reply)'}.`;
+  $('#tbToggleRow').hidden = ctx.role !== 'host'; $('#tbToggle').checked = tbOn;
   $('#drawBtn').disabled = !mc || !!over; $('#resignBtn').disabled = !mc || !!over;
   const rb = $('#rematchBtn'); rb.hidden = !over || !mc;
   rb.textContent = flags.rematchMine ? (flags.rematchTheirs ? 'Starting…' : 'Waiting for opponent…') : (flags.rematchTheirs ? 'Accept rematch' : 'Rematch');
@@ -839,7 +880,7 @@ function renderConn() {
 }
 function renderInfo() {
   const c = G.settings.clock;
-  $('#info').textContent = `${SETS[G.settings.set]} pieces · ${c.on ? `${c.min} min + ${c.inc} s per move` : 'no clock'}`;
+  $('#info').textContent = `${SETS[G.settings.set]} pieces · ${c.on ? `${c.min} min + ${c.inc} s per move` : 'no clock'} · take-backs ${G.settings.takeback ? 'on' : 'off'}`;
 }
 function renderClocks() {
   const on = !!(G && clkOn() && G.clock);
@@ -877,7 +918,7 @@ function renderSetup() {
 function applySetup(patch) {
   if (ctx.role !== 'host' || chess.history().length) return;
   const s = G.settings;
-  G.settings = cleanSettings({ set: patch.set ?? s.set, clock: { on: patch.on ?? s.clock.on, min: patch.min ?? s.clock.min, inc: patch.inc ?? s.clock.inc } });
+  G.settings = cleanSettings({ set: patch.set ?? s.set, takeback: s.takeback, clock: { on: patch.on ?? s.clock.on, min: patch.min ?? s.clock.min, inc: patch.inc ?? s.clock.inc } });
   G.clock = freshClock();
   persist(); sendSync(); render();
 }
@@ -936,7 +977,8 @@ function play(from, to, promotion) {
   try { chess.move({ from, to, promotion }); } catch { return; }
   let clk;
   if (rem != null) { G.clock[mc] = rem; G.clock.last = Date.now(); clk = { w: Math.round(G.clock.w), b: Math.round(G.clock.b) }; }
-  selected = null; net.send({ t: 'move', n, from, to, promotion, clk }); persist(); render();
+  selected = null; flags.tbPending = false; flags.tbFromThem = null;
+  net.send({ t: 'move', n, from, to, promotion, clk }); persist(); render();
 }
 $('#promo').addEventListener('click', e => { if (e.target.id === 'promo') $('#promo').hidden = true; });
 $('#flipBtn').addEventListener('click', () => { flipped = !flipped; render(); });
@@ -946,6 +988,19 @@ $('#resignBtn').addEventListener('click', () => {
 });
 $('#drawBtn').addEventListener('click', () => { net.send({ t: 'draw' }); toast('Draw offer sent'); });
 $('#drawYes').addEventListener('click', () => { flags.drawFromThem = false; net.send({ t: 'draw-ok' }); finish('Draw agreed'); });
+$('#tbBtn').addEventListener('click', () => {
+  const mc = myColor();
+  if (!mc || gameOver() || viewPly != null || !G.settings.takeback || !canAsk(mc) || flags.tbPending) return;
+  flags.tbPending = true; net.send({ t: 'tb-req', n: chess.history().length }); toast('Take-back requested'); render();
+});
+$('#tbYes').addEventListener('click', () => {
+  const req = flags.tbFromThem, mc = myColor();
+  if (!req || !mc || req.n !== chess.history().length || gameOver()) { flags.tbFromThem = null; render(); return; }
+  const k = undoCount(other(mc));
+  net.send({ t: 'tb-ok', n: req.n }); doUndo(k);
+});
+$('#tbNo').addEventListener('click', () => { flags.tbFromThem = null; net.send({ t: 'tb-no' }); render(); });
+$('#tbToggle').addEventListener('change', e => setTakeback(e.target.checked));
 $('#drawNo').addEventListener('click', () => { flags.drawFromThem = false; net.send({ t: 'draw-no' }); render(); });
 $('#rematchBtn').addEventListener('click', () => { flags.rematchMine = true; net.send({ t: 'rematch' }); maybeRematch(); render(); });
 
