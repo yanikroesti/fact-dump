@@ -82,6 +82,7 @@
   let shownId = null;
 
   function render(force) {
+    if (uid && !visible().length) { S.active = newTab('').id; force = true; } // every tab was closed elsewhere
     const t = active();
     const bar = $('tabs');
     bar.textContent = '';
@@ -172,6 +173,7 @@
         const d = document.createElement('div');
         d.className = 'missing'; d.textContent = navigator.onLine ? 'Picture not synced yet' : 'Picture (offline)';
         box.appendChild(d);
+        box.dataset.key = ''; // try again on the next render (after each sync)
       }
     }
   }
