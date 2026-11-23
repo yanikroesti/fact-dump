@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Desktop Note</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#202024">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Note">
+<link rel="manifest" href="notes/manifest.webmanifest">
+<link rel="icon" href="notes/icon-192.png">
+<link rel="apple-touch-icon" href="notes/apple-touch-icon.png">
+<link rel="stylesheet" href="notes/style.css">
+</head>
+<body>
+<div id="login" class="login" hidden>
+  <form id="loginForm" autocomplete="on">
+    <h1>Desktop Note</h1>
+    <label>E-mail<input id="email" type="email" autocomplete="username" required></label>
+    <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit">Sign in</button>
+    <p id="loginMsg" class="msg"></p>
+  </form>
+</div>
+
+<div id="app" class="app" hidden>
+  <header class="bar">
+    <nav id="tabs" class="tabs" aria-label="Tabs"></nav>
+    <button id="addTab" class="icon" title="New tab" aria-label="New tab">+</button>
+    <button id="menuBtn" class="icon" title="Menu" aria-label="Menu">&#8226;&#8226;&#8226;</button>
+  </header>
+  <div id="menu" class="menu" hidden>
+    <button data-act="code">Code mode</button>
+    <button data-act="images">Show images</button>
+    <button data-act="photo">Add picture…</button>
+    <button data-act="copy">Copy whole tab</button>
+    <button data-act="left">Move tab left</button>
+    <button data-act="right">Move tab right</button>
+    <button data-act="close">Close tab</button>
+    <hr>
+    <button data-act="sync">Sync now</button>
+    <button data-act="signout">Sign out</button>
+  </div>
+  <main class="body">
+    <textarea id="editor" spellcheck="false" autocapitalize="sentences" placeholder="Type here. It saves by itself."></textarea>
+    <div id="images" class="images"></div>
+  </main>
+  <footer class="status"><span id="status"></span><span id="stat2"></span></footer>
+  <input id="photoInput" type="file" accept="image/*" hidden>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
+<script src="notes/app.js"></script>
+</body>
+</html>

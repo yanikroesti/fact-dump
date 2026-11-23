@@ -13,6 +13,17 @@
       "permanent": false
     },
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "notes.swisslock.net"
+        }
+      ],
+      "destination": "/artifacts/notes.html",
+      "permanent": false
+    },
+    {
       "source": "/artifacts/algebra_bzi.html",
       "destination": "https://schule.yanikroesti.ch/lernpakete/algebra_bzi.html",
       "permanent": false
@@ -165,6 +176,23 @@
         {
           "key": "Referrer-Policy",
           "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/artifacts/notes(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
         }
       ]
     },
