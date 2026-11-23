@@ -37,11 +37,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .app {
   height: 100dvh; display: grid; grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr); /* many tabs scroll inside the bar instead of widening the page */
   padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
 }
 .bar { background: var(--header); display: flex; align-items: stretch; min-height: 44px; position: relative; }
 .tabs {
-  flex: 1; display: flex; overflow-x: auto; scrollbar-width: none; gap: 2px; padding: 6px 6px 0;
+  flex: 1; min-width: 0; display: flex; overflow-x: auto; scrollbar-width: none; gap: 2px; padding: 6px 6px 0;
 }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
