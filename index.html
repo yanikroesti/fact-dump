@@ -135,7 +135,7 @@ header, main, footer, .toolbar { position: relative; z-index: 1; }
 }
 .sc-head svg { width: clamp(44px, 6vw, 70px); height: auto; color: var(--muted); flex-shrink: 0; }
 .sc-head svg.flip { transform: scaleX(-1); }
-.sc-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.sc-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
 .short {
   --sat: var(--lime);
   display: flex; flex-direction: column; gap: 0.5rem; min-width: 0;
@@ -152,8 +152,8 @@ header, main, footer, .toolbar { position: relative; z-index: 1; }
 .shot svg { position: absolute; inset: 0; margin: auto; width: 30%; height: 30%; color: var(--sat); opacity: 0.8; }
 .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.5s var(--ease-out); }
 .short:hover .shot img { transform: scale(1.04); }
-.short-t { display: flex; align-items: center; gap: 0.5rem; padding: 0.15rem 0.3rem 0; }
-.short-t h3 { font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 700; letter-spacing: -0.035em; white-space: nowrap; }
+.short-t { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.5rem; padding: 0.15rem 0.3rem 0; }
+.short-t h3 { font-size: clamp(1.05rem, 1.3vw, 1.35rem); font-weight: 700; letter-spacing: -0.035em; white-space: nowrap; }
 .short-t h3 b { color: var(--sat); }
 .tag-login {
   margin-left: auto; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -617,29 +617,35 @@ footer {
         <span class="short-sub">Stundenplan, Prüfungen, Noten</span>
         <span class="short-url">schule.yanikroesti.ch <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
-      <a class="short" style="--sat:#a95cd0" href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://media.systemzzz.store/">
+      <a class="short" style="--sat:#a95cd0" href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://media.systemzzz.store/" data-manual>
         <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M10 8.4l4.6 2.6-4.6 2.6z"/></svg><img data-slug="media-systemzzz-store" alt="" loading="lazy" onerror="thumbErr(this)"></span>
         <span class="short-t"><h3>Video-Archiv<b>.</b></h3><span class="tag-login">login</span></span>
         <span class="short-sub">Jellyfin media server</span>
         <span class="short-url">media.systemzzz.store <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
-      <a class="short" style="--sat:#3dd68c" href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://ai.systemzzz.store/">
+      <a class="short" style="--sat:#3dd68c" href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://ai.systemzzz.store/" data-manual>
         <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></svg><img data-slug="ai-systemzzz-store" alt="" loading="lazy" onerror="thumbErr(this)"></span>
         <span class="short-t"><h3>Local AI Studio<b>.</b></h3><span class="tag-login">login</span></span>
         <span class="short-sub">Voices, images and chat</span>
         <span class="short-url">ai.systemzzz.store <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
-      <a class="short" style="--sat:#e0b84a" href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://notes.swisslock.net/">
+      <a class="short" style="--sat:#e0b84a" href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://notes.swisslock.net/" data-manual>
         <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h10.5L19 7v13.5H5z"/><path d="M15 3.5V7.5h4"/><path d="M8.5 11.5h7M8.5 15h5"/></svg><img data-slug="notes-swisslock-net" alt="" loading="lazy" onerror="thumbErr(this)"></span>
         <span class="short-t"><h3>Desktop Note<b>.</b></h3><span class="tag-login">login</span></span>
         <span class="short-sub">Notes synced across devices</span>
         <span class="short-url">notes.swisslock.net <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
-      <a class="short" style="--sat:#ff8c1a" href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://status.swisslock.net/">
+      <a class="short" style="--sat:#ff8c1a" href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://status.swisslock.net/" data-manual>
         <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M6.5 9.5l3 2.5-3 2.5"/><path d="M12 15h5"/></svg><img data-slug="status-swisslock-net" alt="" loading="lazy" onerror="thumbErr(this)"></span>
         <span class="short-t"><h3>Status<b>.</b></h3><span class="tag-login">login</span></span>
         <span class="short-sub">Home server, weather and to-dos</span>
         <span class="short-url">status.swisslock.net <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="short" style="--sat:#4c8dff" href="https://systemzzzz.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://systemzzzz.swisslock.net/" data-manual>
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M4 16l4.5-5 3.5 3 6-7.5"/><path d="M15 6.5h3v3"/></svg><img data-slug="systemzzzz-swisslock-net" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>systemzzz<b>.</b></h3><span class="tag-login">login</span></span>
+        <span class="short-sub">Crypto trend and allocation dashboard</span>
+        <span class="short-url">systemzzzz.swisslock.net <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
     </div>
   </section>
@@ -723,6 +729,7 @@ footer {
           <li><a href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow">Local AI Studio <span class="ext">login</span></a></li>
           <li><a href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow">Desktop Note <span class="ext">login</span></a></li>
           <li><a href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow">Status <span class="ext">login</span></a></li>
+          <li><a href="https://systemzzzz.swisslock.net/" target="_blank" rel="noopener nofollow">systemzzz <span class="ext">login</span></a></li>
           <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
         </ul>
       </div>

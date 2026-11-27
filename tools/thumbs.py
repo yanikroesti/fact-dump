@@ -9,6 +9,14 @@ repo, external ones (schule.yanikroesti.ch …) are fetched live.
     python tools/thumbs.py            # only missing thumbnails
     python tools/thumbs.py --all      # re-capture everything
     python tools/thumbs.py chess      # only slugs containing "chess"
+    python tools/thumbs.py --import DIR
+        # login-only shortcuts (data-manual): turn hand-made shots
+        # DIR/<slug>.png (dark) and DIR/<slug>.light.png into thumbnails
+
+Shortcut cards marked `data-manual` sit behind a login, so a capture here
+would only show the login screen. Their screenshots come from the session
+that owns the app (signed in, sample data, nothing personal) and are never
+overwritten by a normal run.
 
 Needs: pip install playwright pillow && python -m playwright install chromium
 The slug rule must match thumbSlug() in index.html.
@@ -46,10 +54,11 @@ def targets():
     for m in re.finditer(r'data-shot="([^"]+)"', html):
         out.append(m.group(1))
     shots = set(m.group(1) for m in re.finditer(r'data-shot="([^"]+)"', html))
+    manual = set(m.group(1) for m in re.finditer(r'data-shot="([^"]+)"[^>]*\bdata-manual\b', html))
     res = []
     for f in out:
         s = slug(f)
-        if s in seen:
+        if s in seen or f in manual:
             continue
         seen.add(s)
         res.append((s, f, f in shots))
@@ -61,7 +70,34 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+def save_thumb(img, path):
+    img = img.convert("RGB")
+    w, h = img.size
+    if abs(w / h - 1.6) > 0.01:          # crop to 16:10 from the top
+        if w / h > 1.6:
+            nw = round(h * 1.6)
+            img = img.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))
+        else:
+            img = img.crop((0, 0, w, round(w / 1.6)))
+    img = img.resize((640, 400), Image.LANCZOS)
+    img.save(path, "WEBP", quality=74, method=6)
+
+
+def import_dir(src: Path):
+    for f in sorted(src.iterdir()):
+        m = re.fullmatch(r"([a-z0-9-]+)(\.light)?\.(png|webp|jpe?g)", f.name, re.I)
+        if not m:
+            continue
+        folder = OUT / "light" if m.group(2) else OUT
+        folder.mkdir(parents=True, exist_ok=True)
+        save_thumb(Image.open(f), folder / f"{m.group(1).lower()}.webp")
+        print("ok  ", "light" if m.group(2) else "dark", m.group(1))
+
+
 def main():
+    if "--import" in sys.argv:
+        import_dir(Path(sys.argv[sys.argv.index("--import") + 1]))
+        return
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     redo = "--all" in sys.argv
     OUT.mkdir(exist_ok=True)
@@ -100,9 +136,7 @@ def main():
                     pass
                 page.wait_for_timeout(2200)
                 png = page.screenshot(type="png")
-                img = Image.open(io.BytesIO(png)).convert("RGB")
-                img = img.resize((640, 400), Image.LANCZOS)
-                img.save(folder / f"{s}.webp", "WEBP", quality=74, method=6)
+                save_thumb(Image.open(io.BytesIO(png)), folder / f"{s}.webp")
                 print("ok  ", scheme, s)
             except Exception as e:
                 print("FAIL", scheme, s, str(e).splitlines()[0][:120])

@@ -23,6 +23,10 @@ the header, the choice is remembered per browser.
 To add a page: drop the HTML file into `artifacts/`, add one entry to the `PAGES` array in
 `index.html`, then run `python tools/thumbs.py` to capture its preview (dark + light).
 
+Shortcut cards behind a login carry `data-manual`: `thumbs.py` skips them, because it would only see the
+login screen. Their screenshots come from the session that owns the app (signed in, sample data, nothing
+personal) as `<slug>.png` / `<slug>.light.png` and are converted with `python tools/thumbs.py --import <folder>`.
+
 ## Satellites
 
 - [note.yanikroesti.com](https://note.yanikroesti.com) — NoteBox, moved to its own subdomain ([repo](https://github.com/yanikroesti/notebox))
