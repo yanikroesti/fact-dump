@@ -8,50 +8,64 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Cpath d='M40 10 24 54' stroke='%23d4ff47' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+/* theme before first paint: saved choice, else the OS setting */
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('dump.theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+})();
+</script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* the page has one committed dark look — telling the UA that keeps native
-     widgets (select popup, scrollbars, focus rings) dark in a light OS too */
   color-scheme: dark;
   --bg: #0a0a0b;
-  --surface: #101013;
-  --surface-2: #16161a;
+  --surface: #111114;
+  --surface-2: #17171b;
   --line: rgba(255,255,255,0.07);
   --line-hi: rgba(255,255,255,0.14);
   --ink: #f2f2ef;
-  --muted: #8b8b95;
-  --faint: #55555e;
+  --muted: #9a9aa3;
+  --faint: #62626b;
   --lime: #d4ff47;
+  --lime-soft: rgba(212,255,71,0.14);
+  --slash: #d4ff47;
+  --mark: rgba(212,255,71,0.42);
+  --accent-line: rgba(212,255,71,0.5);
+  --hover: rgba(255,255,255,0.035);
+  --shadow: rgba(0,0,0,0.45);
+  --tile: #141418;
+  --tile-2: #0e0e11;
+  --ico-mix: #fff;
+  --tb-bg: rgba(10,10,11,0.86);
+  --field: rgba(255,255,255,0.04);
   --c-research: #7ab8ff;
   --c-learning: #f6c453;
   --c-tools: #5eead4;
   --c-games: #c884fc;
   --c-concepts: #ff8a70;
+  --hand: 'Caveat', 'Segoe Print', cursive;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --gut: clamp(1rem, 4vw, 2.5rem);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.44, 1);
 }
 
 html { scroll-behavior: smooth; }
-
 body {
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--bg); color: var(--ink);
   font-family: 'Space Grotesk', system-ui, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+  min-height: 100vh; overflow-x: hidden;
 }
-
 ::selection { background: var(--lime); color: #000; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+img { display: block; }
 
-/* ── background layers ─────────────────────────────────
-   Both are promoted to their own compositor layer and never repaint.
-   The dot field fades out via a solid-colour overlay gradient rather
-   than a CSS mask: a mask on a fixed, full-viewport element forces a
-   re-raster on every scroll, which flickers under the backdrop-filter
-   bars above it. */
 .bg-dots {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
@@ -59,572 +73,511 @@ body {
     radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 100% 100%, 30px 30px;
   transform: translateZ(0);
-  backface-visibility: hidden;
 }
-/* The glow is deliberately static. It sits permanently behind the two
-   backdrop-filter bars, and anything that moves behind a backdrop-filter
-   forces the browser to re-blur that bar every frame — which flickers on
-   integrated GPUs. Nothing on this page animates behind those bars. */
 .bg-glow {
   position: fixed; z-index: 0; pointer-events: none;
-  width: 1100px; height: 1100px; top: -520px; left: 50%;
+  width: 1100px; height: 1100px; top: -560px; left: 50%;
   transform: translate3d(-50%, 0, 0);
   background: radial-gradient(circle, rgba(212,255,71,0.05) 0%, transparent 62%);
-  backface-visibility: hidden;
+}
+header, main, footer, .toolbar { position: relative; z-index: 1; }
+
+.wrap { max-width: 1460px; margin: 0 auto; padding-left: var(--gut); padding-right: var(--gut); }
+
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
 }
 
-main, header, footer { position: relative; z-index: 1; }
+/* marker swipe behind a word — the lime highlighter of the whole page */
+.mark { position: relative; isolation: isolate; display: inline-block; }
+.mark::before {
+  content: ''; position: absolute; z-index: -1;
+  left: -0.12em; right: -0.16em; bottom: 0.06em; height: 0.42em;
+  background: var(--mk, var(--mark));
+  border-radius: 0.3em 0.08em 0.35em 0.1em;
+  transform: rotate(-1.2deg) skewX(-8deg);
+}
 
-a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; border-radius: 6px; }
 
-/* ── header ────────────────────────────────────────── */
-header {
-  position: sticky; top: 0; z-index: 50;
+/* ── header ──────────────────────────────────────── */
+.top {
   display: flex; align-items: center; gap: 1rem;
-  padding: 0.8rem clamp(1.1rem, 4vw, 2.5rem);
-  border-bottom: 1px solid var(--line);
-  background: rgba(10,10,11,0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transform: translateZ(0);
+  padding-top: 1.3rem; padding-bottom: 0.9rem;
+  border-bottom: 1.5px solid var(--line-hi);
 }
-
 .brand {
-  font-weight: 700; font-size: 1.05rem; letter-spacing: -0.04em;
+  font-weight: 700; font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.055em; line-height: 1;
   display: inline-flex; align-items: baseline;
 }
-.brand .slash { color: var(--lime); display: inline-block; transition: transform 0.5s var(--ease-spring); }
-.brand:hover .slash { transform: rotate(14deg) translateY(-1px); }
-
-.head-meta {
-  margin-left: auto; display: flex; align-items: center; gap: 0.55rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted);
-}
-
-.pill-link {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
-  color: var(--lime); border: 1px solid rgba(212,255,71,0.35);
-  padding: 0.32rem 0.7rem; border-radius: 99px;
-  transition: background 0.18s, box-shadow 0.18s, transform 0.18s var(--ease-spring);
-  white-space: nowrap;
-}
-.pill-link .dot {
-  position: relative;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--lime);
-}
-/* ring animates transform+opacity only, so it composites instead of
-   repainting the header on every frame */
-.pill-link .dot::after {
-  content: ''; position: absolute; inset: -2px; border-radius: 50%;
-  border: 1px solid rgba(212,255,71,0.6);
-  animation: ping 2.6s ease-out infinite;
-}
-@keyframes ping {
-  0%        { transform: scale(0.6); opacity: 0.85; }
-  70%, 100% { transform: scale(2.3); opacity: 0; }
-}
-.pill-link:hover {
-  background: rgba(212,255,71,0.1);
-  box-shadow: 0 0 18px rgba(212,255,71,0.15);
-  transform: translateY(-1px);
-}
-
+.brand .slash { color: var(--slash); display: inline-block; transition: transform 0.5s var(--ease-spring); }
+.brand:hover .slash { transform: rotate(14deg) translateY(-2px); }
+.top-nav { margin-left: auto; display: flex; align-items: center; gap: clamp(0.8rem, 2.4vw, 2rem); font-weight: 600; font-size: clamp(0.9rem, 1.6vw, 1.08rem); }
+.top-nav a { transition: color 0.15s; }
+.top-nav a:hover { color: var(--lime); }
 .dice-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border-radius: 9px;
+  width: 36px; height: 36px; border-radius: 10px;
   border: 1px solid var(--line-hi); background: transparent; color: var(--muted);
   cursor: pointer; transition: color 0.15s, border-color 0.15s, transform 0.3s var(--ease-spring);
 }
-.dice-btn:hover { color: var(--lime); border-color: rgba(212,255,71,0.4); transform: rotate(-14deg) scale(1.08); }
-.dice-btn svg { width: 16px; height: 16px; }
+.dice-btn:hover { color: var(--lime); border-color: var(--accent-line); transform: rotate(-14deg) scale(1.08); }
+.dice-btn svg { width: 17px; height: 17px; }
+@media (max-width: 520px) { .top-nav .me { display: none; } }
 
-/* visually gone, still readable by screen readers — used for the live
-   result line on small screens and for the long form of short labels */
-.sr-only {
-  position: absolute !important; width: 1px; height: 1px;
-  margin: -1px; padding: 0; overflow: hidden;
-  clip-path: inset(50%); white-space: nowrap; border: 0;
+/* ── shortcuts ───────────────────────────────────── */
+.shortcuts { padding-top: 1.1rem; }
+.sc-head {
+  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+  font-family: var(--hand); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+  margin-bottom: 0.9rem; color: var(--ink);
 }
-/* the count is the page's aria-live result line, so it is hidden visually
-   rather than removed from the accessibility tree */
-@media (max-width: 640px) {
-  .head-count {
-    position: absolute; width: 1px; height: 1px;
-    margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+.sc-head svg { width: clamp(44px, 6vw, 70px); height: auto; color: var(--muted); flex-shrink: 0; }
+.sc-head svg.flip { transform: scaleX(-1); }
+.sc-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.short {
+  --sat: var(--lime);
+  display: flex; flex-direction: column; gap: 0.5rem; min-width: 0;
+  border: 1.5px solid var(--line-hi); border-radius: 16px; background: var(--surface);
+  padding: 9px 9px 14px;
+  transition: border-color 0.2s, transform 0.25s var(--ease-out), box-shadow 0.25s;
+}
+.short:hover { border-color: color-mix(in srgb, var(--sat) 60%, transparent); transform: translateY(-3px); box-shadow: 0 16px 36px var(--shadow); }
+.shot {
+  position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--line);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--sat) 22%, var(--tile)), var(--tile-2));
+}
+.shot svg { position: absolute; inset: 0; margin: auto; width: 30%; height: 30%; color: var(--sat); opacity: 0.8; }
+.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.5s var(--ease-out); }
+.short:hover .shot img { transform: scale(1.04); }
+.short-t { display: flex; align-items: center; gap: 0.5rem; padding: 0.15rem 0.3rem 0; }
+.short-t h3 { font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 700; letter-spacing: -0.035em; white-space: nowrap; }
+.short-t h3 b { color: var(--sat); }
+.tag-login {
+  margin-left: auto; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--line-hi); color: var(--muted); border-radius: 5px; padding: 0.14rem 0.38rem;
+}
+.short-sub { font-size: 0.8rem; color: var(--muted); padding: 0 0.3rem; line-height: 1.4; }
+.short-url {
+  align-self: flex-start; margin: 0.15rem 0.3rem 0; max-width: calc(100% - 0.6rem);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--mono); font-size: 0.66rem; font-weight: 700; color: #0a0a0b;
+  background: var(--lime); padding: 0.26rem 0.5rem; border-radius: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.short-url svg { flex-shrink: 0; transition: transform 0.25s var(--ease-spring); }
+.short:hover .short-url svg { transform: translate(2px, -2px); }
+@media (max-width: 1180px) {
+  /* five cards in a sideways strip — scrolls inside itself, never the page */
+  .sc-grid {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(232px, 34%);
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin: 0 calc(var(--gut) * -1); padding: 2px var(--gut) 6px; scroll-padding: 0 var(--gut);
+  }
+  .sc-grid::-webkit-scrollbar { display: none; }
+  .short { scroll-snap-align: start; }
+}
+@media (max-width: 560px) { .sc-grid { grid-auto-columns: 78%; } }
+
+/* ── things I made ───────────────────────────────── */
+.made {
+  margin-top: clamp(2.2rem, 5vw, 3.4rem);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 1rem;
+}
+.made h1 {
+  font-family: var(--hand); font-weight: 700; letter-spacing: -0.01em;
+  font-size: clamp(3.4rem, 10vw, 6.4rem); line-height: 0.9;
+}
+.made h1 .mark::before { height: 0.34em; bottom: 0.04em; }
+.made-sub { margin-top: 0.7rem; color: var(--muted); font-size: clamp(0.95rem, 1.8vw, 1.15rem); max-width: 70ch; line-height: 1.5; }
+.made-sub b { color: var(--ink); font-weight: 600; }
+.doodle { display: flex; align-items: flex-end; gap: 0.2rem; color: var(--muted); padding-right: 0.5rem; }
+.doodle svg { width: 120px; height: auto; }
+.doodle span { font-family: var(--hand); font-size: 1.5rem; line-height: 1.05; color: var(--ink); transform: rotate(-4deg); margin-bottom: 3.2rem; }
+@media (max-width: 820px) { .doodle { display: none; } .made { grid-template-columns: 1fr; } }
+
+/* featured + newest */
+.hl {
+  margin-top: 1.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--line-hi);
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.6rem);
+}
+@media (max-width: 920px) { .hl { grid-template-columns: 1fr; } }
+.feat {
+  display: flex; flex-direction: column; gap: 0.8rem;
+  border: 1.5px solid var(--line-hi); border-radius: 18px; background: var(--surface);
+  padding: 12px 12px 18px;
+  transition: border-color 0.2s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+.feat:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 18px 50px var(--shadow); }
+.feat .th { aspect-ratio: 16 / 9.4; border-radius: 12px; }
+.feat-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0 0.4rem; }
+.feat h2 { font-size: clamp(1.45rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; }
+.feat p { margin-top: 0.45rem; color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+.feat .go { margin-left: auto; flex-shrink: 0; color: var(--ink); transition: transform 0.25s var(--ease-spring), color 0.2s; }
+.feat:hover .go { transform: translate(3px, -3px); color: var(--lime); }
+.badge-new {
+  display: inline-block; margin-bottom: 0.5rem;
+  font-family: var(--mono); font-size: 0.56rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--lime); color: #000; border-radius: 99px; padding: 0.2rem 0.55rem;
+}
+
+.newest h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+.nw {
+  display: grid; grid-template-columns: 132px minmax(0, 1fr) 20px; gap: 1rem; align-items: center;
+  padding: 0.62rem 0.4rem; border-bottom: 1px solid var(--line-hi); border-radius: 10px 10px 0 0;
+  transition: background 0.15s;
+}
+.nw:hover { background: var(--hover); }
+.nw .th { border-radius: 9px; }
+.nw b { display: block; font-size: 1.02rem; letter-spacing: -0.02em; line-height: 1.25; }
+.nw span.d { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; line-height: 1.45; }
+.nw .go { color: var(--faint); transition: transform 0.25s var(--ease-spring), color 0.2s; }
+.nw:hover .go { color: var(--lime); transform: translate(3px, -3px); }
+@media (max-width: 520px) { .nw { grid-template-columns: 96px minmax(0, 1fr) 16px; gap: 0.75rem; } .nw b { font-size: 0.92rem; } }
+
+/* ── projects + toolbar ──────────────────────────── */
+.projects-h {
+  margin-top: clamp(2.6rem, 6vw, 4rem);
+  font-family: var(--hand); font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.2rem); line-height: 1;
+}
+.toolbar { margin-top: 0.7rem; }
+@media (min-width: 900px) {
+  .toolbar {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--tb-bg);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
   }
 }
+.tb-in { display: flex; flex-direction: column; gap: 0.6rem; padding-top: 0.7rem; padding-bottom: 0.7rem; }
+.tb-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 
-/* ── hero ──────────────────────────────────────────── */
-.hero { padding: clamp(2.6rem, 7vw, 5.5rem) clamp(1.1rem, 4vw, 2.5rem) clamp(1.6rem, 3vw, 2.6rem); }
-
-.hero h1 {
-  font-size: clamp(4.2rem, 14vw, 10rem);
-  font-weight: 700; letter-spacing: -0.045em; line-height: 1.04;
-  display: flex; user-select: none;
-  overflow: hidden; padding-bottom: 0.05em; margin-bottom: -0.05em;
-}
-.hero h1 .ltr { display: inline-block; }
-.hero h1 .ltr i {
-  font-style: normal; display: inline-block;
-  transform: translateY(112%);
-  animation: riseUp 0.9s var(--ease-out) forwards;
-  transition: transform 0.35s var(--ease-spring), color 0.35s;
-}
-.hero h1:hover .ltr i { color: var(--lime); }
-.hero h1 .ltr:nth-child(1) i { animation-delay: 0.06s; }
-.hero h1 .ltr:nth-child(2) i { animation-delay: 0.13s; }
-.hero h1 .ltr:nth-child(3) i { animation-delay: 0.20s; }
-.hero h1 .ltr:nth-child(4) i { animation-delay: 0.27s; }
-.hero h1 .ltr:nth-child(5) i { animation-delay: 0.36s; color: var(--lime); }
-.hero h1:hover .ltr:nth-child(1) i { transition-delay: 0.00s; transform: translateY(-4%); }
-.hero h1:hover .ltr:nth-child(2) i { transition-delay: 0.04s; transform: translateY(-4%); }
-.hero h1:hover .ltr:nth-child(3) i { transition-delay: 0.08s; transform: translateY(-4%); }
-.hero h1:hover .ltr:nth-child(4) i { transition-delay: 0.12s; transform: translateY(-4%); }
-.hero h1:hover .ltr:nth-child(5) i { transition-delay: 0.16s; transform: translateY(-4%) rotate(8deg); }
-@keyframes riseUp { to { transform: translateY(0); } }
-
-.tagline {
-  margin-top: 1.4rem;
-  font-size: clamp(1rem, 2.6vw, 1.45rem);
-  color: var(--muted); font-weight: 500; letter-spacing: -0.01em;
-  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.55s forwards;
-}
-.tagline .rot-wrap {
-  display: inline-block; position: relative; vertical-align: bottom;
-  min-width: 9ch; text-align: left;
-}
-.tagline .rot {
-  display: inline-block; font-weight: 600;
-}
-.tagline .rot .ch {
-  display: inline-block; white-space: pre;
-  transition: transform 0.3s var(--ease-out), opacity 0.3s;
-}
-.tagline .rot.out .ch { transform: translateY(-0.65em) rotateX(70deg); opacity: 0; }
-
-.hero-stats {
-  margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; color: var(--faint);
-  letter-spacing: 0.04em;
-  opacity: 0; animation: fadeRise 0.8s var(--ease-out) 0.7s forwards;
-}
-.hero-stats b { color: var(--muted); font-weight: 500; }
-
-@keyframes fadeRise {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* satellite banners — sites that live outside the dump */
-.satellites {
-  margin: 1.9rem 0 0; display: flex; flex-wrap: wrap; gap: 0.7rem;
-}
-.satellite {
-  --sat: var(--lime);
-  display: inline-flex; align-items: center; gap: 0.8rem;
-  border: 1px dashed color-mix(in srgb, var(--sat) 40%, transparent); border-radius: 14px;
-  padding: 0.75rem 1.1rem;
-  transition: background 0.2s, border-color 0.2s, transform 0.25s var(--ease-spring);
-  opacity: 0; animation: fadeRise 0.8s var(--ease-out) var(--sd, 0.85s) forwards;
-  max-width: 100%; flex: 1 1 320px;
-}
-.satellite:hover {
-  background: color-mix(in srgb, var(--sat) 7%, transparent);
-  border-color: var(--sat); transform: translateY(-2px);
-}
-.satellite .box-ico {
-  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--sat) 22%, transparent), color-mix(in srgb, var(--sat) 5%, transparent));
-  display: flex; align-items: center; justify-content: center;
-  color: var(--sat);
-}
-.satellite .box-ico svg { width: 17px; height: 17px; }
-.satellite .sat-txt { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
-.satellite .sat-txt b { color: var(--ink); font-weight: 600; display: block; font-size: 0.86rem; }
-.satellite .sat-txt span { color: var(--sat); font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; overflow-wrap: anywhere; }
-.satellite .go {
-  margin-left: 0.3rem; color: var(--sat); flex-shrink: 0;
-  transition: transform 0.25s var(--ease-spring);
-}
-.satellite:hover .go { transform: translate(3px, -3px); }
-.sat-tag {
-  display: inline-block; margin-left: 0.4rem; vertical-align: 1px;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--sat);
-  border: 1px solid color-mix(in srgb, var(--sat) 45%, transparent);
-  border-radius: 99px; padding: 0.1rem 0.42rem;
-}
-
-/* ── toolbar ───────────────────────────────────────── */
-.toolbar {
-  position: sticky; top: 53px; z-index: 40;
-  padding: 0.7rem clamp(1.1rem, 4vw, 2.5rem);
-  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
-  border-bottom: 1px solid var(--line);
-  background: rgba(10,10,11,0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transform: translateZ(0);
-}
-
-.chips {
-  display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: none;
-  /* wide basis on purpose: rather than squeezing the category chips into a
-     scroller once sort + timeframe joined the bar, the toolbar wraps to a
-     second row and every chip stays visible */
-  -webkit-overflow-scrolling: touch; flex: 1 1 560px; min-width: 0; padding: 2px;
-  mask-image: linear-gradient(90deg, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
-}
-.chips::-webkit-scrollbar { display: none; }
-
+.chips { display: flex; gap: 0.4rem; flex-wrap: wrap; flex: 1 1 auto; min-width: 0; }
 .chip {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
-  padding: 0.42rem 0.8rem; border-radius: 99px; white-space: nowrap;
-  border: 1px solid var(--line-hi); color: var(--muted);
-  background: transparent; cursor: pointer; user-select: none; flex-shrink: 0;
-  display: inline-flex; align-items: center; gap: 0.42rem;
-  transition: color 0.16s, border-color 0.16s, background 0.16s, transform 0.3s var(--ease-spring);
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+  padding: 0.45rem 0.85rem; border-radius: 8px; white-space: nowrap;
+  border: 1.5px solid var(--line-hi); color: var(--muted); background: transparent;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem;
+  transition: color 0.16s, border-color 0.16s, background 0.16s, transform 0.25s var(--ease-spring);
 }
-.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--cc, var(--muted)); transition: box-shadow 0.2s; }
-.chip .n { opacity: 0.55; }
-.chip:hover { color: var(--ink); border-color: var(--cc, var(--line-hi)); transform: translateY(-1px); }
-.chip:active { transform: scale(0.94); }
-.chip.on,
-.chip[aria-pressed="true"] {
-  color: #000; background: var(--cc, var(--ink)); border-color: var(--cc, var(--ink));
-  font-weight: 700;
-}
-.chip.on i { background: #000; }
-.chip.on .n { opacity: 0.7; }
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--cc, var(--muted)); }
+.chip .n { opacity: 0.6; }
+.chip:hover { color: var(--ink); border-color: var(--cc, var(--ink)); transform: translateY(-1px); }
+.chip[aria-pressed="true"] { color: #000; background: var(--cc, var(--lime)); border-color: var(--cc, var(--lime)); font-weight: 700; }
+.chip[aria-pressed="true"] i { background: #000; }
 
-/* keyboard focus — the toolbar had none before the sort group arrived */
-.chip:focus-visible,
-.dice-btn:focus-visible,
-.empty button:focus-visible,
-.card:focus-visible {
-  outline: 2px solid var(--lime); outline-offset: 2px;
+.views {
+  display: inline-flex; gap: 3px; padding: 3px; flex-shrink: 0;
+  border: 1.5px solid var(--line-hi); border-radius: 10px;
 }
-.card:focus-visible { border-radius: 16px; }
+.views button {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  border: 0; background: transparent; color: var(--muted); cursor: pointer;
+  font-family: var(--mono); font-size: 0.66rem; padding: 0.38rem 0.6rem; border-radius: 7px;
+  transition: background 0.15s, color 0.15s;
+}
+.views button svg { width: 15px; height: 15px; flex-shrink: 0; }
+.views button:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+.views button[aria-pressed="true"] { background: var(--lime); color: #000; font-weight: 700; }
+.views.shelved button { opacity: 0.75; }
+.views-note { font-family: var(--mono); font-size: 0.6rem; color: var(--lime); white-space: nowrap; }
 
-/* ── sort + timeframe ──────────────────────────────────
-   Both are built out of the chip vocabulary already on this bar: mono
-   type, 99px pills, the same borders. The sort group is three chips in a
-   ring; the timeframe is a native <select> wearing the same ring, so it
-   keeps its own keyboard behaviour and scales as months pile up. */
-.tb-tools {
-  display: flex; align-items: center; gap: 0.5rem;
-  flex-wrap: wrap; flex-shrink: 0; max-width: 100%;
-}
-
-.seg {
-  display: inline-flex; align-items: center; gap: 3px; flex-wrap: wrap;
-  border: 1px solid var(--line-hi); border-radius: 99px;
-  padding: 3px 4px 3px 0; max-width: 100%;
-}
-.seg-lbl, .pick-lbl {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.13em;
-  /* --muted, not the --faint used for decorative captions: these two name
-     the controls next to them and have to stay readable */
-  text-transform: uppercase; color: var(--muted);
-  padding-left: 0.7rem; padding-right: 0.1rem; user-select: none;
-}
-.seg .chip { border-color: transparent; }
-.seg .chip:hover { border-color: var(--line-hi); }
-.seg .chip[aria-pressed="true"] { border-color: var(--ink); }
-
-.pick {
-  display: inline-flex; align-items: center; gap: 0.15rem;
-  border: 1px solid var(--line-hi); border-radius: 99px;
-  padding: 3px 0.35rem 3px 0; cursor: pointer;
-  transition: border-color 0.16s, background 0.16s;
-}
-.pick:hover { border-color: var(--line-hi); }
-.pick:focus-within { border-color: rgba(212,255,71,0.55); box-shadow: 0 0 0 3px rgba(212,255,71,0.09); }
-.pick-sel {
-  appearance: none; -webkit-appearance: none;
-  background: transparent; border: 0; outline: 0;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
-  color: var(--muted); cursor: pointer;
-  padding: 0.42rem 1.25rem 0.42rem 0.5rem; border-radius: 99px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b95' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 0.4rem center; background-size: 9px;
-  transition: color 0.16s;
-}
-.pick-sel:hover { color: var(--ink); }
-.pick-sel option { background: var(--surface-2); color: var(--ink); }
-/* a chosen month lights the pill the way an active chip does */
-.pick.on { border-color: var(--lime); }
-.pick.on .pick-sel { color: var(--lime); font-weight: 700; }
-.pick.on .pick-lbl { color: var(--lime); opacity: 0.75; }
-
-.search-box { position: relative; flex-shrink: 0; width: 240px; }
-.search-box svg {
-  position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
-  width: 13px; height: 13px; color: var(--faint); pointer-events: none;
-}
+.search-box { position: relative; flex: 1 1 280px; max-width: 460px; min-width: 0; }
+.search-box svg { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--faint); pointer-events: none; }
 .search-box .key {
-  position: absolute; right: 0.55rem; top: 50%; transform: translateY(-50%);
-  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
-  border: 1px solid var(--line); border-radius: 5px; padding: 0.08rem 0.38rem;
-  pointer-events: none;
+  position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 0.58rem; color: var(--faint);
+  border: 1px solid var(--line-hi); border-radius: 5px; padding: 0.06rem 0.36rem; pointer-events: none;
 }
 #search {
-  width: 100%; background: rgba(255,255,255,0.045);
-  border: 1px solid var(--line-hi); border-radius: 10px;
-  color: var(--ink); font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem;
-  padding: 0.5rem 2.2rem 0.5rem 2rem; outline: none;
-  transition: border-color 0.16s, background 0.16s, box-shadow 0.16s;
+  width: 100%; background: var(--field);
+  border: 1.5px solid var(--line-hi); border-radius: 9px;
+  font-size: 0.85rem; padding: 0.5rem 2.2rem 0.5rem 2.1rem; outline: none;
+  transition: border-color 0.16s, box-shadow 0.16s;
 }
 #search::placeholder { color: var(--faint); }
-#search:focus {
-  border-color: rgba(212,255,71,0.5);
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 0 0 3px rgba(212,255,71,0.09);
+#search:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px rgba(212,255,71,0.09); }
+
+.sel {
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  background: var(--field) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239a9aa3' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.6rem center / 10px;
+  border: 1.5px solid var(--line-hi); border-radius: 9px;
+  font-size: 0.8rem; font-weight: 500; padding: 0.5rem 1.9rem 0.5rem 0.75rem; outline: none;
+  transition: border-color 0.16s;
 }
+.sel:hover { border-color: rgba(255,255,255,0.28); }
+.sel:focus-visible { border-color: var(--accent-line); }
+.sel.on { border-color: var(--lime); color: var(--lime); }
+.sel option { background: var(--surface-2); color: var(--ink); }
+
+.tb-meta { margin-left: auto; display: flex; align-items: center; gap: 1rem; font-size: 0.8rem; white-space: nowrap; }
+.tb-meta .count { font-weight: 600; }
+.clear {
+  background: none; border: 0; cursor: pointer; color: var(--muted);
+  text-decoration: underline; text-underline-offset: 3px; font-size: 0.8rem;
+}
+.clear:hover { color: var(--lime); }
+.clear[hidden] { display: none; }
 
 @media (max-width: 760px) {
-  /* Four controls would stack four rows deep in a sticky bar, so the phone
-     layout is an explicit grid instead: search + timeframe share the top
-     line, the sort group takes the second, and the category chips keep the
-     bottom line to themselves — still scrolling sideways inside the bar
-     rather than pushing the page wide. */
-  .toolbar {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center; gap: 0.5rem;
-  }
-  .tb-tools { display: contents; }
-  .search-box { grid-column: 1; grid-row: 1; width: 100%; }
-  .search-box .key { display: none; }
-  .pick { grid-column: 2; grid-row: 1; }
-  .seg { grid-column: 1 / -1; grid-row: 2; padding-left: 4px; }
-  .seg-lbl { display: none; }   /* the three buttons caption themselves */
-  .chips { grid-column: 1 / -1; grid-row: 3; width: 100%; }
-}
-@media (pointer: coarse) {
-  .chip { padding: 0.6rem 0.95rem; font-size: 0.66rem; }
-  #search { padding-top: 0.68rem; padding-bottom: 0.68rem; }
-  .pick-sel { padding-top: 0.6rem; padding-bottom: 0.6rem; font-size: 0.66rem; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--gut) * -1); padding: 2px var(--gut); }
+  .chips::-webkit-scrollbar { display: none; }
+  /* nowrap matters: a wrapping column sizes its line to the widest child,
+     which let the chip strip push the page wide */
+  .tb-row.r1 { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
+  .views { align-self: flex-start; }
+  .views button span { display: none; }
+  .views button { padding: 0.45rem 0.7rem; }
+  .search-box { flex-basis: 100%; max-width: none; }
+  .sel { flex: 1 1 40%; }
+  .tb-meta { margin-left: 0; width: 100%; justify-content: space-between; }
 }
 
-/* ── content ───────────────────────────────────────── */
-main { padding: 0 clamp(1.1rem, 4vw, 2.5rem) 4rem; max-width: 1460px; margin: 0 auto; }
+/* ── results ─────────────────────────────────────── */
+#results { margin-top: 1.1rem; min-height: 40vh; }
 
-/* featured card */
-.feature {
-  margin-top: 1.6rem;
-  display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;
-  border: 1px solid rgba(122,184,255,0.22); border-radius: 20px;
-  background:
-    radial-gradient(ellipse 90% 130% at 88% 50%, rgba(78,142,201,0.16), transparent 55%),
-    linear-gradient(120deg, #0d1119, #0b0e15 60%);
-  padding: clamp(1.3rem, 3.4vw, 2.2rem);
-  position: relative; overflow: hidden;
-  transition: border-color 0.25s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+/* thumbnail: icon tile underneath, screenshot on top — when a screenshot is
+   missing the tile is what shows */
+.th {
+  position: relative; display: block; overflow: hidden; flex-shrink: 0;
+  aspect-ratio: 16 / 10; border-radius: 9px; border: 1px solid var(--line);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--pa) 34%, var(--tile)), color-mix(in srgb, var(--pa) 8%, var(--tile-2)));
 }
-.feature:hover {
-  border-color: rgba(122,184,255,0.5);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.5);
-}
-.feature .f-badges { display: flex; gap: 0.4rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
-.f-badge {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.09em;
-  padding: 0.22rem 0.6rem; border-radius: 99px; text-transform: uppercase;
-}
-.f-badge.new { background: var(--lime); color: #000; font-weight: 700; }
-.f-badge.ghost { border: 1px solid var(--line-hi); color: var(--muted); }
-.feature h2 {
-  font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
-}
-.feature p { margin-top: 0.6rem; color: var(--muted); font-size: 0.92rem; line-height: 1.6; max-width: 52ch; }
-.feature .f-cta {
-  margin-top: 1.1rem; display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #9ec8ff;
-}
-.feature .f-cta svg { transition: transform 0.25s var(--ease-spring); }
-.feature:hover .f-cta svg { transform: translateX(4px); }
+.th .ico { position: absolute; inset: 0; margin: auto; width: 32%; height: 32%; max-width: 46px; max-height: 46px; color: color-mix(in srgb, var(--pa) 60%, var(--ico-mix)); opacity: 0.85; }
+.th img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.5s var(--ease-out); }
+a:hover .th img, .sp-shot:hover img { transform: scale(1.04); }
 
-.f-art { width: 190px; height: 190px; flex-shrink: 0; position: relative; }
-/* floats on hover rather than forever — a permanent loop here repaints
-   the blurred bars whenever this card scrolls under them */
-.f-art svg { width: 100%; height: 100%; transition: transform 0.6s var(--ease-out); }
-.feature:hover .f-art svg { transform: translateY(-6px) rotate(2.5deg); }
-@media (max-width: 700px) {
-  .feature { grid-template-columns: 1fr; }
-  .f-art { display: none; }
+.tag { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--cc); white-space: nowrap; }
+.tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--cc); flex-shrink: 0; }
+.dotsep { opacity: 0.5; }
+.go-ic { color: var(--faint); transition: transform 0.25s var(--ease-spring), color 0.2s; flex-shrink: 0; }
+
+.enter { animation: rise 0.45s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 22ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+
+/* 01 compact index */
+.ix-list { border-top: 1.5px solid var(--line-hi); }
+.ix {
+  display: grid; grid-template-columns: 92px minmax(0, 1fr) 104px 52px 100px 18px;
+  gap: 1.1rem; align-items: center;
+  padding: 0.62rem 0.5rem; border-bottom: 1px solid var(--line-hi);
+  transition: background 0.15s;
+}
+.ix:hover { background: var(--hover); }
+.ix:hover .go-ic { color: var(--lime); transform: translateX(3px); }
+.ix-t { display: block; font-weight: 700; font-size: 0.92rem; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ix-d { display: block; color: var(--muted); font-size: 0.76rem; margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ix-m { display: none; }
+.ix-c, .ix-l, .ix-dt { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); }
+.ix-dt { text-align: right; }
+@media (max-width: 760px) {
+  .ix { grid-template-columns: 76px minmax(0, 1fr) 14px; gap: 0.8rem; padding: 0.6rem 0.2rem; }
+  .ix-c, .ix-l, .ix-dt, .ix-d { display: none; }
+  .ix-t { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 0.88rem; }
+  .ix-m { display: flex; gap: 0.4rem; flex-wrap: wrap; font-family: var(--mono); font-size: 0.6rem; color: var(--muted); margin-top: 0.25rem; }
 }
 
-/* sections */
-.section { margin-top: 2.8rem; }
-.section.hidden { display: none; }
-
-.sec-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 1.1rem; }
-.sec-head h2 {
-  font-size: 1.06rem; font-weight: 700; letter-spacing: -0.01em;
-  display: flex; align-items: center; gap: 0.55rem;
-}
-.sec-head h2 i { width: 9px; height: 9px; border-radius: 3px; background: var(--cc); flex-shrink: 0; }
-.sec-head .cnt { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--faint); }
-.sec-head .rule {
-  flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-hi), transparent);
-  transform-origin: left; transform: scaleX(0); transition: transform 1s var(--ease-out) 0.15s;
-}
-.section.in .rule { transform: scaleX(1); }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
-  gap: 13px;
-}
-@media (max-width: 560px) { .grid { grid-template-columns: 1fr; gap: 11px; } }
-
-/* date view — one flat list, so the category headline is gone. Each card
-   keeps its category colour as a spine on the left instead. */
-.grid.flat .card { box-shadow: inset 3px 0 0 color-mix(in srgb, var(--cat) 55%, transparent); }
-.grid.flat .card:hover { box-shadow: inset 3px 0 0 var(--cat), 0 14px 34px rgba(0,0,0,0.45); }
-/* the four pages the git history could not date: marked in the date list so
-   that sitting at the end reads as deliberate, not as a sorting glitch */
-.grid.flat .card[data-dt=""] .c-date { opacity: 0.75; }
-.grid.flat .card[data-dt=""] .c-date::before { content: '~ '; }
-.sec-head .sub {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--faint);
-}
-
-/* ── card ──────────────────────────────────────────── */
-.card {
-  --mx: 50%; --my: 50%;
-  position: relative;
-  display: flex; flex-direction: column; gap: 0.6rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 1.05rem 1.1rem 0.95rem;
-  overflow: hidden;
+/* 02 preview grid */
+.pg { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 268px), 1fr)); gap: 16px; }
+.gc {
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1.5px solid var(--line-hi); border-radius: 14px; background: var(--surface);
   transition: border-color 0.2s, transform 0.25s var(--ease-out), box-shadow 0.25s;
-  will-change: transform;
 }
-.card.hidden { display: none; }
+.gc:hover { border-color: color-mix(in srgb, var(--pa) 50%, var(--line-hi)); transform: translateY(-3px); box-shadow: 0 16px 36px var(--shadow); }
+.gc .th { border-radius: 0; border: 0; border-bottom: 1px solid var(--line); }
+.gc-b { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.85rem 0.95rem 0.95rem; flex: 1; }
+.gc-t { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.015em; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gc-d { color: var(--muted); font-size: 0.77rem; line-height: 1.5; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gc-m { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.2rem; font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
 
-/* pointer spotlight */
-.card::before {
-  content: '';
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(340px circle at var(--mx) var(--my), color-mix(in srgb, var(--pa) 9%, transparent), transparent 65%);
-  opacity: 0; transition: opacity 0.3s;
+/* 03 category shelves */
+.shelf + .shelf { margin-top: 2.4rem; }
+.shelf-h { font-family: var(--hand); font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 2.4rem); line-height: 1; }
+.shelf-h .mark { --mk: color-mix(in srgb, var(--cc) 42%, transparent); }
+.shelf-h .n { font-size: 0.82em; margin-left: 0.35em; }
+.shelf-grid { margin-top: 0.9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 12px; }
+.sc {
+  display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 0.9rem; align-items: start;
+  padding: 10px; border: 1.5px solid var(--line-hi); border-radius: 12px; background: var(--surface);
+  transition: border-color 0.2s, transform 0.25s var(--ease-out), box-shadow 0.25s;
 }
-.card:hover::before { opacity: 1; }
-.card:hover {
-  border-color: color-mix(in srgb, var(--pa) 45%, var(--line-hi));
-  transform: translateY(-3px);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+.sc:hover { border-color: color-mix(in srgb, var(--cc) 55%, var(--line-hi)); transform: translateY(-2px); box-shadow: 0 12px 28px var(--shadow); }
+.sc-t { display: block; font-weight: 700; font-size: 0.88rem; line-height: 1.3; letter-spacing: -0.01em; }
+.sc-d { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: 0.74rem; line-height: 1.45; margin-top: 0.25rem; }
+.sc-s { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); text-align: right; display: flex; flex-direction: column; gap: 0.35rem; white-space: nowrap; }
+@media (max-width: 520px) { .sc { grid-template-columns: 88px minmax(0, 1fr); } .sc-s { grid-column: 2; flex-direction: row; gap: 0.6rem; text-align: left; } }
+
+/* 04 split browser */
+.split { display: grid; grid-template-columns: minmax(290px, 400px) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.sp-list { border: 1.5px solid var(--line-hi); border-radius: 14px; overflow: hidden; background: var(--surface); }
+.sp-row {
+  display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 0.8rem; align-items: center;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 0.6rem 0.75rem; border: 0; border-bottom: 1px solid var(--line); background: transparent;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.sp-row:last-child { border-bottom: 0; }
+.sp-row:hover { background: var(--hover); }
+.sp-row[aria-selected="true"] { background: var(--lime-soft); box-shadow: inset 3px 0 0 var(--lime); }
+.sp-row:focus-visible { outline-offset: -3px; }
+.sp-t { display: block; font-weight: 700; font-size: 0.86rem; line-height: 1.3; letter-spacing: -0.01em; }
+.sp-m { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.25rem; font-family: var(--mono); font-size: 0.58rem; color: var(--muted); }
+.sp-detail {
+  position: sticky; top: calc(var(--tb-h, 0px) + 16px);
+  border: 1.5px solid var(--line-hi); border-radius: 16px; background: var(--surface);
+  padding: 12px 12px 22px;
+}
+.sp-shot { display: block; }
+.sp-shot .th { aspect-ratio: 16 / 10; border-radius: 11px; }
+.sp-body { padding: 0 0.5rem; }
+.sp-detail h3 { margin-top: 1rem; font-size: clamp(1.35rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; }
+.sp-detail p { margin-top: 0.6rem; color: var(--muted); font-size: 0.9rem; line-height: 1.6; max-width: 70ch; }
+.sp-tags { margin-top: 0.9rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-family: var(--mono); font-size: 0.66rem; color: var(--muted); }
+.sp-tags .tag { border: 1px solid color-mix(in srgb, var(--cc) 45%, transparent); padding: 0.18rem 0.5rem; border-radius: 6px; }
+.btn-open {
+  margin-top: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--lime); color: #0a0a0b; font-weight: 700; font-size: 0.92rem;
+  padding: 0.62rem 1.05rem; border-radius: 10px;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+}
+.btn-open:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,255,71,0.22); }
+.btn-open svg { transition: transform 0.25s var(--ease-spring); }
+.btn-open:hover svg { transform: translateX(3px); }
+.sp-hint { margin-top: 0.8rem; font-family: var(--mono); font-size: 0.58rem; color: var(--faint); }
+@media (max-width: 860px) {
+  .split { grid-template-columns: 1fr; }
+  /* on a phone the detail opens right under the tapped row */
+  .sp-detail { position: static; margin: 0.2rem 0.6rem 0.8rem; border-color: var(--accent-line); }
+  .sp-hint { display: none; }
 }
 
-/* entrance */
-.card.reveal { opacity: 0; transform: translateY(16px); filter: blur(5px); }
-.card.reveal.in {
-  opacity: 1; transform: translateY(0); filter: blur(0);
-  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out), filter 0.55s var(--ease-out),
-    border-color 0.2s, box-shadow 0.25s;
-  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s, 0s;
+/* 05 visual list */
+.vl-list { border-top: 1.5px solid var(--line-hi); }
+.vl {
+  display: grid; grid-template-columns: minmax(170px, 300px) minmax(0, 1fr) 150px 22px;
+  gap: clamp(1rem, 2.4vw, 1.8rem); align-items: center;
+  padding: 1rem 0.4rem; border-bottom: 1.5px solid var(--line-hi);
+  transition: background 0.15s;
+}
+.vl:hover { background: var(--hover); }
+.vl:hover .go-ic { color: var(--lime); transform: translateX(4px); }
+.vl .th { aspect-ratio: 16 / 7.2; border-radius: 11px; }
+.vl-t { display: block; font-size: clamp(1.05rem, 2vw, 1.45rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; }
+.vl-d { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--muted); font-size: 0.88rem; line-height: 1.55; margin-top: 0.4rem; }
+.vl-s { border-left: 1.5px solid var(--line-hi); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; font-family: var(--mono); font-size: 0.66rem; color: var(--muted); }
+.vl-s .tag { background: color-mix(in srgb, var(--cc) 16%, transparent); padding: 0.18rem 0.5rem; border-radius: 5px; }
+@media (max-width: 760px) {
+  .vl { grid-template-columns: 1fr; gap: 0.7rem; padding: 1rem 0; }
+  .vl .th { aspect-ratio: 16 / 8; }
+  .vl-s { border-left: 0; padding-left: 0; flex-direction: row; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+  .vl .go-ic { display: none; }
 }
 
-.c-head { display: flex; align-items: center; gap: 0.5rem; }
-.c-ico {
-  width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--pa) 26%, #17171b), color-mix(in srgb, var(--pa) 8%, #101014));
-  color: var(--pa);
-  border: 1px solid color-mix(in srgb, var(--pa) 22%, transparent);
-  transition: transform 0.35s var(--ease-spring);
-}
-.card:hover .c-ico { transform: rotate(-6deg) scale(1.07); }
-.c-ico svg { width: 17px; height: 17px; }
-
-.c-lang {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.08em;
-  color: var(--faint); border: 1px solid var(--line); border-radius: 6px;
-  padding: 0.14rem 0.4rem;
-}
-
-.c-arrow { margin-left: auto; color: var(--faint); transition: transform 0.25s var(--ease-spring), color 0.2s; }
-.card:hover .c-arrow { transform: translate(3px, -3px); color: var(--pa); }
-
-.c-title { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.28; }
-.c-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.58; flex: 1; }
-
-.c-meta {
-  display: flex; align-items: center; gap: 0.6rem; margin-top: 0.15rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
-}
-.c-cat { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--cat); }
-.c-cat i { width: 6px; height: 6px; border-radius: 50%; background: var(--cat); }
-.c-date { margin-left: auto; }
-
-/* empty state */
-.empty {
-  margin-top: 3.2rem; text-align: center;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); line-height: 2.1;
-  display: none;
-}
+.empty { display: none; text-align: center; padding: 3.5rem 1rem; font-family: var(--mono); font-size: 0.76rem; color: var(--muted); line-height: 2; }
 .empty.show { display: block; }
-.empty b { color: var(--muted); font-weight: 500; }
-.empty button {
-  margin-top: 0.6rem; background: none; border: 1px solid var(--line-hi); color: var(--muted);
-  font-family: inherit; font-size: 0.62rem; padding: 0.35rem 0.9rem; border-radius: 8px; cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-}
-.empty button:hover { color: var(--lime); border-color: rgba(212,255,71,0.4); }
+.empty b { color: var(--ink); font-weight: 500; }
+.empty button { margin-top: 0.6rem; background: none; border: 1.5px solid var(--line-hi); color: var(--muted); font-family: inherit; font-size: 0.7rem; padding: 0.4rem 0.9rem; border-radius: 8px; cursor: pointer; }
+.empty button:hover { color: var(--lime); border-color: var(--accent-line); }
 
-/* ── footer ────────────────────────────────────────── */
+/* ── footer ──────────────────────────────────────── */
 footer {
-  border-top: 1px solid var(--line);
-  padding: 2.6rem clamp(1.1rem, 4vw, 2.5rem) 2.2rem;
+  margin-top: 5rem; border-top: 1px solid var(--line);
+  padding-top: 2.6rem; padding-bottom: 2.2rem;
   background: linear-gradient(180deg, transparent, rgba(212,255,71,0.02));
 }
-.foot-grid {
-  max-width: 1460px; margin: 0 auto;
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem;
-}
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
 @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
-
-.foot-brand { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.04em; }
-.foot-brand .slash { color: var(--lime); }
-.foot-about { margin-top: 0.6rem; font-size: 0.76rem; color: var(--muted); line-height: 1.7; max-width: 34ch; }
-
-.foot-h {
-  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--faint); margin-bottom: 0.8rem;
-}
+.foot-brand { font-weight: 700; font-size: 1.3rem; letter-spacing: -0.04em; }
+.foot-brand .slash { color: var(--slash); }
+.foot-about { margin-top: 0.6rem; font-size: 0.8rem; color: var(--muted); line-height: 1.7; max-width: 42ch; }
+.foot-h { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.8rem; }
 .foot-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.foot-list a {
-  font-size: 0.78rem; color: var(--muted);
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  transition: color 0.15s, transform 0.2s var(--ease-out);
-}
-.foot-list a:hover { color: var(--lime); transform: translateX(3px); }
+.foot-list a { font-size: 0.8rem; color: var(--muted); display: inline-flex; gap: 0.4rem; transition: color 0.15s; }
+.foot-list a:hover { color: var(--lime); }
 .foot-list .ext { font-size: 0.62rem; color: var(--faint); }
-
-.colophon { font-size: 0.76rem; color: var(--muted); line-height: 1.7; }
+.colophon { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
 .colophon b { color: var(--ink); font-weight: 600; }
-.colophon .sig {
-  display: inline-block; margin-top: 0.55rem;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--lime);
-}
+.colophon .sig { display: inline-block; margin-top: 0.55rem; font-family: var(--mono); font-size: 0.62rem; color: var(--lime); }
+.foot-base { margin-top: 2.4rem; padding-top: 1.1rem; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); }
+.foot-base .r { margin-left: auto; }
 
-.foot-base {
-  max-width: 1460px; margin: 2.4rem auto 0; padding-top: 1.1rem;
-  border-top: 1px solid var(--line);
-  display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--faint);
-}
+/* theme switch: shows the theme you would switch to */
+.theme-btn .i-moon { display: none; }
+:root[data-theme="light"] .theme-btn .i-sun { display: none; }
+:root[data-theme="light"] .theme-btn .i-moon { display: block; }
 
-/* ── reduced motion ────────────────────────────────── */
+/* ── light theme: cream paper, black outlines, yellow highlighter ── */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f9f5ea;
+  --surface: #fffdf7;
+  --surface-2: #ffffff;
+  --line: rgba(20,20,20,0.13);
+  --line-hi: #1d1d1d;
+  --ink: #131313;
+  --muted: #3d3d3d;
+  --faint: #7b7b7b;
+  --lime: #ffe34f;
+  --lime-soft: #ffe96e;
+  --slash: #f2c400;
+  --mark: #ffe34f;
+  --accent-line: #131313;
+  --hover: rgba(0,0,0,0.035);
+  --shadow: rgba(60,45,0,0.13);
+  --tile: #ffffff;
+  --tile-2: #efeadc;
+  --ico-mix: #000;
+  --tb-bg: rgba(249,245,234,0.93);
+  --field: #fffdf7;
+}
+:root[data-theme="light"] .bg-dots,
+:root[data-theme="light"] .bg-glow { display: none; }
+:root[data-theme="light"] :focus-visible { outline-color: var(--ink); }
+/* the mockup has no category colours: chips, tags and shelves are ink + yellow */
+:root[data-theme="light"] .chip,
+:root[data-theme="light"] .tag,
+:root[data-theme="light"] .shelf { --cc: var(--ink) !important; }
+:root[data-theme="light"] .chip i,
+:root[data-theme="light"] .tag i { display: none; }
+:root[data-theme="light"] .chip { color: var(--ink); background: var(--surface); }
+:root[data-theme="light"] .chip:hover { border-color: var(--ink); }
+:root[data-theme="light"] .chip[aria-pressed="true"] { background: var(--lime); border-color: var(--lime); color: #000; }
+:root[data-theme="light"] .chip .n { opacity: 0.85; }
+:root[data-theme="light"] .shelf-h .mark { --mk: var(--mark); }
+:root[data-theme="light"] .vl-s .tag,
+:root[data-theme="light"] .sp-tags .tag { background: var(--lime); border: 0; color: #000; }
+:root[data-theme="light"] .short { --sat: var(--ink) !important; }
+:root[data-theme="light"] .short-t h3 b { color: var(--slash); }
+:root[data-theme="light"] .short .shot svg { color: var(--faint); }
+:root[data-theme="light"] .ix,
+:root[data-theme="light"] .sp-row { border-bottom-color: var(--line); }
+:root[data-theme="light"] .ix-c, :root[data-theme="light"] .ix-l, :root[data-theme="light"] .ix-dt,
+:root[data-theme="light"] .gc-m, :root[data-theme="light"] .sc-s, :root[data-theme="light"] .vl-s,
+:root[data-theme="light"] .sp-m, :root[data-theme="light"] .ix-m { color: var(--ink); }
+:root[data-theme="light"] .go-ic,
+:root[data-theme="light"] .nw .go { color: var(--ink); }
+:root[data-theme="light"] .ix:hover .go-ic, :root[data-theme="light"] .vl:hover .go-ic,
+:root[data-theme="light"] .nw:hover .go, :root[data-theme="light"] .feat:hover .go { color: var(--ink); }
+:root[data-theme="light"] .sp-row[aria-selected="true"] { box-shadow: inset 3px 0 0 var(--ink); }
+:root[data-theme="light"] .sp-detail { border-color: var(--line-hi); }
+:root[data-theme="light"] .tag-login { color: var(--ink); }
+:root[data-theme="light"] .btn-open { border: 1.5px solid var(--ink); }
+:root[data-theme="light"] .btn-open:hover { box-shadow: 0 8px 22px var(--shadow); }
+:root[data-theme="light"] .sel.on { color: var(--ink); background-color: var(--lime-soft); }
+:root[data-theme="light"] .clear:hover, :root[data-theme="light"] .top-nav a:hover,
+:root[data-theme="light"] .foot-list a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--slash); text-decoration-thickness: 3px; }
+:root[data-theme="light"] .empty button:hover { color: var(--ink); background: var(--lime); border-color: var(--ink); }
+:root[data-theme="light"] .dice-btn { color: var(--ink); }
+:root[data-theme="light"] .dice-btn:hover { color: var(--ink); background: var(--lime); border-color: var(--ink); }
+:root[data-theme="light"] .colophon .sig { color: #8a6d00; }
+:root[data-theme="light"] footer { background: transparent; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; animation-delay: 0s !important; transition-duration: 0.001s !important; }
   html { scroll-behavior: auto; }
-  .card.reveal { opacity: 1; transform: none; filter: none; }
 }
 </style>
 </head>
@@ -633,183 +586,157 @@ footer {
 <div class="bg-dots"></div>
 <div class="bg-glow"></div>
 
-<header>
-  <a class="brand" href="#" aria-label="dump — home">dump<span class="slash">/</span></a>
-  <div class="head-meta">
-    <span class="head-count" id="head-count" role="status" aria-live="polite" aria-atomic="true"></span>
-    <button class="dice-btn" id="dice" title="open something random" aria-label="open a random page">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/></svg>
-    </button>
+<header class="wrap">
+  <div class="top">
+    <a class="brand" href="#" aria-label="dump — home">dump<span class="slash">/</span></a>
+    <nav class="top-nav" aria-label="site">
+      <span class="me">Yanik Rösti</span>
+      <a href="#about">About</a>
+      <button class="dice-btn theme-btn" id="theme" type="button" title="switch light / dark" aria-label="switch between light and dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="dice-btn" id="dice" title="open something random" aria-label="open a random project">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/></svg>
+      </button>
+    </nav>
   </div>
 </header>
 
-<section class="hero">
-  <h1 aria-label="dump/">
-    <span class="ltr"><i>d</i></span><span class="ltr"><i>u</i></span><span class="ltr"><i>m</i></span><span class="ltr"><i>p</i></span><span class="ltr"><i>/</i></span>
-  </h1>
-  <p class="tagline">the junk drawer of yanikroesti.ch — a home for
-    <span class="rot-wrap"><span class="rot" id="rot"></span></span>
-  </p>
-  <div class="hero-stats">
-    <span><b id="stat-count">—</b> pages</span>
-    <span><b>5</b> categories</span>
-    <span>est. <b>04.2026</b></span>
-    <span>updated <b>09.2026</b></span>
-    <span>no cookies · no tracking · just files</span>
-  </div>
-  <div class="satellites">
-
-    <a class="satellite" style="--sat:#f2a03d; --sd:0.75s" href="https://schule.yanikroesti.ch" target="_blank" rel="noopener">
-      <span class="box-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2.5 8 12 13l9.5-5L12 3z"/><path d="M6 10.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5.5"/><path d="M21.5 8v5"/></svg>
-      </span>
-      <span class="sat-txt">
-        <b>Schule.</b>
-        Stundenplan, Prüfungen, Noten und Lernpakete der Lehre — <span>schule.yanikroesti.ch</span>
-      </span>
-      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-    </a>
-
-    <a class="satellite" style="--sat:#a95cd0; --sd:0.95s" href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow">
-      <span class="box-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M10 8.4l4.6 2.6-4.6 2.6z"/><path d="M8 20.5h8"/></svg>
-      </span>
-      <span class="sat-txt">
-        <b>Video-Archiv <span class="sat-tag">login</span></b>
-        Jellyfin media server, open from any browser after an e-mail code — <span>media.systemzzz.store</span>
-      </span>
-      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-    </a>
-
-    <a class="satellite" style="--sat:#3dd68c; --sd:1.15s" href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow">
-      <span class="box-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></svg>
-      </span>
-      <span class="sat-txt">
-        <b>Local AI Studio <span class="sat-tag">login</span></b>
-        Voices, images, transcription and chat on my own PC, online while it runs — <span>ai.systemzzz.store</span>
-      </span>
-      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-    </a>
-
-    <a class="satellite" style="--sat:#e0b84a; --sd:1.35s" href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow">
-      <span class="box-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h10.5L19 7v13.5H5z"/><path d="M15 3.5V7.5h4"/><path d="M8.5 11.5h7M8.5 15h5"/></svg>
-      </span>
-      <span class="sat-txt">
-        <b>Desktop Note <span class="sat-tag">login</span></b>
-        The tabs of my Windows sticky note on phone and browser, synced both ways — <span>notes.swisslock.net</span>
-      </span>
-      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-    </a>
-
-    <a class="satellite" style="--sat:#ff8c1a; --sd:1.55s" href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow">
-      <span class="box-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M6.5 9.5l3 2.5-3 2.5"/><path d="M12 15h5"/></svg>
-      </span>
-      <span class="sat-txt">
-        <b>Status <span class="sat-tag">login</span></b>
-        Home server, weather, ETFs, calendar and to-dos on one terminal-style board — <span>status.swisslock.net</span>
-      </span>
-      <svg class="go" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-    </a>
-  </div>
-</section>
-
-<nav class="toolbar" aria-label="filter and sort projects">
-  <div class="chips" id="chips" role="group" aria-label="filter by category"></div>
-
-  <div class="search-box">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-    <input id="search" type="text" placeholder="search the dump…" autocomplete="off" spellcheck="false" aria-label="search projects">
-    <span class="key">/</span>
-  </div>
-  <div class="tb-tools">
-    <div class="seg" role="group" aria-label="sort order" id="sortseg">
-      <span class="seg-lbl" aria-hidden="true">sort</span>
-      <button type="button" class="chip" data-sort="cat" aria-pressed="true" aria-label="sort by category">category</button>
-      <button type="button" class="chip" data-sort="new" aria-pressed="false" aria-label="sort newest first">newest</button>
-      <button type="button" class="chip" data-sort="old" aria-pressed="false" aria-label="sort oldest first">oldest</button>
-    </div>
-    <label class="pick" id="rangepick">
-      <span class="pick-lbl">when</span>
-      <select class="pick-sel" id="range"></select>
-    </label>
-  </div></nav>
-
 <main>
-  <a class="feature" href="artifacts/global-births-2025.html" target="_blank" rel="noopener" id="feature-card">
-    <div>
-      <div class="f-badges">
-        <span class="f-badge new">new</span>
-        <span class="f-badge ghost">infographic</span>
-        <span class="f-badge ghost">aug ’26</span>
+  <section class="wrap shortcuts" aria-labelledby="sc-h">
+    <h2 class="sc-head" id="sc-h">
+      <svg viewBox="0 0 80 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M76 8 C52 6 30 14 14 32"/><path d="M12 20 L13 33 L26 31"/><path d="M62 30l-6-5M70 22l-7-2" opacity=".7"/></svg>
+      <span><span class="mark">my everyday shortcuts</span></span>
+      <svg class="flip" viewBox="0 0 80 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M76 8 C52 6 30 14 14 32"/><path d="M12 20 L13 33 L26 31"/><path d="M62 30l-6-5M70 22l-7-2" opacity=".7"/></svg>
+    </h2>
+    <div class="sc-grid">
+      <a class="short" style="--sat:#f2a03d" href="https://schule.yanikroesti.ch" target="_blank" rel="noopener" data-shot="https://schule.yanikroesti.ch">
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2.5 8 12 13l9.5-5L12 3z"/><path d="M6 10.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5.5"/></svg><img data-slug="schule-yanikroesti-ch" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>Schule<b>.</b></h3></span>
+        <span class="short-sub">Stundenplan, Prüfungen, Noten</span>
+        <span class="short-url">schule.yanikroesti.ch <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="short" style="--sat:#a95cd0" href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://media.systemzzz.store/">
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M10 8.4l4.6 2.6-4.6 2.6z"/></svg><img data-slug="media-systemzzz-store" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>Video-Archiv<b>.</b></h3><span class="tag-login">login</span></span>
+        <span class="short-sub">Jellyfin media server</span>
+        <span class="short-url">media.systemzzz.store <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="short" style="--sat:#3dd68c" href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow" data-shot="https://ai.systemzzz.store/">
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></svg><img data-slug="ai-systemzzz-store" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>Local AI Studio<b>.</b></h3><span class="tag-login">login</span></span>
+        <span class="short-sub">Voices, images and chat</span>
+        <span class="short-url">ai.systemzzz.store <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="short" style="--sat:#e0b84a" href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://notes.swisslock.net/">
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h10.5L19 7v13.5H5z"/><path d="M15 3.5V7.5h4"/><path d="M8.5 11.5h7M8.5 15h5"/></svg><img data-slug="notes-swisslock-net" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>Desktop Note<b>.</b></h3><span class="tag-login">login</span></span>
+        <span class="short-sub">Notes synced across devices</span>
+        <span class="short-url">notes.swisslock.net <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="short" style="--sat:#ff8c1a" href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow" data-shot="https://status.swisslock.net/">
+        <span class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M6.5 9.5l3 2.5-3 2.5"/><path d="M12 15h5"/></svg><img data-slug="status-swisslock-net" alt="" loading="lazy" onerror="thumbErr(this)"></span>
+        <span class="short-t"><h3>Status<b>.</b></h3><span class="tag-login">login</span></span>
+        <span class="short-sub">Home server, weather and to-dos</span>
+        <span class="short-url">status.swisslock.net <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="made-h">
+    <div class="made">
+      <div>
+        <h1 id="made-h"><span class="mark">Things I made.</span></h1>
+        <p class="made-sub">A collection of <b id="made-count">—</b> small web projects — experiments, learning resources, useful tools and random concepts.</p>
       </div>
-      <h2>The World’s 132M Births</h2>
-      <p>A Voronoi treemap of every country on earth, sized by its share of 2025’s births — 177 nations, real flags, interactive tooltips. Built from UN World Population Prospects estimates.</p>
-      <span class="f-cta">open the poster
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
+      <div class="doodle" aria-hidden="true">
+        <svg viewBox="0 0 130 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 44 L72 32 L104 46 L62 60 Z"/><path d="M30 44 V80 L62 96 V60"/><path d="M104 46 V82 L62 96"/><path d="M58 70h14v7H58z" transform="rotate(-8 65 73)"/><path d="M14 30l-8-4M20 18l-4-9M33 14l1-9"/></svg>
+        <span>always adding<br>things.</span>
+      </div>
     </div>
-    <div class="f-art" aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="96" fill="#0d1119" stroke="rgba(240,229,203,0.2)"/>
-        <path d="M100 4 A96 96 0 0 1 196 100 L145 118 L108 92 L92 30 Z" fill="#8fb2a0"/>
-        <path d="M196 100 A96 96 0 0 1 130 191 L118 140 L145 118 Z" fill="#7f9f8e"/>
-        <path d="M130 191 A96 96 0 0 1 30 172 L72 128 L118 140 Z" fill="#c4a163"/>
-        <path d="M30 172 A96 96 0 0 1 6 82 L52 88 L72 128 Z" fill="#b28f55"/>
-        <path d="M6 82 A96 96 0 0 1 46 20 L74 54 L52 88 Z" fill="#636fa5"/>
-        <path d="M46 20 A96 96 0 0 1 100 4 L92 30 L74 54 Z" fill="#4e8ec9"/>
-        <path d="M92 30 L108 92 L145 118 L118 140 L72 128 L52 88 L74 54 Z" fill="#9dbcab"/>
-        <circle cx="100" cy="97" r="17" fill="#f4f2ec" opacity="0.95"/>
-        <circle cx="100" cy="97" r="17" fill="none" stroke="rgba(10,14,20,0.5)" stroke-width="2"/>
-        <path d="M83 91 h34 v4.5 H83 Z" fill="#f0941f"/><path d="M83 99.5 h34 v4.5 H83 Z" fill="#1a7f3c"/>
-        <circle cx="100" cy="97" r="3.4" fill="none" stroke="#1c2f66" stroke-width="1.4"/>
-        <circle cx="152" cy="72" r="9" fill="#e0392c"/>
-        <circle cx="56" cy="146" r="10" fill="#1c7a38"/>
-        <circle cx="140" cy="160" r="8" fill="#cf2b2b"/>
-        <circle cx="42" cy="60" r="7" fill="#3c3b6e"/>
-      </svg>
+
+    <div class="hl">
+      <a class="feat" id="feature" target="_blank" rel="noopener"></a>
+      <div class="newest">
+        <h2><span class="mark">Newest projects.</span></h2>
+        <div id="newest"></div>
+      </div>
     </div>
-  </a>
 
-  <div id="sections"></div>
+    <h2 class="projects-h" id="projects">Projects</h2>
+  </section>
 
-  <div class="empty" id="empty">
-    <b>nothing in the dump matches.</b><br>
-    try another word, category or month<br>
-    <button id="empty-clear">reset filters</button>
-  </div>
+  <nav class="toolbar" id="toolbar" aria-label="filter, sort and view projects">
+    <div class="wrap tb-in">
+      <div class="tb-row r1">
+        <div class="chips" id="chips" role="group" aria-label="filter by category"></div>
+        <div class="views" id="views" role="group" aria-label="view">
+          <button type="button" data-view="index" aria-pressed="false" title="Compact index"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h12M9 12h12M9 18h12"/><rect x="3" y="4.5" width="3" height="3" rx=".6"/><rect x="3" y="10.5" width="3" height="3" rx=".6"/><rect x="3" y="16.5" width="3" height="3" rx=".6"/></svg><span>Index</span></button>
+          <button type="button" data-view="grid" aria-pressed="false" title="Preview grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4"/></svg><span>Grid</span></button>
+          <button type="button" data-view="split" aria-pressed="false" title="Split browser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M10 4v16M5.5 8.5h2M5.5 12h2M5.5 15.5h2"/></svg><span>Split</span></button>
+          <button type="button" data-view="visual" aria-pressed="false" title="Visual list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="6" rx="1.2"/><rect x="3" y="14" width="8" height="6" rx="1.2"/><path d="M14 6h7M14 9h5M14 16h7M14 19h5"/></svg><span>Visual</span></button>
+        </div>
+      </div>
+      <div class="tb-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input id="search" type="search" placeholder="Search projects" autocomplete="off" spellcheck="false" aria-label="search projects">
+          <span class="key" aria-hidden="true">/</span>
+        </div>
+        <select class="sel" id="sort" aria-label="sort order">
+          <option value="new">Newest first</option>
+          <option value="old">Oldest first</option>
+          <option value="cat">By category</option>
+        </select>
+        <select class="sel" id="range" aria-label="time frame"></select>
+        <div class="tb-meta">
+          <span class="count" id="count" role="status" aria-live="polite"></span>
+          <button type="button" class="clear" id="clear" hidden>Clear filters</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="wrap" aria-label="project list">
+    <div id="results"></div>
+    <div class="empty" id="empty">
+      <b>nothing in the dump matches.</b><br>
+      try another word, category or month<br>
+      <button type="button" id="empty-clear">clear filters</button>
+    </div>
+  </section>
 </main>
 
-<footer>
-  <div class="foot-grid">
-    <div>
-      <div class="foot-brand">dump<span class="slash">/</span></div>
-      <p class="foot-about">Little projects, research rabbit holes, school packs and half-serious experiments. Nothing here is polished on purpose — that’s the point of a dump.</p>
+<footer id="about">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">dump<span class="slash">/</span></div>
+        <p class="foot-about">I’m Yanik, an electrician apprentice in Switzerland. This is where everything I build ends up: little projects, research rabbit holes, school packs and half-serious experiments. Nothing here is polished on purpose — that’s the point of a dump.</p>
+      </div>
+      <div>
+        <div class="foot-h">shortcuts</div>
+        <ul class="foot-list">
+          <li><a href="https://schule.yanikroesti.ch" target="_blank" rel="noopener">schule.yanikroesti.ch <span class="ext">&nearr;</span></a></li>
+          <li><a href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow">Video-Archiv (Jellyfin) <span class="ext">login</span></a></li>
+          <li><a href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow">Local AI Studio <span class="ext">login</span></a></li>
+          <li><a href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow">Desktop Note <span class="ext">login</span></a></li>
+          <li><a href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow">Status <span class="ext">login</span></a></li>
+          <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-h">colophon</div>
+        <p class="colophon">Curated by <b>Yanik Rösti</b>.<br>Design, motion &amp; taxonomy by <b>Claude</b> (Anthropic) — redesigned 11.2026 with four views and category shelves.
+        <span class="sig">// designed &amp; built by claude</span></p>
+      </div>
     </div>
-    <div>
-      <div class="foot-h">satellites</div>
-      <ul class="foot-list">
-        <li><a href="https://schule.yanikroesti.ch" target="_blank" rel="noopener">schule.yanikroesti.ch <span class="ext">&nearr;</span></a></li>
-        <li><a href="https://media.systemzzz.store/" target="_blank" rel="noopener nofollow">Video-Archiv (Jellyfin) <span class="ext">login</span></a></li>
-        <li><a href="https://ai.systemzzz.store/" target="_blank" rel="noopener nofollow">Local AI Studio <span class="ext">login</span></a></li>
-        <li><a href="https://notes.swisslock.net/" target="_blank" rel="noopener nofollow">Desktop Note <span class="ext">login</span></a></li>
-        <li><a href="https://status.swisslock.net/" target="_blank" rel="noopener nofollow">Status <span class="ext">login</span></a></li>
-        <li><a href="https://github.com/yanikroesti/fact-dump" target="_blank" rel="noopener">github / fact-dump <span class="ext">&nearr;</span></a></li>
-        <li><a href="https://github.com/yanikroesti/school" target="_blank" rel="noopener">github / school <span class="ext">&nearr;</span></a></li>
-      </ul>
+    <div class="foot-base">
+      <span id="foot-count"></span>
+      <span>vanilla html · css · js — no framework, no build step</span>
+      <span class="r">dump.yanikroesti.ch</span>
     </div>
-    <div>
-      <div class="foot-h">colophon</div>
-      <p class="colophon">Curated by <b>Yanik Rösti</b>.<br>Redesign, motion &amp; taxonomy by <b>Claude</b> (Fable&nbsp;5, Anthropic).
-      <span class="sig">// designed &amp; built by claude — 08.2026</span></p>
-    </div>
-  </div>
-  <div class="foot-base">
-    <span id="foot-count"></span>
-    <span>vanilla html · css · js — no framework, no build step</span>
-    <span style="margin-left:auto">dump.yanikroesti.ch</span>
   </div>
 </footer>
 
@@ -930,413 +857,334 @@ const ICONS = {
   concept: '<path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z"/><path d="M19 16.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
 };
 
+/* ═══════════════ derived data ═══════════════ */
 const CAT_ORDER = ['research', 'learning', 'tools', 'games', 'concepts'];
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FEATURED = 'artifacts/global-births-2025.html';
+const MONL = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-/* ═══════════════ build DOM ═══════════════ */
-const sectionsEl = document.getElementById('sections');
-const cardEls = [];
-const catGrids = {};
-
-CAT_ORDER.forEach(cat => {
-  const items = PAGES.filter(p => p.cat === cat);
-  const sec = document.createElement('section');
-  sec.className = 'section';
-  sec.dataset.cat = cat;
-  sec.style.setProperty('--cc', CATS[cat].color);
-  sec.innerHTML =
-    `<div class="sec-head">
-       <h2><i></i>${CATS[cat].label}</h2>
-       <span class="cnt">${String(items.length).padStart(2, '0')}</span>
-       <span class="rule"></span>
-     </div>
-     <div class="grid"></div>`;
-  const grid = sec.querySelector('.grid');
-  catGrids[cat] = grid;
-
-  items.forEach(p => {
-    const a = document.createElement('a');
-    a.className = 'card reveal';
-    a.href = encodeURI(p.f);
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.dataset.cat = p.cat;
-    /* dt is the day-accurate date (may be absent); month drives the timeframe
-       filter. m stays the human label printed on the card. */
-    a.dataset.dt = p.dt || '';
-    a.dataset.month = monthKeyOf(p);
-    a.dataset.search = (p.t + ' ' + p.d + ' ' + CATS[p.cat].label + ' ' + p.kind + ' ' + p.lang + ' ' + p.m).toLowerCase();
-    a.style.setProperty('--pa', p.pa);
-    a.style.setProperty('--cat', CATS[p.cat].color);
-    a.innerHTML =
-      `<div class="c-head">
-         <span class="c-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[p.kind] || ICONS.article}</svg></span>
-         <span class="c-lang">${p.lang.toUpperCase()}</span>
-         <svg class="c-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-       </div>
-       <h3 class="c-title">${p.t}</h3>
-       <p class="c-desc">${p.d}</p>
-       <div class="c-meta">
-         <span class="c-cat"><i></i>${CATS[p.cat].label}</span>
-         <span class="c-date"${p.dt ? '' : ' title="month is an estimate — the history holds no exact date"'}>${p.m}</span>
-       </div>`;
-    grid.appendChild(a);
-    cardEls.push(a);
-  });
-
-  sectionsEl.appendChild(sec);
-});
-
-/* The date view is its own section: sorting by date moves every card into
-   this one grid and empties the category sections. Same markup, same
-   section chrome — only the headline changes. */
-const flatSec = document.createElement('section');
-flatSec.className = 'section hidden';
-flatSec.dataset.flat = '';
-flatSec.style.setProperty('--cc', 'var(--lime)');
-flatSec.innerHTML =
-  `<div class="sec-head">
-     <h2><i></i>by date</h2>
-     <span class="sub" id="flat-sub"></span>
-     <span class="cnt">00</span>
-     <span class="rule"></span>
-   </div>
-   <div class="grid flat"></div>`;
-sectionsEl.appendChild(flatSec);
-const flatGrid = flatSec.querySelector('.grid');
-const flatSub = flatSec.querySelector('.sub');
-
-/* counts */
-const total = PAGES.length;
-document.getElementById('stat-count').textContent = total;
-document.getElementById('head-count').textContent = total + ' pages';
-document.getElementById('foot-count').textContent = total + ' pages and counting';
-
-/* ═══════════════ chips ═══════════════ */
-const chipsEl = document.getElementById('chips');
-let activeCat = null;
-
-function makeChip(cat) {
-  const chip = document.createElement('button');
-  chip.className = 'chip';
-  if (cat) {
-    const n = PAGES.filter(p => p.cat === cat).length;
-    chip.style.setProperty('--cc', CATS[cat].hex);
-    chip.innerHTML = `<i></i>${CATS[cat].label} <span class="n">${n}</span>`;
-    chip.dataset.cat = cat;
-  } else {
-    chip.innerHTML = `all <span class="n">${total}</span>`;
-    chip.classList.add('on');
-  }
-  chip.addEventListener('click', () => {
-    activeCat = (cat && activeCat !== cat) ? cat : null;
-    syncControls(); saveView(); applyFilter();
-  });
-  chipsEl.appendChild(chip);
+/* must match slug() in tools/thumbs.py */
+function thumbSlug(f) {
+  f = f.split('?')[0].split('#')[0].replace(/\/+$/, '');
+  const last = f.split('/').pop().replace(/\.html?$/i, '');
+  return last.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'page';
 }
-makeChip(null);
-CAT_ORDER.forEach(makeChip);
-
-/* ═══════════════ search ═══════════════ */
-const searchEl = document.getElementById('search');
-let query = '';
-let debounce = null;
-searchEl.addEventListener('input', () => {
-  clearTimeout(debounce);
-  debounce = setTimeout(() => {
-    query = searchEl.value.toLowerCase().trim();
-    applyFilter();
-  }, 90);
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement !== searchEl) { e.preventDefault(); searchEl.focus(); }
-  if (e.key === 'Escape' && document.activeElement === searchEl) {
-    if (searchEl.value) { searchEl.value = ''; query = ''; applyFilter(); }
-    else searchEl.blur();
-  }
-});
-
-/* ═══════════════ sort + timeframe ═══════════════ */
-const MON = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-function monthLabel(ym) {
-  const p = ym.split('-');
-  return MON[+p[1] - 1] + ' ’' + p[0].slice(2);
-}
-
-let sortMode = 'cat';   // 'cat' | 'new' | 'old'
-let range = '';         // '' = all time, else 'YYYY-MM'
-
-/* one option per month that actually occurs — the list grows with the dump
-   instead of needing a new chip row every few weeks */
-const rangeEl = document.getElementById('range');
-const rangePick = document.getElementById('rangepick');
-const monthCount = new Map();
-PAGES.forEach(p => {
+function dateLabel(p) {
+  if (p.dt) { const [y, m, d] = p.dt.split('-'); return `${+d} ${MONL[+m - 1]} ${y}`; }
   const k = monthKeyOf(p);
-  if (!k) return;
-  monthCount.set(k, (monthCount.get(k) || 0) + 1);
-});
-const MONTHS = [...monthCount.keys()].sort().reverse();
-rangeEl.innerHTML =
-  '<option value="">all time</option>' +
-  MONTHS.map(k => `<option value="${k}">${monthLabel(k)} · ${monthCount.get(k)}</option>`).join('');
+  if (!k) return '';
+  const [y, m] = k.split('-');
+  return `~ ${MONL[+m - 1]} ${y}`;
+}
+function monthName(k) { const [y, m] = k.split('-'); return `${MONL[+m - 1]} ${y}`; }
 
-const sortBtns = [...document.querySelectorAll('#sortseg .chip')];
-sortBtns.forEach(b => b.addEventListener('click', () => {
-  sortMode = b.dataset.sort;
-  syncControls(); saveView(); applyFilter();
+const ITEMS = PAGES.map((p, i) => ({
+  ...p, i,
+  href: encodeURI(p.f),
+  slug: thumbSlug(p.f),
+  month: monthKeyOf(p),
+  date: dateLabel(p),
+  search: (p.t + ' ' + p.d + ' ' + p.cat + ' ' + p.kind + ' ' + p.lang + ' ' + (p.m || '')).toLowerCase(),
 }));
-rangeEl.addEventListener('change', () => {
-  range = rangeEl.value;
-  syncControls(); saveView(); applyFilter();
-});
+const total = ITEMS.length;
 
-/* push state into the controls — used on load, on every change and on reset */
-function syncControls() {
-  chipsEl.querySelectorAll('.chip').forEach(c => {
-    const on = activeCat ? c.dataset.cat === activeCat : !c.dataset.cat;
-    c.classList.toggle('on', on);
-    /* the category chips are toggles, not tabs — same aria contract as the
-       sort group next to them, so the whole bar reads the same way */
-    c.setAttribute('aria-pressed', String(on));
-  });
-  sortBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sort === sortMode)));
-  rangeEl.value = range;
-  rangePick.classList.toggle('on', !!range);
+/* ═══════════════ little templates ═══════════════ */
+const ARROW = '<svg class="go-ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const ARROW_UP = '<svg class="go" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+
+function thumb(p) {
+  return `<span class="th" style="--pa:${p.pa}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[p.kind] || ICONS.article}</svg><img src="${thumbSrc(p.slug)}" data-slug="${p.slug}" alt="" loading="lazy" decoding="async" onerror="thumbErr(this)"></span>`;
+}
+/* the light theme uses screenshots taken in the light colour scheme
+   (thumbs/light/); a missing one falls back to the dark shot, then to the tile */
+function thumbSrc(slug) {
+  return 'thumbs/' + (document.documentElement.dataset.theme === 'light' ? 'light/' : '') + slug + '.webp';
+}
+function thumbErr(img) {
+  if (img.src.includes('/thumbs/light/')) img.src = 'thumbs/' + img.dataset.slug + '.webp';
+  else img.remove();
+}
+function refreshThumbs() {
+  document.querySelectorAll('img[data-slug]').forEach(img => { img.src = thumbSrc(img.dataset.slug); });
+}
+function tag(p) { return `<span class="tag" style="--cc:${CATS[p.cat].hex}"><i></i>${cap(CATS[p.cat].label)}</span>`; }
+const lang = p => p.lang.toUpperCase();
+const linkAttrs = p => `href="${p.href}" target="_blank" rel="noopener"`;
+const enter = n => `enter" style="--i:${Math.min(n, 16)}`;
+
+const VIEWS = {
+  index: list => `<div class="ix-list">${list.map((p, n) => `
+    <a class="ix ${enter(n)}" ${linkAttrs(p)}>
+      ${thumb(p)}
+      <span><span class="ix-t">${esc(p.t)}</span><span class="ix-d">${esc(p.d)}</span>
+        <span class="ix-m">${tag(p)}<span>${lang(p)}</span><span>${p.date}</span></span></span>
+      <span class="ix-c">${tag(p)}</span><span class="ix-l">${lang(p)}</span><span class="ix-dt">${p.date}</span>${ARROW}
+    </a>`).join('')}</div>`,
+
+  grid: list => `<div class="pg">${list.map((p, n) => `
+    <a class="gc ${enter(n)};--pa:${p.pa}" ${linkAttrs(p)}>
+      ${thumb(p)}
+      <span class="gc-b"><span class="gc-t">${esc(p.t)}</span><span class="gc-d">${esc(p.d)}</span>
+        <span class="gc-m">${tag(p)}<span class="dotsep">·</span><span>${lang(p)}</span><span class="dotsep">·</span><span>${p.date}</span></span></span>
+    </a>`).join('')}</div>`,
+
+  visual: list => `<div class="vl-list">${list.map((p, n) => `
+    <a class="vl ${enter(n)}" ${linkAttrs(p)}>
+      ${thumb(p)}
+      <span><span class="vl-t">${esc(p.t)}</span><span class="vl-d">${esc(p.d)}</span></span>
+      <span class="vl-s"><span>${p.date}</span>${tag(p)}<span>${lang(p)}</span></span>${ARROW}
+    </a>`).join('')}</div>`,
+
+  split: list => `<div class="split">
+    <div class="sp-list" id="sp-list" role="listbox" aria-label="projects">${list.map((p, n) => `
+      <button type="button" class="sp-row ${enter(n)}" role="option" aria-selected="false" data-i="${p.i}">
+        ${thumb(p)}
+        <span><span class="sp-t">${esc(p.t)}</span><span class="sp-m">${tag(p)}<span class="dotsep">·</span><span>${lang(p)}</span><span class="dotsep">·</span><span>${p.date}</span></span></span>
+      </button>`).join('')}</div>
+    <aside class="sp-detail" id="sp-detail" aria-live="polite"></aside>
+  </div>`,
+};
+
+function shelves(list) {
+  return CAT_ORDER.map(cat => {
+    const items = list.filter(p => p.cat === cat);
+    if (!items.length) return '';
+    return `<section class="shelf" style="--cc:${CATS[cat].hex}">
+      <h3 class="shelf-h"><span class="mark">${cap(CATS[cat].label)}<span class="n">${items.length}</span></span></h3>
+      <div class="shelf-grid">${items.map((p, n) => `
+        <a class="sc ${enter(n)}" ${linkAttrs(p)}>
+          ${thumb(p)}
+          <span><span class="sc-t">${esc(p.t)}</span><span class="sc-d">${esc(p.d)}</span></span>
+          <span class="sc-s"><span>${lang(p)}</span><span>${p.date}</span></span>
+        </a>`).join('')}</div>
+    </section>`;
+  }).join('');
 }
 
-/* ═══════════════ remembered view ═══════════════
-   category, sort and timeframe survive a visit; the search box does not —
-   a stale query string on return would look like a broken page. */
-const STORE = 'dump.view.v1';
-function saveView() {
-  try {
-    localStorage.setItem(STORE, JSON.stringify({ cat: activeCat, sort: sortMode, range }));
-  } catch (e) { /* private mode / storage off — the page just forgets */ }
+/* ═══════════════ featured + newest ═══════════════ */
+const feat = ITEMS.find(p => p.f === FEATURED) || ITEMS[0];
+const featEl = document.getElementById('feature');
+featEl.href = feat.href;
+featEl.innerHTML = `${thumb(feat)}
+  <span class="feat-row"><span><span class="badge-new">featured</span><h2><span class="mark">${esc(feat.t)}</span></h2>
+  <p>An interactive treemap of every country on earth, sized by its share of 2025’s births — 177 nations, real flags, tooltips.</p></span>${ARROW_UP}</span>`;
+
+const newest = ITEMS.filter(p => p.dt).sort((a, b) => b.dt.localeCompare(a.dt) || a.i - b.i).slice(0, 5);
+document.getElementById('newest').innerHTML = newest.map(p => `
+  <a class="nw" ${linkAttrs(p)}>${thumb(p)}<span><b>${esc(p.t)}</b><span class="d">${esc(p.d)}</span></span>${ARROW_UP}</a>`).join('');
+
+document.getElementById('made-count').textContent = total;
+document.getElementById('foot-count').textContent = total + ' projects and counting';
+
+/* ═══════════════ state ═══════════════ */
+let activeCat = null, query = '', sortMode = 'new', range = '', view = 'grid', selected = null;
+
+const chipsEl = document.getElementById('chips');
+const searchEl = document.getElementById('search');
+const sortEl = document.getElementById('sort');
+const rangeEl = document.getElementById('range');
+const viewsEl = document.getElementById('views');
+const resultsEl = document.getElementById('results');
+const countEl = document.getElementById('count');
+const clearEl = document.getElementById('clear');
+const emptyEl = document.getElementById('empty');
+const narrow = matchMedia('(max-width: 860px)');
+
+/* chips */
+function chip(cat) {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip';
+  if (cat) {
+    b.dataset.cat = cat;
+    b.style.setProperty('--cc', CATS[cat].hex);
+    b.innerHTML = `<i></i>${cap(CATS[cat].label)} <span class="n">${ITEMS.filter(p => p.cat === cat).length}</span>`;
+  } else {
+    b.innerHTML = `All <span class="n">${total}</span>`;
+  }
+  b.addEventListener('click', () => { activeCat = (cat && activeCat !== cat) ? cat : null; update(); });
+  chipsEl.appendChild(b);
 }
-function restoreView() {
+chip(null); CAT_ORDER.forEach(chip);
+
+/* months for the time frame */
+const monthCount = new Map();
+ITEMS.forEach(p => { if (p.month) monthCount.set(p.month, (monthCount.get(p.month) || 0) + 1); });
+const MONTHS = [...monthCount.keys()].sort().reverse();
+rangeEl.innerHTML = '<option value="">All time</option>' +
+  MONTHS.map(k => `<option value="${k}">${monthName(k)} · ${monthCount.get(k)}</option>`).join('');
+
+/* remembered view */
+const STORE = 'dump.view.v2';
+function save() {
+  try { localStorage.setItem(STORE, JSON.stringify({ cat: activeCat, sort: sortMode, range, view })); } catch (e) {}
+}
+(function restore() {
   let s = null;
   try { s = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) { return; }
   if (!s || typeof s !== 'object') return;
   if (s.cat && CATS[s.cat]) activeCat = s.cat;
-  if (s.sort === 'new' || s.sort === 'old') sortMode = s.sort;
-  if (s.range && MONTHS.indexOf(s.range) !== -1) range = s.range;
-}
+  if (['new', 'old', 'cat'].includes(s.sort)) sortMode = s.sort;
+  if (s.range && monthCount.has(s.range)) range = s.range;
+  if (VIEWS[s.view]) view = s.view;
+})();
 
-function resetFilters() {
-  activeCat = null; query = ''; searchEl.value = '';
-  sortMode = 'cat'; range = '';
-  syncControls(); saveView(); applyFilter();
-}
-document.getElementById('empty-clear').addEventListener('click', resetFilters);
-
-/* ═══════════════ FLIP filtering ═══════════════ */
-const featureEl = document.getElementById('feature-card');
-const headCountEl = document.getElementById('head-count');
-
-function matches(el) {
-  if (activeCat && el.dataset.cat !== activeCat) return false;
-  if (range && el.dataset.month !== range) return false;
-  if (query && !el.dataset.search.includes(query)) return false;
-  return true;
-}
-
-/* cards without a known date go last in BOTH directions — the git history
-   could not prove a date for them, so they are not guessed into a slot */
-function sortedCards(mode) {
-  return cardEls.slice().sort((a, b) => {
-    const da = a.dataset.dt, db = b.dataset.dt;
-    if (!da && !db) return 0;
-    if (!da) return 1;
-    if (!db) return -1;
-    return mode === 'old' ? da.localeCompare(db) : db.localeCompare(da);
+/* ═══════════════ filtering + rendering ═══════════════ */
+function filtered() {
+  const list = ITEMS.filter(p =>
+    (!activeCat || p.cat === activeCat) &&
+    (!range || p.month === range) &&
+    (!query || p.search.includes(query)));
+  /* undated pages go last in both directions — no date is guessed for them */
+  return list.sort((a, b) => {
+    if (!a.dt && !b.dt) return a.i - b.i;
+    if (!a.dt) return 1;
+    if (!b.dt) return -1;
+    return sortMode === 'old' ? a.dt.localeCompare(b.dt) : (b.dt.localeCompare(a.dt) || a.i - b.i);
   });
 }
 
-/* moving the same nodes around (never re-creating them) is what lets the
-   FLIP pass below animate the switch between the two layouts */
-let layout = 'cat';
-function applyLayout(mode) {
-  if (mode === layout) return;
-  if (mode === 'cat') {
-    CAT_ORDER.forEach(cat => cardEls.forEach(el => {
-      if (el.dataset.cat === cat) catGrids[cat].appendChild(el);
-    }));
-  } else {
-    sortedCards(mode).forEach(el => flatGrid.appendChild(el));
-  }
-  layout = mode;
+function syncControls() {
+  chipsEl.querySelectorAll('.chip').forEach(c =>
+    c.setAttribute('aria-pressed', String(activeCat ? c.dataset.cat === activeCat : !c.dataset.cat)));
+  sortEl.value = sortMode;
+  rangeEl.value = range;
+  rangeEl.classList.toggle('on', !!range);
+  const shelved = sortMode === 'cat';
+  viewsEl.classList.toggle('shelved', shelved);
+  viewsEl.title = shelved ? 'Sorted by category — showing shelves. Pick a view to sort by date again.' : '';
+  viewsEl.querySelectorAll('button').forEach(b =>
+    b.setAttribute('aria-pressed', String(!shelved && b.dataset.view === view)));
 }
 
-function applyFilter() {
-  // FIRST: positions of currently visible cards
-  const first = new Map();
-  if (!reduceMotion) {
-    cardEls.forEach(el => { if (!el.classList.contains('hidden')) first.set(el, el.getBoundingClientRect()); });
-  }
+let current = [];
+function render() {
+  current = filtered();
+  const isFiltered = !!(activeCat || query || range);
+  countEl.textContent = isFiltered ? `${current.length} of ${total} projects` : `${total} projects`;
+  clearEl.hidden = !isFiltered;
+  emptyEl.classList.toggle('show', current.length === 0);
 
-  let shown = 0;
-  cardEls.forEach(el => {
-    const ok = matches(el);
-    el.classList.toggle('hidden', !ok);
-    if (ok) shown++;
-  });
-
-  // regroup: category sections, or the single date-sorted list
-  applyLayout(sortMode);
-  const byDate = sortMode !== 'cat';
-
-  document.querySelectorAll('.section[data-cat]').forEach(sec => {
-    const vis = sec.querySelectorAll('.card:not(.hidden)').length;
-    sec.classList.toggle('hidden', byDate || vis === 0);
-    sec.querySelector('.cnt').textContent = String(vis).padStart(2, '0');
-  });
-  flatSec.classList.toggle('hidden', !byDate || shown === 0);
-  if (byDate) {
-    flatSec.classList.add('in');
-    flatSec.querySelector('.cnt').textContent = String(shown).padStart(2, '0');
-    flatSub.textContent = sortMode === 'new' ? 'newest first' : 'oldest first';
-  }
-
-  // the feature card is the default-view highlight, not a list item
-  const filtered = !!(activeCat || query || range);
-  featureEl.style.display = (!filtered && !byDate) ? '' : 'none';
-
-  document.getElementById('empty').classList.toggle('show', shown === 0);
-
-  const detail = [
-    activeCat ? CATS[activeCat].label : '',
-    range ? monthLabel(range) : '',
-    byDate ? (sortMode === 'new' ? 'newest first' : 'oldest first') : '',
-  ].filter(Boolean).join(' · ');
-  headCountEl.textContent = filtered ? shown + ' / ' + total + ' pages' : total + ' pages';
-  if (detail) {
-    const sr = document.createElement('span');
-    sr.className = 'sr-only';
-    sr.textContent = ' — ' + detail;
-    headCountEl.appendChild(sr);
-  }
-
-  // LAST + INVERT + PLAY
-  if (!reduceMotion) {
-    cardEls.forEach(el => {
-      if (el.classList.contains('hidden')) return;
-      const prev = first.get(el);
-      el.classList.add('in');           // ensure entrance state resolved
-      el.style.setProperty('--d', '0s');
-      if (prev) {
-        const now = el.getBoundingClientRect();
-        const dx = prev.left - now.left, dy = prev.top - now.top;
-        if (dx || dy) {
-          el.animate(
-            [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
-            { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-          );
-        }
-      } else {
-        el.animate(
-          [{ opacity: 0, transform: 'translateY(14px) scale(0.97)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }],
-          { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-        );
-      }
-    });
+  if (!current.length) { resultsEl.innerHTML = ''; return; }
+  if (sortMode === 'cat') { resultsEl.innerHTML = shelves(current); return; }
+  resultsEl.innerHTML = VIEWS[view](current);
+  if (view === 'split') {
+    if (!current.some(p => p.i === selected)) selected = current[0].i;
+    select(selected, false);
   }
 }
 
-/* ═══════════════ entrance reveal ═══════════════ */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (!en.isIntersecting) return;
-    if (en.target.classList.contains('section')) { en.target.classList.add('in'); io.unobserve(en.target); return; }
-    en.target.classList.add('in');
-    io.unobserve(en.target);
+/* after a filter, sort or view change the list starts right under the
+   toolbar again instead of leaving you somewhere in the old layout */
+function update() {
+  syncControls(); save(); render();
+  const y = document.getElementById('projects').getBoundingClientRect().bottom + scrollY;
+  if (scrollY > y) scrollTo({ top: y });
+}
+
+/* ═══════════════ split browser ═══════════════ */
+function select(i, focus) {
+  selected = i;
+  const p = ITEMS[i];
+  const list = document.getElementById('sp-list');
+  const detail = document.getElementById('sp-detail');
+  if (!list || !detail) return;
+  let row = null;
+  list.querySelectorAll('.sp-row').forEach(r => {
+    const on = +r.dataset.i === i;
+    r.setAttribute('aria-selected', String(on));
+    r.tabIndex = on ? 0 : -1;
+    if (on) row = r;
   });
-}, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+  detail.innerHTML = `
+    <a class="sp-shot" ${linkAttrs(p)} aria-label="open ${esc(p.t)}">${thumb(p)}</a>
+    <div class="sp-body">
+      <h3>${esc(p.t)}</h3>
+      <p>${esc(p.d)}</p>
+      <div class="sp-tags">${tag(p)}<span>${lang(p)}</span><span class="dotsep">·</span><span>${p.date}</span><span class="dotsep">·</span><span>${esc(p.kind)}</span></div>
+      <a class="btn-open" ${linkAttrs(p)}>Open project <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="sp-hint">↑ ↓ to browse · enter or double-click opens</div>
+    </div>`;
+  /* phone: the detail sits right under the chosen row; desktop: beside the list */
+  if (narrow.matches && row) row.after(detail);
+  else if (detail.parentNode !== list.parentNode) list.parentNode.appendChild(detail);
+  if (row && focus) { row.focus({ preventScroll: true }); row.scrollIntoView({ block: 'nearest' }); }
+  if (row && narrow.matches && focus !== false) row.scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
 
-document.querySelectorAll('.section').forEach(s => io.observe(s));
+resultsEl.addEventListener('click', e => {
+  const row = e.target.closest('.sp-row');
+  if (row) select(+row.dataset.i, null);
+});
+resultsEl.addEventListener('dblclick', e => {
+  const row = e.target.closest('.sp-row');
+  if (row) window.open(ITEMS[+row.dataset.i].href, '_blank', 'noopener');
+});
+resultsEl.addEventListener('keydown', e => {
+  const row = e.target.closest('.sp-row');
+  if (!row) return;
+  const idx = current.findIndex(p => p.i === +row.dataset.i);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    const next = current[Math.max(0, Math.min(current.length - 1, idx + (e.key === 'ArrowDown' ? 1 : -1)))];
+    if (next) select(next.i, true);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    window.open(ITEMS[+row.dataset.i].href, '_blank', 'noopener');
+  }
+});
+narrow.addEventListener('change', () => { if (view === 'split' && sortMode !== 'cat' && selected != null) select(selected, false); });
 
-// stagger delay per card based on its index within the viewport batch
-cardEls.forEach((el, i) => {
-  el.style.setProperty('--d', Math.min((i % 12) * 0.05, 0.5) + 's');
-  io.observe(el);
+/* ═══════════════ controls ═══════════════ */
+let debounce = null;
+searchEl.addEventListener('input', () => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => { query = searchEl.value.toLowerCase().trim(); render(); }, 90);
+});
+sortEl.addEventListener('change', () => { sortMode = sortEl.value; update(); });
+rangeEl.addEventListener('change', () => { range = rangeEl.value; update(); });
+viewsEl.addEventListener('click', e => {
+  const b = e.target.closest('button[data-view]');
+  if (!b) return;
+  view = b.dataset.view;
+  if (sortMode === 'cat') sortMode = 'new';   // shelves belong to category sort
+  update();
+});
+function clearFilters() { activeCat = null; query = ''; searchEl.value = ''; range = ''; update(); }
+clearEl.addEventListener('click', clearFilters);
+document.getElementById('empty-clear').addEventListener('click', clearFilters);
+
+document.addEventListener('keydown', e => {
+  const typing = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+  if (e.key === '/' && !typing) { e.preventDefault(); searchEl.focus(); }
+  if (e.key === 'Escape' && document.activeElement === searchEl) {
+    if (searchEl.value) { searchEl.value = ''; query = ''; render(); } else searchEl.blur();
+  }
 });
 
-/* ═══════════════ pointer spotlight (delegated) ═══════════════ */
-const fineHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
-if (fineHover && !reduceMotion) {
-  let raf = null;
-  document.addEventListener('pointermove', e => {
-    const card = e.target.closest && e.target.closest('.card');
-    if (!card) return;
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = null;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
-    });
-  }, { passive: true });
-}
-
-/* ═══════════════ rotating word ═══════════════ */
-const ROT_WORDS = [
-  ['research', 'var(--c-research)'],
-  ['school packs', 'var(--c-learning)'],
-  ['little tools', 'var(--c-tools)'],
-  ['games', 'var(--c-games)'],
-  ['concepts', 'var(--c-concepts)'],
-  ['experiments', 'var(--lime)'],
-];
-const rotEl = document.getElementById('rot');
-let rotIdx = 0;
-
-function setRotWord(word, color, animate) {
-  rotEl.innerHTML = '';
-  rotEl.style.color = color;
-  [...word].forEach((ch, i) => {
-    const s = document.createElement('span');
-    s.className = 'ch';
-    s.textContent = ch;
-    if (animate && !reduceMotion) {
-      s.style.opacity = '0';
-      s.style.transform = 'translateY(0.65em) rotateX(-70deg)';
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        s.style.transitionDelay = (i * 28) + 'ms';
-        s.style.opacity = '1';
-        s.style.transform = 'translateY(0) rotateX(0)';
-      }));
-    }
-    rotEl.appendChild(s);
-  });
-}
-setRotWord(ROT_WORDS[0][0], ROT_WORDS[0][1], false);
-
-if (!reduceMotion) {
-  setInterval(() => {
-    rotEl.classList.add('out');
-    setTimeout(() => {
-      rotEl.classList.remove('out');
-      rotIdx = (rotIdx + 1) % ROT_WORDS.length;
-      setRotWord(ROT_WORDS[rotIdx][0], ROT_WORDS[rotIdx][1], true);
-    }, 320);
-  }, 2700);
-}
-
-/* ═══════════════ dice ═══════════════ */
 document.getElementById('dice').addEventListener('click', () => {
-  const pool = cardEls.filter(el => !el.classList.contains('hidden'));
-  const pick = pool.length ? pool : cardEls;
-  const el = pick[Math.floor(Math.random() * pick.length)];
-  window.open(el.href, '_blank', 'noopener');
+  const pool = current.length ? current : ITEMS;
+  window.open(pool[Math.floor(Math.random() * pool.length)].href, '_blank', 'noopener');
 });
 
-/* initial paint — the remembered view is put in place before the first
-   measurement, so nothing flies across the screen on load */
-restoreView();
+/* the split detail sticks just below the sticky toolbar */
+const tb = document.getElementById('toolbar');
+new ResizeObserver(() => {
+  const sticky = getComputedStyle(tb).position === 'sticky';
+  document.documentElement.style.setProperty('--tb-h', sticky ? tb.offsetHeight + 'px' : '0px');
+}).observe(tb);
+
+/* theme switch */
+document.getElementById('theme').addEventListener('click', () => {
+  const t = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('dump.theme', t); } catch (e) {}
+  refreshThumbs();
+});
+
+refreshThumbs();   // shortcut screenshots up top
 syncControls();
-applyLayout(sortMode);
-applyFilter();
+render();
 </script>
 </body>
 </html>

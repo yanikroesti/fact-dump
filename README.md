@@ -10,12 +10,18 @@ experiments. Everything ends up here. 33 pages and counting.
 ```
 index.html      the overview page (vanilla HTML/CSS/JS, no build step)
 artifacts/      one self-contained HTML page per project
+thumbs/         preview screenshots (dark) — thumbs/light/ for the light theme
+tools/thumbs.py captures missing screenshots (Playwright + Pillow)
 CNAME           custom-domain binding for static hosting
 ```
 
-Categories: **research · learning · tools · games · concepts** — filtering, search
-and layout all live in `index.html`. To add a page: drop the HTML file into
-`artifacts/` and add one entry to the `PAGES` array in `index.html`.
+Categories: **research · learning · tools · games · concepts**. The project list has four
+views (index, grid, split, visual list); sorting **by category** switches to category shelves.
+Light theme = cream paper with yellow highlighter, dark theme = black with lime; toggle in
+the header, the choice is remembered per browser.
+
+To add a page: drop the HTML file into `artifacts/`, add one entry to the `PAGES` array in
+`index.html`, then run `python tools/thumbs.py` to capture its preview (dark + light).
 
 ## Satellites
 
